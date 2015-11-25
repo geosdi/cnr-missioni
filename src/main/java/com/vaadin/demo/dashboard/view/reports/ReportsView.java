@@ -151,7 +151,6 @@ public final class ReportsView extends TabSheet implements View, CloseHandler,
 
         if (reportType == ReportType.MONTHLY) {
             reportEditor.setTitle("Monthly revenue");
-            reportEditor.addWidget(PaletteItemType.CHART, null);
             reportEditor.addWidget(PaletteItemType.TABLE, null);
         } else if (reportType == ReportType.EMPTY) {
             DateFormat df = new SimpleDateFormat("M/dd/yyyy");
