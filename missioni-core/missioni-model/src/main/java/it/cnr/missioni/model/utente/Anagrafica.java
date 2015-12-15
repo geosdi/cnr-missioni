@@ -1,5 +1,7 @@
 package it.cnr.missioni.model.utente;
 
+import org.joda.time.DateTime;
+
 /**
  * @author Salvia Vito
  */
@@ -8,7 +10,7 @@ public class Anagrafica {
 	private String nome;
 	private String cognome;
 	private String codiceFiscale;
-//	private DateTime dataNascita;
+	private DateTime dataNascita;
 	private String luogoNascita;
 
 	/**
@@ -56,16 +58,16 @@ public class Anagrafica {
 	/**
 	 * @return the dataNascita
 	 */
-//	public DateTime getDataNascita() {
-//		return dataNascita;
-//	}
-//
-//	/**
-//	 * @param dataNascita
-//	 */
-//	public void setDataNascita(DateTime dataNascita) {
-//		this.dataNascita = dataNascita;
-//	}
+	public DateTime getDataNascita() {
+		return dataNascita;
+	}
+
+	/**
+	 * @param dataNascita
+	 */
+	public void setDataNascita(DateTime dataNascita) {
+		this.dataNascita = dataNascita;
+	}
 
 	/**
 	 * @return the luogoNascita

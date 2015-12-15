@@ -6,7 +6,7 @@ package it.cnr.missioni.model.missione;
 public class DatiAnticipoPagamenti {
 
 	private boolean anticipazioniMonetarie;
-	private int mandatoCNR;
+	private String mandatoCNR;
 	private double speseMissioniAnticipate;
 	private boolean rimborsoDaTerzi;
 	private double importoDaTerzi;
@@ -28,14 +28,14 @@ public class DatiAnticipoPagamenti {
 	/**
 	 * @return the mandatoCNR
 	 */
-	public int getMandatoCNR() {
+	public String getMandatoCNR() {
 		return mandatoCNR;
 	}
 
 	/**
 	 * @param mandatoCNR
 	 */
-	public void setMandatoCNR(int mandatoCNR) {
+	public void setMandatoCNR(String mandatoCNR) {
 		this.mandatoCNR = mandatoCNR;
 	}
 

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # ignore target artifact folders
 target/
 
@@ -25,4 +25,3 @@ rebel.xml
 *.iml
 .idea/
 
->>>>>>> d436ea30c1a16470710f82bb4d6aff6f5f322a9f

@@ -11,7 +11,7 @@ import it.cnr.missioni.el.index.settings.UtenteIndexSettings;
 /**
  * @author Salvia Vito
  */
-@Component(value = "utenteIndexCreator")
+@Component(value = "missioneIndexCreator")
 public class MissioneIndexCreator extends GPAbstractIndexCreator {
 
     @Override

@@ -7,7 +7,7 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
  */
 public enum MissioneIndexSettings {
 	
-    UTENTE_DOC_INDEX_SETTINGS(new BaseIndexSettings("cnr_missioni_index_missione", "missione_type"));
+    MISSIONE_DOC_INDEX_SETTINGS(new BaseIndexSettings("cnr_missioni_index_missione", "missione_type"));
 
     private final GPIndexCreator.GPIndexSettings value;
 

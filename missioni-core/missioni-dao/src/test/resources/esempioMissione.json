@@ -1,0 +1,39 @@
+ {
+	"missione": {
+		"id" : "01",
+		"localita" : "Roma",
+		"oggetto" : "Conferenza",
+		"stato" : "STAND_BY",
+		"altro" : "",
+		"datiPeriodoMissione" : {
+			"inizioMissione" : "2015-12-12T10:11:59.568Z",
+			"fineMissione" : "2015-12-14T10:11:59.568Z",
+			"attraversamentoFrontieraAndata" : "",
+			"attraversamentoFrontieraRitorno" : ""
+		},
+		"datiMissioneEstera" : {
+			"missioneEstera" : false,
+			"rimborsoDocumentato" : false,
+			"trattamentoAlternativoMissione" : false
+		},
+		"datiAnticipoPagamenti" : {
+			"anticipazioniMonetarie" : true,
+			"mandatoCNR" : "A01",
+			"speseMissioniAnticipate" : 150.00,
+			"rimborsoDaTerzi" : true,
+			"importoDaTerzi" : 100.00
+		},
+		"rimborso" : {
+			"dataRimborso" : "2015-12-15T10:11:59.568Z",
+			"listaFatture" : [
+				{
+					"numeroFattura" : 134,
+					"data" : "2015-12-12T10:11:59.568Z",
+					"tipologiaSpesa" :"Rifornimento",
+					"importo" : 73.5,
+					"kmPercorsi" : 456
+				}
+			]
+ 		}
+	}
+}

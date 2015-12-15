@@ -18,6 +18,10 @@ public class Missione implements Document {
 
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2011330125118118995L;
 	private String id;
 	private String localita;
 	private String oggetto;

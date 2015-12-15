@@ -5,36 +5,36 @@ package it.cnr.missioni.model.utente;
  */
 public class Residenza {
 
-	private String residenza;
-	private String viaResidenza;
+	private String comune;
+	private String indirizzo;
 	private String domicilioFiscale;
 
 	/**
-	 * @return the residenza
+	 * @return the comune
 	 */
-	public String getResidenza() {
-		return residenza;
+	public String getComune() {
+		return comune;
 	}
 
 	/**
-	 * @param residenza
+	 * @param comune
 	 */
-	public void setResidenza(String residenza) {
-		this.residenza = residenza;
+	public void setComune(String comune) {
+		this.comune = comune;
 	}
 
 	/**
-	 * @return the viaResidenza
+	 * @return the indirizzo
 	 */
-	public String getViaResidenza() {
-		return viaResidenza;
+	public String getIndrizzo() {
+		return indirizzo;
 	}
 
 	/**
-	 * @param viaResidenza
+	 * @param indirizzo
 	 */
-	public void setViaResidenza(String viaResidenza) {
-		this.viaResidenza = viaResidenza;
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class Residenza {
 	 */
 	@Override
 	public String toString() {
-		return "Residenza [residenza=" + residenza + ", viaResidenza=" + viaResidenza + ", domicilioFiscale="
+		return "Residenza [comune=" + comune + ", indirizzo=" + indirizzo + ", domicilioFiscale="
 				+ domicilioFiscale + "]";
 	}
 
