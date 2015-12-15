@@ -1,5 +1,6 @@
 package it.cnr.missioni.model.rimborso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,12 @@ import org.joda.time.DateTime;
 /**
  * @author Salvia Vito
  */
-public class Rimborso  {
+public class Rimborso  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8658916823848446391L;
 	private DateTime dataRimborso;
 	private List<Fattura> listaFatture = new ArrayList<Fattura>();
 

@@ -1,10 +1,16 @@
 package it.cnr.missioni.model.missione;
 
+import java.io.Serializable;
+
 /**
  * @author Salvia Vito
  */
-public class DatiMissioneEstera {
+public class DatiMissioneEstera implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 734443544980437567L;
 	private boolean missioneEstera;
 	private boolean rimborsoDocumentato;
 	private boolean trattamentoAlternativoMissione;

@@ -40,8 +40,7 @@ public class Missione implements Document {
 	 */
 	@Override
 	public Boolean isIdSetted() {
-		// TODO Auto-generated method stub
-		return null;
+		return ((this.id != null) && !(this.id.isEmpty()));
 	}
 
 	/**

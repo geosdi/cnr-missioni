@@ -1,12 +1,18 @@
 package it.cnr.missioni.model.missione;
 
+import java.io.Serializable;
+
 import org.joda.time.DateTime;
 
 /**
  * @author Salvia Vito
  */
-public class DatiPeriodoMissione {
+public class DatiPeriodoMissione implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3755222349066146562L;
 	private DateTime attraversamentoFrontieraAndata;
 	private DateTime attraversamentoFrontieraRitorno;
 	private DateTime inizioMissione;

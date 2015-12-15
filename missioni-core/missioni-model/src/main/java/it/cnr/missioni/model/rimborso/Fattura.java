@@ -1,12 +1,18 @@
 package it.cnr.missioni.model.rimborso;
 
+import java.io.Serializable;
+
 import org.joda.time.DateTime;
 
 /**
  * @author Salvia Vito
  */
-public class Fattura {
+public class Fattura implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long numeroFattura;
 	private DateTime data;
 	private String tipologiaSpesa;

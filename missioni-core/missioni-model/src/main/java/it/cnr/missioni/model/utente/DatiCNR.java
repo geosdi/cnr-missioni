@@ -1,10 +1,16 @@
 package it.cnr.missioni.model.utente;
 
+import java.io.Serializable;
+
 /**
  * @author Salvia Vito
  */
-public class DatiCNR {
+public class DatiCNR implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1534365538828825181L;
 	private int livello;
 	private String qualifica;
 	private String datoreLavoro;

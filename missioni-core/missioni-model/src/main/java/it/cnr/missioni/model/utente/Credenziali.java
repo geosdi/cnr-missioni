@@ -1,10 +1,16 @@
 package it.cnr.missioni.model.utente;
 
+import java.io.Serializable;
+
 /**
  * @author Salvia Vito
  */
-public class Credenziali {
+public class Credenziali implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5504155444424046718L;
 	private String username;
 	private String password;
 	private RuoloUtenteEnum ruoloUtente;

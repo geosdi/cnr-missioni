@@ -1,12 +1,18 @@
 package it.cnr.missioni.model.utente;
 
+import java.io.Serializable;
+
 import org.joda.time.DateTime;
 
 /**
  * @author Salvia Vito
  */
-public class Anagrafica {
+public class Anagrafica implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2355131345839836682L;
 	private String nome;
 	private String cognome;
 	private String codiceFiscale;

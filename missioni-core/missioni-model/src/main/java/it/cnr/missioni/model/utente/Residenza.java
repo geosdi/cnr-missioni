@@ -1,10 +1,16 @@
 package it.cnr.missioni.model.utente;
 
+import java.io.Serializable;
+
 /**
  * @author Salvia Vito
  */
-public class Residenza {
+public class Residenza implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8733345187478501883L;
 	private String comune;
 	private String indirizzo;
 	private String domicilioFiscale;

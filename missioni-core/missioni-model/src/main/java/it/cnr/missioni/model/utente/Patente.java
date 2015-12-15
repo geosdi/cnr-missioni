@@ -1,12 +1,18 @@
 package it.cnr.missioni.model.utente;
 
+import java.io.Serializable;
+
 import org.joda.time.DateTime;
 
 /**
  * @author Salvia Vito
  */
-public class Patente {
+public class Patente implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String numeroPatente;
 	private DateTime dataRilascio;
 	private DateTime validaFinoAl;
