@@ -1,0 +1,11 @@
+ {
+	"utente": {
+		"id" : "01",
+     	"nome": "Vito",
+        "cognome": "Salvia",
+        "codiceFiscale": "slvvti82ò30g942l",
+        "dataNascita": "2015-12-14T10:11:59.568Z",
+        "luogoNascita": "Potenza"
+   
+	}
+}

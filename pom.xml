@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>it.cnr</groupId>
+	<artifactId>missioni</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+
+	<name>CNR :: == Missioni Service</name>
+
+	<licenses>
+		<license>
+			<name>GPL v3 + CE</name>
+			<url>http://www.gnu.org/licenses/</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>cnr</name>
+		<url>http://www.imaa.cnr.it/</url>
+	</organization>
+	<inceptionYear>2015</inceptionYear>
+
+<!-- 	<repositories> -->
+ 		<!-- geoSDI --> 
+<!-- 		<repository> -->
+<!-- 			<id>geosdi</id> -->
+<!-- 			<name>geoSDI Repository</name> -->
+<!-- 			<url>http://repo.geosdi.org</url> -->
+<!-- 		</repository> -->
+<!-- 	</repositories> -->
+
+<repositories>
+<!-- geoSDI -->
+<repository>
+<id>geosdi-snapshots</id>
+<name>repo.geosdi.org-snapshots</name>
+<url>http://repo.geosdi.org/artifactory/libs-snapshot-local</url>
+</repository>
+</repositories>
+
+	<developers>
+		<developer>
+			<name>Salvia Vito</name>
+			<id>vito.salvia</id>
+			<email></email>
+			<organization>sintesi</organization>
+			<roles>
+				<role>Java Developer</role>
+				<role>Project Management Committee (PMC) Member</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- =========================================================== -->
+			<!-- ============== GEOPLATFORM SPRING DEPENDENCY ============== -->
+			<!-- =========================================================== -->
+			<dependency>
+				<groupId>org.geosdi</groupId>
+				<artifactId>geoplatform-spring-dependency</artifactId>
+				<type>pom</type>
+				<scope>import</scope>
+				<version>${geoplatform-version}</version>
+			</dependency>
+
+			<!-- =========================================================== -->
+			<!-- ============== GEOPLATFORM JACKSON DEPENDENCY ============= -->
+			<!-- =========================================================== -->
+			<dependency>
+				<groupId>org.geosdi</groupId>
+				<artifactId>geoplatform-jackson-dependency</artifactId>
+				<type>pom</type>
+				<scope>import</scope>
+				<version>${geoplatform-version}</version>
+			</dependency>
+
+			<!-- =========================================================== -->
+			<!-- =============== GEOPLATFORM JACKSON SUPPORT =============== -->
+			<!-- =========================================================== -->
+			<dependency>
+				<groupId>org.geosdi</groupId>
+				<artifactId>geoplatform-jackson-support</artifactId>
+				<version>${geoplatform-version}</version>
+			</dependency>
+
+			<!-- =========================================================== -->
+			<!-- ================ GEOPLATFORM LOGGER SUPPORT =============== -->
+			<!-- =========================================================== -->
+			<dependency>
+				<groupId>org.geosdi</groupId>
+				<artifactId>geoplatform-logger-support</artifactId>
+				<version>${geoplatform-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>18.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>2.9</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>Saxon-HE</artifactId>
+				<version>${saxson-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<inherited>true</inherited>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.4</version>
+					<configuration>
+						<attach>true</attach>
+					</configuration>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>jar-no-fork</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<!-- compilation -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<debug>true</debug>
+					<encoding>UTF-8</encoding>
+					<!-- Added comment because we have some problem on Windows Vista -->
+					<!--fork>true</fork -->
+					<meminitial>64M</meminitial>
+					<maxmem>1512M</maxmem>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<geoplatform-version>1.8-SNAPSHOT</geoplatform-version>
+		<saxson-version>9.5.1-8</saxson-version>
+	</properties>
+
+
+  <modules>
+    <module>missioni-core</module>
+  </modules>
+</project>

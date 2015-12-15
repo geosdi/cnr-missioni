@@ -1,0 +1,10 @@
+# ignore target artifact folders
+target/
+
+# ignore IDE artifacts
+.settings
+.classpath
+.project
+.idea
+
+
