@@ -1,5 +1,8 @@
 package it.cnr.missioni.el.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
@@ -15,10 +18,9 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.utente.Anagrafica;
+import it.cnr.missioni.model.utente.Credenziali;
 import it.cnr.missioni.model.utente.Utente;
-
 
 /**
  * @author Salvia Vito
@@ -32,55 +34,105 @@ public class UtenteDAOTest {
 	static Logger logger;
 	@Resource(name = "missioniIndexConfigurator")
 	private GPIndexConfigurator missioniDocIndexConfigurator;
-	
+
 	@Resource(name = "utenteIndexCreator")
 	private GPIndexCreator utenteDocIndexCreator;
-	
+
 	@Resource(name = "utenteDAO")
 	private IUtenteDAO utenteDAO;
-	
-	
-	private Utente utente;
-	
-	  @Before
-	    public void setUp() {
-	        Assert.assertNotNull(utenteDocIndexCreator);
-	        Assert.assertNotNull(missioniDocIndexConfigurator);
-	        Assert.assertNotNull(utenteDAO);
-	    }
-	  
-	  @Test
-	  public void A_createUtenteCNRTest() throws Exception{
 
-		  for(int i = 0; i<10000;i++){
-			  creaUtente();
-			  utenteDAO.persist(this.utente);
-		  }
-		  
+	private List<Utente> listaUtenti = new ArrayList<Utente>();
 
-	  }
-	  
-	  @Test
-	  public void B_countTest() throws Exception{
-		  Thread.sleep(1000);
-		  logger.debug("############################NUMBER_OF_DOCS : {}\n",
-	                this.utenteDAO.count().intValue());
-	  }
-	  
-	  @Test
-	  public void C_deleteTest() throws Exception{
-		  utenteDAO.removeAll();
-		  logger.debug("############################NUMBER_OF_DOCS_AFTER_DELETING : {}\n",
-	                this.utenteDAO.count().intValue());
-	  }
-	  
-	  
-	  private void creaUtente(){
-		  this.utente = new Utente();
-		  Anagrafica anagrafica = new Anagrafica();
-		  anagrafica.setCognome("Salvia");
-		  anagrafica.setNome("Vito");
-		  utente.setAnagrafica(anagrafica);
-	  }
+	@Before
+	public void setUp() {
+		Assert.assertNotNull(utenteDocIndexCreator);
+		Assert.assertNotNull(missioniDocIndexConfigurator);
+		Assert.assertNotNull(utenteDAO);
+	}
+
+	@Test
+	public void A_createUtenteCNRTest() throws Exception {
+		creaUtenti();
+		utenteDAO.persist(listaUtenti);
+		Thread.sleep(1000);
+		logger.debug("############################NUMBER_OF_UTENTI : {}\n", this.utenteDAO.count().intValue());
+	}
+
+	@Test
+	public void B_findUtenteByUsernameValidaTest() throws Exception {
+		Utente utente = utenteDAO.findUtenteByUsername("vito.salvia");
+		logger.debug("############################UTENTE_WITH_USERNAME : {}\n",
+				utente.getAnagrafica().getCognome() + " " + utente.getAnagrafica().getNome());
+		Assert.assertTrue("FIND UTENTE BY USERNAME VALIDA", utente != null);
+	}
+	
+	@Test
+	public void C_findUtenteByUsernameErrataTest() throws Exception {
+		Utente utente = utenteDAO.findUtenteByUsername("vito.salvi");
+		Assert.assertTrue("FIND UTENTE BY USERNAME ERRATA", utente == null);
+	}
+
+	@Test
+	public void D_updatePasswordUtente() throws Exception {
+		Utente utente = utenteDAO.findUtenteByUsername("vito.salvia");
+		String oldPassword = utente.getCredenziali().getPassword();
+		utente.getCredenziali().setPassword(utente.getCredenziali().md5hash("salvia.vito"));
+		utenteDAO.persist(utente);
+		Thread.sleep(1000);
+		utente = utenteDAO.findUtenteByUsername("vito.salvia");
+		String newPassword = utente.getCredenziali().getPassword();
+		Assert.assertTrue("Update Password Utente", !oldPassword.equals(newPassword));
+
+	}
+
+	// @Test
+	// public void C_deleteTest() throws Exception {
+	// utenteDAO.removeAll();
+	// logger.debug("############################NUMBER_OF_DOCS_AFTER_DELETING :
+	// {}\n",
+	// this.utenteDAO.count().intValue());
+	// }
+
+	private void creaUtenti() {
+		Utente utente = null;
+		Anagrafica anagrafica = null;
+		Credenziali credenziali = null;
+		utente = new Utente();
+		utente.setId("01");
+		anagrafica = new Anagrafica();
+		anagrafica.setCognome("Salvia");
+		anagrafica.setNome("Vito");
+		credenziali = new Credenziali();
+		credenziali.setUsername("vito.salvia");
+		credenziali.setPassword(credenziali.md5hash("vitosalvia"));
+		utente.setCredenziali(credenziali);
+		utente.setAnagrafica(anagrafica);
+		listaUtenti.add(utente);
+
+		utente = new Utente();
+		utente.setId("02");
+		anagrafica = new Anagrafica();
+		anagrafica.setCognome("Rossi");
+		anagrafica.setNome("Paolo");
+		credenziali = new Credenziali();
+		credenziali.setUsername("paolo.rossi");
+		credenziali.setPassword(credenziali.md5hash("paolorossi"));
+		utente.setCredenziali(credenziali);
+		utente.setAnagrafica(anagrafica);
+		listaUtenti.add(utente);
+		
+		utente = new Utente();
+		utente.setId("03");
+		anagrafica = new Anagrafica();
+		anagrafica.setCognome("Mario");
+		anagrafica.setNome("Bianchi");
+		credenziali = new Credenziali();
+		credenziali.setUsername("mario.bianchi");
+		credenziali.setPassword(credenziali.md5hash("mariobianchi"));
+		utente.setCredenziali(credenziali);
+		utente.setAnagrafica(anagrafica);
+		listaUtenti.add(utente);
+		
+	}
 
 }

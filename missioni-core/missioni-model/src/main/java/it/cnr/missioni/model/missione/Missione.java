@@ -31,6 +31,7 @@ public class Missione implements Document {
 	private DatiMissioneEstera datiMissioneEstera;
 	private DatiAnticipoPagamenti datiAnticipoPagamenti;
 	private Rimborso rimborso;
+	private String idUtente;
 
 	/*
 	 * (non-Javadoc)
@@ -169,15 +170,29 @@ public class Missione implements Document {
 		this.rimborso = rimborso;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the idUtente
+	 */
+	public String getIdUtente() {
+		return idUtente;
+	}
+
+	/**
+	 * @param idUtente 
+	 */
+	public void setIdUtente(String idUtente) {
+		this.idUtente = idUtente;
+	}
+
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", stato=" + stato
 				+ ", altro=" + altro + ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera="
 				+ datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso
-				+ "]";
+				+ ", idUtente=" + idUtente + "]";
 	}
 
 }

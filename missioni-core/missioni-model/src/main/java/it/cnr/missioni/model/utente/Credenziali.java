@@ -14,6 +14,28 @@ public class Credenziali implements Serializable{
 	private String username;
 	private String password;
 	private RuoloUtenteEnum ruoloUtente;
+	
+	/**
+	 * 
+	 * Calcola l' md5 della password
+	 * 
+	 * @param password
+	 * @return String
+	 */
+	public String md5hash(String password) {
+		String hashString = null;
+		try {
+			java.security.MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+			byte[] hash = digest.digest(password.getBytes());
+			hashString = "";
+			for (int i = 0; i < hash.length; i++) {
+				hashString += Integer.toHexString((hash[i] & 0xFF) | 0x100).toLowerCase().substring(1, 3);
+			}
+		} catch (java.security.NoSuchAlgorithmException e) {
+			// logger.error(e);
+		}
+		return hashString;
+	}
 
 	/**
 	 * @return the username

@@ -35,6 +35,9 @@ public class Utente implements Document {
 	private Credenziali credenziali;
 	@XmlJavaTypeAdapter(value = DocumentMapAdapter.class)
 	private Map<String, Veicolo> mappaVeicolo = new HashMap<String, Veicolo>();
+	
+	
+
 
 	/*
 	 * (non-Javadoc)
