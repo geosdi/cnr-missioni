@@ -24,4 +24,4 @@ rebel.xml
 .DS_Store
 *.iml
 .idea/
-/bin/
+
