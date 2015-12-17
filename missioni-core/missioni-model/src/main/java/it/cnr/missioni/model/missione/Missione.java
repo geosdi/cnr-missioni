@@ -32,6 +32,7 @@ public class Missione implements Document {
 	private DatiAnticipoPagamenti datiAnticipoPagamenti;
 	private Rimborso rimborso;
 	private String idUtente;
+	private DateTime dataInserimento;
 
 	/*
 	 * (non-Javadoc)
@@ -185,6 +186,20 @@ public class Missione implements Document {
 	}
 
 	/**
+	 * @return the dataInserimento
+	 */
+	public DateTime getDataInserimento() {
+		return dataInserimento;
+	}
+
+	/**
+	 * @param dataInserimento 
+	 */
+	public void setDataInserimento(DateTime dataInserimento) {
+		this.dataInserimento = dataInserimento;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
@@ -192,7 +207,7 @@ public class Missione implements Document {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", stato=" + stato
 				+ ", altro=" + altro + ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera="
 				+ datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso
-				+ ", idUtente=" + idUtente + "]";
+				+ ", idUtente=" + idUtente + ", dataInserimento=" + dataInserimento + "]";
 	}
 
 }

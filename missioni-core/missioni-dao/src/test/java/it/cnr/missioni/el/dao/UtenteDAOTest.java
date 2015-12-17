@@ -1,9 +1,11 @@
 package it.cnr.missioni.el.dao;
 
+import it.cnr.missioni.el.model.search.UtenteModelSearch;
 import it.cnr.missioni.model.utente.Anagrafica;
 import it.cnr.missioni.model.utente.Credenziali;
 import it.cnr.missioni.model.utente.Utente;
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
+import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.junit.Assert;
@@ -58,26 +60,32 @@ public class UtenteDAOTest {
 
     @Test
     public void B_findUtenteByUsernameValidaTest() throws Exception {
-        Utente utente = utenteDAO.findUtenteByUsername("vito.salvia");
+    	UtenteModelSearch utenteModelSearch = new UtenteModelSearch(null, null, null, "vito.salvia");
+        List<Utente> lista = utenteDAO.findUtenteByQuery(new Page(0,10),utenteModelSearch);
         logger.debug("############################UTENTE_WITH_USERNAME : {}\n",
-                utente.getAnagrafica().getCognome() + " " + utente.getAnagrafica().getNome());
-        Assert.assertTrue("FIND UTENTE BY USERNAME VALIDA", utente != null);
+                lista.get(0).getAnagrafica().getCognome() + " " + lista.get(0).getAnagrafica().getNome());
+        Assert.assertTrue("FIND UTENTE BY USERNAME VALIDA", lista.get(0) != null);
     }
 
     @Test
     public void C_findUtenteByUsernameErrataTest() throws Exception {
-        Utente utente = utenteDAO.findUtenteByUsername("vito.salvi");
-        Assert.assertTrue("FIND UTENTE BY USERNAME ERRATA", utente == null);
+    	UtenteModelSearch utenteModelSearch = new UtenteModelSearch(null, null, null, "vito.salvi");
+        List<Utente> lista = utenteDAO.findUtenteByQuery(new Page(0,10),utenteModelSearch);
+        Assert.assertTrue("FIND UTENTE BY USERNAME ERRATA", lista.isEmpty());
     }
 
     @Test
     public void D_updatePasswordUtente() throws Exception {
-        Utente utente = utenteDAO.findUtenteByUsername("vito.salvia");
+    	UtenteModelSearch utenteModelSearch = new UtenteModelSearch(null, null, null, "vito.salvia");
+        List<Utente> lista = utenteDAO.findUtenteByQuery(new Page(0,10),utenteModelSearch);
+        Utente  utente = lista.get(0);
         String oldPassword = utente.getCredenziali().getPassword();
         utente.getCredenziali().setPassword(utente.getCredenziali().md5hash("salvia.vito"));
         utenteDAO.persist(utente);
         Thread.sleep(1000);
-        utente = utenteDAO.findUtenteByUsername("vito.salvia");
+        utenteModelSearch = new UtenteModelSearch(null, null, null, "vito.salvia");
+        lista = utenteDAO.findUtenteByQuery(new Page(0,10),utenteModelSearch);
+        utente = lista.get(0);
         String newPassword = utente.getCredenziali().getPassword();
         Assert.assertTrue("Update Password Utente", !oldPassword.equals(newPassword));
 

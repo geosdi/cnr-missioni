@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 public abstract class AbstractModelSearch {
 
 	private BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+	
 
 	/**
 	 * 
@@ -25,7 +26,7 @@ public abstract class AbstractModelSearch {
 		
 		//se nulla prendo come riferimento 1/1/1970
 		if(from == null)
-			from = new DateTime(1970,1,1,0,0);
+			from = new DateTime(1970,1,2,0,0);
 			queryDate.gte(from);
 			//se nulla data odierna
 			if (to == null)

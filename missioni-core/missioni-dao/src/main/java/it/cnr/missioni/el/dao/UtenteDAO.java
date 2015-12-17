@@ -1,5 +1,6 @@
 package it.cnr.missioni.el.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,44 +15,46 @@ import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
+import it.cnr.missioni.el.model.search.UtenteModelSearch;
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.utente.Utente;
 
 /**
  * @author Salvia Vito
  */
 @Component(value = "utenteDAO")
-public class UtenteDAO extends AbstractElasticSearchDAO<Utente>  implements IUtenteDAO{
+public class UtenteDAO extends AbstractElasticSearchDAO<Utente> implements IUtenteDAO {
 
-	
 	/**
-	 * @param username
+	 * 
+	 * @param p
+	 * @param utenteModelSearch
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public Utente findUtenteByUsername(String username) throws Exception {
-		Utente utente = null;
+	public List<Utente> findUtenteByQuery(Page p, UtenteModelSearch utenteModelSearch) throws Exception {
+		List<Utente> listaUtenti = new ArrayList<Utente>();
 
-		logger.debug("###############Try to find Utente with username: {}\n\n", username);
-		SearchResponse searchResponse = this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
-				.setQuery(QueryBuilders.matchQuery("utente.credenziali.username", username).cutoffFrequency(0.001f)
-						.operator(MatchQueryBuilder.Operator.AND))
-				.execute().actionGet();
+		logger.debug("###############Try to find Utenti: {}\n\n");
+		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
+				.setTypes(getIndexType()).setQuery(utenteModelSearch.getQueryBuilder())).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");
 		}
 
 		for (SearchHit searchHit : searchResponse.getHits().hits()) {
-			utente = this.mapper.read(searchHit.getSourceAsString());
+			Utente utente = this.mapper.read(searchHit.getSourceAsString());
 			if (!utente.isIdSetted()) {
 				utente.setId(searchHit.getId());
 			}
+			listaUtenti.add(utente);
 		}
 
-		return utente;
+		return listaUtenti;
 	}
-	
+
 	@Override
 	public List<Utente> findLasts() throws Exception {
 		// TODO Auto-generated method stub
@@ -69,11 +72,5 @@ public class UtenteDAO extends AbstractElasticSearchDAO<Utente>  implements IUte
 	public <IC extends GPIndexCreator> void setIndexCreator(IC ic) {
 		super.setIndexCreator(ic);
 	}
-
-
-
-
-
-
 
 }

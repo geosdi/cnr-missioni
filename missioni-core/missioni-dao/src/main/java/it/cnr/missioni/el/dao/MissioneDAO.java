@@ -16,9 +16,11 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
+import it.cnr.missioni.el.model.search.MissioneModelSearch;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.utente.Utente;
@@ -29,27 +31,20 @@ import it.cnr.missioni.model.utente.Utente;
 @Component(value = "missioneDAO")
 public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements IMissioneDAO {
 
-	/**
-	 * 
-	 * @param idUtente
-	 * @param stato
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param p
+ * @param missioneModelSearch
+ * @return
+ * @throws Exception
+ */
 	@Override
-	public List<Missione> findMissioneByUtenteStato(String idUtente, StatoEnum stato) throws Exception {
+	public List<Missione> findMissioneByUtenteStato(Page p,MissioneModelSearch missioneModelSearch) throws Exception {
 		List<Missione> listaMissioni = new ArrayList<Missione>();
 
-		BoolQueryBuilder qb = QueryBuilders.boolQuery();
-
-		if (idUtente != null)
-			qb.must(QueryBuilders.termsQuery("missione.idUtente", idUtente));
-		if (stato != null)
-			qb.must(QueryBuilders.matchQuery("missione.stato", stato.name()));
-
-		logger.debug("###############Try to find Missione of Utente: {}\n\n", idUtente);
-		SearchResponse searchResponse = this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
-				.setQuery(qb).execute().actionGet();
+		logger.debug("###############Try to find Missione of Utente: {}\n\n");
+		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
+				.setQuery(missioneModelSearch.getQueryBuilder())).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

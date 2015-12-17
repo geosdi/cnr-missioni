@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
  */
 public class MissioneModelSearch extends AbstractModelSearch {
 
-	private static final String DATA_INSERIMENTO = "missione.dataInserimentoMissione";
+	private static final String DATA_INSERIMENTO = "missione.dataInserimento";
 	private static final String ID_UTENTE = "missione.idUtente";
 	private static final String STATO = "missione.stato";
 
