@@ -22,59 +22,41 @@
 			<version>${project.version}</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-joda</artifactId>
 		</dependency>
 
-
 		<!-- =========================================================== -->
 		<!-- ========================== JACKSON ======================== -->
 		<!-- =========================================================== -->
-
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>${jackson-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>${jackson-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson-version}</version>
 		</dependency>
-
 
 		<!-- =========================================================== -->
 		<!-- ========== GEOPLATFORM ELASTIC SEARCH CONNECTOR =========== -->
 		<!-- =========================================================== -->
-
 		<dependency>
 			<groupId>org.geosdi</groupId>
 			<artifactId>geoplatform-elastic-search-connector</artifactId>
 			<version>${geoplatform-version}</version>
 		</dependency>
 
-
-
 		<!-- =========================================================== -->
 		<!-- ============================ TEST ========================= -->
 		<!-- =========================================================== -->
-
-
-		<dependency>
-			<groupId>net.sf.saxon</groupId>
-			<artifactId>Saxon-HE</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -90,6 +72,5 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jackson-version>2.6.3</jackson-version>
 	</properties>
 </project>
