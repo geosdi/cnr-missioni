@@ -31,20 +31,20 @@ import it.cnr.missioni.model.utente.Utente;
 @Component(value = "missioneDAO")
 public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements IMissioneDAO {
 
-/**
- * 
- * @param p
- * @param missioneModelSearch
- * @return
- * @throws Exception
- */
+	/**
+	 * 
+	 * @param p
+	 * @param missioneModelSearch
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
-	public List<Missione> findMissioneByUtenteStato(Page p,MissioneModelSearch missioneModelSearch) throws Exception {
+	public List<Missione> findMissioneByUtenteStato(Page p, MissioneModelSearch missioneModelSearch) throws Exception {
 		List<Missione> listaMissioni = new ArrayList<Missione>();
 
 		logger.debug("###############Try to find Missione of Utente: {}\n\n");
-		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
-				.setQuery(missioneModelSearch.getQueryBuilder())).execute().actionGet();
+		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
+				.setTypes(getIndexType()).setQuery(missioneModelSearch.getQueryBuilder())).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

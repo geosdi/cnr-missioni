@@ -2,6 +2,8 @@ package it.cnr.missioni.model.missione;
 
 import java.io.Serializable;
 
+import org.joda.time.DateTime;
+
 /**
  * @author Salvia Vito
  */
@@ -11,23 +13,12 @@ public class DatiMissioneEstera implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 734443544980437567L;
-	private boolean missioneEstera;
+
 	private boolean rimborsoDocumentato;
 	private boolean trattamentoAlternativoMissione;
+	private DateTime attraversamentoFrontieraAndata;
+	private DateTime attraversamentoFrontieraRitorno;
 
-	/**
-	 * @return the missioneEstera
-	 */
-	public boolean isMissioneEstera() {
-		return missioneEstera;
-	}
-
-	/**
-	 * @param missioneEstera
-	 */
-	public void setMissioneEstera(boolean missioneEstera) {
-		this.missioneEstera = missioneEstera;
-	}
 
 	/**
 	 * @return the rimborsoDocumentato
@@ -57,15 +48,32 @@ public class DatiMissioneEstera implements Serializable{
 		this.trattamentoAlternativoMissione = trattamentoAlternativoMissione;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the attraversamentoFrontieraAndata
+	 */
+	public DateTime getAttraversamentoFrontieraAndata() {
+		return attraversamentoFrontieraAndata;
+	}
+
+	/**
+	 * @param attraversamentoFrontieraAndata 
+	 */
+	public void setAttraversamentoFrontieraAndata(DateTime attraversamentoFrontieraAndata) {
+		this.attraversamentoFrontieraAndata = attraversamentoFrontieraAndata;
+	}
+
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "DatiMissioneEstera [missioneEstera=" + missioneEstera + ", rimborsoDocumentato=" + rimborsoDocumentato
-				+ ", trattamentoAlternativoMissione=" + trattamentoAlternativoMissione + "]";
+		return "DatiMissioneEstera [rimborsoDocumentato=" + rimborsoDocumentato + ", trattamentoAlternativoMissione="
+				+ trattamentoAlternativoMissione + ", attraversamentoFrontieraAndata=" + attraversamentoFrontieraAndata
+				+ ", attraversamentoFrontieraRitorno=" + attraversamentoFrontieraRitorno + "]";
 	}
+
+
+
+
 
 }

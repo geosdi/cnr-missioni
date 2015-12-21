@@ -1,10 +1,16 @@
 package it.cnr.missioni.model.utente;
 
+import java.io.Serializable;
+
 /**
  * @author Salvia Vito
  */
-public class Veicolo  {
+public class Veicolo  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8495194560567649985L;
 	/**
 	 * 
 	 */

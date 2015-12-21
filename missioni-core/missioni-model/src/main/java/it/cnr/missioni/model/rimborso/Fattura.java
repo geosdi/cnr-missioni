@@ -17,7 +17,8 @@ public class Fattura implements Serializable{
 	private DateTime data;
 	private String tipologiaSpesa;
 	private double importo;
-	private double kmPercorsi;
+	private String valuta;
+	private String altro;
 
 	/**
 	 * @return the numeroFattura
@@ -75,27 +76,45 @@ public class Fattura implements Serializable{
 		this.importo = importo;
 	}
 
+
+
 	/**
-	 * @return the kmPercorsi
+	 * @return the valuta
 	 */
-	public double getKmPercorsi() {
-		return kmPercorsi;
+	public String getValuta() {
+		return valuta;
 	}
 
 	/**
-	 * @param kmPercorsi
+	 * @param valuta 
 	 */
-	public void setKmPercorsi(double kmPercorsi) {
-		this.kmPercorsi = kmPercorsi;
+	public void setValuta(String valuta) {
+		this.valuta = valuta;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the altro
+	 */
+	public String getAltro() {
+		return altro;
+	}
+
+	/**
+	 * @param altro 
+	 */
+	public void setAltro(String altro) {
+		this.altro = altro;
+	}
+
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Fattura [numeroFattura=" + numeroFattura + ", data=" + data + ", tipologiaSpesa=" + tipologiaSpesa
-				+ ", importo=" + importo + ", kmPercorsi=" + kmPercorsi + "]";
+				+ ", importo=" + importo + ", valuta=" + valuta + ", altro=" + altro + "]";
 	}
+
+
 
 }

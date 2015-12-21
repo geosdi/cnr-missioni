@@ -3,6 +3,7 @@ package it.cnr.missioni.model.missione;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
 import org.joda.time.DateTime;
@@ -14,9 +15,9 @@ import it.cnr.missioni.model.rimborso.Rimborso;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "id", "localita", "oggetto", "stato", "missioneEstera", "altro", "idUtente", "dataInserimento",
+		"datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
 public class Missione implements Document {
-
-
 
 	/**
 	 * 
@@ -26,13 +27,15 @@ public class Missione implements Document {
 	private String localita;
 	private String oggetto;
 	private StatoEnum stato;
+	private boolean missioneEstera;
 	private String altro;
+	private String idUtente;
+	private DateTime dataInserimento;
 	private DatiPeriodoMissione datiPeriodoMissione;
 	private DatiMissioneEstera datiMissioneEstera;
 	private DatiAnticipoPagamenti datiAnticipoPagamenti;
 	private Rimborso rimborso;
-	private String idUtente;
-	private DateTime dataInserimento;
+
 
 	/*
 	 * (non-Javadoc)
@@ -45,6 +48,7 @@ public class Missione implements Document {
 		return ((this.id != null) && !(this.id.isEmpty()));
 	}
 
+
 	/**
 	 * @return the id
 	 */
@@ -52,12 +56,14 @@ public class Missione implements Document {
 		return id;
 	}
 
+
 	/**
-	 * @param id
+	 * @param id 
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	/**
 	 * @return the localita
@@ -66,12 +72,14 @@ public class Missione implements Document {
 		return localita;
 	}
 
+
 	/**
-	 * @param localita
+	 * @param localita 
 	 */
 	public void setLocalita(String localita) {
 		this.localita = localita;
 	}
+
 
 	/**
 	 * @return the oggetto
@@ -80,12 +88,14 @@ public class Missione implements Document {
 		return oggetto;
 	}
 
+
 	/**
-	 * @param oggetto
+	 * @param oggetto 
 	 */
 	public void setOggetto(String oggetto) {
 		this.oggetto = oggetto;
 	}
+
 
 	/**
 	 * @return the stato
@@ -94,12 +104,30 @@ public class Missione implements Document {
 		return stato;
 	}
 
+
 	/**
-	 * @param stato
+	 * @param stato 
 	 */
 	public void setStato(StatoEnum stato) {
 		this.stato = stato;
 	}
+
+
+	/**
+	 * @return the missioneEstera
+	 */
+	public boolean isMissioneEstera() {
+		return missioneEstera;
+	}
+
+
+	/**
+	 * @param missioneEstera 
+	 */
+	public void setMissioneEstera(boolean missioneEstera) {
+		this.missioneEstera = missioneEstera;
+	}
+
 
 	/**
 	 * @return the altro
@@ -108,68 +136,14 @@ public class Missione implements Document {
 		return altro;
 	}
 
+
 	/**
-	 * @param altro
+	 * @param altro 
 	 */
 	public void setAltro(String altro) {
 		this.altro = altro;
 	}
 
-	/**
-	 * @return the datiPeriodoMissione
-	 */
-	public DatiPeriodoMissione getDatiPeriodoMissione() {
-		return datiPeriodoMissione;
-	}
-
-	/**
-	 * @param datiPeriodoMissione
-	 */
-	public void setDatiPeriodoMissione(DatiPeriodoMissione datiPeriodoMissione) {
-		this.datiPeriodoMissione = datiPeriodoMissione;
-	}
-
-	/**
-	 * @return the datiMissioneEstera
-	 */
-	public DatiMissioneEstera getDatiMissioneEstera() {
-		return datiMissioneEstera;
-	}
-
-	/**
-	 * @param datiMissioneEstera
-	 */
-	public void setDatiMissioneEstera(DatiMissioneEstera datiMissioneEstera) {
-		this.datiMissioneEstera = datiMissioneEstera;
-	}
-
-	/**
-	 * @return the datiAnticipoPagamenti
-	 */
-	public DatiAnticipoPagamenti getDatiAnticipoPagamenti() {
-		return datiAnticipoPagamenti;
-	}
-
-	/**
-	 * @param datiAnticipoPagamenti
-	 */
-	public void setDatiAnticipoPagamenti(DatiAnticipoPagamenti datiAnticipoPagamenti) {
-		this.datiAnticipoPagamenti = datiAnticipoPagamenti;
-	}
-
-	/**
-	 * @return the rimborso
-	 */
-	public Rimborso getRimborso() {
-		return rimborso;
-	}
-
-	/**
-	 * @param rimborso 
-	 */
-	public void setRimborso(Rimborso rimborso) {
-		this.rimborso = rimborso;
-	}
 
 	/**
 	 * @return the idUtente
@@ -178,12 +152,14 @@ public class Missione implements Document {
 		return idUtente;
 	}
 
+
 	/**
 	 * @param idUtente 
 	 */
 	public void setIdUtente(String idUtente) {
 		this.idUtente = idUtente;
 	}
+
 
 	/**
 	 * @return the dataInserimento
@@ -192,6 +168,7 @@ public class Missione implements Document {
 		return dataInserimento;
 	}
 
+
 	/**
 	 * @param dataInserimento 
 	 */
@@ -199,15 +176,83 @@ public class Missione implements Document {
 		this.dataInserimento = dataInserimento;
 	}
 
+
+	/**
+	 * @return the datiPeriodoMissione
+	 */
+	public DatiPeriodoMissione getDatiPeriodoMissione() {
+		return datiPeriodoMissione;
+	}
+
+
+	/**
+	 * @param datiPeriodoMissione 
+	 */
+	public void setDatiPeriodoMissione(DatiPeriodoMissione datiPeriodoMissione) {
+		this.datiPeriodoMissione = datiPeriodoMissione;
+	}
+
+
+	/**
+	 * @return the datiMissioneEstera
+	 */
+	public DatiMissioneEstera getDatiMissioneEstera() {
+		return datiMissioneEstera;
+	}
+
+
+	/**
+	 * @param datiMissioneEstera 
+	 */
+	public void setDatiMissioneEstera(DatiMissioneEstera datiMissioneEstera) {
+		this.datiMissioneEstera = datiMissioneEstera;
+	}
+
+
+	/**
+	 * @return the datiAnticipoPagamenti
+	 */
+	public DatiAnticipoPagamenti getDatiAnticipoPagamenti() {
+		return datiAnticipoPagamenti;
+	}
+
+
+	/**
+	 * @param datiAnticipoPagamenti 
+	 */
+	public void setDatiAnticipoPagamenti(DatiAnticipoPagamenti datiAnticipoPagamenti) {
+		this.datiAnticipoPagamenti = datiAnticipoPagamenti;
+	}
+
+
+	/**
+	 * @return the rimborso
+	 */
+	public Rimborso getRimborso() {
+		return rimborso;
+	}
+
+
+	/**
+	 * @param rimborso 
+	 */
+	public void setRimborso(Rimborso rimborso) {
+		this.rimborso = rimborso;
+	}
+
+
 	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", stato=" + stato
-				+ ", altro=" + altro + ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera="
-				+ datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso
-				+ ", idUtente=" + idUtente + ", dataInserimento=" + dataInserimento + "]";
+				+ ", missioneEstera=" + missioneEstera + ", altro=" + altro + ", idUtente=" + idUtente
+				+ ", dataInserimento=" + dataInserimento + ", datiPeriodoMissione=" + datiPeriodoMissione
+				+ ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti
+				+ ", rimborso=" + rimborso + "]";
 	}
+
+	
 
 }

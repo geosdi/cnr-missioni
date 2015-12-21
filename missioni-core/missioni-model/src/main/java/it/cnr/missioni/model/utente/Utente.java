@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
@@ -13,14 +14,14 @@ import org.joda.time.DateTime;
 
 import it.cnr.missioni.model.adapter.DocumentMapAdapter;
 
-
 /**
  * @author Salvia Vito
  */
 @XmlRootElement(name = "utente")
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "id", "dataRegistrazione", "anagrafica", "residenza", "patente", "datiCNR", "credenziali",
+		"mappaVeicolo" })
 public class Utente implements Document {
-
 
 	/**
 	 * 
@@ -29,15 +30,12 @@ public class Utente implements Document {
 	private String id;
 	private DateTime dataRegistrazione;
 	private Anagrafica anagrafica;
-	private DatiCNR datiCNR;
 	private Residenza residenza;
 	private Patente patente;
+	private DatiCNR datiCNR;
 	private Credenziali credenziali;
 	@XmlJavaTypeAdapter(value = DocumentMapAdapter.class)
 	private Map<String, Veicolo> mappaVeicolo = new HashMap<String, Veicolo>();
-	
-	
-
 
 	/*
 	 * (non-Javadoc)

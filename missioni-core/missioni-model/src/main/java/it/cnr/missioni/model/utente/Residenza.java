@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * @author Salvia Vito
  */
-public class Residenza implements Serializable{
+public class Residenza implements Serializable {
 
 	/**
 	 * 
@@ -32,7 +32,7 @@ public class Residenza implements Serializable{
 	/**
 	 * @return the indirizzo
 	 */
-	public String getIndrizzo() {
+	public String getIndirizzo() {
 		return indirizzo;
 	}
 
@@ -57,13 +57,13 @@ public class Residenza implements Serializable{
 		this.domicilioFiscale = domicilioFiscale;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "Residenza [comune=" + comune + ", indirizzo=" + indirizzo + ", domicilioFiscale="
-				+ domicilioFiscale + "]";
+		return "Residenza [comune=" + comune + ", indirizzo=" + indirizzo + ", domicilioFiscale=" + domicilioFiscale
+				+ "]";
 	}
 
 }

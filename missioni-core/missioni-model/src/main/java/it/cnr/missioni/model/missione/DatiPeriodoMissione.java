@@ -13,38 +13,10 @@ public class DatiPeriodoMissione implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 3755222349066146562L;
-	private DateTime attraversamentoFrontieraAndata;
-	private DateTime attraversamentoFrontieraRitorno;
+
 	private DateTime inizioMissione;
 	private DateTime fineMissione;
 
-	/**
-	 * @return the attraversamentoFrontieraAndata
-	 */
-	public DateTime getAttraversamentoFrontieraAndata() {
-		return attraversamentoFrontieraAndata;
-	}
-
-	/**
-	 * @param attraversamentoFrontieraAndata
-	 */
-	public void setAttraversamentoFrontieraAndata(DateTime attraversamentoFrontieraAndata) {
-		this.attraversamentoFrontieraAndata = attraversamentoFrontieraAndata;
-	}
-
-	/**
-	 * @return the attraversamentoFrontieraRitorno
-	 */
-	public DateTime getAttraversamentoFrontieraRitorno() {
-		return attraversamentoFrontieraRitorno;
-	}
-
-	/**
-	 * @param attraversamentoFrontieraRitorno
-	 */
-	public void setAttraversamentoFrontieraRitorno(DateTime attraversamentoFrontieraRitorno) {
-		this.attraversamentoFrontieraRitorno = attraversamentoFrontieraRitorno;
-	}
 
 	/**
 	 * @return the inizioMissione
@@ -74,16 +46,14 @@ public class DatiPeriodoMissione implements Serializable{
 		this.fineMissione = fineMissione;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "DatiPeriodoMissione [attraversamentoFrontieraAndata=" + attraversamentoFrontieraAndata
-				+ ", attraversamentoFrontieraRitorno=" + attraversamentoFrontieraRitorno + ", inizioMissione="
-				+ inizioMissione + ", fineMissione=" + fineMissione + "]";
+		return "DatiPeriodoMissione [inizioMissione=" + inizioMissione + ", fineMissione=" + fineMissione + "]";
 	}
+
+
 
 }

@@ -5,16 +5,18 @@
 		"oggetto" : "Conferenza",
 		"stato" : "STAND_BY",
 		"altro" : "",
+		"missioneEstera" : false,
+		"dataInserimento" : "2015-12-14T10:11:59.568Z",
 		"datiPeriodoMissione" : {
 			"inizioMissione" : "2015-12-12T10:11:59.568Z",
-			"fineMissione" : "2015-12-14T10:11:59.568Z",
-			"attraversamentoFrontieraAndata" : "",
-			"attraversamentoFrontieraRitorno" : ""
+			"fineMissione" : "2015-12-14T10:11:59.568Z"
+
 		},
 		"datiMissioneEstera" : {
-			"missioneEstera" : false,
 			"rimborsoDocumentato" : false,
-			"trattamentoAlternativoMissione" : false
+			"trattamentoAlternativoMissione" : false,
+			"attraversamentoFrontieraAndata" : "",
+			"attraversamentoFrontieraRitorno" : ""
 		},
 		"datiAnticipoPagamenti" : {
 			"anticipazioniMonetarie" : true,
@@ -24,14 +26,19 @@
 			"importoDaTerzi" : 100.00
 		},
 		"rimborso" : {
+			"numeroOrdine" : 145,
 			"dataRimborso" : "2015-12-15T10:11:59.568Z",
+			"totale" : 73.5,
+			"anticipazionePagamento" : 0.0,
+			"avvisoPagamento" : "c.da Santa Loja",
 			"listaFatture" : [
 				{
 					"numeroFattura" : 134,
 					"data" : "2015-12-12T10:11:59.568Z",
 					"tipologiaSpesa" :"Rifornimento",
 					"importo" : 73.5,
-					"kmPercorsi" : 456
+					"altro" : 456,
+					"valuta" : "euro"
 				}
 			]
  		}
