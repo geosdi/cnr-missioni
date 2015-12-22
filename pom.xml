@@ -9,6 +9,13 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>CNR :: == Missioni Service</name>
+    <url>https://github.com/geosdi/cnr-missioni</url>
+
+    <scm>
+        <url>https://github.com/geosdi/cnr-missioni.git</url>
+        <connection>scm:git:git://github.com/geosdi/cnr-missioni.git</connection>
+        <developerConnection>scm:git:git@github.com:geosdi/cnr-missioni.git</developerConnection>
+    </scm>
 
     <licenses>
         <license>
@@ -24,15 +31,6 @@
     </organization>
     <inceptionYear>2015</inceptionYear>
 
-    <!-- 	<repositories> -->
-    <!-- geoSDI -->
-    <!-- 		<repository> -->
-    <!-- 			<id>geosdi</id> -->
-    <!-- 			<name>geoSDI Repository</name> -->
-    <!-- 			<url>http://repo.geosdi.org</url> -->
-    <!-- 		</repository> -->
-    <!-- 	</repositories> -->
-
     <repositories>
         <!-- geoSDI -->
         <repository>
@@ -43,6 +41,28 @@
     </repositories>
 
     <developers>
+        <developer>
+            <name>Francesco Izzi</name>
+            <id>francesco.izzi</id>
+            <email>francesco.izzi@geosdi.org</email>
+            <organization>geoSDI</organization>
+            <roles>
+                <role>Java Senior Developer</role>
+                <role>Project Management Committee (PMC) Member</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <name>Giuseppe La Scaleia</name>
+            <id>glascaleia</id>
+            <email>giuseppe.lascaleia@geosdi.org</email>
+            <organization>geoSDI</organization>
+            <roles>
+                <role>Java Senior Developer</role>
+                <role>Project Management Committee (PMC) Member</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
         <developer>
             <name>Salvia Vito</name>
             <id>vito.salvia</id>
@@ -102,13 +122,13 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>18.0</version>
+                <version>19.0</version>
             </dependency>
 
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
-                <version>2.9</version>
+                <version>${joda-version}</version>
             </dependency>
 
             <dependency>
@@ -182,6 +202,7 @@
 
     <properties>
         <geoplatform-version>1.8-SNAPSHOT</geoplatform-version>
+        <joda-version>2.9.1</joda-version>
     </properties>
 
 
