@@ -203,10 +203,12 @@
     <properties>
         <geoplatform-version>1.8-SNAPSHOT</geoplatform-version>
         <joda-version>2.9.1</joda-version>
+        <javax.ws.rs-api-version>2.0.1</javax.ws.rs-api-version>
     </properties>
 
 
     <modules>
         <module>missioni-core</module>
+        <module>missioni-rest-services</module>
     </modules>
 </project>

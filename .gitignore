@@ -1,9 +1,18 @@
+/missioni-rest-services/missioni-rest-delegate/target
+/missioni-rest-services/missioni-dropwizard-core/dependency-reduced-pom.xml
+/missioni-rest-services/missioni-rest-services.iml
+/missioni-rest-services/missioni-rest-delegate/missioni-rest-delegate.iml
+/missioni-rest-services/missioni-rest-api/target
+/missioni-rest-services/missioni-rest-api/missioni-rest-api.iml
 
 # ignore target artifact folders
 target/
 
 # ignore IDE artifacts
 .settings
+/missioni-rest-services/missioni-dropwizard-core/missioni-dropwizard-core.iml
+/missioni-rest-services/missioni-dropwizard-core/target
+/missioni-rest-services/missioni-rest-delegate/missioni-services-delegate.iml
 .classpath
 .project
 .idea
