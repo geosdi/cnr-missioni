@@ -6,8 +6,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
@@ -15,8 +13,7 @@ import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.UtenteModelSearch;
-import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.model.utente.Utente;
 
 /**
@@ -33,12 +30,12 @@ public class UtenteDAO extends AbstractElasticSearchDAO<Utente> implements IUten
 	 * @throws Exception
 	 */
 	@Override
-	public List<Utente> findUtenteByQuery(Page p, UtenteModelSearch utenteModelSearch) throws Exception {
+	public List<Utente> findUtenteByQuery(Page p, BooleanModelSearch booleanModelSearch) throws Exception {
 		List<Utente> listaUtenti = new ArrayList<Utente>();
 
 		logger.debug("###############Try to find Utenti: {}\n\n");
 		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(utenteModelSearch.getQueryBuilder())).execute().actionGet();
+				.setTypes(getIndexType()).setQuery(booleanModelSearch.buildQuery())).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");
