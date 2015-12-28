@@ -59,5 +59,5 @@ public interface BaseRestService {
      */
     @DELETE
     @Path(value = BaseServiceRSPathConfig.DELETE_MISSIONE_PATH)
-    Response deleteMissione(@QueryParam(value = "missionID") String missionID) throws Exception;
+    Response deleteMissione(@QueryParam(value = "missioneID") String missioneID) throws Exception;
 }

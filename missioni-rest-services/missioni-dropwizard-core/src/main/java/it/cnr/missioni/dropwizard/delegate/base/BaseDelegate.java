@@ -40,5 +40,5 @@ public interface BaseDelegate {
      * @param id
      * @throws Exception
      */
-    Boolean deleteMissione(String id) throws Exception;
+    Boolean deleteMissione(String missioneID) throws Exception;
 }

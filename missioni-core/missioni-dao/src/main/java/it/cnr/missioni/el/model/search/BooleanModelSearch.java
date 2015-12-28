@@ -18,7 +18,8 @@ public  class BooleanModelSearch {
 
 		listaSearch.forEach(booleanSearch -> {
 			try {
-				addBooleanQuery(booleanSearch);
+				
+				booleanSearch.addBooleanQuery(queryBuilder);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -28,20 +29,6 @@ public  class BooleanModelSearch {
 		return queryBuilder;
 	}
 
-	private  void addBooleanQuery(IBooleanSearch booleanSearch) throws Exception {
-		switch (booleanSearch.getType().name()) {
-		case "SHOUD":
-			queryBuilder.should(booleanSearch.getBooleanQuery());
-			break;
-		case "MUST":
-			queryBuilder.must(booleanSearch.getBooleanQuery());
-			break;
-		case "MUST_NOT":
-			queryBuilder.mustNot(booleanSearch.getBooleanQuery());
-			break;
-		}
-
-	}
 
 	/**
 	 * @return the queryBuilder

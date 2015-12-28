@@ -37,7 +37,7 @@ class CNRBaseDelegate implements BaseDelegate {
     @Override
     public Missione getMissioneByID(String missioneID) throws Exception {
         if ((missioneID == null) || (missioneID.isEmpty())) {
-            throw new IllegalParameterFault("The Parameter userID must not " +
+            throw new IllegalParameterFault("The Parameter missioneID must not " +
                     "be null or an Empty String");
         }
         Missione missione = this.missioneDAO.find(missioneID);
@@ -65,12 +65,12 @@ class CNRBaseDelegate implements BaseDelegate {
     }
 
     @Override
-    public Boolean deleteMissione(String id) throws Exception {
-        if ((id == null) || (id.isEmpty())) {
-            throw new IllegalParameterFault("The Parameter ID must not be null " +
+    public Boolean deleteMissione(String missioneID) throws Exception {
+        if ((missioneID == null) || (missioneID.isEmpty())) {
+            throw new IllegalParameterFault("The Parameter missioneID must not be null " +
                     "or an Empty String.");
         }
-        this.missioneDAO.delete(id);
+        this.missioneDAO.delete(missioneID);
         return Boolean.TRUE;
     }
 }

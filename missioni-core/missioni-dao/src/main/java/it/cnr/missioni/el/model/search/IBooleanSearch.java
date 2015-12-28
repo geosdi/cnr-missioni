@@ -1,14 +1,12 @@
 package it.cnr.missioni.el.model.search;
 
-import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 
 /**
  * @author Salvia Vito
  */
 public interface IBooleanSearch {
 	
-	public QueryBuilder getBooleanQuery() throws Exception;
-		
-	public EnumBooleanType getType();
+	void addBooleanQuery(BoolQueryBuilder queryBuilder ) throws Exception;
 
 }

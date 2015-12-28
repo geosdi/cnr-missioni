@@ -31,6 +31,7 @@
 
 	<logger name="it.cnr.missioni.el.dao.UtenteDAOTest" level="debug" />
 	<logger name="it.cnr.missioni.el.dao.MissioneDAOTest" level="debug" />
+	
 
 
 </configuration>

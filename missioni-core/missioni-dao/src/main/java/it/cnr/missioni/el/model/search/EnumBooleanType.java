@@ -27,7 +27,7 @@ public enum EnumBooleanType {
 		this.type = type;
 	}
 	
-	public EnumBooleanType getEnumBooleanType(String type) {
+	public static EnumBooleanType getEnumBooleanType(String type) {
 		for (EnumBooleanType e : EnumBooleanType.values()) {
 			if (e.getType().equals(type))
 				return e;

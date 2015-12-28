@@ -232,15 +232,15 @@ public class UtenteDAOTest {
 		PrefixSearch p = new PrefixSearch();
 		p.setValue("2111111");
 		p.setField(FIELD_MATRICOLA);
-		booleanModelSearch.getListaSearch().add(p);
+		booleanModelSearch.getListaSearch().add(p);		
 		List<Utente> lista = utenteDAO.findUtenteByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND UTENTE BY MATRICOLA ERRATA", lista.size() == 0);
 	}
 
-	 @Test
-	 public void tearDown() throws Exception {
-	 this.utenteDocIndexCreator.deleteIndex();
-	 }
+//	 @Test
+//	 public void tearDown() throws Exception {
+//	 this.utenteDocIndexCreator.deleteIndex();
+//	 }
 
 	private void creaUtenti() {
 		Utente utente = null;

@@ -258,10 +258,10 @@ public class MissioneDAOTest {
 		Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", lista.size() == 1);
 	}
 
-	 @Test
-	 public void tearDown() throws Exception {
-	 this.missioneDocIndexCreator.deleteIndex();
-	 }
+//	 @Test
+//	 public void tearDown() throws Exception {
+//	 this.missioneDocIndexCreator.deleteIndex();
+//	 }
 
 	private void creaMissioni() {
 		Missione missione = new Missione();
