@@ -1,5 +1,6 @@
 package it.cnr.missioni.dropwizard.app;
 
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import io.dropwizard.Application;
 import io.dropwizard.jersey.jackson.JacksonMessageBodyProvider;
 import io.dropwizard.setup.Bootstrap;
@@ -12,6 +13,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import javax.ws.rs.Path;
 import java.util.Map;
+
+import static org.geosdi.geoplatform.support.jackson.property.GPJacksonSupportEnum.WRITE_DATES_AS_TIMESTAMPS_DISABLE;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -34,7 +37,10 @@ public class MissioniServiceApp extends Application<MissioniServiceConfig> {
         ctx.start();
 
         environment.jersey().register(new JacksonMessageBodyProvider(
-                new GPJacksonSupport().getDefaultMapper(), environment.getValidator()));
+                new GPJacksonSupport()
+                        .registerModule(new JodaModule())
+                        .configure(WRITE_DATES_AS_TIMESTAMPS_DISABLE)
+                        .getDefaultMapper(), environment.getValidator()));
 
         environment.healthChecks().register("service-health-check",
                 new MissioniServiceHealthCheck());
