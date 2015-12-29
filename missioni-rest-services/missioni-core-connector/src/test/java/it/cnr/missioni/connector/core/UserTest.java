@@ -52,7 +52,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.model.utente.User;
+
+
 
 /**
  *
@@ -62,7 +64,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml" })
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
-public class MissioneTest {
+public class UserTest  {
 
 	static final String CORE_CONNECTOR_KEY = "MISSIONI_CORE_FILE_PROP";
 	//
@@ -94,47 +96,41 @@ public class MissioneTest {
 	}
 
 	@Test
-	public void A_testFindMissione() throws Exception {
-		Missione missione = missioniCoreClientConnector.getMissioneById("M_01");
-		Assert.assertNotNull(missione);
-	}
-
-	@Test
-	public void B_testFindMissioneByUser() throws Exception {
-		MissioniStore missioniStore = missioniCoreClientConnector.getLastUserMissions("01");
-		Assert.assertEquals("Find Missione by user", 2, missioniStore.getMissioni().size());
-	}
-
-	@Test
-	public void C_testInsertMissione() throws Exception {
-
-		Missione missione = new Missione();
-		missione.setId("M_04");
-		missione.setIdUser("01");
-		missione.setLocalita("Roma");
-		missioniCoreClientConnector.addMissione(missione);
-		Thread.sleep(1000);
-		missione = missioniCoreClientConnector.getMissioneById("M_04");
-		logger.debug("############################INSERT MISSIONE\n");
+	public void A_testFindUserByUsername() throws Exception {
+		User user= missioniCoreClientConnector.getUserByUsername("vito.salvia");
+		Assert.assertNotNull(user);
 	}
 	
 	@Test
-	public void D_testUpdateMissione() throws Exception {
-
-		Missione missione_update = new Missione();
-		missione_update.setId("M_04");
-		missione_update.setLocalita("Napoli");
-		missioniCoreClientConnector.updateMissione(missione_update);
+	public void B_testFindUserByUsernameErrata() throws Exception {
+		User user= missioniCoreClientConnector.getUserByUsername("vito.salvi");
+		Assert.assertNull(user);
+	}
+	
+	@Test
+	public void C_testInsertUser() throws Exception{
+		User user = new User();
+		user.setId("04");
+		missioniCoreClientConnector.addUser(user);
 		Thread.sleep(1000);
-		Missione missione = missioniCoreClientConnector.getMissioneById("M_04");
+		logger.debug("############################INSERT USER\n");
 		
-		Assert.assertTrue("Update Missione", missione.getLocalita().equals(missione_update.getLocalita()));
 	}
 	
 	@Test
-	public void E_testDeleteMissione() throws Exception {
-		missioniCoreClientConnector.deleteMissione("M_04");
-		logger.debug("############################DELETE MISSIONE\n");
+	public void D_testUpdateUser() throws Exception{
+		User user = new User();
+		user.setId("04");
+		missioniCoreClientConnector.updateUser(user);
+		logger.debug("############################UPDATE USER\n");
+		
+	}
+	
+	@Test
+	public void E_testDeleteUser() throws Exception{
+		missioniCoreClientConnector.deleteUser("04");
+		logger.debug("############################DELETE USER\n");
+		
 	}
 
 }

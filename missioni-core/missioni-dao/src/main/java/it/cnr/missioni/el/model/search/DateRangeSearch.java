@@ -10,6 +10,14 @@ import org.joda.time.DateTimeZone;
  * @author Salvia Vito
  */
 public class DateRangeSearch extends AbstractBooleanSearch implements IBooleanSearch {
+	
+	public DateRangeSearch( ){
+		super();
+	}
+	
+	public DateRangeSearch(String field,DateTime from,DateTime to){
+		super(field,from,to);
+	}
 
 	public QueryBuilder getBooleanQuery() throws Exception {
 		if (field == null)

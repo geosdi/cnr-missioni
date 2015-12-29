@@ -7,6 +7,14 @@ import org.elasticsearch.index.query.QueryBuilders;
  * @author Salvia Vito
  */
 public class PrefixSearch extends AbstractBooleanSearch<String> implements IBooleanSearch {
+	
+	public PrefixSearch( ){
+		super();
+	}
+	
+	public PrefixSearch(String field,String value){
+		super(field,value);
+	}
 
 	public QueryBuilder getBooleanQuery() throws Exception {
 		if (field == null || value == null)

@@ -55,7 +55,7 @@ public class MissioneDAOTest {
 	BooleanModelSearch booleanModelSearch;
 
 	private static final String FIELD_DATA_INSERIMENTO = "missione.dataInserimento";
-	private static final String FIELD_ID_UTENTE = "missione.idUtente";
+	private static final String FIELD_ID_USER = "missione.idUser";
 	private static final String FIELD_STATO = "missione.stato";
 	private static final String FIELD_RIMBORSO_NUMERO_ORDINE = "missione.rimborso.numeroOrdine";
 	private static final String FIELD_RIMBORSO_DATA_RIMBORSO = "missione.rimborso.dataRimborso";
@@ -77,26 +77,26 @@ public class MissioneDAOTest {
 	}
 
 	@Test
-	public void B_findMissioneByUtente_1Test() throws Exception {
+	public void B_findMissioneByUser_1Test() throws Exception {
 		booleanModelSearch = new BooleanModelSearch();
 		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_ID_UTENTE);
+		e.setField(FIELD_ID_USER);
 		e.setValue("01");
 		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
-		Assert.assertTrue("FIND MISSIONE BY UTENTE", lista.size() == 2);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		Assert.assertTrue("FIND MISSIONE BY USER", lista.size() == 2);
 
 	}
 
 	@Test
-	public void C_findMissioneByUtente_2Test() throws Exception {
+	public void C_findMissioneByUser_2Test() throws Exception {
 		booleanModelSearch = new BooleanModelSearch();
 		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_ID_UTENTE);
+		e.setField(FIELD_ID_USER);
 		e.setValue("03");
 		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
-		Assert.assertTrue("FIND MISSIONE BY UTENTE", lista.isEmpty());
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		Assert.assertTrue("FIND MISSIONE BY USER", lista.isEmpty());
 
 	}
 
@@ -107,7 +107,7 @@ public class MissioneDAOTest {
 		e.setField(FIELD_STATO);
 		e.setValue(StatoEnum.PRESA_IN_CARICO.name());
 		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 2);
 
 	}
@@ -119,13 +119,13 @@ public class MissioneDAOTest {
 		e.setField(FIELD_STATO);
 		e.setValue(StatoEnum.APPROVATA.name());
 		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 1);
 
 	}
 
 	@Test
-	public void F_findMissioneByUtenteStato_1Test() throws Exception {
+	public void F_findMissioneByUserStato_1Test() throws Exception {
 		booleanModelSearch = new BooleanModelSearch();
 
 		ExactSearch e = new ExactSearch();
@@ -133,18 +133,18 @@ public class MissioneDAOTest {
 		e.setValue(StatoEnum.APPROVATA.name());
 
 		ExactSearch e2 = new ExactSearch();
-		e2.setField(FIELD_ID_UTENTE);
+		e2.setField(FIELD_ID_USER);
 		e2.setValue("01");
 
 		booleanModelSearch.getListaSearch().add(e);
 		booleanModelSearch.getListaSearch().add(e2);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.isEmpty());
 
 	}
 
 	@Test
-	public void G_findMissioneByUtenteStato_2Test() throws Exception {
+	public void G_findMissioneByUserStato_2Test() throws Exception {
 		booleanModelSearch = new BooleanModelSearch();
 
 		ExactSearch e = new ExactSearch();
@@ -152,12 +152,12 @@ public class MissioneDAOTest {
 		e.setValue(StatoEnum.PRESA_IN_CARICO.name());
 
 		ExactSearch e2 = new ExactSearch();
-		e2.setField(FIELD_ID_UTENTE);
+		e2.setField(FIELD_ID_USER);
 		e2.setValue("01");
 
 		booleanModelSearch.getListaSearch().add(e);
 		booleanModelSearch.getListaSearch().add(e2);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 2);
 	}
 
@@ -192,7 +192,7 @@ public class MissioneDAOTest {
 		d.setFrom(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
 		d.setTo(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
 		booleanModelSearch.getListaSearch().add(d);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY DATA", lista.size() == 1);
 	}
 
@@ -204,7 +204,7 @@ public class MissioneDAOTest {
 		d.setFrom(new DateTime(2015, 8, 14, 0, 0, DateTimeZone.UTC));
 		d.setTo(new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
 		booleanModelSearch.getListaSearch().add(d);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY DATA", lista.size() == 0);
 
 	}
@@ -222,14 +222,14 @@ public class MissioneDAOTest {
 		e.setValue(StatoEnum.PRESA_IN_CARICO.name());
 
 		ExactSearch e2 = new ExactSearch();
-		e2.setField(FIELD_ID_UTENTE);
+		e2.setField(FIELD_ID_USER);
 		e2.setValue("01");
 
 		booleanModelSearch.getListaSearch().add(d);
 		booleanModelSearch.getListaSearch().add(e);
 		booleanModelSearch.getListaSearch().add(e2);
 
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY ALL", lista.size() == 1);
 
 	}
@@ -242,7 +242,7 @@ public class MissioneDAOTest {
 		e.setValue(new Long(156));
 		booleanModelSearch = new BooleanModelSearch();
 		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", lista.size() == 1);
 	}
 
@@ -254,7 +254,7 @@ public class MissioneDAOTest {
 		d.setFrom(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC));
 //		d.setTo(new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
 		booleanModelSearch.getListaSearch().add(d);
-		List<Missione> lista = this.missioneDAO.findMissioneByUtenteStato(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
 		Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", lista.size() == 1);
 	}
 
@@ -268,7 +268,7 @@ public class MissioneDAOTest {
 		missione.setId("M_01");
 		missione.setOggetto("Conferenza");
 		missione.setLocalita("Roma");
-		missione.setIdUtente("01");
+		missione.setIdUser("01");
 		missione.setMissioneEstera(false);
 		missione.setStato(StatoEnum.PRESA_IN_CARICO);
 		missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
@@ -314,7 +314,7 @@ public class MissioneDAOTest {
 		missione.setId("M_02");
 		missione.setOggetto("Conferenza");
 		missione.setLocalita("Milano");
-		missione.setIdUtente("01");
+		missione.setIdUser("01");
 		missione.setStato(StatoEnum.PRESA_IN_CARICO);
 		missione.setDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
 		listaMissioni.add(missione);
@@ -323,7 +323,7 @@ public class MissioneDAOTest {
 		missione.setId("M_03");
 		missione.setOggetto("Riunione");
 		missione.setLocalita("Milano");
-		missione.setIdUtente("02");
+		missione.setIdUser("02");
 		missione.setStato(StatoEnum.APPROVATA);
 		missione.setDataInserimento(new DateTime(2015, 11, 23, 0, 0, DateTimeZone.UTC));
 		listaMissioni.add(missione);

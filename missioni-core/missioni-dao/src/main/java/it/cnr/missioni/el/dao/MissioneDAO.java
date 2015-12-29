@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
-import it.cnr.missioni.model.utente.Utente;
+import it.cnr.missioni.model.utente.User;
 
 /**
  * @author Salvia Vito
@@ -39,10 +39,10 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 	 * @throws Exception
 	 */
 	@Override
-	public List<Missione> findMissioneByUtenteStato(Page p, BooleanModelSearch booleanModelSearch) throws Exception {
+	public List<Missione> findMissioneByQuery(Page p, BooleanModelSearch booleanModelSearch) throws Exception {
 		List<Missione> listaMissioni = new ArrayList<Missione>();
 
-		logger.debug("###############Try to find Missione of Utente: {}\n\n");
+		logger.debug("###############Try to find Missione by Query: {}\n\n");
 		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(booleanModelSearch.buildQuery())).execute().actionGet();
 
@@ -50,6 +50,8 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 			throw new IllegalStateException("Error in Elastic Search Query.");
 		}
 
+		
+		
 		for (SearchHit searchHit : searchResponse.getHits().hits()) {
 			Missione missione = this.mapper.read(searchHit.getSourceAsString());
 			if (!missione.isIdSetted()) {

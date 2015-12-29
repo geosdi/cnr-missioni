@@ -17,6 +17,21 @@ public abstract class AbstractBooleanSearch<S> {
 	//DEFAULT
 	protected EnumBooleanType type = EnumBooleanType.MUST;
 	
+	public AbstractBooleanSearch(){
+
+	}
+	
+	public AbstractBooleanSearch(String field,S value){
+		this.field = field;
+		this.value = value;
+	}
+	
+	public AbstractBooleanSearch(String field,DateTime from,DateTime to){
+		this.field = field;
+		this.from = from;
+		this.to= to;
+	}
+	
 	public abstract  QueryBuilder getBooleanQuery() throws Exception;
 	
 	public  void addBooleanQuery(BoolQueryBuilder queryBuilder ) throws Exception {

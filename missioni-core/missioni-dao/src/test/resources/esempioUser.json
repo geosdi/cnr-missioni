@@ -1,0 +1,52 @@
+ {
+	"user": {
+		"id" : "01",
+		"dataRegistrazione":"2015-12-15T10:11:59.568Z",
+		"anagrafica" :{
+		     "nome": "Vito",
+        	"cognome": "Salvia",
+        	"codiceFiscale": "slvvti82ò30g942l",
+        	"dataNascita": "1982-07-30T10:11:59.568Z",
+        	"luogoNascita": "Potenza"
+		},
+		"datiCNR" : {
+			"livello" : "5",
+			"qualifica" : "",
+			"datoreLavoro" : "Izzi",
+			"matricola" : "123ABC",
+			"codiceTerzo" : "12",
+			"mail" : "vito.salvia@gmail.com",
+			"iban" : "IT88T0000211111111111111111"
+		},
+		"residenza" : {
+			"comune" : "Tito",
+			"indirizzo" : "Via Convento",
+			"domicilioFiscale" : "Tito"
+		},
+		"patente" : {
+			"numeroPatente" : "PZ1234",
+			"dataRilascio" : "2001-12-15T10:11:59.568Z",
+			"validaFinoAl" : "2021-12-15T10:11:59.568Z",
+			"rilasciataDa" : "MCTC"
+		},
+		"credenziali" : {
+			"username" : "vito.salvia",
+			"password" : "prova",
+			"ruoloUtente" : "UTENTE_SEMPLICE"
+		},
+		"mappaVeicolo" : {
+			"entry" : [{
+				"key" : "DE457NM",
+				"value" : {
+					"tipo" : "Ford Fiesta",
+					"targa" : "DE457nm",
+					"cartaCircolazione" : "123456",
+					"polizzaAssicurativa" : "987654"
+					}
+				}
+			]
+		}
+
+   
+	}
+}

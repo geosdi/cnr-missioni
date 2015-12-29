@@ -5,19 +5,18 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.index.settings.MissioneIndexSettings;
 import it.cnr.missioni.el.index.settings.UserIndexSettings;
 
 
 /**
  * @author Salvia Vito
  */
-@Component(value = "missioneIndexCreator")
-public class MissioneIndexCreator extends GPAbstractIndexCreator {
+@Component(value = "userIndexCreator")
+public class UserIndexCreator extends GPAbstractIndexCreator {
 
     @Override
     public GPIndexCreator.GPIndexSettings getIndexSettings() {
-        return MissioneIndexSettings.MISSIONE_DOC_INDEX_SETTINGS.getValue();
+        return UserIndexSettings.UTENTE_DOC_INDEX_SETTINGS.getValue();
     }
 
     @Override

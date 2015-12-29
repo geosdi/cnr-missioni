@@ -15,7 +15,7 @@ import it.cnr.missioni.model.rimborso.Rimborso;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "localita", "oggetto", "stato", "missioneEstera", "altro", "idUtente", "dataInserimento",
+@XmlType(propOrder = { "id", "localita", "oggetto", "stato", "missioneEstera", "altro", "idUser", "dataInserimento",
 		"datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
 public class Missione implements Document {
 
@@ -29,7 +29,7 @@ public class Missione implements Document {
 	private StatoEnum stato;
 	private boolean missioneEstera;
 	private String altro;
-	private String idUtente;
+	private String idUser;
 	private DateTime dataInserimento;
 	private DatiPeriodoMissione datiPeriodoMissione;
 	private DatiMissioneEstera datiMissioneEstera;
@@ -148,16 +148,16 @@ public class Missione implements Document {
 	/**
 	 * @return the idUtente
 	 */
-	public String getIdUtente() {
-		return idUtente;
+	public String getIdUser() {
+		return idUser;
 	}
 
 
 	/**
 	 * @param idUtente 
 	 */
-	public void setIdUtente(String idUtente) {
-		this.idUtente = idUtente;
+	public void setIdUser(String idUser) {
+		this.idUser = idUser;
 	}
 
 
@@ -247,7 +247,7 @@ public class Missione implements Document {
 	@Override
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", stato=" + stato
-				+ ", missioneEstera=" + missioneEstera + ", altro=" + altro + ", idUtente=" + idUtente
+				+ ", missioneEstera=" + missioneEstera + ", altro=" + altro + ", idUser=" + idUser
 				+ ", dataInserimento=" + dataInserimento + ", datiPeriodoMissione=" + datiPeriodoMissione
 				+ ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti
 				+ ", rimborso=" + rimborso + "]";

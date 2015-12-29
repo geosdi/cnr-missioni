@@ -8,6 +8,15 @@ import org.elasticsearch.index.query.QueryBuilders;
  */
 public class ExactSearch extends AbstractBooleanSearch<Object> implements IBooleanSearch {
 
+	
+	public ExactSearch( ){
+		super();
+	}
+	
+	public ExactSearch(String field,Object value){
+		super(field,value);
+	}
+	
 	public QueryBuilder getBooleanQuery() throws Exception {
 		if (field == null || value == null)
 			throw new Exception("Field or Value null");
