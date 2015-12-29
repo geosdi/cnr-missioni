@@ -36,8 +36,6 @@
 package it.cnr.missioni.connector.core.spring.connector;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;

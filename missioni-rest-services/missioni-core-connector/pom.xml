@@ -21,7 +21,13 @@
 
 		<dependency>
 			<groupId>it.cnr</groupId>
-			<artifactId>missioni-dropwizard-core</artifactId>
+			<artifactId>missioni-dropwizard-connector</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>it.cnr</groupId>
+			<artifactId>missioni-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

@@ -33,66 +33,38 @@
  * wish to do so, delete this exception statement from your version. 
  *
  */
-package it.cnr.missioni.connector.core;
+package it.cnr.missioni.dropwizard.connector.api.provider;
 
-import javax.annotation.Resource;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
+import org.geosdi.geoplatform.support.jackson.GPJacksonSupport;
 
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import javax.ws.rs.ext.Provider;
 
-import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.model.missione.Missione;
+import static org.geosdi.geoplatform.support.jackson.property.GPJacksonSupportEnum.WRITE_DATES_AS_TIMESTAMPS_DISABLE;
+
 
 /**
  *
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:applicationContext.xml" })
-public class MissioneTest  {
+@Provider
+public abstract class BaseConnectorProvider extends JacksonJaxbJsonProvider {
 
-	static final String CORE_CONNECTOR_KEY = "MISSIONI_CORE_FILE_PROP";
-	//
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-	@Resource(name = "missioniCoreClientConnector")
-	protected MissioniCoreClientConnector missioniCoreClientConnector;
+    protected BaseConnectorProvider() {
+        super(
+        		new GPJacksonSupport()
+        		.registerModule(new JodaModule())
+        		.configure(WRITE_DATES_AS_TIMESTAMPS_DISABLE)
+        		.getDefaultMapper(), DEFAULT_ANNOTATIONS);
+    }
 
-	@BeforeClass
-	public static void beforeClass() {
-		System.setProperty(CORE_CONNECTOR_KEY, "missioni-core-test.prop");
-	}
+    public abstract void registerModule(Module module);
 
-	@Before
-	public void setUp() throws Exception {
-		logger.debug("\n\n\t@@@@@@@ {}.setUp @@@@@@\n\n", this.getClass().getSimpleName());
+    public abstract ObjectMapper getDefaultMapper();
 
-	}
-
-	// @After
-	// public void tearDown() {
-	// logger.debug("\n\t@@@ {}.tearDown @@@", this.getClass().getSimpleName());
-	// // Delete Organization
-	// this.deleteOrganization(organizationTest.getId());
-	// }
-
-	@AfterClass
-	public static void afterClass() {
-		System.clearProperty(CORE_CONNECTOR_KEY);
-	}
-
-	@Test
-	public void testFindMissione() throws Exception {
-		Missione missione = missioniCoreClientConnector.getMissioneById("M_01");
-		Assert.assertNotNull(missione);
-	}
-
+    public abstract ObjectMapper getConfiguredMapper();
 }

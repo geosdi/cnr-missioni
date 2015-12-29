@@ -29,5 +29,6 @@
         <module>missioni-rest-api</module>
         <module>missioni-dropwizard-core</module>
     <module>missioni-core-connector</module>
+    <module>missioni-dropwizard-connector</module>
   </modules>
 </project>
