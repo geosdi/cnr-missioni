@@ -35,10 +35,10 @@
  */
 package it.cnr.missioni.dropwizard.connector.api.connector;
 
-import javax.ws.rs.client.Client;
+import it.cnr.missioni.dropwizard.connector.api.settings.BaseConnectorSettings;
 import org.springframework.beans.factory.DisposableBean;
 
-import it.cnr.missioni.dropwizard.connector.api.settings.BaseConnectorSettings;
+import javax.ws.rs.client.Client;
 
 /**
  *
@@ -50,8 +50,6 @@ public interface MissioniClientConnector extends DisposableBean {
     <C extends BaseConnectorSettings> C getClientSettings();
 
     Client getClient();
-    
-    String createToken();
     
     String getConnectorName();
     

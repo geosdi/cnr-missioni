@@ -36,17 +36,14 @@
 package it.cnr.missioni.dropwizard.connector.api.connector;
 
 import com.google.common.base.Preconditions;
-
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
-import it.cnr.missioni.dropwizard.connector.api.token.MissioniTokenBuilder;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+
 /**
- *
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
@@ -57,24 +54,19 @@ public abstract class AbstractClientConnector implements MissioniClientConnector
     //
     private final ConnectorClientSettings clientSettings;
     protected final Client client;
-    private final MissioniTokenBuilder tokenBuilder;
 
-    protected AbstractClientConnector(ConnectorClientSettings theClientSettings,
-    		MissioniTokenBuilder theTokenBuilder) {
-        this(theClientSettings, defaultClient(), theTokenBuilder);
+    protected AbstractClientConnector(ConnectorClientSettings theClientSettings) {
+        this(theClientSettings, defaultClient());
     }
 
     protected AbstractClientConnector(ConnectorClientSettings theClientSettings,
-            Client theClient, MissioniTokenBuilder theTokenBuilder) {
+            Client theClient) {
         Preconditions.checkNotNull(theClientSettings,
                 "The ConnectorClientSettings must not be null.");
         Preconditions.checkNotNull(theClient, "The Client must not be null.");
-        Preconditions.checkNotNull(theTokenBuilder,
-                "The MissioniTokenBuilder must not be null.");
 
         this.clientSettings = theClientSettings;
         this.client = theClient;
-        this.tokenBuilder = theTokenBuilder;
     }
 
     @Override
@@ -92,10 +84,6 @@ public abstract class AbstractClientConnector implements MissioniClientConnector
         return this.client;
     }
 
-    @Override
-    public final String createToken() {
-        return this.tokenBuilder.createToken().getAccessToken();
-    }
 
     @Override
     public final void destroy() throws Exception {

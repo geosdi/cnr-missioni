@@ -35,34 +35,30 @@
  */
 package it.cnr.missioni.connector.core.spring.connector;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
+import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
+import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import org.glassfish.jersey.client.ClientConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
-import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
-import it.cnr.missioni.dropwizard.connector.api.token.MissioniTokenBuilder;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 
 /**
- *
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
 @Configuration
 class MissioniCoreClientConnectorConfig {
-    
+
     @Bean(name = "missioniCoreClientConnector")
-    public MissioniCoreClientConnector createCoreClientConnector(@Qualifier(
-            value = "missioniCoreTokenBuilder") MissioniTokenBuilder missioniCoreTokenBuilder,
+    public MissioniCoreClientConnector createCoreClientConnector(
             @Qualifier(value = "coreClientSettings") ConnectorClientSettings coreClientSettings) {
-        
-        return new MissioniCoreClientConnector(coreClientSettings, createClient(),
-                missioniCoreTokenBuilder);
+
+        return new MissioniCoreClientConnector(coreClientSettings, createClient());
     }
-    
+
     Client createClient() {
         return ClientBuilder.newClient(new ClientConfig(
                 CoreConnectorProvider.class));

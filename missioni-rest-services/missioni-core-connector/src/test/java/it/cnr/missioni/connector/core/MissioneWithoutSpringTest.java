@@ -2,10 +2,7 @@ package it.cnr.missioni.connector.core;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
-import it.cnr.missioni.dropwizard.connector.api.responce.AccessTokenResponse;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
-import it.cnr.missioni.dropwizard.connector.api.token.CreateTokenException;
-import it.cnr.missioni.dropwizard.connector.api.token.MissioniTokenBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import org.glassfish.jersey.client.ClientConfig;
@@ -44,17 +41,7 @@ public class MissioneWithoutSpringTest {
 
             }
         }, ClientBuilder.newClient(new ClientConfig(
-                CoreConnectorProvider.class)), new MissioniTokenBuilder() {
-
-            @Override
-            public AccessTokenResponse createToken() throws CreateTokenException {
-                return null;
-            }
-
-            @Override
-            public void destroy() throws Exception {
-            }
-        });
+                CoreConnectorProvider.class)));
     }
 
     @Test

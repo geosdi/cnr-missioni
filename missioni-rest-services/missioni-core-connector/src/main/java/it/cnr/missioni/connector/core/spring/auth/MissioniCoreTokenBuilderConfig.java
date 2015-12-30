@@ -35,23 +35,20 @@
  */
 package it.cnr.missioni.connector.core.spring.auth;
 
-import javax.ws.rs.client.ClientBuilder;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import it.cnr.missioni.dropwizard.connector.api.settings.MissioniClientSettings;
 import it.cnr.missioni.dropwizard.connector.api.token.BaseTokenBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import javax.ws.rs.client.ClientBuilder;
 
 /**
- *
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-@Configuration
+//@Configuration
 class MissioniCoreTokenBuilderConfig {
 
-    @Bean(name = "missioniCoreTokenBuilder")
+    //@Bean(name = "missioniCoreTokenBuilder")
     public BaseTokenBuilder createTokenBuilder(@Qualifier(
             value = "missioniCoreSettings") MissioniClientSettings oauth2CoreSettings) {
         return new MissioniCoreTokenBuilder(oauth2CoreSettings,

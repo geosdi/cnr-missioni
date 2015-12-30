@@ -35,118 +35,115 @@
  */
 package it.cnr.missioni.connector.core.spring.connector;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
-import it.cnr.missioni.dropwizard.connector.api.token.MissioniTokenBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.utente.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+
 /**
- *
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
 public class MissioniCoreClientConnector extends AbstractClientConnector {
 
-	static final String LOGGER_MESSAGE = "\n\t@@@@@@@@@@@@@@@@@@@@@@@@@ACQUIRE ACCESS_TOKEN VALUE "
-			+ ": {} for Method : {}\n";
+    static final String LOGGER_MESSAGE = "\n\t@@@@@@@@@@@@@@@@@@@@@@@@@ACQUIRE ACCESS_TOKEN VALUE "
+            + ": {} for Method : {}\n";
 
-	public MissioniCoreClientConnector(ConnectorClientSettings theClientSettings, Client theClient,
-			MissioniTokenBuilder theTokenBuilder) {
-		super(theClientSettings, theClient, theTokenBuilder);
-	}
+    public MissioniCoreClientConnector(ConnectorClientSettings theClientSettings, Client theClient) {
+        super(theClientSettings, theClient);
+    }
 
-	public Missione getMissioneById(String missioneID) throws Exception {
+    public Missione getMissioneById(String missioneID) throws Exception {
 //		String accessToken = super.createToken();
 
 //		logger.trace(LOGGER_MESSAGE, accessToken, "insertOrganization");
-		
 
-		return client.target(super.getRestServiceURL()
+
+        return client.target(super.getRestServiceURL()
 //				.concat("v1/missioni/getMissioneByID/")
-				)
-				.path("v1/missioni/getMissioneByID/")
-				.queryParam("missioneID", missioneID)
-				.request(MediaType.APPLICATION_JSON)
+        )
+                .path("v1/missioni/getMissioneByID/")
+                .queryParam("missioneID", missioneID)
+                .request(MediaType.APPLICATION_JSON)
 //				.header(HttpHeaders.AUTHORIZATION, "bearer ".concat(accessToken))
-				.get(Missione.class);
-	}
-	
-	public MissioniStore getLastUserMissions(String userId) throws Exception {
-		return client.target(super.getRestServiceURL()				)
-				.path("v1/missioni/getLastUserMissions/")
-				.queryParam("userID", userId)
-				.request(MediaType.APPLICATION_JSON)
-				.get(MissioniStore.class);
-	}
-	
-	
-	public Long addMissione(Missione missione) throws Exception {
-		return client.target(super.getRestServiceURL()				)
-				.path("v1/missioni/addMissione/")
-				.request(MediaType.APPLICATION_JSON)
-				 .post(Entity.entity(missione,
-				 MediaType.APPLICATION_JSON), Long.class);
-	}
-	
-	public Boolean deleteMissione(String missioneID) throws Exception {
-		return client.target(super.getRestServiceURL()				)
-				.path("v1/missioni/deleteMissione/")
-				.queryParam("missioneID", missioneID)
-				.request(MediaType.APPLICATION_JSON)
-				.delete(Boolean.class);
-	}
-	
-	public boolean updateMissione(Missione missione) throws Exception {
-		return client.target(super.getRestServiceURL()				)
-				.path("v1/missioni/updateMissione/")
-				.request(MediaType.APPLICATION_JSON)
-				.put(Entity.entity(missione,
-				 MediaType.APPLICATION_JSON), Boolean.class);
-	}
-	
-	public User getUserByUsername(String userName) throws Exception {
-		return client.target(super.getRestServiceURL()
-				)
-				.path("v1/users/getUserByUserName/")
-				.queryParam("username", userName)
-				.request(MediaType.APPLICATION_JSON)
-				.get(User.class);
-	}
-	
-	
-	public Long addUser(User user) throws Exception {
-		return client.target(super.getRestServiceURL()				)
-				.path("v1/users/addUser/")
-				.request(MediaType.APPLICATION_JSON)
-				 .post(Entity.entity(user,
-				 MediaType.APPLICATION_JSON), Long.class);
-	}
-	
-	public Boolean deleteUser(String userID) throws Exception {
-		return client.target(super.getRestServiceURL()				)
-				.path("v1/users/deleteUser/")
-				.queryParam("userID", userID)
-				.request(MediaType.APPLICATION_JSON)
-				.delete(Boolean.class);
-	}
-	
-	public boolean updateUser(User user) throws Exception {
-		return client.target(super.getRestServiceURL()				)
-				.path("v1/users/updateUser/")
-				.request(MediaType.APPLICATION_JSON)
-				.put(Entity.entity(user,
-				 MediaType.APPLICATION_JSON), Boolean.class);
-	}
-	
-	
-	@Override
-	public String getConnectorName() {
-		return "CNR MISSIONI Core Client Connector";
-	}
+                .get(Missione.class);
+    }
+
+    public MissioniStore getLastUserMissions(String userId) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/getLastUserMissions/")
+                .queryParam("userID", userId)
+                .request(MediaType.APPLICATION_JSON)
+                .get(MissioniStore.class);
+    }
+
+
+    public Long addMissione(Missione missione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/addMissione/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(missione,
+                        MediaType.APPLICATION_JSON), Long.class);
+    }
+
+    public Boolean deleteMissione(String missioneID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/deleteMissione/")
+                .queryParam("missioneID", missioneID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateMissione(Missione missione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/updateMissione/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(missione,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+
+    public User getUserByUsername(String userName) throws Exception {
+        return client.target(super.getRestServiceURL()
+        )
+                .path("v1/users/getUserByUserName/")
+                .queryParam("username", userName)
+                .request(MediaType.APPLICATION_JSON)
+                .get(User.class);
+    }
+
+
+    public Long addUser(User user) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/users/addUser/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(user,
+                        MediaType.APPLICATION_JSON), Long.class);
+    }
+
+    public Boolean deleteUser(String userID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/users/deleteUser/")
+                .queryParam("userID", userID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateUser(User user) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/users/updateUser/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(user,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+
+
+    @Override
+    public String getConnectorName() {
+        return "CNR MISSIONI Core Client Connector";
+    }
 }
