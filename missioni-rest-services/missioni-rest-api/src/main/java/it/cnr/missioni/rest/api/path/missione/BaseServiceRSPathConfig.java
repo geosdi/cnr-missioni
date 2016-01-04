@@ -12,7 +12,7 @@ public final class BaseServiceRSPathConfig extends ApplicationServiceRSPathConfi
      * Missioni Service Path
      */
     public static final String MISSIONI_PATH = "/missioni";
-    public static final String GET_MISSIONE_BY_ID_PATH = MISSIONI_PATH + "/getMissioneByID";
+    public static final String GET_MISSIONE_BY_QUERY = MISSIONI_PATH + "/getMissioneByQuery";
     public static final String GET_LAST_USER_MISSIONS_PATH = MISSIONI_PATH + "/getLastUserMissions";
     public static final String ADD_MISSIONE_PATH = MISSIONI_PATH + "/addMissione";
     public static final String UPDATE_MISSIONE_PATH = MISSIONI_PATH + "/updateMissione";

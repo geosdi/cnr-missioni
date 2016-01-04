@@ -5,24 +5,23 @@
  */
 package it.cnr.missioni.rest.api.response.user;
 
-import it.cnr.missioni.model.utente.User;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName(value = "UserStore")
 public class UserStore implements Serializable {
 
     private static final long serialVersionUID = -7592733477679041238L;
-    //
+    @JsonProperty(value = "users", required = false)
     private List<User> users;
 
     public UserStore() {

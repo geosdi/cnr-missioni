@@ -2,7 +2,10 @@ package it.cnr.missioni.el.model.search;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Salvia Vito
@@ -12,10 +15,11 @@ public abstract class AbstractBooleanSearch<S> {
 	
 	protected String field;
 	protected S value;
-	protected DateTime from;
-	protected DateTime to;
+
 	//DEFAULT
 	protected EnumBooleanType type = EnumBooleanType.MUST;
+    protected static final Logger logger = LoggerFactory.getLogger(Page.class);
+
 	
 	public AbstractBooleanSearch(){
 
@@ -26,10 +30,9 @@ public abstract class AbstractBooleanSearch<S> {
 		this.value = value;
 	}
 	
-	public AbstractBooleanSearch(String field,DateTime from,DateTime to){
+	public AbstractBooleanSearch(String field){
 		this.field = field;
-		this.from = from;
-		this.to= to;
+
 	}
 	
 	public abstract  QueryBuilder getBooleanQuery() throws Exception;
@@ -78,34 +81,6 @@ public abstract class AbstractBooleanSearch<S> {
 	}
 
 	/**
-	 * @return the from
-	 */
-	public DateTime getFrom() {
-		return from;
-	}
-
-	/**
-	 * @param from 
-	 */
-	public void setFrom(DateTime from) {
-		this.from = from;
-	}
-
-	/**
-	 * @return the to
-	 */
-	public DateTime getTo() {
-		return to;
-	}
-
-	/**
-	 * @param to 
-	 */
-	public void setTo(DateTime to) {
-		this.to = to;
-	}
-
-	/**
 	 * @return the type
 	 */
 	public EnumBooleanType getType() {
@@ -118,6 +93,13 @@ public abstract class AbstractBooleanSearch<S> {
 	public void setType(EnumBooleanType type) {
 		this.type = type;
 	}
+	
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + " {"
+                + " field = " + field
+                + ", value = " + value + '}';
+    }
 	
 
 }

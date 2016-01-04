@@ -5,7 +5,7 @@ import java.util.Map;
 import org.geosdi.geoplatform.response.collection.GenericMapAdapter;
 import org.geosdi.geoplatform.response.collection.GenericMapType;
 
-import it.cnr.missioni.model.utente.Veicolo;
+import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * @author Salvia Vito

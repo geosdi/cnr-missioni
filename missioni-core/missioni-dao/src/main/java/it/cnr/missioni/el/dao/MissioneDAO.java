@@ -21,9 +21,10 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -39,12 +40,12 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 	 * @throws Exception
 	 */
 	@Override
-	public List<Missione> findMissioneByQuery(Page p, BooleanModelSearch booleanModelSearch) throws Exception {
+	public List<Missione> findMissioneByQuery(Page p, MissioneSearchBuilder missioneSearchBuilder) throws Exception {
 		List<Missione> listaMissioni = new ArrayList<Missione>();
 
 		logger.debug("###############Try to find Missione by Query: {}\n\n");
 		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(booleanModelSearch.buildQuery())).execute().actionGet();
+				.setTypes(getIndexType()).setQuery(missioneSearchBuilder.buildQuery())).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

@@ -16,7 +16,8 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.ExactSearch;
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /**
@@ -43,17 +44,18 @@ class UserDelegate implements IUserDelegate {
 	 * @throws Exception
 	 */
 	@Override
-	public User getUserByUserName(String username) throws Exception {
-		if ((username == null) || (username.isEmpty())) {
-			throw new IllegalParameterFault("The Parameter userName must not " + "be null or an Empty String");
-		}
-		BooleanModelSearch booleanModelSearch = new BooleanModelSearch();
-		booleanModelSearch.getListaSearch().add(new ExactSearch("user.credenziali.username", username));
-		booleanModelSearch.buildQuery();
-		List<User> listaUtenti = this.userDAO.findUtenteByQuery(new Page(0, 10), booleanModelSearch);
-		if (!listaUtenti.isEmpty())
-			return listaUtenti.get(0);
-		else
+	public UserStore getUserByQuery(String nome,String cognome,String codiceFiscale,String matricola,String username) throws Exception {
+		
+		
+		UserSearchBuilder userSearchBuilder = new UserSearchBuilder(nome,cognome,codiceFiscale,matricola,username);
+		
+
+		List<User> listaUtenti = this.userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+		if (!listaUtenti.isEmpty()) {
+			UserStore userStore = new UserStore();
+			userStore.setUsers(listaUtenti);
+			return userStore;
+		} else
 			return null;
 	}
 
@@ -122,5 +124,4 @@ class UserDelegate implements IUserDelegate {
 		return null;
 	}
 
-	
 }

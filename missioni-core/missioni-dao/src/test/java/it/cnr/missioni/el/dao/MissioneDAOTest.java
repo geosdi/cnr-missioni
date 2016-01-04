@@ -22,9 +22,7 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
-import it.cnr.missioni.el.model.search.DateRangeSearch;
-import it.cnr.missioni.el.model.search.ExactSearch;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
@@ -52,14 +50,6 @@ public class MissioneDAOTest {
 
 	private List<Missione> listaMissioni = new ArrayList<Missione>();
 
-	BooleanModelSearch booleanModelSearch;
-
-	private static final String FIELD_DATA_INSERIMENTO = "missione.dataInserimento";
-	private static final String FIELD_ID_USER = "missione.idUser";
-	private static final String FIELD_STATO = "missione.stato";
-	private static final String FIELD_RIMBORSO_NUMERO_ORDINE = "missione.rimborso.numeroOrdine";
-	private static final String FIELD_RIMBORSO_DATA_RIMBORSO = "missione.rimborso.dataRimborso";
-
 	@Before
 	public void setUp() {
 		Assert.assertNotNull(missioneDocIndexCreator);
@@ -78,86 +68,56 @@ public class MissioneDAOTest {
 
 	@Test
 	public void B_findMissioneByUser_1Test() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_ID_USER);
-		e.setValue("01");
-		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setIdUser("01");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY USER", lista.size() == 2);
 
 	}
 
 	@Test
 	public void C_findMissioneByUser_2Test() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_ID_USER);
-		e.setValue("03");
-		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setIdUser("03");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY USER", lista.isEmpty());
 
 	}
 
 	@Test
 	public void D_findMissioneByStato_1Test() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_STATO);
-		e.setValue(StatoEnum.PRESA_IN_CARICO.name());
-		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setStato(StatoEnum.PRESA_IN_CARICO.name());
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 2);
 
 	}
 
 	@Test
 	public void E_findMissioneByStato_2Test() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_STATO);
-		e.setValue(StatoEnum.APPROVATA.name());
-		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setStato(StatoEnum.APPROVATA.name());
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 1);
 
 	}
 
 	@Test
 	public void F_findMissioneByUserStato_1Test() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_STATO);
-		e.setValue(StatoEnum.APPROVATA.name());
-
-		ExactSearch e2 = new ExactSearch();
-		e2.setField(FIELD_ID_USER);
-		e2.setValue("01");
-
-		booleanModelSearch.getListaSearch().add(e);
-		booleanModelSearch.getListaSearch().add(e2);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setStato(StatoEnum.APPROVATA.name());
+		missioneSearchBuilder.setIdUser("01");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.isEmpty());
 
 	}
 
 	@Test
 	public void G_findMissioneByUserStato_2Test() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_STATO);
-		e.setValue(StatoEnum.PRESA_IN_CARICO.name());
-
-		ExactSearch e2 = new ExactSearch();
-		e2.setField(FIELD_ID_USER);
-		e2.setValue("01");
-
-		booleanModelSearch.getListaSearch().add(e);
-		booleanModelSearch.getListaSearch().add(e2);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setStato(StatoEnum.PRESA_IN_CARICO.name());
+		missioneSearchBuilder.setIdUser("01");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 2);
 	}
 
@@ -186,50 +146,33 @@ public class MissioneDAOTest {
 
 	@Test
 	public void L_findMissioniByData_1() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		DateRangeSearch d = new DateRangeSearch();
-		d.setField(FIELD_DATA_INSERIMENTO);
-		d.setFrom(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
-		d.setTo(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
-		booleanModelSearch.getListaSearch().add(d);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setFromDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+		missioneSearchBuilder.setToDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY DATA", lista.size() == 1);
 	}
 
 	@Test
 	public void M_findMissioniByData_2() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		DateRangeSearch d = new DateRangeSearch();
-		d.setField(FIELD_DATA_INSERIMENTO);
-		d.setFrom(new DateTime(2015, 8, 14, 0, 0, DateTimeZone.UTC));
-		d.setTo(new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
-		booleanModelSearch.getListaSearch().add(d);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setFromDataInserimento(new DateTime(2015, 8, 14, 0, 0, DateTimeZone.UTC));
+		missioneSearchBuilder.setToDataInserimento(new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY DATA", lista.size() == 0);
 
 	}
 
 	@Test
 	public void N_findMissioniByAll() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		DateRangeSearch d = new DateRangeSearch();
-		d.setField(FIELD_DATA_INSERIMENTO);
-		d.setFrom(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
-		d.setTo(new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
 
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_STATO);
-		e.setValue(StatoEnum.PRESA_IN_CARICO.name());
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setFromDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+		missioneSearchBuilder.setToDataInserimento(new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
+		missioneSearchBuilder.setStato(StatoEnum.PRESA_IN_CARICO.name());
+		missioneSearchBuilder.setIdUser("01");
 
-		ExactSearch e2 = new ExactSearch();
-		e2.setField(FIELD_ID_USER);
-		e2.setValue("01");
-
-		booleanModelSearch.getListaSearch().add(d);
-		booleanModelSearch.getListaSearch().add(e);
-		booleanModelSearch.getListaSearch().add(e2);
-
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY ALL", lista.size() == 1);
 
 	}
@@ -237,31 +180,26 @@ public class MissioneDAOTest {
 	@Test
 	public void O_findMissioniByRimborsoNumeroOrdine() throws Exception {
 
-		ExactSearch e = new ExactSearch();
-		e.setField(FIELD_RIMBORSO_NUMERO_ORDINE);
-		e.setValue(new Long(156));
-		booleanModelSearch = new BooleanModelSearch();
-		booleanModelSearch.getListaSearch().add(e);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setNumeroOrdineRimborso(new Long(156));
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", lista.size() == 1);
 	}
 
 	@Test
 	public void P_findMissioniByDataRimborso_1() throws Exception {
-		booleanModelSearch = new BooleanModelSearch();
-		DateRangeSearch d = new DateRangeSearch();
-		d.setField(FIELD_RIMBORSO_DATA_RIMBORSO);
-		d.setFrom(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC));
-//		d.setTo(new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
-		booleanModelSearch.getListaSearch().add(d);
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch);
+
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		missioneSearchBuilder.setFromDataRimbroso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC));
+
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", lista.size() == 1);
 	}
 
-//	 @Test
-//	 public void tearDown() throws Exception {
-//	 this.missioneDocIndexCreator.deleteIndex();
-//	 }
+	// @Test
+	// public void tearDown() throws Exception {
+	// this.missioneDocIndexCreator.deleteIndex();
+	// }
 
 	private void creaMissioni() {
 		Missione missione = new Missione();

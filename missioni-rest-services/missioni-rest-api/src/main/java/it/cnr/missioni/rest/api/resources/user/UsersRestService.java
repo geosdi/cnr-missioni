@@ -1,6 +1,6 @@
 package it.cnr.missioni.rest.api.resources.user;
 
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.path.user.UsersServiceRSPathConfig;
 
 import javax.ws.rs.*;
@@ -41,8 +41,8 @@ public interface UsersRestService {
      * @throws Exception
      */
     @GET
-    @Path(value = UsersServiceRSPathConfig.GET_USER_BY_USERNAME_PATH)
-    Response getUserByUserName(@QueryParam(value = "username")String userName) throws Exception;
+    @Path(value = UsersServiceRSPathConfig.GET_USER_BY_QUERY)
+    Response getUserByQuery(@QueryParam(value="nome") String nome,@QueryParam(value="cognome") String cognome,@QueryParam(value="codiceFiscale") String codiceFiscale,@QueryParam(value="matricola") String matricola,@QueryParam(value="username") String username) throws Exception;
 
     /**
      * @param user

@@ -14,7 +14,8 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -30,12 +31,13 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	 * @throws Exception
 	 */
 	@Override
-	public List<User> findUtenteByQuery(Page p, BooleanModelSearch booleanModelSearch) throws Exception {
+	public List<User> findUtenteByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception {
+		
 		List<User> listaUtenti = new ArrayList<User>();
 
-		logger.debug("###############Try to find Utenti by Query: {}\n\n");
+		logger.debug("###############Try to find Users by Query: {}\n\n");
 		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(booleanModelSearch.buildQuery())).execute().actionGet();
+				.setTypes(getIndexType()).setQuery(userSearchBuilder.buildQuery())).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

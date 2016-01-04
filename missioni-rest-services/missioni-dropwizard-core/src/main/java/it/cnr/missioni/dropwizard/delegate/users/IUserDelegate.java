@@ -1,7 +1,6 @@
 package it.cnr.missioni.dropwizard.delegate.users;
 
-import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /**
@@ -26,7 +25,7 @@ public interface IUserDelegate {
 	 * @return
 	 * @throws Exception
 	 */
-	User getUserByUserName(String username) throws Exception;
+	 UserStore getUserByQuery(String nome,String cognome,String codiceFiscale,String matricola,String username) throws Exception;
 
 	/**
 	 * 

@@ -35,15 +35,18 @@
  */
 package it.cnr.missioni.connector.core.spring.connector;
 
-import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
-import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
-import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.utente.User;
-import it.cnr.missioni.rest.api.response.missione.MissioniStore;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+
+import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
+import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -58,20 +61,20 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
         super(theClientSettings, theClient);
     }
 
-    public Missione getMissioneById(String missioneID) throws Exception {
+    public MissioniStore getMissioneByQuery(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
 //		String accessToken = super.createToken();
 
 //		logger.trace(LOGGER_MESSAGE, accessToken, "insertOrganization");
 
 
-        return client.target(super.getRestServiceURL()
-//				.concat("v1/missioni/getMissioneByID/")
-        )
-                .path("v1/missioni/getMissioneByID/")
-                .queryParam("missioneID", missioneID)
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/getMissioneByQuery/")
+                .queryParam("idMissione", missioneSearchBuilder.getIdMissione())
+                .queryParam("idUser", missioneSearchBuilder.getIdUser())
+                .queryParam("stato", missioneSearchBuilder.getStato())
+                .queryParam("numeroOrdineMissione", missioneSearchBuilder.getNumeroOrdineRimborso())
                 .request(MediaType.APPLICATION_JSON)
-//				.header(HttpHeaders.AUTHORIZATION, "bearer ".concat(accessToken))
-                .get(Missione.class);
+                .get(MissioniStore.class);
     }
 
     public MissioniStore getLastUserMissions(String userId) throws Exception {
@@ -107,13 +110,17 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
 
-    public User getUserByUsername(String userName) throws Exception {
+    public UserStore getUserByQuery(UserSearchBuilder userSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL()
         )
-                .path("v1/users/getUserByUserName/")
-                .queryParam("username", userName)
+                .path("v1/users/getUserByQuery/")
+                .queryParam("nome", userSearchBuilder.getNome())
+                .queryParam("cognome", userSearchBuilder.getCognome())
+                .queryParam("codiceFiscale", userSearchBuilder.getCodiceFiscale())
+                .queryParam("matricola", userSearchBuilder.getMatricola())
+                .queryParam("username", userSearchBuilder.getUsername())
                 .request(MediaType.APPLICATION_JSON)
-                .get(User.class);
+                .get(UserStore.class);
     }
 
 

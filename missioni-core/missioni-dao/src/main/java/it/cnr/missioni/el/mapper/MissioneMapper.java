@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito

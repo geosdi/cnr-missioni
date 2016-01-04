@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
 
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -19,6 +19,6 @@ public interface IUserDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<User
 	 * @return
 	 * @throws Exception
 	 */
-	List<User> findUtenteByQuery(Page p, BooleanModelSearch booleanModelSearch) throws Exception;
+	List<User> findUtenteByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception;
 
 }

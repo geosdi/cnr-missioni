@@ -17,10 +17,19 @@ public class ExactSearch extends AbstractBooleanSearch<Object> implements IBoole
 		super(field,value);
 	}
 	
+	
+	
 	public QueryBuilder getBooleanQuery() throws Exception {
 		if (field == null || value == null)
 			throw new Exception("Field or Value null");
+		
+		
+        logger.trace("####################Called {} #internalBooleanSearch with parameters " +
+                "field : {} - value : {}\n\n", getClass().getSimpleName(), field, value);
+		
 		return QueryBuilders.matchQuery(field, value);
 	}
+	
+
 
 }

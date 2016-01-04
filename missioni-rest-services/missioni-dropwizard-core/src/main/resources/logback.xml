@@ -21,17 +21,17 @@
 
 	<logger name="org.geosdi.geoplatform.experimental.el.spring"
 		level="debug" />
-	<logger name="it.cnr.missioni.el.index.UserIndexCreator"
-		level="debug" />
+	<logger name="it.cnr.missioni.el.index.UserIndexCreator" level="debug" />
 	<logger name="it.cnr.missioni.el.index.MissioneIndexCreator"
 		level="debug" />
 	<logger name="it.cnr.missioni.el.dao.UserDAO" level="debug" />
 	<logger name="it.cnr.missioni.el.dao.MissioneDAO" level="debug" />
 	<logger name="org.geosdi.geoplatform.experimental.el.dao" level="trace" />
 
-	<logger name="it.cnr.missioni.el.dao.UserDAOTest" level="debug" />
-	<logger name="it.cnr.missioni.el.dao.MissioneDAOTest" level="debug" />
-	
+	<logger name="it.cnr.missioni.connector.core.UserTest" level="debug" />
+	<logger name="it.cnr.missioni.connector.core.MissioneTest"
+		level="debug" />
+
 
 
 </configuration>

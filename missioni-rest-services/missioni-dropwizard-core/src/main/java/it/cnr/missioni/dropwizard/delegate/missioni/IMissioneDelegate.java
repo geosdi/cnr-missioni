@@ -14,7 +14,7 @@ public interface IMissioneDelegate {
      * @return {@link Missione}
      * @throws Exception
      */
-    Missione getMissioneByID(String missioneID) throws Exception;
+	MissioniStore getMissioneByQuery(String idMissione,String idUser,String stato, Long numeroOrdineRimborso) throws Exception;
 
     /**
      * @param userID

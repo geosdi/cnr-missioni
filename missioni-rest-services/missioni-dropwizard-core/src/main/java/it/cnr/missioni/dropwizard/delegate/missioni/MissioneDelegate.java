@@ -7,8 +7,10 @@ import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.ExactSearch;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.user.UserStore;
 
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
@@ -39,32 +41,39 @@ class MissioneDelegate implements IMissioneDelegate {
 	private IMissioneDAO missioneDAO;
 
 	@Override
-	public Missione getMissioneByID(String missioneID) throws Exception {
-		if ((missioneID == null) || (missioneID.isEmpty())) {
-			throw new IllegalParameterFault("The Parameter missioneID must not " + "be null or an Empty String");
-		}
-		Missione missione = this.missioneDAO.find(missioneID);
-
-		if (missione == null) {
-			throw new ResourceNotFoundFault("The Mission with ID : " + missioneID + " doesn't exist.");
-		}
-		return missione;
+	public MissioniStore getMissioneByQuery(String idMissione,String idUser,String stato, Long numeroOrdineRimborso) throws Exception {
+//		if ((missioneID == null) || (missioneID.isEmpty())) {
+//			throw new IllegalParameterFault("The Parameter missioneID must not " + "be null or an Empty String");
+//		}
+		
+		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder(idMissione,idUser,stato,numeroOrdineRimborso);
+		
+		List<Missione> listaMissioni = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		if (!listaMissioni.isEmpty()) {
+			MissioniStore missioniStore = new MissioniStore();
+			missioniStore.setMissioni(listaMissioni);
+			return missioniStore;
+		} else
+			return null;
+		
+	
 	}
 
 	@Override
 	public MissioniStore getLastUserMissions(String userID) throws Exception {
-
-		if ((userID == null) || (userID.isEmpty())) {
-			throw new IllegalParameterFault("The Parameter userID must not " + "be null or an Empty String");
-		}
-
-		BooleanModelSearch booleanModelSearch = new BooleanModelSearch();
-		booleanModelSearch.getListaSearch().add(new ExactSearch("missione.idUser", userID));
-		booleanModelSearch.buildQuery();
-		MissioniStore missioniStore = new MissioniStore();
-		missioniStore.setMissioni(this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch));
-		missioniStore.setUserID(userID);
-		return missioniStore;
+//
+//		if ((userID == null) || (userID.isEmpty())) {
+//			throw new IllegalParameterFault("The Parameter userID must not " + "be null or an Empty String");
+//		}
+//
+//		BooleanModelSearch booleanModelSearch = new BooleanModelSearch();
+//		booleanModelSearch.getListaSearch().add(new ExactSearch("missione.idUser", userID));
+//		booleanModelSearch.buildQuery();
+//		MissioniStore missioniStore = new MissioniStore();
+//		missioniStore.setMissioni(this.missioneDAO.findMissioneByQuery(new Page(0, 10), booleanModelSearch));
+//		missioniStore.setUserID(userID);
+//		return missioniStore;
+		return null;
 	}
 
 	@Override

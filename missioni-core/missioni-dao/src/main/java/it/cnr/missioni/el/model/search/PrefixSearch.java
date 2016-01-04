@@ -19,7 +19,12 @@ public class PrefixSearch extends AbstractBooleanSearch<String> implements IBool
 	public QueryBuilder getBooleanQuery() throws Exception {
 		if (field == null || value == null)
 			throw new Exception("Field or Value null");
+		
+        logger.trace("####################Called {} #internalBooleanSearch with parameters " +
+                "field : {} - value : {}\n\n", getClass().getSimpleName(), field, value);
+		
 		return QueryBuilders.prefixQuery(field, value.toLowerCase());
 	}
+	
 
 }

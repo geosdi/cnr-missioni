@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import it.cnr.missioni.dropwizard.delegate.users.IUserDelegate;
-import it.cnr.missioni.model.utente.User;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.resources.user.UsersRestService;
 
 /**
@@ -53,8 +53,8 @@ public class UserRestServiceResource implements UsersRestService {
 	 * @throws Exception
 	 */
 	@Override
-	public Response getUserByUserName(String userName) throws Exception {
-		return Response.ok(this.userDelegate.getUserByUserName(userName)).build();
+	public Response getUserByQuery(String nome,String cognome,String codiceFiscale,String matricola,String username) throws Exception {
+		return Response.ok(this.userDelegate.getUserByQuery(nome,cognome,codiceFiscale,matricola,username)).build();
 	}
 
 	/**

@@ -5,7 +5,7 @@ server:
   applicationContextPath: /
   applicationConnectors:
     - type: http
-      port: 8080
+      port: 8282
 #    - type: https
 #      port: 8443
 #      keyStorePath: /Users/fizzi/keystore.jks
