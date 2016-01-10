@@ -33,6 +33,8 @@ logging:
       "org.geosdi.missioni.imaa.el" : debug
       "org.geosdi.geoplatform.experimental.el.spring" : debug
       "org.geosdi.geoplatform.experimental.el.dao" : trace
+      "it.cnr.missioni.el.dao" : debug
+      "it.cnr.missioni.el.index" : debug
 
   appenders:
       - type: console

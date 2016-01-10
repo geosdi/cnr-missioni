@@ -2,7 +2,6 @@ package it.cnr.missioni.dashboard.event;
 
 import java.util.Collection;
 
-import it.cnr.missioni.dashboard.domain.Transaction;
 import it.cnr.missioni.dashboard.view.DashboardViewType;
 
 /*
@@ -50,18 +49,6 @@ public abstract class DashboardEvent {
             return count;
         }
 
-    }
-
-    public static final class TransactionReportEvent {
-        private final Collection<Transaction> transactions;
-
-        public TransactionReportEvent(final Collection<Transaction> transactions) {
-            this.transactions = transactions;
-        }
-
-        public Collection<Transaction> getTransactions() {
-            return transactions;
-        }
     }
 
     public static final class PostViewChangeEvent {

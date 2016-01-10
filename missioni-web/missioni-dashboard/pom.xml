@@ -77,8 +77,6 @@
 						<artifactId>jetty-maven-plugin</artifactId>
 						<version>9.2.3.v20140905</version>
 						<executions>
-							<!-- start and stop jetty (running our app) when running integration 
-								tests -->
 							<execution>
 								<id>start-jetty</id>
 								<phase>pre-integration-test</phase>
@@ -125,16 +123,51 @@
 
 	<dependencies>
 
+
 		<dependency>
 			<groupId>it.cnr</groupId>
 			<artifactId>missioni-core-connector</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
 			<version>${vaadin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client</artifactId>
+			<version>${vaadin.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
@@ -173,11 +206,24 @@
 			<artifactId>maddon</artifactId>
 			<version>1.15</version>
 		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.slf4j</groupId> -->
+		<!-- <artifactId>slf4j-jdk14</artifactId> -->
+		<!-- <version>1.6.4</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.6.4</version>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.13</version>
 		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.13</version>
+		</dependency>
+
+
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>

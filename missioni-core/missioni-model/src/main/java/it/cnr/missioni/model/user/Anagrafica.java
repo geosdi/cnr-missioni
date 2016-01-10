@@ -2,6 +2,11 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 /**
@@ -13,10 +18,16 @@ public class Anagrafica implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 2355131345839836682L;
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String cognome;
+	@Length(min=16,max=16)
 	private String codiceFiscale;
+	@NotNull
+	@Past
 	private DateTime dataNascita;
+	@NotBlank
 	private String luogoNascita;
 
 	/**

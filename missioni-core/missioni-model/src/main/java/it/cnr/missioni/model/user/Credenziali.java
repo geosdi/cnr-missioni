@@ -2,6 +2,10 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author Salvia Vito
  */
@@ -11,8 +15,10 @@ public class Credenziali implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 5504155444424046718L;
-	private String username;
-	private String password;
+	@NotBlank
+	private String username ="";
+	@NotBlank
+	private String password = "";
 	private RuoloUtenteEnum ruoloUtente;
 	
 	/**

@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 import it.cnr.missioni.model.rimborso.Rimborso;
@@ -24,13 +25,16 @@ public class Missione implements Document {
 	 */
 	private static final long serialVersionUID = 2011330125118118995L;
 	private String id;
+	@NotBlank
 	private String localita;
+	@NotBlank
 	private String oggetto;
 	private StatoEnum stato;
 	private boolean missioneEstera;
 	private String altro;
 	private String idUser;
 	private DateTime dataInserimento;
+	private DateTime dateLastModified;
 	private DatiPeriodoMissione datiPeriodoMissione;
 	private DatiMissioneEstera datiMissioneEstera;
 	private DatiAnticipoPagamenti datiAnticipoPagamenti;
@@ -178,6 +182,22 @@ public class Missione implements Document {
 
 
 	/**
+	 * @return the dateLastModified
+	 */
+	public DateTime getDateLastModified() {
+		return dateLastModified;
+	}
+
+
+	/**
+	 * @param dateLastModified 
+	 */
+	public void setDateLastModified(DateTime dateLastModified) {
+		this.dateLastModified = dateLastModified;
+	}
+
+
+	/**
 	 * @return the datiPeriodoMissione
 	 */
 	public DatiPeriodoMissione getDatiPeriodoMissione() {
@@ -248,9 +268,9 @@ public class Missione implements Document {
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", stato=" + stato
 				+ ", missioneEstera=" + missioneEstera + ", altro=" + altro + ", idUser=" + idUser
-				+ ", dataInserimento=" + dataInserimento + ", datiPeriodoMissione=" + datiPeriodoMissione
-				+ ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti
-				+ ", rimborso=" + rimborso + "]";
+				+ ", dataInserimento=" + dataInserimento + ", dateLastModified=" + dateLastModified
+				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
+				+ ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
 	}
 
 	

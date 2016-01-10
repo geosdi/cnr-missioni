@@ -2,6 +2,9 @@ package it.cnr.missioni.model.rimborso;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 /**
@@ -13,24 +16,29 @@ public class Fattura implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private long numeroFattura;
+	@NotNull
+	private Long numeroFattura;
+	@NotNull
 	private DateTime data;
+	@NotBlank
 	private String tipologiaSpesa;
-	private double importo;
+	@NotNull
+	private Double importo;
+	@NotBlank
 	private String valuta;
 	private String altro;
 
 	/**
 	 * @return the numeroFattura
 	 */
-	public long getNumeroFattura() {
+	public Long getNumeroFattura() {
 		return numeroFattura;
 	}
 
 	/**
 	 * @param numeroFattura
 	 */
-	public void setNumeroFattura(long numeroFattura) {
+	public void setNumeroFattura(Long numeroFattura) {
 		this.numeroFattura = numeroFattura;
 	}
 
@@ -65,14 +73,14 @@ public class Fattura implements Serializable{
 	/**
 	 * @return the importo
 	 */
-	public double getImporto() {
+	public Double getImporto() {
 		return importo;
 	}
 
 	/**
 	 * @param importo
 	 */
-	public void setImporto(double importo) {
+	public void setImporto(Double importo) {
 		this.importo = importo;
 	}
 

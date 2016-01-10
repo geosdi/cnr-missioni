@@ -230,6 +230,8 @@ public class UserDAOTest {
 		r.setDomicilioFiscale("Via Convento");
 		user.setResidenza(r);
 		user.setDataRegistrazione(new DateTime(2015, 1, 4, 0, 0));
+		user.setDateLastModified(new DateTime(2015, 1, 4, 0, 0));
+		user.setRegistrazioneCompletata(true);
 		listaUsers.add(user);
 
 		user = new User();
@@ -242,6 +244,7 @@ public class UserDAOTest {
 		credenziali.setPassword(credenziali.md5hash("paolorossi"));
 		user.setCredenziali(credenziali);
 		user.setAnagrafica(anagrafica);
+		user.setRegistrazioneCompletata(false);
 		listaUsers.add(user);
 
 		user = new User();
@@ -254,6 +257,7 @@ public class UserDAOTest {
 		credenziali.setPassword(credenziali.md5hash("mariobianchi"));
 		user.setCredenziali(credenziali);
 		user.setAnagrafica(anagrafica);
+		user.setRegistrazioneCompletata(false);
 		listaUsers.add(user);
 
 	}

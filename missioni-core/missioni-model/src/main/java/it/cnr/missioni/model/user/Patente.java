@@ -2,6 +2,11 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 /**
@@ -13,9 +18,15 @@ public class Patente implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@NotBlank
 	private String numeroPatente;
+	@NotNull
+	@Past
 	private DateTime dataRilascio;
+	@NotNull
+	@Future
 	private DateTime validaFinoAl;
+	@NotBlank
 	private String rilasciataDa;
 
 	/**

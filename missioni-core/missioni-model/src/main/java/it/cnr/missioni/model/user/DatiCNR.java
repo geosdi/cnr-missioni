@@ -2,6 +2,11 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author Salvia Vito
  */
@@ -11,25 +16,30 @@ public class DatiCNR implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1534365538828825181L;
-	private int livello;
+	@NotNull
+	private Integer livello;
 	private String qualifica;
 	private String datoreLavoro;
+	@NotBlank
 	private String matricola;
 	private String codiceTerzo;
+	@NotBlank
+	@Email
 	private String mail;
+	@NotBlank
 	private String iban;
 
 	/**
 	 * @return the livello
 	 */
-	public int getLivello() {
+	public Integer getLivello() {
 		return livello;
 	}
 
 	/**
 	 * @param livello
 	 */
-	public void setLivello(int livello) {
+	public void setLivello(Integer livello) {
 		this.livello = livello;
 	}
 

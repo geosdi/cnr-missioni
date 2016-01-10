@@ -222,21 +222,21 @@ public class MissioneDAOTest {
 		missione.setDatiPeriodoMissione(datiPeriodoMissione);
 
 		Fattura fattura = new Fattura();
-		fattura.setNumeroFattura(134);
+		fattura.setNumeroFattura(new Long(134));
 		fattura.setData(new DateTime(2015, 11, 12, 13, 0, DateTimeZone.UTC));
 		fattura.setImporto(89.8);
 		fattura.setTipologiaSpesa("Pernottamento");
 		fattura.setValuta("Euro");
 
 		Fattura fattura_2 = new Fattura();
-		fattura_2.setNumeroFattura(135);
+		fattura_2.setNumeroFattura(new Long(135));
 		fattura_2.setData(new DateTime(2015, 11, 13, 13, 0, DateTimeZone.UTC));
 		fattura_2.setImporto(89.8);
 		fattura_2.setTipologiaSpesa("Pernottamento");
 		fattura_2.setValuta("Euro");
 
 		Rimborso rimborso = new Rimborso();
-		rimborso.setNumeroOrdine(156);
+		rimborso.setNumeroOrdine(new Long(156));
 		rimborso.setAvvisoPagamento("Via Verdi");
 		rimborso.setAnticipazionePagamento(0.0);
 		rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));

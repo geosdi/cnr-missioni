@@ -26,7 +26,7 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	/**
 	 * 
 	 * @param p
-	 * @param utenteModelSearch
+	 * @param userSearchBuilder
 	 * @return
 	 * @throws Exception
 	 */

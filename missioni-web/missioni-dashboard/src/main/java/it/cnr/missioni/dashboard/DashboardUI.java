@@ -16,15 +16,14 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.data.DataProvider;
-import it.cnr.missioni.dashboard.domain.User_old;
+import it.cnr.missioni.dashboard.action.LoginAction;
+import it.cnr.missioni.dashboard.action.RegistrationUserAction;
+import it.cnr.missioni.dashboard.action.UpdateUserAction;
+import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
-import it.cnr.missioni.dashboard.request.LoginRequest;
-import it.cnr.missioni.dashboard.request.RegistrationRequest;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoginRequestedEvent;
 import it.cnr.missioni.dashboard.view.LoginView;
 import it.cnr.missioni.dashboard.view.MainView;
 import it.cnr.missioni.model.user.User;
@@ -83,19 +82,28 @@ public final class DashboardUI extends UI {
 	}
 
 	@Subscribe
-	public void userLoginRequested(final LoginRequest loginRequest) {
+	public void userLoginRequested(final LoginAction loginRequest) {
 
-		if (loginRequest.callRestService()) {
+		if (loginRequest.doAction()) {
 			VaadinSession.getCurrent().setAttribute(User.class.getName(), loginRequest.getUser());
 			updateContent();
-
 		}
 
 	}
 
 	@Subscribe
-	public void userRegistrationRequested(final RegistrationRequest registrationRequest) {
-		registrationRequest.callRestService();
+	public void userRegistrationRequested(final RegistrationUserAction registrationUserAction) {
+		registrationUserAction.doAction();
+	}
+	
+	@Subscribe
+	public void userUpdateUserRequested(final UpdateUserAction updateUserAction) {
+		updateUserAction.doAction();
+	}
+	
+	@Subscribe
+	public void veicoloRequested(final VeicoloAction veicoloAction) {
+		veicoloAction.doAction();
 	}
 
 	@Subscribe

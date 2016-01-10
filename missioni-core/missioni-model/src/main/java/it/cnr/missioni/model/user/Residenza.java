@@ -2,6 +2,8 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author Salvia Vito
  */
@@ -11,7 +13,9 @@ public class Residenza implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8733345187478501883L;
+	@NotBlank
 	private String comune;
+	@NotBlank
 	private String indirizzo;
 	private String domicilioFiscale;
 

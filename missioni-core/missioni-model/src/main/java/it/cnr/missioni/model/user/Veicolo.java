@@ -2,6 +2,8 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author Salvia Vito
  */
@@ -14,9 +16,13 @@ public class Veicolo  implements Serializable{
 	/**
 	 * 
 	 */
+	@NotBlank
 	private String tipo;
+	@NotBlank
 	private String targa;
+	@NotBlank
 	private String cartaCircolazione;
+	@NotBlank
 	private String polizzaAssicurativa;
 
 	/**

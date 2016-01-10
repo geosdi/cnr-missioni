@@ -5,16 +5,20 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 
 import it.cnr.missioni.dashboard.view.dashboard.DashboardView;
-import it.cnr.missioni.dashboard.view.reports.ReportsView;
-import it.cnr.missioni.dashboard.view.schedule.ScheduleView;
-import it.cnr.missioni.dashboard.view.transactions.TransactionsView;
+import it.cnr.missioni.dashboard.view.dashboard.VeicoliView;
+
 
 public enum DashboardViewType {
-    DASHBOARD("dashboard", DashboardView.class, FontAwesome.HOME, true)  , 
-    TRANSACTIONS(
-            "transactions", TransactionsView.class, FontAwesome.TABLE, false), REPORTS(
-            "reports", ReportsView.class, FontAwesome.FILE_TEXT_O, true), SCHEDULE(
-            "schedule", ScheduleView.class, FontAwesome.CALENDAR_O, false);
+    DASHBOARD("dashboard", DashboardView.class, FontAwesome.HOME, true)
+//    ,
+//    VEICOLI("veicoli", VeicoliView.class, FontAwesome.CAR, true)  
+//    , 
+//    MISSIONE(
+//            "nuova missione", TransactionsView.class, FontAwesome.TABLE, false), REPORTS(
+//            "elenco missioni", ReportsView.class, FontAwesome.FILE_TEXT_O, true)
+//    , SCHEDULE(
+//            "schedule", ScheduleView.class, FontAwesome.CALENDAR_O, false)
+    ;
 
     private final String viewName;
     private final Class<? extends View> viewClass;

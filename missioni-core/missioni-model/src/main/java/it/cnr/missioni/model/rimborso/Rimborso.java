@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.joda.time.DateTime;
 
 /**
@@ -15,25 +17,28 @@ public class Rimborso  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8658916823848446391L;
-	private long numeroOrdine;
+	@NotNull
+	private Long numeroOrdine;
+	@NotNull
 	private DateTime dataRimborso;
+	private DateTime dateLastModified;
 	private List<Fattura> listaFatture = new ArrayList<Fattura>();
-	private double totale;
+	private Double totale;
 	private String avvisoPagamento;
-	private double anticipazionePagamento;
+	private Double anticipazionePagamento;
 	
 
 	/**
 	 * @return the numeroOrdine
 	 */
-	public long getNumeroOrdine() {
+	public Long getNumeroOrdine() {
 		return numeroOrdine;
 	}
 
 	/**
 	 * @param numeroOrdine 
 	 */
-	public void setNumeroOrdine(long numeroOrdine) {
+	public void setNumeroOrdine(Long numeroOrdine) {
 		this.numeroOrdine = numeroOrdine;
 	}
 
@@ -49,6 +54,20 @@ public class Rimborso  implements Serializable{
 	 */
 	public void setDataRimborso(DateTime dataRimborso) {
 		this.dataRimborso = dataRimborso;
+	}
+
+	/**
+	 * @return the dateLastModified
+	 */
+	public DateTime getDateLastModified() {
+		return dateLastModified;
+	}
+
+	/**
+	 * @param dateLastModified 
+	 */
+	public void setDateLastModified(DateTime dateLastModified) {
+		this.dateLastModified = dateLastModified;
 	}
 
 	/**
@@ -68,14 +87,14 @@ public class Rimborso  implements Serializable{
 	/**
 	 * @return the totale
 	 */
-	public double getTotale() {
+	public Double getTotale() {
 		return totale;
 	}
 
 	/**
 	 * @param totale 
 	 */
-	public void setTotale(double totale) {
+	public void setTotale(Double totale) {
 		this.totale = totale;
 	}
 
@@ -96,14 +115,14 @@ public class Rimborso  implements Serializable{
 	/**
 	 * @return the anticipazionePagamento
 	 */
-	public double getAnticipazionePagamento() {
+	public Double getAnticipazionePagamento() {
 		return anticipazionePagamento;
 	}
 
 	/**
 	 * @param anticipazionePagamento 
 	 */
-	public void setAnticipazionePagamento(double anticipazionePagamento) {
+	public void setAnticipazionePagamento(Double anticipazionePagamento) {
 		this.anticipazionePagamento = anticipazionePagamento;
 	}
 
@@ -112,9 +131,9 @@ public class Rimborso  implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "Rimborso [numeroOrdine=" + numeroOrdine + ", dataRimborso=" + dataRimborso + ", listaFatture="
-				+ listaFatture + ", totale=" + totale + ", avvisoPagamento=" + avvisoPagamento
-				+ ", anticipazionePagamento=" + anticipazionePagamento + "]";
+		return "Rimborso [numeroOrdine=" + numeroOrdine + ", dataRimborso=" + dataRimborso + ", dateLastModified="
+				+ dateLastModified + ", listaFatture=" + listaFatture + ", totale=" + totale + ", avvisoPagamento="
+				+ avvisoPagamento + ", anticipazionePagamento=" + anticipazionePagamento + "]";
 	}
 
 
