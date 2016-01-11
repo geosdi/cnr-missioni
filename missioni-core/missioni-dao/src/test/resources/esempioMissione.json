@@ -13,10 +13,9 @@
 
 		},
 		"datiMissioneEstera" : {
-			"rimborsoDocumentato" : false,
-			"trattamentoAlternativoMissione" : false,
-			"attraversamentoFrontieraAndata" : "",
-			"attraversamentoFrontieraRitorno" : ""
+			"trattamentoMissioneEsteraEnum" : "RIMBORSO_DOCUMENTATO",
+			"attraversamentoFrontieraAndata" : "2015-12-13T10:11:59.568Z",
+			"attraversamentoFrontieraRitorno" : "2015-12-13T10:17:59.568Z"
 		},
 		"datiAnticipoPagamenti" : {
 			"anticipazioniMonetarie" : true,

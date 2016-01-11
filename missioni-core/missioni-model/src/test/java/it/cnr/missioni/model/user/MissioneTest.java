@@ -9,9 +9,11 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
 
 /**
@@ -30,6 +32,7 @@ public class MissioneTest {
 	@Test
 	public void missioneErrataTest() {
 		Missione missione = new Missione();
+		missione.setDatiPeriodoMissione(null);
 		Set<ConstraintViolation<Missione>> constraintViolations = validator.validate(missione);
 		assertEquals(2, constraintViolations.size());
 	}
@@ -37,9 +40,26 @@ public class MissioneTest {
 	@Test
 	public void missioneOkTest() {
 		Missione missione = new Missione();
+		missione.setDatiPeriodoMissione(null);
 		missione.setLocalita("Roma");
 		missione.setOggetto("Conferenza");
 		Set<ConstraintViolation<Missione>> constraintViolations = validator.validate(missione);
+		assertEquals(0, constraintViolations.size());
+	}
+	
+	@Test
+	public void periodoMissioneErrataTest() {
+		Missione missione = new Missione();
+		Set<ConstraintViolation<DatiPeriodoMissione>> constraintViolations = validator.validate(missione.getDatiPeriodoMissione());
+		assertEquals(2, constraintViolations.size());
+	}
+
+	@Test
+	public void periodoMissioneOkTest() {
+		Missione missione = new Missione();
+		missione.getDatiPeriodoMissione().setInizioMissione(new DateTime());
+		missione.getDatiPeriodoMissione().setFineMissione(new DateTime());
+		Set<ConstraintViolation<DatiPeriodoMissione>> constraintViolations = validator.validate(missione.getDatiPeriodoMissione());
 		assertEquals(0, constraintViolations.size());
 	}
 

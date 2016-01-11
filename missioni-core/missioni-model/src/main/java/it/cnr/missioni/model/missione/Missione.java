@@ -1,5 +1,6 @@
 package it.cnr.missioni.model.missione;
 
+import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,9 +36,13 @@ public class Missione implements Document {
 	private String idUser;
 	private DateTime dataInserimento;
 	private DateTime dateLastModified;
-	private DatiPeriodoMissione datiPeriodoMissione;
-	private DatiMissioneEstera datiMissioneEstera;
-	private DatiAnticipoPagamenti datiAnticipoPagamenti;
+	@Valid
+	private DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
+	@Valid
+	private DatiMissioneEstera datiMissioneEstera = new DatiMissioneEstera();
+	@Valid
+	private DatiAnticipoPagamenti datiAnticipoPagamenti = new DatiAnticipoPagamenti();
+	@Valid
 	private Rimborso rimborso;
 
 

@@ -89,7 +89,7 @@ public final class ElencoVeicoliTable extends Table {
 		@Override
 		public void handleAction(final Action action, final Object sender, final Object target) {
 			if (action == seleziona) {
-				VeicoloWindow.open(((Veicolo) target), true);
+				VeicoloWindow.open(((Veicolo) target), true,ElencoVeicoliTable.this);
 			}
 		}
 

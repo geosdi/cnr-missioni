@@ -48,7 +48,12 @@ public class User implements Document {
 	@Valid
 	private Credenziali credenziali = new Credenziali();
 	@XmlJavaTypeAdapter(value = DocumentMapAdapter.class)
-	private Map<String, Veicolo> mappaVeicolo = new HashMap<String, Veicolo>();
+	private Map<String, Veicolo> mappaVeicolo = new HashMap<String, Veicolo>(){
+		@Override
+        public Veicolo put(String key, Veicolo value) {
+            return super.put(key.toUpperCase(), value);
+        }
+	};
 
 
 	/*

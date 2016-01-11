@@ -2,6 +2,8 @@ package it.cnr.missioni.model.missione;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import org.joda.time.DateTime;
 
 /**
@@ -14,7 +16,9 @@ public class DatiPeriodoMissione implements Serializable{
 	 */
 	private static final long serialVersionUID = 3755222349066146562L;
 
+	@NotNull
 	private DateTime inizioMissione;
+	@NotNull
 	private DateTime fineMissione;
 
 

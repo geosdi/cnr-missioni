@@ -17,9 +17,12 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.LoginAction;
+import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
+import it.cnr.missioni.dashboard.component.ElencoMissioniTable;
+import it.cnr.missioni.dashboard.component.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -31,9 +34,12 @@ import it.cnr.missioni.model.user.User;
 @Theme("dashboard")
 @Widgetset("it.cnr.missioni.dashboard.DashboardWidgetSet")
 @Title("Missioni Dashboard")
-@SuppressWarnings("serial")
-public final class DashboardUI extends UI {
+public final class DashboardUI extends UI  {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3787052440150933035L;
 	/*
 	 * This field stores an access to the dummy backend layer. In real
 	 * applications you most likely gain access to your beans trough lookup or
@@ -82,14 +88,15 @@ public final class DashboardUI extends UI {
 	}
 
 	@Subscribe
-	public void userLoginRequested(final LoginAction loginRequest) {
+	public void userLoginRequested(final LoginAction loginAction) {
 
-		if (loginRequest.doAction()) {
-			VaadinSession.getCurrent().setAttribute(User.class.getName(), loginRequest.getUser());
+		if (loginAction.doAction()) {
 			updateContent();
 		}
 
 	}
+	
+	
 
 	@Subscribe
 	public void userRegistrationRequested(final RegistrationUserAction registrationUserAction) {
@@ -104,6 +111,21 @@ public final class DashboardUI extends UI {
 	@Subscribe
 	public void veicoloRequested(final VeicoloAction veicoloAction) {
 		veicoloAction.doAction();
+	}
+	
+	@Subscribe
+	public void missioneRequested(final MissioneAction missioneAction) {
+		missioneAction.doAction();
+	}
+	
+	@Subscribe
+	public void updateTableVeicoliRequested(final ElencoVeicoliTable elencoVeicoliTable) {
+		elencoVeicoliTable.aggiornaTable();
+	}
+	
+	@Subscribe
+	public void updateTableMissioniRequested(final ElencoMissioniTable elencoMissioniTable) {
+		elencoMissioniTable.aggiornaTable();
 	}
 
 	@Subscribe

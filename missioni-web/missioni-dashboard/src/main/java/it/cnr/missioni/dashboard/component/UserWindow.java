@@ -1,16 +1,15 @@
 package it.cnr.missioni.dashboard.component;
 
-import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
-import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -22,7 +21,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -30,7 +28,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
@@ -38,16 +35,18 @@ import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.user.User;
 
-@SuppressWarnings("serial")
 public class UserWindow extends Window {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9064172202629030178L;
 
 	public static final String ID = "profilepreferenceswindow";
 
 	private final BeanFieldGroup<User> fieldGroup;
 
-	private TextField usernameField;
-	private PasswordField passwordField;
-	private PasswordField passwordRepeatField;
+
 	private TextField comuneField;
 	private TextField indirizzoField;
 	private TextField domicilioFiscaleField;
@@ -67,16 +66,10 @@ public class UserWindow extends Window {
 	private TextField mailField;
 	private TextField ibanField;
 	
-	private boolean registration;
-	
-	
-	
-	private final boolean preferencesTabOpen;
-
-	private UserWindow(final User user, final boolean preferencesTabOpen,boolean registration) {
 		
-		this.preferencesTabOpen = preferencesTabOpen;
-		this.registration = registration;
+
+	private UserWindow(final User user) {
+		
 		
 		addStyleName("profile-window");
 		setId(ID);
@@ -107,14 +100,12 @@ public class UserWindow extends Window {
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-		if (preferencesTabOpen) {
 			detailsWrapper.addComponent(buildAnagraficaTab());
 			detailsWrapper.addComponent(buildResidenzaTab());
 			detailsWrapper.addComponent(buildPatenteTab());
 			detailsWrapper.addComponent(buildDatiCNR());
 
-		}else
-			detailsWrapper.addComponent(buildCredenzialiTab());
+
 
 
 		content.addComponent(buildFooter());
@@ -148,11 +139,15 @@ public class UserWindow extends Window {
 
 		DateField fieldDataRegistrazione = (DateField)fieldGroup.buildAndBind("Data Registrazione","dataRegistrazione");
 		fieldDataRegistrazione.setReadOnly(true);
+		fieldDataRegistrazione.setResolution(Resolution.MINUTE);
+		fieldDataRegistrazione.setDateFormat("dd/MM/yyyy HH:mm");
 		details.addComponent(fieldDataRegistrazione);
 		
 		
 		DateField fieldDataLastModified = (DateField)fieldGroup.buildAndBind("Data ultima modifica","dateLastModified");
 		fieldDataLastModified.setReadOnly(true);
+		fieldDataLastModified.setResolution(Resolution.MINUTE);
+		fieldDataLastModified.setDateFormat("dd/MM/yyyy HH:mm");
 		details.addComponent(fieldDataLastModified);
 
 		
@@ -242,55 +237,6 @@ public class UserWindow extends Window {
 		return root;
 	}
 
-	private Component buildCredenzialiTab() {
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Credenziali");
-		root.setIcon(FontAwesome.LOCK);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-
-		FormLayout details = new FormLayout();
-		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-		root.addComponent(details);
-		root.setExpandRatio(details, 1);
-
-		
-		BeanItem<User> beanItem = (BeanItem<User>)fieldGroup.getItemDataSource();
-		User user = beanItem.getBean();
-		user.getCredenziali().setPassword("");
-		
-		usernameField = (TextField)fieldGroup.buildAndBind("Username","credenziali.username");
-		if(!registration)
-			usernameField.setReadOnly(true);
-		passwordField = (PasswordField)fieldGroup.buildAndBind("Password","credenziali.password",PasswordField.class);
-		passwordRepeatField = new PasswordField("Ripeti Password");
-		passwordRepeatField.addValidator(new Validator() {
-			@Override
-			public void validate(Object value) throws InvalidValueException {
-				String password = (String) value;
-				if (!password.equals(passwordField.getValue())) {
-					throw new InvalidValueException(Utility.getMessage("password_not_equals"));
-
-				}
-			}
-
-		});
-		
-		
-		
-
-
-
-		details.addComponent(usernameField);
-		details.addComponent(passwordField);
-		details.addComponent(passwordRepeatField);
-		
-		if (preferencesTabOpen)
-			passwordRepeatField.setValue(passwordField.getValue());
-
-		return root;
-	}
 
 	private Component buildFooter() {
 		HorizontalLayout footer = new HorizontalLayout();
@@ -307,15 +253,11 @@ public class UserWindow extends Window {
 					for (Field<?> f : fieldGroup.getFields()) {
 						((AbstractField<?>) f).setValidationVisible(true);
 					}
-					passwordRepeatField.validate();
 					fieldGroup.commit();
 					
 					BeanItem<User> beanItem = (BeanItem<User>)fieldGroup.getItemDataSource();
 					User user = beanItem.getBean();
-					
-					if(registration)
-						DashboardEventBus.post(new RegistrationUserAction(user));
-					else
+
 						DashboardEventBus.post(new UpdateUserAction(user));
 					close();
 					
@@ -332,9 +274,9 @@ public class UserWindow extends Window {
 		return footer;
 	}
 
-	public static void open(final User user, final boolean preferencesTabActive,boolean registration) {
+	public static void open(final User user) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new UserWindow(user, preferencesTabActive,registration);
+		Window w = new UserWindow(user);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

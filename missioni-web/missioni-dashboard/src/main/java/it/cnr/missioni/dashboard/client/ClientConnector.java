@@ -9,6 +9,7 @@ import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorPro
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -87,5 +88,30 @@ public class ClientConnector {
 	public static MissioniStore getMissione(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 	}
+	
+	/**
+	 * 
+	 * Aggiunge una nuova missione
+	 * 
+	 * @param user
+	 * @throws Exception
+	 */
+	public static void addMissione(Missione missione) throws Exception {
+		missioniCoreClientConnector.addMissione(missione);
+
+	}
+	
+	/**
+	 * 
+	 * Aggiorna una missione esistente
+	 * 
+	 * @param user
+	 * @throws Exception
+	 */
+	public static void updateMissione(Missione missione) throws Exception {
+		missioniCoreClientConnector.updateMissione(missione);
+
+	}
+
 
 }

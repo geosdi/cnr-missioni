@@ -1,6 +1,6 @@
 package it.cnr.missioni.model.missione;
 
-public enum StatoEnum {
+public enum StatoEnum{
 	APPROVATA("Approvata"), RESPINTA("Respinta"), PRESA_IN_CARICO("Presa in carico"), STAND_BY("Stand by");
 
 	private String stato;

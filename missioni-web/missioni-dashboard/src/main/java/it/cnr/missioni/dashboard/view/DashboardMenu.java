@@ -20,6 +20,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.component.CredenzialiWindow;
 import it.cnr.missioni.dashboard.component.UserWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
@@ -95,14 +96,14 @@ public final class DashboardMenu extends CustomComponent {
 		settingsItem.addItem("Edit Profile", new Command() {
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
-				UserWindow.open(user, true, false);
+				UserWindow.open(user);
 			}
 		});
 		settingsItem.addSeparator();
 		settingsItem.addItem("Cambia Password", new Command() {
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
-				UserWindow.open((User) (VaadinSession.getCurrent().getAttribute(User.class.getName())), false, false);
+				CredenzialiWindow.open((User) (VaadinSession.getCurrent().getAttribute(User.class.getName())), false);
 			}
 		});
 

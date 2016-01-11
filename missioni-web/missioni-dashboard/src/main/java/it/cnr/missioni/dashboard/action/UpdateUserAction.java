@@ -30,13 +30,13 @@ public class UpdateUserAction implements IAction {
 			user.getCredenziali().setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
 			ClientConnector.updateUser(user);
 			VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
-			Utility.getNotification(Utility.getMessage("success_message"), Utility.getMessage("update_user_success"),
+			Utility.getNotification(Utility.getMessage("success_message"), Utility.getMessage("success_message"),
 					Type.HUMANIZED_MESSAGE);
 
 			return true;
 
 		} catch (Exception e) {
-			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+			Utility.getNotification(Utility.getMessage("error_message"), null,
 					Type.ERROR_MESSAGE);
 			return false;
 		}

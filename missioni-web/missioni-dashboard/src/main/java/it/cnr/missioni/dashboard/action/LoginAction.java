@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.action;
 
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
@@ -36,7 +37,8 @@ public class LoginAction implements IAction {
 							Type.ERROR_MESSAGE);
 					return false;
 				} else {
-					Utility.getNotification(Utility.getMessage("success_message"), Utility.getMessage("login_success"),
+					VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
+					Utility.getNotification(Utility.getMessage("success_message"), null,
 							Type.HUMANIZED_MESSAGE);
 					return true;
 				}

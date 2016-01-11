@@ -5,13 +5,13 @@ import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
+import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
@@ -24,6 +24,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
@@ -31,42 +32,35 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
+import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
-import it.cnr.missioni.dashboard.action.VeicoloAction;
+import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.model.user.Veicolo;
 
-public class VeicoloWindow extends Window {
+public class CredenzialiWindow extends Window {
+
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -333945068835078811L;
+	private static final long serialVersionUID = -5199469615215392155L;
+	public static final String ID = "credenzialiwindow";
 
-	public static final String ID = "veicolowindow";
+	private final BeanFieldGroup<User> fieldGroup;
 
-	private final BeanFieldGroup<Veicolo> fieldGroup;
+	private TextField usernameField;
+	private PasswordField passwordField;
+	private PasswordField passwordRepeatField;
 
-	private TextField tipoField;
-	private TextField targaField;
-	private TextField cartaCircolazioneField;
-	private TextField polizzaAssicurativaField;
-	
-	private boolean modifica;
-	
-	private Veicolo veicolo;
-	private final User user =  (User)VaadinSession.getCurrent().getAttribute(User.class.getName());
-	private ElencoVeicoliTable elencoVeicoliTable;
+	private boolean registration;
 
-	private VeicoloWindow(final Veicolo veicolo,boolean modifica,ElencoVeicoliTable elencoVeicoliTable) {
+	private CredenzialiWindow(final User user, boolean registration) {
 
-		this.modifica = modifica;
-		this.elencoVeicoliTable = elencoVeicoliTable;
-		
+		this.registration = registration;
+
 		addStyleName("profile-window");
 		setId(ID);
 		Responsive.makeResponsive(this);
@@ -90,22 +84,23 @@ public class VeicoloWindow extends Window {
 		content.addComponent(detailsWrapper);
 		content.setExpandRatio(detailsWrapper, 1f);
 
-		fieldGroup = new BeanFieldGroup<Veicolo>(Veicolo.class);
-		fieldGroup.setItemDataSource(veicolo);
+		fieldGroup = new BeanFieldGroup<User>(User.class);
+		fieldGroup.setItemDataSource(user);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-		detailsWrapper.addComponent(buildAnagraficaTab());
+
+		detailsWrapper.addComponent(buildCredenzialiTab());
 
 		content.addComponent(buildFooter());
 
 	}
 
-	private Component buildAnagraficaTab() {
+	private Component buildCredenzialiTab() {
 		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Veicolo");
-		root.setIcon(FontAwesome.CAR);
+		root.setCaption("Credenziali");
+		root.setIcon(FontAwesome.LOCK);
 		root.setWidth(100.0f, Unit.PERCENTAGE);
 		root.setSpacing(true);
 		root.setMargin(true);
@@ -115,35 +110,59 @@ public class VeicoloWindow extends Window {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		tipoField = (TextField) fieldGroup.buildAndBind("Tipo", "tipo");
-		details.addComponent(tipoField);
-		targaField = (TextField) fieldGroup.buildAndBind("Targa", "targa");
-		details.addComponent(targaField);
-		cartaCircolazioneField = (TextField) fieldGroup.buildAndBind("Carta Circolazione", "cartaCircolazione");
-		details.addComponent(cartaCircolazioneField);
-		polizzaAssicurativaField = (TextField) fieldGroup.buildAndBind("Polizza Assicurativa", "polizzaAssicurativa");
-		details.addComponent(polizzaAssicurativaField);
+		BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
+		User user = beanItem.getBean();
+
+
+		usernameField = (TextField) fieldGroup.buildAndBind("Username", "credenziali.username");
+		if (!registration)
+			usernameField.setReadOnly(true);
+		passwordField = (PasswordField) fieldGroup.buildAndBind("Password", "credenziali.password",
+				PasswordField.class);
+		passwordField.setValue("");
+		passwordRepeatField = new PasswordField("Ripeti Password");
+		passwordRepeatField.setValue(passwordField.getValue());
+		passwordRepeatField.setImmediate(true);
+		details.addComponent(usernameField);
+		details.addComponent(passwordField);
+		details.addComponent(passwordRepeatField);
+		passwordRepeatField.setValidationVisible(false);
 		
-		if(modifica)
-			this.veicolo = user.getMappaVeicolo().get(targaField.getValue());
-		targaField.addValidator(new Validator() {
+		passwordRepeatField.addValidator(new Validator() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1231043176244348048L;
+
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				String targa = ((String)value).toUpperCase();
+				String password = (String) value;
+				if (!password.equals(passwordField.getValue())) {
+					throw new InvalidValueException(Utility.getMessage("password_not_equals"));
 
-				if(user.getMappaVeicolo().containsKey(targa) && !modifica){
-					throw new InvalidValueException(Utility.getMessage("targa_present"));
 				}
-				
-				if(modifica){
-					if(user.getMappaVeicolo().containsKey(targa) && !veicolo.getTarga().equals(targa))
-						throw new InvalidValueException(Utility.getMessage("targa_present"));
-				}
-
 			}
 
 		});
 		
+		passwordRepeatField.addBlurListener(new BlurListener() {
+
+			@Override
+			public void blur(BlurEvent event) {
+				try {
+					passwordRepeatField.validate();
+				} catch (Exception e) {
+					passwordRepeatField.setValidationVisible(true);
+				}				
+			}
+			
+
+		});
+
+
+
+
+
 
 		return root;
 	}
@@ -160,19 +179,19 @@ public class VeicoloWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 
 				try {
-					
-					
 					for (Field<?> f : fieldGroup.getFields()) {
 						((AbstractField<?>) f).setValidationVisible(true);
 					}
-
-//					targaField.validate();
+					passwordRepeatField.validate();
 					fieldGroup.commit();
 
-					BeanItem<Veicolo> beanItem = (BeanItem<Veicolo>) fieldGroup.getItemDataSource();
-					Veicolo veicolo = beanItem.getBean();
-					
-					DashboardEventBus.post(new VeicoloAction(veicolo,elencoVeicoliTable));
+					BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
+					User user = beanItem.getBean();
+
+					if (registration)
+						DashboardEventBus.post(new RegistrationUserAction(user));
+					else
+						DashboardEventBus.post(new UpdateUserAction(user));
 					close();
 
 				} catch (InvalidValueException | CommitException e) {
@@ -188,9 +207,9 @@ public class VeicoloWindow extends Window {
 		return footer;
 	}
 
-	public static void open(final Veicolo veicolo,boolean modifica,ElencoVeicoliTable elencoVeicoliTable) {
+	public static void open(final User user, boolean registration) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new VeicoloWindow(veicolo,modifica,elencoVeicoliTable);
+		Window w = new CredenzialiWindow(user, registration);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

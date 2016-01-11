@@ -9,8 +9,8 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Handler;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
@@ -18,7 +18,6 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
@@ -56,7 +55,7 @@ public final class ElencoMissioniTable extends Table {
 		setSortEnabled(true);
 
 		aggiornaTable();
-
+		addActionHandler(new TransactionsActionHandler());
 
 	}
 
@@ -84,7 +83,6 @@ public final class ElencoMissioniTable extends Table {
 				Object[] properties = { "dataInserimento", "id" };
 				boolean[] ordering = { false, true };
 				sort(properties, ordering);
-				addActionHandler(new TransactionsActionHandler());
 			}
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -107,6 +105,7 @@ public final class ElencoMissioniTable extends Table {
 		@Override
 		public void handleAction(final Action action, final Object sender, final Object target) {
 			if (action == seleziona) {
+				MissioneWindow.open(((Missione) target),true,ElencoMissioniTable.this);
 			}
 		}
 
@@ -122,7 +121,7 @@ public final class ElencoMissioniTable extends Table {
 		if (v instanceof DateTime) {
 			DateTime dateValue = (DateTime) v;
 
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			return format.format(dateValue.toDate());
 
 		}

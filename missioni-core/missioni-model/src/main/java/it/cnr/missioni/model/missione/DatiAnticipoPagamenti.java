@@ -2,6 +2,8 @@ package it.cnr.missioni.model.missione;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Min;
+
 /**
  * @author Salvia Vito
  */
@@ -13,8 +15,10 @@ public class DatiAnticipoPagamenti implements Serializable{
 	private static final long serialVersionUID = -6596717379934379754L;
 	private boolean anticipazioniMonetarie;
 	private String mandatoCNR;
+	@Min(value = 0)
 	private double speseMissioniAnticipate;
 	private boolean rimborsoDaTerzi;
+	@Min(value = 0)
 	private double importoDaTerzi;
 
 	/**

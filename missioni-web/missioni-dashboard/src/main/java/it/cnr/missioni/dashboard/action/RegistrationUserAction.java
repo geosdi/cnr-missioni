@@ -43,7 +43,7 @@ private User user;
 				user.getCredenziali().setPassword(user.getCredenziali().md5hash(user.getCredenziali().getPassword()));
 				user.getCredenziali().setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
 				ClientConnector.addUser(user);
-				Utility.getNotification(Utility.getMessage("success_message"), Utility.getMessage("registration_success"),
+				Utility.getNotification(Utility.getMessage("success_message"),null,
 						Type.HUMANIZED_MESSAGE);
 
 				return true;

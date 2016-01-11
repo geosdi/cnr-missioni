@@ -2,15 +2,9 @@ package it.cnr.missioni.dashboard.view;
 
 import java.io.Serializable;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
-import com.vaadin.data.fieldgroup.PropertyId;
-import com.vaadin.event.FieldEvents.BlurEvent;
-import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
@@ -23,7 +17,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -36,7 +29,7 @@ import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.LoginAction;
-import it.cnr.missioni.dashboard.component.UserWindow;
+import it.cnr.missioni.dashboard.component.CredenzialiWindow;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -86,7 +79,7 @@ public class LoginView extends VerticalLayout implements Serializable {
 
 			@Override
 			public void buttonClick(ClickEvent clickEvent) {
-				UserWindow.open(new User(), false,true);
+				CredenzialiWindow.open(new User(),true);
 			}
 		});
 		button.setStyleName(Reindeer.BUTTON_LINK);

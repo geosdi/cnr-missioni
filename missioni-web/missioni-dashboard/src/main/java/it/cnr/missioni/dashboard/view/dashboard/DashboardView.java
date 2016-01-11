@@ -27,23 +27,30 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.ElencoMissioniTable;
 import it.cnr.missioni.dashboard.component.ElencoVeicoliTable;
+import it.cnr.missioni.dashboard.component.MissioneWindow;
 import it.cnr.missioni.dashboard.component.VeicoloWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.view.dashboard.DashboardEdit.DashboardEditListener;
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 
 
-@SuppressWarnings("serial")
 public final class DashboardView extends Panel implements View,
         DashboardEditListener {
 
-    public static final String EDIT_ID = "dashboard-edit";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1115999357356137696L;
+	public static final String EDIT_ID = "dashboard-edit";
     public static final String TITLE_ID = "dashboard-title";
 
     private CssLayout dashboardPanels;
     private final VerticalLayout root;
+    private ElencoVeicoliTable elencoVeicoliTable;
+    private ElencoMissioniTable elencoMissioniTable;
     
    private User user = (User)VaadinSession.getCurrent().getAttribute(User.class.getName());
 
@@ -84,9 +91,9 @@ public final class DashboardView extends Panel implements View,
 		CssLayout l = new CssLayout();
 		l.setCaption("Elenco Veicoli");
 		l.setSizeFull();
-		ElencoVeicoliTable veicoliTable = new ElencoVeicoliTable();
-		veicoliTable.aggiornaTable();
-		l.addComponent(veicoliTable);
+		elencoVeicoliTable = new ElencoVeicoliTable();
+//		elencoVeicoliTable.aggiornaTable();
+		l.addComponent(elencoVeicoliTable);
 
 		Button b = new Button();
 
@@ -94,11 +101,13 @@ public final class DashboardView extends Panel implements View,
 		b.setDescription("Nuovo Veicolo");
 		b.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				VeicoloWindow.open(new Veicolo(),false);
+				VeicoloWindow.open(new Veicolo(),false,elencoVeicoliTable);
 			}
 		});
 
 		if(user.isRegistrazioneCompletata())
+			b.setEnabled(true);
+		else
 			b.setEnabled(false);
 		l.addComponent(b);
 		return createContentWrapper(l);
@@ -117,9 +126,9 @@ public final class DashboardView extends Panel implements View,
 		CssLayout l = new CssLayout();
 		l.setCaption("Elenco Missioni");
 		l.setSizeFull();
-		ElencoMissioniTable missioniTable = new ElencoMissioniTable();
-		missioniTable.aggiornaTable();
-		l.addComponent(missioniTable);
+		 elencoMissioniTable = new ElencoMissioniTable();
+//		elencoMissioniTable.aggiornaTable();
+		l.addComponent(elencoMissioniTable);
 
 		Button b = new Button();
 
@@ -127,10 +136,13 @@ public final class DashboardView extends Panel implements View,
 		b.setDescription("Nuova Missione");
 		b.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
+				MissioneWindow.open(new Missione(),false,elencoMissioniTable);
 			}
 		});
 
 		if(user.isRegistrazioneCompletata())
+			b.setEnabled(true);
+		else
 			b.setEnabled(false);
 		l.addComponent(b);
 		return createContentWrapper(l);

@@ -13,6 +13,8 @@ import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import junit.framework.Assert;
+
 /**
  * @author Salvia Vito
  */
@@ -24,6 +26,19 @@ public class UserTest {
 	public static void setUp() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
+	}
+	
+	@Test
+	public void targaTest(){
+		User user = new User();
+		Veicolo veicolo = new Veicolo();
+		veicolo.setTarga("AbCdE");
+		user.getMappaVeicolo().put(veicolo.getTarga(), veicolo);
+		
+		
+		assertEquals(true,user.getMappaVeicolo().containsKey("ABCDE"));
+		assertEquals(false,user.getMappaVeicolo().containsKey("AbCdE"));
+		
 	}
 
 	@Test
