@@ -1,0 +1,8 @@
+it.cnr.missioni.notification.bridge.implementor.dev.AddMissioneMailDev
+it.cnr.missioni.notification.bridge.implementor.prod.AddMissioneMailProd
+it.cnr.missioni.notification.bridge.implementor.dev.UpdateMissioneMailDev
+it.cnr.missioni.notification.bridge.implementor.prod.UpdateMissioneMailProd
+it.cnr.missioni.notification.bridge.implementor.dev.RequestMissioneRimborsoMailDev
+it.cnr.missioni.notification.bridge.implementor.prod.RequestMissioneRimborsoMailProd
+it.cnr.missioni.notification.bridge.implementor.dev.RimborsoMissioneDoneMailDev
+it.cnr.missioni.notification.bridge.implementor.prod.RimborsoMissioneDoneMailProd

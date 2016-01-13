@@ -1,215 +1,255 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>it.cnr</groupId>
-	<artifactId>missioni</artifactId>
-	<packaging>pom</packaging>
-	<version>1.0-SNAPSHOT</version>
+    <groupId>it.cnr</groupId>
+    <artifactId>missioni</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
 
-	<name>CNR :: == Missioni Service</name>
-	<url>https://github.com/geosdi/cnr-missioni</url>
+    <name>CNR :: == Missioni Service</name>
+    <url>https://github.com/geosdi/cnr-missioni</url>
 
-	<scm>
-		<url>https://github.com/geosdi/cnr-missioni.git</url>
-		<connection>scm:git:git://github.com/geosdi/cnr-missioni.git</connection>
-		<developerConnection>scm:git:git@github.com:geosdi/cnr-missioni.git</developerConnection>
-	</scm>
+    <scm>
+        <url>https://github.com/geosdi/cnr-missioni.git</url>
+        <connection>scm:git:git://github.com/geosdi/cnr-missioni.git</connection>
+        <developerConnection>scm:git:git@github.com:geosdi/cnr-missioni.git</developerConnection>
+    </scm>
 
-	<licenses>
-		<license>
-			<name>GPL v3 + CE</name>
-			<url>http://www.gnu.org/licenses/</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+    <licenses>
+        <license>
+            <name>GPL v3 + CE</name>
+            <url>http://www.gnu.org/licenses/</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-	<organization>
-		<name>cnr</name>
-		<url>http://www.imaa.cnr.it/</url>
-	</organization>
-	<inceptionYear>2015</inceptionYear>
+    <organization>
+        <name>cnr</name>
+        <url>http://www.imaa.cnr.it/</url>
+    </organization>
+    <inceptionYear>2015</inceptionYear>
 
-	<repositories>
-		<!-- geoSDI -->
-		<repository>
-			<id>geosdi-snapshots</id>
-			<name>repo.geosdi.org-snapshots</name>
-			<url>http://repo.geosdi.org/artifactory/libs-snapshot-local</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <!-- geoSDI -->
+        <repository>
+            <id>geosdi-snapshots</id>
+            <name>repo.geosdi.org-snapshots</name>
+            <url>http://repo.geosdi.org/artifactory/libs-snapshot-local</url>
+        </repository>
+    </repositories>
 
-	<developers>
-		<developer>
-			<name>Francesco Izzi</name>
-			<id>francesco.izzi</id>
-			<email>francesco.izzi@geosdi.org</email>
-			<organization>geoSDI</organization>
-			<roles>
-				<role>Java Senior Developer</role>
-				<role>Project Management Committee (PMC) Member</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Giuseppe La Scaleia</name>
-			<id>glascaleia</id>
-			<email>giuseppe.lascaleia@geosdi.org</email>
-			<organization>geoSDI</organization>
-			<roles>
-				<role>Java Senior Developer</role>
-				<role>Project Management Committee (PMC) Member</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Salvia Vito</name>
-			<id>vito.salvia</id>
-			<email/>
-			<organization>sintesi</organization>
-			<roles>
-				<role>Java Developer</role>
-				<role>Project Management Committee (PMC) Member</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <name>Francesco Izzi</name>
+            <id>francesco.izzi</id>
+            <email>francesco.izzi@geosdi.org</email>
+            <organization>geoSDI</organization>
+            <roles>
+                <role>Java Senior Developer</role>
+                <role>Project Management Committee (PMC) Member</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <name>Giuseppe La Scaleia</name>
+            <id>glascaleia</id>
+            <email>giuseppe.lascaleia@geosdi.org</email>
+            <organization>geoSDI</organization>
+            <roles>
+                <role>Java Senior Developer</role>
+                <role>Project Management Committee (PMC) Member</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <name>Salvia Vito</name>
+            <id>vito.salvia</id>
+            <email/>
+            <organization>sintesi</organization>
+            <roles>
+                <role>Java Developer</role>
+                <role>Project Management Committee (PMC) Member</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
 
-	<dependencyManagement>
-		<dependencies>
+    <dependencyManagement>
+        <dependencies>
 
-			<!-- =========================================================== -->
-			<!-- ============== GEOPLATFORM SPRING DEPENDENCY ============== -->
-			<!-- =========================================================== -->
-			<dependency>
-				<groupId>org.geosdi</groupId>
-				<artifactId>geoplatform-spring-dependency</artifactId>
-				<type>pom</type>
-				<scope>import</scope>
-				<version>${geoplatform-version}</version>
-			</dependency>
+            <!-- =========================================================== -->
+            <!-- ============== GEOPLATFORM SPRING DEPENDENCY ============== -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-spring-dependency</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
-			<!-- =========================================================== -->
-			<!-- ============== GEOPLATFORM JACKSON DEPENDENCY ============= -->
-			<!-- =========================================================== -->
-			<dependency>
-				<groupId>org.geosdi</groupId>
-				<artifactId>geoplatform-jackson-dependency</artifactId>
-				<type>pom</type>
-				<scope>import</scope>
-				<version>${geoplatform-version}</version>
-			</dependency>
+            <!-- =========================================================== -->
+            <!-- =============== GEOPLATFORM SL4j DEPENDENCY =============== -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-slf4j-dependency</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
-			<!-- =========================================================== -->
-			<!-- =============== GEOPLATFORM JACKSON SUPPORT =============== -->
-			<!-- =========================================================== -->
-			<dependency>
-				<groupId>org.geosdi</groupId>
-				<artifactId>geoplatform-jackson-support</artifactId>
-				<version>${geoplatform-version}</version>
-			</dependency>
+            <!-- =========================================================== -->
+            <!-- ============== GEOPLATFORM JACKSON DEPENDENCY ============= -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-jackson-dependency</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
-			<!-- =========================================================== -->
-			<!-- ================ GEOPLATFORM LOGGER SUPPORT =============== -->
-			<!-- =========================================================== -->
-			<dependency>
-				<groupId>org.geosdi</groupId>
-				<artifactId>geoplatform-logger-support</artifactId>
-				<version>${geoplatform-version}</version>
-			</dependency>
+            <!-- =========================================================== -->
+            <!-- =============== GEOPLATFORM JACKSON SUPPORT =============== -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-jackson-support</artifactId>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>19.0</version>
-			</dependency>
+            <!-- =========================================================== -->
+            <!-- ================ GEOPLATFORM ASYNC SUPPORT ================ -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-async-support</artifactId>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>joda-time</groupId>
-				<artifactId>joda-time</artifactId>
-				<version>${joda-version}</version>
-			</dependency>
+            <!-- =========================================================== -->
+            <!-- ============= GEOPLATFORM BOOTSTRAP CONFIG ================ -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-bootstrap-config</artifactId>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.12</version>
-				<scope>test</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+            <!-- =========================================================== -->
+            <!-- ================ GEOPLATFORM MAIL SUPPORT ================= -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-mail-support</artifactId>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
+            <!-- =========================================================== -->
+            <!-- ================ GEOPLATFORM LOGGER SUPPORT =============== -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-logger-support</artifactId>
+                <version>${geoplatform-version}</version>
+            </dependency>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<inherited>true</inherited>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>2.4</version>
-					<configuration>
-						<attach>true</attach>
-					</configuration>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>jar-no-fork</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>19.0</version>
+            </dependency>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>2.5</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${joda-version}</version>
+            </dependency>
 
-		<plugins>
-			<!-- compilation -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<debug>true</debug>
-					<encoding>UTF-8</encoding>
-					<!-- Added comment because we have some problem on Windows Vista -->
-					<!--fork>true</fork -->
-					<meminitial>64M</meminitial>
-					<maxmem>1512M</maxmem>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
-	<properties>
-		<geoplatform-version>1.8-SNAPSHOT</geoplatform-version>
-		<joda-version>2.9.1</joda-version>
-		<javax.ws.rs-api-version>2.0.1</javax.ws.rs-api-version>
-		<jersey-version>2.22.1</jersey-version>
-	</properties>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
-	<modules>
-		<module>missioni-core</module>
-		<module>missioni-rest-services</module>
-    <module>missioni-web</module>
-  </modules>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <inherited>true</inherited>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                        <attach>true</attach>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- compilation -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <debug>true</debug>
+                    <encoding>UTF-8</encoding>
+                    <!-- Added comment because we have some problem on Windows Vista -->
+                    <!--fork>true</fork -->
+                    <meminitial>64M</meminitial>
+                    <maxmem>1512M</maxmem>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <properties>
+        <geoplatform-version>1.8-SNAPSHOT</geoplatform-version>
+        <joda-version>2.9.1</joda-version>
+        <javax.ws.rs-api-version>2.0.1</javax.ws.rs-api-version>
+        <jersey-version>2.22.1</jersey-version>
+    </properties>
+
+
+    <modules>
+        <module>missioni-core</module>
+        <module>missioni-notification-support</module>
+        <module>missioni-rest-services</module>
+        <module>missioni-web</module>
+    </modules>
 </project>
