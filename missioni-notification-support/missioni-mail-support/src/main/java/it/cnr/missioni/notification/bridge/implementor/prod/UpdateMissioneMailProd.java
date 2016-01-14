@@ -5,7 +5,13 @@ import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+
+import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -23,7 +29,28 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
     @Override
     public MimeMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-        return null;
+        return new MimeMessagePreparator() {
+
+            String userName = (String) message.getMessageParameters().get("userName");
+            String userSurname = (String) message.getMessageParameters().get("userSurname");
+            String userEmail = (String) message.getMessageParameters().get("userEmail");
+            String cnrMissioniEmail = (String) message.getMessageParameters().get("cnrMissioniEmail");
+            String missioneID = (String) message.getMessageParameters().get("missioneID");
+
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail);
+                message.setTo(new String[]{userEmail, cnrMissioniEmail});
+                Map model = new HashMap();
+                model.put("userName", userName);
+                model.put("userSurname", userSurname);
+                model.put("missioneID", missioneID);
+                String messageText = VelocityEngineUtils
+                        .mergeTemplateIntoString(velocityEngine,
+                                "template/updateMissioneMailNotification.html.vm", "UTF-8", model);
+                message.setText(messageText, Boolean.TRUE);
+            }
+        };
     }
 
     /**

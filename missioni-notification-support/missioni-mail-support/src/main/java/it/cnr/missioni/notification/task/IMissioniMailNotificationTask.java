@@ -1,6 +1,8 @@
 package it.cnr.missioni.notification.task;
 
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
+import it.cnr.missioni.notification.bridge.store.ImplementorStore;
+import it.cnr.missioni.notification.bridge.store.MissioniMailImplementorStore;
 import org.geosdi.geoplatform.support.async.spring.task.GPAsyncTask;
 import org.geosdi.geoplatform.support.async.spring.task.notification.GPAsyncNotificationTask;
 
@@ -8,7 +10,10 @@ import org.geosdi.geoplatform.support.async.spring.task.notification.GPAsyncNoti
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-public interface IMissioniMailNotificationTask<MESSAGE extends Object, S extends IMissioniMailNotificationTask.IMissioneNotificationMessage, R extends Object> {
+public interface IMissioniMailNotificationTask<MESSAGE extends Object, S extends IMissioniMailNotificationTask.IMissioneNotificationMessage, R extends Object>
+        extends GPAsyncNotificationTask<MESSAGE, S, R> {
+
+    ImplementorStore<MissioniMailImplementor> missioniMailImplementor = new MissioniMailImplementorStore();
 
     /**
      *
