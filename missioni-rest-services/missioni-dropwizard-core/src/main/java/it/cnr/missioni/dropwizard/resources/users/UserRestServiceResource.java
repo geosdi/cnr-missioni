@@ -48,13 +48,26 @@ public class UserRestServiceResource implements UsersRestService {
 	}
 
 	/**
-	 * @param userName
+	 * @param nome
+	 * @param cognome
+	 * @param codiceFiscale
+	 * @param matricola
+	 * @param username
+	 * @param targa
+	 * @param cartaCircolazione
+	 * @param polizzaAssicurativa
+	 * @param iban
+	 * @param mail
+	 * @param id
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public Response getUserByQuery(String nome,String cognome,String codiceFiscale,String matricola,String username) throws Exception {
-		return Response.ok(this.userDelegate.getUserByQuery(nome,cognome,codiceFiscale,matricola,username)).build();
+	public Response getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
+			String targa, String cartaCircolazione, String polizzaAssicurativa, String iban, String mail, String id)
+					throws Exception {
+		return Response.ok(this.userDelegate.getUserByQuery(nome, cognome, codiceFiscale, matricola, username, targa,
+				cartaCircolazione, polizzaAssicurativa, iban, mail, id)).build();
 	}
 
 	/**

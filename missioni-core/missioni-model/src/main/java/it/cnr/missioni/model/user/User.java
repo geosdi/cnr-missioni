@@ -15,14 +15,14 @@ import org.geosdi.geoplatform.experimental.el.api.model.Document;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
-import it.cnr.missioni.model.adapter.DocumentMapAdapter;
+import it.cnr.missioni.model.adapter.VeicoloMapAdapter;
 
 /**
  * @author Salvia Vito
  */
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "dataRegistrazione", "anagrafica", "residenza", "patente", "datiCNR", "credenziali",
+@XmlType(propOrder = { "id", "dataRegistrazione","dateLastModified","registrazioneCompletata", "anagrafica", "residenza", "patente", "datiCNR", "credenziali",
 		"mappaVeicolo" })
 public class User implements Document {
 
@@ -47,7 +47,7 @@ public class User implements Document {
 	private DatiCNR datiCNR = new DatiCNR();
 	@Valid
 	private Credenziali credenziali = new Credenziali();
-	@XmlJavaTypeAdapter(value = DocumentMapAdapter.class)
+	@XmlJavaTypeAdapter(value = VeicoloMapAdapter.class)
 	private Map<String, Veicolo> mappaVeicolo = new HashMap<String, Veicolo>(){
 		@Override
         public Veicolo put(String key, Veicolo value) {
@@ -55,6 +55,15 @@ public class User implements Document {
         }
 	};
 
+	
+	public boolean isVeicoloPrincipaleSettato(){
+		for(Veicolo v : mappaVeicolo.values()){
+			if(v.isVeicoloPrincipale())
+				return true;
+		}
+		return false;
+	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -217,5 +226,7 @@ public class User implements Document {
 				+ residenza + ", patente=" + patente + ", datiCNR=" + datiCNR + ", credenziali=" + credenziali
 				+ ", mappaVeicolo=" + mappaVeicolo + "]";
 	}
+	
+	
 
 }

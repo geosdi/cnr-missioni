@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.utility;
 
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
 
@@ -7,8 +8,11 @@ import org.joda.time.DateTime;
 
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.util.converter.Converter;
+import com.vaadin.data.util.converter.DefaultConverterFactory;
+import com.vaadin.data.util.converter.StringToDoubleConverter;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.CheckBox;
@@ -35,9 +39,11 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 
 			dateField.setValidationVisible(false);
 			dateField.setImmediate(true);
-			dateField.setDateFormat("dd/MM/yyyy");
+			dateField.setDateFormat("dd/MM/yyyy HH:mm");
+			dateField.setResolution(Resolution.MINUTE);
 			field = (T) dateField;
-		} else if (type.isAssignableFrom(String.class) || type.isAssignableFrom(Double.class)) {
+		} else if (type.isAssignableFrom(String.class) || type.isAssignableFrom(Double.class) 
+				|| type.isAssignableFrom(Integer.class)|| type.isAssignableFrom(Long.class)) {
 
 			field = super.createField(type, fieldType);
 			BListener listener = new BListener(field);
@@ -45,6 +51,8 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 			((AbstractTextField) field).setImmediate(true);
 			((AbstractTextField) field).setNullRepresentation("");
 			((AbstractTextField) field).addBlurListener(listener);
+			
+			
 		} else if (type.isAssignableFrom(StatoEnum.class) && fieldType.isAssignableFrom(ComboBox.class)) {
 
 			ComboBox comboBox = new ComboBox();
@@ -81,6 +89,7 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 			((CheckBox) field).setValidationVisible(false);
 			((CheckBox) field).setImmediate(true);
 			((CheckBox) field).addBlurListener(listener);
+			
 		}
 
 		else {
@@ -167,6 +176,32 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 
 		}
 
+	}
+	
+	
+	private static class MyStringToDoubleConverter extends StringToDoubleConverter {
+
+	    @Override
+	    protected NumberFormat getFormat(Locale locale) {
+	        NumberFormat format = super.getFormat(locale);
+	        format.setGroupingUsed(false);
+	        format.setMaximumFractionDigits(2);
+	        format.setMinimumFractionDigits(2);
+	        return format;
+	    }
+	}
+	
+	public static class MyConverterFactory extends DefaultConverterFactory {
+	    @Override
+	    protected <PRESENTATION, MODEL> Converter<PRESENTATION, MODEL> findConverter(
+	            Class<PRESENTATION> presentationType, Class<MODEL> modelType) {
+	        // Handle String <-> Double
+	        if (presentationType == String.class && modelType == Double.class) {
+	            return (Converter<PRESENTATION, MODEL>) new MyStringToDoubleConverter();
+	        }
+	        // Let default factory handle the rest
+	        return super.findConverter(presentationType, modelType);
+	    }
 	}
 
 }

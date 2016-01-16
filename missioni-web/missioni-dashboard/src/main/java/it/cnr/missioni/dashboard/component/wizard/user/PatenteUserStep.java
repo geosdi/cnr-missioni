@@ -82,18 +82,19 @@ public class PatenteUserStep implements WizardStep {
 		numeroPatenteField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-				userSearchBuilder.setCodiceFiscale(numeroPatenteField.getValue());
-				UserStore userStore = null;
-				try {
-					userStore = ClientConnector.getUser(userSearchBuilder);
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withNumeroPatente(numeroPatenteField.getValue());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("patente_present"));
 				}
-				if (userStore != null)
-					throw new InvalidValueException(Utility.getMessage("patente_present"));
 			}
 
 		});

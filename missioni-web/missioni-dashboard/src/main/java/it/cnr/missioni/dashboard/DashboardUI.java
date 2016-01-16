@@ -19,14 +19,16 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.RegistrationUserAction;
+import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
-import it.cnr.missioni.dashboard.component.ElencoMissioniTable;
-import it.cnr.missioni.dashboard.component.ElencoVeicoliTable;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
+import it.cnr.missioni.dashboard.notification.INotificationProvider;
+import it.cnr.missioni.dashboard.notification.NotificationProvider;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.view.LoginView;
 import it.cnr.missioni.dashboard.view.MainView;
 import it.cnr.missioni.model.user.User;
@@ -47,11 +49,12 @@ public final class DashboardUI extends UI  {
 	 * actually accessed.
 	 */
 	private final DashboardEventBus dashboardEventbus = new DashboardEventBus();
+	private  INotificationProvider dataProvider;
 
 	@Override
 	protected void init(final VaadinRequest request) {
-		setLocale(Locale.US);
-
+		setLocale(Locale.ITALY);
+		VaadinSession.getCurrent().setConverterFactory(new BeanFieldGrouFactory.MyConverterFactory());
 		DashboardEventBus.register(this);
 		Responsive.makeResponsive(this);
 		addStyleName(ValoTheme.UI_WITH_MENU);
@@ -74,7 +77,8 @@ public final class DashboardUI extends UI  {
 	 * Otherwise login view is shown.
 	 */
 	private void updateContent() {
-		User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+		User user = (User) VaadinSession.getCurrent().getAttribute(User.class);
+
 		// if (user != null && "admin".equals(user.getRole())) {
 		if (user != null) {
 			// Authenticated user
@@ -91,7 +95,9 @@ public final class DashboardUI extends UI  {
 	public void userLoginRequested(final LoginAction loginAction) {
 
 		if (loginAction.doAction()) {
+			dataProvider = new NotificationProvider();
 			updateContent();
+
 		}
 
 	}
@@ -119,15 +125,10 @@ public final class DashboardUI extends UI  {
 	}
 	
 	@Subscribe
-	public void updateTableVeicoliRequested(final ElencoVeicoliTable elencoVeicoliTable) {
-		elencoVeicoliTable.aggiornaTable();
+	public void rimborsoRequested(final RimborsoAction rimborsoAction) {
+		rimborsoAction.doAction();
 	}
 	
-	@Subscribe
-	public void updateTableMissioniRequested(final ElencoMissioniTable elencoMissioniTable) {
-		elencoMissioniTable.aggiornaTable();
-	}
-
 	@Subscribe
 	public void userLoggedOut(final UserLoggedOutEvent event) {
 		// When the user logs out, current VaadinSession gets closed and the
@@ -147,4 +148,11 @@ public final class DashboardUI extends UI  {
 	public static DashboardEventBus getDashboardEventbus() {
 		return ((DashboardUI) getCurrent()).dashboardEventbus;
 	}
+	
+    /**
+     * @return An instance for accessing the (dummy) services layer.
+     */
+    public static INotificationProvider getDataProvider() {
+        return ((DashboardUI) getCurrent()).dataProvider;
+    }
 }

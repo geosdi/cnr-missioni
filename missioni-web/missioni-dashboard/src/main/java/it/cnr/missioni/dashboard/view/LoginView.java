@@ -29,7 +29,7 @@ import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.LoginAction;
-import it.cnr.missioni.dashboard.component.CredenzialiWindow;
+import it.cnr.missioni.dashboard.component.window.CredenzialiWindow;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;

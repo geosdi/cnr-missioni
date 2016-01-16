@@ -19,6 +19,6 @@ public interface IUserDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<User
 	 * @return
 	 * @throws Exception
 	 */
-	List<User> findUtenteByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception;
+	List<User> findUserByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception;
 
 }

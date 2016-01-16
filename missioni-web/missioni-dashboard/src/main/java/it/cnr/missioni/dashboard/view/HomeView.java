@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.view.dashboard;
+package it.cnr.missioni.dashboard.view;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -162,8 +162,8 @@ public final class HomeView extends Panel implements View {
 		l.setSizeFull();
 		elencoMissioniTable = new ElencoMissioniTable();
 
-		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
-		missioneSearchBuilder.setIdUser(user.getId());
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId());
+
 		try {
 			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
 			elencoMissioniTable.aggiornaTable(missioniStore);

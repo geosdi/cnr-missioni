@@ -7,7 +7,6 @@ import com.vaadin.ui.Notification.Type;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
-import it.cnr.missioni.model.user.Credenziali;
 import it.cnr.missioni.model.user.RuoloUtenteEnum;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -26,9 +25,7 @@ private User user;
 	public boolean doAction() {
 
 		try {
-			
-			UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-			userSearchBuilder.setUsername(user.getCredenziali().getUsername());
+			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername(user.getCredenziali().getUsername());
 			
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 			
@@ -40,11 +37,13 @@ private User user;
 			}else{
 				user.setRegistrazioneCompletata(false);
 				user.setDataRegistrazione(new DateTime());
+				user.setDateLastModified(new DateTime());
 				user.getCredenziali().setPassword(user.getCredenziali().md5hash(user.getCredenziali().getPassword()));
 				user.getCredenziali().setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
 				ClientConnector.addUser(user);
 				Utility.getNotification(Utility.getMessage("success_message"),null,
 						Type.HUMANIZED_MESSAGE);
+
 
 				return true;
 			}

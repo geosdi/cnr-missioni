@@ -2,26 +2,21 @@ package it.cnr.missioni.dashboard.component.table;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import org.joda.time.DateTime;
 
-import com.gargoylesoftware.htmlunit.javascript.host.intl.NumberFormat;
 import com.vaadin.data.Property;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Handler;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Table.Align;
-import com.vaadin.ui.Table.RowHeaderMode;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.model.rimborso.Rimborso;
 
 /**
  * @author Salvia Vito

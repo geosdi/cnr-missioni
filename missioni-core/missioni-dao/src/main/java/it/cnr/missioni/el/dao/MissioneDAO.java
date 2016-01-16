@@ -45,7 +45,9 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 
 		logger.debug("###############Try to find Missione by Query: {}\n\n");
 		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(missioneSearchBuilder.buildQuery())).execute().actionGet();
+				.setTypes(getIndexType()).setQuery(missioneSearchBuilder.buildQuery()))
+				.addSort(missioneSearchBuilder.getFieldSort(), missioneSearchBuilder.getSortOrder())
+				.execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

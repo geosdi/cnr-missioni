@@ -7,10 +7,10 @@ public enum EnumBooleanType {
 	
 	MUST("must"),SHOULD("should"),MUST_NOT("must not");
 	
-	private String type;
+	private final String type;
 	
 	EnumBooleanType(String type){
-		this.setType(type);
+		this.type = type;
 	}
 
 	/**
@@ -20,12 +20,6 @@ public enum EnumBooleanType {
 		return type;
 	}
 
-	/**
-	 * @param type 
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
 	
 	public static EnumBooleanType getEnumBooleanType(String type) {
 		for (EnumBooleanType e : EnumBooleanType.values()) {

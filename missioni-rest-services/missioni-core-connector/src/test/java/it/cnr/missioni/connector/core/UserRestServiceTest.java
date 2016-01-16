@@ -90,8 +90,7 @@ public class UserRestServiceTest {
 	@Test
 	public void A_testFindUserByUsername() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setUsername("vito.salvia");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertNotNull(userStore);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
@@ -99,8 +98,7 @@ public class UserRestServiceTest {
 
 	@Test
 	public void B_testFindUserByUsernameErrata() throws Exception {
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setUsername("vito.salvi");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
 		Assert.assertNull(userStore);
@@ -131,34 +129,11 @@ public class UserRestServiceTest {
 		logger.debug("############################DELETE USER\n");
 
 	}
-
-	// @Test
-	// public void E_updatePasswordUser() throws Exception {
-	//
-	// UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-	// userSearchBuilder.setUsername("vito.salvia");
-	// UserStore userStore =
-	// missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-	//
-	// User user = userStore.getUsers().get(0);
-	// String oldPassword = user.getCredenziali().getPassword();
-	// user.getCredenziali().setPassword(user.getCredenziali().md5hash("salvia.vit"));
-	// missioniCoreClientConnector.updateUser(user);
-	// Thread.sleep(1000);
-	// userStore =
-	// missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-	// user = userStore.getUsers().get(0);
-	// String newPassword = user.getCredenziali().getPassword();
-	// Assert.assertTrue("Update Password User",
-	// !oldPassword.equals(newPassword));
-	//
-	// }
+	
 
 	@Test
 	public void F_findUserByCognome() throws Exception {
-
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCognome("Salv");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withCognome("Salv");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
 		Assert.assertNotNull(userStore);
@@ -166,22 +141,18 @@ public class UserRestServiceTest {
 
 	@Test
 	public void G_findUserByNome() throws Exception {
-
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setNome("Vi");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vi");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
 		Assert.assertNotNull(userStore);
 	}
 
 	@Test
-	public void H_findUserByCodiceFiscale() throws Exception {
-
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCodiceFiscale("slvvttttttttttt");
-		userSearchBuilder.setNome("Vito");
-		userSearchBuilder.setCognome("salvia");
-		userSearchBuilder.setMatricola("1111111");
+	public void H_findUserByCodiceFiscale() throws Exception {	
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vito")
+				.withCognome("salvia")
+				.withMatricola("1111111")
+				.withCodiceFiscale("slvvtttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
 		Assert.assertNotNull(userStore);
@@ -190,8 +161,8 @@ public class UserRestServiceTest {
 	@Test
 	public void I_findUserALL() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCodiceFiscale("slvv");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withCodiceFiscale("slvv");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
 		Assert.assertTrue("FIND USER BY ALL", userStore.getUsers().size() == 1);
@@ -200,29 +171,75 @@ public class UserRestServiceTest {
 	@Test
 	public void L_findUserErrataALL() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCodiceFiscale("slvvttttttttttt");
-		userSearchBuilder.setNome("Vito");
-		userSearchBuilder.setCognome("salvia");
-		userSearchBuilder.setMatricola("4111111");
+		
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vito")
+				.withCognome("salvia")
+				.withMatricola("4111111")
+				.withCodiceFiscale("slvvttttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY ALL", userStore == null);
 	}
 
 	@Test
 	public void M_findUserByMatricola() throws Exception {
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setMatricola("1111111");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withMatricola("1111111");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA", userStore.getUsers().size() == 1);
 	}
 
 	@Test
 	public void N_findUserByMatricolaErrata() throws Exception {
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setMatricola("2111111");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withMatricola("2111111");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA ERRATA", userStore == null);
+	}
+	
+	@Test
+	public void O_testFindByTarga() throws Exception {
+		
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withTarga("AA111BB");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		logger.debug("############################USER_ID FOUND{}\n", userStore);
+		Assert.assertNotNull(userStore);
+
+	}
+	
+	@Test
+	public void P_testFindByTargaErrata() throws Exception {
+		
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withTarga("AA111CC");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		logger.debug("############################USER_ID FOUND{}\n", userStore);
+		Assert.assertNull(userStore);
+
+	}
+	
+	@Test
+	public void Q_testUserByIDMustNot() throws Exception {
+		Thread.sleep(1000);
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withId("01");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		logger.debug("############################USER_ID MUST NOT{}\n", userStore.getUsers().size());
+				Assert.assertTrue("FIND USER BY ID",userStore.getUsers().size() == 2);
+
+	}
+	
+	
+	@Test
+	public void R_testUserByCodiceFiscale() throws Exception {
+		
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withId("01")
+				.withCodiceFiscale("slvvtttttttttttt");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		logger.debug("############################USER_ID FOUND{}\n", userStore);
+		Assert.assertNull("FIND USER BY ID",userStore);
+
 	}
 
 }

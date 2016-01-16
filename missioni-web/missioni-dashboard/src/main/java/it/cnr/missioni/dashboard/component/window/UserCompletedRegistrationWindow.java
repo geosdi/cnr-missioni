@@ -50,7 +50,6 @@ public class UserCompletedRegistrationWindow extends Window {
 
 	private final BeanFieldGroup<User> fieldGroup;
 
-
 	private TextField comuneField;
 	private TextField indirizzoField;
 	private TextField domicilioFiscaleField;
@@ -62,7 +61,7 @@ public class UserCompletedRegistrationWindow extends Window {
 
 	private TextField numeroPatenteField;
 	private TextField rilasciataDaField;
-	
+
 	private TextField livelloField;
 	private TextField qualificaField;
 	private TextField datoreLavoroField;
@@ -70,12 +69,11 @@ public class UserCompletedRegistrationWindow extends Window {
 	private TextField codiceTerzoField;
 	private TextField mailField;
 	private TextField ibanField;
-	
-		
+	private User user;
 
 	private UserCompletedRegistrationWindow(final User user) {
-		
-		
+
+		this.user = user;
 		addStyleName("profile-window");
 		setId(ID);
 		Responsive.makeResponsive(this);
@@ -105,13 +103,10 @@ public class UserCompletedRegistrationWindow extends Window {
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-			detailsWrapper.addComponent(buildAnagraficaTab());
-			detailsWrapper.addComponent(buildResidenzaTab());
-			detailsWrapper.addComponent(buildPatenteTab());
-			detailsWrapper.addComponent(buildDatiCNR());
-
-
-
+		detailsWrapper.addComponent(buildAnagraficaTab());
+		detailsWrapper.addComponent(buildResidenzaTab());
+		detailsWrapper.addComponent(buildPatenteTab());
+		detailsWrapper.addComponent(buildDatiCNR());
 
 		content.addComponent(buildFooter());
 
@@ -129,49 +124,48 @@ public class UserCompletedRegistrationWindow extends Window {
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
-		
-		nomeField = (TextField)fieldGroup.buildAndBind("Nome","anagrafica.nome");
+
+		nomeField = (TextField) fieldGroup.buildAndBind("Nome", "anagrafica.nome");
 		details.addComponent(nomeField);
-		cognomeField = (TextField)fieldGroup.buildAndBind("Cognome","anagrafica.cognome");
+		cognomeField = (TextField) fieldGroup.buildAndBind("Cognome", "anagrafica.cognome");
 		details.addComponent(cognomeField);
-		codiceFiscaleField =(TextField)fieldGroup.buildAndBind("Codice Fiscale","anagrafica.codiceFiscale");
+		codiceFiscaleField = (TextField) fieldGroup.buildAndBind("Codice Fiscale", "anagrafica.codiceFiscale");
 		details.addComponent(codiceFiscaleField);
-		luogoNascitaField = (TextField)fieldGroup.buildAndBind("Luogo Nascita","anagrafica.luogoNascita");
+		luogoNascitaField = (TextField) fieldGroup.buildAndBind("Luogo Nascita", "anagrafica.luogoNascita");
 		details.addComponent(luogoNascitaField);
 
-		
-		
-		dataNascitaField = (DateField)fieldGroup.buildAndBind("Data Nascita","anagrafica.dataNascita",DateField.class);
+		dataNascitaField = (DateField) fieldGroup.buildAndBind("Data Nascita", "anagrafica.dataNascita",
+				DateField.class);
 		dataNascitaField.setResolution(Resolution.DAY);
 		dataNascitaField.setDateFormat("dd/MM/yyyy");
 		details.addComponent(dataNascitaField);
 
-		DateField fieldDataRegistrazione = (DateField)fieldGroup.buildAndBind("Data Registrazione","dataRegistrazione");
+		DateField fieldDataRegistrazione = (DateField) fieldGroup.buildAndBind("Data Registrazione",
+				"dataRegistrazione");
 		fieldDataRegistrazione.setReadOnly(true);
 		fieldDataRegistrazione.setResolution(Resolution.MINUTE);
-		
+
 		fieldDataRegistrazione.setDateFormat("dd/MM/yyyy HH:mm");
 		details.addComponent(fieldDataRegistrazione);
-		
-		
-		DateField fieldDataLastModified = (DateField)fieldGroup.buildAndBind("Data ultima modifica","dateLastModified");
+
+		DateField fieldDataLastModified = (DateField) fieldGroup.buildAndBind("Data ultima modifica",
+				"dateLastModified");
 		fieldDataLastModified.setReadOnly(true);
 		fieldDataLastModified.setResolution(Resolution.MINUTE);
 		fieldDataLastModified.setDateFormat("dd/MM/yyyy HH:mm");
 		details.addComponent(fieldDataLastModified);
 
-		
 		return root;
 	}
 
-	
-	private void addValidator(){
+	private void addValidator() {
 		codiceFiscaleField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-//				userSearchBuilder.setCheckUniqueField(true);
-				userSearchBuilder.setCodiceFiscale(codiceFiscaleField.getValue());
+
+				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+						.withCodiceFiscale(codiceFiscaleField.getValue()).withId(user.getId());
+
 				UserStore userStore = null;
 				try {
 					userStore = ClientConnector.getUser(userSearchBuilder);
@@ -185,8 +179,94 @@ public class UserCompletedRegistrationWindow extends Window {
 			}
 
 		});
+
+		matricolaField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withMatricola(matricolaField.getValue()).withId(user.getId());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("matricola_present"));
+				}
+			}
+
+		});
+
+		ibanField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (value != null) {
+
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withIban(ibanField.getValue()).withId(user.getId());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("iban_present"));
+				}
+			}
+
+		});
+
+		mailField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+
+				if (value != null) {
+
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withMail(mailField.getValue()).withId(user.getId());
+
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("mail_present"));
+				}
+			}
+
+		});
+
+		numeroPatenteField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withNumeroPatente(numeroPatenteField.getValue()).withId(user.getId());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("numero_patente_present"));
+				}
+			}
+
+		});
+
 	}
-	
+
 	private Component buildPatenteTab() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Patente");
@@ -200,19 +280,19 @@ public class UserCompletedRegistrationWindow extends Window {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		numeroPatenteField = (TextField)fieldGroup.buildAndBind("Numero Patente","patente.numeroPatente");
+		numeroPatenteField = (TextField) fieldGroup.buildAndBind("Numero Patente", "patente.numeroPatente");
 		details.addComponent(numeroPatenteField);
-		rilasciataDaField = (TextField)fieldGroup.buildAndBind("Rilasciata da","patente.rilasciataDa");
-		details.addComponent(rilasciataDaField);	
-		DateField dataRilascio = (DateField)fieldGroup.buildAndBind("Data Rilascio","patente.dataRilascio");
+		rilasciataDaField = (TextField) fieldGroup.buildAndBind("Rilasciata da", "patente.rilasciataDa");
+		details.addComponent(rilasciataDaField);
+		DateField dataRilascio = (DateField) fieldGroup.buildAndBind("Data Rilascio", "patente.dataRilascio");
 
-		details.addComponent(dataRilascio);	
-		DateField dataValidita = (DateField)fieldGroup.buildAndBind("Valida fino al","patente.validaFinoAl");
+		details.addComponent(dataRilascio);
+		DateField dataValidita = (DateField) fieldGroup.buildAndBind("Valida fino al", "patente.validaFinoAl");
 		details.addComponent(dataValidita);
 
 		return root;
 	}
-	
+
 	private Component buildDatiCNR() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Dati CNR");
@@ -226,21 +306,20 @@ public class UserCompletedRegistrationWindow extends Window {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		livelloField = (TextField)fieldGroup.buildAndBind("Livello","datiCNR.livello");
+		livelloField = (TextField) fieldGroup.buildAndBind("Livello", "datiCNR.livello");
 		details.addComponent(livelloField);
-		qualificaField = (TextField)fieldGroup.buildAndBind("Qualifica","datiCNR.qualifica");
+		qualificaField = (TextField) fieldGroup.buildAndBind("Qualifica", "datiCNR.qualifica");
 		details.addComponent(qualificaField);
-		datoreLavoroField = (TextField)fieldGroup.buildAndBind("Datore Lavoro","datiCNR.datoreLavoro");
+		datoreLavoroField = (TextField) fieldGroup.buildAndBind("Datore Lavoro", "datiCNR.datoreLavoro");
 		details.addComponent(datoreLavoroField);
-		matricolaField = (TextField)fieldGroup.buildAndBind("Matricola","datiCNR.matricola");
+		matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "datiCNR.matricola");
 		details.addComponent(matricolaField);
-		codiceTerzoField = (TextField)fieldGroup.buildAndBind("Codice Terzi","datiCNR.codiceTerzo");
+		codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzi", "datiCNR.codiceTerzo");
 		details.addComponent(codiceTerzoField);
-		mailField = (TextField)fieldGroup.buildAndBind("Mail","datiCNR.mail");
+		mailField = (TextField) fieldGroup.buildAndBind("Mail", "datiCNR.mail");
 		details.addComponent(mailField);
-		ibanField = (TextField)fieldGroup.buildAndBind("Iban","datiCNR.iban");
+		ibanField = (TextField) fieldGroup.buildAndBind("Iban", "datiCNR.iban");
 		details.addComponent(ibanField);
-		
 
 		return root;
 	}
@@ -258,18 +337,15 @@ public class UserCompletedRegistrationWindow extends Window {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		comuneField = (TextField)fieldGroup.buildAndBind("Comune","residenza.comune");
+		comuneField = (TextField) fieldGroup.buildAndBind("Comune", "residenza.comune");
 		details.addComponent(comuneField);
-		indirizzoField = (TextField)fieldGroup.buildAndBind("Indirizzo","residenza.indirizzo");
+		indirizzoField = (TextField) fieldGroup.buildAndBind("Indirizzo", "residenza.indirizzo");
 		details.addComponent(indirizzoField);
-		domicilioFiscaleField = (TextField)fieldGroup.buildAndBind("Domicilio Fiscale","residenza.domicilioFiscale");
+		domicilioFiscaleField = (TextField) fieldGroup.buildAndBind("Domicilio Fiscale", "residenza.domicilioFiscale");
 		details.addComponent(domicilioFiscaleField);
-
-
 
 		return root;
 	}
-
 
 	private Component buildFooter() {
 		HorizontalLayout footer = new HorizontalLayout();
@@ -287,13 +363,13 @@ public class UserCompletedRegistrationWindow extends Window {
 						((AbstractField<?>) f).setValidationVisible(true);
 					}
 					fieldGroup.commit();
-					
-					BeanItem<User> beanItem = (BeanItem<User>)fieldGroup.getItemDataSource();
+
+					BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
 					User new_user = beanItem.getBean();
 
 					DashboardEventBus.post(new UpdateUserAction(new_user));
 					close();
-					
+
 				} catch (InvalidValueException | CommitException e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
 							Type.ERROR_MESSAGE);
@@ -313,9 +389,5 @@ public class UserCompletedRegistrationWindow extends Window {
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}
-
-
-
-
 
 }

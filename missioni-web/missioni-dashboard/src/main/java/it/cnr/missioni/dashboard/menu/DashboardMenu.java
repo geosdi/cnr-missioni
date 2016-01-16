@@ -1,14 +1,11 @@
-package it.cnr.missioni.dashboard.view;
+package it.cnr.missioni.dashboard.menu;
 
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
@@ -20,30 +17,39 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.component.CredenzialiWindow;
-import it.cnr.missioni.dashboard.component.UserWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedEvent;
+import it.cnr.missioni.dashboard.component.window.CredenzialiWindow;
+import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
+import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
+import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
+import it.cnr.missioni.dashboard.event.DashboardEvent.MenuUpdateEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ProfileUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ReportsCountUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * A responsive menu component providing user information and the controls for
  * primary navigation between the views.
  */
-@SuppressWarnings({ "serial", "unchecked" })
 public final class DashboardMenu extends CustomComponent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4240406005134056733L;
 	public static final String ID = "dashboard-menu";
 	public static final String REPORTS_BADGE_ID = "dashboard-menu-reports-badge";
 	public static final String NOTIFICATIONS_BADGE_ID = "dashboard-menu-notifications-badge";
 	private static final String STYLE_VISIBLE = "valo-menu-visible";
-	private Label notificationsBadge;
 	private Label reportsBadge;
 	private MenuItem settingsItem;
+	private  User user = getCurrentUser();
+	private CssLayout menuItemsLayout;
+	private MenuBar settings =  new MenuBar();
 
 	public DashboardMenu() {
 		setPrimaryStyleName("valo-menu");
@@ -68,7 +74,6 @@ public final class DashboardMenu extends CustomComponent {
 
 		menuContent.addComponent(buildTitle());
 		menuContent.addComponent(buildUserMenu());
-		menuContent.addComponent(buildToggleButton());
 		menuContent.addComponent(buildMenuItems());
 
 		return menuContent;
@@ -87,19 +92,24 @@ public final class DashboardMenu extends CustomComponent {
 		return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
 	}
 
-	private Component buildUserMenu() {
-		final MenuBar settings = new MenuBar();
+	private MenuBar buildUserMenu() {
+//	  settings = new MenuBar();
 		settings.addStyleName("user-menu");
-		final User user = getCurrentUser();
+		
 		settingsItem = settings.addItem("", new ThemeResource("img/profile-pic-300px.jpg"), null);
 		updateUserName(null);
-		settingsItem.addItem("Edit Profile", new Command() {
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				UserWindow.open(user);
-			}
-		});
-		settingsItem.addSeparator();
+
+		// se la registrazione è completata
+		if (user.isRegistrazioneCompletata()) {
+			settingsItem.addItem("Edit Profile", new Command() {
+				@Override
+				public void menuSelected(final MenuItem selectedItem) {
+					UserCompletedRegistrationWindow.open(user);
+				}
+			});
+
+			settingsItem.addSeparator();
+		}
 		settingsItem.addItem("Cambia Password", new Command() {
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
@@ -114,110 +124,65 @@ public final class DashboardMenu extends CustomComponent {
 				DashboardEventBus.post(new UserLoggedOutEvent());
 			}
 		});
+		
+		
 		return settings;
 	}
 
-	private Component buildToggleButton() {
-		Button valoMenuToggleButton = new Button("Menu", new ClickListener() {
-			@Override
-			public void buttonClick(final ClickEvent event) {
-				if (getCompositionRoot().getStyleName().contains(STYLE_VISIBLE)) {
-					getCompositionRoot().removeStyleName(STYLE_VISIBLE);
-				} else {
-					getCompositionRoot().addStyleName(STYLE_VISIBLE);
-				}
-			}
-		});
-		valoMenuToggleButton.setIcon(FontAwesome.LIST);
-		valoMenuToggleButton.addStyleName("valo-menu-toggle");
-		valoMenuToggleButton.addStyleName(ValoTheme.BUTTON_BORDERLESS);
-		valoMenuToggleButton.addStyleName(ValoTheme.BUTTON_SMALL);
-		return valoMenuToggleButton;
-	}
-
 	private Component buildMenuItems() {
-		CssLayout menuItemsLayout = new CssLayout();
+		menuItemsLayout = new CssLayout();
 		menuItemsLayout.addStyleName("valo-menuitems");
 
 		for (final DashboardViewType view : DashboardViewType.values()) {
-			Component menuItemComponent = new ValoMenuItemButton(view);
 
-			// if (view == DashboardViewType.REPORTS) {
-			// // Add drop target to reports button
-			// DragAndDropWrapper reports = new DragAndDropWrapper(
-			// menuItemComponent);
-			// reports.setSizeUndefined();
-			// reports.setDragStartMode(DragStartMode.NONE);
-			// reports.setDropHandler(new DropHandler() {
-			//
-			// @Override
-			// public void drop(final DragAndDropEvent event) {
-			// UI.getCurrent()
-			// .getNavigator()
-			// .navigateTo(
-			// DashboardViewType.REPORTS.getViewName());
-			// Table table = (Table) event.getTransferable()
-			// .getSourceComponent();
-			// DashboardEventBus.post(new TransactionReportEvent(
-			// (Collection<Transaction>) table.getValue()));
-			// }
-			//
-			// @Override
-			// public AcceptCriterion getAcceptCriterion() {
-			// return AcceptItem.ALL;
-			// }
-			//
-			// });
-			// menuItemComponent = reports;
-			// }
+			// se l'user ha completato la registrazione
+			if (view.getViewName().equals("aggiungi missione") || view.getViewName().equals("aggiungi veicolo")
+					|| view.getViewName().equals("ricerca missione")) {
 
-			if (view == DashboardViewType.DASHBOARD) {
-				notificationsBadge = new Label();
-				notificationsBadge.setId(NOTIFICATIONS_BADGE_ID);
-				menuItemComponent = buildBadgeWrapper(menuItemComponent, notificationsBadge);
+				if (user.isRegistrazioneCompletata()) {
+					Component menuItemComponent = new ValoMenuItemButton(view);
+					menuItemsLayout.addComponent(menuItemComponent);
+				}
+
 			}
-			// if (view == DashboardViewType.REPORTS) {
-			// reportsBadge = new Label();
-			// reportsBadge.setId(REPORTS_BADGE_ID);
-			// menuItemComponent = buildBadgeWrapper(menuItemComponent,
-			// reportsBadge);
-			// }
+			// se l'user non ha completato la registrazione
+			if (!user.isRegistrazioneCompletata() && view.getViewName().equals("completa registrazione")) {
+				Component menuItemComponent = new ValoMenuItemButton(view);
+				menuItemsLayout.addComponent(menuItemComponent);
+			}
 
-			menuItemsLayout.addComponent(menuItemComponent);
 		}
 		return menuItemsLayout;
 
 	}
 
-	private Component buildBadgeWrapper(final Component menuItemButton, final Component badgeLabel) {
-		CssLayout dashboardWrapper = new CssLayout(menuItemButton);
-		dashboardWrapper.addStyleName("badgewrapper");
-		dashboardWrapper.addStyleName(ValoTheme.MENU_ITEM);
-		badgeLabel.addStyleName(ValoTheme.MENU_BADGE);
-		badgeLabel.setWidthUndefined();
-		badgeLabel.setVisible(false);
-		dashboardWrapper.addComponent(badgeLabel);
-		return dashboardWrapper;
-	}
-
 	@Override
 	public void attach() {
 		super.attach();
-		updateNotificationsCount(null);
+	}
+
+	//aggiorna il menù a seguito della registrazione completata da parte dell'user
+	@Subscribe
+	public void updateMenu(MenuUpdateEvent menuUpdateEvent) {
+		user = getCurrentUser();
+		menuItemsLayout.removeAllComponents();
+
+		for (final DashboardViewType view : DashboardViewType.values()) {
+			if (!view.getViewName().equals("completa registrazione")) {
+				Component menuItemComponent = new ValoMenuItemButton(view);
+				menuItemsLayout.addComponent(menuItemComponent);
+			}
+		}
+//		settings.removeItems();
+		settingsItem = null;
+		settings.removeItems();
+		settings = buildUserMenu();
 	}
 
 	@Subscribe
 	public void postViewChange(final PostViewChangeEvent event) {
 		// After a successful view change the menu can be hidden in mobile view.
 		getCompositionRoot().removeStyleName(STYLE_VISIBLE);
-	}
-
-	@Subscribe
-	public void updateNotificationsCount(final NotificationsCountUpdatedEvent event) {
-		// int unreadNotificationsCount = DashboardUI.getDataProvider()
-		// .getUnreadNotificationsCount();
-		// notificationsBadge.setValue(String.valueOf(unreadNotificationsCount));
-		// notificationsBadge.setVisible(unreadNotificationsCount > 0);
 	}
 
 	@Subscribe
@@ -249,10 +214,27 @@ public final class DashboardMenu extends CustomComponent {
 			setIcon(view.getIcon());
 			setCaption(view.getViewName().substring(0, 1).toUpperCase() + view.getViewName().substring(1));
 			DashboardEventBus.register(this);
+
 			addClickListener(new ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {
-					UI.getCurrent().getNavigator().navigateTo(view.getViewName());
+
+					if (view == DashboardViewType.COMPLETA_REGISTRAZIONE) {
+//						WizardWindow.openWizardUser(user);
+						WizardSetupWindow.getWizardSetup().withTipo("user").withUser(user).build();
+
+					}
+
+					else if (view == DashboardViewType.AGGIUNGI_MISSIONE) {
+						WizardSetupWindow.getWizardSetup().withModifica(false).withTipo("missione").withMissione(new Missione()).build();;
+					}
+
+					else if (view == DashboardViewType.AGGIUNGI_VEICOLO) {
+						VeicoloWindow.open(new Veicolo(), false);
+					} else {
+						UI.getCurrent().getNavigator().navigateTo(view.getViewName());
+					}
+
 				}
 			});
 

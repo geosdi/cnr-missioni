@@ -4,6 +4,8 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.User;
@@ -25,8 +27,7 @@ public class LoginAction implements IAction {
 
 	public boolean doAction() {
 			try {
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-				userSearchBuilder.setUsername(username);
+				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername(username);
 				UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 				if (userStore == null) {
 					Utility.getNotification(Utility.getMessage("error_message"),
@@ -35,6 +36,7 @@ public class LoginAction implements IAction {
 				} else if (! (user = userStore.getUsers().get(0)).getCredenziali().getPassword().equals(user.getCredenziali().md5hash(password))) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("password_error"),
 							Type.ERROR_MESSAGE);
+
 					return false;
 				} else {
 					VaadinSession.getCurrent().setAttribute(User.class.getName(), user);

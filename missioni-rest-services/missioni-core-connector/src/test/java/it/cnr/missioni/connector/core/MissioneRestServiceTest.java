@@ -97,16 +97,15 @@ public class MissioneRestServiceTest {
 	@Test
 	public void A_testFindMissione() throws Exception {
 		
-		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
-		missioneSearchBuilder.setIdUser("01");
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione("M_01");
 		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertNotNull(missioniStore);
 	}
 
 	@Test
 	public void B_testFindMissioneByUser() throws Exception {
-		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
-		missioneSearchBuilder.setIdUser("03");
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione("03");
+
 		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertNull(missioniStore);
 	}
@@ -120,8 +119,8 @@ public class MissioneRestServiceTest {
 		missione.setLocalita("Roma");
 		missioniCoreClientConnector.addMissione(missione);
 		Thread.sleep(1000);
-		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
-		missioneSearchBuilder.setIdUser("M_04");
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("04");
+
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		logger.debug("############################INSERT MISSIONE\n");
 	}
@@ -134,7 +133,8 @@ public class MissioneRestServiceTest {
 		missione_update.setLocalita("Napoli");
 		missioniCoreClientConnector.updateMissione(missione_update);
 		Thread.sleep(1000);
-		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione("M_04");
+
 		missioneSearchBuilder.setIdMissione("M_04");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		

@@ -82,18 +82,19 @@ public class AnagraficaUserStep implements WizardStep {
 		codiceFiscaleField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-//				userSearchBuilder.setCheckUniqueField(true);
-				userSearchBuilder.setCodiceFiscale(codiceFiscaleField.getValue());
-				UserStore userStore = null;
-				try {
-					userStore = ClientConnector.getUser(userSearchBuilder);
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withCodiceFiscale(codiceFiscaleField.getValue());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("codice_fiscale_present"));
 				}
-				if (userStore != null)
-					throw new InvalidValueException(Utility.getMessage("codice_fiscale_present"));
 
 			}
 

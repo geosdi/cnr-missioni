@@ -2,6 +2,8 @@ package it.cnr.missioni.model.user;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -167,6 +169,59 @@ public class UserTest {
 		veicolo.setPolizzaAssicurativa("polizza");
 		Set<ConstraintViolation<Veicolo>> constraintViolations = validator.validate(veicolo);
 		assertEquals(0, constraintViolations.size());
+	}
+	
+	@Test
+	public void buildUserTest(){
+		User user = null;
+		Anagrafica anagrafica = null;
+		Credenziali credenziali = null;
+		user = new User();
+		user.setId("01");
+		anagrafica = new Anagrafica();
+		anagrafica.setCognome("Salvia");
+		anagrafica.setNome("Vito");
+		anagrafica.setDataNascita(new DateTime(1982, 7, 30, 0, 0));
+		anagrafica.setCodiceFiscale("slvvttttttttttt");
+		anagrafica.setLuogoNascita("Potenza");
+		credenziali = new Credenziali();
+		credenziali.setUsername("vito.salvia");
+		credenziali.setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
+		credenziali.setPassword(credenziali.md5hash("vitosalvia"));
+		user.setCredenziali(credenziali);
+		user.setAnagrafica(anagrafica);
+		Veicolo veicolo = new Veicolo();
+		veicolo.setTipo("Ford Fiesta");
+		veicolo.setTarga("AA111BB");
+		veicolo.setCartaCircolazione("12234");
+		veicolo.setPolizzaAssicurativa("A1B2");
+		veicolo.setVeicoloPrincipale(true);
+		Map<String, Veicolo> mappaVeicoli = new HashMap<String, Veicolo>();
+		mappaVeicoli.put(veicolo.getTarga(), veicolo);
+		user.setMappaVeicolo(mappaVeicoli);
+		DatiCNR datiCNR = new DatiCNR();
+		datiCNR.setDatoreLavoro("Izzi");
+		datiCNR.setIban("IT0000000000000000");
+		datiCNR.setLivello(5);
+		datiCNR.setMail("vito.salvia@gmail.com");
+		datiCNR.setMatricola("1111111");
+		datiCNR.setQualifica("");
+		datiCNR.setCodiceTerzo("123");
+		user.setDatiCNR(datiCNR);
+		Patente p = new Patente();
+		p.setDataRilascio(new DateTime(2001, 12, 15, 0, 0));
+		p.setNumeroPatente("12334");
+		p.setRilasciataDa("MCTC");
+		p.setValidaFinoAl(new DateTime(2021, 12, 15, 0, 0));
+		user.setPatente(p);
+		Residenza r = new Residenza();
+		r.setIndirizzo("Via Verdi");
+		r.setComune("Tito");
+		r.setDomicilioFiscale("Via Convento");
+		user.setResidenza(r);
+		user.setDataRegistrazione(new DateTime(2015, 1, 4, 0, 0));
+		user.setDateLastModified(new DateTime(2015, 1, 4, 0, 0));
+		user.setRegistrazioneCompletata(true);
 	}
 
 }

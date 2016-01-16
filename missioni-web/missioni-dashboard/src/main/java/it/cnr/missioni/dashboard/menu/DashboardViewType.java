@@ -1,23 +1,22 @@
-package it.cnr.missioni.dashboard.view;
+package it.cnr.missioni.dashboard.menu;
 
 import com.vaadin.navigator.View;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 
-import it.cnr.missioni.dashboard.view.dashboard.DashboardView;
-import it.cnr.missioni.dashboard.view.dashboard.VeicoliView;
+import it.cnr.missioni.dashboard.view.CalendarioView;
+import it.cnr.missioni.dashboard.view.HomeView;
+import it.cnr.missioni.dashboard.view.RicercaMissioneView;
 
 
 public enum DashboardViewType {
-    DASHBOARD("dashboard", DashboardView.class, FontAwesome.HOME, true)
-//    ,
-//    VEICOLI("veicoli", VeicoliView.class, FontAwesome.CAR, true)  
-//    , 
-//    MISSIONE(
-//            "nuova missione", TransactionsView.class, FontAwesome.TABLE, false), REPORTS(
-//            "elenco missioni", ReportsView.class, FontAwesome.FILE_TEXT_O, true)
-//    , SCHEDULE(
-//            "schedule", ScheduleView.class, FontAwesome.CALENDAR_O, false)
+    HOME("home", HomeView.class, FontAwesome.HOME, true)
+    ,
+    AGGIUNGI_MISSIONE("aggiungi missione", null, FontAwesome.SUITCASE, true),
+    COMPLETA_REGISTRAZIONE("completa registrazione",null, FontAwesome.USER, true),
+    AGGIUNGI_VEICOLO("aggiungi veicolo",null, FontAwesome.CAR, true),
+    RICERCA_MISSIONE("ricerca missione",RicercaMissioneView.class, FontAwesome.SEARCH, true),
+    CALENDARIO("calendario", CalendarioView.class, FontAwesome.CALENDAR, true)  
     ;
 
     private final String viewName;

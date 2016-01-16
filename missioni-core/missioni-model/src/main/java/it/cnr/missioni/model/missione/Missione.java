@@ -1,6 +1,7 @@
 package it.cnr.missioni.model.missione;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -17,8 +18,8 @@ import it.cnr.missioni.model.rimborso.Rimborso;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "localita", "oggetto", "stato", "missioneEstera", "altro", "idUser", "dataInserimento",
-		"datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
+@XmlType(propOrder = { "id", "localita", "oggetto", "stato","fondo","GAE", "missioneEstera", "altro", "idUser","idVeicolo", "dataInserimento",
+		"dateLastModified","mezzoProprio","distanza","datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
 public class Missione implements Document {
 
 	/**
@@ -31,11 +32,17 @@ public class Missione implements Document {
 	@NotBlank
 	private String oggetto;
 	private StatoEnum stato;
+	private String fondo;
+	private String GAE;
 	private boolean missioneEstera;
 	private String altro;
 	private String idUser;
+	private String idVeicolo;
 	private DateTime dataInserimento;
 	private DateTime dateLastModified;
+	private boolean mezzoProprio;
+	@Min(value = 0)
+	private double distanza;
 	@Valid
 	private DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
 	@Valid
@@ -123,6 +130,38 @@ public class Missione implements Document {
 
 
 	/**
+	 * @return the fondo
+	 */
+	public String getFondo() {
+		return fondo;
+	}
+
+
+	/**
+	 * @param fondo 
+	 */
+	public void setFondo(String fondo) {
+		this.fondo = fondo;
+	}
+
+
+	/**
+	 * @return the gAE
+	 */
+	public String getGAE() {
+		return GAE;
+	}
+
+
+	/**
+	 * @param gAE 
+	 */
+	public void setGAE(String gAE) {
+		GAE = gAE;
+	}
+
+
+	/**
 	 * @return the missioneEstera
 	 */
 	public boolean isMissioneEstera() {
@@ -171,6 +210,22 @@ public class Missione implements Document {
 
 
 	/**
+	 * @return the idVeicolo
+	 */
+	public String getIdVeicolo() {
+		return idVeicolo;
+	}
+
+
+	/**
+	 * @param idVeicolo 
+	 */
+	public void setIdVeicolo(String idVeicolo) {
+		this.idVeicolo = idVeicolo;
+	}
+
+
+	/**
 	 * @return the dataInserimento
 	 */
 	public DateTime getDataInserimento() {
@@ -199,6 +254,38 @@ public class Missione implements Document {
 	 */
 	public void setDateLastModified(DateTime dateLastModified) {
 		this.dateLastModified = dateLastModified;
+	}
+
+
+	/**
+	 * @return the mezzoProprio
+	 */
+	public boolean isMezzoProprio() {
+		return mezzoProprio;
+	}
+
+
+	/**
+	 * @param mezzoProprio 
+	 */
+	public void setMezzoProprio(boolean mezzoProprio) {
+		this.mezzoProprio = mezzoProprio;
+	}
+
+
+	/**
+	 * @return the distanza
+	 */
+	public double getDistanza() {
+		return distanza;
+	}
+
+
+	/**
+	 * @param distanza 
+	 */
+	public void setDistanza(double distanza) {
+		this.distanza = distanza;
 	}
 
 
@@ -272,11 +359,17 @@ public class Missione implements Document {
 	@Override
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", stato=" + stato
-				+ ", missioneEstera=" + missioneEstera + ", altro=" + altro + ", idUser=" + idUser
-				+ ", dataInserimento=" + dataInserimento + ", dateLastModified=" + dateLastModified
+				+ ", fondo=" + fondo + ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", altro=" + altro
+				+ ", idUser=" + idUser + ", idVeicolo=" + idVeicolo + ", dataInserimento=" + dataInserimento
+				+ ", dateLastModified=" + dateLastModified + ", mezzoProprio=" + mezzoProprio + ", distanza=" + distanza
 				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
 				+ ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
 	}
+
+
+
+
+
 
 	
 

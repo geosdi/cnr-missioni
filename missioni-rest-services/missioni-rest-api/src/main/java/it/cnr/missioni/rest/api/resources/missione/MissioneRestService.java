@@ -23,7 +23,7 @@ public interface MissioneRestService {
      */
     @GET
     @Path(value = BaseServiceRSPathConfig.GET_MISSIONE_BY_QUERY)
-    Response getMissioneByQuery(@QueryParam(value = "idMissione")String idMissione,@QueryParam(value = "idUser") String idUser,@QueryParam(value = "stato") String stato,@QueryParam(value = "numeroOrdineRimborso") Long numeroOrdineRimborso) throws Exception;
+    Response getMissioneByQuery(@QueryParam(value = "idMissione")String idMissione,@QueryParam(value = "idUser") String idUser,@QueryParam(value = "stato") String stato,@QueryParam(value = "numeroOrdineRimborso") String numeroOrdineRimborso) throws Exception;
 
     /**
      * @param userID

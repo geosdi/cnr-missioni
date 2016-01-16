@@ -13,7 +13,7 @@ import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
-import it.cnr.missioni.dashboard.view.DashboardViewType;
+import it.cnr.missioni.dashboard.menu.DashboardViewType;
 
 @SuppressWarnings("serial")
 public class DashboardNavigator extends Navigator {
@@ -22,7 +22,7 @@ public class DashboardNavigator extends Navigator {
     private static final String TRACKER_ID = null;// "UA-658457-6";
     private GoogleAnalyticsTracker tracker;
 
-    private static final DashboardViewType ERROR_VIEW = DashboardViewType.DASHBOARD;
+    private static final DashboardViewType ERROR_VIEW = DashboardViewType.HOME;
     private ViewProvider errorViewProvider;
 
     public DashboardNavigator(final ComponentContainer container) {
@@ -75,6 +75,9 @@ public class DashboardNavigator extends Navigator {
     private void initViewProviders() {
         // A dedicated view provider is added for each separate view type
         for (final DashboardViewType viewType : DashboardViewType.values()) {
+        	
+        	if(viewType.getViewClass() != null){
+        	
             ViewProvider viewProvider = new ClassBasedViewProvider(
                     viewType.getViewName(), viewType.getViewClass()) {
 
@@ -108,6 +111,7 @@ public class DashboardNavigator extends Navigator {
             }
 
             addProvider(viewProvider);
+        	}
         }
 
         setErrorProvider(new ViewProvider() {

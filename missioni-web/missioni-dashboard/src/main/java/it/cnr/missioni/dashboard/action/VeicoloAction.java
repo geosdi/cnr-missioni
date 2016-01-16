@@ -4,8 +4,10 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.ElencoVeicoliTable;
+import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -16,11 +18,11 @@ import it.cnr.missioni.model.user.Veicolo;
 public class VeicoloAction implements IAction {
 
 	private Veicolo veicolo;
-	private ElencoVeicoliTable elencoVeicoliTable;
+	private String oldTarga;
 	
-	public VeicoloAction(Veicolo veicolo,ElencoVeicoliTable elencoVeicoliTable ){
+	public VeicoloAction(Veicolo veicolo ,String oldTarga ){
 		this.veicolo =  veicolo;
-		this.elencoVeicoliTable = elencoVeicoliTable;
+		this.oldTarga = oldTarga;
 	}
 
 
@@ -30,12 +32,28 @@ public class VeicoloAction implements IAction {
 			
 			User user =  (User)VaadinSession.getCurrent().getAttribute(User.class.getName());
 			
-			user.getMappaVeicolo().put(veicolo.getTarga(), veicolo);
+			//se settato come veicolo principale aggiorno tutti i veicoli presenti a NON principale
+			if(veicolo.isVeicoloPrincipale()){
+				for(Veicolo v : user.getMappaVeicolo().values())
+					if(!v.getTarga().equals(veicolo.getTarga()))
+						v.setVeicoloPrincipale(false);
+			}
+			
+			//se cambia la targa, anche la key nell' HashMap cambia. Elimino la vecchia key
+			if(!veicolo.getTarga().equals(oldTarga)){
+				user.getMappaVeicolo().remove(oldTarga);
+			}
+			
+			//se inserisco un veicolo iniziale sarà di default principale
+			if(user.getMappaVeicolo().isEmpty())
+				veicolo.setVeicoloPrincipale(true);
+			
+			user.getMappaVeicolo().put(veicolo.getTarga().toUpperCase(), veicolo);
 			ClientConnector.updateUser(user);
 			VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
 			Utility.getNotification(Utility.getMessage("success_message"),null,
 					Type.HUMANIZED_MESSAGE);
-			DashboardEventBus.post(elencoVeicoliTable);
+			DashboardEventBus.post(new  DashboardEvent.TableVeicoliUpdatedEvent() );
 			return true;
 
 		} catch (Exception e) {

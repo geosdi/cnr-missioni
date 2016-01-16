@@ -25,7 +25,8 @@ public interface IUserDelegate {
 	 * @return
 	 * @throws Exception
 	 */
-	 UserStore getUserByQuery(String nome,String cognome,String codiceFiscale,String matricola,String username) throws Exception;
+	 UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
+				String targa, String cartaCircolazione, String polizzaAssicurativa, String iban, String mail, String id) throws Exception;
 
 	/**
 	 * 

@@ -9,7 +9,14 @@ public class SearchConstants {
 	public final static String USER_FIELD_COGNOME = "user.anagrafica.cognome";
 	public final static String USER_FIELD_CODICE_FISCALE = "user.anagrafica.codiceFiscale";
 	public final static String USER_FIELD_USERNAME = "user.credenziali.username";
+	public final static String USER_FIELD_NUMERO_PATENTE = "user.patente.numeroPatente";
 	public final static String USER_FIELD_MATRICOLA = "user.datiCNR.matricola";
+	public final static String USER_FIELD_IBAN = "user.datiCNR.iban";
+	public final static String USER_FIELD_MAIL = "user.datiCNR.mail";
+	public final static String USER_FIELD_VEICOLO_TARGA = "user.mappaVeicolo.entry.value.targa";
+	public final static String USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE = "user.mappaVeicolo.entry.value.cartaCircolazione";
+	public final static String USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA = "user.mappaVeicolo.entry.value.polizzaAssicurativa";
+	public final static String USER_FIELD_ID = "user.id";
 	
 	public static final String MISSIONE_FIELD_ID= "missione.id";
 	public static final String MISSIONE_FIELD_DATA_INSERIMENTO = "missione.dataInserimento";

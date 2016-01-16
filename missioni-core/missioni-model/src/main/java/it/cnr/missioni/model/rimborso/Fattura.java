@@ -16,6 +16,7 @@ public class Fattura implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String id;
 	@NotNull
 	private Long numeroFattura;
 	@NotNull
@@ -27,6 +28,20 @@ public class Fattura implements Serializable{
 	@NotBlank
 	private String valuta;
 	private String altro;
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id 
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the numeroFattura
@@ -119,8 +134,8 @@ public class Fattura implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "Fattura [numeroFattura=" + numeroFattura + ", data=" + data + ", tipologiaSpesa=" + tipologiaSpesa
-				+ ", importo=" + importo + ", valuta=" + valuta + ", altro=" + altro + "]";
+		return "Fattura [id=" + id + ", numeroFattura=" + numeroFattura + ", data=" + data + ", tipologiaSpesa="
+				+ tipologiaSpesa + ", importo=" + importo + ", valuta=" + valuta + ", altro=" + altro + "]";
 	}
 
 

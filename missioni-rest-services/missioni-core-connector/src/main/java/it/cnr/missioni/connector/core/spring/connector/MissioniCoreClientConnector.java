@@ -119,6 +119,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("codiceFiscale", userSearchBuilder.getCodiceFiscale())
                 .queryParam("matricola", userSearchBuilder.getMatricola())
                 .queryParam("username", userSearchBuilder.getUsername())
+                .queryParam("targa", userSearchBuilder.getTarga())
+                .queryParam("cartaCircolazione", userSearchBuilder.getCartaCircolazione())
+                .queryParam("polizzaAssicurativa", userSearchBuilder.getPolizzaAssicurativa())
+                .queryParam("iban", userSearchBuilder.getIban())
+                .queryParam("mail", userSearchBuilder.getMail())
+                .queryParam("id", userSearchBuilder.getId())
                 .request(MediaType.APPLICATION_JSON)
                 .get(UserStore.class);
     }

@@ -22,10 +22,6 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
-import it.cnr.missioni.el.model.search.ExactSearch;
-import it.cnr.missioni.el.model.search.PrefixSearch;
-import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.Anagrafica;
 import it.cnr.missioni.model.user.Credenziali;
@@ -57,7 +53,6 @@ public class UserDAOTest {
 
 	private List<User> listaUsers = new ArrayList<User>();
 
-
 	@Before
 	public void setUp() {
 		Assert.assertNotNull(userDocIndexCreator);
@@ -76,9 +71,8 @@ public class UserDAOTest {
 	@Test
 	public void B_findUserByUsernameValidaTest() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setUsername("vito.salvia");	
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		logger.debug("############################UTENTE_WITH_USERNAME : {}\n",
 				lista.get(0).getAnagrafica().getCognome() + " " + lista.get(0).getAnagrafica().getNome());
 		Assert.assertTrue("FIND USER BY USERNAME VALIDA", lista.get(0) != null);
@@ -86,27 +80,24 @@ public class UserDAOTest {
 
 	@Test
 	public void C_findUserByUsernameErrataTest() throws Exception {
-		
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setUsername("vito.salvi");	
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY USERNAME ERRATA", lista.isEmpty());
 	}
 
 	@Test
 	public void D_updatePasswordUser() throws Exception {
 
-		
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setUsername("vito.salvia");
-		
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
+
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		User user = lista.get(0);
 		String oldPassword = user.getCredenziali().getPassword();
 		user.getCredenziali().setPassword(user.getCredenziali().md5hash("salvia.vito"));
 		userDAO.update(user);
 		Thread.sleep(1000);
-		lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+		lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		user = lista.get(0);
 		String newPassword = user.getCredenziali().getPassword();
 		Assert.assertTrue("Update Password User", !oldPassword.equals(newPassword));
@@ -115,74 +106,148 @@ public class UserDAOTest {
 
 	@Test
 	public void E_findUserByCognome() throws Exception {
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCognome("Salv");	
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withCognome("Salv");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY COGNOME", lista.size() == 1);
 	}
 
 	@Test
 	public void F_findUserByNome() throws Exception {
-		
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setNome("Vi");
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vi");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY NOME", lista.size() == 1);
 	}
 
 	@Test
-	public void G_findUserByCodiceFiscale() throws Exception {	
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCodiceFiscale("slvv");	
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+	public void G_findUserByCodiceFiscale() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withCodiceFiscale("slvv");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY CODICE FISCALE", lista.size() == 1);
 	}
 
 	@Test
 	public void G_findUserALL() throws Exception {
-		
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCodiceFiscale("slvvttttttttttt");	
-		userSearchBuilder.setNome("Vito");	
-		userSearchBuilder.setCognome("salvia");	
-		userSearchBuilder.setMatricola("1111111");	
 
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withCodiceFiscale("slvvtttttttttttt").withNome("Vito").withCognome("salvia").withMatricola("1111111");
+
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY ALL", lista.size() == 1);
 	}
 
 	@Test
 	public void G_findUserErrataALL() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-		userSearchBuilder.setCodiceFiscale("slvvttttttttttt");	
-		userSearchBuilder.setNome("Vito");	
-		userSearchBuilder.setCognome("salvia");	
-		userSearchBuilder.setMatricola("4111111");	
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withCodiceFiscale("slvvttttttttttt").withNome("Vito").withCognome("salvia").withMatricola("4111111");
+
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY ALL", lista.size() == 0);
 	}
 
 	@Test
 	public void H_findUserByMatricola() throws Exception {
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();	
-		userSearchBuilder.setMatricola("1111111");	
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("1111111");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA", lista.size() == 1);
 	}
 
 	@Test
-	public void H_findUserByMatricolaErrata() throws Exception {
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder();	
-		userSearchBuilder.setMatricola("2111111");	
-		List<User> lista = userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+	public void I_findUserByMatricolaErrata() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("2111111");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA ERRATA", lista.size() == 0);
 	}
-//
-////	 @Test
-////	 public void tearDown() throws Exception {
-////	 this.utenteDocIndexCreator.deleteIndex();
-////	 }
+
+	@Test
+	public void L_findUserByTarga() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withTarga("AA111BB");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY TARGA", lista.size() == 1);
+	}
+
+	@Test
+	public void M_testUserByIDMustNot() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		// logger.debug("############################USER_ID FOUND{}\n",
+		// userStore);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 2);
+
+	}
+
+	@Test
+	public void N_testUserByIDCodiceFiscale() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+				.withCodiceFiscale("slvvttttttttttttt");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
+
+	}
+
+	@Test
+	public void O_testUserByIDIban() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+				.withIban("0000000000000000");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
+
+	}
+
+	@Test
+	public void P_testUserByIDMatricola() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+				.withMatricola("1111111");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
+
+	}
+
+	@Test
+	public void P_testUserByIDMail() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+				.withMail("vito.salvia@gmail.com");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
+
+	}
+
+	@Test
+	public void Q_testUserByIDTarga() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+				.withTarga("AA111BB");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
+
+	}
+
+	@Test
+	public void R_testUserByIDPolizza() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+				.withPolizzaAssicurativa("A1B2");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
+
+	}
+
+	@Test
+	public void S_testUserByIDCartaCircolazione() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+				.withCartaCircolazione("12234");
+		List<User> lista = userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
+
+	}
+	//
+	//// @Test
+	//// public void tearDown() throws Exception {
+	//// this.utenteDocIndexCreator.deleteIndex();
+	//// }
 
 	private void creaUsers() {
 		User user = null;
@@ -194,7 +259,7 @@ public class UserDAOTest {
 		anagrafica.setCognome("Salvia");
 		anagrafica.setNome("Vito");
 		anagrafica.setDataNascita(new DateTime(1982, 7, 30, 0, 0));
-		anagrafica.setCodiceFiscale("slvvttttttttttt");
+		anagrafica.setCodiceFiscale("slvvtttttttttttt");
 		anagrafica.setLuogoNascita("Potenza");
 		credenziali = new Credenziali();
 		credenziali.setUsername("vito.salvia");
@@ -207,6 +272,7 @@ public class UserDAOTest {
 		veicolo.setTarga("AA111BB");
 		veicolo.setCartaCircolazione("12234");
 		veicolo.setPolizzaAssicurativa("A1B2");
+		veicolo.setVeicoloPrincipale(true);
 		Map<String, Veicolo> mappaVeicoli = new HashMap<String, Veicolo>();
 		mappaVeicoli.put(veicolo.getTarga(), veicolo);
 		user.setMappaVeicolo(mappaVeicoli);

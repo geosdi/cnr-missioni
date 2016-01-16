@@ -1,12 +1,16 @@
 package it.cnr.missioni.model.rimborso;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
+
+import it.cnr.missioni.model.adapter.FatturaMapAdapter;
 
 /**
  * @author Salvia Vito
@@ -17,28 +21,29 @@ public class Rimborso  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8658916823848446391L;
-	@NotNull
-	private Long numeroOrdine;
-	@NotNull
+	@NotBlank
+	private String numeroOrdine;
 	private DateTime dataRimborso;
 	private DateTime dateLastModified;
-	private List<Fattura> listaFatture = new ArrayList<Fattura>();
 	private Double totale;
 	private String avvisoPagamento;
+	@Min(value = 0)
 	private Double anticipazionePagamento;
+	@XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
+	private Map<String, Fattura> mappaFattura = new HashMap<String, Fattura>();
 	
 
 	/**
 	 * @return the numeroOrdine
 	 */
-	public Long getNumeroOrdine() {
+	public String getNumeroOrdine() {
 		return numeroOrdine;
 	}
 
 	/**
 	 * @param numeroOrdine 
 	 */
-	public void setNumeroOrdine(Long numeroOrdine) {
+	public void setNumeroOrdine(String numeroOrdine) {
 		this.numeroOrdine = numeroOrdine;
 	}
 
@@ -70,25 +75,16 @@ public class Rimborso  implements Serializable{
 		this.dateLastModified = dateLastModified;
 	}
 
-	/**
-	 * @return the listaFatture
-	 */
-	public List<Fattura> getListaFatture() {
-		return listaFatture;
-	}
-
-	/**
-	 * @param listaFatture
-	 */
-	public void setListaFatture(List<Fattura> listaFatture) {
-		this.listaFatture = listaFatture;
-	}
 
 	/**
 	 * @return the totale
 	 */
 	public Double getTotale() {
-		return totale;
+		double t = 0.0;
+		for(Fattura f : this.mappaFattura.values())
+			t += f.getImporto();
+		
+		return t;
 	}
 
 	/**
@@ -127,14 +123,30 @@ public class Rimborso  implements Serializable{
 	}
 
 	/**
+	 * @return the mappaFattura
+	 */
+	public Map<String, Fattura> getMappaFattura() {
+		return mappaFattura;
+	}
+
+	/**
+	 * @param mappaFattura 
+	 */
+	public void setMappaFattura(Map<String, Fattura> mappaFattura) {
+		this.mappaFattura = mappaFattura;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Rimborso [numeroOrdine=" + numeroOrdine + ", dataRimborso=" + dataRimborso + ", dateLastModified="
-				+ dateLastModified + ", listaFatture=" + listaFatture + ", totale=" + totale + ", avvisoPagamento="
-				+ avvisoPagamento + ", anticipazionePagamento=" + anticipazionePagamento + "]";
+				+ dateLastModified + ", totale=" + totale + ", avvisoPagamento=" + avvisoPagamento
+				+ ", anticipazionePagamento=" + anticipazionePagamento + ", mappaFattura=" + mappaFattura + "]";
 	}
+
+
 
 
 

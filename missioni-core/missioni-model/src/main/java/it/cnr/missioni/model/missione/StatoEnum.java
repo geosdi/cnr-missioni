@@ -1,27 +1,38 @@
 package it.cnr.missioni.model.missione;
 
-public enum StatoEnum{
-	APPROVATA("Approvata"), RESPINTA("Respinta"), PRESA_IN_CARICO("Presa in carico"), STAND_BY("Stand by");
+import java.util.HashMap;
+import java.util.Map;
 
-	private String stato;
+public enum StatoEnum {
+	INSERITA("Inserita"), APPROVATA("Approvata"), RESPINTA("Respinta"), PRESA_IN_CARICO("Presa in carico"), STAND_BY(
+			"Stand by"), PAGATA("Pagata");
 
-	StatoEnum(String stato) {
-		this.setStato(stato);
+	private final String stato;
+	private static Map<String, StatoEnum> mappa = new HashMap<String, StatoEnum>();
+
+	static {
+		for (StatoEnum s : StatoEnum.values()) {
+			mappa.put(s.stato, s);
+		}
 	}
 
-	public StatoEnum getStatoEnum(String stato) {
-		for (StatoEnum statoEnum : StatoEnum.values()) {
-			if (statoEnum.getStato().equals(stato))
-				return statoEnum;
-		}
-		return null;
+	StatoEnum(String stato) {
+		this.stato = stato;
+	}
+
+	public static StatoEnum getStatoEnum(String stato) {
+		return mappa.get(stato);
 	}
 
 	public String getStato() {
 		return stato;
 	}
 
-	public void setStato(String stato) {
-		this.stato = stato;
+	public static Map<String, StatoEnum> getMappa() {
+		return mappa;
+	}
+
+	public static void setMappa(Map<String, StatoEnum> mappa) {
+		StatoEnum.mappa = mappa;
 	}
 }

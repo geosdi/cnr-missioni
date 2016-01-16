@@ -3,8 +3,10 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
+import it.cnr.missioni.el.model.search.EnumBooleanType;
 import it.cnr.missioni.el.model.search.ExactSearch;
 import it.cnr.missioni.el.model.search.PrefixSearch;
 
@@ -24,32 +26,115 @@ public class UserSearchBuilder implements Serializable {
 	private String codiceFiscale = null;
 	private String username = null;
 	private String matricola = null;
-	
-	public UserSearchBuilder(){}
-	
-	public UserSearchBuilder(String nome,String cognome,String codiceFiscale,String matricola,String username){
-		this.nome = nome;
-		this.cognome = cognome;
-		this.codiceFiscale = codiceFiscale;
-		this.matricola = matricola;
-		this.username = username;
+	private String numeroPatente = null;
+	private String iban = null;
+	private String mail = null;
+	private String targa = null;
+	private String cartaCircolazione = null;
+	private String polizzaAssicurativa = null;
+	private String id = null;
+
+	private String fieldSort = SearchConstants.USER_FIELD_COGNOME;
+	private SortOrder sortOrder = SortOrder.DESC;
+
+	private UserSearchBuilder() {
+		booleanModelSearch = new BooleanModelSearch();
 	}
-	
+
+	public static UserSearchBuilder getUserSearchBuilder() {
+		return new UserSearchBuilder();
+	}
+
+	public UserSearchBuilder withNome(String nome) {
+		this.nome = nome;
+		if( nome != null &&!nome.equals("") )
+		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_NOME, nome));
+		return this;
+	}
+
+	public UserSearchBuilder withCognome(String cognome) {
+		this.cognome = cognome;
+		if( cognome != null && !cognome.equals("")) 
+		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_COGNOME, cognome));
+		return this;
+	}
+
+	public UserSearchBuilder withCodiceFiscale(String codiceFiscale) {
+		this.codiceFiscale = codiceFiscale;
+		if(codiceFiscale != null &&!codiceFiscale.equals("") )
+		booleanModelSearch.getListaSearch()
+				.add(new PrefixSearch(SearchConstants.USER_FIELD_CODICE_FISCALE, codiceFiscale));
+		return this;
+	}
+
+	public UserSearchBuilder withMatricola(String matricola) {
+		this.matricola = matricola;
+		if( matricola != null &&!matricola.equals("") )
+		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola));
+		return this;
+	}
+
+	public UserSearchBuilder withUsername(String username) {
+		this.username = username;
+		if(username != null && !username.equals("") )
+		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_USERNAME, username));
+		return this;
+	}
+
+	public UserSearchBuilder withTarga(String targa) {
+		this.targa = targa;
+		if(targa != null &&!targa.equals("") )
+		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_TARGA, targa));
+		return this;
+	}
+
+	public UserSearchBuilder withCartaCircolazione(String cartaCircolazione) {
+		this.cartaCircolazione = cartaCircolazione;
+		if( cartaCircolazione != null && !cartaCircolazione.equals("") )
+		booleanModelSearch.getListaSearch()
+				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione));
+		return this;
+	}
+
+	public UserSearchBuilder withPolizzaAssicurativa(String polizzaAssicurativa) {
+		this.polizzaAssicurativa = polizzaAssicurativa;
+		if( polizzaAssicurativa != null && !polizzaAssicurativa.equals("") )
+		booleanModelSearch.getListaSearch()
+				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa));
+		return this;
+	}
+
+	public UserSearchBuilder withIban(String iban) {
+		this.iban = iban;
+		if( iban != null && !iban.equals("") )
+		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_IBAN, iban));
+		return this;
+	}
+
+	public UserSearchBuilder withMail(String mail) {
+		this.mail = mail;
+		if( mail!= null &&!mail.equals("") )
+		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_MAIL, mail));
+		return this;
+	}
+
+	public UserSearchBuilder withId(String id) {
+		this.id = id;
+		if(id != null &&!id.equals("") )
+		booleanModelSearch.getListaSearch()
+				.add(new ExactSearch(SearchConstants.USER_FIELD_ID, id, EnumBooleanType.MUST_NOT));
+		return this;
+	}
+
+	public UserSearchBuilder withNumeroPatente(String numeroPatente) {
+		this.numeroPatente = numeroPatente;
+		if( numeroPatente != null &&!numeroPatente.equals("") )
+		booleanModelSearch.getListaSearch()
+				.add(new ExactSearch(SearchConstants.USER_FIELD_NUMERO_PATENTE, numeroPatente));
+		return this;
+	}
 
 	public BoolQueryBuilder buildQuery() {
-		booleanModelSearch = new BooleanModelSearch();
-				
-		if (nome != null)
-			booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_NOME, nome));
-		if (cognome != null)
-			booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_COGNOME, cognome));
-		if (codiceFiscale != null)
-			booleanModelSearch.getListaSearch()
-					.add(new PrefixSearch(SearchConstants.USER_FIELD_CODICE_FISCALE, codiceFiscale));
-		if (matricola != null)
-			booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola));
-		if (username != null)
-			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_USERNAME, username));
 		return booleanModelSearch.buildQuery();
 	}
 
@@ -135,6 +220,132 @@ public class UserSearchBuilder implements Serializable {
 	 */
 	public void setMatricola(String matricola) {
 		this.matricola = matricola;
+	}
+
+	/**
+	 * @return the numeroPatente
+	 */
+	public String getNumeroPatente() {
+		return numeroPatente;
+	}
+
+	/**
+	 * @param numeroPatente
+	 */
+	public void setNumeroPatente(String numeroPatente) {
+		this.numeroPatente = numeroPatente;
+	}
+
+	/**
+	 * @return the iban
+	 */
+	public String getIban() {
+		return iban;
+	}
+
+	/**
+	 * @param iban
+	 */
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+
+	/**
+	 * @return the mail
+	 */
+	public String getMail() {
+		return mail;
+	}
+
+	/**
+	 * @param mail
+	 */
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	/**
+	 * @return the targa
+	 */
+	public String getTarga() {
+		return targa;
+	}
+
+	/**
+	 * @param targa
+	 */
+	public void setTarga(String targa) {
+		this.targa = targa;
+	}
+
+	/**
+	 * @return the cartaCircolazione
+	 */
+	public String getCartaCircolazione() {
+		return cartaCircolazione;
+	}
+
+	/**
+	 * @param cartaCircolazione
+	 */
+	public void setCartaCircolazione(String cartaCircolazione) {
+		this.cartaCircolazione = cartaCircolazione;
+	}
+
+	/**
+	 * @return the polizzaAssicurativa
+	 */
+	public String getPolizzaAssicurativa() {
+		return polizzaAssicurativa;
+	}
+
+	/**
+	 * @param polizzaAssicurativa
+	 */
+	public void setPolizzaAssicurativa(String polizzaAssicurativa) {
+		this.polizzaAssicurativa = polizzaAssicurativa;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the fieldSort
+	 */
+	public String getFieldSort() {
+		return fieldSort;
+	}
+
+	/**
+	 * @param fieldSort
+	 */
+	public void setFieldSort(String fieldSort) {
+		this.fieldSort = fieldSort;
+	}
+
+	/**
+	 * @return the sortOrder
+	 */
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	/**
+	 * @param sortOrder
+	 */
+	public void setSortOrder(SortOrder sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 }

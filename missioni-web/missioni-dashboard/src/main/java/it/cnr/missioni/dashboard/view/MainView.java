@@ -5,6 +5,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
 import it.cnr.missioni.dashboard.DashboardNavigator;
+import it.cnr.missioni.dashboard.menu.DashboardMenu;
 
 /*
  * Dashboard MainView is a simple HorizontalLayout that wraps the menu on the

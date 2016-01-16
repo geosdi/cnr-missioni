@@ -3,6 +3,7 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.joda.time.DateTime;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
@@ -24,39 +25,71 @@ public class MissioneSearchBuilder implements Serializable {
 	private DateTime toDataInserimento = null;
 	private String idUser = null;
 	private String stato = null;
-	private Long numeroOrdineRimborso = null;
+	private String numeroOrdineRimborso = null;
 	private DateTime fromDataRimbroso = null;
 	private DateTime toDataRimbroso = null;
 	private String idMissione = null;
-	
-	public MissioneSearchBuilder(){}
-	
-	public MissioneSearchBuilder(String idMissione,String idUser,String stato, Long numeroOrdineRimborso){
-		this.idUser = idUser;
-		this.stato = stato;
-		this.numeroOrdineRimborso = numeroOrdineRimborso;
-		this.idMissione = idMissione;
+	private String fieldSort = SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO;
+	private SortOrder sortOrder = SortOrder.DESC;
+
+	private MissioneSearchBuilder() {
+		booleanModelSearch = new BooleanModelSearch();
 	}
 
-	public BoolQueryBuilder buildQuery() {
-		booleanModelSearch = new BooleanModelSearch();
+	public static MissioneSearchBuilder getMissioneSearchBuilder() {
+		return new MissioneSearchBuilder();
+	}
+
+	public MissioneSearchBuilder withRangemDataInserimento(DateTime fromDataInserimento, DateTime toDataInserimento) {
+
+		this.fromDataInserimento = fromDataInserimento;
+		this.toDataInserimento = toDataInserimento;
 		if (fromDataInserimento != null || toDataInserimento != null)
 			booleanModelSearch.getListaSearch().add(new DateRangeSearch(SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO,
 					fromDataInserimento, toDataInserimento));
-		if (idUser != null)
+		return this;
+	}
+
+	public MissioneSearchBuilder withIdUser(String idUser) {
+		this.idUser = idUser;
+
+		if (idUser != null && !idUser.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_ID_USER, idUser));
-		if (stato != null)
+		return this;
+	}
+
+	public MissioneSearchBuilder withStato(String stato) {
+		this.stato = stato;
+		if (stato!= null &&!stato.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_STATO, stato));
-		if (numeroOrdineRimborso != null)
+		return this;
+	}
+
+	public MissioneSearchBuilder withNumeroOrdineMissione(String numeroOrdineRimborso) {
+		this.numeroOrdineRimborso = numeroOrdineRimborso;
+		if (numeroOrdineRimborso!= null &&!numeroOrdineRimborso.equals(""))
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE, numeroOrdineRimborso));
+		return this;
+	}
+
+	public MissioneSearchBuilder withRangeDataRimborso(DateTime fromDataRimborso, DateTime toDataRimborso) {
+		this.fromDataRimbroso = fromDataRimborso;
+		this.toDataRimbroso = toDataRimborso;
 		if (fromDataRimbroso != null || toDataRimbroso != null)
 			booleanModelSearch.getListaSearch().add(new DateRangeSearch(
 					SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO, fromDataRimbroso, toDataRimbroso));
-		
-		if (idMissione != null)
+		return this;
+	}
+
+	public MissioneSearchBuilder withIdMissione(String idMissione) {
+		this.idMissione = idMissione;
+		if (idMissione !=null && !idMissione.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_ID, idMissione));
-		
+		return this;
+	}
+
+	public BoolQueryBuilder buildQuery() {
 		return booleanModelSearch.buildQuery();
 	}
 
@@ -133,14 +166,14 @@ public class MissioneSearchBuilder implements Serializable {
 	/**
 	 * @return the numeroOrdineRimborso
 	 */
-	public Long getNumeroOrdineRimborso() {
+	public String getNumeroOrdineRimborso() {
 		return numeroOrdineRimborso;
 	}
 
 	/**
 	 * @param numeroOrdineRimborso
 	 */
-	public void setNumeroOrdineRimborso(Long numeroOrdineRimborso) {
+	public void setNumeroOrdineRimborso(String numeroOrdineRimborso) {
 		this.numeroOrdineRimborso = numeroOrdineRimborso;
 	}
 
@@ -180,10 +213,38 @@ public class MissioneSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param idMissione 
+	 * @param idMissione
 	 */
 	public void setIdMissione(String idMissione) {
 		this.idMissione = idMissione;
+	}
+
+	/**
+	 * @return the fieldSort
+	 */
+	public String getFieldSort() {
+		return fieldSort;
+	}
+
+	/**
+	 * @param fieldSort
+	 */
+	public void setFieldSort(String fieldSort) {
+		this.fieldSort = fieldSort;
+	}
+
+	/**
+	 * @return the sortOrder
+	 */
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	/**
+	 * @param sortOrder
+	 */
+	public void setSortOrder(SortOrder sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 }

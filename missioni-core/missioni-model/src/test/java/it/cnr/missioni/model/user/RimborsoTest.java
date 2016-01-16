@@ -32,13 +32,13 @@ public class RimborsoTest {
 	public void rimborsoErrataTest() {
 		Rimborso rimborso = new Rimborso();
 		Set<ConstraintViolation<Rimborso>> constraintViolations = validator.validate(rimborso);
-		assertEquals(2, constraintViolations.size());
+		assertEquals(1, constraintViolations.size());
 	}
 
 	@Test
 	public void missioneOkTest() {
 		Rimborso rimborso = new Rimborso();
-		rimborso.setNumeroOrdine(new Long(1));
+		rimborso.setNumeroOrdine("01");
 		rimborso.setDataRimborso(new DateTime());
 		Set<ConstraintViolation<Rimborso>> constraintViolations = validator.validate(rimborso);
 		assertEquals(0, constraintViolations.size());

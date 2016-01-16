@@ -84,8 +84,9 @@ public class DatiCNRUserStep implements WizardStep {
 		matricolaField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-				userSearchBuilder.setCodiceFiscale(matricolaField.getValue());
+				if (value != null) {
+				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola(matricolaField.getValue());
+
 				UserStore userStore = null;
 				try {
 					userStore = ClientConnector.getUser(userSearchBuilder);
@@ -95,6 +96,7 @@ public class DatiCNRUserStep implements WizardStep {
 				}
 				if (userStore != null)
 					throw new InvalidValueException(Utility.getMessage("matricola_present"));
+				}
 			}
 
 		});
@@ -103,8 +105,8 @@ public class DatiCNRUserStep implements WizardStep {
 		mailField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-				userSearchBuilder.setCodiceFiscale(mailField.getValue());
+				if (value != null) {
+				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMail(mailField.getValue());
 				UserStore userStore = null;
 				try {
 					userStore = ClientConnector.getUser(userSearchBuilder);
@@ -114,6 +116,7 @@ public class DatiCNRUserStep implements WizardStep {
 				}
 				if (userStore != null)
 					throw new InvalidValueException(Utility.getMessage("mail_present"));
+				}
 			}
 
 		});
@@ -121,18 +124,19 @@ public class DatiCNRUserStep implements WizardStep {
 		ibanField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-				userSearchBuilder.setCodiceFiscale(ibanField.getValue());
-				UserStore userStore = null;
-				try {
-					userStore = ClientConnector.getUser(userSearchBuilder);
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withIban(ibanField.getValue());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("iban_present"));
 				}
-				if (userStore != null)
-					throw new InvalidValueException(Utility.getMessage("iban_present"));
 			}
 
 		});

@@ -41,7 +41,8 @@
 					"tipo" : "Ford Fiesta",
 					"targa" : "DE457nm",
 					"cartaCircolazione" : "123456",
-					"polizzaAssicurativa" : "987654"
+					"polizzaAssicurativa" : "987654",
+					"veicoloPrincipale" : true
 					}
 				}
 			]

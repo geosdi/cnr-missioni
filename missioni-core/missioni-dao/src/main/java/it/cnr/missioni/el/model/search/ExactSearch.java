@@ -17,6 +17,9 @@ public class ExactSearch extends AbstractBooleanSearch<Object> implements IBoole
 		super(field,value);
 	}
 	
+	public ExactSearch(String field,Object value,EnumBooleanType type){
+		super(field,value,type);
+	}
 	
 	
 	public QueryBuilder getBooleanQuery() throws Exception {

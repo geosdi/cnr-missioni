@@ -24,6 +24,7 @@ public class Veicolo  implements Serializable{
 	private String cartaCircolazione;
 	@NotBlank
 	private String polizzaAssicurativa;
+	private boolean veicoloPrincipale;
 
 	/**
 	 * @return the tipo
@@ -81,13 +82,27 @@ public class Veicolo  implements Serializable{
 		this.polizzaAssicurativa = polizzaAssicurativa;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the veicoloPrincipale
+	 */
+	public boolean isVeicoloPrincipale() {
+		return veicoloPrincipale;
+	}
+
+	/**
+	 * @param veicoloPrincipale 
+	 */
+	public void setVeicoloPrincipale(boolean veicoloPrincipale) {
+		this.veicoloPrincipale = veicoloPrincipale;
+	}
+
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Veicolo [tipo=" + tipo + ", targa=" + targa + ", cartaCircolazione=" + cartaCircolazione
-				+ ", polizzaAssicurativa=" + polizzaAssicurativa + "]";
+				+ ", polizzaAssicurativa=" + polizzaAssicurativa + ", veicoloPrincipale=" + veicoloPrincipale + "]";
 	}
 
 }

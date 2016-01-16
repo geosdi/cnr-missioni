@@ -1,12 +1,12 @@
 package it.cnr.missioni.model.missione;
 
-public enum TrattamentoMissioneEsteraEnum{
+public enum TrattamentoMissioneEsteraEnum {
 	RIMBORSO_DOCUMENTATO("Rimborso Documentato"), TRATTAMENTO_ALTERNATIVO("Trattamento Alternativo");
 
-	private String stato;
+	private final String stato;
 
 	TrattamentoMissioneEsteraEnum(String stato) {
-		this.setStato(stato);
+		this.stato = stato;
 	}
 
 	public TrattamentoMissioneEsteraEnum getStatoEnum(String stato) {
@@ -21,7 +21,4 @@ public enum TrattamentoMissioneEsteraEnum{
 		return stato;
 	}
 
-	public void setStato(String stato) {
-		this.stato = stato;
-	}
 }

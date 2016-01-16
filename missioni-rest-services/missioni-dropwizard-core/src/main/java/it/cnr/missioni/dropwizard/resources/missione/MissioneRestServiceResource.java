@@ -30,7 +30,7 @@ public class MissioneRestServiceResource implements MissioneRestService {
      * @throws Exception
      */
     @Override
-	public Response getMissioneByQuery(String idMissione,String idUser, String stato, Long numeroOrdineRimborso) throws Exception{
+	public Response getMissioneByQuery(String idMissione,String idUser, String stato, String numeroOrdineRimborso) throws Exception{
         return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione,idUser,stato,numeroOrdineRimborso)).build();
     }
 

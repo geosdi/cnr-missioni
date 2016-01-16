@@ -42,7 +42,10 @@ public interface UsersRestService {
      */
     @GET
     @Path(value = UsersServiceRSPathConfig.GET_USER_BY_QUERY)
-    Response getUserByQuery(@QueryParam(value="nome") String nome,@QueryParam(value="cognome") String cognome,@QueryParam(value="codiceFiscale") String codiceFiscale,@QueryParam(value="matricola") String matricola,@QueryParam(value="username") String username) throws Exception;
+    Response getUserByQuery(@QueryParam(value="nome") String nome,@QueryParam(value="cognome") String cognome,@QueryParam(value="codiceFiscale") String codiceFiscale,@QueryParam(value="matricola") String matricola,@QueryParam(value="username") String username
+    		,@QueryParam(value="targa") String targa,@QueryParam(value="cartaCircolazione") String cartaCircolazione
+    		,@QueryParam(value="polizzaAssicurativa") String polizzaAssicurativa,@QueryParam(value="iban") String iban
+    		,@QueryParam(value="mail") String mail,@QueryParam(value="id") String id) throws Exception;
 
     /**
      * @param user

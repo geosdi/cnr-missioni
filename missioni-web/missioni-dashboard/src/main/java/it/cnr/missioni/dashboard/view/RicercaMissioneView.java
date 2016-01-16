@@ -80,8 +80,7 @@ public class RicercaMissioneView extends VerticalLayout implements View {
 		VerticalLayout v = new VerticalLayout();
 
 		User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-		MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
-		missioneSearchBuilder.setIdUser(user.getId());
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId());
 		elencoMissioniTable = new ElencoMissioniTable();
 
 		try {
@@ -202,8 +201,8 @@ public class RicercaMissioneView extends VerticalLayout implements View {
 		buttonCerca.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 
-				MissioneSearchBuilder missioneSearchBuilder = new MissioneSearchBuilder();
-				missioneSearchBuilder.setIdUser(user.getId());
+				MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId());
+
 				//se il valore della form è null JODATIME ritorna comunque la data odierna
 				if(dataFromInserimentoMissioneField.getValue() != null)
 					missioneSearchBuilder.setFromDataInserimento(new DateTime(dataFromInserimentoMissioneField.getValue()));

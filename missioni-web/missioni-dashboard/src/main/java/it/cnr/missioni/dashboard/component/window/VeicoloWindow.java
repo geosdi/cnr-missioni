@@ -31,7 +31,6 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
@@ -139,44 +138,71 @@ public class VeicoloWindow extends Window {
 		targaField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				UserSearchBuilder userSearchBuilder = new UserSearchBuilder();
-				userSearchBuilder.setTarga(targaField.getValue());
-				UserStore userStore = null;
-				try {
-					userStore = ClientConnector.getUser(userSearchBuilder);
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withTarga(targaField.getValue());
+					if (modifica)
+						userSearchBuilder.withId(user.getId());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("targa_present"));
 				}
-				if (userStore != null)
-					throw new InvalidValueException(Utility.getMessage("targa_present"));
+
 			}
 
 		});
 
-		// if (modifica)
-		// this.veicolo =
-		// user.getMappaVeicolo().get(targaField.getValue().toUpperCase());
-		// targaField.addValidator(new Validator() {
-		// @Override
-		// public void validate(Object value) throws InvalidValueException {
-		// if (value != null) {
-		// String targa = ((String) value).toUpperCase();
-		//
-		// if (user.getMappaVeicolo().containsKey(targa) && !modifica) {
-		// throw new InvalidValueException(Utility.getMessage("targa_present"));
-		// }
-		//
-		// if (modifica) {
-		// if (user.getMappaVeicolo().containsKey(targa.toUpperCase())
-		// && !veicolo.getTarga().toUpperCase().equals(targa.toUpperCase()))
-		// throw new InvalidValueException(Utility.getMessage("targa_present"));
-		// }
-		// }
-		//
-		// }
-		//
-		// });
+		polizzaAssicurativaField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
+					if (modifica)
+						userSearchBuilder.withId(user.getId());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("polizza_present"));
+				}
+
+			}
+
+		});
+
+		cartaCircolazioneField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withCartaCircolazione(cartaCircolazioneField.getValue());
+					if (modifica)
+						userSearchBuilder.withId(user.getId());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("carta_circolazione_present"));
+				}
+			}
+
+		});
+
 	}
 
 	private Component buildFooter() {

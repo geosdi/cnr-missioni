@@ -4,9 +4,14 @@
 		"localita" : "Roma",
 		"oggetto" : "Conferenza",
 		"stato" : "STAND_BY",
+		"fondo" : "fondo",
+		"GAE" : "GAE",
 		"altro" : "",
 		"missioneEstera" : false,
 		"dataInserimento" : "2015-12-14T10:11:59.568Z",
+		"dateLastModified" : "2015-12-14T10:11:59.568Z",
+		"mezzoProprio" : true,
+		"distanza" : 100,
 		"datiPeriodoMissione" : {
 			"inizioMissione" : "2015-12-12T10:11:59.568Z",
 			"fineMissione" : "2015-12-14T10:11:59.568Z"
@@ -25,21 +30,26 @@
 			"importoDaTerzi" : 100.00
 		},
 		"rimborso" : {
-			"numeroOrdine" : 145,
+			"numeroOrdine" : "56",
 			"dataRimborso" : "2015-12-15T10:11:59.568Z",
 			"totale" : 73.5,
 			"anticipazionePagamento" : 0.0,
 			"avvisoPagamento" : "c.da Santa Loja",
-			"listaFatture" : [
-				{
+			"mappaFattura" : {
+			"entry" : [{
+				"key" : "0000000001",
+				"value" : {
+					"id" : "0000000001",
 					"numeroFattura" : 134,
 					"data" : "2015-12-12T10:11:59.568Z",
-					"tipologiaSpesa" :"Rifornimento",
 					"importo" : 73.5,
-					"altro" : 456,
+					"altro" : "",
 					"valuta" : "euro"
+					}
 				}
 			]
+			}
+			
  		}
 	}
 }

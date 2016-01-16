@@ -11,7 +11,7 @@ import com.vaadin.event.Action.Handler;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.component.window.WizardWindow;
+import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
@@ -93,7 +93,8 @@ public final class ElencoMissioniTable extends Table {
 		@Override
 		public void handleAction(final Action action, final Object sender, final Object target) {
 			if (action == seleziona) {
-				WizardWindow.openWizardMissioneRimborso(true, ((Missione) target), "missione");
+				WizardSetupWindow.getWizardSetup().withModifica(true).withTipo("missione").withMissione((Missione) target).build();;
+
 			}
 			if (action == rimborso) {
 				Rimborso rimborso = null;
@@ -107,7 +108,10 @@ public final class ElencoMissioniTable extends Table {
 					modifica = false;
 				}
 				((Missione) target).setRimborso(rimborso);
-				WizardWindow.openWizardMissioneRimborso(modifica, ((Missione) target), "rimborso");
+				WizardSetupWindow.getWizardSetup().withModifica(modifica).withTipo("rimborso").withMissione((Missione) target).build();;
+
+				
+//				WizardWindow.openWizardMissioneRimborso(modifica, ((Missione) target), "rimborso");
 			}
 		}
 

@@ -13,7 +13,6 @@ import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 
@@ -31,13 +30,15 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	 * @throws Exception
 	 */
 	@Override
-	public List<User> findUtenteByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception {
+	public List<User> findUserByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception {
 		
-		List<User> listaUtenti = new ArrayList<User>();
-
+		List<User> listaUsers = new ArrayList<User>();
+//		logger.debug("\nID "+userSearchBuilder.getId());
 		logger.debug("###############Try to find Users by Query: {}\n\n");
 		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(userSearchBuilder.buildQuery())).execute().actionGet();
+				.setTypes(getIndexType()).setQuery(userSearchBuilder.buildQuery()))
+				.addSort(userSearchBuilder.getFieldSort(), userSearchBuilder.getSortOrder())
+				.execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");
@@ -48,10 +49,10 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 			if (!utente.isIdSetted()) {
 				utente.setId(searchHit.getId());
 			}
-			listaUtenti.add(utente);
+			listaUsers.add(utente);
 		}
 
-		return listaUtenti;
+		return listaUsers;
 	}
 
 	@Override

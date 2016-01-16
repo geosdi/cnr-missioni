@@ -14,8 +14,6 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.IUserDAO;
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
-import it.cnr.missioni.el.model.search.ExactSearch;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -44,13 +42,17 @@ class UserDelegate implements IUserDelegate {
 	 * @throws Exception
 	 */
 	@Override
-	public UserStore getUserByQuery(String nome,String cognome,String codiceFiscale,String matricola,String username) throws Exception {
-		
-		
-		UserSearchBuilder userSearchBuilder = new UserSearchBuilder(nome,cognome,codiceFiscale,matricola,username);
-		
+	public UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola,
+			String username, String targa, String cartaCircolazione, String polizzaAssicurativa, String iban,
+			String mail, String id) throws Exception {
 
-		List<User> listaUtenti = this.userDAO.findUtenteByQuery(new Page(0, 10), userSearchBuilder);
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
+				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
+				.withTarga(targa).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurativa)
+				.withIban(iban).withMail(mail).withId(id);
+
+				
+		List<User> listaUtenti = this.userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
 		if (!listaUtenti.isEmpty()) {
 			UserStore userStore = new UserStore();
 			userStore.setUsers(listaUtenti);
