@@ -2,6 +2,7 @@ package it.cnr.missioni.dropwizard.resources.missione;
 
 import it.cnr.missioni.dropwizard.delegate.missioni.IMissioneDelegate;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.resources.missione.MissioneRestService;
 
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
@@ -30,8 +31,8 @@ public class MissioneRestServiceResource implements MissioneRestService {
      * @throws Exception
      */
     @Override
-	public Response getMissioneByQuery(String idMissione,String idUser, String stato, String numeroOrdineRimborso) throws Exception{
-        return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione,idUser,stato,numeroOrdineRimborso)).build();
+    public Response getMissioneByQuery(String idMissione, String idUser, String stato, String numeroOrdineRimborso) throws Exception {
+        return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso)).build();
     }
 
     /**
@@ -74,4 +75,13 @@ public class MissioneRestServiceResource implements MissioneRestService {
         return Response.ok(this.missioneDelegate.deleteMissione(missionID)).build();
     }
 
+    /**
+     * @param request
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response notifyMissionAdministration(NotificationMissionRequest request) throws Exception {
+        return Response.ok(this.missioneDelegate.notifyMissionAdministration(request)).build();
+    }
 }

@@ -23,6 +23,7 @@
     <logger name="org.geosdi.geoplatform.support.mail.spring.velocity.GPSpringVelocityEngineConfig" level="debug"/>
     <logger name="it.cnr.missioni.notification.bridge.store.ImplementorStore" level="debug"/>
     <logger name="it.cnr.missioni.notification.dispatcher.MissioniMailDispatcher" level="debug"/>
+    <logger name="it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder" level="debug"/>
     <logger name="it.cnr.missioni.notification.task" level="debug"/>
 
 </configuration>

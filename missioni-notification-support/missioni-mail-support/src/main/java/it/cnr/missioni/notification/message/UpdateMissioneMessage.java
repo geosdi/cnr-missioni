@@ -1,6 +1,7 @@
 package it.cnr.missioni.notification.message;
 
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import net.jcip.annotations.Immutable;
 
 import java.util.Map;
@@ -15,8 +16,8 @@ public class UpdateMissioneMessage extends AddMissioneMessage {
     private final String missioneID;
 
     public UpdateMissioneMessage(String userName, String userSurname, String userEmail,
-            String theCnrMissioniEmail, String theMissioneID) {
-        super(userName, userSurname, userEmail, theCnrMissioniEmail);
+            String theCnrMissioniEmail, String theMissioneID, PDFBuilder theMissionePDFBuilder) {
+        super(userName, userSurname, userEmail, theCnrMissioniEmail, theMissionePDFBuilder);
         this.missioneID = theMissioneID;
     }
 

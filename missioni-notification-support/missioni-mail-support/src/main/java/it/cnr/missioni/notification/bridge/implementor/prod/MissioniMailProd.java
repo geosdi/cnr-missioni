@@ -1,11 +1,11 @@
 package it.cnr.missioni.notification.bridge.implementor.prod;
 
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
+import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import javax.mail.internet.MimeMessage;
 
@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-abstract class MissioniMailProd implements MissioniMailImplementor<MimeMessagePreparator> {
+abstract class MissioniMailProd implements MissioniMailImplementor<IMissioniMessagePreparator> {
 
     /**
      * @param mimeMessage
@@ -22,8 +22,8 @@ abstract class MissioniMailProd implements MissioniMailImplementor<MimeMessagePr
      * @throws Exception
      */
     protected MimeMessageHelper createMimeMessageHelper(MimeMessage mimeMessage,
-            final GPMailDetail gpMailDetail) throws Exception {
-        return new MimeMessageHelper(mimeMessage) {
+            final GPMailDetail gpMailDetail, Boolean multipart) throws Exception {
+        return new MimeMessageHelper(mimeMessage, multipart) {
 
             {
                 super.setFrom(gpMailDetail.getFrom(),
@@ -33,6 +33,13 @@ abstract class MissioniMailProd implements MissioniMailImplementor<MimeMessagePr
             }
 
         };
+    }
+
+    /**
+     * @return {@link IMissioniMessagePreparator}
+     */
+    protected IMissioniMessagePreparator createMissioniMessagePreparator() {
+        return new IMissioniMessagePreparator.MissioniMessagePreparator();
     }
 
     /**

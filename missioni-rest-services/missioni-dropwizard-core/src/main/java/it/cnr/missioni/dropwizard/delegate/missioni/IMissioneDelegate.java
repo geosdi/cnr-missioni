@@ -1,6 +1,7 @@
 package it.cnr.missioni.dropwizard.delegate.missioni;
 
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
@@ -10,11 +11,12 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 public interface IMissioneDelegate {
 
     /**
-     * @param missioneID
+     * @param idMissione
      * @return {@link Missione}
      * @throws Exception
      */
-	MissioniStore getMissioneByQuery(String idMissione,String idUser,String stato, String numeroOrdineRimborso) throws Exception;
+    MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato,
+            String numeroOrdineRimborso) throws Exception;
 
     /**
      * @param userID
@@ -37,8 +39,15 @@ public interface IMissioneDelegate {
     Boolean updateMissione(Missione missione) throws Exception;
 
     /**
-     * @param id
+     * @param missioneID
      * @throws Exception
      */
     Boolean deleteMissione(String missioneID) throws Exception;
+
+    /**
+     * @param request
+     * @return {@link Boolean}
+     * @throws Exception
+     */
+    Boolean notifyMissionAdministration(NotificationMissionRequest request) throws Exception;
 }

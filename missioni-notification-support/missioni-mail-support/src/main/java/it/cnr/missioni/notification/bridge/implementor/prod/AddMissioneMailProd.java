@@ -1,5 +1,7 @@
 package it.cnr.missioni.notification.bridge.implementor.prod;
 
+import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
@@ -8,6 +10,9 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,28 +30,39 @@ public class AddMissioneMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public MimeMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-        return new MimeMessagePreparator() {
+        IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
+        missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
             String userName = (String) message.getMessageParameters().get("userName");
             String userSurname = (String) message.getMessageParameters().get("userSurname");
             String userEmail = (String) message.getMessageParameters().get("userEmail");
             String cnrMissioniEmail = (String) message.getMessageParameters().get("cnrMissioniEmail");
+            PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail);
-                message.setTo(new String[] {userEmail, cnrMissioniEmail});
+                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
+                message.setTo(new String[]{userEmail, cnrMissioniEmail});
                 Map model = new HashMap();
                 model.put("userName", userName);
                 model.put("userSurname", userSurname);
-                String messageText = VelocityEngineUtils
-                        .mergeTemplateIntoString(velocityEngine,
-                                "template/addMissioneMailNotification.html.vm", "UTF-8", model);
+                String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                        "template/addMissioneMailNotification.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
+
+                Path tempFilePath = Files.createTempFile("Missione - ".concat(userName).concat(userName), ".pdf");
+                File file = tempFilePath.toFile();
+
+                pdfBuilder.withFile(file);
+                pdfBuilder.build();
+                message.addAttachment(file.getName(), file);
+                missioniMessagePreparator.addAttachment(file);
+
             }
-        };
+        });
+        return missioniMessagePreparator;
     }
 
     /**

@@ -2,6 +2,7 @@ package it.cnr.missioni.rest.api.resources.missione;
 
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.path.missione.BaseServiceRSPathConfig;
+import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,13 +18,13 @@ import javax.ws.rs.core.Response;
 public interface MissioneRestService {
 
     /**
-     * @param missioneID
+     * @param idMissione
      * @return {@link Response}
      * @throws Exception
      */
     @GET
     @Path(value = BaseServiceRSPathConfig.GET_MISSIONE_BY_QUERY)
-    Response getMissioneByQuery(@QueryParam(value = "idMissione")String idMissione,@QueryParam(value = "idUser") String idUser,@QueryParam(value = "stato") String stato,@QueryParam(value = "numeroOrdineRimborso") String numeroOrdineRimborso) throws Exception;
+    Response getMissioneByQuery(@QueryParam(value = "idMissione") String idMissione, @QueryParam(value = "idUser") String idUser, @QueryParam(value = "stato") String stato, @QueryParam(value = "numeroOrdineRimborso") String numeroOrdineRimborso) throws Exception;
 
     /**
      * @param userID
@@ -53,11 +54,20 @@ public interface MissioneRestService {
     Response updateMissione(Missione missione) throws Exception;
 
     /**
-     * @param missionID
+     * @param missioneID
      * @return {@link Response}
      * @throws Exception
      */
     @DELETE
     @Path(value = BaseServiceRSPathConfig.DELETE_MISSIONE_PATH)
     Response deleteMissione(@QueryParam(value = "missioneID") String missioneID) throws Exception;
+
+    /**
+     * @param request
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @POST
+    @Path(value = BaseServiceRSPathConfig.NOTIFY_MISSIONE_ADMINISTRATION_PATH)
+    Response notifyMissionAdministration(NotificationMissionRequest request) throws Exception;
 }

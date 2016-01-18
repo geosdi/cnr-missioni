@@ -22,6 +22,11 @@ import static org.geosdi.geoplatform.support.jackson.property.GPJacksonSupportEn
  */
 public class CNRMissioniServiceApp extends Application<CNRMissioniServiceConfig> {
 
+    static {
+        System.setProperty("spring.profiles.active",
+                "GPMailVelocitySupport, prod");
+    }
+
     public static void main(String[] args) throws Exception {
         new CNRMissioniServiceApp().run(args);
     }

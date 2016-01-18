@@ -53,13 +53,13 @@ public class MissioneNotificationDispatcherDevTest {
     public void dispatchAddMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
                 .buildAddMissioneMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
-                        "vito.salvia@gmail.com"));
+                        "vito.salvia@gmail.com", null));
     }
 
     @Test
     public void dispatchUpdateMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
                 .buildUpdateMissioneMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
-                        "vito.salvia@gmail.com", UUID.randomUUID().toString()));
+                        "vito.salvia@gmail.com", UUID.randomUUID().toString(), null));
     }
 }

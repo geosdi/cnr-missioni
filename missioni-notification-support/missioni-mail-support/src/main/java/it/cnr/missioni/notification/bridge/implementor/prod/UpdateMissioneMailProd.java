@@ -2,6 +2,7 @@ package it.cnr.missioni.notification.bridge.implementor.prod;
 
 import it.cnr.missioni.notification.bridge.implementor.Implementor;
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
+import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
@@ -27,9 +28,10 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public MimeMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-        return new MimeMessagePreparator() {
+        IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
+        missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
             String userName = (String) message.getMessageParameters().get("userName");
             String userSurname = (String) message.getMessageParameters().get("userSurname");
@@ -39,7 +41,7 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail);
+                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.FALSE);
                 message.setTo(new String[]{userEmail, cnrMissioniEmail});
                 Map model = new HashMap();
                 model.put("userName", userName);
@@ -50,7 +52,8 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
                                 "template/updateMissioneMailNotification.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
             }
-        };
+        });
+        return missioniMessagePreparator;
     }
 
     /**

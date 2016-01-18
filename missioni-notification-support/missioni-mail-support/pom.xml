@@ -23,6 +23,12 @@
     <dependencies>
         <dependency>
             <groupId>it.cnr</groupId>
+            <artifactId>missioni-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>it.cnr</groupId>
             <artifactId>missioni-notification-api</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -94,6 +100,15 @@
         <dependency>
             <groupId>org.geosdi</groupId>
             <artifactId>geoplatform-logger-support</artifactId>
+        </dependency>
+
+        <!-- =========================================================== -->
+        <!-- ========================== ITEXT ========================== -->
+        <!-- =========================================================== -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.8</version>
         </dependency>
 
         <!-- =========================================================== -->

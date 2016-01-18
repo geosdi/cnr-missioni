@@ -2,6 +2,7 @@ package it.cnr.missioni.notification.message.factory;
 
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -17,7 +18,7 @@ public interface NotificationMessageFactory {
      * @return {@link AddMissioneMessage}
      */
     AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
-            String cnrMissioniEmail);
+            String cnrMissioniEmail, PDFBuilder pdfBuilder);
 
     /**
      * @param userName
@@ -28,5 +29,5 @@ public interface NotificationMessageFactory {
      * @return {@link  UpdateMissioneMessage}
      */
     UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname, String userEmail,
-            String cnrMissioniEmail, String missioneID);
+            String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder);
 }

@@ -1,5 +1,6 @@
 package it.cnr.missioni.notification.bridge.implementor.prod;
 
+import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
@@ -19,7 +20,7 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public MimeMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
         return null;
     }

@@ -4,6 +4,7 @@ import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import org.geosdi.geoplatform.configurator.bootstrap.Develop;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +21,13 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
      * @param userSurname
      * @param userEmail
      * @param cnrMissioniEmail
+     * @param pdfBuilder
      * @return {@link String AddMissioneMessage}
      */
     @Override
     public AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
-            String cnrMissioniEmail) {
-        return new AddMissioneMessage(userName, userSurname, userEmail, cnrMissioniEmail) {
+            String cnrMissioniEmail, PDFBuilder pdfBuilder) {
+        return new AddMissioneMessage(userName, userSurname, userEmail, cnrMissioniEmail, pdfBuilder) {
 
             /**
              * @return {@link MissioniMailImplementor.NotificationMessageType}
@@ -46,8 +48,9 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
      */
     @Override
     public UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname, String userEmail,
-            String cnrMissioniEmail, String missioneID) {
-        return new UpdateMissioneMessage(userName, userSurname, userEmail, cnrMissioniEmail, missioneID) {
+            String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
+        return new UpdateMissioneMessage(userName, userSurname, userEmail, cnrMissioniEmail,
+                missioneID, pdfBuilder) {
 
             /**
              * @return {@link MissioniMailImplementor.NotificationMessageType}

@@ -35,6 +35,11 @@ logging:
       "org.geosdi.geoplatform.experimental.el.dao" : trace
       "it.cnr.missioni.el.dao" : debug
       "it.cnr.missioni.el.index" : debug
+      "it.cnr.missioni.notification.bridge.store.ImplementorStore" : debug
+      "it.cnr.missioni.notification.dispatcher.MissioniMailDispatcher" : debug
+      "it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder" : debug
+      "it.cnr.missioni.notification.task" : debug
+      "it.cnr.missioni.model.validator" : debug
 
   appenders:
       - type: console

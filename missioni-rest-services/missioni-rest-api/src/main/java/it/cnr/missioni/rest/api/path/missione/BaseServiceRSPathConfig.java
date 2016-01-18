@@ -17,8 +17,8 @@ public final class BaseServiceRSPathConfig extends ApplicationServiceRSPathConfi
     public static final String ADD_MISSIONE_PATH = MISSIONI_PATH + "/addMissione";
     public static final String UPDATE_MISSIONE_PATH = MISSIONI_PATH + "/updateMissione";
     public static final String DELETE_MISSIONE_PATH = MISSIONI_PATH + "/deleteMissione";
-    
-    
+    public static final String NOTIFY_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyMissionAdministration";
+
 
     private BaseServiceRSPathConfig() {
     }
