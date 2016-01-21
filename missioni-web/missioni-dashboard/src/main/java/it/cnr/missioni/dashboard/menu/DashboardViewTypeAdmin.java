@@ -11,15 +11,10 @@ import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
 import it.cnr.missioni.dashboard.view.GestioneVeicoloView;
 
 
-public enum DashboardViewType implements IDashboardMenu{
-    HOME("home", HomeView.class, FontAwesome.HOME, true)
-    ,
-    COMPLETA_REGISTRAZIONE("completa registrazione",null, FontAwesome.USER, true),
-    GESTIONE_MISSIONE("gestione missione",GestioneMissioneView.class, FontAwesome.SUITCASE, true),
-    GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
-    GESTIONE_VEICOLO("gestione veicolo",GestioneVeicoloView.class, FontAwesome.CAR, true),
-    CALENDARIO("calendario", CalendarioView.class, FontAwesome.CALENDAR, true)
-    
+public enum DashboardViewTypeAdmin implements IDashboardMenu{
+    HOME("home", HomeView.class, FontAwesome.HOME, true),
+    GESTIONE_MISSIONE_ADMIN("gestione missione",GestioneMissioneView.class, FontAwesome.SUITCASE, true),
+    GESTIONE_RIMBORSO_ADMIN("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
     ;
 
     private final String viewName;
@@ -27,7 +22,7 @@ public enum DashboardViewType implements IDashboardMenu{
     private final Resource icon;
     private final boolean stateful;
 
-    private DashboardViewType(final String viewName,
+    private DashboardViewTypeAdmin(final String viewName,
             final Class<? extends View> viewClass, final Resource icon,
             final boolean stateful) {
         this.viewName = viewName;
@@ -51,12 +46,10 @@ public enum DashboardViewType implements IDashboardMenu{
     public Resource getIcon() {
         return icon;
     }
-    
-    
 
-    public static DashboardViewType getByViewName(final String viewName) {
-        DashboardViewType result = null;
-        for (DashboardViewType viewType : values()) {
+    public static DashboardViewTypeAdmin getByViewName(final String viewName) {
+        DashboardViewTypeAdmin result = null;
+        for (DashboardViewTypeAdmin viewType : values()) {
             if (viewType.getViewName().equals(viewName)) {
                 result = viewType;
                 break;

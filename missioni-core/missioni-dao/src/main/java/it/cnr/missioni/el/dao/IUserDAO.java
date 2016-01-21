@@ -1,8 +1,7 @@
 package it.cnr.missioni.el.dao;
 
-import java.util.List;
-
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.User;
@@ -19,6 +18,6 @@ public interface IUserDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<User
 	 * @return
 	 * @throws Exception
 	 */
-	List<User> findUserByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception;
+	PageResult<User> findUserByQuery(UserSearchBuilder userSearchBuilder) throws Exception;
 
 }

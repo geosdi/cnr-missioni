@@ -12,6 +12,7 @@ import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -20,6 +21,9 @@ import it.cnr.missioni.dashboard.component.wizard.missione.AnticipazioniPagament
 import it.cnr.missioni.dashboard.component.wizard.missione.DatiGeneraliMissioneStep;
 import it.cnr.missioni.dashboard.component.wizard.missione.DatiMissioneEsteraStep;
 import it.cnr.missioni.dashboard.component.wizard.missione.DatiPeriodoMissioneStep;
+import it.cnr.missioni.dashboard.component.wizard.missione.FondoGAEStep;
+import it.cnr.missioni.dashboard.component.wizard.missione.LocalitaOggettoStep;
+import it.cnr.missioni.dashboard.component.wizard.missione.TipoMissioneStep;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.DatiGeneraliRimborsoStep;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.FatturaRimborsoStep;
 import it.cnr.missioni.dashboard.component.wizard.user.AnagraficaUserStep;
@@ -29,6 +33,7 @@ import it.cnr.missioni.dashboard.component.wizard.user.ResidenzaUserStep;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.User;
 
 /**
@@ -96,6 +101,14 @@ public class WizardSetupWindow implements WizardProgressListener {
 		DatiGeneraliMissioneStep datiGeneraliStep = new DatiGeneraliMissioneStep(missione);
 		datiGeneraliStep.bindFieldGroup();
 
+		TipoMissioneStep tipoMissioneStep = new TipoMissioneStep(missione);
+		
+		LocalitaOggettoStep localitaOggettoStep = new LocalitaOggettoStep(missione);
+		localitaOggettoStep.bindFieldGroup();
+		
+		FondoGAEStep fondoGAEStep = new FondoGAEStep(missione);
+		fondoGAEStep.bindFieldGroup();
+		
 		DatiPeriodoMissioneStep datiPeriodoMissioneStep = new DatiPeriodoMissioneStep(missione.getDatiPeriodoMissione(),
 				missione);
 		datiPeriodoMissioneStep.bindFieldGroup();
@@ -108,6 +121,9 @@ public class WizardSetupWindow implements WizardProgressListener {
 				missione.getDatiAnticipoPagamenti(), missione, modifica);
 		anticipazioniPagamentoStep.bindFieldGroup();
 
+		wizard.addStep(tipoMissioneStep, "tipoMissione");
+		wizard.addStep(localitaOggettoStep, "localitaOggetto");
+		wizard.addStep(fondoGAEStep, "fondoGAE");
 		wizard.addStep(datiGeneraliStep, "datiGenerali");
 		wizard.addStep(datiPeriodoMissioneStep, "inizioFine");
 		wizard.addStep(missioneEsteraStep, "missioneEstera");
@@ -147,7 +163,9 @@ public class WizardSetupWindow implements WizardProgressListener {
 		fatturaRimborsoStep.bindFieldGroup();
 
 		wizard.addStep(datiGeneraliStep, "datiGenerali");
-		wizard.addStep(fatturaRimborsoStep, "datiFattura");
+		
+		if(missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == null || missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().equals(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()))
+			wizard.addStep(fatturaRimborsoStep, "datiFattura");
 		wizard.addListener(new WizardProgressListener() {
 
 			@Override
@@ -170,11 +188,11 @@ public class WizardSetupWindow implements WizardProgressListener {
 			@Override
 			public void activeStepChanged(WizardStepActivationEvent event) {
 				// TODO Auto-generated method stub
-				if (event.getActivatedStep().getCaption().equals("Fatture"))
-					wizard.getParent().getParent().setHeight("70%");
+				if (event.getActivatedStep() instanceof FatturaRimborsoStep)
+					wizard.getParent().setHeight("70%");
 
 				else
-					wizard.getParent().getParent().setHeight("50%");
+					wizard.getParent().setHeight("50%");
 
 			}
 		});
@@ -196,9 +214,10 @@ public class WizardSetupWindow implements WizardProgressListener {
 		wizard.getCancelButton().setCaption("Cancella");
 		wizard.getNextButton().setCaption("Avanti");
 		wizard.getFinishButton().setCaption("Concludi");
-		wizard.setWidth("95%");
+		wizard.setWidth("100%");
 		wizard.setHeight("95%");
 		w.setContent(wizard);
+		
 
 	}
 	

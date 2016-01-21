@@ -14,7 +14,7 @@ import java.util.Objects;
  * @email giuseppe.lascaleia@geosdi.org
  */
 @JsonRootName(value = "MissioniStore")
-@JsonPropertyOrder(value = {"userID", "missioni"})
+@JsonPropertyOrder(value = {"userID", "missioni","totale"})
 public class MissioniStore implements Serializable {
 
     private static final long serialVersionUID = -1456652972409122182L;
@@ -23,6 +23,7 @@ public class MissioniStore implements Serializable {
     private String userID;
     @JsonProperty(value = "missioni", required = false)
     private List<Missione> missioni;
+    private long totale;
 
     public MissioniStore() {
     }
@@ -49,7 +50,21 @@ public class MissioniStore implements Serializable {
         this.missioni = missioni;
     }
 
-    @Override
+    /**
+	 * @return the totale
+	 */
+	public long getTotale() {
+		return totale;
+	}
+
+	/**
+	 * @param totale 
+	 */
+	public void setTotale(long totale) {
+		this.totale = totale;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -62,11 +77,11 @@ public class MissioniStore implements Serializable {
         return Objects.hash(userID);
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + " {" +
-                "userID='" + userID + '\'' +
-                ", missioni=" + missioni +
-                '}';
-    }
+    /**
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		return "MissioniStore [userID=" + userID + ", missioni=" + missioni + ", totale=" + totale + "]";
+	}
 }

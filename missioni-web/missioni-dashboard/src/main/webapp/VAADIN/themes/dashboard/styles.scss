@@ -1,7 +1,8 @@
-// Import all the mixins for this theme
-@import "dashboard";
-
-.dashboard {
-  // Output the actual theme selectors
-  @include dashboard;
-}
+@import "addons.scss";
+  @import "dashboard";
+  
+  .dashboard {
+    // Output the actual theme selectors
+   @include addons;
+    @include dashboard;
+  } 

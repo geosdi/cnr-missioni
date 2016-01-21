@@ -45,7 +45,7 @@ public abstract class AbstractBooleanSearch<S> {
 	
 	public  void addBooleanQuery(BoolQueryBuilder queryBuilder ) throws Exception {
 		switch (type.name()) {
-		case "SHOUD":
+		case "SHOULD":
 			queryBuilder.should(getBooleanQuery());
 			break;
 		case "MUST":

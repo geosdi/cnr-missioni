@@ -31,6 +31,7 @@ public class RimborsoTest {
 	@Test
 	public void rimborsoErrataTest() {
 		Rimborso rimborso = new Rimborso();
+		rimborso.setAnticipazionePagamento(new Double(-3));
 		Set<ConstraintViolation<Rimborso>> constraintViolations = validator.validate(rimborso);
 		assertEquals(1, constraintViolations.size());
 	}
@@ -38,7 +39,7 @@ public class RimborsoTest {
 	@Test
 	public void missioneOkTest() {
 		Rimborso rimborso = new Rimborso();
-		rimborso.setNumeroOrdine("01");
+		rimborso.setAnticipazionePagamento(new Double(300));
 		rimborso.setDataRimborso(new DateTime());
 		Set<ConstraintViolation<Rimborso>> constraintViolations = validator.validate(rimborso);
 		assertEquals(0, constraintViolations.size());

@@ -123,7 +123,7 @@ public class MissioneTest {
 		fattura_2.setId("2222222222222");
 
 		Rimborso rimborso = new Rimborso();
-		rimborso.setNumeroOrdine("56");
+		rimborso.setNumeroOrdine(new Long(1));
 		rimborso.setAvvisoPagamento("Via Verdi");
 		rimborso.setAnticipazionePagamento(0.0);
 		rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));

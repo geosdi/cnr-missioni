@@ -10,6 +10,7 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
@@ -30,11 +31,14 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	 * @throws Exception
 	 */
 	@Override
-	public List<User> findUserByQuery(Page p, UserSearchBuilder userSearchBuilder) throws Exception {
+	public PageResult<User> findUserByQuery(UserSearchBuilder userSearchBuilder) throws Exception {
 		
 		List<User> listaUsers = new ArrayList<User>();
 //		logger.debug("\nID "+userSearchBuilder.getId());
 		logger.debug("###############Try to find Users by Query: {}\n\n");
+		
+		Page p = new Page(userSearchBuilder.getFrom(),userSearchBuilder.getSize());
+		
 		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(userSearchBuilder.buildQuery()))
 				.addSort(userSearchBuilder.getFieldSort(), userSearchBuilder.getSortOrder())
@@ -52,7 +56,7 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 			listaUsers.add(utente);
 		}
 
-		return listaUsers;
+		return new PageResult<User>(searchResponse.getHits().getTotalHits(), listaUsers);
 	}
 
 	@Override

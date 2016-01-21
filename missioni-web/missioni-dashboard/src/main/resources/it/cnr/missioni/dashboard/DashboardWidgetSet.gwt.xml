@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.0/distro-source/core/src/gwt-module.dtd">
 <module>
-<!-- 	<inherits name="com.vaadin.DefaultWidgetSet" /> -->
 	
 	<inherits name="com.google.gwt.user.theme.standard.Standard" />
 	
@@ -27,4 +26,20 @@
     
 
     <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
+
+    
+
+    
+
+    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
+
+    <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
+
+    <inherits name="com.vaadin.DefaultWidgetSet" />
+
+    <inherits name="org.vaadin.jouni.animator.AnimatorWidgetset" />
+
+    <inherits name="org.vaadin.henrik.drawer.widgetset.DrawerApplicationWidgetset" />
+
+    <inherits name="org.vaadin.jouni.dom.DomWidgetset" />
 </module>

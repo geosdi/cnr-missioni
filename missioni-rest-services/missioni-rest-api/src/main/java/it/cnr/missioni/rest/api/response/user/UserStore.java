@@ -23,6 +23,7 @@ public class UserStore implements Serializable {
     private static final long serialVersionUID = -7592733477679041238L;
     @JsonProperty(value = "users", required = false)
     private List<User> users;
+    private long totale;
 
     public UserStore() {
     }
@@ -45,10 +46,26 @@ public class UserStore implements Serializable {
         this.users = users;
     }
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + " {"
-                + "users = " + users + '}';
-    }
+    /**
+	 * @return the totale
+	 */
+	public long getTotale() {
+		return totale;
+	}
+
+	/**
+	 * @param totale 
+	 */
+	public void setTotale(long totale) {
+		this.totale = totale;
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		return "UserStore [users=" + users + ", totale=" + totale + "]";
+	}
 
 }

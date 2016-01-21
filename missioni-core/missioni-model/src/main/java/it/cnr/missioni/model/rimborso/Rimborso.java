@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.validation.constraints.Min;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 import it.cnr.missioni.model.adapter.FatturaMapAdapter;
@@ -21,8 +20,7 @@ public class Rimborso  implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8658916823848446391L;
-	@NotBlank
-	private String numeroOrdine;
+	private Long numeroOrdine;
 	private DateTime dataRimborso;
 	private DateTime dateLastModified;
 	private Double totale;
@@ -36,14 +34,14 @@ public class Rimborso  implements Serializable{
 	/**
 	 * @return the numeroOrdine
 	 */
-	public String getNumeroOrdine() {
+	public Long getNumeroOrdine() {
 		return numeroOrdine;
 	}
 
 	/**
 	 * @param numeroOrdine 
 	 */
-	public void setNumeroOrdine(String numeroOrdine) {
+	public void setNumeroOrdine(Long numeroOrdine) {
 		this.numeroOrdine = numeroOrdine;
 	}
 
@@ -136,6 +134,8 @@ public class Rimborso  implements Serializable{
 		this.mappaFattura = mappaFattura;
 	}
 
+
+
 	/**
 	 * @return
 	 */
@@ -143,7 +143,7 @@ public class Rimborso  implements Serializable{
 	public String toString() {
 		return "Rimborso [numeroOrdine=" + numeroOrdine + ", dataRimborso=" + dataRimborso + ", dateLastModified="
 				+ dateLastModified + ", totale=" + totale + ", avvisoPagamento=" + avvisoPagamento
-				+ ", anticipazionePagamento=" + anticipazionePagamento + ", mappaFattura=" + mappaFattura + "]";
+				+ ", anticipazionePagamento=" + anticipazionePagamento + ", mappaFattura=" + mappaFattura+"]";
 	}
 
 

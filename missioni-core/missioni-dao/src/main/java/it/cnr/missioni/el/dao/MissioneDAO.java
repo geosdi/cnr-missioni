@@ -14,9 +14,12 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.search.MultiMatchQuery.QueryBuilder;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.metrics.max.Max;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
@@ -40,21 +43,23 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 	 * @throws Exception
 	 */
 	@Override
-	public List<Missione> findMissioneByQuery(Page p, MissioneSearchBuilder missioneSearchBuilder) throws Exception {
+	public PageResult<Missione> findMissioneByQuery(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
 		List<Missione> listaMissioni = new ArrayList<Missione>();
 
 		logger.debug("###############Try to find Missione by Query: {}\n\n");
-		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(missioneSearchBuilder.buildQuery()))
-				.addSort(missioneSearchBuilder.getFieldSort(), missioneSearchBuilder.getSortOrder())
-				.execute().actionGet();
+
+		Page p = new Page(missioneSearchBuilder.getFrom(), missioneSearchBuilder.getSize());
+
+		SearchResponse searchResponse = p
+				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
+						.setQuery(missioneSearchBuilder.buildQuery()))
+				.addSort(missioneSearchBuilder.getFieldSort(), missioneSearchBuilder.getSortOrder()).execute()
+				.actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");
 		}
 
-		
-		
 		for (SearchHit searchHit : searchResponse.getHits().hits()) {
 			Missione missione = this.mapper.read(searchHit.getSourceAsString());
 			if (!missione.isIdSetted()) {
@@ -62,8 +67,18 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 			}
 			listaMissioni.add(missione);
 		}
+		return new PageResult<Missione>(searchResponse.getHits().getTotalHits(), listaMissioni);
+	}
 
-		return listaMissioni;
+	public long getMaxNumeroOrdineRimborso() throws Exception {
+		long value = 0;
+
+		SearchResponse sr = this.elastichSearchClient.prepareSearch(getIndexName())
+				.addAggregation(AggregationBuilders.max("max_numero_ordine_rimborso").field("missione.rimborso.numeroOrdine")).execute().actionGet();
+		Max agg = sr.getAggregations().get("max_numero_ordine_rimborso");
+		value = (long) agg.getValue()+1;
+
+		return value;
 	}
 
 	/**

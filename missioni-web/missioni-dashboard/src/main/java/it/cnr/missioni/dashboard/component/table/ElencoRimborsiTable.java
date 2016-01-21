@@ -10,7 +10,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdatedEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
@@ -19,14 +19,14 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
  * @author Salvia Vito
  */
 
-public final class ElencoMissioniTable extends Table {
+public final class ElencoRimborsiTable extends Table {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6439677451802448635L;
 
-	public ElencoMissioniTable() {
+	public ElencoRimborsiTable() {
 		buildTable();
 	}
 
@@ -47,7 +47,8 @@ public final class ElencoMissioniTable extends Table {
 		// setSortEnabled(false);
 		setColumnAlignment("revenue", Align.RIGHT);
 		setRowHeaderMode(RowHeaderMode.HIDDEN);
-		setSizeFull();
+		setWidth("100%");
+		// setHeight("100%");
 
 		setPageLength(10);
 		setSelectable(true);
@@ -73,19 +74,28 @@ public final class ElencoMissioniTable extends Table {
 		this.removeAllItems();
 
 		if (missioniStore != null) {
+			
+			BeanItemContainer<Missione> listaMissioni =
+				    new BeanItemContainer<Missione>(Missione.class);
+			listaMissioni.addNestedContainerProperty("rimborso.numeroOrdine");
+			listaMissioni.addNestedContainerProperty("rimborso.dataRimborso");
+			listaMissioni.addNestedContainerProperty("rimborso.totale");
+			listaMissioni.addAll(missioniStore.getMissioni());
+
+			
 			setVisible(true);
-			setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, missioniStore.getMissioni()));
-			setVisibleColumns("id", "localita", "oggetto", "stato", "dataInserimento");
-			setColumnHeaders("ID", "Località", "Oggetto", "Stato", "Data Inserimento");
-			setId("id");
-			Object[] properties = { "dataInserimento", "id" };
+			setContainerDataSource(listaMissioni);
+			setVisibleColumns("rimborso.numeroOrdine","rimborso.dataRimborso","rimborso.totale","id","oggetto","localita");
+			setColumnHeaders("Numero Ordine","Data Rimborso","Totale","ID Missione","Oggetto","Località");
+			setId("rimborso.numeroOrdine");
+			Object[] properties = { "rimborso.dataRimborso", "rimborso.numeroOrdine" };
 			boolean[] ordering = { false, true };
 			sort(properties, ordering);
-			setColumnWidth("dataInserimento", 160);
-			setColumnWidth("oggetto", 160);
+//			setColumnWidth("dataInserimento", 160);
+//			setColumnWidth("oggetto", 160);
 			setColumnExpandRatio("oggetto", 2);
-			setColumnExpandRatio("localita", 2);
-			setColumnExpandRatio("id", 1);
+			setColumnExpandRatio("localita", 1);
+//			setColumnExpandRatio("id", 1);
 			// setColumnExpandRatio("dataInserimento",1);
 		}
 		// else{
@@ -94,53 +104,6 @@ public final class ElencoMissioniTable extends Table {
 
 	}
 
-	// /**
-	// *
-	// * Crea un context menù quando si clicca col tasto destro su una riga
-	// della
-	// * tabella
-	// *
-	// * @author Salvia Vito
-	// *
-	// */
-	// private class TransactionsActionHandler implements Handler {
-	// private final Action seleziona = new Action("Seleziona");
-	// private final Action rimborso = new Action("Rimborso");
-	//
-	// @Override
-	// public void handleAction(final Action action, final Object sender, final
-	// Object target) {
-	// if (action == seleziona) {
-	// WizardSetupWindow.getWizardSetup().withModifica(true).withTipo("missione").withMissione((Missione)
-	// target).build();;
-	//
-	// }
-	// if (action == rimborso) {
-	// Rimborso rimborso = null;
-	// boolean modifica;
-	// // se non è stato ancora associato il rimborso
-	// if (((Missione) target).getRimborso() != null) {
-	// rimborso = ((Missione) target).getRimborso();
-	// modifica = true;
-	// } else {
-	// rimborso = new Rimborso();
-	// modifica = false;
-	// }
-	// ((Missione) target).setRimborso(rimborso);
-	// WizardSetupWindow.getWizardSetup().withModifica(modifica).withTipo("rimborso").withMissione((Missione)
-	// target).build();;
-	//
-	//
-	//// WizardWindow.openWizardMissioneRimborso(modifica, ((Missione) target),
-	// "rimborso");
-	// }
-	// }
-	//
-	// @Override
-	// public Action[] getActions(final Object target, final Object sender) {
-	// return new Action[] { seleziona, rimborso };
-	// }
-	// }
 
 	/**
 	 * 
@@ -164,12 +127,12 @@ public final class ElencoMissioniTable extends Table {
 
 	/**
 	 * 
-	 * Aggiorna la table missioni a seguito di un inserimento o modifica
+	 * Aggiorna la table rimborsi a seguito di un inserimento o modifica
 	 * 
 	 */
 	@Subscribe
-	public void aggiornaTableMissioni(TableMissioniUpdatedEvent tableMissioniUpdatedEvent) {
-		aggiornaTable(tableMissioniUpdatedEvent.getMissioniStore());
+	public void aggiornaTableMissioni(TableRimborsiUpdatedEvent tableRimborsiUpdatedEvent) {
+		aggiornaTable(tableRimborsiUpdatedEvent.getMissioniStore());
 	}
 
 }

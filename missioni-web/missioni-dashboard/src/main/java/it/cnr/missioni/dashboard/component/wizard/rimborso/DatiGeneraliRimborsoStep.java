@@ -41,7 +41,7 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 	private Rimborso rimborso;
 
 	public String getCaption() {
-		return "Generale";
+		return "Step 1";
 	}
 
 	public DatiGeneraliRimborsoStep(Rimborso rimborso) {

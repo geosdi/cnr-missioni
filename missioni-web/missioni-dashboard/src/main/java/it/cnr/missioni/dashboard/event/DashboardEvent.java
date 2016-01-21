@@ -1,6 +1,10 @@
 package it.cnr.missioni.dashboard.event;
 
+import java.util.List;
+
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
+import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /*
@@ -126,9 +130,38 @@ public abstract class DashboardEvent {
 	}
 
 	/**
-	 *
+	 * Aggiorna la tabella rimborso dopo un inserimento o update
 	 */
 	public static class MenuUpdateEvent {
+	}
+	
+	public static class TableRimborsiUpdatedEvent {
+
+		private MissioniStore missioniStore;
+
+		/**
+		 * @param missioniStore
+		 */
+		public TableRimborsiUpdatedEvent(MissioniStore missioniStore) {
+			this.missioniStore = missioniStore;
+		}
+
+		/**
+		 * @return the missioniStore
+		 */
+		public MissioniStore getMissioniStore() {
+			return missioniStore;
+		}
+
+		/**
+		 * @param missioniStore
+		 */
+		public void setMissioniStore(MissioniStore missioniStore) {
+			this.missioniStore = missioniStore;
+		}
+
+
+
 	}
 	
 

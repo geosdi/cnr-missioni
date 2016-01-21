@@ -11,6 +11,8 @@ import java.util.Collection;
 public interface INotificationProvider {
 
 
+	void check();
+	
     /**
      * @return The number of unread notifications for the current user.
      */

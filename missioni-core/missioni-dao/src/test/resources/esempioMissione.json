@@ -30,7 +30,7 @@
 			"importoDaTerzi" : 100.00
 		},
 		"rimborso" : {
-			"numeroOrdine" : "56",
+			"numeroOrdine" : 1,
 			"dataRimborso" : "2015-12-15T10:11:59.568Z",
 			"totale" : 73.5,
 			"anticipazionePagamento" : 0.0,

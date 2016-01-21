@@ -6,12 +6,11 @@ import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
@@ -24,7 +23,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
-import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
@@ -44,7 +42,7 @@ public class DatiMissioneEsteraStep implements WizardStep {
 	private Missione missione;
 
 	public String getCaption() {
-		return "Missione Estera";
+		return "Step 6";
 	}
 
 	public DatiMissioneEsteraStep(DatiMissioneEstera datiMissioneEstera, Missione missione) {
@@ -99,6 +97,16 @@ public class DatiMissioneEsteraStep implements WizardStep {
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
+		
+		if(!missione.isMissioneEstera()){
+			trattamentoMissioneEsteraField.setReadOnly(true);
+			attraversamentoFrontieraAndataField.setReadOnly(true);
+			attraversamentoFrontieraRitornoField.setReadOnly(true);
+		}else{
+			trattamentoMissioneEsteraField.setReadOnly(false);
+			attraversamentoFrontieraAndataField.setReadOnly(false);
+			attraversamentoFrontieraRitornoField.setReadOnly(false);
+		}
 
 		details.addComponent(trattamentoMissioneEsteraField);
 

@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
@@ -69,7 +68,7 @@ public class MissioneDAOTest {
 	@Test
 	public void B_findMissioneByUser_1Test() throws Exception {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01");
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY USER", lista.size() == 2);
 
 	}
@@ -78,7 +77,7 @@ public class MissioneDAOTest {
 	public void C_findMissioneByUser_2Test() throws Exception {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("03");
 
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY USER", lista.isEmpty());
 
 	}
@@ -88,7 +87,7 @@ public class MissioneDAOTest {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withStato(StatoEnum.PRESA_IN_CARICO.name());
 		missioneSearchBuilder.setStato(StatoEnum.PRESA_IN_CARICO.name());
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 2);
 
 	}
@@ -98,7 +97,7 @@ public class MissioneDAOTest {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withStato(StatoEnum.APPROVATA.name());
 
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 1);
 
 	}
@@ -107,7 +106,7 @@ public class MissioneDAOTest {
 	public void F_findMissioneByUserStato_1Test() throws Exception {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withStato(StatoEnum.APPROVATA.name()).withIdUser("01");
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.isEmpty());
 
 	}
@@ -116,7 +115,7 @@ public class MissioneDAOTest {
 	public void G_findMissioneByUserStato_2Test() throws Exception {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withStato(StatoEnum.PRESA_IN_CARICO.name()).withIdUser("01");
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 2);
 	}
 
@@ -147,8 +146,9 @@ public class MissioneDAOTest {
 	public void L_findMissioniByData_1() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withRangemDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC), new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+				.withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
+						new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY DATA", lista.size() == 1);
 	}
 
@@ -156,9 +156,10 @@ public class MissioneDAOTest {
 	public void M_findMissioniByData_2() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withRangemDataInserimento(new DateTime(2015, 8, 14, 0, 0, DateTimeZone.UTC), new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
-		
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+				.withRangeDataInserimento(new DateTime(2015, 8, 14, 0, 0, DateTimeZone.UTC),
+						new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
+
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY DATA", lista.size() == 0);
 
 	}
@@ -167,12 +168,13 @@ public class MissioneDAOTest {
 	public void N_findMissioniByAll() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withRangemDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC), new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
-		
+				.withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
+						new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
+
 		missioneSearchBuilder.setStato(StatoEnum.PRESA_IN_CARICO.name());
 		missioneSearchBuilder.setIdUser("01");
 
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY ALL", lista.size() == 1);
 
 	}
@@ -180,8 +182,8 @@ public class MissioneDAOTest {
 	@Test
 	public void O_findMissioniByRimborsoNumeroOrdine() throws Exception {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withNumeroOrdineMissione("56");
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+				.withNumeroOrdineMissione(new Long(1));
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", lista.size() == 1);
 	}
 
@@ -189,9 +191,9 @@ public class MissioneDAOTest {
 	public void P_findMissioniByDataRimborso_1() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC),null);
+				.withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC), null);
 
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", lista.size() == 1);
 	}
 
@@ -200,7 +202,7 @@ public class MissioneDAOTest {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder();
 
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 3);
 	}
 
@@ -209,10 +211,93 @@ public class MissioneDAOTest {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withIdMissione("");
-		List<Missione> lista = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 3);
 	}
 
+	@Test
+	public void S_findByOggetto() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withOggetto("sviluppo");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND BY OGGETTO", lista.size() == 1);
+	}
+
+	@Test
+	public void S_findByOggetto2() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withOggetto("Riunione prova");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND BY OGGETTO", lista.size() == 2);
+	}
+
+	@Test
+	public void T_findByMultiMatch() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withMultiMatch("Milano, Riunione prova");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 3);
+	}
+
+	@Test
+	public void U_findByMultiMatch_2() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withMultiMatch("roma conferenza");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 2);
+	}
+
+	@Test
+	public void V_findByMultiMatch_3() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withMultiMatch("roma sviluppo");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 1);
+	}
+
+	@Test
+	public void V_findByMultiMatch_4() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withMultiMatch("sviluppo di applicazioni");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 1);
+	}
+
+	
+	@Test
+	public void V_findByMaxNumeroOrdineMissione() throws Exception {
+
+		Long max = this.missioneDAO.getMaxNumeroOrdineRimborso();
+		Assert.assertTrue("FIND ALL MISSIONI", max == 2);
+	}
+	
+	@Test
+	public void V_findNumeroRimboroUser() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser("01")
+				.withFieldExist("missione.rimborso");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 1);
+	}
+	
+	@Test
+	public void V_findNumeroRimboroUser2() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser("02")
+				.withFieldExist("missione.rimborso");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 0);
+	}
+	
+	
 	// @Test
 	// public void tearDown() throws Exception {
 	// this.missioneDocIndexCreator.deleteIndex();
@@ -221,7 +306,7 @@ public class MissioneDAOTest {
 	private void creaMissioni() {
 		Missione missione = new Missione();
 		missione.setId("M_01");
-		missione.setOggetto("Conferenza");
+		missione.setOggetto("Conferenza prova per lo sviluppo di applicazioni");
 		missione.setLocalita("Roma");
 		missione.setIdUser("01");
 		missione.setMissioneEstera(false);
@@ -259,7 +344,7 @@ public class MissioneDAOTest {
 		fattura_2.setId("2222222222222");
 
 		Rimborso rimborso = new Rimborso();
-		rimborso.setNumeroOrdine("56");
+		rimborso.setNumeroOrdine(new Long(1));
 		rimborso.setAvvisoPagamento("Via Verdi");
 		rimborso.setAnticipazionePagamento(0.0);
 		rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));
@@ -282,7 +367,7 @@ public class MissioneDAOTest {
 
 		missione = new Missione();
 		missione.setId("M_03");
-		missione.setOggetto("Riunione");
+		missione.setOggetto("Riunione prova");
 		missione.setLocalita("Milano");
 		missione.setIdUser("02");
 		missione.setStato(StatoEnum.APPROVATA);

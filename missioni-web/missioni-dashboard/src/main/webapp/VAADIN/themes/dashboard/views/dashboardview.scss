@@ -273,24 +273,84 @@
 
 }
 
-
-
-
 .wizard .v-button-caption {
 	color: white !important;
 
-}
- .v-table {
-	margin-top: 5% !important;
-	background-color:white !important;
 }
 
 
  .wizard .v-table .elencoFatture {
 	margin-top: 5% !important;
 	background-color:white !important;
+
+}
+
+//ALL TABLES
+.v-table-cell-content-blue {
+    color: #197de1;
+    background-color:white !important;
+}
+
+.v-table-cell-wrapper {
+	white-space: normal;
+}
+
+ .v-table {
+	margin-top: 1% !important;
+	background-color:white !important;
+}
+
+.v-table-caption-container {
+    color: #197de1;
+     background-color:white !important;
 }
 
 
+.v-table-header {
+     background-color:white !important;
+//	border-right:0px solid !important;
+//	border-left:0px solid !important;
+}
+
+.v-verticallayout-panel-view{
+	margin:1% !important;
+}
+
+//GESTIONE MISSIONE
+.v-horizontallayout-full-text-search{
+	float:right !important;
+	margin-right:1% !important;
+}
+
+.v-horizontallayout-button-new-missione{
+	float:left !important;
+	margin-left:1% !important;
+}
+.v-horizontallayout-buttons-layout{
+	margin-top:1% !important;
+}
+
+
+.v-slot-toolbar-search{
+	margin-top:1% !important;
+	margin-bottom:3% !important;
+}
+
+.v-vertical > .v-spacing {
+    height: 5%;
+}
+
+
+.v-slot-layout-table-missione{
+	height:auto !important;
+}
+
+.v-slot-tableFatture{
+	margin-top:4%;
+}
+
+.v-button-button-margin{
+	margin-top:2% !important;
+}
 
 }

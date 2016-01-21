@@ -10,6 +10,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
  */
 public interface IMissioneDelegate {
 
+<<<<<<< Updated upstream
     /**
      * @param idMissione
      * @return {@link Missione}
@@ -17,27 +18,37 @@ public interface IMissioneDelegate {
      */
     MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato,
             String numeroOrdineRimborso) throws Exception;
+=======
+	/**
+	 * @param missioneID
+	 * @return {@link Missione}
+	 * @throws Exception
+	 */
+	MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
+			Long dataFromMissione,Long dataToMissione,Long dataFromRimborso,Long dataToRimborso,String oggetto,String multiMatch,String fieldExist,int from,int size) throws Exception;
+>>>>>>> Stashed changes
 
-    /**
-     * @param userID
-     * @return {@link it.cnr.missioni.rest.api.response.missione.MissioniStore}
-     * @throws Exception
-     */
-    MissioniStore getLastUserMissions(String userID) throws Exception;
+	/**
+	 * @param userID
+	 * @return {@link it.cnr.missioni.rest.api.response.missione.MissioniStore}
+	 * @throws Exception
+	 */
+	MissioniStore getLastUserMissions(String userID) throws Exception;
 
-    /**
-     * @param missione
-     * @return {@link String} ID Missione
-     * @throws Exception
-     */
-    String addMissione(Missione missione) throws Exception;
+	/**
+	 * @param missione
+	 * @return {@link String} ID Missione
+	 * @throws Exception
+	 */
+	String addMissione(Missione missione) throws Exception;
 
-    /**
-     * @param missione
-     * @throws Exception
-     */
-    Boolean updateMissione(Missione missione) throws Exception;
+	/**
+	 * @param missione
+	 * @throws Exception
+	 */
+	Boolean updateMissione(Missione missione) throws Exception;
 
+<<<<<<< Updated upstream
     /**
      * @param missioneID
      * @throws Exception
@@ -50,4 +61,11 @@ public interface IMissioneDelegate {
      * @throws Exception
      */
     Boolean notifyMissionAdministration(NotificationMissionRequest request) throws Exception;
+=======
+	/**
+	 * @param id
+	 * @throws Exception
+	 */
+	Boolean deleteMissione(String missioneID) throws Exception;
+>>>>>>> Stashed changes
 }

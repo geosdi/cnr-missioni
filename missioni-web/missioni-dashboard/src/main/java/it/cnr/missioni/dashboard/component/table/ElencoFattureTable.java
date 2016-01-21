@@ -12,7 +12,6 @@ import com.vaadin.event.Action;
 import com.vaadin.event.Action.Handler;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
@@ -21,9 +20,12 @@ import it.cnr.missioni.model.rimborso.Fattura;
 /**
  * @author Salvia Vito
  */
-@SuppressWarnings("serial")
 public final class ElencoFattureTable extends Table {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6369755826586396817L;
 	private BeanFieldGroup<Fattura> beanFieldGroup;
 	private Missione missione;
 
@@ -42,15 +44,17 @@ public final class ElencoFattureTable extends Table {
 	private void buildTable() {
 
 		// Stile
-		addStyleName(ValoTheme.TABLE_NO_STRIPES);
-		addStyleName(ValoTheme.TABLE_BORDERLESS);
-		addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-		addStyleName(ValoTheme.TABLE_SMALL);
-
+//		addStyleName(ValoTheme.TABLE_NO_STRIPES);
+//		addStyleName(ValoTheme.TABLE_BORDERLESS);
+//		addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
+//		addStyleName(ValoTheme.TABLE_SMALL);
+		setStyleName("tableFatture");
 		setSortEnabled(false);
 		setColumnAlignment("revenue", Align.RIGHT);
 		setRowHeaderMode(RowHeaderMode.HIDDEN);
-		setSizeFull();
+		setWidth("100%");
+//		setHeight("30%");
+		setPageLength(0);
 		// setPageLength(10);
 		setSelectable(true);
 		setSortEnabled(true);

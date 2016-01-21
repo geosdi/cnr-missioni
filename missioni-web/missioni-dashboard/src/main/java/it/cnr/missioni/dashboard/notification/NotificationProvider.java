@@ -24,10 +24,14 @@ public class NotificationProvider implements INotificationProvider {
 	 * Initialize the data for this application.
 	 */
 	public NotificationProvider() {
-		randomNotifications();
+//		chechRegistrationComplete();
+	}
+	
+	public void check(){
+		chechRegistrationComplete();
 	}
 
-	private void randomNotifications() {
+	private void chechRegistrationComplete() {
 		DashboardNotification n = null;
 		if (!isUserRegistrationComplete()) {
 			n = new DashboardNotification();

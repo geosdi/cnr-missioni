@@ -19,7 +19,6 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.window.CredenzialiWindow;
 import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
-import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.MenuUpdateEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
@@ -27,9 +26,8 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.ProfileUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ReportsCountUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
-import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.user.RuoloUtenteEnum;
 import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * A responsive menu component providing user information and the controls for
@@ -47,9 +45,9 @@ public final class DashboardMenu extends CustomComponent {
 	private static final String STYLE_VISIBLE = "valo-menu-visible";
 	private Label reportsBadge;
 	private MenuItem settingsItem;
-	private  User user = getCurrentUser();
+	private User user = getCurrentUser();
 	private CssLayout menuItemsLayout;
-	private MenuBar settings =  new MenuBar();
+	private MenuBar settings = new MenuBar();
 
 	public DashboardMenu() {
 		setPrimaryStyleName("valo-menu");
@@ -75,6 +73,8 @@ public final class DashboardMenu extends CustomComponent {
 		menuContent.addComponent(buildTitle());
 		menuContent.addComponent(buildUserMenu());
 		menuContent.addComponent(buildMenuItems());
+		if(getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_ADMIN)
+			menuContent.addComponent(buildMenuAdminItems());
 
 		return menuContent;
 	}
@@ -93,9 +93,9 @@ public final class DashboardMenu extends CustomComponent {
 	}
 
 	private MenuBar buildUserMenu() {
-//	  settings = new MenuBar();
+		// settings = new MenuBar();
 		settings.addStyleName("user-menu");
-		
+
 		settingsItem = settings.addItem("", new ThemeResource("img/profile-pic-300px.jpg"), null);
 		updateUserName(null);
 
@@ -124,8 +124,7 @@ public final class DashboardMenu extends CustomComponent {
 				DashboardEventBus.post(new UserLoggedOutEvent());
 			}
 		});
-		
-		
+
 		return settings;
 	}
 
@@ -133,25 +132,46 @@ public final class DashboardMenu extends CustomComponent {
 		menuItemsLayout = new CssLayout();
 		menuItemsLayout.addStyleName("valo-menuitems");
 
+		menuItemsLayout.addComponent(new ValoMenuItemButton(DashboardViewType.HOME));
 		for (final DashboardViewType view : DashboardViewType.values()) {
 
 			// se l'user ha completato la registrazione
-			if (view.getViewName().equals("aggiungi missione") || view.getViewName().equals("aggiungi veicolo")
-					|| view.getViewName().equals("ricerca missione")) {
+			if (user.isRegistrazioneCompletata() && (view == DashboardViewType.GESTIONE_VEICOLO
+					|| view == DashboardViewType.GESTIONE_RIMBORSO || view == DashboardViewType.GESTIONE_MISSIONE)) {
 
-				if (user.isRegistrazioneCompletata()) {
-					Component menuItemComponent = new ValoMenuItemButton(view);
-					menuItemsLayout.addComponent(menuItemComponent);
-				}
+				// if (user.isRegistrazioneCompletata()) {
+				Component menuItemComponent = new ValoMenuItemButton(view);
+				menuItemsLayout.addComponent(menuItemComponent);
+				// }
 
 			}
 			// se l'user non ha completato la registrazione
-			if (!user.isRegistrazioneCompletata() && view.getViewName().equals("completa registrazione")) {
+			if (!user.isRegistrazioneCompletata() && view == DashboardViewType.COMPLETA_REGISTRAZIONE) {
 				Component menuItemComponent = new ValoMenuItemButton(view);
 				menuItemsLayout.addComponent(menuItemComponent);
 			}
 
 		}
+		return menuItemsLayout;
+
+	}
+	
+	private Component buildMenuAdminItems() {
+		menuItemsLayout = new CssLayout();
+		menuItemsLayout.addStyleName("valo-menuitems");
+		menuItemsLayout.addComponent(new Label("<hr />",ContentMode.HTML));
+		menuItemsLayout.addComponent(new Label("Menù Admin"));
+		menuItemsLayout.addComponent(new ValoMenuItemButton(DashboardViewType.HOME));
+		for (final DashboardViewTypeAdmin view : DashboardViewTypeAdmin.values()) {
+
+
+				Component menuItemComponent = new ValoMenuItemButton(view);
+				menuItemsLayout.addComponent(menuItemComponent);
+
+
+		}
+
+
 		return menuItemsLayout;
 
 	}
@@ -161,7 +181,8 @@ public final class DashboardMenu extends CustomComponent {
 		super.attach();
 	}
 
-	//aggiorna il menù a seguito della registrazione completata da parte dell'user
+	// aggiorna il menù a seguito della registrazione completata da parte
+	// dell'user
 	@Subscribe
 	public void updateMenu(MenuUpdateEvent menuUpdateEvent) {
 		user = getCurrentUser();
@@ -173,7 +194,7 @@ public final class DashboardMenu extends CustomComponent {
 				menuItemsLayout.addComponent(menuItemComponent);
 			}
 		}
-//		settings.removeItems();
+		// settings.removeItems();
 		settingsItem = null;
 		settings.removeItems();
 		settings = buildUserMenu();
@@ -206,9 +227,9 @@ public final class DashboardMenu extends CustomComponent {
 
 		private static final String STYLE_SELECTED = "selected";
 
-		private final DashboardViewType view;
+		private final IDashboardMenu view;
 
-		public ValoMenuItemButton(final DashboardViewType view) {
+		public ValoMenuItemButton(final IDashboardMenu view) {
 			this.view = view;
 			setPrimaryStyleName("valo-menu-item");
 			setIcon(view.getIcon());
@@ -220,17 +241,8 @@ public final class DashboardMenu extends CustomComponent {
 				public void buttonClick(final ClickEvent event) {
 
 					if (view == DashboardViewType.COMPLETA_REGISTRAZIONE) {
-//						WizardWindow.openWizardUser(user);
 						WizardSetupWindow.getWizardSetup().withTipo("user").withUser(user).build();
 
-					}
-
-					else if (view == DashboardViewType.AGGIUNGI_MISSIONE) {
-						WizardSetupWindow.getWizardSetup().withModifica(false).withTipo("missione").withMissione(new Missione()).build();;
-					}
-
-					else if (view == DashboardViewType.AGGIUNGI_VEICOLO) {
-						VeicoloWindow.open(new Veicolo(), false);
 					} else {
 						UI.getCurrent().getNavigator().navigateTo(view.getViewName());
 					}

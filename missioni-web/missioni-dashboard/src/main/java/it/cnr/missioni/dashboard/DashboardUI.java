@@ -49,7 +49,7 @@ public final class DashboardUI extends UI  {
 	 * actually accessed.
 	 */
 	private final DashboardEventBus dashboardEventbus = new DashboardEventBus();
-	private  INotificationProvider dataProvider;
+	private  INotificationProvider notificationProvider = new NotificationProvider();
 
 	@Override
 	protected void init(final VaadinRequest request) {
@@ -85,6 +85,8 @@ public final class DashboardUI extends UI  {
 			setContent(new MainView());
 			removeStyleName("loginview");
 			getNavigator().navigateTo(getNavigator().getState());
+			notificationProvider.check();
+
 		} else {
 			setContent(new LoginView());
 			addStyleName("loginview");
@@ -95,7 +97,7 @@ public final class DashboardUI extends UI  {
 	public void userLoginRequested(final LoginAction loginAction) {
 
 		if (loginAction.doAction()) {
-			dataProvider = new NotificationProvider();
+
 			updateContent();
 
 		}
@@ -150,9 +152,14 @@ public final class DashboardUI extends UI  {
 	}
 	
     /**
-     * @return An instance for accessing the (dummy) services layer.
+     * @return An instance for accessing the  services layer.
      */
     public static INotificationProvider getDataProvider() {
-        return ((DashboardUI) getCurrent()).dataProvider;
+    	
+//    	if(((DashboardUI) getCurrent()).notificationProvider != null){
+//    		
+//    	}
+    	
+        return ((DashboardUI) getCurrent()).notificationProvider;
     }
 }

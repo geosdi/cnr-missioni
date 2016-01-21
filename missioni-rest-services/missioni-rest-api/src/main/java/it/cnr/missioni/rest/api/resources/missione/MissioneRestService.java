@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 @Consumes(value = MediaType.APPLICATION_JSON)
 public interface MissioneRestService {
 
+<<<<<<< Updated upstream
     /**
      * @param idMissione
      * @return {@link Response}
@@ -70,4 +71,61 @@ public interface MissioneRestService {
     @POST
     @Path(value = BaseServiceRSPathConfig.NOTIFY_MISSIONE_ADMINISTRATION_PATH)
     Response notifyMissionAdministration(NotificationMissionRequest request) throws Exception;
+=======
+	/**
+	 * @param missioneID
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@GET
+	@Path(value = BaseServiceRSPathConfig.GET_MISSIONE_BY_QUERY)
+	Response getMissioneByQuery(@QueryParam(value = "idMissione") String idMissione,
+			@QueryParam(value = "idUser") String idUser, @QueryParam(value = "stato") String stato,
+			@QueryParam(value = "numeroOrdineRimborso") Long numeroOrdineRimborso,
+			@QueryParam(value = "dataFromMissione") Long dataFromMissione,
+			@QueryParam(value = "dataToMissione") Long dataToMissione,
+			@QueryParam(value = "dataFromRimborso") Long dataFromRimborso,
+			@QueryParam(value = "dataToRimborso") Long dataToRimborso,
+			@QueryParam(value = "oggetto") String oggetto,
+			@QueryParam(value = "multiMatch") String multiMatch,
+			@QueryParam(value = "fieldExist") String fieldExist,
+			@QueryParam(value = "from") int from,
+			@QueryParam(value = "size") int size) throws Exception;
+
+	/**
+	 * @param userID
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@GET
+	@Path(value = BaseServiceRSPathConfig.GET_LAST_USER_MISSIONS_PATH)
+	Response getLastUserMissions(@QueryParam(value = "userID") String userID) throws Exception;
+
+	/**
+	 * @param missione
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@POST
+	@Path(value = BaseServiceRSPathConfig.ADD_MISSIONE_PATH)
+	Response addMissione(Missione missione) throws Exception;
+
+	/**
+	 * @param missione
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@PUT
+	@Path(value = BaseServiceRSPathConfig.UPDATE_MISSIONE_PATH)
+	Response updateMissione(Missione missione) throws Exception;
+
+	/**
+	 * @param missionID
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@DELETE
+	@Path(value = BaseServiceRSPathConfig.DELETE_MISSIONE_PATH)
+	Response deleteMissione(@QueryParam(value = "missioneID") String missioneID) throws Exception;
+>>>>>>> Stashed changes
 }

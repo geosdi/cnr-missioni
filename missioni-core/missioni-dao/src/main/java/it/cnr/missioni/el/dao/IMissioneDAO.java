@@ -1,10 +1,8 @@
 package it.cnr.missioni.el.dao;
 
-import java.util.List;
-
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 
@@ -20,6 +18,12 @@ public interface IMissioneDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<
 	 * @return
 	 * @throws Exception
 	 */
-	List<Missione> findMissioneByQuery(Page p, MissioneSearchBuilder missioneSearchBuilder) throws Exception;
+	PageResult<Missione> findMissioneByQuery(MissioneSearchBuilder missioneSearchBuilder) throws Exception;
 
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	long getMaxNumeroOrdineRimborso() throws Exception;
 }

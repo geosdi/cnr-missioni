@@ -62,17 +62,21 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
     }
 
     public MissioniStore getMissioneByQuery(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
-//		String accessToken = super.createToken();
-
-//		logger.trace(LOGGER_MESSAGE, accessToken, "insertOrganization");
-
-
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/getMissioneByQuery/")
                 .queryParam("idMissione", missioneSearchBuilder.getIdMissione())
                 .queryParam("idUser", missioneSearchBuilder.getIdUser())
                 .queryParam("stato", missioneSearchBuilder.getStato())
-                .queryParam("numeroOrdineMissione", missioneSearchBuilder.getNumeroOrdineRimborso())
+                .queryParam("numeroOrdineRimborso", missioneSearchBuilder.getNumeroOrdineRimborso())
+                .queryParam("dataFromMissione", missioneSearchBuilder.getFromDataInserimento()!= null ?  missioneSearchBuilder.getFromDataInserimento().toDateTime().getMillis():null)
+                .queryParam("dataToMissione", missioneSearchBuilder.getToDataInserimento()!= null ? missioneSearchBuilder.getToDataInserimento().toDateTime().getMillis():null)
+                .queryParam("dataFromRimborso",missioneSearchBuilder.getFromDataRimbroso()!= null ? missioneSearchBuilder.getFromDataRimbroso().toDateTime().getMillis():null)
+                .queryParam("dataToRimborso",missioneSearchBuilder.getToDataRimbroso()!= null ? missioneSearchBuilder.getToDataRimbroso().toDateTime().getMillis():null)
+                .queryParam("oggetto", missioneSearchBuilder.getOggetto())
+                .queryParam("multiMatch", missioneSearchBuilder.getMultiMatchValue())
+                .queryParam("fieldExist", missioneSearchBuilder.getFieldExist())
+                .queryParam("from", missioneSearchBuilder.getFrom())
+                .queryParam("size", missioneSearchBuilder.getSize())
                 .request(MediaType.APPLICATION_JSON)
                 .get(MissioniStore.class);
     }
@@ -125,6 +129,8 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("iban", userSearchBuilder.getIban())
                 .queryParam("mail", userSearchBuilder.getMail())
                 .queryParam("id", userSearchBuilder.getId())
+                .queryParam("from", userSearchBuilder.getFrom())
+                .queryParam("size", userSearchBuilder.getSize())
                 .request(MediaType.APPLICATION_JSON)
                 .get(UserStore.class);
     }

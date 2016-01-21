@@ -55,7 +55,7 @@ public class FatturaRimborsoStep  implements WizardStep  {
 	private Missione missione;
 
 	public String getCaption() {
-		return "Fatture";
+		return "Step 2";
 	}
 
 	public FatturaRimborsoStep(Missione missione) {
@@ -106,10 +106,12 @@ public class FatturaRimborsoStep  implements WizardStep  {
 		HorizontalLayout footer = new HorizontalLayout();
 		mainLayout.addComponent(footer);
 		elencoFattureTable = new ElencoFattureTable(fieldGroup,missione);
-		elencoFattureTable.setStyleName("elencoFatture");
+//		elencoFattureTable.setStyleName("elencoFatture");
 		elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
 		mainLayout.addComponent(elencoFattureTable);
 
+//		mainLayout.setComponentAlignment(elencoFattureTable, Alignment.MIDDLE_CENTER);
+		
 		details.addComponent(numeroFatturaField);
 		details.addComponent(tipologiaSpesaField);
 		details.addComponent(importoField);

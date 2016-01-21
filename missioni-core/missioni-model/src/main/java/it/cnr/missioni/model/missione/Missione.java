@@ -34,7 +34,7 @@ public class Missione implements Document {
 	private StatoEnum stato;
 	private String fondo;
 	private String GAE;
-	private boolean missioneEstera;
+	private boolean missioneEstera = false;
 	private String altro;
 	private String idUser;
 	private String idVeicolo;

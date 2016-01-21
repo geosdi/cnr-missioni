@@ -8,7 +8,10 @@ import org.joda.time.DateTime;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.DateRangeSearch;
+import it.cnr.missioni.el.model.search.EnumBooleanType;
 import it.cnr.missioni.el.model.search.ExactSearch;
+import it.cnr.missioni.el.model.search.ExistFieldSearch;
+import it.cnr.missioni.el.model.search.MultiMatchSearch;
 
 /**
  * @author Salvia Vito
@@ -25,10 +28,15 @@ public class MissioneSearchBuilder implements Serializable {
 	private DateTime toDataInserimento = null;
 	private String idUser = null;
 	private String stato = null;
-	private String numeroOrdineRimborso = null;
+	private Long numeroOrdineRimborso = null;
 	private DateTime fromDataRimbroso = null;
 	private DateTime toDataRimbroso = null;
 	private String idMissione = null;
+	private String oggetto = null;
+	private String multiMatchValue;
+	private String fieldExist;
+	private int size = 10;
+	private int from = 0;
 	private String fieldSort = SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO;
 	private SortOrder sortOrder = SortOrder.DESC;
 
@@ -40,7 +48,7 @@ public class MissioneSearchBuilder implements Serializable {
 		return new MissioneSearchBuilder();
 	}
 
-	public MissioneSearchBuilder withRangemDataInserimento(DateTime fromDataInserimento, DateTime toDataInserimento) {
+	public MissioneSearchBuilder withRangeDataInserimento(DateTime fromDataInserimento, DateTime toDataInserimento) {
 
 		this.fromDataInserimento = fromDataInserimento;
 		this.toDataInserimento = toDataInserimento;
@@ -60,14 +68,14 @@ public class MissioneSearchBuilder implements Serializable {
 
 	public MissioneSearchBuilder withStato(String stato) {
 		this.stato = stato;
-		if (stato!= null &&!stato.equals(""))
+		if (stato != null && !stato.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_STATO, stato));
 		return this;
 	}
 
-	public MissioneSearchBuilder withNumeroOrdineMissione(String numeroOrdineRimborso) {
+	public MissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso) {
 		this.numeroOrdineRimborso = numeroOrdineRimborso;
-		if (numeroOrdineRimborso!= null &&!numeroOrdineRimborso.equals(""))
+		if (numeroOrdineRimborso != null && !numeroOrdineRimborso.equals(""))
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE, numeroOrdineRimborso));
 		return this;
@@ -84,8 +92,50 @@ public class MissioneSearchBuilder implements Serializable {
 
 	public MissioneSearchBuilder withIdMissione(String idMissione) {
 		this.idMissione = idMissione;
-		if (idMissione !=null && !idMissione.equals(""))
+		if (idMissione != null && !idMissione.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_ID, idMissione));
+		return this;
+	}
+
+	public MissioneSearchBuilder withOggetto(String oggetto) {
+		this.oggetto = oggetto;
+		if (oggetto != null && !oggetto.equals(""))
+
+			booleanModelSearch.getListaSearch()
+					.add(new ExactSearch(SearchConstants.MISSIONE_FIELD_OGGETTO, oggetto, EnumBooleanType.MUST));
+		return this;
+	}
+	
+	public MissioneSearchBuilder withMultiMatch(String multiMatchValue) {
+		this.multiMatchValue = multiMatchValue;
+		if (multiMatchValue != null && !multiMatchValue.equals(""))
+
+			booleanModelSearch.getListaSearch()
+					.add(new MultiMatchSearch(null, multiMatchValue));
+		return this;
+	}
+	
+	public MissioneSearchBuilder withFieldExist(String fieldExist) {
+		this.fieldExist = fieldExist;
+		if (fieldExist != null && !fieldExist.equals(""))
+
+			booleanModelSearch.getListaSearch()
+					.add(new ExistFieldSearch(fieldExist));
+		return this;
+	}
+	
+	public MissioneSearchBuilder withSortField(String fieldSort) {
+		this.fieldSort = fieldSort;
+		return this;
+	}
+
+	public MissioneSearchBuilder withSize(int size) {
+		this.size = size;
+		return this;
+	}
+	
+	public MissioneSearchBuilder withFrom(int from) {
+		this.from = from;
 		return this;
 	}
 
@@ -166,14 +216,14 @@ public class MissioneSearchBuilder implements Serializable {
 	/**
 	 * @return the numeroOrdineRimborso
 	 */
-	public String getNumeroOrdineRimborso() {
+	public Long getNumeroOrdineRimborso() {
 		return numeroOrdineRimborso;
 	}
 
 	/**
 	 * @param numeroOrdineRimborso
 	 */
-	public void setNumeroOrdineRimborso(String numeroOrdineRimborso) {
+	public void setNumeroOrdineRimborso(Long numeroOrdineRimborso) {
 		this.numeroOrdineRimborso = numeroOrdineRimborso;
 	}
 
@@ -217,6 +267,76 @@ public class MissioneSearchBuilder implements Serializable {
 	 */
 	public void setIdMissione(String idMissione) {
 		this.idMissione = idMissione;
+	}
+
+	/**
+	 * @return the oggetto
+	 */
+	public String getOggetto() {
+		return oggetto;
+	}
+
+	/**
+	 * @param oggetto
+	 */
+	public void setOggetto(String oggetto) {
+		this.oggetto = oggetto;
+	}
+
+	/**
+	 * @return the multiMatchValue
+	 */
+	public String getMultiMatchValue() {
+		return multiMatchValue;
+	}
+
+	/**
+	 * @param multiMatchValue 
+	 */
+	public void setMultiMatchValue(String multiMatchValue) {
+		this.multiMatchValue = multiMatchValue;
+	}
+
+	/**
+	 * @return the fieldExist
+	 */
+	public String getFieldExist() {
+		return fieldExist;
+	}
+
+	/**
+	 * @param fieldExist 
+	 */
+	public void setFieldExist(String fieldExist) {
+		this.fieldExist = fieldExist;
+	}
+
+	/**
+	 * @return the size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+	/**
+	 * @param size
+	 */
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	/**
+	 * @return the from
+	 */
+	public int getFrom() {
+		return from;
+	}
+
+	/**
+	 * @param from
+	 */
+	public void setFrom(int from) {
+		this.from = from;
 	}
 
 	/**

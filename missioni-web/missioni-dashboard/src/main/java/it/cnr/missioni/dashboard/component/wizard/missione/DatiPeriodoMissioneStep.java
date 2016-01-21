@@ -44,7 +44,7 @@ public class DatiPeriodoMissioneStep implements WizardStep {
 	private Missione missione;
 
 	public String getCaption() {
-		return "Inizio\\Fine";
+		return "Step 5";
 	}
 
 	public DatiPeriodoMissioneStep(DatiPeriodoMissione datiPeriodoMissione,Missione missione) {

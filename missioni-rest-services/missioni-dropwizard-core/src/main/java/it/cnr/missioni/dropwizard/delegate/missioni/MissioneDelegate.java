@@ -1,5 +1,16 @@
 package it.cnr.missioni.dropwizard.delegate.missioni;
 
+<<<<<<< Updated upstream
+=======
+import javax.annotation.Resource;
+
+import org.geosdi.geoplatform.exception.IllegalParameterFault;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+
+>>>>>>> Stashed changes
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
@@ -31,6 +42,7 @@ import java.util.List;
  */
 class MissioneDelegate implements IMissioneDelegate {
 
+<<<<<<< Updated upstream
     static {
         gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
     }
@@ -144,4 +156,90 @@ class MissioneDelegate implements IMissioneDelegate {
 
         return Boolean.TRUE;
     }
+=======
+	static {
+		gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
+	}
+
+	private static final TimeBasedGenerator gen;
+	//
+	@GeoPlatformLog
+	private static Logger logger;
+
+	@Resource(name = "missioneDAO")
+	private IMissioneDAO missioneDAO;
+
+	@Override
+	public MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,Long dataFromMissione,Long dataToMissione,
+			Long dataFromRimborso,Long dataToRimborso,String oggetto,String multiMatch,String fieldExist,int from,int size)
+			throws Exception {
+		// if ((missioneID == null) || (missioneID.isEmpty())) {
+		// throw new IllegalParameterFault("The Parameter missioneID must not "
+		// + "be null or an Empty String");
+		// }
+		
+		DateTime fromInserimento = dataFromMissione != null ? new DateTime(dataFromMissione) : null;
+		DateTime toInserimento = dataToMissione != null ? new DateTime(dataToMissione) : null;
+		
+		DateTime fromRimborso = dataFromRimborso != null ? new DateTime(dataFromRimborso) : null;
+		DateTime toRimborso = dataToRimborso != null ? new DateTime(dataToRimborso) : null;
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(idUser).withIdMissione(idMissione).withStato(stato)
+				.withNumeroOrdineMissione(numeroOrdineRimborso)
+				.withRangeDataInserimento(fromInserimento, toInserimento)
+				.withRangeDataRimborso(fromRimborso, toRimborso)
+				.withOggetto(oggetto)
+				.withMultiMatch(multiMatch)
+				.withFieldExist(fieldExist)
+				.withFrom(from).withSize(size);
+		PageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
+		if (!pageResult.getResults().isEmpty()) {
+			MissioniStore missioniStore = new MissioniStore();
+			missioniStore.setMissioni(pageResult.getResults());
+			missioniStore.setTotale(pageResult.getTotal());
+			return missioniStore;
+		} else
+			return null;
+
+	}
+
+	@Override
+	public MissioniStore getLastUserMissions(String userID) throws Exception {
+		return null;
+	}
+
+	@Override
+	public String addMissione(Missione missione) throws Exception {
+		if ((missione == null)) {
+			throw new IllegalParameterFault("The Parameter missione must not be null ");
+		}
+		
+
+		
+		this.missioneDAO.persist(missione);
+		return null;
+	}
+
+	@Override
+	public Boolean updateMissione(Missione missione) throws Exception {
+		if ((missione == null)) {
+			throw new IllegalParameterFault("The Parameter missione must not be null ");
+		}
+		//se alla missione è associato anche un nuovo rimborso gli setto il max numero ordine
+		if(missione.getRimborso() != null && missione.getRimborso().getNumeroOrdine() == null)
+			missione.getRimborso().setNumeroOrdine(this.missioneDAO.getMaxNumeroOrdineRimborso());
+		this.missioneDAO.update(missione);
+		return Boolean.TRUE;
+	}
+
+	@Override
+	public Boolean deleteMissione(String missioneID) throws Exception {
+		if ((missioneID == null) || (missioneID.isEmpty())) {
+			throw new IllegalParameterFault("The Parameter missioneID must not be null " + "or an Empty String.");
+		}
+		this.missioneDAO.delete(missioneID);
+		return Boolean.TRUE;
+	}
+>>>>>>> Stashed changes
 }

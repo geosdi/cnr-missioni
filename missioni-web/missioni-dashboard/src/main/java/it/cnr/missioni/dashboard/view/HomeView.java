@@ -29,8 +29,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
@@ -40,16 +40,16 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
+import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
 import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdatedEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliUpdatedEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.notification.DashboardNotification;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
-import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedEvent;
+import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
@@ -112,25 +112,6 @@ public final class HomeView extends Panel implements View {
         return header;
     }
 
-	/**
-	 * 
-	 * Aggiorna la table veicoli a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableVeicoli(final TableVeicoliUpdatedEvent tableVeicoliUpdatedEvent) {
-		this.elencoVeicoliTable.aggiornaTable();
-	}
-
-	/**
-	 * 
-	 * Aggiorna la table missioni a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableMissioni(TableMissioniUpdatedEvent tableMissioniUpdatedEvent) {
-		this.elencoMissioniTable.aggiornaTable(tableMissioniUpdatedEvent.getMissioniStore());
-	}
 
 	/**
 	 * 
@@ -158,7 +139,7 @@ public final class HomeView extends Panel implements View {
 	private Component buildTableMissioni() {
 
 		CssLayout l = new CssLayout();
-		l.setCaption("Elenco Missioni");
+		l.setCaption("Ultime Missioni");
 		l.setSizeFull();
 		elencoMissioniTable = new ElencoMissioniTable();
 
@@ -177,16 +158,47 @@ public final class HomeView extends Panel implements View {
 		return createContentWrapper(l);
 
 	}
+	
+	/**
+	 * 
+	 * Costruisce la table per l'elenco dei veicoli
+	 * 
+	 * @return Component
+	 */
+	private Component buildTableRimborsi() {
+
+		CssLayout l = new CssLayout();
+		l.setCaption("Ultimi Rimborsi");
+		l.setSizeFull();
+		ElencoRimborsiTable elencoRimborsiTable = new ElencoRimborsiTable();
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO).withIdUser(user.getId());
+
+		try {
+			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
+			elencoRimborsiTable.aggiornaTable(missioniStore);
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
+
+		l.addComponent(elencoRimborsiTable);
+		return createContentWrapper(l);
+
+	}
 
 	private Component buildContent() {
 		dashboardPanels = new CssLayout();
 		dashboardPanels.addStyleName("dashboard-panels");
 		Responsive.makeResponsive(dashboardPanels);
-
-		dashboardPanels.addComponent(buildNotes());
-		dashboardPanels.addComponent(buildCalendar());
-		dashboardPanels.addComponent(buildTableVeicoli());
 		dashboardPanels.addComponent(buildTableMissioni());
+		dashboardPanels.addComponent(buildTableRimborsi());
+		dashboardPanels.addComponent(buildTableVeicoli());
+		dashboardPanels.addComponent(buildNotes());
+
+
 		return dashboardPanels;
 	}
 

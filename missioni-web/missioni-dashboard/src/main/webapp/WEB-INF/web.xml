@@ -17,6 +17,10 @@
 			<param-name>UI</param-name>
 			<param-value>it.cnr.missioni.dashboard.DashboardUI</param-value>
 		</init-param>
+		        <init-param>
+            <param-name>widgetset</param-name>
+            <param-value>it.cnr.missioni.dashboard.DashboardWidgetSet</param-value>
+        </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CnrMissioniDashboard</servlet-name>

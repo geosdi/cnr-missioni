@@ -33,7 +33,8 @@ public class UserSearchBuilder implements Serializable {
 	private String cartaCircolazione = null;
 	private String polizzaAssicurativa = null;
 	private String id = null;
-
+	private int size = 10;
+	private int from = 0;
 	private String fieldSort = SearchConstants.USER_FIELD_COGNOME;
 	private SortOrder sortOrder = SortOrder.DESC;
 
@@ -134,6 +135,16 @@ public class UserSearchBuilder implements Serializable {
 		return this;
 	}
 
+	public UserSearchBuilder withSize(int size) {
+		this.size = size;
+		return this;
+	}
+	
+	public UserSearchBuilder withFrom(int from) {
+		this.from = from;
+		return this;
+	}
+	
 	public BoolQueryBuilder buildQuery() {
 		return booleanModelSearch.buildQuery();
 	}
@@ -320,6 +331,34 @@ public class UserSearchBuilder implements Serializable {
 		this.id = id;
 	}
 
+	/**
+	 * @return the size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+	/**
+	 * @param size
+	 */
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	/**
+	 * @return the from
+	 */
+	public int getFrom() {
+		return from;
+	}
+
+	/**
+	 * @param from
+	 */
+	public void setFrom(int from) {
+		this.from = from;
+	}
+	
 	/**
 	 * @return the fieldSort
 	 */

@@ -16,61 +16,68 @@ import javax.ws.rs.core.Response;
 @Consumes(value = MediaType.APPLICATION_JSON)
 public interface UsersRestService {
 
-    /**
-     * @param userName
-     * @param password
-     * @return {@link Response}
-     * @throws Exception
-     */
-    @GET
-    @Path(value = UsersServiceRSPathConfig.AUTHORIZE_USER_PATH)
-    Response authorize(@QueryParam(value = "username")String userName, @QueryParam(value = "password")String password) throws Exception;
+	/**
+	 * @param userName
+	 * @param password
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@GET
+	@Path(value = UsersServiceRSPathConfig.AUTHORIZE_USER_PATH)
+	Response authorize(@QueryParam(value = "username") String userName, @QueryParam(value = "password") String password)
+			throws Exception;
 
+	/**
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@GET
+	@Path(value = UsersServiceRSPathConfig.GET_ALL_USERS_PATH)
+	Response getLastUsers() throws Exception;
 
-    /**
-     * @return {@link Response}
-     * @throws Exception
-     */
-    @GET
-    @Path(value = UsersServiceRSPathConfig.GET_ALL_USERS_PATH)
-    Response getLastUsers() throws Exception;
+	/**
+	 * @param userName
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@GET
+	@Path(value = UsersServiceRSPathConfig.GET_USER_BY_QUERY)
+	Response getUserByQuery(@QueryParam(value = "nome") String nome, @QueryParam(value = "cognome") String cognome,
+			@QueryParam(value = "codiceFiscale") String codiceFiscale,
+			@QueryParam(value = "matricola") String matricola, @QueryParam(value = "username") String username,
+			@QueryParam(value = "targa") String targa,
+			@QueryParam(value = "cartaCircolazione") String cartaCircolazione,
+			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
+			@QueryParam(value = "iban") String iban, @QueryParam(value = "mail") String mail,
+			@QueryParam(value = "id") String id,
+			@QueryParam(value = "from") int from,
+			@QueryParam(value = "size") int size
+			) throws Exception;
 
-    /**
-     * @param userName
-     * @return {@link Response}
-     * @throws Exception
-     */
-    @GET
-    @Path(value = UsersServiceRSPathConfig.GET_USER_BY_QUERY)
-    Response getUserByQuery(@QueryParam(value="nome") String nome,@QueryParam(value="cognome") String cognome,@QueryParam(value="codiceFiscale") String codiceFiscale,@QueryParam(value="matricola") String matricola,@QueryParam(value="username") String username
-    		,@QueryParam(value="targa") String targa,@QueryParam(value="cartaCircolazione") String cartaCircolazione
-    		,@QueryParam(value="polizzaAssicurativa") String polizzaAssicurativa,@QueryParam(value="iban") String iban
-    		,@QueryParam(value="mail") String mail,@QueryParam(value="id") String id) throws Exception;
+	/**
+	 * @param user
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@POST
+	@Path(value = UsersServiceRSPathConfig.ADD_USER_PATH)
+	Response addUser(User user) throws Exception;
 
-    /**
-     * @param user
-     * @return {@link Response}
-     * @throws Exception
-     */
-    @POST
-    @Path(value = UsersServiceRSPathConfig.ADD_USER_PATH)
-    Response addUser(User user) throws Exception;
+	/**
+	 * @param user
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@PUT
+	@Path(value = UsersServiceRSPathConfig.UPDATE_USER_PATH)
+	Response updateUser(User user) throws Exception;
 
-    /**
-     * @param user
-     * @return {@link Response}
-     * @throws Exception
-     */
-    @PUT
-    @Path(value = UsersServiceRSPathConfig.UPDATE_USER_PATH)
-    Response updateUser(User user) throws Exception;
-
-    /**
-     * @param userID
-     * @return {@link Response}
-     * @throws Exception
-     */
-    @DELETE
-    @Path(value = UsersServiceRSPathConfig.DELETE_USER_PATH)
-    Response deleteUser(@QueryParam(value = "userID")String userID) throws Exception;
+	/**
+	 * @param userID
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@DELETE
+	@Path(value = UsersServiceRSPathConfig.DELETE_USER_PATH)
+	Response deleteUser(@QueryParam(value = "userID") String userID) throws Exception;
 }

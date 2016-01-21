@@ -47,7 +47,7 @@ public class AnticipazioniPagamentoStep implements WizardStep {
 	private boolean modifica;
 
 	public String getCaption() {
-		return "Anticipazioni Pagamento";
+		return "Step 7";
 	}
 
 	public AnticipazioniPagamentoStep(DatiAnticipoPagamenti datiAnticipoPagamenti, Missione missione, boolean modifica

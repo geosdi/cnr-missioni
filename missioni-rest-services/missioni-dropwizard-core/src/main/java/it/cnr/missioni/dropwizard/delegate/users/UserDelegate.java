@@ -1,11 +1,9 @@
 package it.cnr.missioni.dropwizard.delegate.users;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
@@ -44,18 +42,19 @@ class UserDelegate implements IUserDelegate {
 	@Override
 	public UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola,
 			String username, String targa, String cartaCircolazione, String polizzaAssicurativa, String iban,
-			String mail, String id) throws Exception {
+			String mail, String id,int from,int size) throws Exception {
 
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
 				.withTarga(targa).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurativa)
-				.withIban(iban).withMail(mail).withId(id);
+				.withIban(iban).withMail(mail).withId(id).withFrom(from).withSize(size);
 
 				
-		List<User> listaUtenti = this.userDAO.findUserByQuery(new Page(0, 10), userSearchBuilder);
-		if (!listaUtenti.isEmpty()) {
+		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
+		if (!pageResult.getResults().isEmpty()) {
 			UserStore userStore = new UserStore();
-			userStore.setUsers(listaUtenti);
+			userStore.setUsers(pageResult.getResults());
+			userStore.setTotale(pageResult.getTotal());
 			return userStore;
 		} else
 			return null;

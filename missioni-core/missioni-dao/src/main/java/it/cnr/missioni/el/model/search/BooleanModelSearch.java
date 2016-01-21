@@ -1,5 +1,6 @@
 package it.cnr.missioni.el.model.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,12 @@ import org.elasticsearch.index.query.QueryBuilders;
 /**
  * @author Salvia Vito
  */
-public  class BooleanModelSearch {
+public  class BooleanModelSearch implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5617290380156544514L;
 	private BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
 	private List<IBooleanSearch> listaSearch = new ArrayList<IBooleanSearch>();
 
