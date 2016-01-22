@@ -26,17 +26,7 @@ public class MissioneRestServiceResource implements MissioneRestService {
 	@Resource(name = "missioneDelegate")
 	private IMissioneDelegate missioneDelegate;
 
-<<<<<<< Updated upstream
-    /**
-     * @param missioneID
-     * @return {@link Response}
-     * @throws Exception
-     */
-    @Override
-    public Response getMissioneByQuery(String idMissione, String idUser, String stato, String numeroOrdineRimborso) throws Exception {
-        return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso)).build();
-    }
-=======
+
 	/**
 	 * @param idMissione
 	 * @param idUser
@@ -59,8 +49,7 @@ public class MissioneRestServiceResource implements MissioneRestService {
 		return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso,
 				dataFromMissione, dataToMissione, dataFromRimborso, dataToRimborso, oggetto,multiMatch, fieldExist,from,size)).build();
 	}
->>>>>>> Stashed changes
-
+	
 	/**
 	 * @param userID
 	 * @return {@link Response}

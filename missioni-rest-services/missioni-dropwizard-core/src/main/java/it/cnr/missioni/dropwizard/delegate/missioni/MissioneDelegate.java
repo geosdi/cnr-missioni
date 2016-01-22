@@ -1,7 +1,6 @@
 package it.cnr.missioni.dropwizard.delegate.missioni;
 
-<<<<<<< Updated upstream
-=======
+
 import javax.annotation.Resource;
 
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
@@ -9,8 +8,6 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
-
->>>>>>> Stashed changes
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
@@ -41,17 +38,12 @@ import java.util.List;
  * @email giuseppe.lascaleia@geosdi.org
  */
 class MissioneDelegate implements IMissioneDelegate {
+	
+	private static final TimeBasedGenerator gen;
+	//
+	@GeoPlatformLog
+	private static Logger logger;
 
-<<<<<<< Updated upstream
-    static {
-        gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
-    }
-
-    private static final TimeBasedGenerator gen;
-    //
-    @GeoPlatformLog
-    private static Logger logger;
-    //
     @Resource(name = "missioneDAO")
     private IMissioneDAO missioneDAO;
     @Resource(name = "userDAO")
@@ -66,108 +58,49 @@ class MissioneDelegate implements IMissioneDelegate {
     private CNRMissioniEmail cnrMissioniEsteroEmail;
     @Resource(name = "notificationMissionRequestValidator")
     private ICNRMissionValidator<NotificationMissionRequest, String> notificationMissionRequestValidator;
-
-    @Override
-    public MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, String numeroOrdineRimborso)
-            throws Exception {
-        // if ((missioneID == null) || (missioneID.isEmpty())) {
-        // throw new IllegalParameterFault("The Parameter missioneID must not "
-        // + "be null or an Empty String");
-        // }
-
-        MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withIdUser(idUser).withIdMissione(idMissione).withStato(stato)
-                .withNumeroOrdineMissione(numeroOrdineRimborso);
-
-        List<Missione> listaMissioni = this.missioneDAO.findMissioneByQuery(new Page(0, 10), missioneSearchBuilder);
-        if (!listaMissioni.isEmpty()) {
-            MissioniStore missioniStore = new MissioniStore();
-            missioniStore.setMissioni(listaMissioni);
-            return missioniStore;
-        } else
-            return null;
-
+	
+    static {
+        gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
     }
 
-    @Override
-    public MissioniStore getLastUserMissions(String userID) throws Exception {
-        return null;
+
+/**
+ * @param request
+ * @return {@link Boolean}
+ * @throws Exception
+ */
+@Override
+public Boolean notifyMissionAdministration(NotificationMissionRequest request) throws Exception {
+    if (request == null)
+        throw new IllegalParameterFault("The Parameter Request must not be null.");
+
+    String message = this.notificationMissionRequestValidator.validate(request);
+    if (message != null) {
+        throw new IllegalParameterFault(message);
     }
 
-    @Override
-    public String addMissione(Missione missione) throws Exception {
-        if ((missione == null)) {
-            throw new IllegalParameterFault("The Parameter missione must not be null ");
-        }
-        this.missioneDAO.persist(missione);
-        return null;
-    }
+    Missione missione = this.missioneDAO.find(request.getMissionID());
+    if (missione == null)
+        throw new ResourceNotFoundFault("La Missione con ID : " + request.getMissionID() + " non esiste");
 
-    @Override
-    public Boolean updateMissione(Missione missione) throws Exception {
-        if ((missione == null)) {
-            throw new IllegalParameterFault("The Parameter missione must not be null ");
-        }
-        this.missioneDAO.update(missione);
-        return Boolean.TRUE;
-    }
+    User user = this.userDAO.find(missione.getIdUser());
+    if (user == null)
+        throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 
-    @Override
-    public Boolean deleteMissione(String missioneID) throws Exception {
-        if ((missioneID == null) || (missioneID.isEmpty())) {
-            throw new IllegalParameterFault("The Parameter missioneID must not be null " + "or an Empty String.");
-        }
-        this.missioneDAO.delete(missioneID);
-        return Boolean.TRUE;
-    }
+    this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory
+            .buildAddMissioneMessage(user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
+                    user.getDatiCNR().getMail(),
+                    (missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
+                            : this.cnrMissioniItaliaEmail.getEmail()),
+                    MissionePDFBuilder
+                            .newPDFBuilder()
+                            .withUser(user)
+                            .withMissione(missione)));
 
-    /**
-     * @param request
-     * @return {@link Boolean}
-     * @throws Exception
-     */
-    @Override
-    public Boolean notifyMissionAdministration(NotificationMissionRequest request) throws Exception {
-        if (request == null)
-            throw new IllegalParameterFault("The Parameter Request must not be null.");
+    return Boolean.TRUE;
+}
 
-        String message = this.notificationMissionRequestValidator.validate(request);
-        if (message != null) {
-            throw new IllegalParameterFault(message);
-        }
 
-        Missione missione = this.missioneDAO.find(request.getMissionID());
-        if (missione == null)
-            throw new ResourceNotFoundFault("La Missione con ID : " + request.getMissionID() + " non esiste");
-
-        User user = this.userDAO.find(missione.getIdUser());
-        if (user == null)
-            throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-
-        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory
-                .buildAddMissioneMessage(user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
-                        user.getDatiCNR().getMail(),
-                        (missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
-                                : this.cnrMissioniItaliaEmail.getEmail()),
-                        MissionePDFBuilder
-                                .newPDFBuilder()
-                                .withUser(user)
-                                .withMissione(missione)));
-
-        return Boolean.TRUE;
-    }
-=======
-	static {
-		gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
-	}
-
-	private static final TimeBasedGenerator gen;
-	//
-	@GeoPlatformLog
-	private static Logger logger;
-
-	@Resource(name = "missioneDAO")
-	private IMissioneDAO missioneDAO;
 
 	@Override
 	public MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,Long dataFromMissione,Long dataToMissione,
@@ -241,5 +174,4 @@ class MissioneDelegate implements IMissioneDelegate {
 		this.missioneDAO.delete(missioneID);
 		return Boolean.TRUE;
 	}
->>>>>>> Stashed changes
 }
