@@ -124,6 +124,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("matricola", userSearchBuilder.getMatricola())
                 .queryParam("username", userSearchBuilder.getUsername())
                 .queryParam("targa", userSearchBuilder.getTarga())
+                .queryParam("numeroPatente", userSearchBuilder.getNumeroPatente())
                 .queryParam("cartaCircolazione", userSearchBuilder.getCartaCircolazione())
                 .queryParam("polizzaAssicurativa", userSearchBuilder.getPolizzaAssicurativa())
                 .queryParam("iban", userSearchBuilder.getIban())

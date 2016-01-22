@@ -38,7 +38,6 @@ public abstract class AbstractBooleanSearch<S> {
 	
 	public AbstractBooleanSearch(String field){
 		this.field = field;
-
 	}
 	
 	public abstract  QueryBuilder getBooleanQuery() throws Exception;

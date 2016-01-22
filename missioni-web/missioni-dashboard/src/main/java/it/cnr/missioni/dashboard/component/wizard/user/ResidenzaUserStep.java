@@ -41,7 +41,7 @@ public class ResidenzaUserStep implements WizardStep {
 	private User user;
 
 	public String getCaption() {
-		return "Residenza";
+		return "Step 2";
 	}
 
 	public ResidenzaUserStep(User user) {

@@ -46,7 +46,7 @@ public class PatenteUserStep implements WizardStep {
 	private User user;
 
 	public String getCaption() {
-		return "Patente";
+		return "Step 3";
 	}
 
 	public PatenteUserStep(User user) {

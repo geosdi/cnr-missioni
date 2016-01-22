@@ -8,6 +8,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.EnumBooleanType;
 import it.cnr.missioni.el.model.search.ExactSearch;
+import it.cnr.missioni.el.model.search.MultiMatchSearch;
 import it.cnr.missioni.el.model.search.PrefixSearch;
 
 /**
@@ -33,10 +34,12 @@ public class UserSearchBuilder implements Serializable {
 	private String cartaCircolazione = null;
 	private String polizzaAssicurativa = null;
 	private String id = null;
+	private String multiMatchValue;
+	private String fieldMultiMatch = "user.anagrafica.nome,user.anagrafica.cognome,user.anagrafica.codiceFiscale,user.datiCNR.matricola,user.datiCNR.mail";
 	private int size = 10;
 	private int from = 0;
 	private String fieldSort = SearchConstants.USER_FIELD_COGNOME;
-	private SortOrder sortOrder = SortOrder.DESC;
+	private SortOrder sortOrder = SortOrder.ASC;
 
 	private UserSearchBuilder() {
 		booleanModelSearch = new BooleanModelSearch();
@@ -135,6 +138,21 @@ public class UserSearchBuilder implements Serializable {
 		return this;
 	}
 
+	
+	public UserSearchBuilder withMultiMatch(String multiMatchValue) {
+		this.multiMatchValue = multiMatchValue;
+		if (multiMatchValue != null && !multiMatchValue.equals(""))
+
+			booleanModelSearch.getListaSearch()
+					.add(new MultiMatchSearch(fieldMultiMatch, multiMatchValue));
+		return this;
+	}
+	
+	public UserSearchBuilder withMultiMatchField(String fieldMultiMatch) {
+		this.fieldMultiMatch = fieldMultiMatch;
+		return this;
+	}
+	
 	public UserSearchBuilder withSize(int size) {
 		this.size = size;
 		return this;
@@ -329,6 +347,34 @@ public class UserSearchBuilder implements Serializable {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the multiMatchField
+	 */
+	public String getMultiMatchValue() {
+		return multiMatchValue;
+	}
+
+	/**
+	 * @param multiMatchField 
+	 */
+	public void setMultiMatchValue(String multiMatchValue) {
+		this.multiMatchValue = multiMatchValue;
+	}
+
+	/**
+	 * @return the fieldMultiMatch
+	 */
+	public String getFieldMultiMatch() {
+		return fieldMultiMatch;
+	}
+
+	/**
+	 * @param fieldMultiMatch 
+	 */
+	public void setFieldMultiMatch(String fieldMultiMatch) {
+		this.fieldMultiMatch = fieldMultiMatch;
 	}
 
 	/**

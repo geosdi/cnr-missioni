@@ -41,12 +41,12 @@ class UserDelegate implements IUserDelegate {
 	 */
 	@Override
 	public UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola,
-			String username, String targa, String cartaCircolazione, String polizzaAssicurativa, String iban,
+			String username, String targa,String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
 			String mail, String id,int from,int size) throws Exception {
 
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
-				.withTarga(targa).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurativa)
+				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurativa)
 				.withIban(iban).withMail(mail).withId(id).withFrom(from).withSize(size);
 
 				

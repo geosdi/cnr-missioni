@@ -9,6 +9,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 public class MultiMatchSearch extends AbstractBooleanSearch<Object> implements IBooleanSearch {
 
 	
+	
 	public MultiMatchSearch( ){
 		super();
 	}
@@ -30,7 +31,7 @@ public class MultiMatchSearch extends AbstractBooleanSearch<Object> implements I
         logger.trace("####################Called {} #internalBooleanSearch with parameters " +
                 "field : {} - value : {}\n\n", getClass().getSimpleName(), field, value);
 		
-		return QueryBuilders.multiMatchQuery(value, "missione.localita","missione.oggetto");
+		return QueryBuilders.multiMatchQuery(value, field.split(","));
 	}
 	
 

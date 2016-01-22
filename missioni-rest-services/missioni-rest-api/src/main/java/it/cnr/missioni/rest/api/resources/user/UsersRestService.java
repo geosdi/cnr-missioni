@@ -46,6 +46,7 @@ public interface UsersRestService {
 			@QueryParam(value = "codiceFiscale") String codiceFiscale,
 			@QueryParam(value = "matricola") String matricola, @QueryParam(value = "username") String username,
 			@QueryParam(value = "targa") String targa,
+			@QueryParam(value = "numeroPatente") String numeroPatente,
 			@QueryParam(value = "cartaCircolazione") String cartaCircolazione,
 			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
 			@QueryParam(value = "iban") String iban, @QueryParam(value = "mail") String mail,

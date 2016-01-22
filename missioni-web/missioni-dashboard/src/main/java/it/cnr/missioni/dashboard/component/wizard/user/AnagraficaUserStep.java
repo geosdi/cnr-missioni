@@ -47,7 +47,7 @@ public class AnagraficaUserStep implements WizardStep {
 	private User user;
 
 	public String getCaption() {
-		return "Generale";
+		return "Step 1";
 	}
 
 	public AnagraficaUserStep(User user) {

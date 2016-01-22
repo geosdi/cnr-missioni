@@ -50,7 +50,7 @@ public class DatiCNRUserStep implements WizardStep {
 	private User user;
 
 	public String getCaption() {
-		return "Patente";
+		return "Step 4";
 	}
 
 	public DatiCNRUserStep(User user) {

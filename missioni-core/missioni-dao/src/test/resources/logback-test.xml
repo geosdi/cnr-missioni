@@ -25,8 +25,14 @@
 		level="debug" />
 	<logger name="it.cnr.missioni.el.index.MissioneIndexCreator"
 		level="debug" />
+			<logger name="it.cnr.missioni.el.index.PrenotazioneIndexCreator"
+		level="debug" />
+			<logger name="it.cnr.missioni.el.index.VeicoloCNRIndexCreator"
+		level="debug" />
 	<logger name="it.cnr.missioni.el.dao.UserDAO" level="debug" />
 	<logger name="it.cnr.missioni.el.dao.MissioneDAO" level="debug" />
+		<logger name="it.cnr.missioni.el.dao.PrenotazioneDAO" level="debug" />
+	<logger name="it.cnr.missioni.el.dao.VeicoloCNRDAO" level="debug" />
 	<logger name="org.geosdi.geoplatform.experimental.el.dao" level="trace" />
 
 	<logger name="it.cnr.missioni.el.dao.UserDAOTest" level="debug" />

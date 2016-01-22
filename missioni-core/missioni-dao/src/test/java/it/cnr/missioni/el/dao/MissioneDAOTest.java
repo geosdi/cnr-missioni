@@ -237,7 +237,7 @@ public class MissioneDAOTest {
 	public void T_findByMultiMatch() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withMultiMatch("Milano, Riunione prova");
+				.withMultiMatch("Milano Riunione prova");
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 3);
 	}

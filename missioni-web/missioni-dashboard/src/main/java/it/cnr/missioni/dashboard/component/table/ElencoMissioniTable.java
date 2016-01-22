@@ -26,6 +26,10 @@ public final class ElencoMissioniTable extends Table {
 	 */
 	private static final long serialVersionUID = 6439677451802448635L;
 
+	/**
+	 * 
+	 */
+
 	public ElencoMissioniTable() {
 		buildTable();
 	}

@@ -6,19 +6,22 @@ import com.vaadin.server.Resource;
 
 import it.cnr.missioni.dashboard.view.CalendarioView;
 import it.cnr.missioni.dashboard.view.HomeView;
+import it.cnr.missioni.dashboard.view.admin.GestioneUserAdminView;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
 import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
 import it.cnr.missioni.dashboard.view.GestioneVeicoloView;
 
 
-public enum DashboardViewType implements IDashboardMenu{
-    HOME("home", HomeView.class, FontAwesome.HOME, true)
-    ,
+public enum DashboardViewType  {
+	
+    HOME("home", HomeView.class, FontAwesome.HOME, true) ,
     COMPLETA_REGISTRAZIONE("completa registrazione",null, FontAwesome.USER, true),
     GESTIONE_MISSIONE("gestione missione",GestioneMissioneView.class, FontAwesome.SUITCASE, true),
     GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
     GESTIONE_VEICOLO("gestione veicolo",GestioneVeicoloView.class, FontAwesome.CAR, true),
-    CALENDARIO("calendario", CalendarioView.class, FontAwesome.CALENDAR, true)
+    CALENDARIO("calendario", CalendarioView.class, FontAwesome.CALENDAR, true),
+    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, true),
+
     
     ;
 

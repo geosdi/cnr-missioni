@@ -13,25 +13,25 @@ import org.springframework.core.io.ClassPathResource;
  * @author Salvia Vito 
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class UserMapperTest {
+public class VeicoloCNRMapperTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserMapperTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(VeicoloCNRMapperTest.class);
     //
-    private final UserMapper userMapper = new UserMapper();
+    private final VeicoloCNRMapper veicoloCNRMapper = new VeicoloCNRMapper();
 
     @Test
     public void writeEsempio1AsStringTest() throws Exception {
         logger.info("\n\n@@@@@@@@@@@@@@@@@@Mapper : {}, write as String : "
-                + "{}", userMapper, userMapper
-                .writeAsString(userMapper
-                        .read(new ClassPathResource("esempioUser.json").getFile())));
+                + "{}", veicoloCNRMapper, veicoloCNRMapper
+                .writeAsString(veicoloCNRMapper
+                        .read(new ClassPathResource("esempioVeicoloCNR.json").getFile())));
     }
 
     @Test
     public void readEsempio1FromFileTest() throws Exception {
         logger.info("\n\n@@@@@@@@@@@@@@@@Mapper : {}, read from File : {}\n\n",
-        		userMapper, userMapper
-                        .read(new ClassPathResource("esempioUser.json").getFile()));
+        		veicoloCNRMapper, veicoloCNRMapper
+                        .read(new ClassPathResource("esempioVeicoloCNR.json").getFile()));
     }
 
 }

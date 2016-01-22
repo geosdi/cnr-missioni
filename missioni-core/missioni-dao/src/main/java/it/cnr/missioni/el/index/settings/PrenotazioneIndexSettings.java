@@ -5,13 +5,13 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 /**
  * @author Salvia Vito
  */
-public enum UserIndexSettings {
+public enum PrenotazioneIndexSettings {
 	
-    USER_DOC_INDEX_SETTINGS(new BaseIndexSettings("cnr_missioni_index_user", "user_type"));
+    PRENOTAZIONE_DOC_INDEX_SETTINGS(new BaseIndexSettings("cnr_missioni_index_prenotazione", "prenotazione_type"));
 
     private final GPIndexCreator.GPIndexSettings value;
 
-    private UserIndexSettings(GPIndexCreator.GPIndexSettings value) {
+    private PrenotazioneIndexSettings(GPIndexCreator.GPIndexSettings value) {
         this.value = value;
     }
 

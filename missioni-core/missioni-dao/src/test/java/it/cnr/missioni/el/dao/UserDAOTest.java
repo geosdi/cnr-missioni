@@ -22,7 +22,9 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.Anagrafica;
 import it.cnr.missioni.model.user.Credenziali;
 import it.cnr.missioni.model.user.DatiCNR;
@@ -243,6 +245,27 @@ public class UserDAOTest {
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
 
 	}
+	
+	
+	@Test
+	public void T_findByMultiMatch() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withMultiMatch("Salvia 1111111");
+		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL USER", lista.size() == 1);
+	}
+
+	@Test
+	public void T_findByMultiMatch2() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withMultiMatch("Paolo Salvia");
+		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL USER", lista.size() == 2);
+	}
+
+	
 	//
 	//// @Test
 	//// public void tearDown() throws Exception {

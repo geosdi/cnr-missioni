@@ -35,6 +35,7 @@ public class MissioneSearchBuilder implements Serializable {
 	private String oggetto = null;
 	private String multiMatchValue;
 	private String fieldExist;
+	private String fieldMultiMatch = "missione.localita,missione.oggetto";
 	private int size = 10;
 	private int from = 0;
 	private String fieldSort = SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO;
@@ -111,7 +112,7 @@ public class MissioneSearchBuilder implements Serializable {
 		if (multiMatchValue != null && !multiMatchValue.equals(""))
 
 			booleanModelSearch.getListaSearch()
-					.add(new MultiMatchSearch(null, multiMatchValue));
+					.add(new MultiMatchSearch(fieldMultiMatch,multiMatchValue));
 		return this;
 	}
 	
@@ -121,6 +122,11 @@ public class MissioneSearchBuilder implements Serializable {
 
 			booleanModelSearch.getListaSearch()
 					.add(new ExistFieldSearch(fieldExist));
+		return this;
+	}
+	
+	public MissioneSearchBuilder withMultiMatchField(String fieldMultiMatch) {
+		this.fieldMultiMatch = fieldMultiMatch;
 		return this;
 	}
 	
@@ -309,6 +315,20 @@ public class MissioneSearchBuilder implements Serializable {
 	 */
 	public void setFieldExist(String fieldExist) {
 		this.fieldExist = fieldExist;
+	}
+
+	/**
+	 * @return the fieldMultiMatch
+	 */
+	public String getFieldMultiMatch() {
+		return fieldMultiMatch;
+	}
+
+	/**
+	 * @param fieldMultiMatch 
+	 */
+	public void setFieldMultiMatch(String fieldMultiMatch) {
+		this.fieldMultiMatch = fieldMultiMatch;
 	}
 
 	/**

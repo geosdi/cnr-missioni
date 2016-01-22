@@ -6,6 +6,7 @@ import it.cnr.missioni.dashboard.menu.DashboardViewType;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /*
  * Event bus events used in Dashboard are listed here as inner classes.
@@ -158,6 +159,42 @@ public abstract class DashboardEvent {
 		 */
 		public void setMissioniStore(MissioniStore missioniStore) {
 			this.missioniStore = missioniStore;
+		}
+
+
+
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la tabella missione dopo un inserimento o update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class TableUserUpdatedEvent {
+
+		private UserStore userStore;
+
+		/**
+		 * @param missioniStore
+		 */
+		public TableUserUpdatedEvent(UserStore userStore) {
+			this.setUserStore(userStore);
+		}
+
+		/**
+		 * @return the userStore
+		 */
+		public UserStore getUserStore() {
+			return userStore;
+		}
+
+		/**
+		 * @param userStore 
+		 */
+		public void setUserStore(UserStore userStore) {
+			this.userStore = userStore;
 		}
 
 

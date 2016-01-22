@@ -69,12 +69,15 @@ public final class DashboardMenu extends CustomComponent {
 		menuContent.addStyleName("no-horizontal-drag-hints");
 		menuContent.setWidth(null);
 		menuContent.setHeight("100%");
-
+		menuItemsLayout = new CssLayout();
+		menuItemsLayout.addStyleName("valo-menuitems");
+		
 		menuContent.addComponent(buildTitle());
 		menuContent.addComponent(buildUserMenu());
+//		menuContent.addComponent(buildMenuAdminItems());
 		menuContent.addComponent(buildMenuItems());
-		if(getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_ADMIN)
-			menuContent.addComponent(buildMenuAdminItems());
+//		if(getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_ADMIN)
+//			menuContent.addComponent(buildMenuAdminItems());
 
 		return menuContent;
 	}
@@ -104,7 +107,7 @@ public final class DashboardMenu extends CustomComponent {
 			settingsItem.addItem("Edit Profile", new Command() {
 				@Override
 				public void menuSelected(final MenuItem selectedItem) {
-					UserCompletedRegistrationWindow.open(user);
+					UserCompletedRegistrationWindow.open(user,false);
 				}
 			});
 
@@ -129,8 +132,7 @@ public final class DashboardMenu extends CustomComponent {
 	}
 
 	private Component buildMenuItems() {
-		menuItemsLayout = new CssLayout();
-		menuItemsLayout.addStyleName("valo-menuitems");
+
 
 		menuItemsLayout.addComponent(new ValoMenuItemButton(DashboardViewType.HOME));
 		for (final DashboardViewType view : DashboardViewType.values()) {
@@ -152,29 +154,20 @@ public final class DashboardMenu extends CustomComponent {
 			}
 
 		}
+		
+		//Creazione menù admin
+		if (user.isRegistrazioneCompletata() && user.getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_SEMPLICE){
+			menuItemsLayout.addComponent(new Label("<hr />",ContentMode.HTML));
+			menuItemsLayout.addComponent(new Label("Menù Admin"));
+			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
+		}
+		
 		return menuItemsLayout;
 
 	}
 	
-	private Component buildMenuAdminItems() {
-		menuItemsLayout = new CssLayout();
-		menuItemsLayout.addStyleName("valo-menuitems");
-		menuItemsLayout.addComponent(new Label("<hr />",ContentMode.HTML));
-		menuItemsLayout.addComponent(new Label("Menù Admin"));
-		menuItemsLayout.addComponent(new ValoMenuItemButton(DashboardViewType.HOME));
-		for (final DashboardViewTypeAdmin view : DashboardViewTypeAdmin.values()) {
 
-
-				Component menuItemComponent = new ValoMenuItemButton(view);
-				menuItemsLayout.addComponent(menuItemComponent);
-
-
-		}
-
-
-		return menuItemsLayout;
-
-	}
 
 	@Override
 	public void attach() {
@@ -187,14 +180,7 @@ public final class DashboardMenu extends CustomComponent {
 	public void updateMenu(MenuUpdateEvent menuUpdateEvent) {
 		user = getCurrentUser();
 		menuItemsLayout.removeAllComponents();
-
-		for (final DashboardViewType view : DashboardViewType.values()) {
-			if (!view.getViewName().equals("completa registrazione")) {
-				Component menuItemComponent = new ValoMenuItemButton(view);
-				menuItemsLayout.addComponent(menuItemComponent);
-			}
-		}
-		// settings.removeItems();
+		buildMenuItems();
 		settingsItem = null;
 		settings.removeItems();
 		settings = buildUserMenu();
@@ -227,9 +213,9 @@ public final class DashboardMenu extends CustomComponent {
 
 		private static final String STYLE_SELECTED = "selected";
 
-		private final IDashboardMenu view;
+		private final DashboardViewType view;
 
-		public ValoMenuItemButton(final IDashboardMenu view) {
+		public ValoMenuItemButton(final DashboardViewType view) {
 			this.view = view;
 			setPrimaryStyleName("valo-menu-item");
 			setIcon(view.getIcon());

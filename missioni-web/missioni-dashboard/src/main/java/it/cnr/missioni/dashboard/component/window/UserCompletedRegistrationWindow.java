@@ -71,7 +71,7 @@ public class UserCompletedRegistrationWindow extends Window {
 	private TextField ibanField;
 	private User user;
 
-	private UserCompletedRegistrationWindow(final User user) {
+	private UserCompletedRegistrationWindow(final User user,final boolean isAdmin) {
 
 		this.user = user;
 		addStyleName("profile-window");
@@ -108,7 +108,9 @@ public class UserCompletedRegistrationWindow extends Window {
 		detailsWrapper.addComponent(buildPatenteTab());
 		detailsWrapper.addComponent(buildDatiCNR());
 
-		content.addComponent(buildFooter());
+		if(!isAdmin)
+			content.addComponent(buildFooter());
+		fieldGroup.setReadOnly(isAdmin);
 
 	}
 
@@ -383,9 +385,9 @@ public class UserCompletedRegistrationWindow extends Window {
 		return footer;
 	}
 
-	public static void open(final User user) {
+	public static void open(final User user,final boolean isAdmin) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new UserCompletedRegistrationWindow(user);
+		Window w = new UserCompletedRegistrationWindow(user,isAdmin);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}
