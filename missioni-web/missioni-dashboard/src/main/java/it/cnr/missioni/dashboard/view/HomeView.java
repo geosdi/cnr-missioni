@@ -119,23 +119,6 @@ public final class HomeView extends Panel implements View {
 	 * 
 	 * @return Component
 	 */
-	private Component buildTableVeicoli() {
-
-		CssLayout l = new CssLayout();
-		l.setCaption("Elenco Veicoli");
-		l.setSizeFull();
-		elencoVeicoliTable = new ElencoVeicoliTable();
-		l.addComponent(elencoVeicoliTable);
-		return createContentWrapper(l);
-
-	}
-
-	/**
-	 * 
-	 * Costruisce la table per l'elenco dei veicoli
-	 * 
-	 * @return Component
-	 */
 	private Component buildTableMissioni() {
 
 		CssLayout l = new CssLayout();
@@ -195,10 +178,7 @@ public final class HomeView extends Panel implements View {
 		Responsive.makeResponsive(dashboardPanels);
 		dashboardPanels.addComponent(buildTableMissioni());
 		dashboardPanels.addComponent(buildTableRimborsi());
-		dashboardPanels.addComponent(buildTableVeicoli());
-		dashboardPanels.addComponent(buildNotes());
-
-
+//		dashboardPanels.addComponent(buildCalendar());
 		return dashboardPanels;
 	}
 
@@ -217,8 +197,11 @@ public final class HomeView extends Panel implements View {
 
 		Calendar cal = new Calendar("Calendario");
 		// cal.setHeight("80%");
-		cal.setSizeFull();
+//		cal.setSizeFull();
 
+		cal.setWidth("200px");
+		cal.setHeight("200px");
+		
 		cal.setWeeklyCaptionFormat("dd/MM/yyyy");
 		cal.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
 		cal.setLocale(Locale.ITALY);
@@ -228,8 +211,70 @@ public final class HomeView extends Panel implements View {
 		DateTime end = new DateTime(now.getYear(), now.getMonthOfYear(), now.dayOfMonth().getMaximumValue(), 0, 0);
 		cal.setStartDate(start.toDate());
 		cal.setEndDate(end.toDate());
-		Component panel = createContentWrapper(cal);
+		Component panel = createContentWrapper2(cal);
+		
 		return panel;
+	}
+	
+	private Component createContentWrapper2(final Component content) {
+		final CssLayout slot = new CssLayout();
+//		slot.setWidth("100%");
+//		slot.setHeight("50%");
+		slot.addStyleName("dashboard-panel-slot");
+		slot.setWidth("100%");
+		CssLayout card = new CssLayout();
+		card.setWidth("100%");
+		card.addStyleName(ValoTheme.LAYOUT_CARD);
+
+		HorizontalLayout toolbar = new HorizontalLayout();
+		toolbar.addStyleName("dashboard-panel-toolbar");
+		toolbar.setWidth("100%");
+
+		Label caption = new Label(content.getCaption());
+		caption.addStyleName(ValoTheme.LABEL_H4);
+		caption.addStyleName(ValoTheme.LABEL_COLORED);
+		caption.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+		content.setCaption(null);
+
+		MenuBar tools = new MenuBar();
+		tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
+		MenuItem max = tools.addItem("", FontAwesome.EXPAND, new Command() {
+
+			@Override
+			public void menuSelected(final MenuItem selectedItem) {
+				if (!slot.getStyleName().contains("max")) {
+					selectedItem.setIcon(FontAwesome.COMPRESS);
+					toggleMaximized(slot, true);
+				} else {
+					slot.removeStyleName("max");
+					selectedItem.setIcon(FontAwesome.EXPAND);
+					toggleMaximized(slot, false);
+				}
+			}
+		});
+		max.setStyleName("icon-only");
+		MenuItem root = tools.addItem("", FontAwesome.COG, null);
+		root.addItem("Configure", new Command() {
+			@Override
+			public void menuSelected(final MenuItem selectedItem) {
+				Notification.show("Not implemented in this demo");
+			}
+		});
+		root.addSeparator();
+		root.addItem("Close", new Command() {
+			@Override
+			public void menuSelected(final MenuItem selectedItem) {
+				Notification.show("Not implemented in this demo");
+			}
+		});
+
+		toolbar.addComponents(caption, tools);
+		toolbar.setExpandRatio(caption, 1);
+		toolbar.setComponentAlignment(caption, Alignment.MIDDLE_LEFT);
+
+		card.addComponents(toolbar, content);
+		slot.addComponent(card);
+		return slot;
 	}
 
 	private Component createContentWrapper(final Component content) {

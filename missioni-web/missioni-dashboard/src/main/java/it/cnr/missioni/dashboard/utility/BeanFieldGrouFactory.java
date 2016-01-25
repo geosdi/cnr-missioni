@@ -30,7 +30,7 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 	@Override
 	public <T extends Field> T createField(Class<?> type, Class<T> fieldType) {
 		T field;
-		if (type.isAssignableFrom(DateTime.class)) {
+		if (type.isAssignableFrom(DateTime.class) || type.isAssignableFrom(Date.class)) {
 
 			DateField dateField = new DateField();
 			BListener listener = new BListener(dateField);

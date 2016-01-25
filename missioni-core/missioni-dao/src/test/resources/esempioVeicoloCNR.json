@@ -4,6 +4,7 @@
 		"targa":"09876",
 		"polizzaAssicurativa":"polizza n.2",
 		"cartaCircolazione":"carta 1234",
-		"tipo" : "Ford"
+		"tipo" : "Ford",
+		"stato" : "DISPONIBILE"
 		}
 }

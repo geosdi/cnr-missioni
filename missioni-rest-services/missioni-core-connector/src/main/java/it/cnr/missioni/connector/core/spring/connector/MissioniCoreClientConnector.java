@@ -42,11 +42,17 @@ import javax.ws.rs.core.MediaType;
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.prenotazione.Prenotazione;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
+import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -81,13 +87,13 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(MissioniStore.class);
     }
 
-    public MissioniStore getLastUserMissions(String userId) throws Exception {
-        return client.target(super.getRestServiceURL())
-                .path("v1/missioni/getLastUserMissions/")
-                .queryParam("userID", userId)
-                .request(MediaType.APPLICATION_JSON)
-                .get(MissioniStore.class);
-    }
+//    public MissioniStore getLastUserMissions(String userId) throws Exception {
+//        return client.target(super.getRestServiceURL())
+//                .path("v1/missioni/getLastUserMissions/")
+//                .queryParam("userID", userId)
+//                .request(MediaType.APPLICATION_JSON)
+//                .get(MissioniStore.class);
+//    }
 
 
     public Long addMissione(Missione missione) throws Exception {
@@ -160,6 +166,77 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(user,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
+    
+    public PrenotazioniStore getPrenotazioneByQuery(PrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/prenotazioni/getPrenotazioniByQuery/")
+                .queryParam("dataFrom", prenotazioneSearchBuilder.getDataFrom().toDateTime().getMillis())
+                .queryParam("dataTo", prenotazioneSearchBuilder.getDataTo().toDateTime().getMillis())
+                .request(MediaType.APPLICATION_JSON)
+                .get(PrenotazioniStore.class);
+    }
+
+
+
+
+    public Long addPrenotazione(Prenotazione prenotazione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/prenotazioni/addPrenotazione/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(prenotazione,
+                        MediaType.APPLICATION_JSON), Long.class);
+    }
+
+    public Boolean deletePrenotazione(String prenotazioneID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/prenotazioni/deletePrenotazione/")
+                .queryParam("prenotazioneID", prenotazioneID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updatePrenotazione(Prenotazione prenotazione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/prenotazioni/updatePrenotazione/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(prenotazione,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
+    public VeicoloCNRStore getVeicoloCNRByQuery(VeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/veicoloCNR/getVeicoloCNRByQuery/")
+                .queryParam("stato", veicoloCNRSearchBuilder.getStato())
+                .queryParam("from", veicoloCNRSearchBuilder.getFrom())
+                .queryParam("size", veicoloCNRSearchBuilder.getSize())
+                .request(MediaType.APPLICATION_JSON)
+                .get(VeicoloCNRStore.class);
+    }
+    
+    public Long addVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/veicoloCNR/addVeicoloCNR/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(veicoloCNR,
+                        MediaType.APPLICATION_JSON), Long.class);
+    }
+
+    public Boolean deleteVeicoloCNR(String veicoloCNRID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/veicoloCNR/deleteVeicoloCNR/")
+                .queryParam("veicoloCNRID", veicoloCNRID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/veicoloCNR/updateVeicoloCNR/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(veicoloCNR,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+
 
 
     @Override

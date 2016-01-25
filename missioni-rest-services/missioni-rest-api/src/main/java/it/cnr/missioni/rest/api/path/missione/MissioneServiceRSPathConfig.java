@@ -6,7 +6,7 @@ import it.cnr.missioni.rest.api.path.ApplicationServiceRSPathConfig;
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-public final class BaseServiceRSPathConfig extends ApplicationServiceRSPathConfig {
+public final class MissioneServiceRSPathConfig extends ApplicationServiceRSPathConfig {
 
     /**
      * Missioni Service Path
@@ -20,6 +20,6 @@ public final class BaseServiceRSPathConfig extends ApplicationServiceRSPathConfi
     public static final String NOTIFY_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyMissionAdministration";
 
 
-    private BaseServiceRSPathConfig() {
+    private MissioneServiceRSPathConfig() {
     }
 }

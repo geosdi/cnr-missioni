@@ -10,52 +10,65 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
  */
 public interface IUserDelegate {
 	
-	/**
-	 * 
-	 * @param userName
-	 * @param password
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param username
+ * @param password
+ * @return
+ * @throws Exception
+ */
 	 Boolean authorize(String username, String password) throws Exception;
 
-	/**
-	 * 
-	 * @param userName
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param nome
+ * @param cognome
+ * @param codiceFiscale
+ * @param matricola
+ * @param username
+ * @param targa
+ * @param numeroPatente
+ * @param cartaCircolazione
+ * @param polizzaAssicurativa
+ * @param iban
+ * @param mail
+ * @param id
+ * @param from
+ * @param size
+ * @return
+ * @throws Exception
+ */
 	 UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
 				String targa,String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban, String mail, String id,int from,int size) throws Exception;
 
-	/**
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @return
+ * @throws Exception
+ */
 	UserStore getLastUserMissions() throws Exception;
 
 	/**
 	 * 
-	 * @param missione
+	 * @param user
 	 * @return
 	 * @throws Exception
 	 */
 	String addUser(User user) throws Exception;
 
-	/**
-	 * 
-	 * @param utente
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param user
+ * @return
+ * @throws Exception
+ */
 	Boolean updateUser(User user) throws Exception;
 
-	/**
-	 * 
-	 * @param utenteID
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param userID
+ * @return
+ * @throws Exception
+ */
 	Boolean deleteUser(String userID) throws Exception;
 }

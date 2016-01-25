@@ -41,11 +41,11 @@ public class UserRestServiceResource implements UsersRestService {
 	 * @return
 	 * @throws Exception
 	 */
-	@Override
-	public Response getLastUsers() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Response getLastUsers() throws Exception {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	/**
 	 * @param nome

@@ -18,6 +18,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.action.MissioneAction;
+import it.cnr.missioni.dashboard.action.AddUpdatePrenotazioneAction;
+import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
@@ -129,6 +131,16 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void rimborsoRequested(final RimborsoAction rimborsoAction) {
 		rimborsoAction.doAction();
+	}
+	
+	@Subscribe
+	public void prenotazioneRequested(final AddUpdatePrenotazioneAction prenotazioneAction) {
+		prenotazioneAction.doAction();
+	}
+	
+	@Subscribe
+	public void prenotazioneRequested(final DeletePrenotazioneAction deleteAction) {
+		deleteAction.doAction();
 	}
 	
 	@Subscribe

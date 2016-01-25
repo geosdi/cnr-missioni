@@ -38,7 +38,10 @@ public final class DashboardMenu extends CustomComponent {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4240406005134056733L;
+	private static final long serialVersionUID = 25971648266194928L;
+	/**
+	 * 
+	 */
 	public static final String ID = "dashboard-menu";
 	public static final String REPORTS_BADGE_ID = "dashboard-menu-reports-badge";
 	public static final String NOTIFICATIONS_BADGE_ID = "dashboard-menu-notifications-badge";
@@ -71,13 +74,14 @@ public final class DashboardMenu extends CustomComponent {
 		menuContent.setHeight("100%");
 		menuItemsLayout = new CssLayout();
 		menuItemsLayout.addStyleName("valo-menuitems");
-		
+
 		menuContent.addComponent(buildTitle());
 		menuContent.addComponent(buildUserMenu());
-//		menuContent.addComponent(buildMenuAdminItems());
+		// menuContent.addComponent(buildMenuAdminItems());
 		menuContent.addComponent(buildMenuItems());
-//		if(getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_ADMIN)
-//			menuContent.addComponent(buildMenuAdminItems());
+		// if(getCurrentUser().getCredenziali().getRuoloUtente() ==
+		// RuoloUtenteEnum.UTENTE_ADMIN)
+		// menuContent.addComponent(buildMenuAdminItems());
 
 		return menuContent;
 	}
@@ -107,7 +111,7 @@ public final class DashboardMenu extends CustomComponent {
 			settingsItem.addItem("Edit Profile", new Command() {
 				@Override
 				public void menuSelected(final MenuItem selectedItem) {
-					UserCompletedRegistrationWindow.open(user,false);
+					UserCompletedRegistrationWindow.open(user, false);
 				}
 			});
 
@@ -133,13 +137,14 @@ public final class DashboardMenu extends CustomComponent {
 
 	private Component buildMenuItems() {
 
-
 		menuItemsLayout.addComponent(new ValoMenuItemButton(DashboardViewType.HOME));
 		for (final DashboardViewType view : DashboardViewType.values()) {
 
 			// se l'user ha completato la registrazione
-			if (user.isRegistrazioneCompletata() && (view == DashboardViewType.GESTIONE_VEICOLO
-					|| view == DashboardViewType.GESTIONE_RIMBORSO || view == DashboardViewType.GESTIONE_MISSIONE)) {
+			if (user.isRegistrazioneCompletata() && (view == DashboardViewType.GESTIONE_VEICOLO_PROPRIO
+					|| view == DashboardViewType.GESTIONE_RIMBORSO 
+							|| view == DashboardViewType.CALENDARIO 
+					|| view == DashboardViewType.GESTIONE_MISSIONE)) {
 
 				// if (user.isRegistrazioneCompletata()) {
 				Component menuItemComponent = new ValoMenuItemButton(view);
@@ -154,20 +159,22 @@ public final class DashboardMenu extends CustomComponent {
 			}
 
 		}
-		
-		//Creazione menù admin
-		if (user.isRegistrazioneCompletata() && user.getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_SEMPLICE){
-			menuItemsLayout.addComponent(new Label("<hr />",ContentMode.HTML));
+
+		// Creazione menù admin
+		if (user.isRegistrazioneCompletata()
+				&& user.getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_SEMPLICE) {
+			menuItemsLayout.addComponent(new Label("<hr />", ContentMode.HTML));
 			menuItemsLayout.addComponent(new Label("Menù Admin"));
 			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
+
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_VEICOLO_CNR_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
 		}
-		
+
 		return menuItemsLayout;
 
 	}
-	
-
 
 	@Override
 	public void attach() {
@@ -210,6 +217,11 @@ public final class DashboardMenu extends CustomComponent {
 	}
 
 	public final class ValoMenuItemButton extends Button {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6092998505814688109L;
 
 		private static final String STYLE_SELECTED = "selected";
 

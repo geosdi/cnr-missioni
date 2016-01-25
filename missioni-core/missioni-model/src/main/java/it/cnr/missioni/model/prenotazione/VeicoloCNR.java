@@ -22,6 +22,7 @@ public class VeicoloCNR extends Veicolo implements Document{
 	 */
 	private static final long serialVersionUID = 1405399099831810547L;
 	private String id;
+	private StatoVeicoloEnum stato;
 
 	/*
 	 * (non-Javadoc)
@@ -46,8 +47,32 @@ public class VeicoloCNR extends Veicolo implements Document{
 	 */
 	@Override
 	public void setId(String theID) {
-		// TODO Auto-generated method stub
+		this.id = theID;
 		
+	}
+
+	/**
+	 * @return the stato
+	 */
+	public StatoVeicoloEnum getStato() {
+		return stato;
+	}
+
+	/**
+	 * @param stato 
+	 */
+	public void setStato(StatoVeicoloEnum stato) {
+		this.stato = stato;
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public String toString() {
+		return "VeicoloCNR [id=" + id + ", stato=" + stato + ", getTipo()=" + getTipo() + ", getTarga()=" + getTarga()
+				+ ", getCartaCircolazione()=" + getCartaCircolazione() + ", getPolizzaAssicurativa()="
+				+ getPolizzaAssicurativa() + "]";
 	}
 
 }

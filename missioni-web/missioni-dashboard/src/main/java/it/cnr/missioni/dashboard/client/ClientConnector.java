@@ -8,11 +8,17 @@ import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnect
 import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.prenotazione.Prenotazione;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
+import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
  * @author Salvia Vito
@@ -88,7 +94,7 @@ public class ClientConnector {
 	public static MissioniStore getMissione(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 	}
-	
+
 	/**
 	 * 
 	 * Aggiunge una nuova missione
@@ -100,7 +106,7 @@ public class ClientConnector {
 		missioniCoreClientConnector.addMissione(missione);
 
 	}
-	
+
 	/**
 	 * 
 	 * Aggiorna una missione esistente
@@ -113,5 +119,57 @@ public class ClientConnector {
 
 	}
 
+	/**
+	 * 
+	 * @param veicoloCNRSearchBuilder
+	 * @throws Exception
+	 */
+	public static VeicoloCNRStore getVeicoloCNRDisponibile(VeicoloCNRSearchBuilder veicoloCNRSearchBuilder)
+			throws Exception {
+		return missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+
+	}
+
+	/**
+	 * 
+	 * @param prenotazione
+	 * @throws Exception
+	 */
+	public static void addPrenotazione(Prenotazione prenotazione) throws Exception {
+		missioniCoreClientConnector.addPrenotazione(prenotazione);
+
+	}
+
+	/**
+	 * 
+	 * @param prenotazione
+	 * @throws Exception
+	 */
+	public static void updatePrenotazione(Prenotazione prenotazione) throws Exception {
+		missioniCoreClientConnector.updatePrenotazione(prenotazione);
+
+	}
+
+	/**
+	 * 
+	 * @param prenotazioneID
+	 * @throws Exception
+	 */
+	public static void deletePrenotazione(String prenotazioneID) throws Exception {
+		missioniCoreClientConnector.deletePrenotazione(prenotazioneID);
+
+	}
+
+	/**
+	 * 
+	 * @param prenotazioneSearchBuilder
+	 * @return
+	 * @throws Exception
+	 */
+	public static PrenotazioniStore getPrenotazione(PrenotazioneSearchBuilder prenotazioneSearchBuilder)
+			throws Exception {
+		return missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
+
+	}
 
 }

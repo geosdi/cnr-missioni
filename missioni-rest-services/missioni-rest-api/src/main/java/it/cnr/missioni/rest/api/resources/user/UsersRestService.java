@@ -31,9 +31,9 @@ public interface UsersRestService {
 	 * @return {@link Response}
 	 * @throws Exception
 	 */
-	@GET
-	@Path(value = UsersServiceRSPathConfig.GET_ALL_USERS_PATH)
-	Response getLastUsers() throws Exception;
+//	@GET
+//	@Path(value = UsersServiceRSPathConfig.GET_ALL_USERS_PATH)
+//	Response getLastUsers() throws Exception;
 
 	/**
 	 * @param userName

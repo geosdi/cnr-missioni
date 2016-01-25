@@ -1,7 +1,9 @@
 package it.cnr.missioni.el.dao;
 
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 
+import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 
 /**
@@ -9,6 +11,13 @@ import it.cnr.missioni.model.prenotazione.Prenotazione;
  */
 public interface IPrenotazioneDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<Prenotazione> {
 
-	
+
+	/**
+	 * 
+	 * @param prenotazioneSearchBuilder
+	 * @return
+	 * @throws Exception
+	 */
+	PageResult<Prenotazione> findPrenotazioneByQuery(PrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception;
 
 }

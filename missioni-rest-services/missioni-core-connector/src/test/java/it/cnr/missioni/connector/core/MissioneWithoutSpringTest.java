@@ -50,11 +50,11 @@ public class MissioneWithoutSpringTest {
 //        Assert.assertNotNull(missione);
     }
 
-    @Test
-    public void B_testFindMissioneByUser() throws Exception {
-        MissioniStore missioniStore = missioniCoreClientConnector.getLastUserMissions("01");
-        Assert.assertEquals("Find Missione by user", 2, missioniStore.getMissioni().size());
-    }
+//    @Test
+//    public void B_testFindMissioneByUser() throws Exception {
+//        MissioniStore missioniStore = missioniCoreClientConnector.getLastUserMissions("01");
+//        Assert.assertEquals("Find Missione by user", 2, missioniStore.getMissioni().size());
+//    }
 
     @Test
     public void C_testInsertMissione() throws Exception {

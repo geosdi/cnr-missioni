@@ -28,5 +28,11 @@ public class SearchConstants {
 	public static final String MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO = "missione.rimborso.dataRimborso";
 	public final static String MISSIONE_FIELD_RIMBORSO = "missione.rimborso";
 	
+	
+	public static final String PRENOTAZIONE_FIELD_DATA_FROM = "prenotazione.dataFrom";
+
+	public static final String VEICOLO_CNR_FIELD_STATO = "veicoloCNR.stato";
+
+	
 	public final static String MULTI_MATCH_ALL_FIELD = "_all";
 }

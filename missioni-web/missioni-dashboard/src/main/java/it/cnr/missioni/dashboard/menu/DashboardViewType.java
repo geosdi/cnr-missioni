@@ -18,10 +18,10 @@ public enum DashboardViewType  {
     COMPLETA_REGISTRAZIONE("completa registrazione",null, FontAwesome.USER, true),
     GESTIONE_MISSIONE("gestione missione",GestioneMissioneView.class, FontAwesome.SUITCASE, true),
     GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
-    GESTIONE_VEICOLO("gestione veicolo",GestioneVeicoloView.class, FontAwesome.CAR, true),
+    GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio",GestioneVeicoloView.class, FontAwesome.CAR, true),
     CALENDARIO("calendario", CalendarioView.class, FontAwesome.CALENDAR, true),
     GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, true),
-
+    GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneUserAdminView.class, FontAwesome.CAR, true),
     
     ;
 

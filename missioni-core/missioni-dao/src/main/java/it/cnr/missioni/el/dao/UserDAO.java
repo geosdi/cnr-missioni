@@ -49,11 +49,11 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 		}
 
 		for (SearchHit searchHit : searchResponse.getHits().hits()) {
-			User utente = this.mapper.read(searchHit.getSourceAsString());
-			if (!utente.isIdSetted()) {
-				utente.setId(searchHit.getId());
+			User user = this.mapper.read(searchHit.getSourceAsString());
+			if (!user.isIdSetted()) {
+				user.setId(searchHit.getId());
 			}
-			listaUsers.add(utente);
+			listaUsers.add(user);
 		}
 
 		return new PageResult<User>(searchResponse.getHits().getTotalHits(), listaUsers);
@@ -76,5 +76,7 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	public <IC extends GPIndexCreator> void setIndexCreator(IC ic) {
 		super.setIndexCreator(ic);
 	}
+
+
 
 }

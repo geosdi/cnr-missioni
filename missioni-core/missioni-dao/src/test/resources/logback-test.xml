@@ -37,6 +37,7 @@
 
 	<logger name="it.cnr.missioni.el.dao.UserDAOTest" level="debug" />
 	<logger name="it.cnr.missioni.el.dao.MissioneDAOTest" level="debug" />
-
+	<logger name="it.cnr.missioni.el.dao.PrenotazioneDAOTest" level="debug" />
+	<logger name="it.cnr.missioni.el.dao.VeicoloCNRDAOTest" level="debug" />
 
 </configuration>

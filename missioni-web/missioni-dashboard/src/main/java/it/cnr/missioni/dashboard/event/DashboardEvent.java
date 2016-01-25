@@ -2,6 +2,7 @@ package it.cnr.missioni.dashboard.event;
 
 import java.util.List;
 
+import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
@@ -199,6 +200,38 @@ public abstract class DashboardEvent {
 
 
 
+	}
+	
+	/**
+	 * Aggiorna il calendario 
+	 */
+	public static class CalendarUpdateEvent{
+		
+		private PrenotazioneEvent prenotazioneEvent;
+
+		/**
+		 * @param prenotazioneEvent
+		 */
+		public CalendarUpdateEvent(PrenotazioneEvent prenotazioneEvent) {
+			this.prenotazioneEvent = prenotazioneEvent;
+		}
+
+		/**
+		 * @return the prenotazioneEvent
+		 */
+		public PrenotazioneEvent getPrenotazioneEvent() {
+			return prenotazioneEvent;
+		}
+
+		/**
+		 * @param prenotazioneEvent 
+		 */
+		public void setPrenotazioneEvent(PrenotazioneEvent prenotazioneEvent) {
+			this.prenotazioneEvent = prenotazioneEvent;
+		}
+		
+		
+		
 	}
 	
 

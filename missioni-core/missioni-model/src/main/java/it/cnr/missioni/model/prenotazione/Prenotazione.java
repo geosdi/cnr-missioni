@@ -16,7 +16,7 @@ import it.cnr.missioni.model.user.Veicolo;
  */
 @XmlRootElement(name = "prenotazione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"id", "dataFrom","dataTo","veicoloCNR","idUser"})
+@XmlType(propOrder = {"id", "dataFrom","dataTo","veicoloCNR","idUser","descrizione","allDay"})
 public class Prenotazione implements Document {
 
 	/**
@@ -35,6 +35,8 @@ public class Prenotazione implements Document {
 	private String idUser;
 	@NotNull
 	private String idVeicoloCNR;
+	private String descrizione;
+	private boolean allDay;
 	
 
 
@@ -61,7 +63,7 @@ public class Prenotazione implements Document {
 	 */
 	@Override
 	public void setId(String theID) {
-		// TODO Auto-generated method stub
+		this.id = theID;
 		
 	}
 
@@ -124,12 +126,40 @@ public class Prenotazione implements Document {
 	}
 
 	/**
+	 * @return the descrizione
+	 */
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	/**
+	 * @param descrizione 
+	 */
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	/**
+	 * @return the allDay
+	 */
+	public boolean isAllDay() {
+		return allDay;
+	}
+
+	/**
+	 * @param allDay 
+	 */
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "Prenotazione [id=" + id + ", dataFrom=" + dataFrom + ", dataTo=" + dataTo + ", idUser=" + getIdUser()
-				+ ", idVeicoloCNR=" + idVeicoloCNR + "]";
+		return "Prenotazione [id=" + id + ", dataFrom=" + dataFrom + ", dataTo=" + dataTo + ", idUser=" + idUser
+				+ ", idVeicoloCNR=" + idVeicoloCNR + ", descrizione=" + descrizione + ", allDay=" + allDay + "]";
 	}
 
 

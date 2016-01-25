@@ -35,21 +35,35 @@ class UserDelegate implements IUserDelegate {
 	private IUserDAO userDAO;
 
 	/**
-	 * @param userName
+	 * 
+	 * @param nome
+	 * @param cognome
+	 * @param codiceFiscale
+	 * @param matricola
+	 * @param username
+	 * @param targa
+	 * @param numeroPatente
+	 * @param cartaCircolazione
+	 * @param polizzaAssicurativa
+	 * @param iban
+	 * @param mail
+	 * @param id
+	 * @param from
+	 * @param size
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
 	public UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola,
-			String username, String targa,String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
-			String mail, String id,int from,int size) throws Exception {
+			String username, String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa,
+			String iban, String mail, String id, int from, int size) throws Exception {
 
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
-				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurativa)
-				.withIban(iban).withMail(mail).withId(id).withFrom(from).withSize(size);
+				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione)
+				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withId(id).withFrom(from)
+				.withSize(size);
 
-				
 		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
 		if (!pageResult.getResults().isEmpty()) {
 			UserStore userStore = new UserStore();
@@ -71,7 +85,8 @@ class UserDelegate implements IUserDelegate {
 	}
 
 	/**
-	 * @param missione
+	 * 
+	 * @param user
 	 * @return
 	 * @throws Exception
 	 */
@@ -86,7 +101,8 @@ class UserDelegate implements IUserDelegate {
 	}
 
 	/**
-	 * @param utente
+	 * 
+	 * @param user
 	 * @return
 	 * @throws Exception
 	 */
@@ -100,7 +116,8 @@ class UserDelegate implements IUserDelegate {
 	}
 
 	/**
-	 * @param utenteID
+	 * 
+	 * @param userID
 	 * @return
 	 * @throws Exception
 	 */
@@ -114,6 +131,7 @@ class UserDelegate implements IUserDelegate {
 	}
 
 	/**
+	 * 
 	 * @param userName
 	 * @param password
 	 * @return
