@@ -4,13 +4,11 @@ import it.cnr.missioni.dropwizard.delegate.missioni.IMissioneDelegate;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.resources.missione.MissioneRestService;
-
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /**
@@ -20,75 +18,75 @@ import javax.ws.rs.core.Response;
 @Component(value = "missioneRestServiceResource")
 public class MissioneRestServiceResource implements MissioneRestService {
 
-	@GeoPlatformLog
-	static Logger logger;
-	//
-	@Resource(name = "missioneDelegate")
-	private IMissioneDelegate missioneDelegate;
+    @GeoPlatformLog
+    static Logger logger;
+    //
+    @Resource(name = "missioneDelegate")
+    private IMissioneDelegate missioneDelegate;
 
 
-	/**
-	 * @param idMissione
-	 * @param idUser
-	 * @param stato
-	 * @param numeroOrdineRimborso
-	 * @param dataFromMissione
-	 * @param dataToMissione
-	 * @param dataFromRimborso
-	 * @param dataToRimborso
-	 * @return
-	 * @throws Exception
-	 */
-	@Override
-	public Response getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
-			Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
-			String multiMatch,String fieldExist,
-			int from,int size)
-					throws Exception {
-		// TODO Auto-generated method stub
-		return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso,
-				dataFromMissione, dataToMissione, dataFromRimborso, dataToRimborso, oggetto,multiMatch, fieldExist,from,size)).build();
-	}
-	
-	/**
-	 * @param userID
-	 * @return {@link Response}
-	 * @throws Exception
-	 */
-	@Override
-	public Response getLastUserMissions(String userID) throws Exception {
-		return Response.ok(this.missioneDelegate.getLastUserMissions(userID)).build();
-	}
+    /**
+     * @param idMissione
+     * @param idUser
+     * @param stato
+     * @param numeroOrdineRimborso
+     * @param dataFromMissione
+     * @param dataToMissione
+     * @param dataFromRimborso
+     * @param dataToRimborso
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Response getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
+            Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
+            String multiMatch, String fieldExist,
+            int from, int size)
+            throws Exception {
+        // TODO Auto-generated method stub
+        return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso,
+                dataFromMissione, dataToMissione, dataFromRimborso, dataToRimborso, oggetto, multiMatch, fieldExist, from, size)).build();
+    }
 
-	/**
-	 * @param missione
-	 * @return {@link Response}
-	 * @throws Exception
-	 */
-	@Override
-	public Response addMissione(Missione missione) throws Exception {
-		return Response.ok(this.missioneDelegate.addMissione(missione)).build();
-	}
+    /**
+     * @param userID
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response getLastUserMissions(String userID) throws Exception {
+        return Response.ok(this.missioneDelegate.getLastUserMissions(userID)).build();
+    }
 
-	/**
-	 * @param missione
-	 * @return {@link Response}
-	 * @throws Exception
-	 */
-	@Override
-	public Response updateMissione(Missione missione) throws Exception {
-		return Response.ok(this.missioneDelegate.updateMissione(missione)).build();
-	}
+    /**
+     * @param missione
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response addMissione(Missione missione) throws Exception {
+        return Response.ok(this.missioneDelegate.addMissione(missione)).build();
+    }
 
-	/**
-	 * @param missionID
-	 * @return {@link Response}
-	 * @throws Exception
-	 */
-	@Override
-	public Response deleteMissione(String missionID) throws Exception {
-		return Response.ok(this.missioneDelegate.deleteMissione(missionID)).build();
-	}
+    /**
+     * @param missione
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response updateMissione(Missione missione) throws Exception {
+        return Response.ok(this.missioneDelegate.updateMissione(missione)).build();
+    }
+
+    /**
+     * @param missionID
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response deleteMissione(String missionID) throws Exception {
+        return Response.ok(this.missioneDelegate.deleteMissione(missionID)).build();
+    }
 
     /**
      * @param request
@@ -98,5 +96,10 @@ public class MissioneRestServiceResource implements MissioneRestService {
     @Override
     public Response notifyMissionAdministration(NotificationMissionRequest request) throws Exception {
         return Response.ok(this.missioneDelegate.notifyMissionAdministration(request)).build();
+    }
+
+    @Override
+    public Response notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception {
+        return Response.ok(this.missioneDelegate.notifyRimborsoMissionAdministration(request)).build();
     }
 }

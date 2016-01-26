@@ -18,6 +18,7 @@ public final class MissioneServiceRSPathConfig extends ApplicationServiceRSPathC
     public static final String UPDATE_MISSIONE_PATH = MISSIONI_PATH + "/updateMissione";
     public static final String DELETE_MISSIONE_PATH = MISSIONI_PATH + "/deleteMissione";
     public static final String NOTIFY_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyMissionAdministration";
+    public static final String NOTIFY_RIMBORSO_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyRimborsoMissionAdministration";
 
 
     private MissioneServiceRSPathConfig() {
