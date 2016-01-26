@@ -1,6 +1,7 @@
 package it.cnr.missioni.notification.message.factory.prod;
 
 import it.cnr.missioni.notification.message.AddMissioneMessage;
+import it.cnr.missioni.notification.message.AddRimborsoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
@@ -42,5 +43,20 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
             String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
         return new UpdateMissioneMessage(userName, userSurname, userEmail, cnrMissioniEmail,
                 missioneID, pdfBuilder);
+    }
+
+    /**
+     * @param userName
+     * @param userSurname
+     * @param userEmail
+     * @param cnrMissioniEmail
+     * @param missioneID
+     * @param pdfBuilder
+     * @return {@link AddRimborsoMessage}
+     */
+    @Override
+    public AddRimborsoMessage buildAddRimborsoMessage(String userName, String userSurname,
+            String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
+        return new AddRimborsoMessage(userName, userSurname, userEmail, cnrMissioniEmail, missioneID, pdfBuilder);
     }
 }

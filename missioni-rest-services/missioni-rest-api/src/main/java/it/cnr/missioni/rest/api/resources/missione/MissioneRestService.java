@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response;
 public interface MissioneRestService {
 
 	/**
-	 * @param missioneID
+	 * @param idMissione
 	 * @return {@link Response}
 	 * @throws Exception
 	 */
@@ -65,7 +65,7 @@ public interface MissioneRestService {
 	Response updateMissione(Missione missione) throws Exception;
 
 	/**
-	 * @param missionID
+	 * @param missioneID
 	 * @return {@link Response}
 	 * @throws Exception
 	 */

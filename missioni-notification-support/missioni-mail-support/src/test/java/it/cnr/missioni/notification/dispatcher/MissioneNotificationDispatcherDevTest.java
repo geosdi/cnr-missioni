@@ -1,6 +1,8 @@
 package it.cnr.missioni.notification.dispatcher;
 
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
+import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
+import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -53,13 +55,20 @@ public class MissioneNotificationDispatcherDevTest {
     public void dispatchAddMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
                 .buildAddMissioneMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
-                        "vito.salvia@gmail.com", null));
+                        "vito.salvia@gmail.com", MissionePDFBuilder.newPDFBuilder()));
     }
 
     @Test
     public void dispatchUpdateMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
                 .buildUpdateMissioneMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
-                        "vito.salvia@gmail.com", UUID.randomUUID().toString(), null));
+                        "vito.salvia@gmail.com", UUID.randomUUID().toString(), MissionePDFBuilder.newPDFBuilder()));
+    }
+
+    @Test
+    public void dispatchAddRimborsoMissioneMailDevTest() throws Exception {
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
+                .buildAddRimborsoMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
+                        "vito.salvia@gmail.com", UUID.randomUUID().toString(), RimborsoPDFBuilder.newPDFBuilder()));
     }
 }

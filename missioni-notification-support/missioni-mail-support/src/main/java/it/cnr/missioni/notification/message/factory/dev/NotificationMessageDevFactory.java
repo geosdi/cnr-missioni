@@ -2,6 +2,7 @@ package it.cnr.missioni.notification.message.factory.dev;
 
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
+import it.cnr.missioni.notification.message.AddRimborsoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
@@ -58,6 +59,27 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
             @Override
             public MissioniMailImplementor.NotificationMessageType getNotificationMessageType() {
                 return MissioniMailImplementor.NotificationMessageType.MODIFICA_MISSIONE_MAIL_DEV;
+            }
+        };
+    }
+
+    /**
+     * @param userName
+     * @param userSurname
+     * @param userEmail
+     * @param cnrMissioniEmail
+     * @param missioneID
+     * @param pdfBuilder
+     * @return {@link AddRimborsoMessage}
+     */
+    @Override
+    public AddRimborsoMessage buildAddRimborsoMessage(String userName, String userSurname,
+            String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
+        return new AddRimborsoMessage(userName, userSurname, userEmail, cnrMissioniEmail, missioneID, pdfBuilder) {
+
+            @Override
+            public MissioniMailImplementor.NotificationMessageType getNotificationMessageType() {
+                return MissioniMailImplementor.NotificationMessageType.RICHIESTA_RIMBORSO_MISSIONE_MAIL_DEV;
             }
         };
     }

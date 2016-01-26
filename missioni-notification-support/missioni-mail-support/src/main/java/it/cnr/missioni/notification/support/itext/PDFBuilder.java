@@ -55,7 +55,8 @@ public interface PDFBuilder {
      *
      */
     enum PDFBuilderType implements IPDFBuilderType {
-        MISSIONE_PDF_BUILDER("MISSIONE_PDF_BUILDER");
+        MISSIONE_PDF_BUILDER("MISSIONE_PDF_BUILDER"),
+        RIMBORSO_PDF_BUIDER("RIMBORSO_PDF_BUIDER");
 
         private final String value;
 

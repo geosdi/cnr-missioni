@@ -193,7 +193,7 @@ public class MissioniNotificationDispatcherProdTest {
         fattura_2.setId("2222222222222");
 
         Rimborso rimborso = new Rimborso();
-        rimborso.setNumeroOrdine("56");
+        rimborso.setNumeroOrdine(56l);
         rimborso.setAvvisoPagamento("Via Verdi");
         rimborso.setAnticipazionePagamento(0.0);
         rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));

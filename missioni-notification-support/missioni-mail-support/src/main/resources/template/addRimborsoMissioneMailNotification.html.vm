@@ -1,0 +1,11 @@
+<html>
+<body>
+    <h3>CNR : Sistema Missioni</h3>
+    <div>
+        <p>Gentile ${userName} ${userSurname}, le confermiamo che il rimborso relativo
+        alla missione ${missioneID} &egrave; stato inserito correttamente. In allegato
+         il pdf che riepiloga i dati inseriti.
+        </p>
+    </div>
+</body>
+</html>

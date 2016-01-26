@@ -3,6 +3,10 @@ package it.cnr.missioni.notification.bridge.implementor.dev;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -20,7 +24,16 @@ public class RequestMissioneRimborsoMailDev extends MissioniMailDev {
     @Override
     public String prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-        return null;
+        String userName = (String) message.getMessageParameters().get("userName");
+        String userSurname = (String) message.getMessageParameters().get("userSurname");
+        String missioneID = (String) message.getMessageParameters().get("missioneID");
+
+        Map model = new HashMap();
+        model.put("userName", userName);
+        model.put("userSurname", userSurname);
+        model.put("missioneID", missioneID);
+        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                "template/addRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
     }
 
     /**
