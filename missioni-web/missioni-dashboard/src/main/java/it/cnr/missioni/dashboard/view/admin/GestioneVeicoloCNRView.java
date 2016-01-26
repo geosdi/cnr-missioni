@@ -1,29 +1,40 @@
-package it.cnr.missioni.dashboard.view;
+package it.cnr.missioni.dashboard.view.admin;
 
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
+import it.cnr.missioni.dashboard.component.table.admin.ElencoVeicoliCNRTable;
 import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
+import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
+import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloView extends VerticalLayout implements View {
+public class GestioneVeicoloCNRView extends VerticalLayout implements View {
 
 	/**
 	 * 
@@ -32,14 +43,15 @@ public class GestioneVeicoloView extends VerticalLayout implements View {
 	/**
 	 * 
 	 */
-	private ElencoVeicoliTable elencoVeicoliTable;
+	private ElencoVeicoliCNRTable elencoVeicoliCNRTable;
 	private VerticalLayout layoutTable;
 	private Button buttonModifica;
-	private Veicolo selectedVeicolo;
+	private VeicoloCNR selectedVeicoloCNR;
+	private VeicoloCNRStore veicoloCNRStore;
 
 	// private CssLayout panel = new CssLayout();
 
-	public GestioneVeicoloView() {
+	public GestioneVeicoloCNRView() {
 		addStyleName(ValoTheme.PANEL_BORDERLESS);
 		addStyleName("missione-view");
 		setSizeFull();
@@ -80,18 +92,27 @@ public class GestioneVeicoloView extends VerticalLayout implements View {
 	private VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
-		this.elencoVeicoliTable = new ElencoVeicoliTable();
+		this.elencoVeicoliCNRTable = new ElencoVeicoliCNRTable();
 
-		this.elencoVeicoliTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+		
+		try {
+			VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
+			this.elencoVeicoliCNRTable.aggiornaTable(veicoloCNRStore);
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+		this.elencoVeicoliCNRTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedVeicolo = (Veicolo) itemClickEvent.getItemId();
+				selectedVeicoloCNR = (VeicoloCNR) itemClickEvent.getItemId();
 				enableDisableButtons(true);
 			}
 		});
 
-		v.addComponent(this.elencoVeicoliTable);
-		v.setComponentAlignment(elencoVeicoliTable,
+		v.addComponent(this.elencoVeicoliCNRTable);
+		v.setComponentAlignment(elencoVeicoliCNRTable,
 				new Alignment(Bits.ALIGNMENT_VERTICAL_CENTER | Bits.ALIGNMENT_HORIZONTAL_CENTER));
 
 		return v;
@@ -111,7 +132,7 @@ public class GestioneVeicoloView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloWindow.open(new Veicolo(), false);
+				VeicoloCNRWindow.open(new VeicoloCNR(), false);
 			}
 
 		});
@@ -130,7 +151,7 @@ public class GestioneVeicoloView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloWindow.open(selectedVeicolo, true);
+				VeicoloCNRWindow.open(selectedVeicoloCNR, true);
 
 			}
 

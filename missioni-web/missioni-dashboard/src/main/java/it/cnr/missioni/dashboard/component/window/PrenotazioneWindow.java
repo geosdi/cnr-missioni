@@ -135,7 +135,7 @@ public class PrenotazioneWindow extends Window {
 		List<VeicoloCNR> lista = new ArrayList<VeicoloCNR>();
 		veicoliCNRField = new ComboBox("Veicolo");
 		try {
-			lista = ClientConnector.getVeicoloCNRDisponibile(
+			lista = ClientConnector.getVeicoloCNR(
 					VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().withStato(StatoVeicoloEnum.DISPONIBILE.name()))
 					.getVeicoliCNR();
 		} catch (Exception e) {

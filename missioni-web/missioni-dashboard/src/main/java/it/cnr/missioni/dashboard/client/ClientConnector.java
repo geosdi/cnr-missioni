@@ -124,8 +124,7 @@ public class ClientConnector {
 	 * @param veicoloCNRSearchBuilder
 	 * @throws Exception
 	 */
-	public static VeicoloCNRStore getVeicoloCNRDisponibile(VeicoloCNRSearchBuilder veicoloCNRSearchBuilder)
-			throws Exception {
+	public static VeicoloCNRStore getVeicoloCNR(VeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 
 	}
@@ -169,6 +168,26 @@ public class ClientConnector {
 	public static PrenotazioniStore getPrenotazione(PrenotazioneSearchBuilder prenotazioneSearchBuilder)
 			throws Exception {
 		return missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
+
+	}
+
+	/**
+	 * 
+	 * @param veicoloCNR
+	 * @throws Exception
+	 */
+	public static void updateVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
+		missioniCoreClientConnector.updateVeicoloCNR(veicoloCNR);
+
+	}
+
+	/**
+	 * 
+	 * @param veicoloCNR
+	 * @throws Exception
+	 */
+	public static void addVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
+		missioniCoreClientConnector.addVeicoloCNR(veicoloCNR);
 
 	}
 

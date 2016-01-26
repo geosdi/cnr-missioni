@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.component.window;
+package it.cnr.missioni.dashboard.component.window.admin;
 
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -17,6 +17,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
@@ -30,43 +31,45 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.VeicoloAction;
+import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.user.UserStore;
+import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
-public class VeicoloWindow extends Window {
+public class VeicoloCNRWindow extends Window {
+
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -333945068835078811L;
+	private static final long serialVersionUID = -2904991157664896304L;
 
-	public static final String ID = "veicolowindow";
+	public static final String ID = "veicoloCNRwindow";
 
-	private final BeanFieldGroup<Veicolo> fieldGroup;
+	private final BeanFieldGroup<VeicoloCNR> fieldGroup;
 
 	private TextField tipoField;
 	private TextField targaField;
 	private TextField cartaCircolazioneField;
 	private TextField polizzaAssicurativaField;
-	private CheckBox veicoloPrincipaleField;
-	private String oldTarga;
+	private ComboBox statoField;
 
 	private boolean modifica;
 
-	private final Veicolo veicolo;
-	private final User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+	private final VeicoloCNR veicoloCNR;
 
-	private VeicoloWindow(final Veicolo veicolo, boolean modifica) {
+	private VeicoloCNRWindow(final VeicoloCNR veicoloCNR, boolean modifica) {
 
-		this.veicolo = veicolo;
-		this.oldTarga = veicolo.getTarga();
+		this.veicoloCNR = veicoloCNR;
 		this.modifica = modifica;
 
 		addStyleName("profile-window");
@@ -92,8 +95,8 @@ public class VeicoloWindow extends Window {
 		content.addComponent(detailsWrapper);
 		content.setExpandRatio(detailsWrapper, 1f);
 
-		fieldGroup = new BeanFieldGroup<Veicolo>(Veicolo.class);
-		fieldGroup.setItemDataSource(this.veicolo);
+		fieldGroup = new BeanFieldGroup<VeicoloCNR>(VeicoloCNR.class);
+		fieldGroup.setItemDataSource(this.veicoloCNR);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
@@ -127,9 +130,8 @@ public class VeicoloWindow extends Window {
 		polizzaAssicurativaField = (TextField) fieldGroup.buildAndBind("Polizza Assicurativa", "polizzaAssicurativa");
 		details.addComponent(polizzaAssicurativaField);
 
-		veicoloPrincipaleField = (CheckBox) fieldGroup.buildAndBind("Veicolo Principale", "veicoloPrincipale",
-				CheckBox.class);
-		details.addComponent(veicoloPrincipaleField);
+		statoField =(ComboBox)fieldGroup.buildAndBind("Stato","stato",ComboBox.class);
+		details.addComponent(statoField);
 
 		addValidator();
 		return root;
@@ -141,18 +143,18 @@ public class VeicoloWindow extends Window {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
 							.withTarga(targaField.getValue());
 					if (modifica)
-						userSearchBuilder.withId(user.getId());
-					UserStore userStore = null;
+						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
+					VeicoloCNRStore veicoloCNRStore = null;
 					try {
-						userStore = ClientConnector.getUser(userSearchBuilder);
+						veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
 					} catch (Exception e) {
 						Utility.getNotification(Utility.getMessage("error_message"),
 								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
 					}
-					if (userStore != null)
+					if (veicoloCNRStore != null)
 						throw new InvalidValueException(Utility.getMessage("targa_present"));
 				}
 
@@ -164,18 +166,18 @@ public class VeicoloWindow extends Window {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
 							.withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
 					if (modifica)
-						userSearchBuilder.withId(user.getId());
-					UserStore userStore = null;
+						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
+					VeicoloCNRStore veicoloCNRStore = null;
 					try {
-						userStore = ClientConnector.getUser(userSearchBuilder);
+						veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
 					} catch (Exception e) {
 						Utility.getNotification(Utility.getMessage("error_message"),
 								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
 					}
-					if (userStore != null)
+					if (veicoloCNRStore != null)
 						throw new InvalidValueException(Utility.getMessage("polizza_present"));
 				}
 
@@ -187,18 +189,18 @@ public class VeicoloWindow extends Window {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
 							.withCartaCircolazione(cartaCircolazioneField.getValue());
 					if (modifica)
-						userSearchBuilder.withId(user.getId());
-					UserStore userStore = null;
+						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
+					VeicoloCNRStore veicoloCNRStore = null;
 					try {
-						userStore = ClientConnector.getUser(userSearchBuilder);
+						veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
 					} catch (Exception e) {
 						Utility.getNotification(Utility.getMessage("error_message"),
 								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
 					}
-					if (userStore != null)
+					if (veicoloCNRStore != null)
 						throw new InvalidValueException(Utility.getMessage("carta_circolazione_present"));
 				}
 			}
@@ -227,10 +229,10 @@ public class VeicoloWindow extends Window {
 					// targaField.validate();
 					fieldGroup.commit();
 
-					BeanItem<Veicolo> beanItem = (BeanItem<Veicolo>) fieldGroup.getItemDataSource();
-					Veicolo new_veicolo = beanItem.getBean();
+					BeanItem<VeicoloCNR> beanItem = (BeanItem<VeicoloCNR>) fieldGroup.getItemDataSource();
+					VeicoloCNR new_veicoloCNR = beanItem.getBean();
 
-					DashboardEventBus.post(new VeicoloAction(new_veicolo, oldTarga));
+					DashboardEventBus.post(new VeicoloCNRAction(new_veicoloCNR, modifica));
 					close();
 
 				} catch (InvalidValueException | CommitException e) {
@@ -246,9 +248,9 @@ public class VeicoloWindow extends Window {
 		return footer;
 	}
 
-	public static void open(final Veicolo veicolo, boolean modifica) {
+	public static void open(final VeicoloCNR veicoloCNR, boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new VeicoloWindow(veicolo, modifica);
+		Window w = new VeicoloCNRWindow(veicoloCNR, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

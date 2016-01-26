@@ -308,21 +308,7 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 
 	}
 
-	private Button createButtonNewMissione() {
-		final Button buttonNewMissione = new Button();
-		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNewMissione.setIcon(FontAwesome.PLUS);
-		buttonNewMissione.setDescription("Nuova Missione");
-		buttonNewMissione.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withModifica(false).withTipo("missione").withMissione(new Missione()).build();				
-			}
-			
-		});
-		return buttonNewMissione;
-	}						
+				
 
 
 	private Button createButtonSearch() {
@@ -361,8 +347,8 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 		GridLayout layout = new GridLayout(4, 1);
 
 		buttonEdit = new Button();
-		buttonEdit.setDescription("Modifica");
-		buttonEdit.setIcon(FontAwesome.PENCIL);
+		buttonEdit.setDescription("Dettagli");
+		buttonEdit.setIcon(FontAwesome.EDIT);
 		buttonEdit.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonEdit.addClickListener(new Button.ClickListener() {
 

@@ -4,9 +4,10 @@ import com.vaadin.navigator.View;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
 
-import it.cnr.missioni.dashboard.view.CalendarioView;
+import it.cnr.missioni.dashboard.view.PrenotazioneVeicoloCNRView;
 import it.cnr.missioni.dashboard.view.HomeView;
 import it.cnr.missioni.dashboard.view.admin.GestioneUserAdminView;
+import it.cnr.missioni.dashboard.view.admin.GestioneVeicoloCNRView;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
 import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
 import it.cnr.missioni.dashboard.view.GestioneVeicoloView;
@@ -19,10 +20,9 @@ public enum DashboardViewType  {
     GESTIONE_MISSIONE("gestione missione",GestioneMissioneView.class, FontAwesome.SUITCASE, true),
     GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
     GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio",GestioneVeicoloView.class, FontAwesome.CAR, true),
-    CALENDARIO("calendario", CalendarioView.class, FontAwesome.CALENDAR, true),
+    CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, true),
     GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, true),
-    GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneUserAdminView.class, FontAwesome.CAR, true),
-    
+    GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneVeicoloCNRView.class, FontAwesome.CAR, true),
     ;
 
     private final String viewName;

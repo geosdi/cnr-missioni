@@ -22,6 +22,7 @@ import com.vaadin.ui.Field;
 
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
 
 /**
  * @author Salvia Vito
@@ -67,7 +68,23 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 			}
 
 			field = (T) comboBox;
-		} else if (type.isAssignableFrom(TrattamentoMissioneEsteraEnum.class)
+		}else if (type.isAssignableFrom(StatoVeicoloEnum.class) && fieldType.isAssignableFrom(ComboBox.class)) {
+
+			ComboBox comboBox = new ComboBox();
+			comboBox.setImmediate(true);
+			comboBox.setValidationVisible(false);
+			StatoVeicoloEnum[] lista = StatoVeicoloEnum.values();
+			BListener listener = new BListener(comboBox);
+			comboBox.addBlurListener(listener);
+			for (StatoVeicoloEnum s : lista) {
+				comboBox.addItem(s);
+				comboBox.setItemCaption(s, s.getStato());
+			}
+
+			field = (T) comboBox;
+		} 
+		
+		else if (type.isAssignableFrom(TrattamentoMissioneEsteraEnum.class)
 				&& fieldType.isAssignableFrom(ComboBox.class)) {
 
 			ComboBox comboBox = new ComboBox();

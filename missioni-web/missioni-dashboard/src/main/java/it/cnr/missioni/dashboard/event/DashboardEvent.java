@@ -8,6 +8,7 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
+import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /*
  * Event bus events used in Dashboard are listed here as inner classes.
@@ -231,6 +232,40 @@ public abstract class DashboardEvent {
 		}
 		
 		
+		
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la tabella veicoli CNR dopo un inserimento o un update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class TableVeicoliCNRUpdatedEvent {
+		
+		private VeicoloCNRStore veicoloCNRStore;
+
+		/**
+		 * @param veicoloCNRStore
+		 */
+		public TableVeicoliCNRUpdatedEvent(VeicoloCNRStore veicoloCNRStore) {
+			this.veicoloCNRStore = veicoloCNRStore;
+		}
+
+		/**
+		 * @return the veicoloCNRStore
+		 */
+		public VeicoloCNRStore getVeicoloCNRStore() {
+			return veicoloCNRStore;
+		}
+
+		/**
+		 * @param veicoloCNRStore 
+		 */
+		public void setVeicoloCNRStore(VeicoloCNRStore veicoloCNRStore) {
+			this.veicoloCNRStore = veicoloCNRStore;
+		}
 		
 	}
 	

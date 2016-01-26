@@ -33,7 +33,12 @@ public interface VeicoloCNRRestService {
 	 */
 	@GET
 	@Path(value = VeicoloCNRServiceRSPathConfig.GET_VEICOLO_CNR_BY_QUERY)
-	Response getVeicoloCNRByQuery(@QueryParam(value = "stato") String stato, @QueryParam(value = "from") int from,
+	Response getVeicoloCNRByQuery(@QueryParam(value = "stato") String stato,
+			@QueryParam(value = "targa") String targa,
+			@QueryParam(value = "cartaCircolazione") String cartaCircolazione,
+			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
+			@QueryParam(value = "id") String id,
+			@QueryParam(value = "from") int from,
 			@QueryParam(value = "size") int size) throws Exception;
 
 	/**

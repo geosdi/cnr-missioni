@@ -24,6 +24,7 @@ import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
+import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
@@ -144,6 +145,11 @@ public final class DashboardUI extends UI  {
 	}
 	
 	@Subscribe
+	public void veicoloCNRRequested(final VeicoloCNRAction veicoloCNRAction) {
+		veicoloCNRAction.doAction();
+	}
+	
+	@Subscribe
 	public void userLoggedOut(final UserLoggedOutEvent event) {
 		// When the user logs out, current VaadinSession gets closed and the
 		// page gets reloaded on the login screen. Do notice the this doesn't
@@ -166,12 +172,7 @@ public final class DashboardUI extends UI  {
     /**
      * @return An instance for accessing the  services layer.
      */
-    public static INotificationProvider getDataProvider() {
-    	
-//    	if(((DashboardUI) getCurrent()).notificationProvider != null){
-//    		
-//    	}
-    	
+    public static INotificationProvider getDataProvider() { 	
         return ((DashboardUI) getCurrent()).notificationProvider;
     }
 }

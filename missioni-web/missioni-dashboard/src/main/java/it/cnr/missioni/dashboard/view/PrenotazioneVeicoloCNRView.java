@@ -52,7 +52,7 @@ import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 
-public final class CalendarioView extends VerticalLayout implements View{
+public final class PrenotazioneVeicoloCNRView extends VerticalLayout implements View{
 
 
 	/**
@@ -63,7 +63,7 @@ public final class CalendarioView extends VerticalLayout implements View{
 
 	// private CssLayout panel = new CssLayout();
 
-	public CalendarioView() {
+	public PrenotazioneVeicoloCNRView() {
 		addStyleName(ValoTheme.PANEL_BORDERLESS);
 		addStyleName("missione-view");
 		setSizeFull();

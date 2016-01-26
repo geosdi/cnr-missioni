@@ -35,6 +35,8 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.AfterClass;
@@ -151,6 +153,56 @@ public class VeicoloCNRRestServiceTest {
 		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().withStato(StatoVeicoloEnum.DISPONIBILE.name());
 		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		Assert.assertTrue("FIND DISPONIBILE VEICOLO CNR", veicoloCNRStore.getTotale() == 1);
+	}
+	
+	@Test
+	public void F_findVeicoloTargaWithNotID() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withTarga("6575").withId("02");
+		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		Thread.sleep(1000);	
+		Assert.assertNull("FIND  VEICOLO CNR", veicoloCNRStore);
+
+	}
+
+	@Test
+	public void G_findVeicoloCartaCircolazioneWithNotID() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withCartaCircolazione("carta 456").withId("02");
+		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		Thread.sleep(1000);		
+		Assert.assertNull("FIND  VEICOLO CNR", veicoloCNRStore);
+
+	}
+	
+	@Test
+	public void H_findVeicoloPolizzaAssicurativaWithNotID() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withPolizzaAssicurativa("polizza 2").withId("02");
+		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		Thread.sleep(1000);		
+		Assert.assertNull("FIND  VEICOLO CNR", veicoloCNRStore);
+
+	}
+	
+	@Test
+	public void I_findVeicoloPolizza() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withPolizzaAssicurativa("polizza 2");
+		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		Thread.sleep(1000);		
+		Assert.assertTrue("FINR  VEICOLO CNR", veicoloCNRStore.getTotale() == 1);
+
+	}
+	
+	@Test
+	public void L_findVeicoloPolizza_2() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withPolizzaAssicurativa("Polizza 2");
+		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		Thread.sleep(1000);		
+		Assert.assertTrue("FINR  VEICOLO CNR", veicoloCNRStore.getTotale()== 1);
+
 	}
 
 	

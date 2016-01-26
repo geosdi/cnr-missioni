@@ -32,6 +32,10 @@ public class SearchConstants {
 	public static final String PRENOTAZIONE_FIELD_DATA_FROM = "prenotazione.dataFrom";
 
 	public static final String VEICOLO_CNR_FIELD_STATO = "veicoloCNR.stato";
+	public static final String VEICOLO_CNR_FIELD_TARGA = "veicoloCNR.targa";
+	public static final String VEICOLO_CNR_FIELD_CARTA_CIRCOLAZIONE = "veicoloCNR.cartaCircolazione";
+	public static final String VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA = "veicoloCNR.polizzaAssicurativa";
+	public static final String VEICOLO_CNR_FIELD_ID = "veicoloCNR.id";
 
 	
 	public final static String MULTI_MATCH_ALL_FIELD = "_all";

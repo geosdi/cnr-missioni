@@ -19,7 +19,7 @@ public interface IVeicoloCNRDelegate {
 	 * @return
 	 * @throws Exception
 	 */
-	VeicoloCNRStore getVeicoloCNRByQuery(String stato, int from, int size) throws Exception;
+	VeicoloCNRStore getVeicoloCNRByQuery(String stato,String targa,String cartaCircolazione,String polizzaAsscurativa,String id, int from, int size) throws Exception;
 
 	/**
 	 * 

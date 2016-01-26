@@ -3,6 +3,7 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
@@ -96,7 +97,7 @@ public class UserSearchBuilder implements Serializable {
 		this.cartaCircolazione = cartaCircolazione;
 		if( cartaCircolazione != null && !cartaCircolazione.equals("") )
 		booleanModelSearch.getListaSearch()
-				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione));
+				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione,Operator.AND));
 		return this;
 	}
 
@@ -104,7 +105,7 @@ public class UserSearchBuilder implements Serializable {
 		this.polizzaAssicurativa = polizzaAssicurativa;
 		if( polizzaAssicurativa != null && !polizzaAssicurativa.equals("") )
 		booleanModelSearch.getListaSearch()
-				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa));
+				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa,Operator.AND));
 		return this;
 	}
 

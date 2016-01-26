@@ -1,5 +1,6 @@
 package it.cnr.missioni.el.model.search;
 
+import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
@@ -9,15 +10,27 @@ import org.elasticsearch.index.query.QueryBuilders;
 public class ExactSearch extends AbstractBooleanSearch<Object> implements IBooleanSearch {
 
 	
+	private Operator operator = Operator.OR;
+	
 	public ExactSearch( ){
 		super();
+	}
+	
+	public ExactSearch(String field,Object value,Operator operator){
+		super(field,value);
+		this.operator = operator;
 	}
 	
 	public ExactSearch(String field,Object value){
 		super(field,value);
 	}
 	
-	public ExactSearch(String field,Object value,EnumBooleanType type){
+	public ExactSearch(String field,Object value,EnumBooleanType type,Operator operator){
+		super(field,value,type);
+		this.operator = operator;
+	}
+	
+	public ExactSearch(String field,Object value,EnumBooleanType type ){
 		super(field,value,type);
 	}
 	
@@ -30,7 +43,7 @@ public class ExactSearch extends AbstractBooleanSearch<Object> implements IBoole
         logger.trace("####################Called {} #internalBooleanSearch with parameters " +
                 "field : {} - value : {}\n\n", getClass().getSimpleName(), field, value);
 		
-		return QueryBuilders.matchQuery(field, value);
+		return QueryBuilders.matchQuery(field, value).operator(operator);
 	}
 	
 

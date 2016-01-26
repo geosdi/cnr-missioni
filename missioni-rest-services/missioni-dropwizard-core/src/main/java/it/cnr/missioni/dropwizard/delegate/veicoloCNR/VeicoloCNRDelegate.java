@@ -43,9 +43,13 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 	 * @throws Exception
 	 */
 	@Override
-	public VeicoloCNRStore getVeicoloCNRByQuery(String stato, int from, int size) throws Exception {
+	public VeicoloCNRStore getVeicoloCNRByQuery(String stato,String targa,String cartaCircolazione,String polizzaAssicurtiva,String id, int from, int size) throws Exception {
 
 		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().withStato(stato)
+				.withCartaCircolazione(cartaCircolazione)
+				.withPolizzaAssicurativa(polizzaAssicurtiva)
+				.withTarga(targa)
+				.withId(id)
 				.withFrom(from).withSize(size);
 
 		

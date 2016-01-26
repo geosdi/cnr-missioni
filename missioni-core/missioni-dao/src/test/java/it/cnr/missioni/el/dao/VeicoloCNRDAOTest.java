@@ -136,7 +136,56 @@ public class VeicoloCNRDAOTest {
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 1);
 
 	}
+	
+	@Test
+	public void H_findVeicoloTargaWithNotID() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withTarga("6575").withId("02");
+		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
+		Thread.sleep(1000);	
+		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 0);
 
+	}
+
+	@Test
+	public void I_findVeicoloCartaCircolazioneWithNotID() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withCartaCircolazione("carta 456").withId("02");
+		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
+		Thread.sleep(1000);		
+		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 0);
+
+	}
+	
+	@Test
+	public void L_findVeicoloPolizzaAssicurativaWithNotID() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withPolizzaAssicurativa("polizza 2").withId("02");
+		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
+		Thread.sleep(1000);		
+		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 0);
+
+	}
+	
+	@Test
+	public void M_findVeicoloPolizza() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withPolizzaAssicurativa("polizza 2");
+		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
+		Thread.sleep(1000);		
+		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 1);
+
+	}
+	
+	@Test
+	public void M_findVeicoloPolizza_2() throws Exception {
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withPolizzaAssicurativa("Polizza 2");
+		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
+		Thread.sleep(1000);		
+		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 1);
+
+	}
 	//
 	//// @Test
 	//// public void tearDown() throws Exception {
