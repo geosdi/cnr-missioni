@@ -2,8 +2,9 @@ package it.cnr.missioni.dropwizard.delegate.missioni;
 
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
-import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+
+import javax.ws.rs.core.StreamingOutput;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -73,15 +74,15 @@ public interface IMissioneDelegate {
 
     /**
      * @param missionID
-     * @return {@link MissioneStreaming}
+     * @return {@link StreamingOutput}
      * @throws Exception
      */
-    MissioneStreaming downloadMissioneAsPdf(String missionID) throws Exception;
+    StreamingOutput downloadMissioneAsPdf(String missionID) throws Exception;
 
     /**
      * @param missionID
-     * @return {@link MissioneStreaming}
+     * @return {@link StreamingOutput}
      * @throws Exception
      */
-    MissioneStreaming downloadRimborsoMissioneAsPdf(String missionID) throws Exception;
+    StreamingOutput downloadRimborsoMissioneAsPdf(String missionID) throws Exception;
 }
