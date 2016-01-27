@@ -42,7 +42,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         String dataInizio = missione.getDatiPeriodoMissione().getInizioMissione().toString();
         String dataFine = missione.getDatiPeriodoMissione().getFineMissione().toString();
 
-        PdfWriter.getInstance(document, new FileOutputStream(this.file));
+        PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
         document.addSubject("Richiesta Missione");
         document.open();
 
@@ -260,8 +260,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         document.close();
     }
 
-   
-    
+
     /**
      * @return {@link IPDFBuilderType}
      */

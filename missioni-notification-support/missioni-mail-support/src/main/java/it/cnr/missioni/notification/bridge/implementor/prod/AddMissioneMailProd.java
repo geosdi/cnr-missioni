@@ -52,7 +52,7 @@ public class AddMissioneMailProd extends MissioniMailProd {
                         "template/addMissioneMailNotification.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
 
-                Path tempFilePath = Files.createTempFile("Missione - ".concat(userName).concat(userName), ".pdf");
+                Path tempFilePath = Files.createTempFile("Missione - ".concat(userName), ".pdf");
                 File file = tempFilePath.toFile();
 
                 pdfBuilder.withFile(file);

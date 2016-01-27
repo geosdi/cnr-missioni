@@ -21,10 +21,9 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>it.cnr</groupId>
-			<artifactId>missioni-model</artifactId>
+			<artifactId>missioni-notification-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

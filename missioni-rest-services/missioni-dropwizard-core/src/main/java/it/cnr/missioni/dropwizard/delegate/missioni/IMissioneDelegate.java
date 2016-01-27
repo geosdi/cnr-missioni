@@ -2,6 +2,7 @@ package it.cnr.missioni.dropwizard.delegate.missioni;
 
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
+import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
@@ -9,10 +10,21 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
  * @email giuseppe.lascaleia@geosdi.org
  */
 public interface IMissioneDelegate {
-
-
+    
     /**
-     * @param missioneID
+     * @param idMissione
+     * @param idUser
+     * @param stato
+     * @param numeroOrdineRimborso
+     * @param dataFromMissione
+     * @param dataToMissione
+     * @param dataFromRimborso
+     * @param dataToRimborso
+     * @param oggetto
+     * @param multiMatch
+     * @param fieldExist
+     * @param from
+     * @param size
      * @return {@link Missione}
      * @throws Exception
      */
@@ -59,4 +71,17 @@ public interface IMissioneDelegate {
      */
     Boolean notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception;
 
+    /**
+     * @param missionID
+     * @return {@link MissioneStreaming}
+     * @throws Exception
+     */
+    MissioneStreaming downloadMissioneAsPdf(String missionID) throws Exception;
+
+    /**
+     * @param missionID
+     * @return {@link MissioneStreaming}
+     * @throws Exception
+     */
+    MissioneStreaming downloadRimborsoMissioneAsPdf(String missionID) throws Exception;
 }

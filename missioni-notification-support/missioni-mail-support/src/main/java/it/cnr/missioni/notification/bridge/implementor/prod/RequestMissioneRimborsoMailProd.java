@@ -54,7 +54,7 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
                         "template/addRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
 
-                Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userName).concat(userName), ".pdf");
+                Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userName), ".pdf");
                 File file = tempFilePath.toFile();
 
                 pdfBuilder.withFile(file);

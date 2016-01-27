@@ -81,7 +81,7 @@ public interface MissioneRestService {
     @POST
     @Path(value = MissioneServiceRSPathConfig.NOTIFY_MISSIONE_ADMINISTRATION_PATH)
     Response notifyMissionAdministration(NotificationMissionRequest request) throws Exception;
-    
+
 
     /**
      * @param request
@@ -91,4 +91,24 @@ public interface MissioneRestService {
     @POST
     @Path(value = MissioneServiceRSPathConfig.NOTIFY_RIMBORSO_MISSIONE_ADMINISTRATION_PATH)
     Response notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception;
+
+    /**
+     * @param missionID
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @GET
+    @Path(value = MissioneServiceRSPathConfig.DOWNLOAD_MISSIONE_AS_PDF_PATH)
+    @Produces(value = "application/pdf")
+    Response downloadMissioneAsPdf(@QueryParam(value = "missionID") String missionID) throws Exception;
+
+    /**
+     * @param missionID
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @GET
+    @Path(value = MissioneServiceRSPathConfig.DOWNLOAD_RIMBORSO_MISSIONE_AS_PDF_PATH)
+    @Produces(value = "application/pdf")
+    Response downloadRimborsoMissioneAsPdf(@QueryParam(value = "missionID") String missionID) throws Exception;
 }

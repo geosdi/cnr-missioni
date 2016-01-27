@@ -2,10 +2,10 @@ package it.cnr.missioni.notification.support.itext;
 
 import com.google.common.base.Preconditions;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 
 import java.io.File;
+import java.io.OutputStream;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -25,12 +25,17 @@ public interface PDFBuilder {
      */
     PDFBuilder withMissione(Missione missione);
 
-
     /**
      * @param file
-     * @return {@link File}
+     * @return {@link PDFBuilder}
      */
     PDFBuilder withFile(File file);
+
+    /**
+     * @param outputStream
+     * @return {@link PDFBuilder}
+     */
+    PDFBuilder withOutputStream(OutputStream outputStream);
 
     /**
      * @return {@link IPDFBuilderType}
@@ -89,6 +94,7 @@ public interface PDFBuilder {
         protected User user;
         protected Missione missione;
         protected File file;
+        protected OutputStream outputStream;
 
         protected AbstractPDFBuilder() {
         }
@@ -112,7 +118,7 @@ public interface PDFBuilder {
             this.missione = missione;
             return self();
         }
-        
+
 
         /**
          * @param file
@@ -125,12 +131,23 @@ public interface PDFBuilder {
         }
 
         /**
+         * @param outputStream
+         * @return {@link PDFBuilder}
+         */
+        @Override
+        public PDFBuilder withOutputStream(OutputStream outputStream) {
+            this.outputStream = outputStream;
+            return self();
+        }
+
+        /**
          * @throws Exception
          */
         protected void checkArguments() throws Exception {
             Preconditions.checkArgument((this.user != null), "The Parameter User must not be null.");
             Preconditions.checkArgument((this.missione != null), "The Parameter Missione must not be null.");
-            Preconditions.checkArgument((this.file != null), "The Parameter User File not be null.");
+            Preconditions.checkArgument(((this.file != null) || (this.outputStream != null)),
+                    "You must define File or OutputStream Parameter.");
         }
 
         /**

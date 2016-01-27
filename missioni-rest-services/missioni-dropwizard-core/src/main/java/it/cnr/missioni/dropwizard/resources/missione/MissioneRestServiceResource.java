@@ -4,6 +4,7 @@ import it.cnr.missioni.dropwizard.delegate.missioni.IMissioneDelegate;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.resources.missione.MissioneRestService;
+import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
@@ -98,9 +99,41 @@ public class MissioneRestServiceResource implements MissioneRestService {
         return Response.ok(this.missioneDelegate.notifyMissionAdministration(request)).build();
     }
 
+    /**
+     * @param request
+     * @return {@link Response}
+     * @throws Exception
+     */
     @Override
     public Response notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception {
         return Response.ok(this.missioneDelegate.notifyRimborsoMissionAdministration(request)).build();
     }
 
+    /**
+     * @param missionID
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response downloadMissioneAsPdf(String missionID) throws Exception {
+        MissioneStreaming stream = this.missioneDelegate.downloadMissioneAsPdf(missionID);
+        Response.ResponseBuilder responseBuilder = Response.ok(stream)
+                .header("Content-Disposition",
+                        "attachment; filename=" + stream.getFileName());
+        return responseBuilder.build();
+    }
+
+    /**
+     * @param missionID
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response downloadRimborsoMissioneAsPdf(String missionID) throws Exception {
+        MissioneStreaming stream = this.missioneDelegate.downloadRimborsoMissioneAsPdf(missionID);
+        Response.ResponseBuilder responseBuilder = Response.ok(stream)
+                .header("Content-Disposition",
+                        "attachment; filename=" + stream.getFileName());
+        return responseBuilder.build();
+    }
 }

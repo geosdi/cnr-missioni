@@ -19,10 +19,9 @@ public final class MissioneServiceRSPathConfig extends ApplicationServiceRSPathC
     public static final String DELETE_MISSIONE_PATH = MISSIONI_PATH + "/deleteMissione";
     public static final String NOTIFY_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyMissionAdministration";
     public static final String NOTIFY_RIMBORSO_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyRimborsoMissionAdministration";
+    public static final String DOWNLOAD_MISSIONE_AS_PDF_PATH = MISSIONI_PATH + "/downloadMissioneAsPdf";
+    public static final String DOWNLOAD_RIMBORSO_MISSIONE_AS_PDF_PATH = MISSIONI_PATH + "/downloadRimborsoMissioneAsPdf";
 
-
-    
-    
     private MissioneServiceRSPathConfig() {
     }
 }
