@@ -4,6 +4,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
+import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -42,6 +43,9 @@ public class LoginAction implements IAction {
 					VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
 					Utility.getNotification(Utility.getMessage("success_message"), null,
 							Type.HUMANIZED_MESSAGE);
+					
+
+					
 					return true;
 				}
 

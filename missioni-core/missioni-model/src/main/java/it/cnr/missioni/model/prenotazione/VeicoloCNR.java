@@ -1,5 +1,6 @@
 package it.cnr.missioni.model.prenotazione;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,7 +15,7 @@ import it.cnr.missioni.model.user.Veicolo;
  */
 @XmlRootElement(name = "veicoloCNR")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"id", "tipo","targa","cartaCircolazione","polizzaAssicurativa"})
+@XmlType(propOrder = {"id", "tipo","targa","cartaCircolazione","polizzaAssicurativa","stato"})
 public class VeicoloCNR extends Veicolo implements Document{
 
 	/**
@@ -22,6 +23,7 @@ public class VeicoloCNR extends Veicolo implements Document{
 	 */
 	private static final long serialVersionUID = 1405399099831810547L;
 	private String id;
+	@NotNull
 	private StatoVeicoloEnum stato;
 
 	/*

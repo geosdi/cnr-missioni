@@ -34,6 +34,8 @@ import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.dashboard.view.GestioneTemplateView;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
@@ -42,7 +44,7 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneUserAdminView extends VerticalLayout implements View {
+public class GestioneUserAdminView extends GestioneTemplateView implements View {
 
 	/**
 	 * 
@@ -66,56 +68,55 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 	private User selectedUser;
 	
 		
-	private User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-	private UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder();
+	private UserSearchBuilder userSearchBuilder ;
 	private UserStore userStore;
 
 	// private CssLayout panel = new CssLayout();
 
 	public GestioneUserAdminView() {
-		addStyleName(ValoTheme.PANEL_BORDERLESS);
-		addStyleName("missione-view");
-		setSizeFull();
-		DashboardEventBus.register(this);
-		setHeight("96%");
-		setWidth("98%");
-		addStyleName(ValoTheme.LAYOUT_CARD);
-		addStyleName("panel-view");
-		Responsive.makeResponsive(this);
-
-		CssLayout toolbar = new CssLayout();
-		toolbar.setWidth("100%");
-		toolbar.setStyleName("toolbar-search");
-		HorizontalLayout fullTextsearchLayout = new HorizontalLayout(buildFilter(), createButtonSearch());
-		fullTextsearchLayout.setSpacing(true);
-		fullTextsearchLayout.setStyleName("full-text-search");
-
-
-		layoutTable = buildTable();
-		layoutTable.setStyleName("layout-table-missione");
-
-		GridLayout buttonsLayout = buildButtonsSelectedUser();
-		buttonsLayout.setSpacing(true);
-		buttonsLayout.setStyleName("buttons-layout");
-		
-		
-		toolbar.addComponent(fullTextsearchLayout);
-		addComponent(toolbar);
-//		setExpandRatio(toolbar, new Float(1));
-//		addComponent(layoutForm);
-//		Animator.animate(layoutForm, new Css().translateY("1000px")).duration(5000);
-//		setExpandRatio(layoutForm, new Float(0.1));
-		addComponent(layoutTable);
-		addComponent(buttonsLayout);
-		setExpandRatio(layoutTable, new Float(1));
-		setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
+//		addStyleName(ValoTheme.PANEL_BORDERLESS);
+//		addStyleName("missione-view");
+//		setSizeFull();
+//		DashboardEventBus.register(this);
+//		setHeight("96%");
+//		setWidth("98%");
+//		addStyleName(ValoTheme.LAYOUT_CARD);
+//		addStyleName("panel-view");
+//		Responsive.makeResponsive(this);
+//
+//		CssLayout toolbar = new CssLayout();
+//		toolbar.setWidth("100%");
+//		toolbar.setStyleName("toolbar-search");
+//		HorizontalLayout fullTextsearchLayout = new HorizontalLayout(buildFilter(), createButtonSearch());
+//		fullTextsearchLayout.setSpacing(true);
+//		fullTextsearchLayout.setStyleName("full-text-search");
+//
+//
+//		layoutTable = buildTable();
+//		layoutTable.setStyleName("layout-table-missione");
+//
+//		GridLayout buttonsLayout = buildButtonsSelectedUser();
+//		buttonsLayout.setSpacing(true);
+//		buttonsLayout.setStyleName("buttons-layout");
+//		
+//		
+//		toolbar.addComponent(fullTextsearchLayout);
+//		addComponent(toolbar);
+////		setExpandRatio(toolbar, new Float(1));
+////		addComponent(layoutForm);
+////		Animator.animate(layoutForm, new Css().translateY("1000px")).duration(5000);
+////		setExpandRatio(layoutForm, new Float(0.1));
+//		addComponent(layoutTable);
+//		addComponent(buttonsLayout);
+//		setExpandRatio(layoutTable, new Float(1));
+//		setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
 	}
 
 	/**
 	 * 
 	 * @return VerticalLayout
 	 */
-	private VerticalLayout buildTable() {
+	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoUserTable = new ElencoUserTable();
@@ -267,8 +268,8 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 	/**
 	 * Costruisce la Select per la paginazione
 	 */
-	private void buildComboPage() {
-
+	protected void buildComboPage() {
+		this.selectPage = new ComboBox();
 		this.selectPage.removeAllItems();
 		if (userStore != null) {
 			long totale = userStore.getTotale();
@@ -311,7 +312,7 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 				
 
 
-	private Button createButtonSearch() {
+	protected Button createButtonSearch() {
 		final Button buttonCerca = new Button();
 		buttonCerca.setIcon(FontAwesome.SEARCH);
 		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -343,7 +344,7 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 		return buttonCerca;
 	}
 
-	private GridLayout buildButtonsSelectedUser() {
+	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 
 		buttonEdit = new Button();
@@ -354,7 +355,7 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				UserCompletedRegistrationWindow.open(user,true);
+				UserCompletedRegistrationWindow.open(selectedUser,true);
 
 			}
 			
@@ -369,28 +370,25 @@ public class GestioneUserAdminView extends VerticalLayout implements View {
 
 	}
 
-	private void enableDisableButtons(boolean enabled) {
+	protected void enableDisableButtons(boolean enabled) {
 		this.buttonEdit.setEnabled(enabled);
 	}
 
-	private Component buildFilter() {
-		multiMatchField = new TextField();
-		multiMatchField.addTextChangeListener(new TextChangeListener() {
-			@Override
-			public void textChange(final TextChangeEvent event) {
 
-			}
-		});
+	/**
+	 * 
+	 */
+	protected void initialize() {
+		this.userSearchBuilder =  UserSearchBuilder.getUserSearchBuilder();
+	}
 
-		multiMatchField.setInputPrompt("Testo da ricercare");
-		multiMatchField.setIcon(FontAwesome.SEARCH);
-		multiMatchField.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
-		multiMatchField.addShortcutListener(new ShortcutListener("Clear", KeyCode.ESCAPE, null) {
-			@Override
-			public void handleAction(final Object sender, final Object target) {
-			}
-		});
-		return multiMatchField;
+	/**
+	 * @return
+	 */
+	@Override
+	protected Button createButtonNew() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

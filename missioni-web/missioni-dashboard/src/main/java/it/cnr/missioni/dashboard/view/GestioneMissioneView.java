@@ -44,7 +44,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneMissioneView extends VerticalLayout implements View {
+public class GestioneMissioneView extends GestioneTemplateView implements View {
 
 	/**
 	 * 
@@ -54,7 +54,7 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 	 * 
 	 */
 	private ElencoMissioniTable elencoMissioniTable;
-	private ComboBox selectPage = new ComboBox();
+	private ComboBox selectPage;
 	private TextField idMissioneField;
 	private DateField dataFromInserimentoMissioneField;
 	private DateField dataToInserimentoMissioneField;
@@ -66,75 +66,32 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 	private Button buttonMail;
 	private Button buttonRimborso;
 	private Button buttonPDF;
-	private TextField multiMatchField;
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
-	
-	private  CssAnimation a;
-	
-	private User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-	private MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-			.withIdUser(user.getId());
+
+	private CssAnimation a;
+
+	private User user;
+	private MissioneSearchBuilder missioneSearchBuilder;
 	private MissioniStore missioniStore;
 
 	// private CssLayout panel = new CssLayout();
 
 	public GestioneMissioneView() {
-		addStyleName(ValoTheme.PANEL_BORDERLESS);
-		addStyleName("missione-view");
-		setSizeFull();
-		DashboardEventBus.register(this);
-		setHeight("96%");
-		setWidth("98%");
-		addStyleName(ValoTheme.LAYOUT_CARD);
-		addStyleName("panel-view");
-		Responsive.makeResponsive(this);
+		super();
+	}
 
-		CssLayout toolbar = new CssLayout();
-		toolbar.setWidth("100%");
-		toolbar.setStyleName("toolbar-search");
-		HorizontalLayout fullTextsearchLayout = new HorizontalLayout(buildFilter(), createButtonSearch());
-		fullTextsearchLayout.setSpacing(true);
-		fullTextsearchLayout.setStyleName("full-text-search");
+	protected void initialize() {
+		this.user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId());
 
-		HorizontalLayout newMissioneLayout = new HorizontalLayout(createButtonNewMissione());
-		newMissioneLayout.setSpacing(true);
-		newMissioneLayout.setStyleName("button-new-missione");
-
-		layoutTable = buildTable();
-		layoutTable.setStyleName("layout-table-missione");
-
-		GridLayout buttonsLayout = buildButtonsMissione();
-		buttonsLayout.setSpacing(true);
-		buttonsLayout.setStyleName("buttons-layout");
-		
-		 layoutForm = new VerticalLayout();
-		layoutForm.addComponent(new TextField("aaaa"));
-//		layoutForm.setVisible(false);
-		layoutForm.setHeight("15%");
-
-		
-
-
-		
-		toolbar.addComponent(newMissioneLayout);
-		toolbar.addComponent(fullTextsearchLayout);
-		addComponent(toolbar);
-//		setExpandRatio(toolbar, new Float(1));
-//		addComponent(layoutForm);
-//		Animator.animate(layoutForm, new Css().translateY("1000px")).duration(5000);
-//		setExpandRatio(layoutForm, new Float(0.1));
-		addComponent(layoutTable);
-		addComponent(buttonsLayout);
-		setExpandRatio(layoutTable, new Float(1));
-		setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
 	}
 
 	/**
 	 * 
 	 * @return VerticalLayout
 	 */
-	private VerticalLayout buildTable() {
+	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoMissioniTable = new ElencoMissioniTable();
@@ -142,7 +99,7 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 		this.elencoMissioniTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedMissione = (Missione)itemClickEvent.getItemId();
+				selectedMissione = (Missione) itemClickEvent.getItemId();
 				enableDisableButtons(true);
 			}
 		});
@@ -286,8 +243,8 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 	/**
 	 * Costruisce la Select per la paginazione
 	 */
-	private void buildComboPage() {
-
+	protected void buildComboPage() {
+		this.selectPage = new ComboBox();
 		this.selectPage.removeAllItems();
 		if (missioniStore != null) {
 			long totale = missioniStore.getTotale();
@@ -322,12 +279,7 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 
 	}
 
-	@Override
-	public void enter(final ViewChangeEvent event) {
-
-	}
-
-	private Button createButtonNewMissione() {
+	protected Button createButtonNew() {
 		final Button buttonNewMissione = new Button();
 		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonNewMissione.setIcon(FontAwesome.PLUS);
@@ -336,15 +288,15 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withModifica(false).withTipo("missione").withMissione(new Missione()).build();				
+				WizardSetupWindow.getWizardSetup().withModifica(false).withTipo("missione").withMissione(new Missione())
+						.build();
 			}
-			
+
 		});
 		return buttonNewMissione;
-	}						
+	}
 
-
-	private Button createButtonSearch() {
+	protected Button createButtonSearch() {
 		final Button buttonCerca = new Button();
 		buttonCerca.setIcon(FontAwesome.SEARCH);
 		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -357,14 +309,8 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
 					buildComboPage();
-					 DashboardEventBus.post(new
-					 DashboardEvent.TableMissioniUpdatedEvent(missioniStore));
-					 
-			 
+					DashboardEventBus.post(new DashboardEvent.TableMissioniUpdatedEvent(missioniStore));
 
-//					 Animator anim = new Animator(new Label("Animate Me!"));
-
-//					 layoutForm.setVisible(true);
 
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -376,9 +322,9 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 		return buttonCerca;
 	}
 
-	private GridLayout buildButtonsMissione() {
+	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
-
+		layout.setSpacing(true);
 		buttonModifica = new Button();
 		buttonModifica.setDescription("Modifica");
 		buttonModifica.setIcon(FontAwesome.PENCIL);
@@ -387,16 +333,33 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withModifica(true).withTipo("missione").withMissione(selectedMissione).build();
-				
+				WizardSetupWindow.getWizardSetup().withModifica(true).withTipo("missione")
+						.withMissione(selectedMissione).build();
+
 			}
-			
+
 		});
 
 		buttonMail = new Button();
 		buttonMail.setDescription("Invia Mail");
 		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
 		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
+
+		buttonMail.addClickListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					ClientConnector.sendMissioneMail(selectedMissione.getId());
+					Utility.getNotification(Utility.getMessage("success_message"), null,
+							Type.HUMANIZED_MESSAGE);
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
+							Type.ERROR_MESSAGE);
+				}
+			}
+
+		});
 
 		buttonRimborso = new Button();
 		buttonRimborso.setDescription("Rimborso");
@@ -417,10 +380,11 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 					modifica = false;
 					selectedMissione.setRimborso(rimborso);
 				}
-				
-				WizardSetupWindow.getWizardSetup().withModifica(modifica).withTipo("rimborso").withMissione(selectedMissione).build();				
+
+				WizardSetupWindow.getWizardSetup().withModifica(modifica).withTipo("rimborso")
+						.withMissione(selectedMissione).build();
 			}
-			
+
 		});
 
 		buttonPDF = new Button();
@@ -436,31 +400,16 @@ public class GestioneMissioneView extends VerticalLayout implements View {
 
 	}
 
-	private void enableDisableButtons(boolean enabled) {
+	protected void enableDisableButtons(boolean enabled) {
 		this.buttonMail.setEnabled(enabled);
 		this.buttonModifica.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonRimborso.setEnabled(enabled);
 	}
 
-	private Component buildFilter() {
-		multiMatchField = new TextField();
-		multiMatchField.addTextChangeListener(new TextChangeListener() {
-			@Override
-			public void textChange(final TextChangeEvent event) {
+	@Override
+	public void enter(final ViewChangeEvent event) {
 
-			}
-		});
-
-		multiMatchField.setInputPrompt("Testo da ricercare");
-		multiMatchField.setIcon(FontAwesome.SEARCH);
-		multiMatchField.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
-		multiMatchField.addShortcutListener(new ShortcutListener("Clear", KeyCode.ESCAPE, null) {
-			@Override
-			public void handleAction(final Object sender, final Object target) {
-			}
-		});
-		return multiMatchField;
 	}
 
 }

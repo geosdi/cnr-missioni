@@ -188,7 +188,24 @@ public class ClientConnector {
 	 */
 	public static void addVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
 		missioniCoreClientConnector.addVeicoloCNR(veicoloCNR);
+	}
 
+	/**
+	 * 
+	 * @param missioneID
+	 * @throws Exception
+	 */
+	public static void sendMissioneMail(String missioneID) throws Exception {
+		missioniCoreClientConnector.sendMissioneMail(missioneID);
+	}
+	
+	/**
+	 * 
+	 * @param missioneID
+	 * @throws Exception
+	 */
+	public static void sendRimborsoMail(String missioneID) throws Exception {
+		missioniCoreClientConnector.sendRimborsoMail(missioneID);
 	}
 
 }

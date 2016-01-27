@@ -74,7 +74,7 @@ public final class PrenotazioneVeicoloCNRView extends VerticalLayout implements 
 		addStyleName("panel-view");
 		Responsive.makeResponsive(this);
 
-        CalendarPrenotazioni calendar = new CalendarPrenotazioni();
+        CalendarPrenotazioni calendar = new CalendarPrenotazioni("100%","");
         calendar.initContent();
         addComponent(calendar.getLayoutCalendar());
 	}

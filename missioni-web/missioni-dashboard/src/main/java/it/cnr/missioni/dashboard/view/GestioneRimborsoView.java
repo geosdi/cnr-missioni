@@ -42,7 +42,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneRimborsoView extends VerticalLayout implements View {
+public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 	/**
 	 * 
@@ -52,7 +52,7 @@ public class GestioneRimborsoView extends VerticalLayout implements View {
 	 * 
 	 */
 	private ElencoRimborsiTable elencoRimborsiTable;
-	private ComboBox selectPage = new ComboBox();
+	private ComboBox selectPage;
 	private TextField idMissioneField;
 	private DateField dataFromInserimentoMissioneField;
 	private DateField dataToInserimentoMissioneField;
@@ -64,69 +64,23 @@ public class GestioneRimborsoView extends VerticalLayout implements View {
 	private Button buttonMail;
 	private Button buttonMissione;
 	private Button buttonPDF;
-	private TextField multiMatchField;
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
 
-	private User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-	private MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-			.withIdUser(user.getId()).withFieldExist("missione.rimborso").withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+	private User user;
+	private MissioneSearchBuilder missioneSearchBuilder;
+	
 	private MissioniStore missioniStore;
 
 	public GestioneRimborsoView() {
-		addStyleName(ValoTheme.PANEL_BORDERLESS);
-		addStyleName("missione-view");
-		setSizeFull();
-		DashboardEventBus.register(this);
-		setHeight("96%");
-		setWidth("98%");
-		addStyleName(ValoTheme.LAYOUT_CARD);
-		addStyleName("panel-view");
-		Responsive.makeResponsive(this);
-
-		CssLayout toolbar = new CssLayout();
-		toolbar.setWidth("100%");
-		toolbar.setStyleName("toolbar-search");
-		HorizontalLayout fullTextsearchLayout = new HorizontalLayout(buildFilter(), createButtonSearch());
-		fullTextsearchLayout.setSpacing(true);
-		fullTextsearchLayout.setStyleName("full-text-search");
-
-		// HorizontalLayout newMissioneLayout = new
-		// HorizontalLayout(createButtonNewRi());
-		// newMissioneLayout.setSpacing(true);
-		// newMissioneLayout.setStyleName("button-new-missione");
-
-		layoutTable = buildTable();
-		layoutTable.setStyleName("layout-table-missione");
-
-		GridLayout buttonsLayout = buildButtonsRimborso();
-		buttonsLayout.setSpacing(true);
-		buttonsLayout.setStyleName("buttons-layout");
-
-		layoutForm = new VerticalLayout();
-		layoutForm.addComponent(new TextField("aaaa"));
-		// layoutForm.setVisible(false);
-		layoutForm.setHeight("15%");
-
-		// toolbar.addComponent(newMissioneLayout);
-		toolbar.addComponent(fullTextsearchLayout);
-		addComponent(toolbar);
-		// setExpandRatio(toolbar, new Float(1));
-		// addComponent(layoutForm);
-		// Animator.animate(layoutForm, new
-		// Css().translateY("1000px")).duration(5000);
-		// setExpandRatio(layoutForm, new Float(0.1));
-		addComponent(layoutTable);
-		addComponent(buttonsLayout);
-		setExpandRatio(layoutTable, new Float(1));
-		setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
+		super();
 	}
 
 	/**
 	 * 
 	 * @return VerticalLayout
 	 */
-	private VerticalLayout buildTable() {
+	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoRimborsiTable = new ElencoRimborsiTable();
@@ -279,8 +233,8 @@ public class GestioneRimborsoView extends VerticalLayout implements View {
 	/**
 	 * Costruisce la Select per la paginazione
 	 */
-	private void buildComboPage() {
-
+	protected void buildComboPage() {
+		this.selectPage = new ComboBox();
 		this.selectPage.removeAllItems();
 		if (missioniStore != null) {
 			long totale = missioniStore.getTotale();
@@ -321,7 +275,7 @@ public class GestioneRimborsoView extends VerticalLayout implements View {
 
 	}
 
-	private Button createButtonSearch() {
+	protected Button createButtonSearch() {
 		final Button buttonCerca = new Button();
 		buttonCerca.setIcon(FontAwesome.SEARCH);
 		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -346,9 +300,9 @@ public class GestioneRimborsoView extends VerticalLayout implements View {
 		return buttonCerca;
 	}
 
-	private GridLayout buildButtonsRimborso() {
+	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
-
+		layout.setSpacing(true);
 		buttonModifica = new Button();
 		buttonModifica.setDescription("Modifica");
 		buttonModifica.setIcon(FontAwesome.PENCIL);
@@ -368,6 +322,22 @@ public class GestioneRimborsoView extends VerticalLayout implements View {
 		buttonMail.setDescription("Invia Mail");
 		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
 		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		
+		buttonMail.addClickListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				try {
+					ClientConnector.sendRimborsoMail(selectedMissione.getId());
+					Utility.getNotification(Utility.getMessage("success_message"), null,
+							Type.HUMANIZED_MESSAGE);
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
+							Type.ERROR_MESSAGE);
+				}
+			}
+
+		});
 
 		buttonMissione = new Button();
 		buttonMissione.setDescription("Missione");
@@ -397,31 +367,36 @@ public class GestioneRimborsoView extends VerticalLayout implements View {
 
 	}
 
-	private void enableDisableButtons(boolean enabled) {
+	protected void enableDisableButtons(boolean enabled) {
 		this.buttonMail.setEnabled(enabled);
 		this.buttonModifica.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonMissione.setEnabled(enabled);
 	}
 
-	private Component buildFilter() {
-		multiMatchField = new TextField();
-		multiMatchField.addTextChangeListener(new TextChangeListener() {
-			@Override
-			public void textChange(final TextChangeEvent event) {
 
-			}
-		});
 
-		multiMatchField.setInputPrompt("Testo da ricercare");
-		multiMatchField.setIcon(FontAwesome.SEARCH);
-		multiMatchField.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
-		multiMatchField.addShortcutListener(new ShortcutListener("Clear", KeyCode.ESCAPE, null) {
-			@Override
-			public void handleAction(final Object sender, final Object target) {
-			}
-		});
-		return multiMatchField;
+	/**
+	 * 
+	 */
+	@Override
+	protected void initialize() {
+		this.user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(user.getId()).withFieldExist("missione.rimborso").withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+		
 	}
 
+	/**
+	 * @return
+	 */
+	@Override
+	protected Button createButtonNew() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	
 }

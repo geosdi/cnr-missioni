@@ -4,37 +4,29 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Responsive;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoVeicoliCNRTable;
-import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
 import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.model.user.Veicolo;
-import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloCNRView extends VerticalLayout implements View {
+public class GestioneVeicoloCNRView extends GestioneTemplateView implements View {
 
 	/**
 	 * 
@@ -44,57 +36,24 @@ public class GestioneVeicoloCNRView extends VerticalLayout implements View {
 	 * 
 	 */
 	private ElencoVeicoliCNRTable elencoVeicoliCNRTable;
-	private VerticalLayout layoutTable;
 	private Button buttonModifica;
 	private VeicoloCNR selectedVeicoloCNR;
 	private VeicoloCNRStore veicoloCNRStore;
 
-	// private CssLayout panel = new CssLayout();
 
 	public GestioneVeicoloCNRView() {
-		addStyleName(ValoTheme.PANEL_BORDERLESS);
-		addStyleName("missione-view");
-		setSizeFull();
-		DashboardEventBus.register(this);
-		setHeight("96%");
-		setWidth("98%");
-		addStyleName(ValoTheme.LAYOUT_CARD);
-		addStyleName("panel-view");
-		Responsive.makeResponsive(this);
-
-		CssLayout toolbar = new CssLayout();
-		toolbar.setWidth("100%");
-		toolbar.setStyleName("toolbar-search");
-
-		HorizontalLayout newMissioneLayout = new HorizontalLayout(createButtonNewVeicolo());
-		newMissioneLayout.setSpacing(true);
-		newMissioneLayout.setStyleName("button-new-missione");
-
-		layoutTable = buildTable();
-		layoutTable.setStyleName("layout-table-missione");
-
-		GridLayout buttonsLayout = buildButtonsVeicolo();
-		buttonsLayout.setSpacing(true);
-		buttonsLayout.setStyleName("buttons-layout");
-
-		toolbar.addComponent(newMissioneLayout);
-		addComponent(toolbar);
-		addComponent(layoutTable);
-		addComponent(buttonsLayout);
-		setExpandRatio(layoutTable, new Float(1));
-		setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
+		super();
 	}
 
 	/**
 	 * 
 	 * @return VerticalLayout
 	 */
-	private VerticalLayout buildTable() {
+	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoVeicoliCNRTable = new ElencoVeicoliCNRTable();
 
-		
 		try {
 			VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
 			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
@@ -123,7 +82,7 @@ public class GestioneVeicoloCNRView extends VerticalLayout implements View {
 
 	}
 
-	private Button createButtonNewVeicolo() {
+	protected Button createButtonNew() {
 		final Button buttonNewMissione = new Button();
 		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonNewMissione.setIcon(FontAwesome.PLUS);
@@ -139,14 +98,13 @@ public class GestioneVeicoloCNRView extends VerticalLayout implements View {
 		return buttonNewMissione;
 	}
 
-	private GridLayout buildButtonsVeicolo() {
+	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
-
+		layout.setSpacing(true);
 		buttonModifica = new Button();
 		buttonModifica.setDescription("Modifica");
 		buttonModifica.setIcon(FontAwesome.PENCIL);
 		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.addStyleName("button-margin");
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -165,8 +123,39 @@ public class GestioneVeicoloCNRView extends VerticalLayout implements View {
 
 	}
 
-	private void enableDisableButtons(boolean enabled) {
+	protected void enableDisableButtons(boolean enabled) {
 		this.buttonModifica.setEnabled(enabled);
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void initialize() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void buildComboPage() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	protected Button createButtonSearch() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	protected  Component buildFilter(){
+		return null;
 	}
 
 }

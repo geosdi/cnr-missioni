@@ -49,6 +49,7 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -241,6 +242,25 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
 
+    public boolean sendMissioneMail(String  missioneID) throws Exception {
+    	NotificationMissionRequest request = new NotificationMissionRequest();
+    		request.setMissionID(missioneID);
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/notifyMissionAdministration/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(request,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
+    public boolean sendRimborsoMail(String  missioneID) throws Exception {
+    	NotificationMissionRequest request = new NotificationMissionRequest();
+    		request.setMissionID(missioneID);
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/notifyRimborsoMissionAdministration/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(request,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
 
 
     @Override

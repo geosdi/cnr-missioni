@@ -5,6 +5,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
 import it.cnr.missioni.dashboard.DashboardNavigator;
+import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.menu.DashboardMenu;
 
 /*
@@ -15,6 +16,8 @@ import it.cnr.missioni.dashboard.menu.DashboardMenu;
 public class MainView extends HorizontalLayout {
 
     public MainView() {
+    	
+    	
         setSizeFull();
         addStyleName("mainview");
 

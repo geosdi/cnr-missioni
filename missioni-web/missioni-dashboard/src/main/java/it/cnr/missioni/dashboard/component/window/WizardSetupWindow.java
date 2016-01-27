@@ -12,7 +12,6 @@ import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Page;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -90,6 +89,10 @@ public class WizardSetupWindow implements WizardProgressListener {
 			buildWizardRimborso();
 		if (tipo.equals("user"))
 			buildWizardUser(user);
+		buildWindow();
+		UI.getCurrent().addWindow(w);
+		w.focus();
+
 	}
 
 
@@ -199,13 +202,14 @@ public class WizardSetupWindow implements WizardProgressListener {
 	}
 
 	private void init() {
-		buildWindow();
+
 		mainLayout = new VerticalLayout();
 		mainLayout.setSizeFull();
 		mainLayout.setMargin(true);
 		mainLayout.addStyleName("wizard");
 		wizard = new Wizard();
 		wizard.setUriFragmentEnabled(true);
+		wizard.setVisible(true);
 		wizard.addListener(this);
 		mainLayout.addComponent(wizard);
 		mainLayout.setComponentAlignment(wizard, Alignment.TOP_CENTER);
@@ -216,7 +220,7 @@ public class WizardSetupWindow implements WizardProgressListener {
 		wizard.getFinishButton().setCaption("Concludi");
 		wizard.setWidth("100%");
 		wizard.setHeight("95%");
-		w.setContent(wizard);
+
 		
 
 	}
@@ -225,17 +229,17 @@ public class WizardSetupWindow implements WizardProgressListener {
 		
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
 		 this.w = new Window();
-		UI.getCurrent().addWindow(w);
-		w.focus();
 		this.w.setId(ID);
-		Responsive.makeResponsive(this.w);
+		this.w.setVisible(true);
+//		Responsive.makeResponsive(this.w);
 		this.w .setModal(true);
 		this.w .setCloseShortcut(KeyCode.ESCAPE, null);
 		this.w .setResizable(false);
 		this.w .setClosable(true);
-//		setSizeFull();
 		this.w .setHeight("55%");
 		this.w .setWidth("40%");
+		w.setContent(wizard);
+
 
 	}
 

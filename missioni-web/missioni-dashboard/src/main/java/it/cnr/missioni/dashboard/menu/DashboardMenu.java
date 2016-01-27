@@ -23,7 +23,6 @@ import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.MenuUpdateEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ProfileUpdatedEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.ReportsCountUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.user.RuoloUtenteEnum;
@@ -199,11 +198,11 @@ public final class DashboardMenu extends CustomComponent {
 		getCompositionRoot().removeStyleName(STYLE_VISIBLE);
 	}
 
-	@Subscribe
-	public void updateReportsCount(final ReportsCountUpdatedEvent event) {
-		reportsBadge.setValue(String.valueOf(event.getCount()));
-		reportsBadge.setVisible(event.getCount() > 0);
-	}
+//	@Subscribe
+//	public void updateReportsCount(final ReportsCountUpdatedEvent event) {
+//		reportsBadge.setValue(String.valueOf(event.getCount()));
+//		reportsBadge.setVisible(event.getCount() > 0);
+//	}
 
 	@Subscribe
 	public void updateUserName(final ProfileUpdatedEvent event) {

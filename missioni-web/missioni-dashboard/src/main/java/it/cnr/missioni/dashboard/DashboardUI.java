@@ -25,11 +25,13 @@ import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
+import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
 import it.cnr.missioni.dashboard.notification.INotificationProvider;
 import it.cnr.missioni.dashboard.notification.NotificationProvider;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.view.LoginView;
@@ -84,11 +86,15 @@ public final class DashboardUI extends UI  {
 
 		// if (user != null && "admin".equals(user.getRole())) {
 		if (user != null) {
+			
+
+			
 			// Authenticated user
 			setContent(new MainView());
 			removeStyleName("loginview");
 			getNavigator().navigateTo(getNavigator().getState());
 			notificationProvider.check();
+
 
 		} else {
 			setContent(new LoginView());
@@ -99,10 +105,8 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void userLoginRequested(final LoginAction loginAction) {
 
-		if (loginAction.doAction()) {
-
+		if (loginAction.doAction()) {			
 			updateContent();
-
 		}
 
 	}

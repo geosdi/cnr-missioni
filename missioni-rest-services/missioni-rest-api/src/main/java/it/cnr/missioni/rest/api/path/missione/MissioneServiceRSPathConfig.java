@@ -21,6 +21,8 @@ public final class MissioneServiceRSPathConfig extends ApplicationServiceRSPathC
     public static final String NOTIFY_RIMBORSO_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyRimborsoMissionAdministration";
 
 
+    
+    
     private MissioneServiceRSPathConfig() {
     }
 }

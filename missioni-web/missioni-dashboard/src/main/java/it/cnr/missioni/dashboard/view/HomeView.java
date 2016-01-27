@@ -10,8 +10,6 @@ import org.joda.time.DateTime;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.addon.calendar.ui.Calendar.TimeFormat;
-import com.vaadin.event.LayoutEvents.LayoutClickEvent;
-import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -32,18 +30,17 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
+import it.cnr.missioni.dashboard.component.calendar.CalendarPrenotazioni;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
 import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
-import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
+import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.notification.DashboardNotification;
@@ -58,13 +55,15 @@ public final class HomeView extends Panel implements View {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1115999357356137696L;
+	private static final long serialVersionUID = 5797632444234046456L;
+	/**
+	 * 
+	 */
 	public static final String EDIT_ID = "dashboard-edit";
 	public static final String TITLE_ID = "dashboard-title";
 
 	private CssLayout dashboardPanels;
 	private final VerticalLayout root;
-	private ElencoVeicoliTable elencoVeicoliTable;
 	private ElencoMissioniTable elencoMissioniTable;
 	private Window notificationsWindow;
 	 private NotificationsButton notificationsButton;
@@ -72,6 +71,9 @@ public final class HomeView extends Panel implements View {
 	private User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
 
 	public HomeView() {
+		
+
+		
 		addStyleName(ValoTheme.PANEL_BORDERLESS);
 		setSizeFull();
 		DashboardEventBus.register(this);
@@ -87,14 +89,11 @@ public final class HomeView extends Panel implements View {
 		root.addComponent(content);
 		root.setExpandRatio(content, 1);
 
-		DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
 
-		root.addLayoutClickListener(new LayoutClickListener() {
-			@Override
-			public void layoutClick(final LayoutClickEvent event) {
-				DashboardEventBus.post(new CloseOpenWindowsEvent());
-			}
-		});
+		
+		DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());	
+		
+
 	}
 	
     private Component buildHeader() {
@@ -178,40 +177,19 @@ public final class HomeView extends Panel implements View {
 		Responsive.makeResponsive(dashboardPanels);
 		dashboardPanels.addComponent(buildTableMissioni());
 		dashboardPanels.addComponent(buildTableRimborsi());
-//		dashboardPanels.addComponent(buildCalendar());
+		dashboardPanels.addComponent(buildCalendar());
 		return dashboardPanels;
 	}
 
-	private Component buildNotes() {
-		TextArea notes = new TextArea("Notes");
-		notes.setValue(
-				"Remember to:\n· Zoom in and out in the Sales view\n· Filter the transactions and drag a set of them to the Reports tab\n· Create a new report\n· Change the schedule of the movie theater");
-		notes.setSizeFull();
-		notes.addStyleName(ValoTheme.TEXTAREA_BORDERLESS);
-		Component panel = createContentWrapper(notes);
-		panel.addStyleName("notes");
-		return panel;
-	}
 
 	private Component buildCalendar() {
 
-		Calendar cal = new Calendar("Calendario");
-		// cal.setHeight("80%");
-//		cal.setSizeFull();
-
-		cal.setWidth("200px");
-		cal.setHeight("200px");
-		
-		cal.setWeeklyCaptionFormat("dd/MM/yyyy");
-		cal.setTimeZone(TimeZone.getTimeZone("Europe/Rome"));
-		cal.setLocale(Locale.ITALY);
-		cal.setTimeFormat(TimeFormat.Format24H);
-		DateTime now = new DateTime();
-		DateTime start = new DateTime(now.getYear(), now.getMonthOfYear(), 1, 0, 0);
-		DateTime end = new DateTime(now.getYear(), now.getMonthOfYear(), now.dayOfMonth().getMaximumValue(), 0, 0);
-		cal.setStartDate(start.toDate());
-		cal.setEndDate(end.toDate());
-		Component panel = createContentWrapper2(cal);
+        CalendarPrenotazioni calendar = new CalendarPrenotazioni("600px","300px");
+        calendar.initContent();
+        VerticalLayout l = calendar.getLayoutCalendar();
+       
+        
+		Component panel = createContentWrapper2(l);
 		
 		return panel;
 	}
@@ -220,7 +198,7 @@ public final class HomeView extends Panel implements View {
 		final CssLayout slot = new CssLayout();
 //		slot.setWidth("100%");
 //		slot.setHeight("50%");
-		slot.addStyleName("dashboard-panel-slot");
+//		slot.addStyleName("dashboard-panel-slot");
 		slot.setWidth("100%");
 		CssLayout card = new CssLayout();
 		card.setWidth("100%");
@@ -240,6 +218,11 @@ public final class HomeView extends Panel implements View {
 		tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
 		MenuItem max = tools.addItem("", FontAwesome.EXPAND, new Command() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7645614062259408973L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				if (!slot.getStyleName().contains("max")) {
@@ -255,6 +238,11 @@ public final class HomeView extends Panel implements View {
 		max.setStyleName("icon-only");
 		MenuItem root = tools.addItem("", FontAwesome.COG, null);
 		root.addItem("Configure", new Command() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5014516404913881968L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				Notification.show("Not implemented in this demo");
@@ -262,6 +250,11 @@ public final class HomeView extends Panel implements View {
 		});
 		root.addSeparator();
 		root.addItem("Close", new Command() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4608004443713485478L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				Notification.show("Not implemented in this demo");
@@ -300,6 +293,11 @@ public final class HomeView extends Panel implements View {
 		tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
 		MenuItem max = tools.addItem("", FontAwesome.EXPAND, new Command() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 847091348534740483L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				if (!slot.getStyleName().contains("max")) {
@@ -315,6 +313,11 @@ public final class HomeView extends Panel implements View {
 		max.setStyleName("icon-only");
 		MenuItem root = tools.addItem("", FontAwesome.COG, null);
 		root.addItem("Configure", new Command() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7967080645845509438L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				Notification.show("Not implemented in this demo");
@@ -322,6 +325,11 @@ public final class HomeView extends Panel implements View {
 		});
 		root.addSeparator();
 		root.addItem("Close", new Command() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7758314449866999973L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				Notification.show("Not implemented in this demo");
@@ -339,6 +347,7 @@ public final class HomeView extends Panel implements View {
 
 	@Override
 	public void enter(final ViewChangeEvent event) {
+
 	}
 
 	private void toggleMaximized(final Component panel, final boolean maximized) {
@@ -363,7 +372,12 @@ public final class HomeView extends Panel implements View {
 	   private NotificationsButton buildNotificationsButton() {
 	        NotificationsButton result = new NotificationsButton();
 	        result.addClickListener(new ClickListener() {
-	            @Override
+	            /**
+				 * 
+				 */
+				private static final long serialVersionUID = -6830083227084878734L;
+
+				@Override
 	            public void buttonClick(final ClickEvent event) {
 	                openNotificationsPopup(event);
 	            }
@@ -424,6 +438,10 @@ public final class HomeView extends Panel implements View {
 	    }
 
 	public static final class NotificationsButton extends Button {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 7788438669790156398L;
 		private static final String STYLE_UNREAD = "unread";
 		public static final String ID = "dashboard-notifications";
 

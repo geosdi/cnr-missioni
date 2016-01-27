@@ -92,6 +92,16 @@ public class CalendarPrenotazioni implements Serializable{
 	private VerticalLayout layoutCalendar;
 
 	HorizontalLayout layoutButtons;
+	
+	private String width;
+	
+	private String height;
+	
+	
+	public CalendarPrenotazioni(String width,String heght){
+		this.width = width;
+		this.height = heght;
+	}
 
 	public void initContent() {
 
@@ -106,9 +116,9 @@ public class CalendarPrenotazioni implements Serializable{
 		initNavigationButtons();
 
 		VerticalLayout hl = new VerticalLayout();
-		hl.setWidth("100%");
 		hl.setSpacing(true);
 		hl.addComponent(captionLabel);
+		
 
 		CssLayout group = new CssLayout();
 		group.addStyleName("v-component-group");
@@ -255,19 +265,8 @@ public class CalendarPrenotazioni implements Serializable{
 	private void initCalendar() {
 
 		calendarComponent = (new Calendar(new MyEventProvider()));
-		calendarComponent.setImmediate(true);
-		
-//		ContainerEventProvider cep =
-//		        new ContainerEventProvider(container) {
-//		    @Override
-//		    public void addEvent(CalendarEvent event) {
-//		        PrenotazioneEvent entity = new PrenotazioneEvent(
-//		            event.getCaption(), event.getDescription(),
-//		            event.getStart(), event.getEnd(),
-//		            event.getStyleName());
-//		        container.addEntity(entity);
-//		    }
-//		}
+		calendarComponent.setWidth("100px");
+		calendarComponent.setHeight("100px");
 
 		if (calendarWidth != null || calendarHeight != null) {
 			if (calendarHeight != null) {
@@ -456,6 +455,8 @@ public class CalendarPrenotazioni implements Serializable{
 		calendar.add(GregorianCalendar.DATE, -1);
 
 		calendarComponent.setEndDate(calendar.getTime());
+		
+
 
 		calendar.setTime(getToday());
 		// resetCalendarTime(true);

@@ -58,4 +58,5 @@ public interface IMissioneDelegate {
      * @throws Exception
      */
     Boolean notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception;
+
 }

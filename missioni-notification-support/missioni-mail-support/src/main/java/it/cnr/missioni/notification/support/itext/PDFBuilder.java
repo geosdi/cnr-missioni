@@ -2,6 +2,7 @@ package it.cnr.missioni.notification.support.itext;
 
 import com.google.common.base.Preconditions;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public interface PDFBuilder {
      * @return {@link PDFBuilder}
      */
     PDFBuilder withMissione(Missione missione);
+
 
     /**
      * @param file
@@ -110,6 +112,7 @@ public interface PDFBuilder {
             this.missione = missione;
             return self();
         }
+        
 
         /**
          * @param file

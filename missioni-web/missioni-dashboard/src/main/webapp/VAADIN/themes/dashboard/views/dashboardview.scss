@@ -316,13 +316,12 @@
 	margin:1% !important;
 }
 
-//GESTIONE MISSIONE
+//GESTIONE TEMPLATE
 .v-horizontallayout-full-text-search{
-	float:right !important;
 	margin-right:1% !important;
 }
 
-.v-horizontallayout-button-new-missione{
+.v-horizontallayout-button-new-object{
 	float:left !important;
 	margin-left:1% !important;
 }
@@ -341,7 +340,7 @@
 }
 
 
-.v-slot-layout-table-missione{
+.v-slot-layout-table-object{
 	height:auto !important;
 }
 
@@ -352,6 +351,8 @@
 .v-button-button-margin{
 	margin-top:2% !important;
 }
+
+
 
 //CALENDAR
 .v-label-label-calendar{

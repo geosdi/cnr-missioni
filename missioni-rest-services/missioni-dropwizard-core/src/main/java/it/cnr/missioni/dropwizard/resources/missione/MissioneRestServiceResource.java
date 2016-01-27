@@ -102,4 +102,5 @@ public class MissioneRestServiceResource implements MissioneRestService {
     public Response notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception {
         return Response.ok(this.missioneDelegate.notifyRimborsoMissionAdministration(request)).build();
     }
+
 }

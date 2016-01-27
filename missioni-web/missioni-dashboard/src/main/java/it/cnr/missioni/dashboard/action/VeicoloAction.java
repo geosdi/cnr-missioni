@@ -4,10 +4,8 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
