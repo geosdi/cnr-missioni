@@ -4,6 +4,7 @@ package it.cnr.missioni.dropwizard.delegate.missioni;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import com.google.maps.model.GeocodingResult;
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
@@ -16,12 +17,15 @@ import it.cnr.missioni.notification.spring.configuration.CNRMissioniEmail;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
+import it.cnr.missioni.rest.api.response.geocoder.GeocoderResponse;
+import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
+import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +62,8 @@ class MissioneDelegate implements IMissioneDelegate {
     private CNRMissioniEmail cnrMissioniEsteroEmail;
     @Resource(name = "notificationMissionRequestValidator")
     private ICNRMissionValidator<NotificationMissionRequest, String> notificationMissionRequestValidator;
+    @Resource(name = "gpGeocodingService")
+    private GPGeocodingService gpGeocodingService;
 
 
     /**
@@ -275,5 +281,27 @@ class MissioneDelegate implements IMissioneDelegate {
         if (user == null)
             throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
         return new MissioneStreaming(RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
+    }
+
+    /**
+     * @param location
+     * @return {@link GeocoderStore}
+     * @throws Exception
+     */
+    @Override
+    public GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception {
+        if ((location == null) || (location.isEmpty())) {
+            throw new IllegalParameterFault("The Parameter Location must not be null or an " +
+                    "empty String");
+        }
+        GeocoderStore geocoderStore = new GeocoderStore();
+        GeocodingResult[] results = this.gpGeocodingService.newRequest().address(location).await();
+        if ((results != null) && (results.length > 0)) {
+            for (GeocodingResult geocodingResult : results) {
+                geocoderStore.addGeocoderResponse(new GeocoderResponse(geocodingResult.formattedAddress,
+                        geocodingResult.geometry.location.lat, geocodingResult.geometry.location.lng));
+            }
+        }
+        return geocoderStore;
     }
 }

@@ -21,6 +21,7 @@ public final class MissioneServiceRSPathConfig extends ApplicationServiceRSPathC
     public static final String NOTIFY_RIMBORSO_MISSIONE_ADMINISTRATION_PATH = MISSIONI_PATH + "/notifyRimborsoMissionAdministration";
     public static final String DOWNLOAD_MISSIONE_AS_PDF_PATH = MISSIONI_PATH + "/downloadMissioneAsPdf";
     public static final String DOWNLOAD_RIMBORSO_MISSIONE_AS_PDF_PATH = MISSIONI_PATH + "/downloadRimborsoMissioneAsPdf";
+    public static final String GET_GEOCODER_STORE_FOR_MISSIONE_LOCATION_PATH = MISSIONI_PATH + "/getGeocoderStoreForMissioneLocation";
 
     private MissioneServiceRSPathConfig() {
     }

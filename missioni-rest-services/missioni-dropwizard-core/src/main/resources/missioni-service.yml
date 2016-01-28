@@ -40,6 +40,7 @@ logging:
       "it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder" : debug
       "it.cnr.missioni.notification.task" : debug
       "it.cnr.missioni.model.validator" : debug
+      "org.geosdi.geoplatform.support.google.spring.services.context" : debug
 
   appenders:
       - type: console

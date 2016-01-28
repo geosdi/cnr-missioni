@@ -46,6 +46,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(value = {"org.geosdi.geoplatform.logger.support.spring.config",
         "org.geosdi.geoplatform.experimental.el.spring", "org.geosdi.geoplatform.support.async.spring",
         "org.geosdi.geoplatform.support.mail.spring", "it.cnr.missioni.el",
-        "it.cnr.missioni.notification", "it.cnr.missioni.dropwizard"})
+        "it.cnr.missioni.notification", "org.geosdi.geoplatform.support.google.spring",
+        "it.cnr.missioni.dropwizard"})
 public class CNRMissioniServiceLoader {
 }

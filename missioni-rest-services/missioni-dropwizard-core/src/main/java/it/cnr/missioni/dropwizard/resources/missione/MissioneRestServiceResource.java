@@ -130,4 +130,14 @@ public class MissioneRestServiceResource implements MissioneRestService {
                 .header("Content-Disposition",
                         "attachment; filename=RimborsoMissione.pdf").build();
     }
+
+    /**
+     * @param location
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response getGeocoderStoreForMissioneLocation(String location) throws Exception {
+        return Response.ok(this.missioneDelegate.getGeocoderStoreForMissioneLocation(location)).build();
+    }
 }

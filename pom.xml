@@ -157,6 +157,15 @@
                 <version>${geoplatform-version}</version>
             </dependency>
 
+            <!-- =========================================================== -->
+            <!-- = GEOPLATFORM Google Maps Services Module Support SUPPORT = -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-google-maps-services-support</artifactId>
+                <version>${geoplatform-version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>

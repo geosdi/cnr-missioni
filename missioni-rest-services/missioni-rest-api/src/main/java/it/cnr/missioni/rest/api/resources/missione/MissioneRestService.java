@@ -111,4 +111,14 @@ public interface MissioneRestService {
     @Path(value = MissioneServiceRSPathConfig.DOWNLOAD_RIMBORSO_MISSIONE_AS_PDF_PATH)
     @Produces(value = "application/pdf")
     Response downloadRimborsoMissioneAsPdf(@QueryParam(value = "missionID") String missionID) throws Exception;
+
+    /**
+     * @param location
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @GET
+    @Path(value = MissioneServiceRSPathConfig.GET_GEOCODER_STORE_FOR_MISSIONE_LOCATION_PATH)
+    Response getGeocoderStoreForMissioneLocation(@QueryParam(value = "location") String location)
+            throws Exception;
 }

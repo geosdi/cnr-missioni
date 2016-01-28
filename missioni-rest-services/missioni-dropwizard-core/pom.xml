@@ -66,6 +66,14 @@
         </dependency>
 
         <!-- =========================================================== -->
+        <!-- = GEOPLATFORM Google Maps Services Module Support SUPPORT = -->
+        <!-- =========================================================== -->
+        <dependency>
+            <groupId>org.geosdi</groupId>
+            <artifactId>geoplatform-google-maps-services-support</artifactId>
+        </dependency>
+
+        <!-- =========================================================== -->
         <!-- ======================= DROPWIZARD ======================== -->
         <!-- =========================================================== -->
         <dependency>

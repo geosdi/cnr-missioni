@@ -2,6 +2,7 @@ package it.cnr.missioni.dropwizard.delegate.missioni;
 
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
+import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 import javax.ws.rs.core.StreamingOutput;
@@ -11,7 +12,7 @@ import javax.ws.rs.core.StreamingOutput;
  * @email giuseppe.lascaleia@geosdi.org
  */
 public interface IMissioneDelegate {
-    
+
     /**
      * @param idMissione
      * @param idUser
@@ -85,4 +86,11 @@ public interface IMissioneDelegate {
      * @throws Exception
      */
     StreamingOutput downloadRimborsoMissioneAsPdf(String missionID) throws Exception;
+
+    /**
+     * @param location
+     * @return {@link GeocoderStore}
+     * @throws Exception
+     */
+    GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception;
 }
