@@ -13,11 +13,9 @@ import java.io.OutputStream;
  */
 public class MissioneStreaming implements StreamingOutput {
 
-    private final String fileName;
     private final PDFBuilder pdfBuilder;
 
-    public MissioneStreaming(String theFileName, PDFBuilder thePdfBuilder) {
-        this.fileName = theFileName;
+    public MissioneStreaming(PDFBuilder thePdfBuilder) {
         this.pdfBuilder = thePdfBuilder;
     }
 
@@ -40,12 +38,5 @@ public class MissioneStreaming implements StreamingOutput {
         } finally {
             if (output != null) output.close();
         }
-    }
-
-    /**
-     * @return {@link String}
-     */
-    public String getFileName() {
-        return fileName;
     }
 }

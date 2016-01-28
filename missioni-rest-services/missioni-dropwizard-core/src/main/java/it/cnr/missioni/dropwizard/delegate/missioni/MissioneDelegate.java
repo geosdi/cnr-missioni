@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
+import javax.ws.rs.core.StreamingOutput;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -200,11 +201,11 @@ class MissioneDelegate implements IMissioneDelegate {
 
     /**
      * @param missionID
-     * @return {@link MissioneStreaming}
+     * @return {@link StreamingOutput}
      * @throws Exception
      */
     @Override
-    public MissioneStreaming downloadMissioneAsPdf(String missionID) throws Exception {
+    public StreamingOutput downloadMissioneAsPdf(String missionID) throws Exception {
         if ((missionID == null) || (missionID.isEmpty())) {
             throw new IllegalParameterFault("The Parameter missioneID must not be null " + "or an Empty String.");
         }
@@ -215,18 +216,16 @@ class MissioneDelegate implements IMissioneDelegate {
         User user = this.userDAO.find(missione.getIdUser());
         if (user == null)
             throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-       
-        return new MissioneStreaming("Missione - " + missionID + ".pdf",
-                MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
+        return new MissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
     }
 
     /**
      * @param missionID
-     * @return {@link MissioneStreaming}
+     * @return {@link StreamingOutput}
      * @throws Exception
      */
     @Override
-    public MissioneStreaming downloadRimborsoMissioneAsPdf(String missionID) throws Exception {
+    public StreamingOutput downloadRimborsoMissioneAsPdf(String missionID) throws Exception {
         if ((missionID == null) || (missionID.isEmpty())) {
             throw new IllegalParameterFault("The Parameter missioneID must not be null " + "or an Empty String.");
         }
@@ -237,7 +236,6 @@ class MissioneDelegate implements IMissioneDelegate {
         User user = this.userDAO.find(missione.getIdUser());
         if (user == null)
             throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-        return new MissioneStreaming("Rimborso-Missione - ".concat(missionID).concat(".pdf"),
-                RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
+        return new MissioneStreaming(RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
     }
 }
