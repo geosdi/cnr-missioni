@@ -42,6 +42,7 @@ import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.notification.DashboardNotification;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -66,14 +67,13 @@ public final class HomeView extends Panel implements View {
 	private final VerticalLayout root;
 	private ElencoMissioniTable elencoMissioniTable;
 	private Window notificationsWindow;
-	 private NotificationsButton notificationsButton;
+	private NotificationsButton notificationsButton;
+	private CalendarPrenotazioni calendar;
 
-	private User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+	private User user = DashboardUI.getCurrentUser();
 
 	public HomeView() {
-		
 
-		
 		addStyleName(ValoTheme.PANEL_BORDERLESS);
 		setSizeFull();
 		DashboardEventBus.register(this);
@@ -89,28 +89,25 @@ public final class HomeView extends Panel implements View {
 		root.addComponent(content);
 		root.setExpandRatio(content, 1);
 
-
+		DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
 		
-		DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());	
 		
 
 	}
-	
-    private Component buildHeader() {
-        HorizontalLayout header = new HorizontalLayout();
-        header.addStyleName("viewheader");
-        header.setSpacing(true);
 
+	private Component buildHeader() {
+		HorizontalLayout header = new HorizontalLayout();
+		header.addStyleName("viewheader");
+		header.setSpacing(true);
 
-        notificationsButton = buildNotificationsButton();
-        HorizontalLayout tools = new HorizontalLayout(notificationsButton);
-        tools.setSpacing(true);
-        tools.addStyleName("toolbar");
-        header.addComponent(tools);
+		notificationsButton = buildNotificationsButton();
+		HorizontalLayout tools = new HorizontalLayout(notificationsButton);
+		tools.setSpacing(true);
+		tools.addStyleName("toolbar");
+		header.addComponent(tools);
 
-        return header;
-    }
-
+		return header;
+	}
 
 	/**
 	 * 
@@ -125,7 +122,8 @@ public final class HomeView extends Panel implements View {
 		l.setSizeFull();
 		elencoMissioniTable = new ElencoMissioniTable();
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId());
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(user.getId());
 
 		try {
 			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
@@ -135,12 +133,14 @@ public final class HomeView extends Panel implements View {
 					Type.ERROR_MESSAGE);
 		}
 
-
 		l.addComponent(elencoMissioniTable);
-		return createContentWrapper(l);
+
+		Component p = createContentWrapper(l);
+		p.setId("tableMissioni");
+		return p;
 
 	}
-	
+
 	/**
 	 * 
 	 * Costruisce la table per l'elenco dei veicoli
@@ -165,10 +165,22 @@ public final class HomeView extends Panel implements View {
 					Type.ERROR_MESSAGE);
 		}
 
-
 		l.addComponent(elencoRimborsiTable);
-		return createContentWrapper(l);
+		Component p = createContentWrapper(l);
+		p.setId("tableRimborsi");
+		return p;
 
+	}
+
+	private Component buildCalendar() {
+
+		calendar = new CalendarPrenotazioni("100%", "200px");
+		calendar.initContent();
+		VerticalLayout l = calendar.getLayoutCalendar();
+
+		Component panel = createContentWrapper(l);
+		panel.setId("calendar");
+		return panel;
 	}
 
 	private Component buildContent() {
@@ -181,94 +193,82 @@ public final class HomeView extends Panel implements View {
 		return dashboardPanels;
 	}
 
-
-	private Component buildCalendar() {
-
-        CalendarPrenotazioni calendar = new CalendarPrenotazioni("600px","300px");
-        calendar.initContent();
-        VerticalLayout l = calendar.getLayoutCalendar();
-       
-        
-		Component panel = createContentWrapper2(l);
-		
-		return panel;
-	}
-	
-	private Component createContentWrapper2(final Component content) {
-		final CssLayout slot = new CssLayout();
-//		slot.setWidth("100%");
-//		slot.setHeight("50%");
-//		slot.addStyleName("dashboard-panel-slot");
-		slot.setWidth("100%");
-		CssLayout card = new CssLayout();
-		card.setWidth("100%");
-		card.addStyleName(ValoTheme.LAYOUT_CARD);
-
-		HorizontalLayout toolbar = new HorizontalLayout();
-		toolbar.addStyleName("dashboard-panel-toolbar");
-		toolbar.setWidth("100%");
-
-		Label caption = new Label(content.getCaption());
-		caption.addStyleName(ValoTheme.LABEL_H4);
-		caption.addStyleName(ValoTheme.LABEL_COLORED);
-		caption.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-		content.setCaption(null);
-
-		MenuBar tools = new MenuBar();
-		tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
-		MenuItem max = tools.addItem("", FontAwesome.EXPAND, new Command() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7645614062259408973L;
-
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				if (!slot.getStyleName().contains("max")) {
-					selectedItem.setIcon(FontAwesome.COMPRESS);
-					toggleMaximized(slot, true);
-				} else {
-					slot.removeStyleName("max");
-					selectedItem.setIcon(FontAwesome.EXPAND);
-					toggleMaximized(slot, false);
-				}
-			}
-		});
-		max.setStyleName("icon-only");
-		MenuItem root = tools.addItem("", FontAwesome.COG, null);
-		root.addItem("Configure", new Command() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 5014516404913881968L;
-
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				Notification.show("Not implemented in this demo");
-			}
-		});
-		root.addSeparator();
-		root.addItem("Close", new Command() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -4608004443713485478L;
-
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				Notification.show("Not implemented in this demo");
-			}
-		});
-
-		toolbar.addComponents(caption, tools);
-		toolbar.setExpandRatio(caption, 1);
-		toolbar.setComponentAlignment(caption, Alignment.MIDDLE_LEFT);
-
-		card.addComponents(toolbar, content);
-		slot.addComponent(card);
-		return slot;
-	}
+	//
+	// private Component createContentWrapper2(final Component content) {
+	// final CssLayout slot = new CssLayout();
+	// // slot.setWidth("100%");
+	// // slot.setHeight("50%");
+	// // slot.addStyleName("dashboard-panel-slot");
+	// slot.setWidth("100%");
+	// CssLayout card = new CssLayout();
+	// card.setWidth("100%");
+	// card.addStyleName(ValoTheme.LAYOUT_CARD);
+	//
+	// HorizontalLayout toolbar = new HorizontalLayout();
+	// toolbar.addStyleName("dashboard-panel-toolbar");
+	// toolbar.setWidth("100%");
+	//
+	// Label caption = new Label(content.getCaption());
+	// caption.addStyleName(ValoTheme.LABEL_H4);
+	// caption.addStyleName(ValoTheme.LABEL_COLORED);
+	// caption.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+	// content.setCaption(null);
+	//
+	// MenuBar tools = new MenuBar();
+	// tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
+	// MenuItem max = tools.addItem("", FontAwesome.EXPAND, new Command() {
+	//
+	// /**
+	// *
+	// */
+	// private static final long serialVersionUID = -7645614062259408973L;
+	//
+	// @Override
+	// public void menuSelected(final MenuItem selectedItem) {
+	// if (!slot.getStyleName().contains("max")) {
+	// selectedItem.setIcon(FontAwesome.COMPRESS);
+	// toggleMaximized(slot, true);
+	// } else {
+	// slot.removeStyleName("max");
+	// selectedItem.setIcon(FontAwesome.EXPAND);
+	// toggleMaximized(slot, false);
+	// }
+	// }
+	// });
+	// max.setStyleName("icon-only");
+	// MenuItem root = tools.addItem("", FontAwesome.COG, null);
+	// root.addItem("Configure", new Command() {
+	// /**
+	// *
+	// */
+	// private static final long serialVersionUID = 5014516404913881968L;
+	//
+	// @Override
+	// public void menuSelected(final MenuItem selectedItem) {
+	// Notification.show("Not implemented in this demo");
+	// }
+	// });
+	// root.addSeparator();
+	// root.addItem("Close", new Command() {
+	// /**
+	// *
+	// */
+	// private static final long serialVersionUID = -4608004443713485478L;
+	//
+	// @Override
+	// public void menuSelected(final MenuItem selectedItem) {
+	// Notification.show("Not implemented in this demo");
+	// }
+	// });
+	//
+	// toolbar.addComponents(caption, tools);
+	// toolbar.setExpandRatio(caption, 1);
+	// toolbar.setComponentAlignment(caption, Alignment.MIDDLE_LEFT);
+	//
+	// card.addComponents(toolbar, content);
+	// slot.addComponent(card);
+	// return slot;
+	// }
 
 	private Component createContentWrapper(final Component content) {
 		final CssLayout slot = new CssLayout();
@@ -348,6 +348,8 @@ public final class HomeView extends Panel implements View {
 	@Override
 	public void enter(final ViewChangeEvent event) {
 
+
+
 	}
 
 	private void toggleMaximized(final Component panel, final boolean maximized) {
@@ -362,80 +364,84 @@ public final class HomeView extends Panel implements View {
 		}
 
 		if (maximized) {
+			if (panel.getId().equals("calendar")) {
+				calendar.getCalendarComponent().setHeightUndefined();
+				calendar.getCalendarComponent().setWidth("100%");
+			}
 			panel.setVisible(true);
 			panel.addStyleName("max");
+
 		} else {
+			if (panel.getId().equals("calendar")) {
+				calendar.getCalendarComponent().setHeight("200px");
+				calendar.getCalendarComponent().setWidth("100%");
+			}
 			panel.removeStyleName("max");
 		}
 	}
-	
-	   private NotificationsButton buildNotificationsButton() {
-	        NotificationsButton result = new NotificationsButton();
-	        result.addClickListener(new ClickListener() {
-	            /**
-				 * 
-				 */
-				private static final long serialVersionUID = -6830083227084878734L;
 
-				@Override
-	            public void buttonClick(final ClickEvent event) {
-	                openNotificationsPopup(event);
-	            }
-	        });
-	        return result;
-	    }
-	   
-	    private void openNotificationsPopup(final ClickEvent event) {
-	        VerticalLayout notificationsLayout = new VerticalLayout();
-	        notificationsLayout.setMargin(true);
-	        notificationsLayout.setSpacing(true);
+	private NotificationsButton buildNotificationsButton() {
+		NotificationsButton result = new NotificationsButton();
+		result.addClickListener(new ClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6830083227084878734L;
 
-	        Label title = new Label("Notifiche");
-	        title.addStyleName(ValoTheme.LABEL_H3);
-	        title.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-	        notificationsLayout.addComponent(title);
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				openNotificationsPopup(event);
+			}
+		});
+		return result;
+	}
 
-	        Collection<DashboardNotification> notifications = DashboardUI
-	                .getDataProvider().getNotifications();
-	        DashboardEventBus.post(new NotificationsCountUpdatedEvent());
+	private void openNotificationsPopup(final ClickEvent event) {
+		VerticalLayout notificationsLayout = new VerticalLayout();
+		notificationsLayout.setMargin(true);
+		notificationsLayout.setSpacing(true);
 
-	        for (DashboardNotification notification : notifications) {
-	            VerticalLayout notificationLayout = new VerticalLayout();
-	            notificationLayout.addStyleName("notification-item");
+		Label title = new Label("Notifiche");
+		title.addStyleName(ValoTheme.LABEL_H3);
+		title.addStyleName(ValoTheme.LABEL_NO_MARGIN);
+		notificationsLayout.addComponent(title);
 
-	            Label titleLabel = new Label(notification.getTitle());
-	            titleLabel.addStyleName("notification-title");
+		Collection<DashboardNotification> notifications = DashboardUI.getDataProvider().getNotifications();
+		DashboardEventBus.post(new NotificationsCountUpdatedEvent());
 
+		for (DashboardNotification notification : notifications) {
+			VerticalLayout notificationLayout = new VerticalLayout();
+			notificationLayout.addStyleName("notification-item");
 
-	            Label contentLabel = new Label(notification.getContent());
-	            contentLabel.addStyleName("notification-content");
+			Label titleLabel = new Label(notification.getTitle());
+			titleLabel.addStyleName("notification-title");
 
-	            notificationLayout.addComponents(titleLabel,
-	                    contentLabel);
-	            notificationsLayout.addComponent(notificationLayout);
-	        }
+			Label contentLabel = new Label(notification.getContent());
+			contentLabel.addStyleName("notification-content");
 
+			notificationLayout.addComponents(titleLabel, contentLabel);
+			notificationsLayout.addComponent(notificationLayout);
+		}
 
-	        if (notificationsWindow == null) {
-	            notificationsWindow = new Window();
-	            notificationsWindow.setWidth(300.0f, Unit.PIXELS);
-	            notificationsWindow.addStyleName("notifications");
-	            notificationsWindow.setClosable(false);
-	            notificationsWindow.setResizable(false);
-	            notificationsWindow.setDraggable(false);
-	            notificationsWindow.setCloseShortcut(KeyCode.ESCAPE, null);
-	            notificationsWindow.setContent(notificationsLayout);
-	        }
+		if (notificationsWindow == null) {
+			notificationsWindow = new Window();
+			notificationsWindow.setWidth(300.0f, Unit.PIXELS);
+			notificationsWindow.addStyleName("notifications");
+			notificationsWindow.setClosable(false);
+			notificationsWindow.setResizable(false);
+			notificationsWindow.setDraggable(false);
+			notificationsWindow.setCloseShortcut(KeyCode.ESCAPE, null);
+			notificationsWindow.setContent(notificationsLayout);
+		}
 
-	        if (!notificationsWindow.isAttached()) {
-	            notificationsWindow.setPositionY(event.getClientY()
-	                    - event.getRelativeY() +40 );
-	            getUI().addWindow(notificationsWindow);
-	            notificationsWindow.focus();
-	        } else {
-	            notificationsWindow.close();
-	        }
-	    }
+		if (!notificationsWindow.isAttached()) {
+			notificationsWindow.setPositionY(event.getClientY() - event.getRelativeY() + 40);
+			getUI().addWindow(notificationsWindow);
+			notificationsWindow.focus();
+		} else {
+			notificationsWindow.close();
+		}
+	}
 
 	public static final class NotificationsButton extends Button {
 		/**
@@ -452,13 +458,11 @@ public final class HomeView extends Panel implements View {
 			addStyleName(ValoTheme.BUTTON_ICON_ONLY);
 			DashboardEventBus.register(this);
 		}
-		
-		 @Subscribe
-	        public void updateNotificationsCount(
-	                final NotificationsCountUpdatedEvent event) {
-			 setUnreadCount(DashboardUI.getDataProvider()
-	                    .getUnreadNotificationsCount());
-	        }
+
+		@Subscribe
+		public void updateNotificationsCount(final NotificationsCountUpdatedEvent event) {
+			setUnreadCount(DashboardUI.getDataProvider().getUnreadNotificationsCount());
+		}
 
 		public void setUnreadCount(final int count) {
 			setCaption(String.valueOf(count));

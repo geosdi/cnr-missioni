@@ -10,7 +10,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 public class ExactSearch extends AbstractBooleanSearch<Object> implements IBooleanSearch {
 
 	
-	private Operator operator = Operator.OR;
+	private Operator operator = Operator.AND;
 	
 	public ExactSearch( ){
 		super();
@@ -33,6 +33,9 @@ public class ExactSearch extends AbstractBooleanSearch<Object> implements IBoole
 	public ExactSearch(String field,Object value,EnumBooleanType type ){
 		super(field,value,type);
 	}
+	
+
+
 	
 	
 	public QueryBuilder getBooleanQuery() throws Exception {

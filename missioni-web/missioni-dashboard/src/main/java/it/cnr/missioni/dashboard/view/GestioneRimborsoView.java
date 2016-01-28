@@ -1,5 +1,20 @@
 package it.cnr.missioni.dashboard.view;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.ws.rs.core.Response;
+
+import org.apache.commons.io.IOUtils;
+
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -9,9 +24,17 @@ import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
 import com.vaadin.server.Responsive;
+import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinResponse;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.server.ClientConnector.AttachEvent;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -32,6 +55,9 @@ import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
+import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
+import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
@@ -69,7 +95,7 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 	private User user;
 	private MissioneSearchBuilder missioneSearchBuilder;
-	
+
 	private MissioniStore missioniStore;
 
 	public GestioneRimborsoView() {
@@ -322,15 +348,14 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 		buttonMail.setDescription("Invia Mail");
 		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
 		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		
+
 		buttonMail.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 				try {
 					ClientConnector.sendRimborsoMail(selectedMissione.getId());
-					Utility.getNotification(Utility.getMessage("success_message"), null,
-							Type.HUMANIZED_MESSAGE);
+					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
 							Type.ERROR_MESSAGE);
@@ -359,6 +384,26 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
 
+		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
+		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
+
+			/**
+			 * This method will be invoked just before the download starts.
+			 * Thus, a new file path can be set.
+			 *
+			 * @param downloadEvent
+			 */
+			@Override
+			public void beforeDownload(DownloaderEvent downloadEvent) {
+
+				downloaderForLink.setFileDownloadResource(getResource());
+
+			}
+
+		});
+
+		downloaderForLink.extend(buttonPDF);
+
 		layout.addComponents(buttonModifica, buttonMail, buttonMissione, buttonPDF);
 
 		enableDisableButtons(false);
@@ -367,14 +412,35 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 	}
 
+	private StreamResource getResource() {
+		try {
+
+			Response r = ClientConnector.downloadRimborsoMissioneAsPdf(selectedMissione.getId());
+			InputStream is = r.readEntity(InputStream.class);
+
+			StreamResource stream = new StreamResource(new StreamSource() {
+				@Override
+				public InputStream getStream() {
+					return is;
+				}
+			}, "rimborso.pdf");
+
+			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
+			return stream;
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+		return null;
+	}
+
 	protected void enableDisableButtons(boolean enabled) {
 		this.buttonMail.setEnabled(enabled);
 		this.buttonModifica.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonMissione.setEnabled(enabled);
+
 	}
-
-
 
 	/**
 	 * 
@@ -382,9 +448,10 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 	@Override
 	protected void initialize() {
 		this.user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser(user.getId()).withFieldExist("missione.rimborso").withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
-		
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId())
+				.withFieldExist("missione.rimborso")
+				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+
 	}
 
 	/**
@@ -396,7 +463,4 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 		return null;
 	}
 
-
-
-	
 }

@@ -60,6 +60,8 @@ public final class ElencoFattureTable extends Table {
 		setSortEnabled(true);
 		aggiornaTable();
 		setFooterVisible(true);
+		setNullSelectionAllowed(false);
+
 		addActionHandler(new TransactionsActionHandler());
 
 	}

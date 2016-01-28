@@ -2,6 +2,8 @@
 	"user": {
 		"id" : "01",
 		"dataRegistrazione":"2015-12-15T10:11:59.568Z",
+		"registrazioneCompletata" : true,
+		"responsabileGruppo": false,
 		"anagrafica" :{
 		     "nome": "Vito",
         	"cognome": "Salvia",

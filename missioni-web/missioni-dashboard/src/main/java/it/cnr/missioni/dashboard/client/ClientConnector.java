@@ -1,6 +1,7 @@
 package it.cnr.missioni.dashboard.client;
 
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 
@@ -198,7 +199,7 @@ public class ClientConnector {
 	public static void sendMissioneMail(String missioneID) throws Exception {
 		missioniCoreClientConnector.sendMissioneMail(missioneID);
 	}
-	
+
 	/**
 	 * 
 	 * @param missioneID
@@ -206,6 +207,24 @@ public class ClientConnector {
 	 */
 	public static void sendRimborsoMail(String missioneID) throws Exception {
 		missioniCoreClientConnector.sendRimborsoMail(missioneID);
+	}
+
+	/**
+	 * 
+	 * @param missioneID
+	 * @throws Exception
+	 */
+	public static Response downloadMissioneAsPdf(String missioneID) throws Exception {
+		return missioniCoreClientConnector.downloadMissioneAsPdf(missioneID);
+	}
+
+	/**
+	 * 
+	 * @param missioneID
+	 * @throws Exception
+	 */
+	public static Response downloadRimborsoMissioneAsPdf(String missioneID) throws Exception {
+		return missioniCoreClientConnector.downloadRimborsoMissioneAsPdf(missioneID);
 	}
 
 }

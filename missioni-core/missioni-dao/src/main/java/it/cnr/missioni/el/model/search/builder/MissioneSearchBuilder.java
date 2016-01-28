@@ -3,6 +3,7 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.search.sort.SortOrder;
 import org.joda.time.DateTime;
 
@@ -103,7 +104,7 @@ public class MissioneSearchBuilder implements Serializable {
 		if (oggetto != null && !oggetto.equals(""))
 
 			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.MISSIONE_FIELD_OGGETTO, oggetto, EnumBooleanType.MUST));
+					.add(new ExactSearch(SearchConstants.MISSIONE_FIELD_OGGETTO, oggetto, EnumBooleanType.MUST,Operator.OR));
 		return this;
 	}
 	

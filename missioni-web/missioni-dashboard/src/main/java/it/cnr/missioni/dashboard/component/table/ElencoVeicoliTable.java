@@ -50,6 +50,8 @@ public final class ElencoVeicoliTable extends Table {
 		setSelectable(true);
 		setSortEnabled(true);
 		setVisible(false);
+		setNullSelectionAllowed(false);
+
 		aggiornaTable();
 
 		addGeneratedColumn("veicoloPrincipale", new ColumnGenerator() {

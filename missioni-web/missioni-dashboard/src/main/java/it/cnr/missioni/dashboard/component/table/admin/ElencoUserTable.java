@@ -6,10 +6,14 @@ import org.joda.time.DateTime;
 
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.DashboardUI;
+import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableUserUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.user.User;
@@ -58,10 +62,9 @@ public final class ElencoUserTable extends Table {
 		setSortEnabled(true);
 		setVisible(false);
 		setImmediate(true);
-		// setFilterBarVisible(true);
-		// select(null);
-		// setNullSelectionAllowed(true);
-		// unselect(itemId);
+		setNullSelectionAllowed(false);
+
+
 
 	}
 
@@ -87,8 +90,8 @@ public final class ElencoUserTable extends Table {
 			
 			setVisible(true);
 			setContainerDataSource(listaUser);
-			setVisibleColumns("anagrafica.cognome", "anagrafica.nome", "anagrafica.codiceFiscale", "datiCNR.matricola");
-			setColumnHeaders("Cognome", "Nome", "Codice Fiscale", "Matricola");
+			setVisibleColumns("responsabileGruppo","anagrafica.cognome", "anagrafica.nome", "anagrafica.codiceFiscale", "datiCNR.matricola");
+			setColumnHeaders("Responsabile Gruppo","Cognome", "Nome", "Codice Fiscale", "Matricola");
 			setId("id");
 			Object[] properties = { "anagrafica.cognome", "anagrafica.nome" };
 			boolean[] ordering = { true, true };
@@ -99,6 +102,33 @@ public final class ElencoUserTable extends Table {
 //			setColumnExpandRatio("localita", 2);
 //			setColumnExpandRatio("id", 1);
 			// setColumnExpandRatio("dataInserimento",1);
+			
+			addGeneratedColumn("responsabileGruppo", new Table.ColumnGenerator() {
+			      @Override
+			      public Object generateCell(Table source, final Object itemId, Object columnId) {
+//			        boolean selected = selectedItemIds.contains(itemId);
+			        /* When the chekboc value changes, add/remove the itemId from the selectedItemIds set */
+			        final CheckBox cb = new CheckBox("",((User)itemId).isResponsabileGruppo());
+			        
+			        cb.addValueChangeListener(new ValueChangeListener() {
+						
+
+						@Override
+						public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+							
+							User user = ((User)itemId);
+							user.setResponsabileGruppo(cb.getValue());
+							DashboardUI.getCurrentUser().setResponsabileGruppo(cb.getValue());
+							DashboardEventBus.post(new UpdateUserAction(user));
+
+						}
+					});
+			        
+
+			        return cb;
+			      }
+			    });
+			
 		}
 
 	}

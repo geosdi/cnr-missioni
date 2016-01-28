@@ -215,6 +215,7 @@ class MissioneDelegate implements IMissioneDelegate {
         User user = this.userDAO.find(missione.getIdUser());
         if (user == null)
             throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+       
         return new MissioneStreaming("Missione - " + missionID + ".pdf",
                 MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
     }

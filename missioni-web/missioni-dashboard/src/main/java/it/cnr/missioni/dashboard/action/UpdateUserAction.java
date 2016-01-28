@@ -39,6 +39,10 @@ public class UpdateUserAction implements IAction {
 			DashboardEventBus.post(new  DashboardEvent.ProfileUpdatedEvent() );
 			if(!value)
 				DashboardEventBus.post(new  DashboardEvent.MenuUpdateEvent() );
+			
+			Utility.getNotification(Utility.getMessage("success_message"), null,
+					Type.HUMANIZED_MESSAGE);
+			
 			return true;
 
 		} catch (Exception e) {

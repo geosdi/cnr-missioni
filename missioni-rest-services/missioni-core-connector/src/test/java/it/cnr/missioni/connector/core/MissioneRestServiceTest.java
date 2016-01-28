@@ -35,10 +35,15 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.AfterClass;
@@ -259,4 +264,37 @@ public class MissioneRestServiceTest {
 		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertNull(missioniStore);
 	}
+	
+	@Test
+	public void Z_createMissionePDFFile() throws Exception {
+
+		Response r = missioniCoreClientConnector.downloadMissioneAsPdf("M_01");
+		
+		InputStream is = r.readEntity(InputStream.class);
+		File downloadfile = new File("./target/missione.pdf");
+		byte[] byteArray = IOUtils.toByteArray(is);
+		FileOutputStream fos = new FileOutputStream(downloadfile);
+		fos.write(byteArray);
+		fos.flush();
+		fos.close();
+		
+		
+	}
+	
+	@Test
+	public void Z_createRimborsoMissionePDFFile() throws Exception {
+
+		Response r = missioniCoreClientConnector.downloadRimborsoMissioneAsPdf("M_01");
+		
+		InputStream is = r.readEntity(InputStream.class);
+		File downloadfile = new File("./target/rimborso.pdf");
+		byte[] byteArray = IOUtils.toByteArray(is);
+		FileOutputStream fos = new FileOutputStream(downloadfile);
+		fos.write(byteArray);
+		fos.flush();
+		fos.close();
+		
+		
+	}
+	
 }

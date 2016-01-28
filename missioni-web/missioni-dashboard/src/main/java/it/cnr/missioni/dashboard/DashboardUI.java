@@ -16,23 +16,22 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.LoginAction;
-import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.AddUpdatePrenotazioneAction;
 import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
+import it.cnr.missioni.dashboard.action.LoginAction;
+import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
+import it.cnr.missioni.dashboard.action.admin.UpdateUserResponsabileGruppoAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
-import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.notification.INotificationProvider;
 import it.cnr.missioni.dashboard.notification.NotificationProvider;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.view.LoginView;
 import it.cnr.missioni.dashboard.view.MainView;
@@ -82,19 +81,17 @@ public final class DashboardUI extends UI  {
 	 * Otherwise login view is shown.
 	 */
 	private void updateContent() {
-		User user = (User) VaadinSession.getCurrent().getAttribute(User.class);
 
 		// if (user != null && "admin".equals(user.getRole())) {
-		if (user != null) {
-			
-
-			
+		if (getCurrentUser() != null) {
+		
 			// Authenticated user
 			setContent(new MainView());
 			removeStyleName("loginview");
 			getNavigator().navigateTo(getNavigator().getState());
 			notificationProvider.check();
 
+			
 
 		} else {
 			setContent(new LoginView());
@@ -103,10 +100,17 @@ public final class DashboardUI extends UI  {
 	}
 
 	@Subscribe
-	public void userLoginRequested(final LoginAction loginAction) {
+	public void userLoginRequested(final LoginAction loginAction) throws InterruptedException {
 
 		if (loginAction.doAction()) {			
 			updateContent();
+//			Runnable runnable = () -> {
+//				User u = DashboardUI.getCurrentUser();
+//				WizardSetupWindow.getWizardSetup().withTipo("user").withUser(u).build();
+//			};
+//
+//			Thread thread = new Thread(runnable);
+//			thread.start();
 		}
 
 	}
@@ -121,6 +125,11 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void userUpdateUserRequested(final UpdateUserAction updateUserAction) {
 		updateUserAction.doAction();
+	}
+	
+	@Subscribe
+	public void userUpdateUserRequested(final UpdateUserResponsabileGruppoAction updateUserResponsabileGruppoAction) {
+		updateUserResponsabileGruppoAction.doAction();
 	}
 	
 	@Subscribe
@@ -179,4 +188,12 @@ public final class DashboardUI extends UI  {
     public static INotificationProvider getDataProvider() { 	
         return ((DashboardUI) getCurrent()).notificationProvider;
     }
+    
+    
+
+	//Ritorna l'utente che si è loggato al sistema
+	public static User getCurrentUser(){
+		return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+	}
+	
 }

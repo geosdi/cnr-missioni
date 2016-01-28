@@ -35,9 +35,12 @@
  */
 package it.cnr.missioni.connector.core.spring.connector;
 
+import java.io.File;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
@@ -50,6 +53,7 @@ import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
+import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -262,6 +266,24 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
 
+    
+    public Response downloadMissioneAsPdf(String missioneID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/downloadMissioneAsPdf/")
+                .queryParam("missionID", missioneID)
+                .request("application/pdf")
+                
+                .get(Response.class);
+    }
+    
+    public Response downloadRimborsoMissioneAsPdf(String missioneID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/downloadRimborsoMissioneAsPdf/")
+                .queryParam("missionID", missioneID)
+                .request("application/pdf")
+                
+                .get(Response.class);
+    }
 
     @Override
     public String getConnectorName() {

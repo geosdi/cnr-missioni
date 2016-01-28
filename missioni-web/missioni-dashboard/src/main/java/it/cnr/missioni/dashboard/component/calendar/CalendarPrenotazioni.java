@@ -47,7 +47,7 @@ import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 
-public class CalendarPrenotazioni implements Serializable{
+public class CalendarPrenotazioni implements Serializable {
 
 	private static final long serialVersionUID = -5436777475398410597L;
 
@@ -56,51 +56,28 @@ public class CalendarPrenotazioni implements Serializable{
 	}
 
 	private GregorianCalendar calendar;
-
 	private Calendar calendarComponent;
-
 	private Date currentMonthsFirstDate;
-
 	private final Label captionLabel = new Label("");
-
 	private Button monthButton;
-
 	private Button weekButton;
-
 	private Button dayButton;
-
 	private Button nextButton;
-
 	private Button prevButton;
-
 	private Mode viewMode = Mode.MONTH;
-
 	private boolean testBench = false;
-
-	private String calendarHeight = null;
-
-	private String calendarWidth = null;
-
 	private Integer firstHour;
-
 	private Integer lastHour;
-
 	private Integer firstDay;
-
 	private Integer lastDay;
-
 	private VerticalLayout layoutCalendar;
-
 	HorizontalLayout layoutButtons;
-	
 	private String width;
-	
 	private String height;
-	
-	
-	public CalendarPrenotazioni(String width,String heght){
+
+	public CalendarPrenotazioni(String width, String height) {
 		this.width = width;
-		this.height = heght;
+		this.height = height;
 	}
 
 	public void initContent() {
@@ -110,21 +87,20 @@ public class CalendarPrenotazioni implements Serializable{
 	}
 
 	private void initLayoutContent() {
-		
+
 		DashboardEventBus.register(this);
-		
+
 		initNavigationButtons();
 
 		VerticalLayout hl = new VerticalLayout();
 		hl.setSpacing(true);
 		hl.addComponent(captionLabel);
-		
 
 		CssLayout group = new CssLayout();
 		group.addStyleName("v-component-group");
 		hl.addComponent(layoutButtons);
 		hl.setComponentAlignment(layoutButtons, Alignment.MIDDLE_CENTER);
-		
+
 		hl.setComponentAlignment(captionLabel, Alignment.MIDDLE_CENTER);
 		captionLabel.addStyleName(ValoTheme.LABEL_LIGHT);
 		captionLabel.addStyleName("label-calendar");
@@ -136,13 +112,13 @@ public class CalendarPrenotazioni implements Serializable{
 		layoutCalendar = new VerticalLayout();
 		layoutCalendar.addComponent(controlPanel);
 		layoutCalendar.addComponent(hl);
-		layoutCalendar.addComponent(calendarComponent);
+		layoutCalendar.addComponent(getCalendarComponent());
 		addListener();
 	}
 
 	// Aggiunge i listener
 	private void addListener() {
-		calendarComponent.setHandler(new BasicDateClickHandler() {
+		getCalendarComponent().setHandler(new BasicDateClickHandler() {
 
 			@Override
 			public void dateClick(DateClickEvent event) {
@@ -154,32 +130,27 @@ public class CalendarPrenotazioni implements Serializable{
 			}
 		});
 
-		calendarComponent.setHandler(new EventClickHandler() {
+		getCalendarComponent().setHandler(new EventClickHandler() {
 
 			public void eventClick(EventClick event) {
 
 				// solamente le la prenotazione appartiene all'utente loggato
 				if (((User) VaadinSession.getCurrent().getAttribute(User.class)).getId()
 						.equals(((PrenotazioneEvent) event.getCalendarEvent()).getIdUser()))
-					PrenotazioneWindow.open(calendarComponent,(PrenotazioneEvent) event.getCalendarEvent(), true);
+					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), true);
 			}
 		});
 
-		calendarComponent.setHandler(new RangeSelectHandler() {
+		getCalendarComponent().setHandler(new RangeSelectHandler() {
 
 			public void rangeSelect(RangeSelectEvent event) {
 
-//				if (!calendarComponent.getEvents(event.getStart(), event.getEnd()).isEmpty()) {
-//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("event_present"),
-//							Type.ERROR_MESSAGE);
-//				} else
-
-					handleRangeSelect(event);
+				handleRangeSelect(event);
 
 			}
 		});
 
-		calendarComponent.setHandler(new BasicDateClickHandler() {
+		getCalendarComponent().setHandler(new BasicDateClickHandler() {
 
 			@Override
 			public void dateClick(DateClickEvent event) {
@@ -212,8 +183,8 @@ public class CalendarPrenotazioni implements Serializable{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// simulate week click
-				WeekClickHandler handler = (WeekClickHandler) calendarComponent.getHandler(WeekClick.EVENT_ID);
-				handler.weekClick(new WeekClick(calendarComponent, calendar.get(GregorianCalendar.WEEK_OF_YEAR),
+				WeekClickHandler handler = (WeekClickHandler) getCalendarComponent().getHandler(WeekClick.EVENT_ID);
+				handler.weekClick(new WeekClick(getCalendarComponent(), calendar.get(GregorianCalendar.WEEK_OF_YEAR),
 						calendar.get(GregorianCalendar.YEAR)));
 			}
 		});
@@ -225,9 +196,9 @@ public class CalendarPrenotazioni implements Serializable{
 			@Override
 			public void buttonClick(ClickEvent event) {
 				// simulate day click
-				BasicDateClickHandler handler = (BasicDateClickHandler) calendarComponent
+				BasicDateClickHandler handler = (BasicDateClickHandler) getCalendarComponent()
 						.getHandler(DateClickEvent.EVENT_ID);
-				handler.dateClick(new DateClickEvent(calendarComponent, calendar.getTime()));
+				handler.dateClick(new DateClickEvent(getCalendarComponent(), calendar.getTime()));
 			}
 		});
 
@@ -264,43 +235,43 @@ public class CalendarPrenotazioni implements Serializable{
 
 	private void initCalendar() {
 
-		calendarComponent = (new Calendar(new MyEventProvider()));
-		calendarComponent.setWidth("100px");
-		calendarComponent.setHeight("100px");
+		setCalendarComponent((new Calendar(new MyEventProvider())));
+		getCalendarComponent().setWidth(this.width);
+		getCalendarComponent().setHeight(this.height);
 
-		if (calendarWidth != null || calendarHeight != null) {
-			if (calendarHeight != null) {
-				calendarComponent.setHeight(calendarHeight);
+		if (width != null || height != null) {
+			if (height != null) {
+				getCalendarComponent().setHeight(height);
 			}
-			if (calendarWidth != null) {
-				calendarComponent.setWidth(calendarWidth);
+			if (width != null) {
+				getCalendarComponent().setWidth(width);
 			}
 		} else {
-			calendarComponent.setSizeFull();
+			getCalendarComponent().setSizeFull();
 		}
 
 		if (firstHour != null && lastHour != null) {
-			calendarComponent.setFirstVisibleHourOfDay(firstHour);
-			calendarComponent.setLastVisibleHourOfDay(lastHour);
+			getCalendarComponent().setFirstVisibleHourOfDay(firstHour);
+			getCalendarComponent().setLastVisibleHourOfDay(lastHour);
 		}
 
 		if (firstDay != null && lastDay != null) {
-			calendarComponent.setFirstVisibleDayOfWeek(firstDay);
-			calendarComponent.setLastVisibleDayOfWeek(lastDay);
+			getCalendarComponent().setFirstVisibleDayOfWeek(firstDay);
+			getCalendarComponent().setLastVisibleDayOfWeek(lastDay);
 		}
 
 		Date today = getToday();
 		calendar = new GregorianCalendar();
 		calendar.setTime(today);
-		calendarComponent.getInternalCalendar().setTime(today);
+		getCalendarComponent().getInternalCalendar().setTime(today);
 		currentMonthsFirstDate = calendar.getTime();
 		int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
 		calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
 		currentMonthsFirstDate = calendar.getTime();
-		calendarComponent.setStartDate(currentMonthsFirstDate);
+		getCalendarComponent().setStartDate(currentMonthsFirstDate);
 		calendar.add(GregorianCalendar.MONTH, 1);
 		calendar.add(GregorianCalendar.DATE, -1);
-		calendarComponent.setEndDate(calendar.getTime());
+		getCalendarComponent().setEndDate(calendar.getTime());
 
 		updateCaptionLabel();
 	}
@@ -359,7 +330,7 @@ public class CalendarPrenotazioni implements Serializable{
 		PrenotazioneEvent p = new PrenotazioneEvent();
 		p.setStart(start);
 		p.setEnd(end);
-		PrenotazioneWindow.open(calendarComponent,p, false);
+		PrenotazioneWindow.open(getCalendarComponent(), p, false);
 	}
 
 	private void nextMonth() {
@@ -391,7 +362,7 @@ public class CalendarPrenotazioni implements Serializable{
 		calendar.add(GregorianCalendar.MONTH, direction);
 		resetTime(false);
 		currentMonthsFirstDate = calendar.getTime();
-		calendarComponent.setStartDate(currentMonthsFirstDate);
+		getCalendarComponent().setStartDate(currentMonthsFirstDate);
 
 		updateCaptionLabel();
 
@@ -406,7 +377,7 @@ public class CalendarPrenotazioni implements Serializable{
 		resetCalendarTime(false);
 		resetTime(true);
 		calendar.add(GregorianCalendar.DATE, 6);
-		calendarComponent.setEndDate(calendar.getTime());
+		getCalendarComponent().setEndDate(calendar.getTime());
 	}
 
 	private void rollDate(int direction) {
@@ -447,16 +418,14 @@ public class CalendarPrenotazioni implements Serializable{
 		int rollAmount = calendar.get(GregorianCalendar.DAY_OF_MONTH) - 1;
 		calendar.add(GregorianCalendar.DAY_OF_MONTH, -rollAmount);
 
-		calendarComponent.setStartDate(calendar.getTime());
+		getCalendarComponent().setStartDate(calendar.getTime());
 
 		updateCaptionLabel();
 
 		calendar.add(GregorianCalendar.MONTH, 1);
 		calendar.add(GregorianCalendar.DATE, -1);
 
-		calendarComponent.setEndDate(calendar.getTime());
-		
-
+		getCalendarComponent().setEndDate(calendar.getTime());
 
 		calendar.setTime(getToday());
 		// resetCalendarTime(true);
@@ -472,9 +441,9 @@ public class CalendarPrenotazioni implements Serializable{
 	private void resetCalendarTime(boolean resetEndTime) {
 		resetTime(resetEndTime);
 		if (resetEndTime) {
-			calendarComponent.setEndDate(calendar.getTime());
+			getCalendarComponent().setEndDate(calendar.getTime());
 		} else {
-			calendarComponent.setStartDate(calendar.getTime());
+			getCalendarComponent().setStartDate(calendar.getTime());
 			updateCaptionLabel();
 		}
 	}
@@ -539,59 +508,68 @@ public class CalendarPrenotazioni implements Serializable{
 		this.layoutCalendar = layoutCalendar;
 	}
 
-	
-	   public static class MyEventProvider implements CalendarEventProvider {
-
-	        private static final long serialVersionUID = -3655982234130426761L;
-
-	        private List<CalendarEvent> events = new ArrayList<CalendarEvent>();
-
-	        public MyEventProvider() {
-
-	        }
-
-	        public void addEvent(CalendarEvent BasicEvent) {
-	            events.add(BasicEvent);
-	        }
-
-	    	@Override
-	    	public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
-	            events = new ArrayList<CalendarEvent>();
-	    		try {
-	    			PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder
-	    					.getPrenotazioneSearchBuilder()			
-	    					.withRangeData(new DateTime(startDate.getTime()), new DateTime(endDate.getTime()));
-	    			PrenotazioniStore prenotazioniStore = ClientConnector.getPrenotazione(prenotazioneSearchBuilder);
-
-	    			if (prenotazioniStore != null) {
-	    				prenotazioniStore.getPrenotazioni().forEach(p -> {
-	    					PrenotazioneEvent prenotazioneEvent = new PrenotazioneEvent();
-	    					prenotazioneEvent.setAllDay(p.isAllDay());
-	    					prenotazioneEvent.setId(p.getId());
-	    					prenotazioneEvent.setIdUser(p.getIdUser());
-	    					prenotazioneEvent.setStart(p.getDataFrom().toDate());
-	    					prenotazioneEvent.setEnd(p.getDataTo().toDate());
-	    					prenotazioneEvent.setVeicolo(p.getIdVeicoloCNR());
-	    					prenotazioneEvent.setCaption(p.getDescrizione());
-	    					events.add(prenotazioneEvent);
-	    				});
-	    			}
-	    			// lista.addAll(prenotazioniStore.getPrenotazioni());
-	    		} catch (Exception e) {
-	    			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-	    					Type.ERROR_MESSAGE);
-	    		}
-	    		return events;
-	    	}
-	    }
-	
-
-	
-	@Subscribe
-	public void updateCalendar(CalendarUpdateEvent calendarUpdateEvent){
-		calendarComponent.markAsDirty();
+	/**
+	 * @return the calendarComponent
+	 */
+	public Calendar getCalendarComponent() {
+		return calendarComponent;
 	}
-	
 
+	/**
+	 * @param calendarComponent
+	 */
+	public void setCalendarComponent(Calendar calendarComponent) {
+		this.calendarComponent = calendarComponent;
+	}
+
+	public static class MyEventProvider implements CalendarEventProvider {
+
+		private static final long serialVersionUID = -3655982234130426761L;
+
+		private List<CalendarEvent> events = new ArrayList<CalendarEvent>();
+
+		public MyEventProvider() {
+
+		}
+
+		public void addEvent(CalendarEvent BasicEvent) {
+			events.add(BasicEvent);
+		}
+
+		@Override
+		public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
+			events = new ArrayList<CalendarEvent>();
+			try {
+				PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder
+						.getPrenotazioneSearchBuilder()
+						.withRangeData(new DateTime(startDate.getTime()), new DateTime(endDate.getTime()));
+				PrenotazioniStore prenotazioniStore = ClientConnector.getPrenotazione(prenotazioneSearchBuilder);
+
+				if (prenotazioniStore != null) {
+					prenotazioniStore.getPrenotazioni().forEach(p -> {
+						PrenotazioneEvent prenotazioneEvent = new PrenotazioneEvent();
+						prenotazioneEvent.setAllDay(p.isAllDay());
+						prenotazioneEvent.setId(p.getId());
+						prenotazioneEvent.setIdUser(p.getIdUser());
+						prenotazioneEvent.setStart(p.getDataFrom().toDate());
+						prenotazioneEvent.setEnd(p.getDataTo().toDate());
+						prenotazioneEvent.setVeicolo(p.getIdVeicoloCNR());
+						prenotazioneEvent.setCaption(p.getDescrizione());
+						events.add(prenotazioneEvent);
+					});
+				}
+				// lista.addAll(prenotazioniStore.getPrenotazioni());
+			} catch (Exception e) {
+				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+						Type.ERROR_MESSAGE);
+			}
+			return events;
+		}
+	}
+
+	@Subscribe
+	public void updateCalendar(CalendarUpdateEvent calendarUpdateEvent) {
+		getCalendarComponent().markAsDirty();
+	}
 
 }

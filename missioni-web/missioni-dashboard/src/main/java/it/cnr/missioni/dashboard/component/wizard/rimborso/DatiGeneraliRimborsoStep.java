@@ -28,7 +28,6 @@ import it.cnr.missioni.model.rimborso.Rimborso;
  */
 public class DatiGeneraliRimborsoStep implements WizardStep {
 
-	private TextField numeroOrdineField;
 	private TextField avvisoPagamentoField;
 	private TextField anticipazionePagamentoField;
 	private TextField totaleField;
@@ -60,7 +59,6 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
 
-		numeroOrdineField = (TextField) fieldGroup.buildAndBind("Numero Ordine", "numeroOrdine");
 		avvisoPagamentoField = (TextField) fieldGroup.buildAndBind("Avviso Pagamento", "avvisoPagamento");
 		anticipazionePagamentoField = (TextField) fieldGroup.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
 		totaleField = (TextField) fieldGroup.buildAndBind("Totale", "totale");
@@ -88,7 +86,6 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		mainLayout.addComponent(details);
 		mainLayout.setExpandRatio(details, 1);
 
-		details.addComponent(numeroOrdineField);
 		details.addComponent(avvisoPagamentoField);
 		details.addComponent(anticipazionePagamentoField);
 		details.addComponent(totaleField);

@@ -97,7 +97,7 @@ public class UserSearchBuilder implements Serializable {
 		this.cartaCircolazione = cartaCircolazione;
 		if( cartaCircolazione != null && !cartaCircolazione.equals("") )
 		booleanModelSearch.getListaSearch()
-				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione,Operator.AND));
+				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione));
 		return this;
 	}
 
@@ -105,7 +105,7 @@ public class UserSearchBuilder implements Serializable {
 		this.polizzaAssicurativa = polizzaAssicurativa;
 		if( polizzaAssicurativa != null && !polizzaAssicurativa.equals("") )
 		booleanModelSearch.getListaSearch()
-				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa,Operator.AND));
+				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa));
 		return this;
 	}
 

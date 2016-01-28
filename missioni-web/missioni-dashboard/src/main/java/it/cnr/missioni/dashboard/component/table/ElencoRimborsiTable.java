@@ -56,6 +56,8 @@ public final class ElencoRimborsiTable extends Table {
 		// addActionHandler(new TransactionsActionHandler());
 		setVisible(false);
 		setImmediate(true);
+		setNullSelectionAllowed(false);
+
 		// setFilterDecorator(new TableFilterDecorator());
 		// setFilterGenerator(new TableFilterGenerator());
 		// setFilterBarVisible(true);

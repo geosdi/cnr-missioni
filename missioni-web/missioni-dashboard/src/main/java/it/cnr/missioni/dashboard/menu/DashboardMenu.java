@@ -17,6 +17,7 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.component.window.CredenzialiWindow;
 import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
@@ -47,7 +48,7 @@ public final class DashboardMenu extends CustomComponent {
 	private static final String STYLE_VISIBLE = "valo-menu-visible";
 	private Label reportsBadge;
 	private MenuItem settingsItem;
-	private User user = getCurrentUser();
+	private User user = DashboardUI.getCurrentUser();
 	private CssLayout menuItemsLayout;
 	private MenuBar settings = new MenuBar();
 
@@ -94,9 +95,9 @@ public final class DashboardMenu extends CustomComponent {
 		return logoWrapper;
 	}
 
-	private User getCurrentUser() {
-		return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-	}
+//	private User getCurrentUser() {
+//		return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+//	}
 
 	private MenuBar buildUserMenu() {
 		// settings = new MenuBar();
@@ -184,7 +185,7 @@ public final class DashboardMenu extends CustomComponent {
 	// dell'user
 	@Subscribe
 	public void updateMenu(MenuUpdateEvent menuUpdateEvent) {
-		user = getCurrentUser();
+		user = DashboardUI.getCurrentUser();
 		menuItemsLayout.removeAllComponents();
 		buildMenuItems();
 		settingsItem = null;
@@ -206,13 +207,12 @@ public final class DashboardMenu extends CustomComponent {
 
 	@Subscribe
 	public void updateUserName(final ProfileUpdatedEvent event) {
-		User user = getCurrentUser();
 
 		if (!user.isRegistrazioneCompletata())
-			settingsItem.setText(user.getCredenziali().getUsername());
+			settingsItem.setText(DashboardUI.getCurrentUser().getCredenziali().getUsername());
 
 		else
-			settingsItem.setText(user.getAnagrafica().getCognome() + " " + user.getAnagrafica().getNome());
+			settingsItem.setText(DashboardUI.getCurrentUser().getAnagrafica().getCognome() + " " + user.getAnagrafica().getNome());
 	}
 
 	public final class ValoMenuItemButton extends Button {

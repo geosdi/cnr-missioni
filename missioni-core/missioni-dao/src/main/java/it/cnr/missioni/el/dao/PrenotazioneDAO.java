@@ -15,7 +15,6 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
-import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 
 /**
@@ -23,8 +22,6 @@ import it.cnr.missioni.model.prenotazione.Prenotazione;
  */
 @Component(value = "prenotazioneDAO")
 public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> implements IPrenotazioneDAO {
-
-	
 
 	@Resource(name = "prenotazioneMapper")
 	@Override
@@ -55,27 +52,21 @@ public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> impl
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<Prenotazione>findPrenotazioneByQuery(PrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception {
+	public PageResult<Prenotazione> findPrenotazioneByQuery(PrenotazioneSearchBuilder prenotazioneSearchBuilder)
+			throws Exception {
 		List<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>();
-//		logger.debug("\nID "+userSearchBuilder.getId());
 		logger.debug("###############Try to find Prenotazioni by Query: {}\n\n");
-		
-		
+
+		Long total = count();
+
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(prenotazioneSearchBuilder.buildQuery())
+				.setTypes(getIndexType()).setQuery(prenotazioneSearchBuilder.buildQuery()).setSize(total.intValue())
 				.execute().actionGet());
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");
 		}
 
-		
-		Long total = searchResponse.getHits().getTotalHits();
-		
-		 searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(prenotazioneSearchBuilder.buildQuery()).setSize(total.intValue())
-				.execute().actionGet());
-		
 		for (SearchHit searchHit : searchResponse.getHits().hits()) {
 			Prenotazione prenotazione = this.mapper.read(searchHit.getSourceAsString());
 			if (!prenotazione.isIdSetted()) {
@@ -86,7 +77,5 @@ public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> impl
 
 		return new PageResult<Prenotazione>(searchResponse.getHits().getTotalHits(), listaPrenotazioni);
 	}
-
-
 
 }

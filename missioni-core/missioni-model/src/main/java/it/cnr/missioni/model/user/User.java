@@ -22,7 +22,7 @@ import it.cnr.missioni.model.adapter.VeicoloMapAdapter;
  */
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "dataRegistrazione","dateLastModified","registrazioneCompletata", "anagrafica", "residenza", "patente", "datiCNR", "credenziali",
+@XmlType(propOrder = { "id", "dataRegistrazione","dateLastModified","registrazioneCompletata", "responsabileGruppo","anagrafica", "residenza", "patente", "datiCNR", "credenziali",
 		"mappaVeicolo" })
 public class User implements Document {
 
@@ -36,6 +36,7 @@ public class User implements Document {
 	private DateTime dataRegistrazione;
 	private DateTime dateLastModified;
 	private boolean registrazioneCompletata;
+	private boolean responsabileGruppo;
 	
 	@Valid
 	private Anagrafica anagrafica = new Anagrafica();
@@ -133,6 +134,22 @@ public class User implements Document {
 	}
 
 	/**
+	 * @return the responsabileGruppo
+	 */
+	public boolean isResponsabileGruppo() {
+		return responsabileGruppo;
+	}
+
+
+	/**
+	 * @param responsabileGruppo 
+	 */
+	public void setResponsabileGruppo(boolean responsabileGruppo) {
+		this.responsabileGruppo = responsabileGruppo;
+	}
+
+
+	/**
 	 * @return the anagrafica
 	 */
 	public Anagrafica getAnagrafica() {
@@ -222,9 +239,9 @@ public class User implements Document {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", dataRegistrazione=" + dataRegistrazione + ", dateLastModified=" + dateLastModified
-				+ ", registrazioneCompletata=" + registrazioneCompletata + ", anagrafica=" + anagrafica + ", residenza="
-				+ residenza + ", patente=" + patente + ", datiCNR=" + datiCNR + ", credenziali=" + credenziali
-				+ ", mappaVeicolo=" + mappaVeicolo + "]";
+				+ ", registrazioneCompletata=" + registrazioneCompletata + ", responsabileGruppo=" + responsabileGruppo
+				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente=" + patente + ", datiCNR="
+				+ datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo + "]";
 	}
 	
 	

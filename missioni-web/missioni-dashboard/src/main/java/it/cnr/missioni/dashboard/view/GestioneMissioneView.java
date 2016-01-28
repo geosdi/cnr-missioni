@@ -1,26 +1,25 @@
 package it.cnr.missioni.dashboard.view;
 
+import java.io.InputStream;
+
+import javax.ws.rs.core.Response;
+
 import org.vaadin.jouni.animator.client.CssAnimation;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Responsive;
+import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -34,6 +33,9 @@ import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
+import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
+import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
@@ -311,7 +313,6 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 					buildComboPage();
 					DashboardEventBus.post(new DashboardEvent.TableMissioniUpdatedEvent(missioniStore));
 
-
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
@@ -351,8 +352,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 			public void buttonClick(ClickEvent event) {
 				try {
 					ClientConnector.sendMissioneMail(selectedMissione.getId());
-					Utility.getNotification(Utility.getMessage("success_message"), null,
-							Type.HUMANIZED_MESSAGE);
+					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
 							Type.ERROR_MESSAGE);
@@ -391,6 +391,19 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 		buttonPDF.setDescription("Genera PDF");
 		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		
+		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
+		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
+			@Override
+			public void beforeDownload(DownloaderEvent downloadEvent) {
+
+				downloaderForLink.setFileDownloadResource(getResource());
+
+			}
+
+		});
+
+		downloaderForLink.extend(buttonPDF);
 
 		layout.addComponents(buttonModifica, buttonMail, buttonRimborso, buttonPDF);
 
@@ -398,6 +411,29 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 
 		return layout;
 
+	}
+	
+	private StreamResource getResource() {
+		try {
+
+			Response r = ClientConnector.downloadMissioneAsPdf(selectedMissione.getId());
+
+			InputStream is = r.readEntity(InputStream.class);
+
+			StreamResource stream = new StreamResource(new StreamSource() {
+				@Override
+				public InputStream getStream() {
+					return is;
+				}
+			}, "missione.pdf");
+
+			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
+			return stream;
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+		return null;
 	}
 
 	protected void enableDisableButtons(boolean enabled) {

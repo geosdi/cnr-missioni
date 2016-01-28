@@ -53,7 +53,7 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		this.polizzaAssicurativa = polizzaAssicurativa;
 		if (polizzaAssicurativa != null && !polizzaAssicurativa.trim().equals(""))
 			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA, polizzaAssicurativa,Operator.AND));
+					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA,polizzaAssicurativa));
 		return this;
 	}
 
@@ -61,7 +61,7 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		this.cartaCircolazione = cartaCircolazione;
 		if (cartaCircolazione != null && !cartaCircolazione.trim().equals(""))
 			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_CARTA_CIRCOLAZIONE, cartaCircolazione,Operator.AND));
+					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_CARTA_CIRCOLAZIONE,cartaCircolazione));
 		return this;
 	}
 

@@ -52,6 +52,7 @@ public final class ElencoVeicoliCNRTable extends Table {
 		setSelectable(true);
 		setSortEnabled(true);
 		setVisible(false);
+		setNullSelectionAllowed(false);
 
 		// addActionHandler(new TransactionsActionHandler());
 
