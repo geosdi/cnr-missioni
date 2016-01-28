@@ -35,11 +35,15 @@ import javax.ws.rs.core.StreamingOutput;
  */
 class MissioneDelegate implements IMissioneDelegate {
 
+    static {
+        gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
+    }
+
     private static final TimeBasedGenerator gen;
-    //
+
     @GeoPlatformLog
     private static Logger logger;
-
+    //
     @Resource(name = "missioneDAO")
     private IMissioneDAO missioneDAO;
     @Resource(name = "userDAO")
@@ -54,10 +58,6 @@ class MissioneDelegate implements IMissioneDelegate {
     private CNRMissioniEmail cnrMissioniEsteroEmail;
     @Resource(name = "notificationMissionRequestValidator")
     private ICNRMissionValidator<NotificationMissionRequest, String> notificationMissionRequestValidator;
-
-    static {
-        gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
-    }
 
 
     /**
@@ -172,10 +172,22 @@ class MissioneDelegate implements IMissioneDelegate {
         if ((missione == null)) {
             throw new IllegalParameterFault("The Parameter missione must not be null ");
         }
-
-
+        missione.setId(gen.generate().toString());
         this.missioneDAO.persist(missione);
-        return null;
+
+        User user = this.userDAO.find(missione.getIdUser());
+        if (user == null)
+            throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory
+                .buildAddMissioneMessage(user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
+                        user.getDatiCNR().getMail(),
+                        (missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
+                                : this.cnrMissioniItaliaEmail.getEmail()),
+                        MissionePDFBuilder
+                                .newPDFBuilder()
+                                .withUser(user)
+                                .withMissione(missione)));
+        return missione.getId();
     }
 
     @Override
@@ -183,10 +195,36 @@ class MissioneDelegate implements IMissioneDelegate {
         if ((missione == null)) {
             throw new IllegalParameterFault("The Parameter missione must not be null ");
         }
-        //se alla missione è associato anche un nuovo rimborso gli setto il max numero ordine
-        if (missione.getRimborso() != null && missione.getRimborso().getNumeroOrdine() == null)
+
+        User user = this.userDAO.find(missione.getIdUser());
+        if (user == null)
+            throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+
+        if (missione.isRimborsoSetted() != null && missione.getRimborso().getNumeroOrdine() == null)
             missione.getRimborso().setNumeroOrdine(this.missioneDAO.getMaxNumeroOrdineRimborso());
         this.missioneDAO.update(missione);
+
+        if (missione.isRimborsoSetted()) {
+            this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory
+                    .buildAddRimborsoMessage(user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
+                            user.getDatiCNR().getMail(),
+                            (missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
+                                    : this.cnrMissioniItaliaEmail.getEmail()), missione.getId(),
+                            RimborsoPDFBuilder
+                                    .newPDFBuilder()
+                                    .withUser(user)
+                                    .withMissione(missione)));
+        } else {
+            this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory
+                    .buildAddMissioneMessage(user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
+                            user.getDatiCNR().getMail(),
+                            (missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
+                                    : this.cnrMissioniItaliaEmail.getEmail()),
+                            MissionePDFBuilder
+                                    .newPDFBuilder()
+                                    .withUser(user)
+                                    .withMissione(missione)));
+        }
         return Boolean.TRUE;
     }
 
