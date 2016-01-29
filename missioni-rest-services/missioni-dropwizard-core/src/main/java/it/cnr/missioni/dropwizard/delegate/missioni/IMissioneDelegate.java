@@ -4,6 +4,7 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
 
 import javax.ws.rs.core.StreamingOutput;
 
@@ -93,4 +94,12 @@ public interface IMissioneDelegate {
      * @throws Exception
      */
     GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception;
+
+    /**
+     * @param start
+     * @param end
+     * @return {@link DistanceResponse}
+     * @throws Exception
+     */
+    DistanceResponse getDistanceForMissione(String start, String end) throws Exception;
 }

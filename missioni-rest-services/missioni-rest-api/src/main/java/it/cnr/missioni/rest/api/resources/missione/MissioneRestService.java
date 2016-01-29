@@ -121,4 +121,15 @@ public interface MissioneRestService {
     @Path(value = MissioneServiceRSPathConfig.GET_GEOCODER_STORE_FOR_MISSIONE_LOCATION_PATH)
     Response getGeocoderStoreForMissioneLocation(@QueryParam(value = "location") String location)
             throws Exception;
+
+    /**
+     * @param start
+     * @param end
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @GET
+    @Path(value = MissioneServiceRSPathConfig.GET_DISTANCE_FOR_MISSIONE_PATH)
+    Response getDistanceForMissione(@QueryParam(value = "start") String start,
+            @QueryParam(value = "end") String end) throws Exception;
 }

@@ -4,7 +4,7 @@ package it.cnr.missioni.dropwizard.delegate.missioni;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.*;
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
@@ -21,10 +21,12 @@ import it.cnr.missioni.rest.api.response.geocoder.GeocoderResponse;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
+import org.geosdi.geoplatform.support.google.spring.services.distance.GPDistanceMatrixService;
 import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -64,6 +66,8 @@ class MissioneDelegate implements IMissioneDelegate {
     private ICNRMissionValidator<NotificationMissionRequest, String> notificationMissionRequestValidator;
     @Resource(name = "gpGeocodingService")
     private GPGeocodingService gpGeocodingService;
+    @Resource(name = "gpDistanceMatrixService")
+    private GPDistanceMatrixService gpDistanceMatrixService;
 
 
     /**
@@ -303,5 +307,35 @@ class MissioneDelegate implements IMissioneDelegate {
             }
         }
         return geocoderStore;
+    }
+
+    /**
+     * @param start
+     * @param end
+     * @return {@link DistanceResponse}
+     * @throws Exception
+     */
+    @Override
+    public DistanceResponse getDistanceForMissione(String start, String end) throws Exception {
+        if ((start == null) || (start.isEmpty())) {
+            throw new IllegalParameterFault("The Parameter start must not be null or an " +
+                    "empty String");
+        }
+
+        if ((end == null) || (end.isEmpty())) {
+            throw new IllegalParameterFault("The Parameter end must not be null or an " +
+                    "empty String");
+        }
+        DistanceMatrix distanceMatrix = this.gpDistanceMatrixService
+                .getDistanceMatrix(new String[]{start}, new String[]{end})
+                .mode(TravelMode.DRIVING).language("it").await();
+
+        DistanceMatrixRow distanceMatrixRow = distanceMatrix.rows[0];
+        DistanceMatrixElement element = distanceMatrixRow.elements[0];
+        if (element.status == DistanceMatrixElementStatus.NOT_FOUND) {
+            throw new IllegalParameterFault("Error in Geocoding the Start and End Location to have Distance");
+        }
+        return new DistanceResponse.MissioneDistanceResponse(element.distance.humanReadable,
+                element.duration.humanReadable);
     }
 }

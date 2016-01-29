@@ -140,4 +140,15 @@ public class MissioneRestServiceResource implements MissioneRestService {
     public Response getGeocoderStoreForMissioneLocation(String location) throws Exception {
         return Response.ok(this.missioneDelegate.getGeocoderStoreForMissioneLocation(location)).build();
     }
+
+    /**
+     * @param start
+     * @param end
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response getDistanceForMissione(String start, String end) throws Exception {
+        return Response.ok(this.missioneDelegate.getDistanceForMissione(start, end)).build();
+    }
 }
