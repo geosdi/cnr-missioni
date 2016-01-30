@@ -1,10 +1,12 @@
 package it.cnr.missioni.rest.api.response.geocoder;
 
 import com.google.common.collect.Lists;
+import it.cnr.missioni.rest.api.response.geocoder.adapter.GeocoderResponseAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;
 
 /**
@@ -17,6 +19,7 @@ public class GeocoderStore implements IGeocoderStore {
 
     private static final long serialVersionUID = 6222591373046634575L;
     //
+    @XmlJavaTypeAdapter(value = GeocoderResponseAdapter.class)
     private List<IGeocoderResponse> geocoderResponses;
 
     /**
