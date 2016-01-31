@@ -16,8 +16,8 @@ public class DatiCNR implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1534365538828825181L;
-	@NotNull
-	private Integer livello;
+	@NotBlank
+	private String livello;
 	private String qualifica;
 	private String datoreLavoro;
 	@NotBlank
@@ -32,14 +32,14 @@ public class DatiCNR implements Serializable{
 	/**
 	 * @return the livello
 	 */
-	public Integer getLivello() {
+	public String getLivello() {
 		return livello;
 	}
 
 	/**
 	 * @param livello
 	 */
-	public void setLivello(Integer livello) {
+	public void setLivello(String livello) {
 		this.livello = livello;
 	}
 

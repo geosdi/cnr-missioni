@@ -1,34 +1,30 @@
 package it.cnr.missioni.dashboard.component.wizard.missione;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 import org.vaadin.teemu.wizards.WizardStep;
 
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
+import com.vaadin.event.FieldEvents.BlurEvent;
+import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -47,7 +43,7 @@ public class DatiPeriodoMissioneStep implements WizardStep {
 		return "Step 5";
 	}
 
-	public DatiPeriodoMissioneStep(DatiPeriodoMissione datiPeriodoMissione,Missione missione) {
+	public DatiPeriodoMissioneStep(DatiPeriodoMissione datiPeriodoMissione, Missione missione) {
 		this.datiPeriodoMissione = datiPeriodoMissione;
 		this.missione = missione;
 
@@ -57,7 +53,7 @@ public class DatiPeriodoMissioneStep implements WizardStep {
 		return buildPanel();
 	}
 
-	public void bindFieldGroup() {
+	public BeanFieldGroup<DatiPeriodoMissione> bindFieldGroup() {
 
 		fieldGroup = new BeanFieldGroup<DatiPeriodoMissione>(DatiPeriodoMissione.class);
 		fieldGroup.setItemDataSource(datiPeriodoMissione);
@@ -65,22 +61,78 @@ public class DatiPeriodoMissioneStep implements WizardStep {
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
 
-		inizioMissioneField = (DateField) fieldGroup.buildAndBind("Inizio Missione", "inizioMissione");
-//		inizioMissioneField.setResolution(Resolution.MINUTE);
-		
-		fineMissioneField = (DateField) fieldGroup.buildAndBind("Fine Missione", "fineMissione");
+		inizioMissioneField = new DateField("Data Inizio");
+		inizioMissioneField.setRangeStart(new DateTime().toDate());
+		inizioMissioneField.setDateOutOfRangeMessage("Data non possibile");
+		inizioMissioneField.setResolution(Resolution.MINUTE);
+		inizioMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
+		inizioMissioneField.setValidationVisible(false);
+
+		fineMissioneField = new DateField("Data Fine");
+		fineMissioneField.setRangeStart(new DateTime().toDate());
+		fineMissioneField.setDateOutOfRangeMessage("Data non possibile");
+		fineMissioneField.setResolution(Resolution.MINUTE);
+		fineMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
+		fineMissioneField.setValidationVisible(false);
+
+		addValidator();
+
+		return fieldGroup;
+
+	}
+
+	private void addValidator() {
+
+		inizioMissioneField.addBlurListener(new BlurListener() {
+
+			@Override
+			public void blur(BlurEvent event) {
+				try {
+					inizioMissioneField.validate();
+				} catch (Exception e) {
+					inizioMissioneField.setValidationVisible(true);
+				}
+
+			}
+		});
+
+		fineMissioneField.addBlurListener(new BlurListener() {
+
+			@Override
+			public void blur(BlurEvent event) {
+				try {
+					fineMissioneField.validate();
+				} catch (Exception e) {
+					fineMissioneField.setValidationVisible(true);
+				}
+
+			}
+		});
 
 		fineMissioneField.addValidator(new Validator() {
 
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				DateTime data = (DateTime) value;
-				if (inizioMissioneField.getValue() != null && inizioMissioneField.getValue() != null
-						&& data.isBefore(inizioMissioneField.getValue().getTime()))
-					throw new InvalidValueException(Utility.getMessage("data_error"));
+
+				if (fineMissioneField.getValue() == null)
+					throw new InvalidValueException(Utility.getMessage("field_required"));
+
+				else {
+					DateTime data = new DateTime((Date) value);
+					if (data.isBefore(new DateTime(inizioMissioneField.getValue().getTime())))
+						throw new InvalidValueException(Utility.getMessage("data_error"));
+				}
+
 			}
 		});
 
+		inizioMissioneField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (inizioMissioneField.getValue() == null)
+					throw new InvalidValueException(Utility.getMessage("field_required"));
+			}
+		});
 	}
 
 	private Component buildPanel() {
@@ -103,21 +155,39 @@ public class DatiPeriodoMissioneStep implements WizardStep {
 	}
 
 	public boolean onAdvance() {
+
+		boolean check = true;
+
+		inizioMissioneField.setValidationVisible(true);
+		fineMissioneField.setValidationVisible(true);
+
 		try {
-			for (Field<?> f : fieldGroup.getFields()) {
-				((AbstractField<?>) f).setValidationVisible(true);
-			}
-			fieldGroup.commit();
-			
-			BeanItem<DatiPeriodoMissione> beanItem = (BeanItem<DatiPeriodoMissione>)fieldGroup.getItemDataSource();
-			DatiPeriodoMissione new_datiPeriodoMissione = beanItem.getBean();		
-			missione.setDatiPeriodoMissione(new_datiPeriodoMissione);
-			return true;
-		} catch (InvalidValueException | CommitException e) {
+			inizioMissioneField.validate();
+
+		} catch (InvalidValueException e) {
+			check = false;
+		}
+
+		try {
+			fineMissioneField.validate();
+
+		} catch (InvalidValueException e) {
+
+			check = false;
+		}
+
+		if (check) {
+			DatiPeriodoMissione periodoMissione = new DatiPeriodoMissione();
+			periodoMissione.setFineMissione(new DateTime(fineMissioneField.getValue()));
+			periodoMissione.setInizioMissione(new DateTime(inizioMissioneField.getValue()));
+
+			missione.setDatiPeriodoMissione(periodoMissione);
+		} else {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
 					Type.ERROR_MESSAGE);
-			return false;
 		}
+		return check;
+
 	}
 
 	public boolean onBack() {

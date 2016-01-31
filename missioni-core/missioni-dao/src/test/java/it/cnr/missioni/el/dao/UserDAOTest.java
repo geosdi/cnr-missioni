@@ -11,6 +11,7 @@ import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
+import org.joda.time.chrono.ISOChronology;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -271,7 +272,23 @@ public class UserDAOTest {
 		Assert.assertTrue("FIND ALL USER", lista.size() == 0);
 	}
 	
+	@Test
+	public void V_findByRespnsabileGruppo() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(true).withAll(true);
+
+		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL USER", lista.size() == 1);
+	}
 	
+	@Test
+	public void V_findByNotRespnsabileGruppo() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(false).withAll(true);
+
+		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
+		Assert.assertTrue("FIND ALL USER", lista.size() == 2);
+	}
 	
 	//
 	//// @Test
@@ -289,7 +306,7 @@ public class UserDAOTest {
 		anagrafica = new Anagrafica();
 		anagrafica.setCognome("Salvia");
 		anagrafica.setNome("Vito");
-		anagrafica.setDataNascita(new DateTime(1982, 7, 30, 0, 0));
+		anagrafica.setDataNascita(new DateTime(1982, 7, 30, 0, 0,ISOChronology.getInstanceUTC()));
 		anagrafica.setCodiceFiscale("slvvtttttttttttt");
 		anagrafica.setLuogoNascita("Potenza");
 		credenziali = new Credenziali();
@@ -308,26 +325,26 @@ public class UserDAOTest {
 		mappaVeicoli.put(veicolo.getTarga(), veicolo);
 		user.setMappaVeicolo(mappaVeicoli);
 		DatiCNR datiCNR = new DatiCNR();
-		datiCNR.setDatoreLavoro("Izzi");
+		datiCNR.setDatoreLavoro("01");
 		datiCNR.setIban("IT0000000000000000");
-		datiCNR.setLivello(5);
+		datiCNR.setLivello("Assegnista");
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setMatricola("1111111");
 		datiCNR.setQualifica("");
 		user.setDatiCNR(datiCNR);
 		Patente p = new Patente();
-		p.setDataRilascio(new DateTime(2001, 12, 15, 0, 0));
+		p.setDataRilascio(new DateTime(2001, 12, 15, 0, 0,ISOChronology.getInstanceUTC()));
 		p.setNumeroPatente("12334");
 		p.setRilasciataDa("MCTC");
-		p.setValidaFinoAl(new DateTime(2021, 12, 15, 0, 0));
+		p.setValidaFinoAl(new DateTime(2021, 12, 15, 0, 0,ISOChronology.getInstanceUTC()));
 		user.setPatente(p);
 		Residenza r = new Residenza();
 		r.setIndirizzo("Via Verdi");
 		r.setComune("Tito");
 		r.setDomicilioFiscale("Via Convento");
 		user.setResidenza(r);
-		user.setDataRegistrazione(new DateTime(2015, 1, 4, 0, 0));
-		user.setDateLastModified(new DateTime(2015, 1, 4, 0, 0));
+		user.setDataRegistrazione(new DateTime(2015, 1, 4, 0, 0,ISOChronology.getInstanceUTC()));
+		user.setDateLastModified(new DateTime(2015, 1, 4, 0, 0,ISOChronology.getInstanceUTC()));
 		user.setRegistrazioneCompletata(true);
 		listaUsers.add(user);
 

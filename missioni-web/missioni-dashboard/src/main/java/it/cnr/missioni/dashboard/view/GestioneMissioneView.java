@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import javax.ws.rs.core.Response;
 
-import org.vaadin.jouni.animator.client.CssAnimation;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -30,7 +29,11 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
+import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
+import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
+import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
+import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
@@ -64,14 +67,13 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 	private TextField oggettoMissioneField;
 
 	private VerticalLayout layoutTable;
-	private Button buttonModifica;
-	private Button buttonMail;
+	private Button buttonDettagli;
+//	private Button buttonMail;
 	private Button buttonRimborso;
 	private Button buttonPDF;
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
 
-	private CssAnimation a;
 
 	private User user;
 	private MissioneSearchBuilder missioneSearchBuilder;
@@ -290,7 +292,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withModifica(false).withTipo("missione").withMissione(new Missione())
+				WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione())
 						.build();
 			}
 
@@ -311,7 +313,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
 					buildComboPage();
-					DashboardEventBus.post(new DashboardEvent.TableMissioniUpdatedEvent(missioniStore));
+					DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore));
 
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -326,40 +328,40 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button();
-		buttonModifica.setDescription("Modifica");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.addClickListener(new Button.ClickListener() {
+		buttonDettagli = new Button();
+		buttonDettagli.setDescription("Dettagli");
+		buttonDettagli.setIcon(FontAwesome.GEARS);
+		buttonDettagli.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonDettagli.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withModifica(true).withTipo("missione")
-						.withMissione(selectedMissione).build();
 
+				DettagliMissioneWindow.open(selectedMissione);
+				
 			}
 
 		});
 
-		buttonMail = new Button();
-		buttonMail.setDescription("Invia Mail");
-		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
-		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
-
-		buttonMail.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					ClientConnector.sendMissioneMail(selectedMissione.getId());
-					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
-							Type.ERROR_MESSAGE);
-				}
-			}
-
-		});
+//		buttonMail = new Button();
+//		buttonMail.setDescription("Invia Mail");
+//		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
+//		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
+//
+//		buttonMail.addClickListener(new Button.ClickListener() {
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//				try {
+//					ClientConnector.sendMissioneMail(selectedMissione.getId());
+//					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
+//				} catch (Exception e) {
+//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
+//							Type.ERROR_MESSAGE);
+//				}
+//			}
+//
+//		});
 
 		buttonRimborso = new Button();
 		buttonRimborso.setDescription("Rimborso");
@@ -370,19 +372,19 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				Rimborso rimborso = null;
-				boolean modifica;
-				// se non è stato ancora associato il rimborso
+				// se è già associato il rimborso
 				if (selectedMissione.getRimborso() != null) {
 					rimborso = selectedMissione.getRimborso();
-					modifica = true;
+					DettagliRimborsoWindow.open(selectedMissione);
+
 				} else {
 					rimborso = new Rimborso();
-					modifica = false;
 					selectedMissione.setRimborso(rimborso);
+					WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso())
+					.withMissione(selectedMissione).build();
 				}
 
-				WizardSetupWindow.getWizardSetup().withModifica(modifica).withTipo("rimborso")
-						.withMissione(selectedMissione).build();
+
 			}
 
 		});
@@ -405,7 +407,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 
 		downloaderForLink.extend(buttonPDF);
 
-		layout.addComponents(buttonModifica, buttonMail, buttonRimborso, buttonPDF);
+		layout.addComponents(buttonDettagli, buttonRimborso, buttonPDF);
 
 		enableDisableButtons(false);
 
@@ -437,8 +439,8 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 	}
 
 	protected void enableDisableButtons(boolean enabled) {
-		this.buttonMail.setEnabled(enabled);
-		this.buttonModifica.setEnabled(enabled);
+//		this.buttonMail.setEnabled(enabled);
+		this.buttonDettagli.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonRimborso.setEnabled(enabled);
 	}

@@ -53,6 +53,8 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 		SearchResponse searchResponse = p
 				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
 						.setQuery(missioneSearchBuilder.buildQuery()))
+				.setFrom(missioneSearchBuilder.getFrom())
+				.setSize(missioneSearchBuilder.getSize())
 				.addSort(missioneSearchBuilder.getFieldSort(), missioneSearchBuilder.getSortOrder()).execute()
 				.actionGet();
 

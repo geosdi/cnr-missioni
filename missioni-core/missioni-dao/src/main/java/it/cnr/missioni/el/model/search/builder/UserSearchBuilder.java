@@ -3,7 +3,6 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
@@ -37,8 +36,11 @@ public class UserSearchBuilder implements Serializable {
 	private String id = null;
 	private String multiMatchValue;
 	private String fieldMultiMatch = "user.anagrafica.nome,user.anagrafica.cognome,user.anagrafica.codiceFiscale,user.datiCNR.matricola,user.datiCNR.mail";
+	private Boolean responsabileGruppo = null;
 	private int size = 10;
 	private int from = 0;
+	private boolean all = false;
+	
 	private String fieldSort = SearchConstants.USER_FIELD_COGNOME;
 	private SortOrder sortOrder = SortOrder.ASC;
 
@@ -154,6 +156,14 @@ public class UserSearchBuilder implements Serializable {
 		return this;
 	}
 	
+	public UserSearchBuilder withResponsabileGruppo(Boolean responsabileGruppo) {
+		this.responsabileGruppo = responsabileGruppo;
+		if (responsabileGruppo != null)
+			booleanModelSearch.getListaSearch()
+					.add(new ExactSearch(SearchConstants.USER_FIELD_RESPONSABILIE_GRUPPO, responsabileGruppo));
+		return this;
+	}
+	
 	public UserSearchBuilder withSize(int size) {
 		this.size = size;
 		return this;
@@ -161,6 +171,11 @@ public class UserSearchBuilder implements Serializable {
 	
 	public UserSearchBuilder withFrom(int from) {
 		this.from = from;
+		return this;
+	}
+	
+	public UserSearchBuilder withAll(boolean all) {
+		this.all = all;
 		return this;
 	}
 	
@@ -379,6 +394,20 @@ public class UserSearchBuilder implements Serializable {
 	}
 
 	/**
+	 * @return the responsabileGruppo
+	 */
+	public Boolean isResponsabileGruppo() {
+		return responsabileGruppo;
+	}
+
+	/**
+	 * @param responsabileGruppo 
+	 */
+	public void setResponsabileGruppo(Boolean responsabileGruppo) {
+		this.responsabileGruppo = responsabileGruppo;
+	}
+
+	/**
 	 * @return the size
 	 */
 	public int getSize() {
@@ -406,6 +435,20 @@ public class UserSearchBuilder implements Serializable {
 		this.from = from;
 	}
 	
+	/**
+	 * @return the all
+	 */
+	public boolean isAll() {
+		return all;
+	}
+
+	/**
+	 * @param all 
+	 */
+	public void setAll(boolean all) {
+		this.all = all;
+	}
+
 	/**
 	 * @return the fieldSort
 	 */

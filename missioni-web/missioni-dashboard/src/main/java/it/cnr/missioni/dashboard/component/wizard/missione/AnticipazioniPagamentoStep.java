@@ -44,17 +44,15 @@ public class AnticipazioniPagamentoStep implements WizardStep {
 
 	private DatiAnticipoPagamenti datiAnticipoPagamenti;
 	private Missione missione;
-	private boolean modifica;
 
 	public String getCaption() {
 		return "Step 7";
 	}
 
-	public AnticipazioniPagamentoStep(DatiAnticipoPagamenti datiAnticipoPagamenti, Missione missione, boolean modifica
+	public AnticipazioniPagamentoStep(Missione missione
 			 ) {
-		this.datiAnticipoPagamenti = datiAnticipoPagamenti;
+		this.datiAnticipoPagamenti = missione.getDatiAnticipoPagamenti();
 		this.missione = missione;
-		this.modifica = modifica;
 
 	}
 
@@ -138,9 +136,6 @@ public class AnticipazioniPagamentoStep implements WizardStep {
 			BeanItem<DatiAnticipoPagamenti> beanItem = (BeanItem<DatiAnticipoPagamenti>) fieldGroup.getItemDataSource();
 			DatiAnticipoPagamenti new_datiAnticipoPagamenti = beanItem.getBean();
 			missione.setDatiAnticipoPagamenti(new_datiAnticipoPagamenti);
-
-			DashboardEventBus.post(new MissioneAction(missione, modifica));
-
 			return true;
 		} catch (InvalidValueException | CommitException e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),

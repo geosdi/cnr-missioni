@@ -46,7 +46,7 @@ public class MissioneTest {
 		missione.setDatiPeriodoMissione(null);
 		missione.setDistanza(-1);
 		Set<ConstraintViolation<Missione>> constraintViolations = validator.validate(missione);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 	}
 
 	@Test
@@ -55,6 +55,7 @@ public class MissioneTest {
 		missione.setDatiPeriodoMissione(null);
 		missione.setLocalita("Roma");
 		missione.setOggetto("Conferenza");
+		missione.setResponsabileGruppo("01");
 		missione.setDistanza(100);
 		Set<ConstraintViolation<Missione>> constraintViolations = validator.validate(missione);
 		assertEquals(0, constraintViolations.size());

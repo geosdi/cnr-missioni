@@ -31,15 +31,15 @@
 
     
 
-    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
+    
 
-    <inherits name="org.tepi.filtertable.gwt.FilterTableWidgetset" />
+    
 
     <inherits name="com.vaadin.DefaultWidgetSet" />
 
-    <inherits name="org.vaadin.jouni.animator.AnimatorWidgetset" />
+    
 
-    <inherits name="org.vaadin.henrik.drawer.widgetset.DrawerApplicationWidgetset" />
+    
 
-    <inherits name="org.vaadin.jouni.dom.DomWidgetset" />
+    
 </module>

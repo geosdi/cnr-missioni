@@ -63,7 +63,9 @@ import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnect
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
+import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
 
 /**
  *
@@ -106,17 +108,19 @@ public class MissioneRestServiceTest {
 
 	@Test
 	public void A_testFindMissione() throws Exception {
-		
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione("M_01");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdMissione("M_01");
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertNotNull(missioniStore);
 	}
 
 	@Test
 	public void B_testFindMissioneByUser() throws Exception {
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione("03");
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdMissione("03");
 
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertNull(missioniStore);
 	}
 
@@ -134,59 +138,61 @@ public class MissioneRestServiceTest {
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		logger.debug("############################INSERT MISSIONE\n");
 	}
-	
+
 	@Test
 	public void D_testUpdateMissione() throws Exception {
 
 		Missione missione_update = new Missione();
 		missione_update.setId("M_04");
 		missione_update.setLocalita("Napoli");
-		
+
 		Rimborso r = new Rimborso();
 		missione_update.setRimborso(r);
-		
-	
-		
+
 		missioniCoreClientConnector.updateMissione(missione_update);
 		Thread.sleep(1000);
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione("M_04");
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdMissione("M_04");
 
 		missioneSearchBuilder.setIdMissione("M_04");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		logger.debug("############################NUMERO ORDINE MISSIONE\n"+missioniStore.getMissioni().get(0).getRimborso().getNumeroOrdine());	
-		Assert.assertTrue("Update Missione", missioniStore.getMissioni().get(0).getLocalita().equals(missione_update.getLocalita()));
+		logger.debug("############################NUMERO ORDINE MISSIONE\n"
+				+ missioniStore.getMissioni().get(0).getRimborso().getNumeroOrdine());
+		Assert.assertTrue("Update Missione",
+				missioniStore.getMissioni().get(0).getLocalita().equals(missione_update.getLocalita()));
 	}
-	
+
 	@Test
 	public void E_testDeleteMissione() throws Exception {
 		missioniCoreClientConnector.deleteMissione("M_04");
 		logger.debug("############################DELETE MISSIONE\n");
 	}
-	
+
 	@Test
 	public void F_testFindMissioneByRimborso() throws Exception {
-		
+
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC),null);	
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+				.withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC), null);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", missioniStore.getMissioni().size() == 1);
 	}
-	
+
 	@Test
 	public void G_testFindMissioneByNumeroRimborso() throws Exception {
-		
+
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withNumeroOrdineMissione(new Long(1));	
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+				.withNumeroOrdineMissione(new Long(1));
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", missioniStore.getMissioni().size() == 1);
 	}
-	
+
 	@Test
 	public void H_testFindMissioneByData() throws Exception {
-		
+
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC), new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+				.withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
+						new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", missioniStore.getMissioni().size() == 1);
 	}
 
@@ -195,7 +201,7 @@ public class MissioneRestServiceTest {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withMultiMatch("Milano, Riunione prova");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 3);
 	}
 
@@ -204,7 +210,7 @@ public class MissioneRestServiceTest {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withMultiMatch("roma conferenza");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
 
@@ -213,7 +219,7 @@ public class MissioneRestServiceTest {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withMultiMatch("roma sviluppo");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 1);
 	}
 
@@ -222,54 +228,51 @@ public class MissioneRestServiceTest {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withMultiMatch("sviluppo di applicazioni");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 1);
 	}
-	
-	
+
 	@Test
 	public void N_findByOggetto() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withOggetto("conferenza");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
-	
+
 	@Test
 	public void O_findByOggetto2() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withOggetto("riunione prova");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() ==2);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
-	
+
 	@Test
 	public void V_findNumeroRimboroUser() throws Exception {
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser("01")
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01")
 				.withFieldExist("missione.rimborso");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertTrue("FIND ALL MISSIONI",missioniStore.getMissioni().size()  == 1);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 1);
 	}
-	
+
 	@Test
 	public void V_findNumeroRimboroUser2() throws Exception {
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser("02")
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("02")
 				.withFieldExist("missione.rimborso");
-		MissioniStore missioniStore= missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertNull(missioniStore);
 	}
-	
+
 	@Test
 	public void Z_createMissionePDFFile() throws Exception {
 
 		Response r = missioniCoreClientConnector.downloadMissioneAsPdf("M_01");
-		
+
 		InputStream is = r.readEntity(InputStream.class);
 		File downloadfile = new File("./target/missione.pdf");
 		byte[] byteArray = IOUtils.toByteArray(is);
@@ -277,24 +280,23 @@ public class MissioneRestServiceTest {
 		fos.write(byteArray);
 		fos.flush();
 		fos.close();
-		
-		
-	}
-	
-	@Test
-	public void Z_createRimborsoMissionePDFFile() throws Exception {
 
-		Response r = missioniCoreClientConnector.downloadRimborsoMissioneAsPdf("M_01");
-		
-		InputStream is = r.readEntity(InputStream.class);
-		File downloadfile = new File("./target/rimborso.pdf");
-		byte[] byteArray = IOUtils.toByteArray(is);
-		FileOutputStream fos = new FileOutputStream(downloadfile);
-		fos.write(byteArray);
-		fos.flush();
-		fos.close();
-		
-		
 	}
-	
+
+	@Test
+	public void Z_getDistanceForMissione() throws Exception {
+
+		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector.getDistanceForMissione("Tito Scalo", "Roma");
+
+		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distanceResponce.getDistance());
+
+	}
+
+	@Test
+	public void getGeocoderStoreForMissioneLocation() throws Exception {
+
+		GeocoderStore geocoderStore = missioniCoreClientConnector.getGeocoderStoreForMissioneLocation("Roma");
+		logger.info("#####################GEOCODER FOR MISSIONE : {}\n", geocoderStore);
+	}
+
 }

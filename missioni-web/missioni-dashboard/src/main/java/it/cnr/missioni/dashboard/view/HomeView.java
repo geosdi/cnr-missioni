@@ -66,6 +66,7 @@ public final class HomeView extends Panel implements View {
 	private CssLayout dashboardPanels;
 	private final VerticalLayout root;
 	private ElencoMissioniTable elencoMissioniTable;
+	private ElencoRimborsiTable elencoRimborsiTable;
 	private Window notificationsWindow;
 	private NotificationsButton notificationsButton;
 	private CalendarPrenotazioni calendar;
@@ -90,8 +91,6 @@ public final class HomeView extends Panel implements View {
 		root.setExpandRatio(content, 1);
 
 		DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
-		
-		
 
 	}
 
@@ -122,16 +121,16 @@ public final class HomeView extends Panel implements View {
 		l.setSizeFull();
 		elencoMissioniTable = new ElencoMissioniTable();
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser(user.getId());
-
-		try {
-			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			elencoMissioniTable.aggiornaTable(missioniStore);
-		} catch (Exception e) {
-			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-					Type.ERROR_MESSAGE);
-		}
+//		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+//				.withIdUser(user.getId());
+//
+//		try {
+//			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
+//			elencoMissioniTable.aggiornaTable(missioniStore);
+//		} catch (Exception e) {
+//			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+//					Type.ERROR_MESSAGE);
+//		}
 
 		l.addComponent(elencoMissioniTable);
 
@@ -152,18 +151,18 @@ public final class HomeView extends Panel implements View {
 		CssLayout l = new CssLayout();
 		l.setCaption("Ultimi Rimborsi");
 		l.setSizeFull();
-		ElencoRimborsiTable elencoRimborsiTable = new ElencoRimborsiTable();
+		elencoRimborsiTable = new ElencoRimborsiTable();
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO).withIdUser(user.getId());
-
-		try {
-			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			elencoRimborsiTable.aggiornaTable(missioniStore);
-		} catch (Exception e) {
-			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-					Type.ERROR_MESSAGE);
-		}
+//		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+//				.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO).withIdUser(user.getId());
+//
+//		try {
+//			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
+//			elencoRimborsiTable.aggiornaTable(missioniStore);
+//		} catch (Exception e) {
+//			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+//					Type.ERROR_MESSAGE);
+//		}
 
 		l.addComponent(elencoRimborsiTable);
 		Component p = createContentWrapper(l);
@@ -193,82 +192,6 @@ public final class HomeView extends Panel implements View {
 		return dashboardPanels;
 	}
 
-	//
-	// private Component createContentWrapper2(final Component content) {
-	// final CssLayout slot = new CssLayout();
-	// // slot.setWidth("100%");
-	// // slot.setHeight("50%");
-	// // slot.addStyleName("dashboard-panel-slot");
-	// slot.setWidth("100%");
-	// CssLayout card = new CssLayout();
-	// card.setWidth("100%");
-	// card.addStyleName(ValoTheme.LAYOUT_CARD);
-	//
-	// HorizontalLayout toolbar = new HorizontalLayout();
-	// toolbar.addStyleName("dashboard-panel-toolbar");
-	// toolbar.setWidth("100%");
-	//
-	// Label caption = new Label(content.getCaption());
-	// caption.addStyleName(ValoTheme.LABEL_H4);
-	// caption.addStyleName(ValoTheme.LABEL_COLORED);
-	// caption.addStyleName(ValoTheme.LABEL_NO_MARGIN);
-	// content.setCaption(null);
-	//
-	// MenuBar tools = new MenuBar();
-	// tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
-	// MenuItem max = tools.addItem("", FontAwesome.EXPAND, new Command() {
-	//
-	// /**
-	// *
-	// */
-	// private static final long serialVersionUID = -7645614062259408973L;
-	//
-	// @Override
-	// public void menuSelected(final MenuItem selectedItem) {
-	// if (!slot.getStyleName().contains("max")) {
-	// selectedItem.setIcon(FontAwesome.COMPRESS);
-	// toggleMaximized(slot, true);
-	// } else {
-	// slot.removeStyleName("max");
-	// selectedItem.setIcon(FontAwesome.EXPAND);
-	// toggleMaximized(slot, false);
-	// }
-	// }
-	// });
-	// max.setStyleName("icon-only");
-	// MenuItem root = tools.addItem("", FontAwesome.COG, null);
-	// root.addItem("Configure", new Command() {
-	// /**
-	// *
-	// */
-	// private static final long serialVersionUID = 5014516404913881968L;
-	//
-	// @Override
-	// public void menuSelected(final MenuItem selectedItem) {
-	// Notification.show("Not implemented in this demo");
-	// }
-	// });
-	// root.addSeparator();
-	// root.addItem("Close", new Command() {
-	// /**
-	// *
-	// */
-	// private static final long serialVersionUID = -4608004443713485478L;
-	//
-	// @Override
-	// public void menuSelected(final MenuItem selectedItem) {
-	// Notification.show("Not implemented in this demo");
-	// }
-	// });
-	//
-	// toolbar.addComponents(caption, tools);
-	// toolbar.setExpandRatio(caption, 1);
-	// toolbar.setComponentAlignment(caption, Alignment.MIDDLE_LEFT);
-	//
-	// card.addComponents(toolbar, content);
-	// slot.addComponent(card);
-	// return slot;
-	// }
 
 	private Component createContentWrapper(final Component content) {
 		final CssLayout slot = new CssLayout();
@@ -345,10 +268,24 @@ public final class HomeView extends Panel implements View {
 		return slot;
 	}
 
+	// E' necessario ricaricare le tabelle missioni e rimborsi, perchè l'evento
+	// di ricerca si protrae anche nella homeview
 	@Override
 	public void enter(final ViewChangeEvent event) {
+		try {
+			MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+					.withIdUser(user.getId());
+			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
+			elencoMissioniTable.aggiornaTable(missioniStore);
 
+			missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+					.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO);
+			elencoRimborsiTable.aggiornaTable(missioniStore);
 
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
 
 	}
 

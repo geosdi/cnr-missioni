@@ -1,47 +1,23 @@
 package it.cnr.missioni.dashboard.view;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
-import javax.imageio.ImageIO;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.io.IOUtils;
-
-import com.google.gwt.user.client.ui.ClickListener;
-import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FileResource;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Resource;
-import com.vaadin.server.Responsive;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinResponse;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.server.ClientConnector.AttachEvent;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -52,7 +28,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
-import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
+import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
+import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
@@ -87,7 +64,7 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 	private VerticalLayout layoutTable;
 	private Button buttonModifica;
-	private Button buttonMail;
+//	private Button buttonMail;
 	private Button buttonMissione;
 	private Button buttonPDF;
 	private VerticalLayout layoutForm;
@@ -337,32 +314,31 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withModifica(true).withTipo("rimborso")
-						.withMissione(selectedMissione).build();
+				DettagliRimborsoWindow.open(selectedMissione);
 
 			}
 
 		});
 
-		buttonMail = new Button();
-		buttonMail.setDescription("Invia Mail");
-		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
-		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
-
-		buttonMail.addClickListener(new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				try {
-					ClientConnector.sendRimborsoMail(selectedMissione.getId());
-					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
-							Type.ERROR_MESSAGE);
-				}
-			}
-
-		});
+//		buttonMail = new Button();
+//		buttonMail.setDescription("Invia Mail");
+//		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
+//		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
+//
+//		buttonMail.addClickListener(new Button.ClickListener() {
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//				try {
+//					ClientConnector.sendRimborsoMail(selectedMissione.getId());
+//					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
+//				} catch (Exception e) {
+//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
+//							Type.ERROR_MESSAGE);
+//				}
+//			}
+//
+//		});
 
 		buttonMissione = new Button();
 		buttonMissione.setDescription("Missione");
@@ -372,8 +348,7 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withModifica(true).withTipo("missione")
-						.withMissione(selectedMissione).build();
+				DettagliMissioneWindow.open(selectedMissione);
 
 			}
 
@@ -404,7 +379,7 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 		downloaderForLink.extend(buttonPDF);
 
-		layout.addComponents(buttonModifica, buttonMail, buttonMissione, buttonPDF);
+		layout.addComponents(buttonModifica, buttonMissione, buttonPDF);
 
 		enableDisableButtons(false);
 
@@ -435,7 +410,7 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 	}
 
 	protected void enableDisableButtons(boolean enabled) {
-		this.buttonMail.setEnabled(enabled);
+//		this.buttonMail.setEnabled(enabled);
 		this.buttonModifica.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonMissione.setEnabled(enabled);

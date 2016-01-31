@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.component.wizard.missione;
 
+import org.joda.time.DateTime;
 import org.vaadin.teemu.wizards.WizardStep;
 
 import com.vaadin.data.Validator;
@@ -8,8 +9,11 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.event.FieldEvents.BlurEvent;
+import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
@@ -65,23 +69,109 @@ public class DatiMissioneEsteraStep implements WizardStep {
 
 		trattamentoMissioneEsteraField = (ComboBox) fieldGroup.buildAndBind("Trattamento Rimborso",
 				"trattamentoMissioneEsteraEnum", ComboBox.class);
-		attraversamentoFrontieraAndataField = (DateField) fieldGroup.buildAndBind("Attraversamento Frontiera Andata",
-				"attraversamentoFrontieraAndata");
-		attraversamentoFrontieraRitornoField = (DateField) fieldGroup.buildAndBind("Attraversamento Frontiera Ritorno",
-				"attraversamentoFrontieraRitorno");
 
-		trattamentoMissioneEsteraField.addValidator(new Validator() {
+		attraversamentoFrontieraAndataField = new DateField("Attraversamento Frontiera andata");
+		attraversamentoFrontieraAndataField.setRangeStart(new DateTime().toDate());
+		attraversamentoFrontieraAndataField.setDateOutOfRangeMessage("Data non possibile");
+		attraversamentoFrontieraAndataField.setResolution(Resolution.MINUTE);
+		attraversamentoFrontieraAndataField.setDateFormat("dd/MM/yyyy HH:mm");
+		attraversamentoFrontieraAndataField.setValidationVisible(false);
 
-			@Override
-			public void validate(Object value) throws InvalidValueException {
-				TrattamentoMissioneEsteraEnum v = (TrattamentoMissioneEsteraEnum) value;
-				if (missione.isMissioneEstera() && (v == null)) {
-					throw new InvalidValueException(Utility.getMessage("checkbox_missione_error"));
+		attraversamentoFrontieraRitornoField = new DateField("Attraversamento Frontiera andata");
+		attraversamentoFrontieraRitornoField.setRangeStart(new DateTime().toDate());
+		attraversamentoFrontieraRitornoField.setDateOutOfRangeMessage("Data non possibile");
+		attraversamentoFrontieraRitornoField.setResolution(Resolution.MINUTE);
+		attraversamentoFrontieraRitornoField.setDateFormat("dd/MM/yyyy HH:mm");
+		attraversamentoFrontieraRitornoField.setValidationVisible(false);
+
+		addValidator();
+
+	}
+
+	public void addDateRange() {
+		// Le date di attraversamento frontiera devono essere comprese tra la
+		// data di inizio e fine missione
+		attraversamentoFrontieraRitornoField
+				.setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+		attraversamentoFrontieraRitornoField.setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
+		attraversamentoFrontieraAndataField
+				.setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+		attraversamentoFrontieraAndataField.setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
+	}
+
+	public void addValidator() {
+
+		// se la missione è di tipo estera
+		if (missione.isMissioneEstera()) {
+
+			attraversamentoFrontieraAndataField.addBlurListener(new BlurListener() {
+
+				@Override
+				public void blur(BlurEvent event) {
+					try {
+						attraversamentoFrontieraAndataField.validate();
+					} catch (Exception e) {
+						attraversamentoFrontieraAndataField.setValidationVisible(true);
+					}
+
+				}
+			});
+
+			attraversamentoFrontieraRitornoField.addBlurListener(new BlurListener() {
+
+				@Override
+				public void blur(BlurEvent event) {
+					try {
+						attraversamentoFrontieraAndataField.validate();
+					} catch (Exception e) {
+						attraversamentoFrontieraAndataField.setValidationVisible(true);
+					}
+
+				}
+			});
+
+			trattamentoMissioneEsteraField.addValidator(new Validator() {
+
+				@Override
+				public void validate(Object value) throws InvalidValueException {
+					TrattamentoMissioneEsteraEnum v = (TrattamentoMissioneEsteraEnum) value;
+					if ((v == null)) {
+						throw new InvalidValueException(Utility.getMessage("checkbox_missione_error"));
+					}
+
 				}
 
-			}
+			});
 
-		});
+			attraversamentoFrontieraAndataField.addValidator(new Validator() {
+
+				@Override
+				public void validate(Object value) throws InvalidValueException {
+
+					if (attraversamentoFrontieraAndataField.getValue() == null)
+						throw new InvalidValueException(Utility.getMessage("field_required"));
+
+				}
+			});
+
+			// la data di ritorno posteriore alla data di andata
+			attraversamentoFrontieraRitornoField.addValidator(new Validator() {
+
+				@Override
+				public void validate(Object value) throws InvalidValueException {
+
+					if (attraversamentoFrontieraAndataField.getValue() == null)
+						throw new InvalidValueException(Utility.getMessage("field_required"));
+					else {
+						DateTime data = (DateTime) value;
+						if (attraversamentoFrontieraAndataField.getValue() != null
+								&& data.isBefore(attraversamentoFrontieraAndataField.getValue().getTime()))
+							throw new InvalidValueException(Utility.getMessage("data_error"));
+					}
+
+				}
+			});
+		}
 
 	}
 
@@ -97,12 +187,12 @@ public class DatiMissioneEsteraStep implements WizardStep {
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
-		
-		if(!missione.isMissioneEstera()){
+
+		if (!missione.isMissioneEstera()) {
 			trattamentoMissioneEsteraField.setReadOnly(true);
 			attraversamentoFrontieraAndataField.setReadOnly(true);
 			attraversamentoFrontieraRitornoField.setReadOnly(true);
-		}else{
+		} else {
 			trattamentoMissioneEsteraField.setReadOnly(false);
 			attraversamentoFrontieraAndataField.setReadOnly(false);
 			attraversamentoFrontieraRitornoField.setReadOnly(false);
@@ -117,23 +207,44 @@ public class DatiMissioneEsteraStep implements WizardStep {
 	}
 
 	public boolean onAdvance() {
+
+		boolean check = true;
+
+		for (Field<?> f : fieldGroup.getFields()) {
+			((AbstractField<?>) f).setValidationVisible(true);
+		}
+		attraversamentoFrontieraAndataField.setValidationVisible(true);
+		attraversamentoFrontieraRitornoField.setValidationVisible(true);
 		try {
-
-			for (Field<?> f : fieldGroup.getFields()) {
-				((AbstractField<?>) f).setValidationVisible(true);
-			}
 			fieldGroup.commit();
+		} catch (InvalidValueException | CommitException e) {
+			check = false;
+		}
+		try {
+			attraversamentoFrontieraAndataField.validate();
+		} catch (InvalidValueException e) {
+			check = false;
+		}
+		try {
+			attraversamentoFrontieraRitornoField.validate();
+		} catch (InvalidValueException e) {
+			check = false;
+		}
 
+		if (check) {
 			BeanItem<DatiMissioneEstera> beanItem = (BeanItem<DatiMissioneEstera>) fieldGroup.getItemDataSource();
 			DatiMissioneEstera new_datiMissioneEstera = beanItem.getBean();
 			missione.setDatiMissioneEstera(new_datiMissioneEstera);
-
-			return true;
-		} catch (InvalidValueException | CommitException e) {
+			missione.getDatiMissioneEstera()
+					.setAttraversamentoFrontieraAndata(new DateTime(attraversamentoFrontieraAndataField.getValue()));
+			missione.getDatiMissioneEstera()
+					.setAttraversamentoFrontieraRitorno(new DateTime(attraversamentoFrontieraRitornoField.getValue()));
+		} else {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
 					Type.ERROR_MESSAGE);
-			return false;
 		}
+		return check;
+
 	}
 
 	public boolean onBack() {

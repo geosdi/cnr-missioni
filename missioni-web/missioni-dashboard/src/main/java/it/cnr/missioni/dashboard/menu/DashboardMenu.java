@@ -21,6 +21,7 @@ import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.component.window.CredenzialiWindow;
 import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
+import it.cnr.missioni.dashboard.component.wizard.user.WizardUser;
 import it.cnr.missioni.dashboard.event.DashboardEvent.MenuUpdateEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ProfileUpdatedEvent;
@@ -238,7 +239,7 @@ public final class DashboardMenu extends CustomComponent {
 				public void buttonClick(final ClickEvent event) {
 
 					if (view == DashboardViewType.COMPLETA_REGISTRAZIONE) {
-						WizardSetupWindow.getWizardSetup().withTipo("user").withUser(user).build();
+						WizardSetupWindow.getWizardSetup().withTipo(new WizardUser()).withUser(user).build();
 
 					} else {
 						UI.getCurrent().getNavigator().navigateTo(view.getViewName());

@@ -31,8 +31,8 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 	private TextField avvisoPagamentoField;
 	private TextField anticipazionePagamentoField;
 	private TextField totaleField;
-	private DateField fieldDataInserimentoField;
-	private DateField fieldDataLastModifiedField;
+//	private DateField fieldDataInserimentoField;
+//	private DateField fieldDataLastModifiedField;
 
 	private BeanFieldGroup<Rimborso> fieldGroup;
 	private HorizontalLayout mainLayout;;
@@ -63,10 +63,10 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		anticipazionePagamentoField = (TextField) fieldGroup.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
 		totaleField = (TextField) fieldGroup.buildAndBind("Totale", "totale");
 
-		fieldDataInserimentoField = (DateField) fieldGroup.buildAndBind("Data Inserimento", "dataRimborso");
-		fieldDataInserimentoField.setReadOnly(true);
-		fieldDataLastModifiedField = (DateField) fieldGroup.buildAndBind("Data ultima modifica", "dateLastModified");
-		fieldDataLastModifiedField.setReadOnly(true);
+//		fieldDataInserimentoField = (DateField) fieldGroup.buildAndBind("Data Inserimento", "dataRimborso");
+//		fieldDataInserimentoField.setReadOnly(true);
+//		fieldDataLastModifiedField = (DateField) fieldGroup.buildAndBind("Data ultima modifica", "dateLastModified");
+//		fieldDataLastModifiedField.setReadOnly(true);
 
 
 
@@ -90,8 +90,8 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		details.addComponent(anticipazionePagamentoField);
 		details.addComponent(totaleField);
 		totaleField.setReadOnly(true);
-		details.addComponent(fieldDataInserimentoField);
-		details.addComponent(fieldDataLastModifiedField);
+//		details.addComponent(fieldDataInserimentoField);
+//		details.addComponent(fieldDataLastModifiedField);
 
 		return mainLayout;
 	}

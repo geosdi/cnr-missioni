@@ -146,7 +146,7 @@ public class UserTest {
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setIban("112345");
 		datiCNR.setMatricola("9876");
-		datiCNR.setLivello(1);
+		datiCNR.setLivello("Assegnista");
 		Set<ConstraintViolation<DatiCNR>> constraintViolations = validator.validate(datiCNR);
 		assertEquals(0, constraintViolations.size());
 	}
@@ -200,9 +200,9 @@ public class UserTest {
 		mappaVeicoli.put(veicolo.getTarga(), veicolo);
 		user.setMappaVeicolo(mappaVeicoli);
 		DatiCNR datiCNR = new DatiCNR();
-		datiCNR.setDatoreLavoro("Izzi");
+		datiCNR.setDatoreLavoro("01");
 		datiCNR.setIban("IT0000000000000000");
-		datiCNR.setLivello(5);
+		datiCNR.setLivello("Assegnista");
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setMatricola("1111111");
 		datiCNR.setQualifica("");

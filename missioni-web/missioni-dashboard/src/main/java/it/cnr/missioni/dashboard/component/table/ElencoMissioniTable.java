@@ -10,7 +10,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdatedEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
@@ -173,7 +173,7 @@ public final class ElencoMissioniTable extends Table {
 	 * 
 	 */
 	@Subscribe
-	public void aggiornaTableMissioni(TableMissioniUpdatedEvent tableMissioniUpdatedEvent) {
+	public void aggiornaTableMissioni(TableMissioniUpdateUpdatedEvent tableMissioniUpdatedEvent) {
 		aggiornaTable(tableMissioniUpdatedEvent.getMissioniStore());
 	}
 

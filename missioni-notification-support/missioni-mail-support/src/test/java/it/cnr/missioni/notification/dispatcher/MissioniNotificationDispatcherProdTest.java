@@ -124,7 +124,7 @@ public class MissioniNotificationDispatcherProdTest {
         DatiCNR datiCNR = new DatiCNR();
         datiCNR.setDatoreLavoro("Izzi");
         datiCNR.setIban("IT0000000000000000");
-        datiCNR.setLivello(5);
+        datiCNR.setLivello("5");
         datiCNR.setMail("vito.salvia@gmail.com");
         datiCNR.setMatricola("1111111");
         datiCNR.setQualifica("");

@@ -16,7 +16,9 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
@@ -103,8 +105,8 @@ public class ClientConnector {
 	 * @param user
 	 * @throws Exception
 	 */
-	public static void addMissione(Missione missione) throws Exception {
-		missioniCoreClientConnector.addMissione(missione);
+	public static String  addMissione(Missione missione) throws Exception {
+		return missioniCoreClientConnector.addMissione(missione);
 
 	}
 
@@ -225,6 +227,27 @@ public class ClientConnector {
 	 */
 	public static Response downloadRimborsoMissioneAsPdf(String missioneID) throws Exception {
 		return missioniCoreClientConnector.downloadRimborsoMissioneAsPdf(missioneID);
+	}
+	
+	/**
+	 * 
+	 * @param location
+	 * @return
+	 * @throws Exception
+	 */
+	public static DistanceResponse.MissioneDistanceResponse getDistanceForMissione(String start, String end)
+			throws Exception {
+		return missioniCoreClientConnector.getDistanceForMissione(start, end);
+	}
+
+	/**
+	 * 
+	 * @param location
+	 * @return
+	 * @throws Exception
+	 */
+	public static GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception {
+		return missioniCoreClientConnector.getGeocoderStoreForMissioneLocation(location);
 	}
 
 }

@@ -1,9 +1,9 @@
 package it.cnr.missioni.rest.api.response.missione.distance;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -34,8 +34,8 @@ public interface DistanceResponse extends Serializable {
     /**
      *
      */
-    @XmlRootElement(name = "MissioneDistanceResponse")
-    @XmlAccessorType(XmlAccessType.FIELD)
+    @JsonRootName(value = "MissioneDistanceResponse")
+    @JsonPropertyOrder(value = { "distance", "duration" })
     class MissioneDistanceResponse implements DistanceResponse {
 
         private static final long serialVersionUID = -1166804837229700778L;

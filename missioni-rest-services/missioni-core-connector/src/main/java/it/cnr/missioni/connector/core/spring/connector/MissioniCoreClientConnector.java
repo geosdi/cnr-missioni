@@ -53,8 +53,10 @@ import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
+import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
@@ -101,12 +103,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
 //    }
 
 
-    public Long addMissione(Missione missione) throws Exception {
+    public String addMissione(Missione missione) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/addMissione/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(missione,
-                        MediaType.APPLICATION_JSON), Long.class);
+                        MediaType.APPLICATION_JSON), String.class);
     }
 
     public Boolean deleteMissione(String missioneID) throws Exception {
@@ -141,6 +143,8 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("iban", userSearchBuilder.getIban())
                 .queryParam("mail", userSearchBuilder.getMail())
                 .queryParam("id", userSearchBuilder.getId())
+                .queryParam("responsabileGruppo", userSearchBuilder.isResponsabileGruppo())
+                .queryParam("all", userSearchBuilder.isAll())
                 .queryParam("from", userSearchBuilder.getFrom())
                 .queryParam("size", userSearchBuilder.getSize())
                 .request(MediaType.APPLICATION_JSON)
@@ -285,6 +289,23 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(Response.class);
     }
 
+    public DistanceResponse.MissioneDistanceResponse getDistanceForMissione(String start,String end) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/getDistanceForMissione/")
+                .queryParam("start", start)
+                .queryParam("end", end)
+                .request(MediaType.APPLICATION_JSON)
+                .get(DistanceResponse.MissioneDistanceResponse.class);
+    }
+    
+    public GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/getGeocoderStoreForMissioneLocation/")
+                .queryParam("location", location)
+                .request(MediaType.APPLICATION_JSON)
+                .get(GeocoderStore.class);
+    }
+    
     @Override
     public String getConnectorName() {
         return "CNR MISSIONI Core Client Connector";

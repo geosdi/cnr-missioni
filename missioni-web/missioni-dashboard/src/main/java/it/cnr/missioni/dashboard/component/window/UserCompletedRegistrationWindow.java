@@ -6,6 +6,8 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.event.FieldEvents.BlurEvent;
+import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
@@ -14,6 +16,7 @@ import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -58,6 +61,7 @@ public class UserCompletedRegistrationWindow extends Window {
 	private TextField codiceFiscaleField;
 	private TextField luogoNascitaField;
 	private DateField dataNascitaField;
+	private ComboBox listaUserField;
 
 	private TextField numeroPatenteField;
 	private TextField rilasciataDaField;
@@ -71,7 +75,7 @@ public class UserCompletedRegistrationWindow extends Window {
 	private TextField ibanField;
 	private User user;
 
-	private UserCompletedRegistrationWindow(final User user,final boolean isAdmin) {
+	private UserCompletedRegistrationWindow(final User user, final boolean isAdmin) {
 
 		this.user = user;
 		addStyleName("profile-window");
@@ -108,9 +112,10 @@ public class UserCompletedRegistrationWindow extends Window {
 		detailsWrapper.addComponent(buildPatenteTab());
 		detailsWrapper.addComponent(buildDatiCNR());
 
-		if(!isAdmin)
+		if (!isAdmin)
 			content.addComponent(buildFooter());
 		fieldGroup.setReadOnly(isAdmin);
+		addValidator();
 
 	}
 
@@ -160,7 +165,161 @@ public class UserCompletedRegistrationWindow extends Window {
 		return root;
 	}
 
+	private Component buildPatenteTab() {
+		HorizontalLayout root = new HorizontalLayout();
+		root.setCaption("Patente");
+		root.setIcon(FontAwesome.CAR);
+		root.setWidth(100.0f, Unit.PERCENTAGE);
+		root.setSpacing(true);
+		root.setMargin(true);
+
+		FormLayout details = new FormLayout();
+		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		root.addComponent(details);
+		root.setExpandRatio(details, 1);
+
+		numeroPatenteField = (TextField) fieldGroup.buildAndBind("Numero Patente", "patente.numeroPatente");
+		details.addComponent(numeroPatenteField);
+		rilasciataDaField = (TextField) fieldGroup.buildAndBind("Rilasciata da", "patente.rilasciataDa");
+		details.addComponent(rilasciataDaField);
+		DateField dataRilascio = (DateField) fieldGroup.buildAndBind("Data Rilascio", "patente.dataRilascio");
+
+		details.addComponent(dataRilascio);
+		DateField dataValidita = (DateField) fieldGroup.buildAndBind("Valida fino al", "patente.validaFinoAl");
+		details.addComponent(dataValidita);
+
+		return root;
+	}
+
+	private Component buildDatiCNR() {
+		HorizontalLayout root = new HorizontalLayout();
+		root.setCaption("Dati CNR");
+		root.setIcon(FontAwesome.INSTITUTION);
+		root.setWidth(100.0f, Unit.PERCENTAGE);
+		root.setSpacing(true);
+		root.setMargin(true);
+
+		FormLayout details = new FormLayout();
+		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		root.addComponent(details);
+		root.setExpandRatio(details, 1);
+
+		livelloField = (TextField) fieldGroup.buildAndBind("Livello", "datiCNR.livello");
+		details.addComponent(livelloField);
+		qualificaField = (TextField) fieldGroup.buildAndBind("Qualifica", "datiCNR.qualifica");
+		details.addComponent(qualificaField);
+		// datoreLavoroField = (TextField) fieldGroup.buildAndBind("Datore
+		// Lavoro", "datiCNR.datoreLavoro");
+		// details.addComponent(datoreLavoroField);
+
+		listaUserField = new ComboBox("Datore Lavoro");
+
+		try {
+			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true);
+
+			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
+
+			userStore.getUsers().forEach(u -> {
+				listaUserField.addItem(u.getId());
+				listaUserField.setItemCaption(u.getId(),
+						u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
+			});
+
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
+		listaUserField.setValidationVisible(false);
+		fieldGroup.bind(listaUserField, "datiCNR.datoreLavoro");
+		details.addComponent(listaUserField);
+
+		matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "datiCNR.matricola");
+		details.addComponent(matricolaField);
+		codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzi", "datiCNR.codiceTerzo");
+		details.addComponent(codiceTerzoField);
+		mailField = (TextField) fieldGroup.buildAndBind("Mail", "datiCNR.mail");
+		details.addComponent(mailField);
+		ibanField = (TextField) fieldGroup.buildAndBind("Iban", "datiCNR.iban");
+		details.addComponent(ibanField);
+
+		return root;
+	}
+
+	private Component buildResidenzaTab() {
+		HorizontalLayout root = new HorizontalLayout();
+		root.setCaption("Residenza");
+		root.setIcon(FontAwesome.HOME);
+		root.setWidth(100.0f, Unit.PERCENTAGE);
+		root.setSpacing(true);
+		root.setMargin(true);
+
+		FormLayout details = new FormLayout();
+		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		root.addComponent(details);
+		root.setExpandRatio(details, 1);
+
+		comuneField = (TextField) fieldGroup.buildAndBind("Comune", "residenza.comune");
+		details.addComponent(comuneField);
+		indirizzoField = (TextField) fieldGroup.buildAndBind("Indirizzo", "residenza.indirizzo");
+		details.addComponent(indirizzoField);
+		domicilioFiscaleField = (TextField) fieldGroup.buildAndBind("Domicilio Fiscale", "residenza.domicilioFiscale");
+		details.addComponent(domicilioFiscaleField);
+
+		return root;
+	}
+
+	private Component buildFooter() {
+		HorizontalLayout footer = new HorizontalLayout();
+		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
+		footer.setWidth(100.0f, Unit.PERCENTAGE);
+
+		Button ok = new Button("OK");
+		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		ok.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+				try {
+					for (Field<?> f : fieldGroup.getFields()) {
+						((AbstractField<?>) f).setValidationVisible(true);
+					}
+					fieldGroup.commit();
+
+					BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
+					User new_user = beanItem.getBean();
+
+					DashboardEventBus.post(new UpdateUserAction(new_user));
+					close();
+
+				} catch (InvalidValueException | CommitException e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
+							Type.ERROR_MESSAGE);
+				}
+
+			}
+		});
+		ok.focus();
+		footer.addComponent(ok);
+		footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
+		return footer;
+	}
+
 	private void addValidator() {
+
+		listaUserField.addBlurListener(new BlurListener() {
+
+			@Override
+			public void blur(BlurEvent event) {
+				try {
+					listaUserField.validate();
+				} catch (Exception e) {
+					listaUserField.setValidationVisible(true);
+				}
+			}
+
+		});
+
 		codiceFiscaleField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
@@ -269,125 +428,9 @@ public class UserCompletedRegistrationWindow extends Window {
 
 	}
 
-	private Component buildPatenteTab() {
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Patente");
-		root.setIcon(FontAwesome.CAR);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-
-		FormLayout details = new FormLayout();
-		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-		root.addComponent(details);
-		root.setExpandRatio(details, 1);
-
-		numeroPatenteField = (TextField) fieldGroup.buildAndBind("Numero Patente", "patente.numeroPatente");
-		details.addComponent(numeroPatenteField);
-		rilasciataDaField = (TextField) fieldGroup.buildAndBind("Rilasciata da", "patente.rilasciataDa");
-		details.addComponent(rilasciataDaField);
-		DateField dataRilascio = (DateField) fieldGroup.buildAndBind("Data Rilascio", "patente.dataRilascio");
-
-		details.addComponent(dataRilascio);
-		DateField dataValidita = (DateField) fieldGroup.buildAndBind("Valida fino al", "patente.validaFinoAl");
-		details.addComponent(dataValidita);
-
-		return root;
-	}
-
-	private Component buildDatiCNR() {
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Dati CNR");
-		root.setIcon(FontAwesome.INSTITUTION);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-
-		FormLayout details = new FormLayout();
-		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-		root.addComponent(details);
-		root.setExpandRatio(details, 1);
-
-		livelloField = (TextField) fieldGroup.buildAndBind("Livello", "datiCNR.livello");
-		details.addComponent(livelloField);
-		qualificaField = (TextField) fieldGroup.buildAndBind("Qualifica", "datiCNR.qualifica");
-		details.addComponent(qualificaField);
-		datoreLavoroField = (TextField) fieldGroup.buildAndBind("Datore Lavoro", "datiCNR.datoreLavoro");
-		details.addComponent(datoreLavoroField);
-		matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "datiCNR.matricola");
-		details.addComponent(matricolaField);
-		codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzi", "datiCNR.codiceTerzo");
-		details.addComponent(codiceTerzoField);
-		mailField = (TextField) fieldGroup.buildAndBind("Mail", "datiCNR.mail");
-		details.addComponent(mailField);
-		ibanField = (TextField) fieldGroup.buildAndBind("Iban", "datiCNR.iban");
-		details.addComponent(ibanField);
-
-		return root;
-	}
-
-	private Component buildResidenzaTab() {
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Residenza");
-		root.setIcon(FontAwesome.HOME);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-
-		FormLayout details = new FormLayout();
-		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-		root.addComponent(details);
-		root.setExpandRatio(details, 1);
-
-		comuneField = (TextField) fieldGroup.buildAndBind("Comune", "residenza.comune");
-		details.addComponent(comuneField);
-		indirizzoField = (TextField) fieldGroup.buildAndBind("Indirizzo", "residenza.indirizzo");
-		details.addComponent(indirizzoField);
-		domicilioFiscaleField = (TextField) fieldGroup.buildAndBind("Domicilio Fiscale", "residenza.domicilioFiscale");
-		details.addComponent(domicilioFiscaleField);
-
-		return root;
-	}
-
-	private Component buildFooter() {
-		HorizontalLayout footer = new HorizontalLayout();
-		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
-		footer.setWidth(100.0f, Unit.PERCENTAGE);
-
-		Button ok = new Button("OK");
-		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		ok.addClickListener(new ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-
-				try {
-					for (Field<?> f : fieldGroup.getFields()) {
-						((AbstractField<?>) f).setValidationVisible(true);
-					}
-					fieldGroup.commit();
-
-					BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
-					User new_user = beanItem.getBean();
-
-					DashboardEventBus.post(new UpdateUserAction(new_user));
-					close();
-
-				} catch (InvalidValueException | CommitException e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
-							Type.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		ok.focus();
-		footer.addComponent(ok);
-		footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
-		return footer;
-	}
-
-	public static void open(final User user,final boolean isAdmin) {
+	public static void open(final User user, final boolean isAdmin) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new UserCompletedRegistrationWindow(user,isAdmin);
+		Window w = new UserCompletedRegistrationWindow(user, isAdmin);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

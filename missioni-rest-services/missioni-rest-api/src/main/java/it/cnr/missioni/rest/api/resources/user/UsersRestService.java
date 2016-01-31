@@ -51,6 +51,8 @@ public interface UsersRestService {
 			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
 			@QueryParam(value = "iban") String iban, @QueryParam(value = "mail") String mail,
 			@QueryParam(value = "id") String id,
+			@QueryParam(value = "responsabileGruppo") Boolean responsabileGruppo,
+			@QueryParam(value = "all") boolean all,
 			@QueryParam(value = "from") int from,
 			@QueryParam(value = "size") int size
 			) throws Exception;

@@ -179,7 +179,10 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         PdfPCell cellDisposizioni = new PdfPCell(new Paragraph("Altre disposizioni:", fontBold));
         cellDisposizioni.setBorder(Rectangle.NO_BORDER);
         tableLocalita.addCell(cellDisposizioni);
-        PdfPCell cellDisposizioni2 = new PdfPCell(new Paragraph(missione.getAltro(), fontNormal));
+        
+        String tipoVeicolo = missione.isMezzoProprio() ? "Veicolo Proprio" : "Veicolo CNR";
+        
+        PdfPCell cellDisposizioni2 = new PdfPCell(new Paragraph(tipoVeicolo+" - "+missione.getMotivazioniMezzoProprio(), fontNormal));
         // cellOggetto2.setNoWrap(false);
         tableLocalita.addCell(cellDisposizioni2);
         document.add(tableLocalita);
@@ -228,16 +231,12 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         document.add(new Paragraph("\n"));
 
         PdfPTable tableFondo = new PdfPTable(2);
-        Chunk chunkFondo = new Chunk("Fondo: ", fontBold);
-        Chunk chunkGae = new Chunk("GAE: ", fontBold);
-        Chunk chunkFondo2 = new Chunk(missione.getFondo(), fontNormal);
-        Chunk chunkGae2 = new Chunk(missione.getGAE(), fontNormal);
         Paragraph paragraphFondo = new Paragraph();
-        paragraphFondo.add(chunkFondo);
-        paragraphFondo.add(chunkFondo2);
+        paragraphFondo.add(new Chunk("Fondo: "+missione.getFondo(),fontNormal));
         paragraphFondo.add("\n");
-        paragraphFondo.add(chunkGae);
-        paragraphFondo.add(chunkGae2);
+        paragraphFondo.add(new Chunk("GAE: "+missione.getGAE(),fontNormal));
+        paragraphFondo.add("\n");
+        paragraphFondo.add(new Chunk("CUP:",fontNormal));
         tableFondo.addCell(new PdfPCell(paragraphFondo));
         PdfPCell cellFirmaResponsabile = new PdfPCell(new Paragraph("Firma Responsabile fondo:", fontBold));
         cellFirmaResponsabile.setMinimumHeight(40f);

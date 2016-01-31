@@ -2,9 +2,9 @@ package it.cnr.missioni.dashboard.action;
 
 import org.joda.time.DateTime;
 
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
@@ -12,7 +12,7 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
-import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
@@ -31,26 +31,33 @@ public class MissioneAction implements IAction {
 	public boolean doAction() {
 
 		try {
-			User user = (User) VaadinSession.getCurrent().getAttribute(User.class);
-			missione.setDateLastModified(new DateTime());
+
 			// se inseriamo una nuova missione
 			if (!modifica) {
-
-				missione.setIdUser(user.getId());
+				missione.setDataInserimento(new DateTime());
+				if(missione.isMezzoProprio()){
+					Veicolo v = DashboardUI.getCurrentUser().getVeicoloPrincipale();
+					missione.setIdVeicolo(v.getTarga());
+					missione.setShortDescriptionVeicolo(v.getTipo());
+				}
+				missione.setIdUser(DashboardUI.getCurrentUser().getId());
 				missione.setDataInserimento(new DateTime());
 				missione.setStato(StatoEnum.INSERITA);
-				ClientConnector.addMissione(missione);
+				String id = ClientConnector.addMissione(missione);
+				Thread.sleep(1000);
+				ClientConnector.sendMissioneMail(id);
 			} else {
+				missione.setDateLastModified(new DateTime());
 				ClientConnector.updateMissione(missione);
 			}
 
-			Thread.sleep(1000);
+
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 
 			//ricarica tutte le missioni per aggiornare la table
-			MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId());
+			MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId());
 			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdatedEvent(missioniStore));
+			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore));
 			
 			return true;
 

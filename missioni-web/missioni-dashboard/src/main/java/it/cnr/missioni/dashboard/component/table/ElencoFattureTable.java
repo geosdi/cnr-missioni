@@ -33,6 +33,12 @@ public final class ElencoFattureTable extends Table {
 		this.beanFieldGroup = beanFieldGroup;
 		this.missione = missione;
 		buildTable();
+		addActionHandler(new TransactionsActionHandler());
+	}
+	
+	public ElencoFattureTable(Missione missione) {
+		this.missione = missione;
+		buildTable();
 	}
 
 	/**
@@ -59,11 +65,9 @@ public final class ElencoFattureTable extends Table {
 		setSelectable(true);
 		setSortEnabled(true);
 		aggiornaTable();
-		setFooterVisible(true);
 		setNullSelectionAllowed(false);
-
-		addActionHandler(new TransactionsActionHandler());
-
+		setVisible(false);
+		setFooterVisible(false);
 	}
 
 	/**
@@ -87,6 +91,10 @@ public final class ElencoFattureTable extends Table {
 			Object[] properties = { "data", "numeroFattura" };
 			boolean[] ordering = { false, false };
 			sort(properties, ordering);
+			
+			setVisible(true);
+			setFooterVisible(true);
+
 			
 		}
 

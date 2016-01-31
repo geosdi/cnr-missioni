@@ -8,9 +8,12 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.event.FieldEvents.BlurEvent;
+import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
@@ -36,12 +39,12 @@ public class DatiCNRUserStep implements WizardStep {
 
 	private TextField livelloField;
 	private TextField qualificaField;
-	private TextField datoreLavoroField;
+//	private TextField datoreLavoroField;
 	private TextField matricolaField;
 	private TextField codiceTerzoField;
 	private TextField mailField;
 	private TextField ibanField;
-
+	private ComboBox listaUserField;
 
 	private BeanFieldGroup<DatiCNR> fieldGroup;
 	private HorizontalLayout mainLayout;;
@@ -72,55 +75,92 @@ public class DatiCNRUserStep implements WizardStep {
 		livelloField = (TextField) fieldGroup.buildAndBind("Livello", "livello");
 		qualificaField = (TextField) fieldGroup.buildAndBind("Qualifica", "qualifica");
 
-		datoreLavoroField = (TextField) fieldGroup.buildAndBind("Datore Lavoro", "datoreLavoro");
 		matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "matricola");
 		codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzo", "codiceTerzo");
 		mailField = (TextField) fieldGroup.buildAndBind("Mail", "mail");
 		ibanField = (TextField) fieldGroup.buildAndBind("Iban", "iban");
+
+		listaUserField = new ComboBox("Datore Lavoro");
+
+		try {
+			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true);
+
+			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
+
+			userStore.getUsers().forEach(u -> {
+				listaUserField.addItem(u.getId());
+				listaUserField.setItemCaption(u.getId(),
+						u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
+			});
+
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
+		listaUserField.setValidationVisible(false);
+		fieldGroup.bind(listaUserField, "datiCNR.datoreLavoro");
+
 		addValidator();
 	}
-	
-	private void addValidator(){
-		matricolaField.addValidator(new Validator() {
-			@Override
-			public void validate(Object value) throws InvalidValueException {
-				if (value != null) {
-				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola(matricolaField.getValue());
 
-				UserStore userStore = null;
+	private void addValidator() {
+
+		listaUserField.addBlurListener(new BlurListener() {
+
+			@Override
+			public void blur(BlurEvent event) {
 				try {
-					userStore = ClientConnector.getUser(userSearchBuilder);
+					listaUserField.validate();
 				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
-				}
-				if (userStore != null)
-					throw new InvalidValueException(Utility.getMessage("matricola_present"));
+					listaUserField.setValidationVisible(true);
 				}
 			}
 
 		});
-		
-		
-//		mailField.addValidator(new Validator() {
-//			@Override
-//			public void validate(Object value) throws InvalidValueException {
-//				if (value != null) {
-//				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMail(mailField.getValue());
-//				UserStore userStore = null;
-//				try {
-//					userStore = ClientConnector.getUser(userSearchBuilder);
-//				} catch (Exception e) {
-//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-//							Type.ERROR_MESSAGE);
-//				}
-//				if (userStore != null)
-//					throw new InvalidValueException(Utility.getMessage("mail_present"));
-//				}
-//			}
-//
-//		});
-		
+
+		matricolaField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withMatricola(matricolaField.getValue());
+
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("matricola_present"));
+				}
+			}
+
+		});
+
+		// mailField.addValidator(new Validator() {
+		// @Override
+		// public void validate(Object value) throws InvalidValueException {
+		// if (value != null) {
+		// UserSearchBuilder userSearchBuilder =
+		// UserSearchBuilder.getUserSearchBuilder().withMail(mailField.getValue());
+		// UserStore userStore = null;
+		// try {
+		// userStore = ClientConnector.getUser(userSearchBuilder);
+		// } catch (Exception e) {
+		// Utility.getNotification(Utility.getMessage("error_message"),
+		// Utility.getMessage("request_error"),
+		// Type.ERROR_MESSAGE);
+		// }
+		// if (userStore != null)
+		// throw new InvalidValueException(Utility.getMessage("mail_present"));
+		// }
+		// }
+		//
+		// });
+
 		ibanField.addValidator(new Validator() {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
@@ -140,7 +180,7 @@ public class DatiCNRUserStep implements WizardStep {
 			}
 
 		});
-		
+
 	}
 
 	private Component buildGeneraleTab() {
@@ -159,13 +199,11 @@ public class DatiCNRUserStep implements WizardStep {
 
 		details.addComponent(livelloField);
 		details.addComponent(qualificaField);
-		details.addComponent(datoreLavoroField);
+		details.addComponent(listaUserField);
 		details.addComponent(matricolaField);
 		details.addComponent(codiceTerzoField);
 		details.addComponent(mailField);
 		details.addComponent(ibanField);
-
-
 
 		return mainLayout;
 	}

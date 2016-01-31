@@ -1,15 +1,14 @@
 package it.cnr.missioni.rest.api.response.geocoder;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-@XmlRootElement(name = "GeocoderResponse")
-@XmlAccessorType(XmlAccessType.FIELD)
+@JsonRootName(value = "GeocoderResponse")
+@JsonPropertyOrder(value = { "formattedAddress", "lat","lon" })
 public class GeocoderResponse implements IGeocoderResponse {
 
     private static final long serialVersionUID = 2054698550628082441L;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.elasticsearch.common.geo.GeoPoint;
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
@@ -316,6 +317,12 @@ public class MissioneDAOTest {
 		missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
 		missione.setMezzoProprio(true);
 		missione.setDistanza(100.00);
+		missione.setResponsabileGruppo("01");
+		missione.setShortResponsabileGruppo("Salvia Vito");
+		missione.setIdVeicolo("AA111BB");
+		missione.setShortDescriptionVeicolo("Ford Fiesta");
+		missione.setGeoPoint(new GeoPoint(41.9027835,12.4963655));
+		missione.setDistanza(355);
 		DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
 		dati.setAnticipazioniMonetarie(true);
 		dati.setMandatoCNR("AA11");
@@ -361,8 +368,12 @@ public class MissioneDAOTest {
 		missione.setOggetto("Conferenza");
 		missione.setLocalita("Milano");
 		missione.setIdUser("01");
+		missione.setResponsabileGruppo("01");
+		missione.setShortResponsabileGruppo("Salvia Vito");
 		missione.setStato(StatoEnum.PRESA_IN_CARICO);
 		missione.setDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+		missione.setGeoPoint(new GeoPoint(45.4654219,9.1859243));
+		missione.setDistanza(901);
 		listaMissioni.add(missione);
 
 		missione = new Missione();
@@ -370,8 +381,12 @@ public class MissioneDAOTest {
 		missione.setOggetto("Riunione prova");
 		missione.setLocalita("Milano");
 		missione.setIdUser("02");
+		missione.setResponsabileGruppo("01");
+		missione.setShortResponsabileGruppo("Salvia Vito");
 		missione.setStato(StatoEnum.APPROVATA);
 		missione.setDataInserimento(new DateTime(2015, 11, 23, 0, 0, DateTimeZone.UTC));
+		missione.setGeoPoint(new GeoPoint(45.4654219,9.1859243));
+		missione.setDistanza(901);
 		listaMissioni.add(missione);
 	}
 

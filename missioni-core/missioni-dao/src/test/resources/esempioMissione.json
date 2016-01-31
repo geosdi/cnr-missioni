@@ -3,15 +3,25 @@
 		"id" : "01",
 		"localita" : "Roma",
 		"oggetto" : "Conferenza",
+		"responsabileGruppo" : "01",
+		"shortResponsabileGruppo" : "Salvia Vito",
+		"motivazioniMezzoProprio" : "motivazione",
 		"stato" : "STAND_BY",
 		"fondo" : "fondo",
 		"GAE" : "GAE",
-		"altro" : "",
 		"missioneEstera" : false,
 		"dataInserimento" : "2015-12-14T10:11:59.568Z",
 		"dateLastModified" : "2015-12-14T10:11:59.568Z",
 		"mezzoProprio" : true,
-		"distanza" : 100,
+		"idVeicolo" : "AA111BB",
+		"shortDescriptionVeicolo" : "Ford Fiesta",
+		"idUser" : "01",
+		"distanza" : 355,
+		"geoPoint": {
+        	"lat": 41.9027835,
+        	"lon": 12.4963655,
+        	"geohash": "sr2ykk5t6kvr"
+         },
 		"datiPeriodoMissione" : {
 			"inizioMissione" : "2015-12-12T10:11:59.568Z",
 			"fineMissione" : "2015-12-14T10:11:59.568Z"

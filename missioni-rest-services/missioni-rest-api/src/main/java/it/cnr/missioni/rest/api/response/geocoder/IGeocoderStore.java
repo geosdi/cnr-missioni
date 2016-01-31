@@ -1,3 +1,4 @@
+
 package it.cnr.missioni.rest.api.response.geocoder;
 
 import java.io.Serializable;

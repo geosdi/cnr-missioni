@@ -1,7 +1,9 @@
 package it.cnr.missioni.model.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -231,6 +233,12 @@ public class User implements Document {
 	 */
 	public void setMappaVeicolo(Map<String, Veicolo> mappaVeicolo) {
 		this.mappaVeicolo = mappaVeicolo;
+	}
+	
+	public Veicolo getVeicoloPrincipale(){
+		if(!mappaVeicolo.isEmpty())
+			return (this.mappaVeicolo.values().stream().filter(v -> v.isVeicoloPrincipale()).collect(Collectors.toList())).get(0);
+		return null;
 	}
 
 	/**

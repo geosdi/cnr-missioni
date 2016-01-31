@@ -4,7 +4,11 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.joda.time.Chronology;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
 
 import com.vaadin.data.fieldgroup.DefaultFieldGroupFieldFactory;
 import com.vaadin.data.util.converter.Converter;
@@ -42,6 +46,7 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 			dateField.setImmediate(true);
 			dateField.setDateFormat("dd/MM/yyyy HH:mm");
 			dateField.setResolution(Resolution.MINUTE);
+			dateField.setLocale(Locale.ITALY);
 			field = (T) dateField;
 		} else if (type.isAssignableFrom(String.class) || type.isAssignableFrom(Double.class) 
 				|| type.isAssignableFrom(Integer.class)|| type.isAssignableFrom(Long.class)) {
@@ -142,6 +147,7 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 				return null;
 			else
 				return new DateTime(value);
+//			return LocalDate.fromDateFields(value); 
 		}
 
 		/**
@@ -160,6 +166,8 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 			}
 			return null;
 		}
+
+
 	}
 
 	/**

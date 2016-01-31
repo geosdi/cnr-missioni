@@ -61,6 +61,8 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
 
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(veicoloCNRSearchBuilder.buildQuery())
+				.setFrom(veicoloCNRSearchBuilder.getFrom())
+				.setSize(veicoloCNRSearchBuilder.getSize())
 				.execute().actionGet());
 
 		if (searchResponse.status() != RestStatus.OK) {

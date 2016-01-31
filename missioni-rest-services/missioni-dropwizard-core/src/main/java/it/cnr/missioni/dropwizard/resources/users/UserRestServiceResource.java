@@ -41,33 +41,40 @@ public class UserRestServiceResource implements UsersRestService {
 	 * @return
 	 * @throws Exception
 	 */
-//	@Override
-//	public Response getLastUsers() throws Exception {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	// @Override
+	// public Response getLastUsers() throws Exception {
+	// // TODO Auto-generated method stub
+	// return null;
+	// }
 
 	/**
+	 * 
 	 * @param nome
 	 * @param cognome
 	 * @param codiceFiscale
 	 * @param matricola
 	 * @param username
 	 * @param targa
+	 * @param numeroPatente
 	 * @param cartaCircolazione
 	 * @param polizzaAssicurativa
 	 * @param iban
 	 * @param mail
 	 * @param id
+	 * @param responsabileGruppo
+	 * @param all
+	 * @param from
+	 * @param size
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
 	public Response getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
-			String targa, String numeroPatente,String cartaCircolazione, String polizzaAssicurativa, String iban, String mail, String id,int from,int size)
-					throws Exception {
-		return Response.ok(this.userDelegate.getUserByQuery(nome, cognome, codiceFiscale, matricola, username, targa,numeroPatente,
-				cartaCircolazione, polizzaAssicurativa, iban, mail, id,from,size)).build();
+			String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
+			String mail, String id, Boolean responsabileGruppo, boolean all, int from, int size) throws Exception {
+		return Response.ok(this.userDelegate.getUserByQuery(nome, cognome, codiceFiscale, matricola, username, targa,
+				numeroPatente, cartaCircolazione, polizzaAssicurativa, iban, mail, id, responsabileGruppo, all, from,
+				size)).build();
 	}
 
 	/**

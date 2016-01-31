@@ -32,17 +32,22 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	 */
 	@Override
 	public PageResult<User> findUserByQuery(UserSearchBuilder userSearchBuilder) throws Exception {
-		
+
 		List<User> listaUsers = new ArrayList<User>();
-//		logger.debug("\nID "+userSearchBuilder.getId());
 		logger.debug("###############Try to find Users by Query: {}\n\n");
-		
-		Page p = new Page(userSearchBuilder.getFrom(),userSearchBuilder.getSize());
-		
-		SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(userSearchBuilder.buildQuery()))
-				.addSort(userSearchBuilder.getFieldSort(), userSearchBuilder.getSortOrder())
-				.execute().actionGet();
+
+		Page p = new Page(userSearchBuilder.getFrom(), userSearchBuilder.getSize());
+
+		//carico tutti gli user per le combobox
+		int size = userSearchBuilder.getSize();
+		if (userSearchBuilder.isAll())
+			size = count().intValue();
+
+		SearchResponse searchResponse = p
+				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
+						.setQuery(userSearchBuilder.buildQuery()))
+				.setFrom(userSearchBuilder.getFrom()).setSize(size)
+				.addSort(userSearchBuilder.getFieldSort(), userSearchBuilder.getSortOrder()).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");
@@ -76,7 +81,5 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	public <IC extends GPIndexCreator> void setIndexCreator(IC ic) {
 		super.setIndexCreator(ic);
 	}
-
-
 
 }

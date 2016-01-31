@@ -197,6 +197,7 @@ class MissioneDelegate implements IMissioneDelegate {
                                 .newPDFBuilder()
                                 .withUser(user)
                                 .withMissione(missione)));
+        missione = this.missioneDAO.persist(missione);
         return missione.getId();
     }
 

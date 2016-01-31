@@ -4,9 +4,14 @@ import org.joda.time.DateTime;
 
 import com.vaadin.ui.Notification.Type;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
  * @author Salvia Vito
@@ -23,14 +28,21 @@ public class RimborsoAction implements IAction {
 
 		try {
 
-			if(missione.getRimborso().getDataRimborso() == null)
+			if (missione.getRimborso().getDataRimborso() == null)
 				missione.getRimborso().setDataRimborso(new DateTime());
 			missione.getRimborso().setDateLastModified(new DateTime());
 
 			ClientConnector.updateMissione(missione);
 
 			Thread.sleep(1000);
+
+			MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+					.withIdUser(DashboardUI.getCurrentUser().getId());
+			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
+			DashboardEventBus.post(new DashboardEvent.TableRimborsiUpdatedEvent(missioniStore));
+			ClientConnector.sendRimborsoMail(missione.getId());
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
+
 			return true;
 
 		} catch (Exception e) {

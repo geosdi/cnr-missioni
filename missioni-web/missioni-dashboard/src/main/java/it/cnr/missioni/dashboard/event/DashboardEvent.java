@@ -106,14 +106,14 @@ public abstract class DashboardEvent {
 	 * @author Salvia Vito
 	 *
 	 */
-	public static class TableMissioniUpdatedEvent {
+	public static class TableMissioniUpdateUpdatedEvent {
 
 		private MissioniStore missioniStore;
 
 		/**
 		 * @param missioniStore
 		 */
-		public TableMissioniUpdatedEvent(MissioniStore missioniStore) {
+		public TableMissioniUpdateUpdatedEvent(MissioniStore missioniStore) {
 			this.missioniStore = missioniStore;
 		}
 
@@ -271,7 +271,7 @@ public abstract class DashboardEvent {
 	}
 	
 
-	
+
 
 	
 }

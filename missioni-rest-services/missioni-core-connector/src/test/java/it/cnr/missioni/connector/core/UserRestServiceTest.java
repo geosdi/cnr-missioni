@@ -35,6 +35,8 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.AfterClass;
@@ -129,13 +131,11 @@ public class UserRestServiceTest {
 		logger.debug("############################DELETE USER\n");
 
 	}
-	
 
 	@Test
 	public void F_findUserByCognome() throws Exception {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withCognome("Salv");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
 		Assert.assertNotNull(userStore);
 	}
 
@@ -148,11 +148,9 @@ public class UserRestServiceTest {
 	}
 
 	@Test
-	public void H_findUserByCodiceFiscale() throws Exception {	
+	public void H_findUserByCodiceFiscale() throws Exception {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vito")
-				.withCognome("salvia")
-				.withMatricola("1111111")
-				.withCodiceFiscale("slvvtttttttttttt");
+				.withCognome("salvia").withMatricola("1111111").withCodiceFiscale("slvvtttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
 		Assert.assertNotNull(userStore);
@@ -161,8 +159,7 @@ public class UserRestServiceTest {
 	@Test
 	public void I_findUserALL() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-				.withCodiceFiscale("slvv");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withCodiceFiscale("slvv");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
 		Assert.assertTrue("FIND USER BY ALL", userStore.getUsers().size() == 1);
@@ -171,75 +168,84 @@ public class UserRestServiceTest {
 	@Test
 	public void L_findUserErrataALL() throws Exception {
 
-		
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vito")
-				.withCognome("salvia")
-				.withMatricola("4111111")
-				.withCodiceFiscale("slvvttttttttttttt");
+				.withCognome("salvia").withMatricola("4111111").withCodiceFiscale("slvvttttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY ALL", userStore == null);
 	}
 
 	@Test
 	public void M_findUserByMatricola() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-				.withMatricola("1111111");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("1111111");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA", userStore.getUsers().size() == 1);
 	}
 
 	@Test
 	public void N_findUserByMatricolaErrata() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-				.withMatricola("2111111");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("2111111");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA ERRATA", userStore == null);
 	}
-	
+
 	@Test
 	public void O_testFindByTarga() throws Exception {
-		
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-				.withTarga("AA111BB");
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withTarga("AA111BB");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
 		Assert.assertNotNull(userStore);
 
 	}
-	
+
 	@Test
 	public void P_testFindByTargaErrata() throws Exception {
-		
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-				.withTarga("AA111CC");
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withTarga("AA111CC");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
 		Assert.assertNull(userStore);
 
 	}
-	
+
 	@Test
 	public void Q_testUserByIDMustNot() throws Exception {
 		Thread.sleep(1000);
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-				.withId("01");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID MUST NOT{}\n", userStore.getUsers().size());
-				Assert.assertTrue("FIND USER BY ID",userStore.getUsers().size() == 2);
+		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 2);
 
 	}
-	
-	
+
 	@Test
 	public void R_testUserByCodiceFiscale() throws Exception {
-		
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-				.withId("01")
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
 				.withCodiceFiscale("slvvtttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
-		Assert.assertNull("FIND USER BY ID",userStore);
+		Assert.assertNull("FIND USER BY ID", userStore);
 
+	}
+
+	@Test
+	public void S_findByRespnsabileGruppo() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(true)
+				.withAll(true);
+
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() == 1);
+	}
+
+	@Test
+	public void T_findByNotRespnsabileGruppo() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(false)
+				.withAll(true);
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() == 2);
 	}
 
 }

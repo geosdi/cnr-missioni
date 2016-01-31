@@ -33,13 +33,15 @@ public interface IUserDelegate {
  * @param iban
  * @param mail
  * @param id
+ * @param responsabileGruppo
+ * @param all
  * @param from
  * @param size
  * @return
  * @throws Exception
  */
 	 UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
-				String targa,String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban, String mail, String id,int from,int size) throws Exception;
+				String targa,String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban, String mail, String id,Boolean responsabileGruppo,boolean all,int from,int size) throws Exception;
 
 /**
  * 
