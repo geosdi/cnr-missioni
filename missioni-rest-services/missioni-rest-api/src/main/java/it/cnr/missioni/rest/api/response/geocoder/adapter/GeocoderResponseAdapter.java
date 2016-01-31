@@ -1,4 +1,3 @@
-
 package it.cnr.missioni.rest.api.response.geocoder.adapter;
 
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderResponse;
