@@ -41,8 +41,7 @@ public class WizardRimborso extends AbstractWizard {
 
 		getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
 
-		if (missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == null
-				|| missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum()
+		if ( missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum()
 						.equals(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()))
 			getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
 		getWizard().addStep(this.riepilogoDatiRimborsoStep, "riepilogoDatiRimborso");

@@ -15,6 +15,7 @@ import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import it.cnr.missioni.model.configuration.QualificaUser;
 import junit.framework.Assert;
 
 /**
@@ -137,7 +138,7 @@ public class UserTest {
 		DatiCNR datiCNR = new DatiCNR();
 		datiCNR.setMail("vito.salvia");
 		Set<ConstraintViolation<DatiCNR>> constraintViolations = validator.validate(datiCNR);
-		assertEquals(4, constraintViolations.size());
+		assertEquals(5, constraintViolations.size());
 	}
 
 	@Test
@@ -146,7 +147,8 @@ public class UserTest {
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setIban("112345");
 		datiCNR.setMatricola("9876");
-		datiCNR.setLivello("Assegnista");
+		datiCNR.setLivello("5");
+		datiCNR.setDescrizioneQualifica("Ricercatore");
 		Set<ConstraintViolation<DatiCNR>> constraintViolations = validator.validate(datiCNR);
 		assertEquals(0, constraintViolations.size());
 	}
@@ -205,7 +207,7 @@ public class UserTest {
 		datiCNR.setLivello("Assegnista");
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setMatricola("1111111");
-		datiCNR.setQualifica("");
+		datiCNR.setDescrizioneQualifica("Ricercatore");
 		datiCNR.setCodiceTerzo("123");
 		user.setDatiCNR(datiCNR);
 		Patente p = new Patente();

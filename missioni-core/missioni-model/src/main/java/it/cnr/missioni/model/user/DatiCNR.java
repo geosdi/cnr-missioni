@@ -2,8 +2,6 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -18,7 +16,10 @@ public class DatiCNR implements Serializable{
 	private static final long serialVersionUID = 1534365538828825181L;
 	@NotBlank
 	private String livello;
-	private String qualifica;
+	
+	private String IdQualifica;
+	@NotBlank
+	private String descrizioneQualifica;
 	private String datoreLavoro;
 	@NotBlank
 	private String matricola;
@@ -43,18 +44,34 @@ public class DatiCNR implements Serializable{
 		this.livello = livello;
 	}
 
+
+
 	/**
-	 * @return the qualifica
+	 * @return the idQualifica
 	 */
-	public String getQualifica() {
-		return qualifica;
+	public String getIdQualifica() {
+		return IdQualifica;
 	}
 
 	/**
-	 * @param qualifica
+	 * @param idQualifica 
 	 */
-	public void setQualifica(String qualifica) {
-		this.qualifica = qualifica;
+	public void setIdQualifica(String idQualifica) {
+		IdQualifica = idQualifica;
+	}
+
+	/**
+	 * @return the descrizioneQualifica
+	 */
+	public String getDescrizioneQualifica() {
+		return descrizioneQualifica;
+	}
+
+	/**
+	 * @param descrizioneQualifica 
+	 */
+	public void setDescrizioneQualifica(String descrizioneQualifica) {
+		this.descrizioneQualifica = descrizioneQualifica;
 	}
 
 	/**
@@ -127,14 +144,16 @@ public class DatiCNR implements Serializable{
 		this.iban = iban;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "DatiCNR [livello=" + livello + ", qualifica=" + qualifica + ", datoreLavoro=" + datoreLavoro
-				+ ", matricola=" + matricola + ", codiceTerzo=" + codiceTerzo + ", mail=" + mail + ", iban=" + iban
-				+ "]";
+		return "DatiCNR [livello=" + livello + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
+				+ getDescrizioneQualifica() + ", datoreLavoro=" + datoreLavoro + ", matricola=" + matricola
+				+ ", codiceTerzo=" + codiceTerzo + ", mail=" + mail + ", iban=" + iban + "]";
 	}
+
+
 
 }

@@ -13,7 +13,8 @@
 		},
 		"datiCNR" : {
 			"livello" : "5",
-			"qualifica" : "",
+			"descrizioneQualifica" : "Assegnista",
+			"idQualifica" : "01",
 			"datoreLavoro" : "Izzi",
 			"matricola" : "123ABC",
 			"codiceTerzo" : "12",

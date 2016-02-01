@@ -18,26 +18,26 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-Index-Test.xml"})
-public class UserIndexCreatorTest {
+public class TipologiaSpesaIndexCreatorTest {
 
     @GeoPlatformLog
     static Logger logger;
     //
-    @Resource(name = "userIndexCreator")
-    private GPIndexCreator userIndexCreator;
+    @Resource(name = "tipologiaSpesaIndexCreator")
+    private GPIndexCreator tipologiaSpesaIndexCreator;
 
     @Before
     public void setUp() {
-        Assert.assertNotNull(userIndexCreator);
+        Assert.assertNotNull(tipologiaSpesaIndexCreator);
     }
 
     @Test
     public void createIndexTest() throws Exception {
-        this.userIndexCreator.createIndex();
+        this.tipologiaSpesaIndexCreator.createIndex();
     }
 
     @After
     public void tearDown() throws Exception {
-        this.userIndexCreator.deleteIndex();
+        this.tipologiaSpesaIndexCreator.deleteIndex();
     }
 }

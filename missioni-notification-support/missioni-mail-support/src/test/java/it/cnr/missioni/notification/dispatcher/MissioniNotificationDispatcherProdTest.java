@@ -1,5 +1,6 @@
 package it.cnr.missioni.notification.dispatcher;
 
+import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.missione.*;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
@@ -127,7 +128,8 @@ public class MissioniNotificationDispatcherProdTest {
         datiCNR.setLivello("5");
         datiCNR.setMail("vito.salvia@gmail.com");
         datiCNR.setMatricola("1111111");
-        datiCNR.setQualifica("");
+        datiCNR.setDescrizioneQualifica("Assegnista");
+        datiCNR.setIdQualifica("01");
         datiCNR.setCodiceTerzo("123");
         user.setDatiCNR(datiCNR);
         Patente p = new Patente();

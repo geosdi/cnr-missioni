@@ -38,6 +38,19 @@ public class SearchConstants {
 	public static final String VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA = "veicoloCNR.polizzaAssicurativa";
 	public static final String VEICOLO_CNR_FIELD_ID = "veicoloCNR.id";
 
+	public static final String QUALIFICA_USER_FIELD_VALUE = "qualificaUser.value";
+	public static final String QUALIFICA_USER_FIELD_ID = "qualificaUser.id";
 	
+	public static final String RIMBORSO_KM_FIELD_VALUE = "rimborsoKm.value";
+	public static final String RIMBORSO_KM_FIELD_ID = "rimborsoKm.id";
+	
+	
+	public static final String TIPOLOGIA_SPESA_FIELD_VALUE = "tipologiaSpesa.value";
+	public static final String TIPOLOGIA_SPESA_FIELD_ID = "tipologiaSpesa.id";
+	public static final String TIPOLOGIA_SPESA_FIELD_TIPO = "tipologiaSpesa.tipo";
+	
+	public static final String NAZIONE_FIELD_VALUE = "nazione.value";
+	public static final String NAZIONE_FIELD_ID = "nazione.id";
+
 	public final static String MULTI_MATCH_ALL_FIELD = "_all";
 }

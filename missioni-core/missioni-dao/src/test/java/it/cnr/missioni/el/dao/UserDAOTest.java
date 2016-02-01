@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.user.Anagrafica;
 import it.cnr.missioni.model.user.Credenziali;
 import it.cnr.missioni.model.user.DatiCNR;
@@ -330,7 +331,8 @@ public class UserDAOTest {
 		datiCNR.setLivello("Assegnista");
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setMatricola("1111111");
-		datiCNR.setQualifica("");
+		datiCNR.setDescrizioneQualifica("Assegnista");
+		datiCNR.setIdQualifica("01");
 		user.setDatiCNR(datiCNR);
 		Patente p = new Patente();
 		p.setDataRilascio(new DateTime(2001, 12, 15, 0, 0,ISOChronology.getInstanceUTC()));

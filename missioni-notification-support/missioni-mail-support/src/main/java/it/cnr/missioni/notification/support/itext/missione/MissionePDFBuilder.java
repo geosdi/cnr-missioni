@@ -94,7 +94,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         PdfPTable tableUtente = new PdfPTable(2);
         PdfPTable nestedTableUtente = new PdfPTable(2);
-        PdfPCell cellQualifica = new PdfPCell(new Paragraph(user.getDatiCNR().getQualifica(), fontNormal));
+        PdfPCell cellQualifica = new PdfPCell(new Paragraph(user.getDatiCNR().getDescrizioneQualifica(), fontNormal));
         cellQualifica.setBorder(Rectangle.NO_BORDER);
         nestedTableUtente.addCell(cellQualifica);
         PdfPCell cellLivello = new PdfPCell(new Paragraph(user.getDatiCNR().getLivello().toString(), fontNormal));
@@ -125,7 +125,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         //
         tableUtente.addCell(new Paragraph(dataNascita + " " + user.getAnagrafica().getLuogoNascita(), fontNormal));
-        tableUtente.addCell(new Paragraph(user.getDatiCNR().getQualifica(), fontNormal));
+        tableUtente.addCell(new Paragraph(user.getDatiCNR().getDescrizioneQualifica(), fontNormal));
 
         //
         PdfPCell cellDataNascita = new PdfPCell(new Paragraph("Data e luogo di nascita", fontNormal6));
