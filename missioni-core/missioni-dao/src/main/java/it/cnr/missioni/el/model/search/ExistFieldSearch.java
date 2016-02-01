@@ -17,7 +17,9 @@ public class ExistFieldSearch extends AbstractBooleanSearch<Object> implements I
 		super(field);
 	}
 	
-	
+	public ExistFieldSearch(String field,EnumBooleanType type ){
+		super(field,type);
+	}
 	
 	public QueryBuilder getBooleanQuery() throws Exception {
 		if (field == null)

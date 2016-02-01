@@ -5,7 +5,9 @@ import org.vaadin.teemu.wizards.WizardStep;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -49,16 +51,16 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		root.setSpacing(true);
 		root.setMargin(true);
 
-		FormLayout details = new FormLayout();
-		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		CssLayout details = new CssLayout();
+		details.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
 		root.addComponent(details);
 //		root.setExpandRatio(details, 1);
 
 
 
-		details.addComponent(new Label("Avviso Pagamento: " + missione.getRimborso().getAvvisoPagamento()));
-		details.addComponent(new Label("Anticipazione Pagamento: " + missione.getRimborso().getAnticipazionePagamento()));
-		details.addComponent(new Label("Totale: " + missione.getRimborso().getTotale()));
+		details.addComponent(buildLabel("Avviso Pagamento: " , missione.getRimborso().getAvvisoPagamento()));
+		details.addComponent(buildLabel("Anticipazione Pagamento: " , Double.toString(missione.getRimborso().getAnticipazionePagamento())));
+		details.addComponent(buildLabel("Totale: " , Double.toString(missione.getRimborso().getTotale())));
 		
 		
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
@@ -94,6 +96,14 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 	public HorizontalLayout getMainLayout() {
 		return mainLayout;
+	}
+	
+	private Label buildLabel(String caption,String value){		
+		Label labelValue = new Label("<b>"+caption+"</b>"+value,ContentMode.HTML);
+		labelValue.setStyleName(ValoTheme.LABEL_LIGHT);
+		
+		labelValue.setWidth("50%");
+		return labelValue;
 	}
 
 }

@@ -36,6 +36,11 @@ public abstract class AbstractBooleanSearch<S> {
 		this.type = type;
 	}
 	
+	public AbstractBooleanSearch(String field,EnumBooleanType type){
+		this.field = field;
+		this.type = type;
+	}
+	
 	public AbstractBooleanSearch(String field){
 		this.field = field;
 	}

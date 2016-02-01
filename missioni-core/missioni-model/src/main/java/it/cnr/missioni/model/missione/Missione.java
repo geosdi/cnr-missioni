@@ -43,8 +43,8 @@ public class Missione implements Document {
     private DateTime dataInserimento;
     private DateTime dateLastModified;
     private boolean mezzoProprio;
-    @Min(value = 0)
-    private double distanza;
+    @NotBlank
+    private String distanza;
     private GeoPoint geoPoint;
     @Valid
     private DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
@@ -327,7 +327,7 @@ public class Missione implements Document {
 	/**
 	 * @return the distanza
 	 */
-	public double getDistanza() {
+	public String getDistanza() {
 		return distanza;
 	}
 
@@ -335,7 +335,7 @@ public class Missione implements Document {
 	/**
 	 * @param distanza 
 	 */
-	public void setDistanza(double distanza) {
+	public void setDistanza(String distanza) {
 		this.distanza = distanza;
 	}
 

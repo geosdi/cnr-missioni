@@ -1,37 +1,24 @@
 package it.cnr.missioni.dashboard.component.wizard.missione;
 
+import java.text.SimpleDateFormat;
+
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.wizards.WizardStep;
 
-import com.vaadin.data.Validator;
-import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
-import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.CheckBox;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.MissioneAction;
-import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
-import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
-import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.Veicolo;
 
@@ -64,50 +51,50 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 		root.setSpacing(true);
 		root.setMargin(true);
 
-		FormLayout details = new FormLayout();
-		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		CssLayout details = new CssLayout();
+		details.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
 		root.addComponent(details);
-		root.setExpandRatio(details, 1);
+//		root.setExpandRatio(details, 1);
 
 		String tipoMissione = missione.isMissioneEstera() ? "Italia" : "Estera";
 		String tipoVeicolo = missione.isMezzoProprio() ? "Veicolo Proprio" : "Veicolo CNR";
 
-		details.addComponent(new Label("Tipo Missione: " + tipoMissione));
-		details.addComponent(new Label("Località: " + missione.getLocalita()));
-		details.addComponent(new Label("Oggetto: " + missione.getOggetto()));
-		details.addComponent(new Label("Fondo: " + missione.getFondo()));
-		details.addComponent(new Label("GAE: " + missione.getGAE()));
-		details.addComponent(new Label("Responsabile Gruppo: " + missione.getShortResponsabileGruppo()));
-		details.addComponent(new Label("Distanza: " + missione.getDistanza()));
-		details.addComponent(new Label("Veicolo: " + tipoVeicolo));
+		
+
+		details.addComponent(buildLabel("Tipo Missione: ",tipoMissione));
+		details.addComponent(buildLabel("Località: " , missione.getLocalita()));
+		details.addComponent(buildLabel("Oggetto: " , missione.getOggetto()));
+		details.addComponent(buildLabel("Fondo: " , missione.getFondo()));
+		details.addComponent(buildLabel("GAE: " , missione.getGAE()));
+		details.addComponent(buildLabel("Responsabile Gruppo: " , missione.getShortResponsabileGruppo()));
+		details.addComponent(buildLabel("Distanza: " , missione.getDistanza()));
+		details.addComponent(buildLabel("Veicolo: " , tipoVeicolo));
 		if (missione.isMezzoProprio()) {
 
 			Veicolo v = DashboardUI.getCurrentUser().getVeicoloPrincipale();
-			details.addComponent(new Label("Motivazione mezzo proprio: " + missione.getMotivazioniMezzoProprio()));
-			details.addComponent(new Label(new Label("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga())));
+			details.addComponent(buildLabel("Motivazione mezzo proprio: " , missione.getMotivazioniMezzoProprio()));
+			details.addComponent(buildLabel("Veicolo: " , v.getTipo() + " Targa: " + v.getTarga()));
 
 		}
 		details.addComponent(
-				new Label("Inizio Missione: " + missione.getDatiPeriodoMissione().getInizioMissione().toString()));
+				buildLabel("Inizio Missione: " , new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getInizioMissione().toDate())));
 		details.addComponent(
-				new Label("Fine Missione: " + missione.getDatiPeriodoMissione().getFineMissione().toString()));
+				buildLabel("Fine Missione: " ,  new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getFineMissione().toDate())));
 		if (missione.isMissioneEstera()) {
-			details.addComponent(new Label("Trattamento Rimborso: "
-					+ missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().values()));
-			details.addComponent(new Label("Attraversamento Frontiera Andata: "
-					+ missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
-			details.addComponent(new Label("Attraversamento Frontiera Ritorno: "
-					+ missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toString()));
+			details.addComponent(buildLabel("Trattamento Rimborso: ", missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
+			details.addComponent(buildLabel("Attraversamento Frontiera Andata: "
+					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate())));
+			details.addComponent(buildLabel("Attraversamento Frontiera Ritorno: "
+					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate())));
 		}
-		details.addComponent(new Label(
-				"Anticipazioni Monetarie: " + missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie()));
+		details.addComponent(buildLabel(
+				"Anticipazioni Monetarie: " , missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie() ? "Si" : "No"));
 
-		details.addComponent(new Label("Numero Mandato CNR: " + missione.getDatiAnticipoPagamenti().getMandatoCNR()));
-		details.addComponent(new Label("Altre Spese di Missione Anticipate: "
-				+ missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate()));
+		details.addComponent(buildLabel("Numero Mandato CNR: " , missione.getDatiAnticipoPagamenti().getMandatoCNR()));
+		details.addComponent(buildLabel("Altre Spese di Missione Anticipate: ", Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate())));
 		details.addComponent(
-				new Label("Rimborso da Terzi: " + missione.getDatiAnticipoPagamenti().getImportoDaTerzi()));
-		details.addComponent(new Label("Importo da Terzi: " + missione.getDatiAnticipoPagamenti().getImportoDaTerzi()));
+				buildLabel("Rimborso da Terzi: " ,  Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
+		details.addComponent(buildLabel("Importo da Terzi: " , Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
 
 		return root;
 	}
@@ -138,6 +125,14 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 
 	public HorizontalLayout getMainLayout() {
 		return mainLayout;
+	}
+	
+	private Label buildLabel(String caption,String value){		
+		Label labelValue = new Label("<b>"+caption+"</b>"+value,ContentMode.HTML);
+		labelValue.setStyleName(ValoTheme.LABEL_LIGHT);
+		
+		labelValue.setWidth("50%");
+		return labelValue;
 	}
 
 }

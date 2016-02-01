@@ -145,7 +145,7 @@ public class MissioneRestServiceTest {
 		Missione missione_update = new Missione();
 		missione_update.setId("M_04");
 		missione_update.setLocalita("Napoli");
-
+		missione_update.setIdUser("01");
 		Rimborso r = new Rimborso();
 		missione_update.setRimborso(r);
 
@@ -299,4 +299,13 @@ public class MissioneRestServiceTest {
 		logger.info("#####################GEOCODER FOR MISSIONE : {}\n", geocoderStore);
 	}
 
+	@Test
+	public void Z_findMissioneNoRimborso() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withFieldNotExist("missione.rimborso");
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		Assert.assertTrue("FIND ALL MISSIONI",missioniStore.getMissioni().size() == 2);
+	}
+	
 }

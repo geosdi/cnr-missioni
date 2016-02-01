@@ -88,6 +88,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("oggetto", missioneSearchBuilder.getOggetto())
                 .queryParam("multiMatch", missioneSearchBuilder.getMultiMatchValue())
                 .queryParam("fieldExist", missioneSearchBuilder.getFieldExist())
+                .queryParam("fieldNotExist", missioneSearchBuilder.getFieldNotExist())
                 .queryParam("from", missioneSearchBuilder.getFrom())
                 .queryParam("size", missioneSearchBuilder.getSize())
                 .request(MediaType.APPLICATION_JSON)

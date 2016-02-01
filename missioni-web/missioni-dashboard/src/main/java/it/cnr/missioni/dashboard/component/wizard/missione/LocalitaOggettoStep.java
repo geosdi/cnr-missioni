@@ -14,7 +14,6 @@ import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
@@ -22,11 +21,9 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
@@ -148,7 +145,7 @@ public class LocalitaOggettoStep implements WizardStep {
 					try {
 						geocoderStore = ClientConnector.getGeocoderStoreForMissioneLocation(localitaField.getValue());
 
-						if (!geocoderStore.getGeocoderResponses().isEmpty()) {
+						if (geocoderStore.getGeocoderResponses() != null) {
 
 							geocoderStore.getGeocoderResponses().forEach(c -> {
 								listaLocalitaField.addItem(c.getLat()
@@ -157,6 +154,10 @@ public class LocalitaOggettoStep implements WizardStep {
 								 + "-" + c.getLon(),
 								 c.getFormattedAddress());
 							});
+						}
+						else{
+							Utility.getNotification(Utility.getMessage("error_message"),
+									Utility.getMessage("localita_error"), Type.ERROR_MESSAGE);
 						}
 
 					} catch (Exception e) {
@@ -181,6 +182,7 @@ public class LocalitaOggettoStep implements WizardStep {
 			missione = beanItem.getBean();
 			missione.setOggetto(oggettoField.getValue());
 			missione.setLocalita(localitaField.getValue());
+			missione.setDistanza(distanzaField.getValue());
 			
 			String[] latLng = ((String)listaLocalitaField.getValue()).split("-");
 			GeoPoint geoPoint  = new GeoPoint(Double.parseDouble(latLng[0]),Double.parseDouble(latLng[1]));

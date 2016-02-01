@@ -284,10 +284,12 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNewMissione = new Button();
+		final Button buttonNewMissione = new Button("Nuova Missione");
 		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonNewMissione.setIcon(FontAwesome.PLUS);
-		buttonNewMissione.setDescription("Nuova Missione");
+		buttonNewMissione.setDescription("Crea una nuova Missione");
+		buttonNewMissione.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
 		buttonNewMissione.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -328,10 +330,11 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonDettagli = new Button();
-		buttonDettagli.setDescription("Dettagli");
-		buttonDettagli.setIcon(FontAwesome.GEARS);
-		buttonDettagli.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonDettagli = new Button("Dettagli");
+		buttonDettagli.setDescription("Visualizza i dettagli della Missione");
+		buttonDettagli.setIcon(FontAwesome.EDIT);
+		buttonDettagli.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		
 		buttonDettagli.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -363,10 +366,11 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 //
 //		});
 
-		buttonRimborso = new Button();
-		buttonRimborso.setDescription("Rimborso");
+		buttonRimborso = new Button("Rimborso");
+		buttonRimborso.setDescription("Visualizza i dettagli del Rimborso");
 		buttonRimborso.setIcon(FontAwesome.EURO);
 		buttonRimborso.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonRimborso.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		buttonRimborso.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -389,10 +393,11 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 
 		});
 
-		buttonPDF = new Button();
-		buttonPDF.setDescription("Genera PDF");
+		buttonPDF = new Button("PDF");
+		buttonPDF.setDescription("Download del PDF");
 		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonPDF.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {

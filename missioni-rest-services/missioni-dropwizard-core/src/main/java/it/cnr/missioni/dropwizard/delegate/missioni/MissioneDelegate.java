@@ -139,7 +139,7 @@ class MissioneDelegate implements IMissioneDelegate {
 
     @Override
     public MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso, Long dataFromMissione, Long dataToMissione,
-            Long dataFromRimborso, Long dataToRimborso, String oggetto, String multiMatch, String fieldExist, int from, int size)
+            Long dataFromRimborso, Long dataToRimborso, String oggetto, String multiMatch, String fieldExist, String fieldNotExist,int from, int size)
             throws Exception {
         // if ((missioneID == null) || (missioneID.isEmpty())) {
         // throw new IllegalParameterFault("The Parameter missioneID must not "
@@ -160,6 +160,7 @@ class MissioneDelegate implements IMissioneDelegate {
                 .withOggetto(oggetto)
                 .withMultiMatch(multiMatch)
                 .withFieldExist(fieldExist)
+                .withFieldNotExist(fieldNotExist)
                 .withFrom(from).withSize(size);
         PageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
         if (!pageResult.getResults().isEmpty()) {
@@ -182,6 +183,7 @@ class MissioneDelegate implements IMissioneDelegate {
         if ((missione == null)) {
             throw new IllegalParameterFault("The Parameter missione must not be null ");
         }
+        if(missione.getId().isEmpty())
         missione.setId(gen.generate().toString());
         this.missioneDAO.persist(missione);
 

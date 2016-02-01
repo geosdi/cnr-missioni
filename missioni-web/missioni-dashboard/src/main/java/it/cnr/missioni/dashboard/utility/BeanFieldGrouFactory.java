@@ -32,89 +32,33 @@ import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
  * @author Salvia Vito
  */
 public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
+
 	@Override
 	public <T extends Field> T createField(Class<?> type, Class<T> fieldType) {
-		T field;
+		T field = null;
 		if (type.isAssignableFrom(DateTime.class) || type.isAssignableFrom(Date.class)) {
 
-			DateField dateField = new DateField();
-			BListener listener = new BListener(dateField);
-			dateField.addBlurListener(listener);
-			dateField.setConverter(new DateTimeConverter());
+			field = customDateField(field, type, fieldType);
+		} else if (type.isAssignableFrom(String.class) || type.isAssignableFrom(Double.class)
+				|| type.isAssignableFrom(Integer.class) || type.isAssignableFrom(Long.class)) {
+			field = customFieldText(field, type, fieldType);
 
-			dateField.setValidationVisible(false);
-			dateField.setImmediate(true);
-			dateField.setDateFormat("dd/MM/yyyy HH:mm");
-			dateField.setResolution(Resolution.MINUTE);
-			dateField.setLocale(Locale.ITALY);
-			field = (T) dateField;
-		} else if (type.isAssignableFrom(String.class) || type.isAssignableFrom(Double.class) 
-				|| type.isAssignableFrom(Integer.class)|| type.isAssignableFrom(Long.class)) {
-
-			field = super.createField(type, fieldType);
-			BListener listener = new BListener(field);
-			((AbstractTextField) field).setValidationVisible(false);
-			((AbstractTextField) field).setImmediate(true);
-			((AbstractTextField) field).setNullRepresentation("");
-			((AbstractTextField) field).addBlurListener(listener);
-			
-			
 		} else if (type.isAssignableFrom(StatoEnum.class) && fieldType.isAssignableFrom(ComboBox.class)) {
 
-			ComboBox comboBox = new ComboBox();
-			comboBox.setImmediate(true);
-			comboBox.setValidationVisible(false);
-			StatoEnum[] lista = StatoEnum.values();
-			BListener listener = new BListener(comboBox);
-			comboBox.addBlurListener(listener);
-			for (StatoEnum s : lista) {
-				comboBox.addItem(s);
-				comboBox.setItemCaption(s, s.getStato());
-			}
+			field = customStatoComboBox(field, type, fieldType);
+		} else if (type.isAssignableFrom(StatoVeicoloEnum.class) && fieldType.isAssignableFrom(ComboBox.class)) {
 
-			field = (T) comboBox;
-		}else if (type.isAssignableFrom(StatoVeicoloEnum.class) && fieldType.isAssignableFrom(ComboBox.class)) {
+			field = customStatoVeicoloComboBox(field, type, fieldType);
+		}
 
-			ComboBox comboBox = new ComboBox();
-			comboBox.setImmediate(true);
-			comboBox.setValidationVisible(false);
-			StatoVeicoloEnum[] lista = StatoVeicoloEnum.values();
-			BListener listener = new BListener(comboBox);
-			comboBox.addBlurListener(listener);
-			for (StatoVeicoloEnum s : lista) {
-				comboBox.addItem(s);
-				comboBox.setItemCaption(s, s.getStato());
-			}
-
-			field = (T) comboBox;
-		} 
-		
 		else if (type.isAssignableFrom(TrattamentoMissioneEsteraEnum.class)
 				&& fieldType.isAssignableFrom(ComboBox.class)) {
 
-			ComboBox comboBox = new ComboBox();
-			comboBox.setImmediate(true);
-			comboBox.setValidationVisible(false);
-			BListener listener = new BListener(comboBox);
-			comboBox.addBlurListener(listener);
-			TrattamentoMissioneEsteraEnum[] lista = TrattamentoMissioneEsteraEnum.values();
-
-			for (TrattamentoMissioneEsteraEnum s : lista) {
-				comboBox.addItem(s);
-				comboBox.setItemCaption(s, s.getStato());
-			}
-
-			field = (T) comboBox;
+			field = customTrattamentoMissioneEsteraVeicoloComboBox(field, type, fieldType);
 		} else if (type.isAssignableFrom(Boolean.class)) {
-			field = super.createField(type, fieldType);
-			BListener listener = new BListener(field);
-			((CheckBox) field).setValidationVisible(false);
-			((CheckBox) field).setImmediate(true);
-			((CheckBox) field).addBlurListener(listener);
-			
-		}
+			field = customCheckBox(field, type, fieldType);
 
-		else {
+		} else {
 			field = super.createField(type, fieldType);
 
 		}
@@ -122,6 +66,97 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 		return field;
 	}
 
+	private <T extends Field> T customFieldText(T field, Class<?> type, Class<T> fieldType) {
+		field = super.createField(type, fieldType);
+		BListener listener = new BListener(field);
+		((AbstractTextField) field).setValidationVisible(false);
+		((AbstractTextField) field).setImmediate(true);
+		((AbstractTextField) field).setNullRepresentation("");
+		((AbstractTextField) field).addBlurListener(listener);
+		return field;
+	}
+
+	private <T extends Field> T customStatoComboBox(T field, Class<?> type, Class<T> fieldType) {
+		ComboBox comboBox = new ComboBox();
+		comboBox.setImmediate(true);
+		comboBox.setValidationVisible(false);
+		StatoEnum[] lista = StatoEnum.values();
+		BListener listener = new BListener(comboBox);
+		comboBox.addBlurListener(listener);
+		for (StatoEnum s : lista) {
+			comboBox.addItem(s);
+			comboBox.setItemCaption(s, s.getStato());
+		}
+
+		field = (T) comboBox;
+		return field;
+	}
+
+	private <T extends Field> T customStatoVeicoloComboBox(T field, Class<?> type, Class<T> fieldType) {
+		ComboBox comboBox = new ComboBox();
+		comboBox.setImmediate(true);
+		comboBox.setValidationVisible(false);
+		StatoVeicoloEnum[] lista = StatoVeicoloEnum.values();
+		BListener listener = new BListener(comboBox);
+		comboBox.addBlurListener(listener);
+		for (StatoVeicoloEnum s : lista) {
+			comboBox.addItem(s);
+			comboBox.setItemCaption(s, s.getStato());
+		}
+
+		field = (T) comboBox;
+		return field;
+	}
+
+	private <T extends Field> T customTrattamentoMissioneEsteraVeicoloComboBox(T field, Class<?> type,
+			Class<T> fieldType) {
+		ComboBox comboBox = new ComboBox();
+		comboBox.setImmediate(true);
+		comboBox.setValidationVisible(false);
+		BListener listener = new BListener(comboBox);
+		comboBox.addBlurListener(listener);
+		TrattamentoMissioneEsteraEnum[] lista = TrattamentoMissioneEsteraEnum.values();
+
+		for (TrattamentoMissioneEsteraEnum s : lista) {
+			comboBox.addItem(s);
+			comboBox.setItemCaption(s, s.getStato());
+		}
+
+		field = (T) comboBox;
+		return field;
+	}
+
+	private <T extends Field> T customDateField(T field, Class<?> type, Class<T> fieldType) {
+		DateField dateField = new DateField();
+		BListener listener = new BListener(dateField);
+		dateField.addBlurListener(listener);
+		dateField.setConverter(new DateTimeConverter());
+
+		dateField.setValidationVisible(false);
+		dateField.setImmediate(true);
+		dateField.setDateFormat("dd/MM/yyyy HH:mm");
+		dateField.setResolution(Resolution.MINUTE);
+		dateField.setLocale(Locale.ITALY);
+		field = (T) dateField;
+		return field;
+	}
+
+	private <T extends Field> T customCheckBox(T field, Class<?> type, Class<T> fieldType) {
+		field = super.createField(type, fieldType);
+		BListener listener = new BListener(field);
+		((CheckBox) field).setValidationVisible(false);
+		((CheckBox) field).setImmediate(true);
+		((CheckBox) field).addBlurListener(listener);
+		return field;
+	}
+
+	/**
+	 * 
+	 * Converte JodaTime in Date e viceversa
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
 	public class DateTimeConverter implements Converter<Date, DateTime> {
 		@Override
 		public Class<DateTime> getModelType() {
@@ -147,7 +182,7 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 				return null;
 			else
 				return new DateTime(value);
-//			return LocalDate.fromDateFields(value); 
+			// return LocalDate.fromDateFields(value);
 		}
 
 		/**
@@ -166,7 +201,6 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 			}
 			return null;
 		}
-
 
 	}
 
@@ -202,31 +236,30 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 		}
 
 	}
-	
-	
-	private static class MyStringToDoubleConverter extends StringToDoubleConverter {
 
-	    @Override
-	    protected NumberFormat getFormat(Locale locale) {
-	        NumberFormat format = super.getFormat(locale);
-	        format.setGroupingUsed(false);
-	        format.setMaximumFractionDigits(2);
-	        format.setMinimumFractionDigits(2);
-	        return format;
-	    }
+	private static class CustomeStringToDoubleConverter extends StringToDoubleConverter {
+
+		@Override
+		protected NumberFormat getFormat(Locale locale) {
+			NumberFormat format = super.getFormat(locale);
+			format.setGroupingUsed(false);
+			format.setMaximumFractionDigits(2);
+			format.setMinimumFractionDigits(2);
+			return format;
+		}
 	}
-	
-	public static class MyConverterFactory extends DefaultConverterFactory {
-	    @Override
-	    protected <PRESENTATION, MODEL> Converter<PRESENTATION, MODEL> findConverter(
-	            Class<PRESENTATION> presentationType, Class<MODEL> modelType) {
-	        // Handle String <-> Double
-	        if (presentationType == String.class && modelType == Double.class) {
-	            return (Converter<PRESENTATION, MODEL>) new MyStringToDoubleConverter();
-	        }
-	        // Let default factory handle the rest
-	        return super.findConverter(presentationType, modelType);
-	    }
+
+	public static class ConverterFactory extends DefaultConverterFactory {
+		@Override
+		protected <PRESENTATION, MODEL> Converter<PRESENTATION, MODEL> findConverter(
+				Class<PRESENTATION> presentationType, Class<MODEL> modelType) {
+			// Handle String <-> Double
+			if (presentationType == String.class && modelType == Double.class) {
+				return (Converter<PRESENTATION, MODEL>) new CustomeStringToDoubleConverter();
+			}
+			// Let default factory handle the rest
+			return super.findConverter(presentationType, modelType);
+		}
 	}
 
 }

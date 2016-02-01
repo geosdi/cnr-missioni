@@ -347,10 +347,12 @@ public class GestioneUserAdminView extends GestioneTemplateView implements View 
 	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 
-		buttonEdit = new Button();
-		buttonEdit.setDescription("Dettagli");
+		buttonEdit = new Button("Dettagli");
+		buttonEdit.setDescription("Visualizza i dettagli dell'user");
 		buttonEdit.setIcon(FontAwesome.EDIT);
 		buttonEdit.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonEdit.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
 		buttonEdit.addClickListener(new Button.ClickListener() {
 
 			@Override

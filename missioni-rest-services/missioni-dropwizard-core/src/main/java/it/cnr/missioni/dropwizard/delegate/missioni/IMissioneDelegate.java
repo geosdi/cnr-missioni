@@ -14,25 +14,27 @@ import javax.ws.rs.core.StreamingOutput;
  */
 public interface IMissioneDelegate {
 
-    /**
-     * @param idMissione
-     * @param idUser
-     * @param stato
-     * @param numeroOrdineRimborso
-     * @param dataFromMissione
-     * @param dataToMissione
-     * @param dataFromRimborso
-     * @param dataToRimborso
-     * @param oggetto
-     * @param multiMatch
-     * @param fieldExist
-     * @param from
-     * @param size
-     * @return {@link Missione}
-     * @throws Exception
-     */
+/**
+ * 
+ * @param idMissione
+ * @param idUser
+ * @param stato
+ * @param numeroOrdineRimborso
+ * @param dataFromMissione
+ * @param dataToMissione
+ * @param dataFromRimborso
+ * @param dataToRimborso
+ * @param oggetto
+ * @param multiMatch
+ * @param fieldExist
+ * @param fieldNotExist
+ * @param from
+ * @param size
+ * @return
+ * @throws Exception
+ */
     MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
-            Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto, String multiMatch, String fieldExist, int from, int size) throws Exception;
+            Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto, String multiMatch, String fieldExist, String fieldNotExist ,int from, int size) throws Exception;
 
     /**
      * @param userID

@@ -16,7 +16,7 @@
 		"idVeicolo" : "AA111BB",
 		"shortDescriptionVeicolo" : "Ford Fiesta",
 		"idUser" : "01",
-		"distanza" : 355,
+		"distanza" : "355 Km",
 		"geoPoint": {
         	"lat": 41.9027835,
         	"lon": 12.4963655,

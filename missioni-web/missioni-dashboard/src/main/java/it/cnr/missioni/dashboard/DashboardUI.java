@@ -58,7 +58,7 @@ public final class DashboardUI extends UI  {
 	@Override
 	protected void init(final VaadinRequest request) {
 		setLocale(Locale.ITALY);
-		VaadinSession.getCurrent().setConverterFactory(new BeanFieldGrouFactory.MyConverterFactory());
+		VaadinSession.getCurrent().setConverterFactory(new BeanFieldGrouFactory.ConverterFactory());
 		DashboardEventBus.register(this);
 		Responsive.makeResponsive(this);
 		addStyleName(ValoTheme.UI_WITH_MENU);

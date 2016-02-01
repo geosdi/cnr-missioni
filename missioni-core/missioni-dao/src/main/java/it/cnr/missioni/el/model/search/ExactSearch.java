@@ -34,9 +34,6 @@ public class ExactSearch extends AbstractBooleanSearch<Object> implements IBoole
 		super(field,value,type);
 	}
 	
-
-
-	
 	
 	public QueryBuilder getBooleanQuery() throws Exception {
 		if (field == null || value == null)

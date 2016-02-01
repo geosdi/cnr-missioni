@@ -17,11 +17,25 @@ import javax.ws.rs.core.Response;
 @Consumes(value = MediaType.APPLICATION_JSON)
 public interface MissioneRestService {
 
-    /**
-     * @param idMissione
-     * @return {@link Response}
-     * @throws Exception
-     */
+/**
+ * 
+ * @param idMissione
+ * @param idUser
+ * @param stato
+ * @param numeroOrdineRimborso
+ * @param dataFromMissione
+ * @param dataToMissione
+ * @param dataFromRimborso
+ * @param dataToRimborso
+ * @param oggetto
+ * @param multiMatch
+ * @param fieldExist
+ * @param fieldNotExist
+ * @param from
+ * @param size
+ * @return
+ * @throws Exception
+ */
     @GET
     @Path(value = MissioneServiceRSPathConfig.GET_MISSIONE_BY_QUERY)
     Response getMissioneByQuery(@QueryParam(value = "idMissione") String idMissione,
@@ -34,6 +48,7 @@ public interface MissioneRestService {
             @QueryParam(value = "oggetto") String oggetto,
             @QueryParam(value = "multiMatch") String multiMatch,
             @QueryParam(value = "fieldExist") String fieldExist,
+            @QueryParam(value = "fieldNotExist") String fieldNotExist,
             @QueryParam(value = "from") int from,
             @QueryParam(value = "size") int size) throws Exception;
 

@@ -159,7 +159,7 @@ public class MissioniNotificationDispatcherProdTest {
         missione.setGAE("GAE");
         missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
         missione.setMezzoProprio(true);
-        missione.setDistanza(100.00);
+        missione.setDistanza("100.00 Km");
         DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
         dati.setAnticipazioniMonetarie(true);
         dati.setMandatoCNR("AA11");

@@ -306,10 +306,12 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button();
-		buttonModifica.setDescription("Modifica");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
+		buttonModifica = new Button("Dettagli");
+		buttonModifica.setDescription("Visualizza i dettagli del Rimborso");
+		buttonModifica.setIcon(FontAwesome.EDIT);
 		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -340,10 +342,12 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 //
 //		});
 
-		buttonMissione = new Button();
-		buttonMissione.setDescription("Missione");
+		buttonMissione = new Button("Missone");
+		buttonMissione.setDescription("Visualizza i dati della Missione");
 		buttonMissione.setIcon(FontAwesome.SUITCASE);
 		buttonMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonMissione.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
 		buttonMissione.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -354,10 +358,12 @@ public class GestioneRimborsoView extends GestioneTemplateView implements View {
 
 		});
 
-		buttonPDF = new Button();
-		buttonPDF.setDescription("Genera PDF");
+		buttonPDF = new Button("PDF");
+		buttonPDF.setDescription("Download del PDF");
 		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonPDF.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
 
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {

@@ -44,7 +44,7 @@ public class MissioneTest {
 	public void missioneErrataTest() {
 		Missione missione = new Missione();
 		missione.setDatiPeriodoMissione(null);
-		missione.setDistanza(-1);
+		missione.setDistanza(null);
 		Set<ConstraintViolation<Missione>> constraintViolations = validator.validate(missione);
 		assertEquals(4, constraintViolations.size());
 	}
@@ -56,7 +56,7 @@ public class MissioneTest {
 		missione.setLocalita("Roma");
 		missione.setOggetto("Conferenza");
 		missione.setResponsabileGruppo("01");
-		missione.setDistanza(100);
+		missione.setDistanza("100 Km");
 		Set<ConstraintViolation<Missione>> constraintViolations = validator.validate(missione);
 		assertEquals(0, constraintViolations.size());
 	}
@@ -90,7 +90,7 @@ public class MissioneTest {
 		missione.setGAE("GAE");
 		missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
 		missione.setMezzoProprio(true);
-		missione.setDistanza(100.00);
+		missione.setDistanza("100 km");
 		DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
 		dati.setAnticipazioniMonetarie(true);
 		dati.setMandatoCNR("AA11");

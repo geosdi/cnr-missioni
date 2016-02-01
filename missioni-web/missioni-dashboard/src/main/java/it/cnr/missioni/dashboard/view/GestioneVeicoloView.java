@@ -70,11 +70,13 @@ public class GestioneVeicoloView extends GestioneTemplateView implements View {
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNewMissione = new Button();
-		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNewMissione.setIcon(FontAwesome.PLUS);
-		buttonNewMissione.setDescription("Nuovo Veicolo");
-		buttonNewMissione.addClickListener(new Button.ClickListener() {
+		final Button buttonNewVeicolo = new Button("Nuovo Veicolo");
+		buttonNewVeicolo.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonNewVeicolo.setIcon(FontAwesome.PLUS);
+		buttonNewVeicolo.setDescription("Aggiunge un nuovo Veicolo");
+		buttonNewVeicolo.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
+		buttonNewVeicolo.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -82,16 +84,18 @@ public class GestioneVeicoloView extends GestioneTemplateView implements View {
 			}
 
 		});
-		return buttonNewMissione;
+		return buttonNewVeicolo;
 	}
 
 	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button();
-		buttonModifica.setDescription("Modifica");
+		buttonModifica = new Button("Modifica");
+		buttonModifica.setDescription("Modifica i dati del vieicolo");
 		buttonModifica.setIcon(FontAwesome.PENCIL);
 		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
 			@Override

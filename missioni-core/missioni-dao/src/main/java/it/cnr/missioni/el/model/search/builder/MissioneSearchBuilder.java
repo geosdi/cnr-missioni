@@ -36,6 +36,7 @@ public class MissioneSearchBuilder implements Serializable {
 	private String oggetto = null;
 	private String multiMatchValue;
 	private String fieldExist;
+	private String fieldNotExist;
 	private String fieldMultiMatch = "missione.localita,missione.oggetto";
 	private int size = 10;
 	private int from = 0;
@@ -123,6 +124,15 @@ public class MissioneSearchBuilder implements Serializable {
 
 			booleanModelSearch.getListaSearch()
 					.add(new ExistFieldSearch(fieldExist));
+		return this;
+	}
+	
+	public MissioneSearchBuilder withFieldNotExist(String fieldNotExist) {
+		this.fieldNotExist = fieldNotExist;
+		if (fieldNotExist != null && !fieldNotExist.equals(""))
+
+			booleanModelSearch.getListaSearch()
+					.add(new ExistFieldSearch(fieldNotExist,EnumBooleanType.MUST_NOT));
 		return this;
 	}
 	
@@ -316,6 +326,20 @@ public class MissioneSearchBuilder implements Serializable {
 	 */
 	public void setFieldExist(String fieldExist) {
 		this.fieldExist = fieldExist;
+	}
+
+	/**
+	 * @return the fieldNotExist
+	 */
+	public String getFieldNotExist() {
+		return fieldNotExist;
+	}
+
+	/**
+	 * @param fieldNotExist 
+	 */
+	public void setFieldNotExist(String fieldNotExist) {
+		this.fieldNotExist = fieldNotExist;
 	}
 
 	/**

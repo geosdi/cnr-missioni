@@ -25,27 +25,34 @@ public class MissioneRestServiceResource implements MissioneRestService {
     private IMissioneDelegate missioneDelegate;
 
 
-    /**
-     * @param idMissione
-     * @param idUser
-     * @param stato
-     * @param numeroOrdineRimborso
-     * @param dataFromMissione
-     * @param dataToMissione
-     * @param dataFromRimborso
-     * @param dataToRimborso
-     * @return
-     * @throws Exception
-     */
+/**
+ * 
+ * @param idMissione
+ * @param idUser
+ * @param stato
+ * @param numeroOrdineRimborso
+ * @param dataFromMissione
+ * @param dataToMissione
+ * @param dataFromRimborso
+ * @param dataToRimborso
+ * @param oggetto
+ * @param multiMatch
+ * @param fieldExist
+ * @param fieldNotExist
+ * @param from
+ * @param size
+ * @return
+ * @throws Exception
+ */
     @Override
     public Response getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
             Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
-            String multiMatch, String fieldExist,
+            String multiMatch, String fieldExist,String fieldNotExist,
             int from, int size)
             throws Exception {
         // TODO Auto-generated method stub
         return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso,
-                dataFromMissione, dataToMissione, dataFromRimborso, dataToRimborso, oggetto, multiMatch, fieldExist, from, size)).build();
+                dataFromMissione, dataToMissione, dataFromRimborso, dataToRimborso, oggetto, multiMatch, fieldExist,fieldNotExist, from, size)).build();
     }
 
     /**
