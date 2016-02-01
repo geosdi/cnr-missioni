@@ -3,7 +3,6 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.EnumBooleanType;
@@ -39,14 +38,14 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		this.stato = stato;
 		if (stato != null && !stato.trim().equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_STATO, stato));
-		return this;
+		return self();
 	}
 
 	public VeicoloCNRSearchBuilder withTarga(String targa) {
 		this.targa = targa;
 		if (targa != null && !targa.trim().equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_TARGA, targa));
-		return this;
+		return self();
 	}
 
 	public VeicoloCNRSearchBuilder withPolizzaAssicurativa(String polizzaAssicurativa) {
@@ -54,7 +53,7 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		if (polizzaAssicurativa != null && !polizzaAssicurativa.trim().equals(""))
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA,polizzaAssicurativa));
-		return this;
+		return self();
 	}
 
 	public VeicoloCNRSearchBuilder withCartaCircolazione(String cartaCircolazione) {
@@ -62,7 +61,7 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		if (cartaCircolazione != null && !cartaCircolazione.trim().equals(""))
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_CARTA_CIRCOLAZIONE,cartaCircolazione));
-		return this;
+		return self();
 	}
 
 	public VeicoloCNRSearchBuilder withId(String id) {
@@ -70,17 +69,17 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		if (id != null && !id.trim().equals(""))
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, id, EnumBooleanType.MUST_NOT));
-		return this;
+		return self();
 	}
 
 	public VeicoloCNRSearchBuilder withSize(int size) {
 		this.size = size;
-		return this;
+		return self();
 	}
 
 	public VeicoloCNRSearchBuilder withFrom(int from) {
 		this.from = from;
-		return this;
+		return self();
 	}
 
 	public BoolQueryBuilder buildQuery() {
@@ -199,4 +198,12 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		this.from = from;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	private VeicoloCNRSearchBuilder self() {
+		return this;
+	}
+	
 }

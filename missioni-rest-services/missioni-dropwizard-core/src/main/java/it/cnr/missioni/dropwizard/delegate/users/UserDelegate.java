@@ -98,6 +98,8 @@ class UserDelegate implements IUserDelegate {
 		if ((user == null)) {
 			throw new IllegalParameterFault("The Parameter user must not be null");
 		}
+		if(user.getId().isEmpty())
+			user.setId(gen.generate().toString());
 		user = this.userDAO.persist(user);
 		return user.getId();
 

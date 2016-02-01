@@ -40,7 +40,7 @@ public class PrenotazioneSearchBuilder implements Serializable {
 		this.dataTo = dataTo;
 			booleanModelSearch.getListaSearch().add(new DateRangeSearch(SearchConstants.PRENOTAZIONE_FIELD_DATA_FROM,
 					dataFrom, dataTo));
-		return this;
+		return self();
 	}
 
 	public BoolQueryBuilder buildQuery() {
@@ -90,5 +90,12 @@ public class PrenotazioneSearchBuilder implements Serializable {
 	}
 
 	
+	/**
+	 * 
+	 * @return
+	 */
+	private PrenotazioneSearchBuilder self() {
+		return this;
+	}
 
 }

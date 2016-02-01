@@ -56,14 +56,14 @@ public class UserSearchBuilder implements Serializable {
 		this.nome = nome;
 		if( nome != null &&!nome.equals("") )
 		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_NOME, nome));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withCognome(String cognome) {
 		this.cognome = cognome;
 		if( cognome != null && !cognome.equals("")) 
 		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_COGNOME, cognome));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withCodiceFiscale(String codiceFiscale) {
@@ -71,28 +71,28 @@ public class UserSearchBuilder implements Serializable {
 		if(codiceFiscale != null &&!codiceFiscale.equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new PrefixSearch(SearchConstants.USER_FIELD_CODICE_FISCALE, codiceFiscale));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withMatricola(String matricola) {
 		this.matricola = matricola;
 		if( matricola != null &&!matricola.equals("") )
 		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withUsername(String username) {
 		this.username = username;
 		if(username != null && !username.equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_USERNAME, username));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withTarga(String targa) {
 		this.targa = targa;
 		if(targa != null &&!targa.equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_TARGA, targa));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withCartaCircolazione(String cartaCircolazione) {
@@ -100,7 +100,7 @@ public class UserSearchBuilder implements Serializable {
 		if( cartaCircolazione != null && !cartaCircolazione.equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withPolizzaAssicurativa(String polizzaAssicurativa) {
@@ -108,21 +108,21 @@ public class UserSearchBuilder implements Serializable {
 		if( polizzaAssicurativa != null && !polizzaAssicurativa.equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withIban(String iban) {
 		this.iban = iban;
 		if( iban != null && !iban.equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_IBAN, iban));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withMail(String mail) {
 		this.mail = mail;
 		if( mail!= null &&!mail.equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_MAIL, mail));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withId(String id) {
@@ -130,7 +130,7 @@ public class UserSearchBuilder implements Serializable {
 		if(id != null &&!id.equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_ID, id, EnumBooleanType.MUST_NOT));
-		return this;
+		return self();
 	}
 
 	public UserSearchBuilder withNumeroPatente(String numeroPatente) {
@@ -138,7 +138,7 @@ public class UserSearchBuilder implements Serializable {
 		if( numeroPatente != null &&!numeroPatente.equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_NUMERO_PATENTE, numeroPatente));
-		return this;
+		return self();
 	}
 
 	
@@ -148,12 +148,12 @@ public class UserSearchBuilder implements Serializable {
 
 			booleanModelSearch.getListaSearch()
 					.add(new MultiMatchSearch(fieldMultiMatch, multiMatchValue));
-		return this;
+		return self();
 	}
 	
 	public UserSearchBuilder withMultiMatchField(String fieldMultiMatch) {
 		this.fieldMultiMatch = fieldMultiMatch;
-		return this;
+		return self();
 	}
 	
 	public UserSearchBuilder withResponsabileGruppo(Boolean responsabileGruppo) {
@@ -161,22 +161,22 @@ public class UserSearchBuilder implements Serializable {
 		if (responsabileGruppo != null)
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.USER_FIELD_RESPONSABILIE_GRUPPO, responsabileGruppo));
-		return this;
+		return self();
 	}
 	
 	public UserSearchBuilder withSize(int size) {
 		this.size = size;
-		return this;
+		return self();
 	}
 	
 	public UserSearchBuilder withFrom(int from) {
 		this.from = from;
-		return this;
+		return self();
 	}
 	
 	public UserSearchBuilder withAll(boolean all) {
 		this.all = all;
-		return this;
+		return self();
 	}
 	
 	public BoolQueryBuilder buildQuery() {
@@ -475,6 +475,14 @@ public class UserSearchBuilder implements Serializable {
 	 */
 	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private UserSearchBuilder self() {
+		return this;
 	}
 
 }

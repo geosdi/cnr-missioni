@@ -58,7 +58,7 @@ public class MissioneSearchBuilder implements Serializable {
 		if (fromDataInserimento != null || toDataInserimento != null)
 			booleanModelSearch.getListaSearch().add(new DateRangeSearch(SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO,
 					fromDataInserimento, toDataInserimento));
-		return this;
+		return self();
 	}
 
 	public MissioneSearchBuilder withIdUser(String idUser) {
@@ -66,14 +66,14 @@ public class MissioneSearchBuilder implements Serializable {
 
 		if (idUser != null && !idUser.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_ID_USER, idUser));
-		return this;
+		return self();
 	}
 
 	public MissioneSearchBuilder withStato(String stato) {
 		this.stato = stato;
 		if (stato != null && !stato.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_STATO, stato));
-		return this;
+		return self();
 	}
 
 	public MissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso) {
@@ -81,7 +81,7 @@ public class MissioneSearchBuilder implements Serializable {
 		if (numeroOrdineRimborso != null && !numeroOrdineRimborso.equals(""))
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE, numeroOrdineRimborso));
-		return this;
+		return self();
 	}
 
 	public MissioneSearchBuilder withRangeDataRimborso(DateTime fromDataRimborso, DateTime toDataRimborso) {
@@ -90,70 +90,67 @@ public class MissioneSearchBuilder implements Serializable {
 		if (fromDataRimbroso != null || toDataRimbroso != null)
 			booleanModelSearch.getListaSearch().add(new DateRangeSearch(
 					SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO, fromDataRimbroso, toDataRimbroso));
-		return this;
+		return self();
 	}
 
 	public MissioneSearchBuilder withIdMissione(String idMissione) {
 		this.idMissione = idMissione;
 		if (idMissione != null && !idMissione.equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_ID, idMissione));
-		return this;
+		return self();
 	}
 
 	public MissioneSearchBuilder withOggetto(String oggetto) {
 		this.oggetto = oggetto;
 		if (oggetto != null && !oggetto.equals(""))
 
-			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.MISSIONE_FIELD_OGGETTO, oggetto, EnumBooleanType.MUST,Operator.OR));
-		return this;
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_OGGETTO, oggetto,
+					EnumBooleanType.MUST, Operator.OR));
+		return self();
 	}
-	
+
 	public MissioneSearchBuilder withMultiMatch(String multiMatchValue) {
 		this.multiMatchValue = multiMatchValue;
 		if (multiMatchValue != null && !multiMatchValue.equals(""))
 
-			booleanModelSearch.getListaSearch()
-					.add(new MultiMatchSearch(fieldMultiMatch,multiMatchValue));
-		return this;
+			booleanModelSearch.getListaSearch().add(new MultiMatchSearch(fieldMultiMatch, multiMatchValue));
+		return self();
 	}
-	
+
 	public MissioneSearchBuilder withFieldExist(String fieldExist) {
 		this.fieldExist = fieldExist;
 		if (fieldExist != null && !fieldExist.equals(""))
 
-			booleanModelSearch.getListaSearch()
-					.add(new ExistFieldSearch(fieldExist));
-		return this;
+			booleanModelSearch.getListaSearch().add(new ExistFieldSearch(fieldExist));
+		return self();
 	}
-	
+
 	public MissioneSearchBuilder withFieldNotExist(String fieldNotExist) {
 		this.fieldNotExist = fieldNotExist;
 		if (fieldNotExist != null && !fieldNotExist.equals(""))
 
-			booleanModelSearch.getListaSearch()
-					.add(new ExistFieldSearch(fieldNotExist,EnumBooleanType.MUST_NOT));
-		return this;
+			booleanModelSearch.getListaSearch().add(new ExistFieldSearch(fieldNotExist, EnumBooleanType.MUST_NOT));
+		return self();
 	}
-	
+
 	public MissioneSearchBuilder withMultiMatchField(String fieldMultiMatch) {
 		this.fieldMultiMatch = fieldMultiMatch;
-		return this;
+		return self();
 	}
-	
+
 	public MissioneSearchBuilder withSortField(String fieldSort) {
 		this.fieldSort = fieldSort;
-		return this;
+		return self();
 	}
 
 	public MissioneSearchBuilder withSize(int size) {
 		this.size = size;
-		return this;
+		return self();
 	}
-	
+
 	public MissioneSearchBuilder withFrom(int from) {
 		this.from = from;
-		return this;
+		return self();
 	}
 
 	public BoolQueryBuilder buildQuery() {
@@ -308,7 +305,7 @@ public class MissioneSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param multiMatchValue 
+	 * @param multiMatchValue
 	 */
 	public void setMultiMatchValue(String multiMatchValue) {
 		this.multiMatchValue = multiMatchValue;
@@ -322,7 +319,7 @@ public class MissioneSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param fieldExist 
+	 * @param fieldExist
 	 */
 	public void setFieldExist(String fieldExist) {
 		this.fieldExist = fieldExist;
@@ -336,7 +333,7 @@ public class MissioneSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param fieldNotExist 
+	 * @param fieldNotExist
 	 */
 	public void setFieldNotExist(String fieldNotExist) {
 		this.fieldNotExist = fieldNotExist;
@@ -350,7 +347,7 @@ public class MissioneSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param fieldMultiMatch 
+	 * @param fieldMultiMatch
 	 */
 	public void setFieldMultiMatch(String fieldMultiMatch) {
 		this.fieldMultiMatch = fieldMultiMatch;
@@ -410,6 +407,14 @@ public class MissioneSearchBuilder implements Serializable {
 	 */
 	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	private MissioneSearchBuilder self() {
+		return this;
 	}
 
 }

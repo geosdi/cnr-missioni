@@ -1,7 +1,5 @@
 package it.cnr.missioni.dropwizard.delegate.prenotazione;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
@@ -48,6 +46,8 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 		if ((prenotazione == null)) {
 			throw new IllegalParameterFault("The Parameter prenotazione must not be null");
 		}
+		if(prenotazione.getId().isEmpty())
+			prenotazione.setId(gen.generate().toString());
 		this.prenotazioneDAO.persist(prenotazione);
 
 		return null;
