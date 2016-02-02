@@ -327,7 +327,8 @@ public class UserDAOTest {
 		mappaVeicoli.put(veicolo.getTarga(), veicolo);
 		user.setMappaVeicolo(mappaVeicoli);
 		DatiCNR datiCNR = new DatiCNR();
-		datiCNR.setDatoreLavoro("01");
+		datiCNR.setDatoreLavoro("02");
+		datiCNR.setShortDescriptionDatoreLavoro("Rossi Paolo");
 		datiCNR.setIban("IT0000000000000000");
 		datiCNR.setLivello(LivelloUserEnum.V);
 		datiCNR.setMail("vito.salvia@gmail.com");

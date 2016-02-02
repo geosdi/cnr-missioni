@@ -46,11 +46,10 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 		if ((prenotazione == null)) {
 			throw new IllegalParameterFault("The Parameter prenotazione must not be null");
 		}
-		if(prenotazione.getId().isEmpty())
+		if(prenotazione.getId() == null)
 			prenotazione.setId(gen.generate().toString());
-		this.prenotazioneDAO.persist(prenotazione);
+		return this.prenotazioneDAO.persist(prenotazione).getId();
 
-		return null;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.view.admin;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -15,34 +16,35 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.table.admin.ElencoVeicoliCNRTable;
-import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
+import it.cnr.missioni.dashboard.component.table.admin.ElencoRimborsoKmTable;
+import it.cnr.missioni.dashboard.component.window.admin.RimborsoKmWindow;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.DisableButtonNewEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsoKmUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
+import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.model.configuration.RimborsoKm;
+import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloCNRView extends GestioneTemplateView implements View {
+public class GestioneRimborsoKmView extends GestioneTemplateView implements View {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 93612577398232810L;
-	/**
-	 * 
-	 */
-	private ElencoVeicoliCNRTable elencoVeicoliCNRTable;
+	private static final long serialVersionUID = 8210899238444116295L;
+	private ElencoRimborsoKmTable elencoRimborsoKmTable;
 	private Button buttonModifica;
-	private VeicoloCNR selectedVeicoloCNR;
-	private VeicoloCNRStore veicoloCNRStore;
+	private Button buttonNew;
+	private RimborsoKm selectedRimborsoKm;
+	private RimborsoKmStore rimborsoKmStore;
 
-
-	public GestioneVeicoloCNRView() {
+	public GestioneRimborsoKmView() {
 		super();
+		DashboardEventBus.register(this);
 	}
 
 	/**
@@ -52,26 +54,30 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
-		this.elencoVeicoliCNRTable = new ElencoVeicoliCNRTable();
+		this.elencoRimborsoKmTable = new ElencoRimborsoKmTable();
 
 		try {
-			VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
-			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
-			this.elencoVeicoliCNRTable.aggiornaTable(veicoloCNRStore);
+			rimborsoKmStore = ClientConnector.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+
+			if (rimborsoKmStore == null)
+				buttonNew.setVisible(true);
+			else
+				buttonNew.setVisible(false);
+			this.elencoRimborsoKmTable.aggiornaTable(rimborsoKmStore);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
-		this.elencoVeicoliCNRTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+		this.elencoRimborsoKmTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedVeicoloCNR = (VeicoloCNR) itemClickEvent.getItemId();
+				selectedRimborsoKm = (RimborsoKm) itemClickEvent.getItemId();
 				enableDisableButtons(true);
 			}
 		});
 
-		v.addComponent(this.elencoVeicoliCNRTable);
-		v.setComponentAlignment(elencoVeicoliCNRTable,
+		v.addComponent(this.elencoRimborsoKmTable);
+		v.setComponentAlignment(elencoRimborsoKmTable,
 				new Alignment(Bits.ALIGNMENT_VERTICAL_CENTER | Bits.ALIGNMENT_HORIZONTAL_CENTER));
 
 		return v;
@@ -83,16 +89,16 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNew = new Button("Aggiungi Veicolo CNR");
-		buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNew.setIcon(FontAwesome.PLUS);
-		buttonNew.setDescription("Inserisce un nuovo veicolo CNR");
-		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-		buttonNew.addClickListener(new Button.ClickListener() {
+		this.buttonNew = new Button("Aggiungi Rimborso Km");
+		this.buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		this.buttonNew.setIcon(FontAwesome.PLUS);
+		this.buttonNew.setDescription("Inserisce un nuovo rimborso km");
+		this.buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		this.buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloCNRWindow.open(new VeicoloCNR(), false);
+				RimborsoKmWindow.open(new RimborsoKm(), false);
 			}
 
 		});
@@ -112,7 +118,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloCNRWindow.open(selectedVeicoloCNR, true);
+				RimborsoKmWindow.open(selectedRimborsoKm, false);
 
 			}
 
@@ -157,8 +163,18 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 		return null;
 	}
 
-	protected  Component buildFilter(){
+	protected Component buildFilter() {
 		return null;
+	}
+
+	/**
+	 * Disabilita il button al primo inserimento del rimborso km
+	 * 
+	 * @param disableButtonNew
+	 */
+	@Subscribe
+	public void disabledButtonNew(final DisableButtonNewEvent disableButtonNew) {
+		this.buttonNew.setVisible(false);
 	}
 
 }

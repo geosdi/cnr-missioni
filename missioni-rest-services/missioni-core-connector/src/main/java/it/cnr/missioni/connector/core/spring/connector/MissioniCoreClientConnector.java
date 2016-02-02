@@ -237,12 +237,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(VeicoloCNRStore.class);
     }
     
-    public Long addVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
+    public String addVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/veicoloCNR/addVeicoloCNR/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(veicoloCNR,
-                        MediaType.APPLICATION_JSON), Long.class);
+                        MediaType.APPLICATION_JSON), String.class);
     }
 
     public Boolean deleteVeicoloCNR(String veicoloCNRID) throws Exception {
@@ -327,12 +327,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(QualificaUserStore.class);
     }
     
-    public Long addQualificaUser(QualificaUser qualificaUser) throws Exception {
+    public String addQualificaUser(QualificaUser qualificaUser) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/qualificaUser/addQualificaUser/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(qualificaUser,
-                        MediaType.APPLICATION_JSON), Long.class);
+                        MediaType.APPLICATION_JSON), String.class);
     }
 
     public Boolean deleteQualificaUser(String qualificaUserID) throws Exception {
@@ -361,12 +361,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(NazioneStore.class);
     }
     
-    public Long addNazione(Nazione nazione) throws Exception {
+    public String addNazione(Nazione nazione) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/nazione/addNazione/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(nazione,
-                        MediaType.APPLICATION_JSON), Long.class);
+                        MediaType.APPLICATION_JSON), String.class);
     }
 
     public Boolean deleteNazione(String nazioneID) throws Exception {
@@ -392,12 +392,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(RimborsoKmStore.class);
     }
     
-    public Long addRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
+    public String addRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/rimborsoKm/addRimborsoKm/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(rimborsoKm,
-                        MediaType.APPLICATION_JSON), Long.class);
+                        MediaType.APPLICATION_JSON), String.class);
     }
 
     public Boolean deleteRimborsoKm(String rimborsoKmID) throws Exception {

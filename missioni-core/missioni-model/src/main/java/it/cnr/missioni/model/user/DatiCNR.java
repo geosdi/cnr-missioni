@@ -22,6 +22,7 @@ public class DatiCNR implements Serializable{
 	@NotBlank
 	private String descrizioneQualifica;
 	private String datoreLavoro;
+	private String shortDescriptionDatoreLavoro;
 	@NotBlank
 	private String matricola;
 	private String codiceTerzo;
@@ -96,6 +97,20 @@ public class DatiCNR implements Serializable{
 	}
 
 	/**
+	 * @return the shortDescriptionDatoreLavoro
+	 */
+	public String getShortDescriptionDatoreLavoro() {
+		return shortDescriptionDatoreLavoro;
+	}
+
+	/**
+	 * @param shortDescriptionDatoreLavoro 
+	 */
+	public void setShortDescriptionDatoreLavoro(String shortDescriptionDatoreLavoro) {
+		this.shortDescriptionDatoreLavoro = shortDescriptionDatoreLavoro;
+	}
+
+	/**
 	 * @return the matricola
 	 */
 	public String getMatricola() {
@@ -156,9 +171,10 @@ public class DatiCNR implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "DatiCNR [livello=" + getLivello() + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
-				+ getDescrizioneQualifica() + ", datoreLavoro=" + datoreLavoro + ", matricola=" + matricola
-				+ ", codiceTerzo=" + codiceTerzo + ", mail=" + mail + ", iban=" + iban + "]";
+		return "DatiCNR [livello=" + livello + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
+				+ descrizioneQualifica + ", datoreLavoro=" + datoreLavoro + ", shortDescriptionDatoreLavoro="
+				+ shortDescriptionDatoreLavoro + ", matricola=" + matricola + ", codiceTerzo=" + codiceTerzo + ", mail="
+				+ mail + ", iban=" + iban + "]";
 	}
 
 

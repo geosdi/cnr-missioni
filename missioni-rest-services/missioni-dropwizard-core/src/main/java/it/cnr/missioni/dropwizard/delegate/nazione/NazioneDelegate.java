@@ -69,10 +69,9 @@ class NazioneDelegate implements INazioneDelegate {
 		if ((nazione == null)) {
 			throw new IllegalParameterFault("The Parameter nazione must not be null");
 		}
-		if (nazione.getId().isEmpty())
+		if (nazione.getId() == null)
 			nazione.setId(gen.generate().toString());
-		this.nazioneDAO.persist(nazione);
-		return null;
+		return this.nazioneDAO.persist(nazione).getId();
 
 	}
 

@@ -48,8 +48,8 @@ class RimborsoKmDelegate implements IRimborsoKmDelegate {
 		PageResult<RimborsoKm> pageResult = this.rimborsoKmDAO.findRimborsoKmByQuery(rimborsoSearchBuilder);
 		if (!pageResult.getResults().isEmpty()) {
 			RimborsoKmStore rimborsoKmStore = new RimborsoKmStore();
-			RimborsoKm rimborsoKm = pageResult.getResults().get(0);
-			rimborsoKmStore.setRimborsoKm(rimborsoKm);
+			rimborsoKmStore.setRimborsoKm(pageResult.getResults());
+			rimborsoKmStore.setTotale(pageResult.getTotal());
 			return rimborsoKmStore;
 		} else
 			return null;
@@ -66,7 +66,7 @@ class RimborsoKmDelegate implements IRimborsoKmDelegate {
 		if ((rimborsoKm == null)) {
 			throw new IllegalParameterFault("The Parameter rimborsoKm must not be null");
 		}
-		if (rimborsoKm.getId().isEmpty())
+		if (rimborsoKm.getId() == null)
 			rimborsoKm.setId(gen.generate().toString());
 		this.rimborsoKmDAO.persist(rimborsoKm);
 		return null;

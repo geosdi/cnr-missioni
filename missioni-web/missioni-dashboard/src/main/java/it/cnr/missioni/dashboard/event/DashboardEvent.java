@@ -4,10 +4,14 @@ import java.util.List;
 
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
+import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
+import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
+import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -44,19 +48,19 @@ public abstract class DashboardEvent {
 	public static class NotificationsCountUpdatedEvent {
 	}
 
-//	public static final class ReportsCountUpdatedEvent {
-//		private final int count;
-//
-//		public ReportsCountUpdatedEvent(final int count) {
-//			this.count = count;
-//		}
-//
-//		public int getCount() {
-//			return count;
-//		}
-//
-//	}
-//
+	// public static final class ReportsCountUpdatedEvent {
+	// private final int count;
+	//
+	// public ReportsCountUpdatedEvent(final int count) {
+	// this.count = count;
+	// }
+	//
+	// public int getCount() {
+	// return count;
+	// }
+	//
+	// }
+	//
 	public static final class PostViewChangeEvent {
 		private final DashboardViewType view;
 
@@ -138,7 +142,7 @@ public abstract class DashboardEvent {
 	 */
 	public static class MenuUpdateEvent {
 	}
-	
+
 	public static class TableRimborsiUpdatedEvent {
 
 		private MissioniStore missioniStore;
@@ -164,10 +168,8 @@ public abstract class DashboardEvent {
 			this.missioniStore = missioniStore;
 		}
 
-
-
 	}
-	
+
 	/**
 	 * 
 	 * Aggiorna la tabella missione dopo un inserimento o update
@@ -194,21 +196,19 @@ public abstract class DashboardEvent {
 		}
 
 		/**
-		 * @param userStore 
+		 * @param userStore
 		 */
 		public void setUserStore(UserStore userStore) {
 			this.userStore = userStore;
 		}
 
-
-
 	}
-	
+
 	/**
-	 * Aggiorna il calendario 
+	 * Aggiorna il calendario
 	 */
-	public static class CalendarUpdateEvent{
-		
+	public static class CalendarUpdateEvent {
+
 		private PrenotazioneEvent prenotazioneEvent;
 
 		/**
@@ -226,16 +226,14 @@ public abstract class DashboardEvent {
 		}
 
 		/**
-		 * @param prenotazioneEvent 
+		 * @param prenotazioneEvent
 		 */
 		public void setPrenotazioneEvent(PrenotazioneEvent prenotazioneEvent) {
 			this.prenotazioneEvent = prenotazioneEvent;
 		}
-		
-		
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * Aggiorna la tabella veicoli CNR dopo un inserimento o un update
@@ -244,7 +242,7 @@ public abstract class DashboardEvent {
 	 *
 	 */
 	public static class TableVeicoliCNRUpdatedEvent {
-		
+
 		private VeicoloCNRStore veicoloCNRStore;
 
 		/**
@@ -262,16 +260,126 @@ public abstract class DashboardEvent {
 		}
 
 		/**
-		 * @param veicoloCNRStore 
+		 * @param veicoloCNRStore
 		 */
 		public void setVeicoloCNRStore(VeicoloCNRStore veicoloCNRStore) {
 			this.veicoloCNRStore = veicoloCNRStore;
 		}
-		
+
+	}
+
+	/**
+	 * 
+	 * Aggiorna la tabella qualifica dopo un inserimento o un update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class TableQualificaUserUpdatedEvent {
+
+		private QualificaUserStore qualificaStore;
+
+		/**
+		 * @param veicoloCNRStore
+		 */
+		public TableQualificaUserUpdatedEvent(QualificaUserStore qualificaStore) {
+			this.setQualificaStore(qualificaStore);
+		}
+
+		/**
+		 * @return the qualificaStore
+		 */
+		public QualificaUserStore getQualificaStore() {
+			return qualificaStore;
+		}
+
+		/**
+		 * @param qualificaStore
+		 */
+		public void setQualificaStore(QualificaUserStore qualificaStore) {
+			this.qualificaStore = qualificaStore;
+		}
+
+	}
+
+	/**
+	 * 
+	 * Aggiorna la tabella nazione dopo un inserimento o un update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class TableNazioneUpdatedEvent {
+
+		private NazioneStore nazioneStore;
+
+		/**
+		 * @param veicoloCNRStore
+		 */
+		public TableNazioneUpdatedEvent(NazioneStore nazioneStore) {
+			this.setNazioneStore(nazioneStore);
+		}
+
+		/**
+		 * @return the nazioneStore
+		 */
+		public NazioneStore getNazioneStore() {
+			return nazioneStore;
+		}
+
+		/**
+		 * @param nazioneStore
+		 */
+		public void setNazioneStore(NazioneStore nazioneStore) {
+			this.nazioneStore = nazioneStore;
+		}
+
+	}
+
+	/**
+	 * 
+	 * Aggiorna la tabella rimborso km dopo un inserimento o un update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class TableRimborsoKmUpdatedEvent {
+
+		private RimborsoKmStore rimborsoKmStore;
+
+		/**
+		 * @param veicoloCNRStore
+		 */
+		public TableRimborsoKmUpdatedEvent(RimborsoKmStore rimborsoKmStore) {
+			this.rimborsoKmStore = rimborsoKmStore;
+		}
+
+		/**
+		 * @return the rimborsoKmStore
+		 */
+		public RimborsoKmStore getRimborsoKmStore() {
+			return rimborsoKmStore;
+		}
+
+		/**
+		 * @param rimborsoKmStore 
+		 */
+		public void setRimborsoKmStore(RimborsoKmStore rimborsoKmStore) {
+			this.rimborsoKmStore = rimborsoKmStore;
+		}
+
+
 	}
 	
-
-
-
+	/**
+	 * 
+	 * Disabilita il button
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class DisableButtonNewEvent {
+		
+	}
 	
 }

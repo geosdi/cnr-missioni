@@ -60,14 +60,16 @@ public class QualificaUserDAO extends AbstractElasticSearchDAO<QualificaUser> im
 
 		Page p = new Page(qualificaUserSearchBuilder.getFrom(), qualificaUserSearchBuilder.getSize());
 
-		//carico tutte le qualifiche per le combobox
+		// carico tutte le qualifiche per le combobox
 		int size = qualificaUserSearchBuilder.getSize();
 		if (qualificaUserSearchBuilder.isAll())
 			size = count().intValue();
-		
+
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(qualificaUserSearchBuilder.buildQuery())
-				.setFrom(qualificaUserSearchBuilder.getFrom()).setSize(size).execute()
+				.setFrom(qualificaUserSearchBuilder.getFrom())
+				.setSize(size)
+				.addSort(qualificaUserSearchBuilder.getFieldSort(), qualificaUserSearchBuilder.getSortOrder()).execute()
 				.actionGet());
 
 		if (searchResponse.status() != RestStatus.OK) {

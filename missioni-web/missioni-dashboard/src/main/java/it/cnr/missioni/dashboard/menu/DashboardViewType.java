@@ -6,6 +6,9 @@ import com.vaadin.server.Resource;
 
 import it.cnr.missioni.dashboard.view.PrenotazioneVeicoloCNRView;
 import it.cnr.missioni.dashboard.view.HomeView;
+import it.cnr.missioni.dashboard.view.admin.GestioneNazioneView;
+import it.cnr.missioni.dashboard.view.admin.GestioneQualificaUserView;
+import it.cnr.missioni.dashboard.view.admin.GestioneRimborsoKmView;
 import it.cnr.missioni.dashboard.view.admin.GestioneUserAdminView;
 import it.cnr.missioni.dashboard.view.admin.GestioneVeicoloCNRView;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
@@ -24,6 +27,10 @@ public enum DashboardViewType {
     GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, true)
     ,
     GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneVeicoloCNRView.class, FontAwesome.CAR, true),
+    GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user",GestioneQualificaUserView.class, FontAwesome.USERS, true),
+    GESTIONE_NAZIONE_ADMIN("gestione nazione",GestioneNazioneView.class, FontAwesome.GLOBE, true),
+    GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km",GestioneRimborsoKmView.class, FontAwesome.EURO, true),
+
     ;
 
     private final String viewName;

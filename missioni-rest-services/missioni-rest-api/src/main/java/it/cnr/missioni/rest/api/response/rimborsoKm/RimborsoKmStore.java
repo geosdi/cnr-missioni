@@ -11,7 +11,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 
 /**
@@ -30,28 +29,45 @@ public class RimborsoKmStore implements Serializable {
 	 * 
 	 */
 	@JsonProperty(value = "rimborsoKm", required = false)
-	private RimborsoKm rimborsoKm;
+	private List<RimborsoKm> rimborsoKm;
+	private long totale;
 
 	public RimborsoKmStore() {
 	}
 
-	public RimborsoKmStore(RimborsoKm rimborsoKm) {
+	public RimborsoKmStore(List<RimborsoKm> rimborsoKm) {
 		this.setRimborsoKm(rimborsoKm);
 	}
 
 	/**
 	 * @return the rimborsoKm
 	 */
-	public RimborsoKm getRimborsoKm() {
+	public List<RimborsoKm> getRimborsoKm() {
 		return rimborsoKm;
 	}
 
 	/**
 	 * @param rimborsoKm 
 	 */
-	public void setRimborsoKm(RimborsoKm rimborsoKm) {
+	public void setRimborsoKm(List<RimborsoKm> rimborsoKm) {
 		this.rimborsoKm = rimborsoKm;
 	}
+
+	/**
+	 * @return the totale
+	 */
+	public long getTotale() {
+		return totale;
+	}
+
+	/**
+	 * @param totale 
+	 */
+	public void setTotale(long totale) {
+		this.totale = totale;
+	}
+
+
 
 
 }

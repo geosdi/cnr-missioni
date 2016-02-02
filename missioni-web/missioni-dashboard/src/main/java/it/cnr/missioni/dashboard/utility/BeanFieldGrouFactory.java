@@ -55,7 +55,11 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 				&& fieldType.isAssignableFrom(ComboBox.class)) {
 
 			field = customTrattamentoMissioneEsteraVeicoloComboBox(field, type, fieldType);
-		} else if (type.isAssignableFrom(Boolean.class)) {
+		} 
+		else if ( fieldType.isAssignableFrom(ComboBox.class)) {
+			field = customComboBox(field, type, fieldType);
+		}
+		else if (type.isAssignableFrom(Boolean.class)) {
 			field = customCheckBox(field, type, fieldType);
 
 		} else {
@@ -63,6 +67,14 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 
 		}
 
+		return field;
+	}
+	
+	private <T extends Field> T customComboBox(T field, Class<?> type, Class<T> fieldType) {
+		field = super.createField(type, fieldType);
+		BListener listener = new BListener(field);
+		((ComboBox)field).addBlurListener(listener);
+		((ComboBox)field).setValidationVisible(false);
 		return field;
 	}
 

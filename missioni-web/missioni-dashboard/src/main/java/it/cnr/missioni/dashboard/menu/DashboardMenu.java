@@ -161,9 +161,15 @@ public final class DashboardMenu extends CustomComponent {
 			menuItemsLayout.addComponent(new Label("Menù Admin"));
 			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
-
 			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_VEICOLO_CNR_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_QUALIFICA_USER_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_NAZIONE_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_RIMBORSO_KM_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
+
 		}
 
 		return menuItemsLayout;

@@ -15,33 +15,29 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.table.admin.ElencoVeicoliCNRTable;
-import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
+import it.cnr.missioni.dashboard.component.table.admin.ElencoNazioneTable;
+import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloCNRView extends GestioneTemplateView implements View {
+public class GestioneNazioneView extends GestioneTemplateView implements View {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 93612577398232810L;
-	/**
-	 * 
-	 */
-	private ElencoVeicoliCNRTable elencoVeicoliCNRTable;
+	private static final long serialVersionUID = 8210899238444116295L;
+	private ElencoNazioneTable elencoNazioneTable;
 	private Button buttonModifica;
-	private VeicoloCNR selectedVeicoloCNR;
-	private VeicoloCNRStore veicoloCNRStore;
+	private Nazione selectedNazione;
+	private NazioneStore nazioneStore;
 
-
-	public GestioneVeicoloCNRView() {
+	public GestioneNazioneView() {
 		super();
 	}
 
@@ -52,26 +48,25 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
-		this.elencoVeicoliCNRTable = new ElencoVeicoliCNRTable();
+		this.elencoNazioneTable = new ElencoNazioneTable();
 
 		try {
-			VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
-			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
-			this.elencoVeicoliCNRTable.aggiornaTable(veicoloCNRStore);
+			nazioneStore = ClientConnector.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder());
+			this.elencoNazioneTable.aggiornaTable(nazioneStore);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
-		this.elencoVeicoliCNRTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+		this.elencoNazioneTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedVeicoloCNR = (VeicoloCNR) itemClickEvent.getItemId();
+				selectedNazione = (Nazione) itemClickEvent.getItemId();
 				enableDisableButtons(true);
 			}
 		});
 
-		v.addComponent(this.elencoVeicoliCNRTable);
-		v.setComponentAlignment(elencoVeicoliCNRTable,
+		v.addComponent(this.elencoNazioneTable);
+		v.setComponentAlignment(elencoNazioneTable,
 				new Alignment(Bits.ALIGNMENT_VERTICAL_CENTER | Bits.ALIGNMENT_HORIZONTAL_CENTER));
 
 		return v;
@@ -83,16 +78,16 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNew = new Button("Aggiungi Veicolo CNR");
+		final Button buttonNew = new Button("Aggiungi Nazione");
 		buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonNew.setIcon(FontAwesome.PLUS);
-		buttonNew.setDescription("Inserisce un nuovo veicolo CNR");
+		buttonNew.setDescription("Inserisce una nuova nazione");
 		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloCNRWindow.open(new VeicoloCNR(), false);
+				NazioneWindow.open(new Nazione(), false);
 			}
 
 		});
@@ -112,7 +107,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloCNRWindow.open(selectedVeicoloCNR, true);
+				NazioneWindow.open(selectedNazione, false);
 
 			}
 
@@ -157,7 +152,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 		return null;
 	}
 
-	protected  Component buildFilter(){
+	protected Component buildFilter() {
 		return null;
 	}
 

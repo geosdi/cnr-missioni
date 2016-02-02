@@ -70,10 +70,9 @@ class QualificaUserDelegate implements IQualificaUserDelegate {
 		if ((qualificaUser == null)) {
 			throw new IllegalParameterFault("The Parameter qualificaUser must not be null");
 		}
-		if (qualificaUser.getId().isEmpty())
+		if (qualificaUser.getId() == null)
 			qualificaUser.setId(gen.generate().toString());
-		this.qualificaUserDAO.persist(qualificaUser);
-		return null;
+		return this.qualificaUserDAO.persist(qualificaUser).getId();
 
 	}
 

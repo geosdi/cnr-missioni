@@ -80,10 +80,9 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 		if ((veicoloCNR == null)) {
 			throw new IllegalParameterFault("The Parameter veicoloCNR must not be null");
 		}
-		if(veicoloCNR.getId().isEmpty())
+		if(veicoloCNR.getId() == null)
 			veicoloCNR.setId(gen.generate().toString());
-		this.veicoloCNRDAO.persist(veicoloCNR);
-		return null;
+		return  this.veicoloCNRDAO.persist(veicoloCNR).getId();
 
 	}
 

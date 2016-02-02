@@ -3,6 +3,7 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.EnumBooleanType;
@@ -25,6 +26,9 @@ public class NazioneSearchBuilder implements Serializable {
 	private int size = 10;
 	private int from = 0;
 	private boolean all = false;
+	
+	private String fieldSort = SearchConstants.NAZIONE_FIELD_VALUE;
+	private SortOrder sortOrder = SortOrder.ASC;
 
 	private NazioneSearchBuilder() {
 		booleanModelSearch = new BooleanModelSearch();
@@ -150,6 +154,34 @@ public class NazioneSearchBuilder implements Serializable {
 	 */
 	public void setAll(boolean all) {
 		this.all = all;
+	}
+
+	/**
+	 * @return the fieldSort
+	 */
+	public String getFieldSort() {
+		return fieldSort;
+	}
+
+	/**
+	 * @param fieldSort 
+	 */
+	public void setFieldSort(String fieldSort) {
+		this.fieldSort = fieldSort;
+	}
+
+	/**
+	 * @return the sortOrder
+	 */
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	/**
+	 * @param sortOrder 
+	 */
+	public void setSortOrder(SortOrder sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 	/**

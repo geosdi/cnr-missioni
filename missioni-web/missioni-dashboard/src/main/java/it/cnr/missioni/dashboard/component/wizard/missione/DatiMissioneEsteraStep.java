@@ -1,5 +1,7 @@
 package it.cnr.missioni.dashboard.component.wizard.missione;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 import org.vaadin.teemu.wizards.WizardStep;
 
@@ -71,14 +73,12 @@ public class DatiMissioneEsteraStep implements WizardStep {
 				"trattamentoMissioneEsteraEnum", ComboBox.class);
 
 		attraversamentoFrontieraAndataField = new DateField("Attraversamento Frontiera andata");
-		attraversamentoFrontieraAndataField.setRangeStart(new DateTime().toDate());
 		attraversamentoFrontieraAndataField.setDateOutOfRangeMessage("Data non possibile");
 		attraversamentoFrontieraAndataField.setResolution(Resolution.MINUTE);
 		attraversamentoFrontieraAndataField.setDateFormat("dd/MM/yyyy HH:mm");
 		attraversamentoFrontieraAndataField.setValidationVisible(false);
 
 		attraversamentoFrontieraRitornoField = new DateField("Attraversamento Frontiera andata");
-		attraversamentoFrontieraRitornoField.setRangeStart(new DateTime().toDate());
 		attraversamentoFrontieraRitornoField.setDateOutOfRangeMessage("Data non possibile");
 		attraversamentoFrontieraRitornoField.setResolution(Resolution.MINUTE);
 		attraversamentoFrontieraRitornoField.setDateFormat("dd/MM/yyyy HH:mm");
@@ -160,10 +160,10 @@ public class DatiMissioneEsteraStep implements WizardStep {
 				@Override
 				public void validate(Object value) throws InvalidValueException {
 
-					if (attraversamentoFrontieraAndataField.getValue() == null)
+					if (attraversamentoFrontieraRitornoField.getValue() == null)
 						throw new InvalidValueException(Utility.getMessage("field_required"));
 					else {
-						DateTime data = (DateTime) value;
+						DateTime data = new DateTime((Date) value);
 						if (attraversamentoFrontieraAndataField.getValue() != null
 								&& data.isBefore(attraversamentoFrontieraAndataField.getValue().getTime()))
 							throw new InvalidValueException(Utility.getMessage("data_error"));

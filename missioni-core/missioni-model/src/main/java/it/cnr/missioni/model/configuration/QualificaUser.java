@@ -16,13 +16,11 @@ import org.geosdi.geoplatform.experimental.el.api.model.Document;
 @XmlType(propOrder = { "id", "value" })
 public class QualificaUser implements Document {
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 7333017498177070328L;
-	/**
-	 * 
-	 */
+	private static final long serialVersionUID = -1723673255852798697L;
 	private String id;
 	@NotNull
 	private String value;
@@ -81,7 +79,8 @@ public class QualificaUser implements Document {
 	 */
 	@Override
 	public String toString() {
-		return "RimborsoKm [id=" + id + ", value=" + value + "]";
+		return "QualificaUser [id=" + id + ", value=" + value + "]";
 	}
+
 
 }

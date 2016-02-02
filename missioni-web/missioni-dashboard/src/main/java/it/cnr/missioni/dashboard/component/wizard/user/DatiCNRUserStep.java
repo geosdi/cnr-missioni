@@ -27,9 +27,11 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.DatiCNR;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /**
@@ -75,6 +77,15 @@ public class DatiCNRUserStep implements WizardStep {
 			livelloField = (ComboBox) fieldGroup.buildAndBind("Livello", "livello", ComboBox.class);
 			qualificaField = new ComboBox("Qualifica");
 			fieldGroup.bind(qualificaField, "idQualifica");
+
+			QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
+					.getQualificaUserSearchBuilder().withAll(true);
+			QualificaUserStore qualificaStore = ClientConnector
+					.getQualificaUser(qualificaUserSearchBuilder);
+			qualificaStore.getQualificaUser().forEach(q -> {
+				qualificaField.addItem(q.getId());
+				qualificaField.setItemCaption(q.getId(), q.getValue());
+			});
 
 			matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "matricola");
 			codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzo", "codiceTerzo");
@@ -217,6 +228,8 @@ public class DatiCNRUserStep implements WizardStep {
 			BeanItem<DatiCNR> beanItem = (BeanItem<DatiCNR>) fieldGroup.getItemDataSource();
 			datiCNR = beanItem.getBean();
 			user.setDatiCNR(datiCNR);
+			user.getDatiCNR().setDescrizioneQualifica(qualificaField.getItemCaption(qualificaField.getValue()));
+			user.getDatiCNR().setShortDescriptionDatoreLavoro(listaUserField.getItemCaption(listaUserField.getValue()));
 			DashboardEventBus.post(new UpdateUserAction(user));
 			return true;
 		} catch (InvalidValueException | CommitException e) {

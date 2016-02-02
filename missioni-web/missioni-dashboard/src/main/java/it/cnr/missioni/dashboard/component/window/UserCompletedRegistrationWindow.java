@@ -38,8 +38,10 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
 public class UserCompletedRegistrationWindow extends Window {
@@ -68,7 +70,7 @@ public class UserCompletedRegistrationWindow extends Window {
 
 	private ComboBox livelloField;
 	private ComboBox qualificaField;
-//	private TextField datoreLavoroField;
+	// private TextField datoreLavoroField;
 	private TextField matricolaField;
 	private TextField codiceTerzoField;
 	private TextField mailField;
@@ -204,22 +206,24 @@ public class UserCompletedRegistrationWindow extends Window {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		livelloField = (ComboBox) fieldGroup.buildAndBind("Livello", "datiCNR.livello",ComboBox.class);
+		livelloField = (ComboBox) fieldGroup.buildAndBind("Livello", "datiCNR.livello", ComboBox.class);
 		details.addComponent(livelloField);
+
 		qualificaField = new ComboBox("Qualifica");
-		fieldGroup.bind(qualificaField, "datiCNR.idQualifica");
-		details.addComponent(qualificaField);
-		// datoreLavoroField = (TextField) fieldGroup.buildAndBind("Datore
-		// Lavoro", "datiCNR.datoreLavoro");
-		// details.addComponent(datoreLavoroField);
-
 		listaUserField = new ComboBox("Datore Lavoro");
-
 		try {
+
+			QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
+					.getQualificaUserSearchBuilder().withAll(true);
+			QualificaUserStore qualificaStore = ClientConnector
+					.getQualificaUser(qualificaUserSearchBuilder);
+			qualificaStore.getQualificaUser().forEach(q -> {
+				qualificaField.addItem(q.getId());
+				qualificaField.setItemCaption(q.getId(), q.getValue());
+			});
+
 			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true);
-
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-
 			userStore.getUsers().forEach(u -> {
 				listaUserField.addItem(u.getId());
 				listaUserField.setItemCaption(u.getId(),
@@ -230,6 +234,9 @@ public class UserCompletedRegistrationWindow extends Window {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
+
+		fieldGroup.bind(qualificaField, "datiCNR.idQualifica");
+		details.addComponent(qualificaField);
 
 		listaUserField.setValidationVisible(false);
 		fieldGroup.bind(listaUserField, "datiCNR.datoreLavoro");
@@ -290,6 +297,10 @@ public class UserCompletedRegistrationWindow extends Window {
 					BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
 					User new_user = beanItem.getBean();
 
+					new_user.getDatiCNR()
+							.setDescrizioneQualifica(qualificaField.getItemCaption(qualificaField.getValue()));
+					new_user.getDatiCNR().setShortDescriptionDatoreLavoro(listaUserField.getItemCaption(listaUserField.getValue()));
+					
 					DashboardEventBus.post(new UpdateUserAction(new_user));
 					close();
 

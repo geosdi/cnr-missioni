@@ -9,9 +9,15 @@ import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnect
 import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.model.configuration.QualificaUser;
+import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
@@ -19,7 +25,10 @@ import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
+import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
+import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
+import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -105,7 +114,7 @@ public class ClientConnector {
 	 * @param user
 	 * @throws Exception
 	 */
-	public static String  addMissione(Missione missione) throws Exception {
+	public static String addMissione(Missione missione) throws Exception {
 		return missioniCoreClientConnector.addMissione(missione);
 
 	}
@@ -228,7 +237,7 @@ public class ClientConnector {
 	public static Response downloadRimborsoMissioneAsPdf(String missioneID) throws Exception {
 		return missioniCoreClientConnector.downloadRimborsoMissioneAsPdf(missioneID);
 	}
-	
+
 	/**
 	 * 
 	 * @param location
@@ -248,6 +257,103 @@ public class ClientConnector {
 	 */
 	public static GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception {
 		return missioniCoreClientConnector.getGeocoderStoreForMissioneLocation(location);
+	}
+
+	/**
+	 * 
+	 * @param nazioneSearchBuilder
+	 * @return
+	 * @throws Exception
+	 */
+	public static NazioneStore getNazione(NazioneSearchBuilder nazioneSearchBuilder) throws Exception {
+		return missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
+
+	}
+
+	/**
+	 * 
+	 * @param qualificaUserSearchBuilder
+	 * @return
+	 * @throws Exception
+	 */
+	public static QualificaUserStore getQualificaUser(QualificaUserSearchBuilder qualificaUserSearchBuilder)
+			throws Exception {
+		return missioniCoreClientConnector.getQualificaUserByQuery(qualificaUserSearchBuilder);
+
+	}
+
+	/**
+	 * 
+	 * @param rimborsoKmSearchBuilder
+	 * @return
+	 * @throws Exception
+	 */
+	public static RimborsoKmStore getRimborsoKm(RimborsoKmSearchBuilder rimborsoKmSearchBuilder) throws Exception {
+		return missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoKmSearchBuilder);
+
+	}
+
+	/**
+	 * 
+	 * @param qualificaUser
+	 * @return
+	 * @throws Exception
+	 */
+	public static String addQualificaUser(QualificaUser qualificaUser) throws Exception {
+		return missioniCoreClientConnector.addQualificaUser(qualificaUser);
+
+	}
+
+	/**
+	 * 
+	 * @param qualificaUser
+	 * @throws Exception
+	 */
+	public static void updateQualificaUser(QualificaUser qualificaUser) throws Exception {
+		missioniCoreClientConnector.updateQualificaUser(qualificaUser);
+
+	}
+
+	/**
+	 * 
+	 * @param nazione
+	 * @return
+	 * @throws Exception
+	 */
+	public static String addNazione(Nazione nazione) throws Exception {
+		return missioniCoreClientConnector.addNazione(nazione);
+
+	}
+
+	/**
+	 * 
+	 * @param nazione
+	 * @throws Exception
+	 */
+	public static void updateNazione(Nazione nazione) throws Exception {
+		missioniCoreClientConnector.updateNazione(nazione);
+
+	}
+
+	/**
+	 * 
+	 * @param rimborsoKm
+	 * @return
+	 * @throws Exception
+	 */
+	public static String addRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
+		return missioniCoreClientConnector.addRimborsoKm(rimborsoKm);
+
+	}
+
+	/**
+	 * 
+	 * @param rimborsoKm
+	 * @throws Exception
+	 */
+	public static void updateRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
+		missioniCoreClientConnector.updateRimborsoKm(rimborsoKm);
+
 	}
 
 }

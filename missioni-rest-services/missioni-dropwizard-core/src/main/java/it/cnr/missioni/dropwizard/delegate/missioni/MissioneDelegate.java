@@ -168,7 +168,7 @@ class MissioneDelegate implements IMissioneDelegate {
 		if ((missione == null)) {
 			throw new IllegalParameterFault("The Parameter missione must not be null ");
 		}
-		if (missione.getId().isEmpty())
+		if (missione.getId() == null)
 			missione.setId(gen.generate().toString());
 		this.missioneDAO.persist(missione);
 
@@ -180,8 +180,7 @@ class MissioneDelegate implements IMissioneDelegate {
 				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 						: this.cnrMissioniItaliaEmail.getEmail()),
 				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
-		missione = this.missioneDAO.persist(missione);
-		return missione.getId();
+		return  this.missioneDAO.persist(missione).getId();
 	}
 
 	@Override

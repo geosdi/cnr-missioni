@@ -65,7 +65,9 @@ public class NazioneDAO extends AbstractElasticSearchDAO<Nazione> implements INa
 		
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(nazioneSearchBuilder.buildQuery())
-				.setFrom(nazioneSearchBuilder.getFrom()).setSize(size).execute().actionGet());
+				.setFrom(nazioneSearchBuilder.getFrom()).setSize(size)
+				.addSort(nazioneSearchBuilder.getFieldSort(), nazioneSearchBuilder.getSortOrder())
+				.execute().actionGet());
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");
