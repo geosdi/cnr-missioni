@@ -27,9 +27,10 @@ import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.user.Anagrafica;
 import it.cnr.missioni.model.user.Credenziali;
 import it.cnr.missioni.model.user.DatiCNR;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 import it.cnr.missioni.model.user.Patente;
 import it.cnr.missioni.model.user.Residenza;
-import it.cnr.missioni.model.user.RuoloUtenteEnum;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 
@@ -312,7 +313,7 @@ public class UserDAOTest {
 		anagrafica.setLuogoNascita("Potenza");
 		credenziali = new Credenziali();
 		credenziali.setUsername("vito.salvia");
-		credenziali.setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
+		credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
 		credenziali.setPassword(credenziali.md5hash("vitosalvia"));
 		user.setCredenziali(credenziali);
 		user.setAnagrafica(anagrafica);
@@ -328,7 +329,7 @@ public class UserDAOTest {
 		DatiCNR datiCNR = new DatiCNR();
 		datiCNR.setDatoreLavoro("01");
 		datiCNR.setIban("IT0000000000000000");
-		datiCNR.setLivello("Assegnista");
+		datiCNR.setLivello(LivelloUserEnum.V);
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setMatricola("1111111");
 		datiCNR.setDescrizioneQualifica("Assegnista");

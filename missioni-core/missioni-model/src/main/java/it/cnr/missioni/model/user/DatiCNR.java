@@ -2,6 +2,8 @@ package it.cnr.missioni.model.user;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -14,9 +16,8 @@ public class DatiCNR implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1534365538828825181L;
-	@NotBlank
-	private String livello;
-	
+	@NotNull
+	private LivelloUserEnum livello;
 	private String IdQualifica;
 	@NotBlank
 	private String descrizioneQualifica;
@@ -29,22 +30,28 @@ public class DatiCNR implements Serializable{
 	private String mail;
 	@NotBlank
 	private String iban;
+	
+	public enum LivelloUserEnum {
+		I,II,III,IV,V,VI,VII,VIII;
+	}
+
+
+
+
 
 	/**
 	 * @return the livello
 	 */
-	public String getLivello() {
+	public LivelloUserEnum getLivello() {
 		return livello;
 	}
 
 	/**
-	 * @param livello
+	 * @param livello 
 	 */
-	public void setLivello(String livello) {
+	public void setLivello(LivelloUserEnum livello) {
 		this.livello = livello;
 	}
-
-
 
 	/**
 	 * @return the idQualifica
@@ -149,7 +156,7 @@ public class DatiCNR implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "DatiCNR [livello=" + livello + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
+		return "DatiCNR [livello=" + getLivello() + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
 				+ getDescrizioneQualifica() + ", datoreLavoro=" + datoreLavoro + ", matricola=" + matricola
 				+ ", codiceTerzo=" + codiceTerzo + ", mail=" + mail + ", iban=" + iban + "]";
 	}

@@ -27,7 +27,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ProfileUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
-import it.cnr.missioni.model.user.RuoloUtenteEnum;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
 
 /**
@@ -78,11 +78,7 @@ public final class DashboardMenu extends CustomComponent {
 
 		menuContent.addComponent(buildTitle());
 		menuContent.addComponent(buildUserMenu());
-		// menuContent.addComponent(buildMenuAdminItems());
 		menuContent.addComponent(buildMenuItems());
-		// if(getCurrentUser().getCredenziali().getRuoloUtente() ==
-		// RuoloUtenteEnum.UTENTE_ADMIN)
-		// menuContent.addComponent(buildMenuAdminItems());
 
 		return menuContent;
 	}
@@ -96,9 +92,6 @@ public final class DashboardMenu extends CustomComponent {
 		return logoWrapper;
 	}
 
-//	private User getCurrentUser() {
-//		return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-//	}
 
 	private MenuBar buildUserMenu() {
 		// settings = new MenuBar();
@@ -163,7 +156,7 @@ public final class DashboardMenu extends CustomComponent {
 
 		// Creazione menù admin
 		if (user.isRegistrazioneCompletata()
-				&& user.getCredenziali().getRuoloUtente() == RuoloUtenteEnum.UTENTE_SEMPLICE) {
+				&& user.getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_SEMPLICE) {
 			menuItemsLayout.addComponent(new Label("<hr />", ContentMode.HTML));
 			menuItemsLayout.addComponent(new Label("Menù Admin"));
 			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
@@ -200,11 +193,6 @@ public final class DashboardMenu extends CustomComponent {
 		getCompositionRoot().removeStyleName(STYLE_VISIBLE);
 	}
 
-//	@Subscribe
-//	public void updateReportsCount(final ReportsCountUpdatedEvent event) {
-//		reportsBadge.setValue(String.valueOf(event.getCount()));
-//		reportsBadge.setVisible(event.getCount() > 0);
-//	}
 
 	@Subscribe
 	public void updateUserName(final ProfileUpdatedEvent event) {

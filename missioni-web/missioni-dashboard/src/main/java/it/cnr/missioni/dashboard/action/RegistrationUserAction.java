@@ -7,7 +7,7 @@ import com.vaadin.ui.Notification.Type;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
-import it.cnr.missioni.model.user.RuoloUtenteEnum;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
@@ -39,7 +39,7 @@ private User user;
 				user.setDataRegistrazione(new DateTime());
 				user.setDateLastModified(new DateTime());
 				user.getCredenziali().setPassword(user.getCredenziali().md5hash(user.getCredenziali().getPassword()));
-				user.getCredenziali().setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
+				user.getCredenziali().setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
 				ClientConnector.addUser(user);
 				Utility.getNotification(Utility.getMessage("success_message"),null,
 						Type.HUMANIZED_MESSAGE);

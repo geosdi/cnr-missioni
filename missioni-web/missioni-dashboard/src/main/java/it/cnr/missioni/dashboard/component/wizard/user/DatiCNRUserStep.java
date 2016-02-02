@@ -37,9 +37,8 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
  */
 public class DatiCNRUserStep implements WizardStep {
 
-	private TextField livelloField;
-	private TextField qualificaField;
-//	private TextField datoreLavoroField;
+	private ComboBox livelloField;
+	private ComboBox qualificaField;
 	private TextField matricolaField;
 	private TextField codiceTerzoField;
 	private TextField mailField;
@@ -66,23 +65,24 @@ public class DatiCNRUserStep implements WizardStep {
 	}
 
 	public void bindFieldGroup() {
-		fieldGroup = new BeanFieldGroup<DatiCNR>(DatiCNR.class);
-		fieldGroup.setItemDataSource(datiCNR);
-		fieldGroup.setBuffered(true);
-		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
-		fieldGroup.setFieldFactory(fieldFactory);
-
-		livelloField = (TextField) fieldGroup.buildAndBind("Livello", "livello");
-		qualificaField = (TextField) fieldGroup.buildAndBind("Qualifica", "qualifica");
-
-		matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "matricola");
-		codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzo", "codiceTerzo");
-		mailField = (TextField) fieldGroup.buildAndBind("Mail", "mail");
-		ibanField = (TextField) fieldGroup.buildAndBind("Iban", "iban");
-
-		listaUserField = new ComboBox("Datore Lavoro");
-
 		try {
+			fieldGroup = new BeanFieldGroup<DatiCNR>(DatiCNR.class);
+			fieldGroup.setItemDataSource(datiCNR);
+			fieldGroup.setBuffered(true);
+			FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
+			fieldGroup.setFieldFactory(fieldFactory);
+
+			livelloField = (ComboBox) fieldGroup.buildAndBind("Livello", "livello", ComboBox.class);
+			qualificaField = new ComboBox("Qualifica");
+			fieldGroup.bind(qualificaField, "idQualifica");
+
+			matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "matricola");
+			codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzo", "codiceTerzo");
+			mailField = (TextField) fieldGroup.buildAndBind("Mail", "mail");
+			ibanField = (TextField) fieldGroup.buildAndBind("Iban", "iban");
+
+			listaUserField = new ComboBox("Datore Lavoro");
+
 			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true);
 
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
@@ -140,26 +140,25 @@ public class DatiCNRUserStep implements WizardStep {
 
 		});
 
-		// mailField.addValidator(new Validator() {
-		// @Override
-		// public void validate(Object value) throws InvalidValueException {
-		// if (value != null) {
-		// UserSearchBuilder userSearchBuilder =
-		// UserSearchBuilder.getUserSearchBuilder().withMail(mailField.getValue());
-		// UserStore userStore = null;
-		// try {
-		// userStore = ClientConnector.getUser(userSearchBuilder);
-		// } catch (Exception e) {
-		// Utility.getNotification(Utility.getMessage("error_message"),
-		// Utility.getMessage("request_error"),
-		// Type.ERROR_MESSAGE);
-		// }
-		// if (userStore != null)
-		// throw new InvalidValueException(Utility.getMessage("mail_present"));
-		// }
-		// }
-		//
-		// });
+		mailField.addValidator(new Validator() {
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (value != null) {
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withMail(mailField.getValue());
+					UserStore userStore = null;
+					try {
+						userStore = ClientConnector.getUser(userSearchBuilder);
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+					if (userStore != null)
+						throw new InvalidValueException(Utility.getMessage("mail_present"));
+				}
+			}
+
+		});
 
 		ibanField.addValidator(new Validator() {
 			@Override

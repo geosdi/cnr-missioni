@@ -19,7 +19,7 @@ public class Credenziali implements Serializable{
 	private String username ="";
 	@NotBlank
 	private String password = "";
-	private RuoloUtenteEnum ruoloUtente;
+	private RuoloUserEnum ruoloUtente;
 	
 	/**
 	 * 
@@ -74,14 +74,14 @@ public class Credenziali implements Serializable{
 	/**
 	 * @return the ruoloUtente
 	 */
-	public RuoloUtenteEnum getRuoloUtente() {
+	public RuoloUserEnum getRuoloUtente() {
 		return ruoloUtente;
 	}
 
 	/**
 	 * @param ruoloUtente
 	 */
-	public void setRuoloUtente(RuoloUtenteEnum ruoloUtente) {
+	public void setRuoloUtente(RuoloUserEnum ruoloUtente) {
 		this.ruoloUtente = ruoloUtente;
 	}
 

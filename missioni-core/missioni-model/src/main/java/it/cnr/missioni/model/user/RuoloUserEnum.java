@@ -3,13 +3,13 @@ package it.cnr.missioni.model.user;
 /**
  * @author Salvia Vito 
  */
-public enum RuoloUtenteEnum {
+public enum RuoloUserEnum {
 
 	UTENTE_ADMIN("Admin"), UTENTE_SEMPLICE("Utente Semplice");
 
 	private String ruolo;
 
-	RuoloUtenteEnum(String ruolo) {
+	RuoloUserEnum(String ruolo) {
 		this.setRuolo(ruolo);
 	}
 
@@ -21,8 +21,8 @@ public enum RuoloUtenteEnum {
 		this.ruolo = ruolo;
 	}
 
-	public RuoloUtenteEnum getRuoloEnum(String ruolo) {
-		for (RuoloUtenteEnum r : RuoloUtenteEnum.values()) {
+	public RuoloUserEnum getRuoloEnum(String ruolo) {
+		for (RuoloUserEnum r : RuoloUserEnum.values()) {
 			if (r.getRuolo().equals(ruolo))
 				return r;
 		}

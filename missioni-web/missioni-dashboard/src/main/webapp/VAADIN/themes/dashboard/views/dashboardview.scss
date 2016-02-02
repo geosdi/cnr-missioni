@@ -118,6 +118,12 @@
   	      width: 50% !important;
   	    }
   	  }
+  	  
+  	    	  &[width-range~="701px-"] {
+  	    .dashboard-panel-slot-calendar {
+  	      width: 100% !important;
+  	    }
+  	  }
 
       &[height-range~="0-440px"] {
   	    .dashboard-panel-slot {

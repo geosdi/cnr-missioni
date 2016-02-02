@@ -13,7 +13,7 @@ import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
 import it.cnr.missioni.dashboard.view.GestioneVeicoloView;
 
 
-public enum DashboardViewType {
+public enum DashboardViewTypeAdmin  {
 	
     HOME("home", HomeView.class, FontAwesome.HOME, true) ,
     COMPLETA_REGISTRAZIONE("completa registrazione",null, FontAwesome.USER, true),
@@ -21,8 +21,7 @@ public enum DashboardViewType {
     GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
     GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio",GestioneVeicoloView.class, FontAwesome.CAR, true),
     CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, true),
-    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, true)
-    ,
+    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, true),
     GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneVeicoloCNRView.class, FontAwesome.CAR, true),
     ;
 
@@ -31,7 +30,7 @@ public enum DashboardViewType {
     private final Resource icon;
     private final boolean stateful;
 
-    private DashboardViewType(final String viewName,
+    private DashboardViewTypeAdmin(final String viewName,
             final Class<? extends View> viewClass, final Resource icon,
             final boolean stateful) {
         this.viewName = viewName;
@@ -58,9 +57,9 @@ public enum DashboardViewType {
     
     
 
-    public static DashboardViewType getByViewName(final String viewName) {
-    	DashboardViewType result = null;
-        for (DashboardViewType viewType : values()) {
+    public static DashboardViewTypeAdmin getByViewName(final String viewName) {
+        DashboardViewTypeAdmin result = null;
+        for (DashboardViewTypeAdmin viewType : values()) {
             if (viewType.getViewName().equals(viewName)) {
                 result = viewType;
                 break;

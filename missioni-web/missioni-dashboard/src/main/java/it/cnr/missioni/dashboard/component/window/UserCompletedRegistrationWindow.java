@@ -66,9 +66,9 @@ public class UserCompletedRegistrationWindow extends Window {
 	private TextField numeroPatenteField;
 	private TextField rilasciataDaField;
 
-	private TextField livelloField;
-	private TextField qualificaField;
-	private TextField datoreLavoroField;
+	private ComboBox livelloField;
+	private ComboBox qualificaField;
+//	private TextField datoreLavoroField;
 	private TextField matricolaField;
 	private TextField codiceTerzoField;
 	private TextField mailField;
@@ -204,9 +204,10 @@ public class UserCompletedRegistrationWindow extends Window {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		livelloField = (TextField) fieldGroup.buildAndBind("Livello", "datiCNR.livello");
+		livelloField = (ComboBox) fieldGroup.buildAndBind("Livello", "datiCNR.livello",ComboBox.class);
 		details.addComponent(livelloField);
-		qualificaField = (TextField) fieldGroup.buildAndBind("Qualifica", "datiCNR.qualifica");
+		qualificaField = new ComboBox("Qualifica");
+		fieldGroup.bind(qualificaField, "datiCNR.idQualifica");
 		details.addComponent(qualificaField);
 		// datoreLavoroField = (TextField) fieldGroup.buildAndBind("Datore
 		// Lavoro", "datiCNR.datoreLavoro");

@@ -5,6 +5,7 @@ import it.cnr.missioni.model.missione.*;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.*;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
@@ -109,7 +110,7 @@ public class MissioniNotificationDispatcherProdTest {
         anagrafica.setLuogoNascita("Potenza");
         credenziali = new Credenziali();
         credenziali.setUsername("vito.salvia");
-        credenziali.setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
+        credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
         credenziali.setPassword(credenziali.md5hash("vitosalvia"));
         user.setCredenziali(credenziali);
         user.setAnagrafica(anagrafica);
@@ -125,7 +126,7 @@ public class MissioniNotificationDispatcherProdTest {
         DatiCNR datiCNR = new DatiCNR();
         datiCNR.setDatoreLavoro("Izzi");
         datiCNR.setIban("IT0000000000000000");
-        datiCNR.setLivello("5");
+        datiCNR.setLivello(LivelloUserEnum.V);
         datiCNR.setMail("vito.salvia@gmail.com");
         datiCNR.setMatricola("1111111");
         datiCNR.setDescrizioneQualifica("Assegnista");

@@ -9,7 +9,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.model.user.RuoloUtenteEnum;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
 
 /**
@@ -30,7 +30,7 @@ public class UpdateUserAction implements IAction {
 			user.setRegistrazioneCompletata(true);
 			user.setDateLastModified(new DateTime());
 			user.getCredenziali().setPassword(user.getCredenziali().getPassword());
-			user.getCredenziali().setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
+			user.getCredenziali().setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
 			ClientConnector.updateUser(user);
 			VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
 			Utility.getNotification(Utility.getMessage("success_message"), Utility.getMessage("success_message"),

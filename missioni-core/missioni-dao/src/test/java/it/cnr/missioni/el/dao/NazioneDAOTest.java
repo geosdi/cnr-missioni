@@ -19,10 +19,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
-import it.cnr.missioni.model.configuration.QualificaUser;
 
 /**
  * @author Salvia Vito

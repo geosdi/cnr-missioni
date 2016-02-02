@@ -12,7 +12,7 @@
         	"luogoNascita": "Potenza"
 		},
 		"datiCNR" : {
-			"livello" : "5",
+			"livello" : "V",
 			"descrizioneQualifica" : "Assegnista",
 			"idQualifica" : "01",
 			"datoreLavoro" : "Izzi",

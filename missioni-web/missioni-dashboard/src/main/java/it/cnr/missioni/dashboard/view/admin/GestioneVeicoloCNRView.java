@@ -83,10 +83,11 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNewMissione = new Button();
+		final Button buttonNewMissione = new Button("Aggiungi Veicolo CNR");
 		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonNewMissione.setIcon(FontAwesome.PLUS);
-		buttonNewMissione.setDescription("Nuovo Veicolo");
+		buttonNewMissione.setDescription("Inserisce un nuovo veicolo CNR");
+		buttonNewMissione.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		buttonNewMissione.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -101,10 +102,12 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView implements View
 	protected GridLayout buildButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button();
+		buttonModifica = new Button("Modifica");
 		buttonModifica.setDescription("Modifica");
 		buttonModifica.setIcon(FontAwesome.PENCIL);
 		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
 			@Override

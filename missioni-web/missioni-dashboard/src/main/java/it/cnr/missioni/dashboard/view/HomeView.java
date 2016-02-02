@@ -2,20 +2,13 @@ package it.cnr.missioni.dashboard.view;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import org.joda.time.DateTime;
 
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.addon.calendar.ui.Calendar;
-import com.vaadin.addon.calendar.ui.Calendar.TimeFormat;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -39,10 +32,8 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.calendar.CalendarPrenotazioni;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
 import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
-import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.notification.DashboardNotification;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -179,6 +170,7 @@ public final class HomeView extends Panel implements View {
 
 		Component panel = createContentWrapper(l);
 		panel.setId("calendar");
+		panel.addStyleName("dashboard-panel-slot-calendar");
 		return panel;
 	}
 
@@ -195,7 +187,6 @@ public final class HomeView extends Panel implements View {
 
 	private Component createContentWrapper(final Component content) {
 		final CssLayout slot = new CssLayout();
-		slot.setWidth("100%");
 		slot.addStyleName("dashboard-panel-slot");
 
 		CssLayout card = new CssLayout();

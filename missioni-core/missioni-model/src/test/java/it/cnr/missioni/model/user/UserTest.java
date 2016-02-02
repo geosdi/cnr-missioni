@@ -15,8 +15,7 @@ import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import it.cnr.missioni.model.configuration.QualificaUser;
-import junit.framework.Assert;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 
 /**
  * @author Salvia Vito
@@ -147,7 +146,7 @@ public class UserTest {
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setIban("112345");
 		datiCNR.setMatricola("9876");
-		datiCNR.setLivello("5");
+		datiCNR.setLivello(LivelloUserEnum.V);
 		datiCNR.setDescrizioneQualifica("Ricercatore");
 		Set<ConstraintViolation<DatiCNR>> constraintViolations = validator.validate(datiCNR);
 		assertEquals(0, constraintViolations.size());
@@ -188,7 +187,7 @@ public class UserTest {
 		anagrafica.setLuogoNascita("Potenza");
 		credenziali = new Credenziali();
 		credenziali.setUsername("vito.salvia");
-		credenziali.setRuoloUtente(RuoloUtenteEnum.UTENTE_SEMPLICE);
+		credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
 		credenziali.setPassword(credenziali.md5hash("vitosalvia"));
 		user.setCredenziali(credenziali);
 		user.setAnagrafica(anagrafica);
@@ -204,7 +203,7 @@ public class UserTest {
 		DatiCNR datiCNR = new DatiCNR();
 		datiCNR.setDatoreLavoro("01");
 		datiCNR.setIban("IT0000000000000000");
-		datiCNR.setLivello("Assegnista");
+		datiCNR.setLivello(LivelloUserEnum.V);
 		datiCNR.setMail("vito.salvia@gmail.com");
 		datiCNR.setMatricola("1111111");
 		datiCNR.setDescrizioneQualifica("Ricercatore");
