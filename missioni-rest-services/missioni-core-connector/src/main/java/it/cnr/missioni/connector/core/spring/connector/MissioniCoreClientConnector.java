@@ -45,9 +45,15 @@ import javax.ws.rs.core.Response;
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.model.configuration.QualificaUser;
+import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
@@ -57,7 +63,10 @@ import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
+import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
+import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
+import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -223,6 +232,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("id", veicoloCNRSearchBuilder.getId())
                 .queryParam("from", veicoloCNRSearchBuilder.getFrom())
                 .queryParam("size", veicoloCNRSearchBuilder.getSize())
+                .queryParam("all", veicoloCNRSearchBuilder.isAll())
                 .request(MediaType.APPLICATION_JSON)
                 .get(VeicoloCNRStore.class);
     }
@@ -305,6 +315,105 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("location", location)
                 .request(MediaType.APPLICATION_JSON)
                 .get(GeocoderStore.class);
+    }
+    
+    public QualificaUserStore getQualificaUserByQuery(QualificaUserSearchBuilder qualificaUserSearchBuilder) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/qualificaUser/getQualificaUserByQuery/")
+                .queryParam("from", qualificaUserSearchBuilder.getFrom())
+                .queryParam("size", qualificaUserSearchBuilder.getSize())
+                .queryParam("all", qualificaUserSearchBuilder.isAll())
+                .request(MediaType.APPLICATION_JSON)
+                .get(QualificaUserStore.class);
+    }
+    
+    public Long addQualificaUser(QualificaUser qualificaUser) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/qualificaUser/addQualificaUser/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(qualificaUser,
+                        MediaType.APPLICATION_JSON), Long.class);
+    }
+
+    public Boolean deleteQualificaUser(String qualificaUserID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/qualificaUser/deleteQualificaUser/")
+                .queryParam("qualificaUserID", qualificaUserID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateQualificaUser(QualificaUser qualificaUser) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/qualificaUser/updateQualificaUser/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(qualificaUser,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
+    public NazioneStore getNazioneByQuery(NazioneSearchBuilder nazioneSearchBuilder) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/nazione/getNazioneByQuery/")
+                .queryParam("from", nazioneSearchBuilder.getFrom())
+                .queryParam("size", nazioneSearchBuilder.getSize())
+                .queryParam("all", nazioneSearchBuilder.isAll())
+                .request(MediaType.APPLICATION_JSON)
+                .get(NazioneStore.class);
+    }
+    
+    public Long addNazione(Nazione nazione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/nazione/addNazione/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(nazione,
+                        MediaType.APPLICATION_JSON), Long.class);
+    }
+
+    public Boolean deleteNazione(String nazioneID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/nazione/deleteNazione/")
+                .queryParam("nazioneID", nazioneID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateNazione(Nazione nazione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/nazione/updateNazione/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(nazione,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+
+    public RimborsoKmStore getRimborsoKmByQuery(RimborsoKmSearchBuilder rimborsoKmSearchBuilder) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/rimborsoKm/getRimborsoKmByQuery/")
+                .request(MediaType.APPLICATION_JSON)
+                .get(RimborsoKmStore.class);
+    }
+    
+    public Long addRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/rimborsoKm/addRimborsoKm/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(rimborsoKm,
+                        MediaType.APPLICATION_JSON), Long.class);
+    }
+
+    public Boolean deleteRimborsoKm(String rimborsoKmID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/rimborsoKm/deleteRimborsoKm/")
+                .queryParam("rimborsoKmID", rimborsoKmID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/rimborsoKm/updateRimborsoKm/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(rimborsoKm,
+                        MediaType.APPLICATION_JSON), Boolean.class);
     }
     
     @Override

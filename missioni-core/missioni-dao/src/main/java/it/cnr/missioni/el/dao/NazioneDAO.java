@@ -58,9 +58,14 @@ public class NazioneDAO extends AbstractElasticSearchDAO<Nazione> implements INa
 
 		Page p = new Page(nazioneSearchBuilder.getFrom(), nazioneSearchBuilder.getSize());
 
+		//carico tutte le nazioni per le combobox
+		int size = nazioneSearchBuilder.getSize();
+		if (nazioneSearchBuilder.isAll())
+			size = count().intValue();
+		
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(nazioneSearchBuilder.buildQuery())
-				.setFrom(nazioneSearchBuilder.getFrom()).setSize(nazioneSearchBuilder.getSize()).execute().actionGet());
+				.setFrom(nazioneSearchBuilder.getFrom()).setSize(size).execute().actionGet());
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

@@ -122,7 +122,7 @@ public class VeicoloCNRRestServiceTest {
 		v.setPolizzaAssicurativa("polizza 123");
 		v.setTarga("BBBBB");
 		v.setTipo("Tipo");
-		missioniCoreClientConnector.addVeicoloCNR(v);
+		missioniCoreClientConnector.updateVeicoloCNR(v);
 		Thread.sleep(1000);
 		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
 		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);

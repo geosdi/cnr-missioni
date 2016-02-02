@@ -59,10 +59,15 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
 
 		Page p = new Page(veicoloCNRSearchBuilder.getFrom(), veicoloCNRSearchBuilder.getSize());
 
+		//carico tutti i veicoli per le combobox
+		int size = veicoloCNRSearchBuilder.getSize();
+		if (veicoloCNRSearchBuilder.isAll())
+			size = count().intValue();
+		
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(veicoloCNRSearchBuilder.buildQuery())
 				.setFrom(veicoloCNRSearchBuilder.getFrom())
-				.setSize(veicoloCNRSearchBuilder.getSize())
+				.setSize(size)
 				.execute().actionGet());
 
 		if (searchResponse.status() != RestStatus.OK) {

@@ -23,6 +23,7 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 	private String cartaCircolazione;
 	private String polizzaAssicurativa;
 	private String id;
+	private boolean all = false;
 	private int size = 10;
 	private int from = 0;
 
@@ -79,6 +80,11 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 
 	public VeicoloCNRSearchBuilder withFrom(int from) {
 		this.from = from;
+		return self();
+	}
+	
+	public VeicoloCNRSearchBuilder withAll(boolean all) {
+		this.setAll(all);
 		return self();
 	}
 
@@ -168,6 +174,20 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the all
+	 */
+	public boolean isAll() {
+		return all;
+	}
+
+	/**
+	 * @param all 
+	 */
+	public void setAll(boolean all) {
+		this.all = all;
 	}
 
 	/**

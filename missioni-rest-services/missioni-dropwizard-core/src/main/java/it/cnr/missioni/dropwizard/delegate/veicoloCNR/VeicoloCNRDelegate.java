@@ -34,23 +34,29 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 	@Resource(name = "veicoloCNRDAO")
 	private IVeicoloCNRDAO veicoloCNRDAO;
 
-	/**
-	 * 
-	 * @param stato
-	 * @param from
-	 * @param size
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param stato
+ * @param targa
+ * @param cartaCircolazione
+ * @param polizzaAssicurtiva
+ * @param id
+ * @param from
+ * @param size
+ * @param all
+ * @return
+ * @throws Exception
+ */
 	@Override
-	public VeicoloCNRStore getVeicoloCNRByQuery(String stato,String targa,String cartaCircolazione,String polizzaAssicurtiva,String id, int from, int size) throws Exception {
+	public VeicoloCNRStore getVeicoloCNRByQuery(String stato,String targa,String cartaCircolazione,String polizzaAssicurtiva,String id, int from, int size,boolean all) throws Exception {
 
 		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().withStato(stato)
 				.withCartaCircolazione(cartaCircolazione)
 				.withPolizzaAssicurativa(polizzaAssicurtiva)
 				.withTarga(targa)
 				.withId(id)
-				.withFrom(from).withSize(size);
+				.withFrom(from).withSize(size)
+				.withAll(all);
 
 		
 		PageResult<VeicoloCNR> pageResult = this.veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder);
