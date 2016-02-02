@@ -1,5 +1,7 @@
 package it.cnr.missioni.dashboard.view;
 
+import java.util.ArrayList;
+
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -13,6 +15,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
 import it.cnr.missioni.model.user.Veicolo;
@@ -48,6 +51,7 @@ public class GestioneVeicoloView extends GestioneTemplateView implements View {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoVeicoliTable = new ElencoVeicoliTable();
+		this.elencoVeicoliTable .aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
 
 		this.elencoVeicoliTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override

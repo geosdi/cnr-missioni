@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
@@ -217,7 +218,7 @@ public class FatturaRimborsoStep implements WizardStep {
 					}
 					// aggiorno la tabella
 					aggiornaFatturaTab(new Fattura());
-					elencoFattureTable.aggiornaTable();
+					elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
 					elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
 				} else {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),

@@ -6,14 +6,13 @@ import org.joda.time.DateTime;
 
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
+import it.cnr.missioni.dashboard.component.table.ITable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableUserUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.user.User;
@@ -23,7 +22,7 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
  * @author Salvia Vito
  */
 
-public final class ElencoUserTable extends Table {
+public final class ElencoUserTable extends ITable.AbstractTable {
 
 	/**
 	 * 
@@ -35,45 +34,18 @@ public final class ElencoUserTable extends Table {
 	 */
 
 	public ElencoUserTable() {
+		super();
 		buildTable();
 	}
 
-	/**
-	 * 
-	 * Costruisce la tabella per la visualizzazione dei dati
-	 * 
-	 * @param neetWrapper
-	 */
-	private void buildTable() {
-		DashboardEventBus.register(this);
-		// Stile
-		addStyleName(ValoTheme.TABLE_NO_STRIPES);
-		addStyleName(ValoTheme.TABLE_BORDERLESS);
-		// addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-		addStyleName(ValoTheme.TABLE_SMALL);
-		//
-		// setSortEnabled(false);
-		setColumnAlignment("revenue", Align.RIGHT);
-		setRowHeaderMode(RowHeaderMode.HIDDEN);
-		setSizeFull();
 
-		setPageLength(10);
-		setSelectable(true);
-		setSortEnabled(true);
-		setVisible(false);
-		setImmediate(true);
-		setNullSelectionAllowed(false);
-
-
-
-	}
 
 	/**
 	 * Aggiorna la tabella con la nuova lista derivante dalla query su ES
 	 *
 	 * @param missioniStore
 	 */
-	public void aggiornaTable(UserStore userStore) {
+	public <T> void aggiornaTable(T userStore) {
 		this.removeAllItems();
 
 		if (userStore != null) {
@@ -86,7 +58,7 @@ public final class ElencoUserTable extends Table {
 			listaUser.addNestedContainerProperty("anagrafica.codiceFiscale");
 			listaUser.addNestedContainerProperty("datiCNR.matricola");
 
-			listaUser.addAll(userStore.getUsers());
+			listaUser.addAll(((UserStore)userStore).getUsers());
 			
 			setVisible(true);
 			setContainerDataSource(listaUser);

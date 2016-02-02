@@ -19,7 +19,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
  * @author Salvia Vito
  */
 
-public final class ElencoRimborsiTable extends Table {
+public final class ElencoRimborsiTable  extends ITable.AbstractTable  {
 
 	/**
 	 * 
@@ -27,52 +27,18 @@ public final class ElencoRimborsiTable extends Table {
 	private static final long serialVersionUID = 6439677451802448635L;
 
 	public ElencoRimborsiTable() {
+		super();
 		buildTable();
 	}
 
-	/**
-	 * 
-	 * Costruisce la tabella per la visualizzazione dei dati
-	 * 
-	 * @param neetWrapper
-	 */
-	private void buildTable() {
-		DashboardEventBus.register(this);
-		// Stile
-		addStyleName(ValoTheme.TABLE_NO_STRIPES);
-		addStyleName(ValoTheme.TABLE_BORDERLESS);
-		// addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-		addStyleName(ValoTheme.TABLE_SMALL);
-		//
-		// setSortEnabled(false);
-		setColumnAlignment("revenue", Align.RIGHT);
-		setRowHeaderMode(RowHeaderMode.HIDDEN);
-		setWidth("100%");
-		// setHeight("100%");
 
-		setPageLength(10);
-		setSelectable(true);
-		setSortEnabled(true);
-		// addActionHandler(new TransactionsActionHandler());
-		setVisible(false);
-		setImmediate(true);
-		setNullSelectionAllowed(false);
-
-		// setFilterDecorator(new TableFilterDecorator());
-		// setFilterGenerator(new TableFilterGenerator());
-		// setFilterBarVisible(true);
-		// select(null);
-		// setNullSelectionAllowed(true);
-		// unselect(itemId);
-
-	}
 
 	/**
 	 * Aggiorna la tabella con la nuova lista derivante dalla query su ES
 	 *
 	 * @param missioniStore
 	 */
-	public void aggiornaTable(MissioniStore missioniStore) {
+	public <T> void aggiornaTable(T missioniStore) {
 		this.removeAllItems();
 
 		if (missioniStore != null) {
@@ -82,7 +48,7 @@ public final class ElencoRimborsiTable extends Table {
 			listaMissioni.addNestedContainerProperty("rimborso.numeroOrdine");
 			listaMissioni.addNestedContainerProperty("rimborso.dataRimborso");
 			listaMissioni.addNestedContainerProperty("rimborso.totale");
-			listaMissioni.addAll(missioniStore.getMissioni());
+			listaMissioni.addAll(((MissioniStore)missioniStore).getMissioni());
 
 			
 			setVisible(true);

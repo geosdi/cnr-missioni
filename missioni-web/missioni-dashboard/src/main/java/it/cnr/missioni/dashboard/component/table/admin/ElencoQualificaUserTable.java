@@ -2,18 +2,16 @@ package it.cnr.missioni.dashboard.component.table.admin;
 
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.component.table.ITable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableQualificaUserUpdatedEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 
 /**
  * @author Salvia Vito
  */
-public final class ElencoQualificaUserTable extends Table {
+public final class ElencoQualificaUserTable extends ITable.AbstractTable {
 
 	/**
 	 * 
@@ -25,49 +23,24 @@ public final class ElencoQualificaUserTable extends Table {
 	 */
 
 	public ElencoQualificaUserTable() {
-		buildTable();
+	super();
+	buildTable();
 	}
 
-	/**
-	 * 
-	 * Costruisce la tabella per la visualizzazione dei dati
-	 * 
-	 * @param neetWrapper
-	 */
-	private void buildTable() {
-		DashboardEventBus.register(this);
-		// Stile
-		addStyleName(ValoTheme.TABLE_NO_STRIPES);
-		addStyleName(ValoTheme.TABLE_BORDERLESS);
-		addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-		addStyleName(ValoTheme.TABLE_SMALL);
 
-		setSortEnabled(false);
-		setColumnAlignment("revenue", Align.RIGHT);
-		setRowHeaderMode(RowHeaderMode.HIDDEN);
-		setSizeFull();
-		setPageLength(10);
-		setSelectable(true);
-		setSortEnabled(true);
-		setVisible(false);
-		setNullSelectionAllowed(false);
-
-		// addActionHandler(new TransactionsActionHandler());
-
-	}
 
 	/**
 	 * Aggiorna la tabella con la nuova lista derivante dalla query su ES
 	 */
 
-	public void aggiornaTable(QualificaUserStore qualificaUserStore) {
+	public <T> void aggiornaTable(T qualificaUserStore) {
 		this.removeAllItems();
 
-		if (!qualificaUserStore.getQualificaUser().isEmpty()) {
+		if (qualificaUserStore != null) {
 
 			setVisible(true);
 			setContainerDataSource(
-					new BeanItemContainer<QualificaUser>(QualificaUser.class, qualificaUserStore.getQualificaUser()));
+					new BeanItemContainer<QualificaUser>(QualificaUser.class, ((QualificaUserStore)qualificaUserStore).getQualificaUser()));
 
 			setVisibleColumns("value");
 			setColumnHeaders("Qualifica");

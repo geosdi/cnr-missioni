@@ -2,24 +2,16 @@ package it.cnr.missioni.dashboard.component.table.admin;
 
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.component.table.ITable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliCNRUpdatedEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliUpdatedEvent;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
  * @author Salvia Vito
  */
-public final class ElencoVeicoliCNRTable extends Table {
+public final class ElencoVeicoliCNRTable extends ITable.AbstractTable{
 
 	/**
 	 * 
@@ -27,45 +19,19 @@ public final class ElencoVeicoliCNRTable extends Table {
 	private static final long serialVersionUID = 3858138091665164557L;
 
 	public ElencoVeicoliCNRTable() {
+		super();
 		buildTable();
 	}
 
-	/**
-	 * 
-	 * Costruisce la tabella per la visualizzazione dei dati
-	 * 
-	 * @param neetWrapper
-	 */
-	private void buildTable() {
-		DashboardEventBus.register(this);
-		// Stile
-		addStyleName(ValoTheme.TABLE_NO_STRIPES);
-		addStyleName(ValoTheme.TABLE_BORDERLESS);
-		addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-		addStyleName(ValoTheme.TABLE_SMALL);
-
-		setSortEnabled(false);
-		setColumnAlignment("revenue", Align.RIGHT);
-		setRowHeaderMode(RowHeaderMode.HIDDEN);
-		setSizeFull();
-		setPageLength(10);
-		setSelectable(true);
-		setSortEnabled(true);
-		setVisible(false);
-		setNullSelectionAllowed(false);
-
-		// addActionHandler(new TransactionsActionHandler());
-
-	}
 
 	/**
 	 * Aggiorna la tabella con la nuova lista derivante dalla query su ES
 	 */
 
-	public void aggiornaTable(VeicoloCNRStore veicoloCNRStore) {
+	public <T> void aggiornaTable(T veicoloCNRStore) {
 		this.removeAllItems();
 
-		if (!veicoloCNRStore.getVeicoliCNR().isEmpty()) {
+		if (veicoloCNRStore != null) {
 			
 			
 			BeanItemContainer<VeicoloCNR> listaVeicoliCNR=
@@ -76,7 +42,7 @@ public final class ElencoVeicoliCNRTable extends Table {
 			listaVeicoliCNR.addNestedContainerProperty("cartaCircolazione");
 			listaVeicoliCNR.addNestedContainerProperty("polizzaAssicurativa");
 
-			listaVeicoliCNR.addAll(veicoloCNRStore.getVeicoliCNR());
+			listaVeicoliCNR.addAll(((VeicoloCNRStore)veicoloCNRStore).getVeicoliCNR());
 			
 			setVisible(true);
 			setContainerDataSource(listaVeicoliCNR);	

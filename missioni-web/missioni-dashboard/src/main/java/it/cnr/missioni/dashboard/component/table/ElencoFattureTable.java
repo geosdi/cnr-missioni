@@ -2,6 +2,8 @@ package it.cnr.missioni.dashboard.component.table;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
@@ -11,16 +13,16 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Handler;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.Table;
 
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * @author Salvia Vito
  */
-public final class ElencoFattureTable extends Table {
+public final class ElencoFattureTable  extends ITable.AbstractTable  {
 
 	/**
 	 * 
@@ -30,41 +32,30 @@ public final class ElencoFattureTable extends Table {
 	private Missione missione;
 
 	public ElencoFattureTable(BeanFieldGroup<Fattura> beanFieldGroup, Missione missione) {
+		super();
+		buildTable();
 		this.beanFieldGroup = beanFieldGroup;
 		this.missione = missione;
-		buildTable();
 		addActionHandler(new TransactionsActionHandler());
+
+	}
+
+	public ElencoFattureTable(Missione missione) {
+		super();
+		buildTable();
+		this.missione = missione;
 	}
 	
-	public ElencoFattureTable(Missione missione) {
-		this.missione = missione;
-		buildTable();
-	}
+	@Override
+	public void buildTable(){
 
-	/**
-	 * 
-	 * Costruisce la tabella per la visualizzazione dei dati
-	 * 
-	 * @param neetWrapper
-	 */
-	private void buildTable() {
-
-		// Stile
-//		addStyleName(ValoTheme.TABLE_NO_STRIPES);
-//		addStyleName(ValoTheme.TABLE_BORDERLESS);
-//		addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
-//		addStyleName(ValoTheme.TABLE_SMALL);
-		setStyleName("tableFatture");
 		setSortEnabled(false);
 		setColumnAlignment("revenue", Align.RIGHT);
 		setRowHeaderMode(RowHeaderMode.HIDDEN);
 		setWidth("100%");
-//		setHeight("30%");
 		setPageLength(0);
-		// setPageLength(10);
 		setSelectable(true);
 		setSortEnabled(true);
-		aggiornaTable();
 		setNullSelectionAllowed(false);
 		setVisible(false);
 		setFooterVisible(false);
@@ -77,13 +68,13 @@ public final class ElencoFattureTable extends Table {
 	 * @param listaNeet
 	 * @param totNeets
 	 */
-	public void aggiornaTable() {
+	public <T> void aggiornaTable(T lista) {
 		this.removeAllItems();
 
-		if (!missione.getRimborso().getMappaFattura().isEmpty()) {
+		if (lista != null) {
 
 			setContainerDataSource(
-					new BeanItemContainer<Fattura>(Fattura.class, missione.getRimborso().getMappaFattura().values()));
+					new BeanItemContainer<Fattura>(Fattura.class, ((List<Fattura>)lista)));
 
 			setVisibleColumns("numeroFattura", "data", "tipologiaSpesa", "valuta", "altro", "importo");
 			setColumnHeaders("Numero Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo");
@@ -91,21 +82,19 @@ public final class ElencoFattureTable extends Table {
 			Object[] properties = { "data", "numeroFattura" };
 			boolean[] ordering = { false, false };
 			sort(properties, ordering);
-			
+
 			setVisible(true);
 			setFooterVisible(true);
 
-			
 		}
 
 	}
 
-	
-	public void aggiornaTotale(double totale){
-		DecimalFormat df = new DecimalFormat("#0.00");		
-		setColumnFooter("importo", "Tot.: "+df.format(totale));
+	public void aggiornaTotale(double totale) {
+		DecimalFormat df = new DecimalFormat("#0.00");
+		setColumnFooter("importo", "Tot.: " + df.format(totale));
 	}
-	
+
 	@Override
 	protected String formatPropertyValue(Object rowId, Object colId, Property property) {
 		Object v = property.getValue();
@@ -138,10 +127,9 @@ public final class ElencoFattureTable extends Table {
 			}
 			if (action == elimina) {
 				missione.getRimborso().getMappaFattura().remove(((Fattura) target).getId());
-				aggiornaTable();
+				aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
 				aggiornaTotale(missione.getRimborso().getTotale());
-				Utility.getNotification(Utility.getMessage("success_message"), null,
-						Type.HUMANIZED_MESSAGE);
+				Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 			}
 		}
 
@@ -150,6 +138,7 @@ public final class ElencoFattureTable extends Table {
 			return new Action[] { seleziona, elimina };
 		}
 	}
+
 
 
 }

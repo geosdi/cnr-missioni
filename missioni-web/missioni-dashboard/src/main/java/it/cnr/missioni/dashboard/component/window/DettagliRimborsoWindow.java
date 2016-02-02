@@ -1,5 +1,7 @@
 package it.cnr.missioni.dashboard.component.window;
 
+import java.util.ArrayList;
+
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
@@ -18,6 +20,7 @@ import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.rimborso.Fattura;
 
 public class DettagliRimborsoWindow extends Window {
 
@@ -102,7 +105,7 @@ public class DettagliRimborsoWindow extends Window {
 		root.setMargin(true);
 
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
-		elencoFattureTable.aggiornaTable();
+		elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
 		elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
 		root.addComponent(elencoFattureTable);
 		return root;

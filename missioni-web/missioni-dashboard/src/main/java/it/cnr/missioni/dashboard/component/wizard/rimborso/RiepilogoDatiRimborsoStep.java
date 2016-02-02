@@ -1,5 +1,7 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
+import java.util.ArrayList;
+
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.wizards.WizardStep;
 
@@ -20,6 +22,7 @@ import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.rimborso.Fattura;
 
 /**
  * @author Salvia Vito
@@ -64,7 +67,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		
 		
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
-		elencoFattureTable.aggiornaTable();
+		elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
 		root.addComponent(elencoFattureTable);
 		
 		return root;

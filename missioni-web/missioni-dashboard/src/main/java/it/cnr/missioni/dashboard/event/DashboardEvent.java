@@ -8,6 +8,7 @@ import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
@@ -101,6 +102,31 @@ public abstract class DashboardEvent {
 	 *
 	 */
 	public static class TableVeicoliUpdatedEvent {
+		
+		private List<Veicolo> lista;
+
+		/**
+		 * @param lista
+		 */
+		public TableVeicoliUpdatedEvent(List<Veicolo> lista) {
+			this.lista = lista;
+		}
+
+		/**
+		 * @return the lista
+		 */
+		public List<Veicolo> getLista() {
+			return lista;
+		}
+
+		/**
+		 * @param lista 
+		 */
+		public void setLista(List<Veicolo> lista) {
+			this.lista = lista;
+		}
+		
+		
 	}
 
 	/**
