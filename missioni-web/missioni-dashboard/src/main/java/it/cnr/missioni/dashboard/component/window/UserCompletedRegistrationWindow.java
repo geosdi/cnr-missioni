@@ -44,7 +44,7 @@ import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
-public class UserCompletedRegistrationWindow extends Window {
+public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 
 	/**
 	 * 
@@ -78,48 +78,35 @@ public class UserCompletedRegistrationWindow extends Window {
 	private User user;
 
 	private UserCompletedRegistrationWindow(final User user, final boolean isAdmin) {
-
+		super();
 		this.user = user;
-		addStyleName("profile-window");
-		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		TabSheet detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
 		fieldGroup = new BeanFieldGroup<User>(User.class);
-		fieldGroup.setItemDataSource(user);
-		fieldGroup.setBuffered(true);
-
-		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
-		fieldGroup.setFieldFactory(fieldFactory);
-		detailsWrapper.addComponent(buildAnagraficaTab());
-		detailsWrapper.addComponent(buildResidenzaTab());
-		detailsWrapper.addComponent(buildPatenteTab());
-		detailsWrapper.addComponent(buildDatiCNR());
-
+		setId(ID);
+		build();
+		buildFieldGroup();
+		buildTabs();
 		if (!isAdmin)
 			content.addComponent(buildFooter());
 		fieldGroup.setReadOnly(isAdmin);
 		addValidator();
 
 	}
+	
+	private void buildTabs(){
+		detailsWrapper.addComponent(buildAnagraficaTab());
+		detailsWrapper.addComponent(buildResidenzaTab());
+		detailsWrapper.addComponent(buildPatenteTab());
+		detailsWrapper.addComponent(buildDatiCNR());
+	}
+	
+	private void buildFieldGroup(){
+		fieldGroup.setItemDataSource(user);
+		fieldGroup.setBuffered(true);
+
+		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
+		fieldGroup.setFieldFactory(fieldFactory);
+	}
+	
 
 	private Component buildAnagraficaTab() {
 		HorizontalLayout root = new HorizontalLayout();

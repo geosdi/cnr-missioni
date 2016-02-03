@@ -5,14 +5,14 @@ import org.vaadin.teemu.wizards.event.WizardCompletedEvent;
 import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
-import it.cnr.missioni.dashboard.component.window.AbstractWizard;
+import it.cnr.missioni.dashboard.component.window.IWizard;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
  */
-public class WizardMissione extends AbstractWizard {
+public class WizardMissione extends IWizard.AbstractWizard{
 
 	private Missione missione;
 	private DatiMissioneEsteraStep missioneEsteraStep;

@@ -5,10 +5,7 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Responsive;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -19,21 +16,20 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
+import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 
-public class RimborsoKmWindow extends Window {
+public class RimborsoKmWindow extends IWindow.AbstractWindow {
 
 
 
@@ -52,46 +48,29 @@ public class RimborsoKmWindow extends Window {
 	private final RimborsoKm rimborsoKm;
 
 	private RimborsoKmWindow(final RimborsoKm rimborsoKm, boolean modifica) {
-
+		super();
 		this.rimborsoKm = rimborsoKm;
 		this.modifica = modifica;
 
-		addStyleName("profile-window");
 		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		TabSheet detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
 		fieldGroup = new BeanFieldGroup<RimborsoKm>(RimborsoKm.class);
+		build();
+		buildFieldGroup();
+		detailsWrapper.addComponent(buildRimborsoKmTab());
+
+		content.addComponent(buildFooter());
+
+	}
+	
+	private void buildFieldGroup(){
 		fieldGroup.setItemDataSource(this.rimborsoKm);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-		detailsWrapper.addComponent(buildAnagraficaTab());
-
-		content.addComponent(buildFooter());
-
 	}
 
-	private Component buildAnagraficaTab() {
+	private Component buildRimborsoKmTab() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Rimborso Km");
 		root.setIcon(FontAwesome.EURO);

@@ -33,6 +33,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
+import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
@@ -45,8 +46,7 @@ import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
-public class VeicoloCNRWindow extends Window {
-
+public class VeicoloCNRWindow extends IWindow.AbstractWindow {
 
 	/**
 	 * 
@@ -68,46 +68,27 @@ public class VeicoloCNRWindow extends Window {
 	private final VeicoloCNR veicoloCNR;
 
 	private VeicoloCNRWindow(final VeicoloCNR veicoloCNR, boolean modifica) {
-
+		super();
 		this.veicoloCNR = veicoloCNR;
 		this.modifica = modifica;
-
-		addStyleName("profile-window");
 		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		TabSheet detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
 		fieldGroup = new BeanFieldGroup<VeicoloCNR>(VeicoloCNR.class);
+		build();
+		buildFieldGroup();
+		detailsWrapper.addComponent(buildVeicoloCNRTab());
+		content.addComponent(buildFooter());
+
+	}
+
+	private void buildFieldGroup() {
 		fieldGroup.setItemDataSource(this.veicoloCNR);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-		detailsWrapper.addComponent(buildAnagraficaTab());
-
-		content.addComponent(buildFooter());
-
 	}
 
-	private Component buildAnagraficaTab() {
+	private Component buildVeicoloCNRTab() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Veicolo");
 		root.setIcon(FontAwesome.CAR);
@@ -130,7 +111,7 @@ public class VeicoloCNRWindow extends Window {
 		polizzaAssicurativaField = (TextField) fieldGroup.buildAndBind("Polizza Assicurativa", "polizzaAssicurativa");
 		details.addComponent(polizzaAssicurativaField);
 
-		statoField =(ComboBox)fieldGroup.buildAndBind("Stato","stato",ComboBox.class);
+		statoField = (ComboBox) fieldGroup.buildAndBind("Stato", "stato", ComboBox.class);
 		details.addComponent(statoField);
 
 		addValidator();
@@ -143,8 +124,8 @@ public class VeicoloCNRWindow extends Window {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-							.withTarga(targaField.getValue());
+					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
+							.getVeicoloCNRSearchBuilder().withTarga(targaField.getValue());
 					if (modifica)
 						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
 					VeicoloCNRStore veicoloCNRStore = null;
@@ -166,8 +147,8 @@ public class VeicoloCNRWindow extends Window {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-							.withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
+					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
+							.getVeicoloCNRSearchBuilder().withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
 					if (modifica)
 						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
 					VeicoloCNRStore veicoloCNRStore = null;
@@ -189,8 +170,8 @@ public class VeicoloCNRWindow extends Window {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-							.withCartaCircolazione(cartaCircolazioneField.getValue());
+					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
+							.getVeicoloCNRSearchBuilder().withCartaCircolazione(cartaCircolazioneField.getValue());
 					if (modifica)
 						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
 					VeicoloCNRStore veicoloCNRStore = null;

@@ -22,7 +22,7 @@ import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
 
-public class DettagliRimborsoWindow extends Window {
+public class DettagliRimborsoWindow  extends IWindow.AbstractWindow  {
 
 	/**
 	 * 
@@ -42,35 +42,40 @@ public class DettagliRimborsoWindow extends Window {
 	private DettagliRimborsoWindow(Missione missione) {
 
 		this.missione = missione;
-
-		addStyleName("profile-window");
 		setId(ID);
 		Responsive.makeResponsive(this);
+		build();
+		buildTabs();
 
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
-		detailsWrapper.addComponent(buildRimborsoTab());
-		detailsWrapper.addComponent(buildFatturaTab());
+//		setModal(true);
+//		setCloseShortcut(KeyCode.ESCAPE, null);
+//		setResizable(false);
+//		setClosable(true);
+//		setHeight(90.0f, Unit.PERCENTAGE);
+//
+//		VerticalLayout content = new VerticalLayout();
+//		content.setSizeFull();
+//		content.setMargin(new MarginInfo(true, false, false, false));
+//		setContent(content);
+//
+//		detailsWrapper = new TabSheet();
+//		detailsWrapper.setSizeFull();
+//		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+//		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
+//		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
+//		content.addComponent(detailsWrapper);
+//		content.setExpandRatio(detailsWrapper, 1f);
+//
+//		detailsWrapper.addComponent(buildRimborsoTab());
+//		detailsWrapper.addComponent(buildFatturaTab());
 
 	}
 
+	private void buildTabs(){
+		detailsWrapper.addComponent(buildRimborsoTab());
+		detailsWrapper.addComponent(buildFatturaTab());
+	}
+	
 	private Component buildRimborsoTab() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Rimborso");

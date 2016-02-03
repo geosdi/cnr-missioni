@@ -5,30 +5,23 @@ import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
-import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
-import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Responsive;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -40,8 +33,7 @@ import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.user.User;
 
-public class CredenzialiWindow extends Window {
-
+public class CredenzialiWindow extends IWindow.AbstractWindow {
 
 	/**
 	 * 
@@ -54,47 +46,28 @@ public class CredenzialiWindow extends Window {
 	private TextField usernameField;
 	private PasswordField passwordField;
 	private PasswordField passwordRepeatField;
+	private User user;
 
 	private boolean registration;
 
 	private CredenzialiWindow(final User user, boolean registration) {
-
+		super();
+		this.user = user;
 		this.registration = registration;
-
-		addStyleName("profile-window");
-		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		TabSheet detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
+		this.setID(ID);
 		fieldGroup = new BeanFieldGroup<User>(User.class);
-		fieldGroup.setItemDataSource(user);
-		fieldGroup.setBuffered(true);
-
-		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
-		fieldGroup.setFieldFactory(fieldFactory);
-
+		build();
+		buildFieldGroup();
 		detailsWrapper.addComponent(buildCredenzialiTab());
-
 		content.addComponent(buildFooter());
 
+	}
+
+	private void buildFieldGroup() {
+		fieldGroup.setItemDataSource(user);
+		fieldGroup.setBuffered(true);
+		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
+		fieldGroup.setFieldFactory(fieldFactory);
 	}
 
 	private Component buildCredenzialiTab() {
@@ -113,7 +86,6 @@ public class CredenzialiWindow extends Window {
 		BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
 		User user = beanItem.getBean();
 
-
 		usernameField = (TextField) fieldGroup.buildAndBind("Username", "credenziali.username");
 		if (!registration)
 			usernameField.setReadOnly(true);
@@ -127,7 +99,7 @@ public class CredenzialiWindow extends Window {
 		details.addComponent(passwordField);
 		details.addComponent(passwordRepeatField);
 		passwordRepeatField.setValidationVisible(false);
-		
+
 		passwordRepeatField.addValidator(new Validator() {
 			/**
 			 * 
@@ -144,7 +116,7 @@ public class CredenzialiWindow extends Window {
 			}
 
 		});
-		
+
 		passwordRepeatField.addBlurListener(new BlurListener() {
 
 			@Override
@@ -153,16 +125,10 @@ public class CredenzialiWindow extends Window {
 					passwordRepeatField.validate();
 				} catch (Exception e) {
 					passwordRepeatField.setValidationVisible(true);
-				}				
+				}
 			}
-			
 
 		});
-
-
-
-
-
 
 		return root;
 	}

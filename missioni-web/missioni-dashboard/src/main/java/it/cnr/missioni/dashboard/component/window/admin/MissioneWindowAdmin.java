@@ -38,6 +38,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
+import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
@@ -46,7 +47,7 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.User;
 
-public class MissioneWindowAdmin extends Window {
+public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 
 	/**
 	 * 
@@ -60,7 +61,6 @@ public class MissioneWindowAdmin extends Window {
 	public static final String ID = "missionewindow";
 
 	private final BeanFieldGroup<Missione> fieldGroup;
-
 
 	private TextField localitaField;
 	private TextField oggettoField;
@@ -81,54 +81,38 @@ public class MissioneWindowAdmin extends Window {
 	private CheckBox rimborsoDaTerziField;
 	private CheckBox mezzoProprioField;
 	private TextField distanzaField;
-	
+
 	private ElencoMissioniTable elencoMissioniTable;
 	private boolean modifica;
+	private Missione missione;
 
-	private MissioneWindowAdmin(final Missione missione,boolean modifica,ElencoMissioniTable elencoMissioniTable) {
-		
+	private MissioneWindowAdmin(final Missione missione, boolean modifica, ElencoMissioniTable elencoMissioniTable) {
+
+		super();
 		this.elencoMissioniTable = elencoMissioniTable;
 		this.modifica = modifica;
-		
-		addStyleName("profile-window");
+		this.missione = missione;
 		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		TabSheet detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
 		fieldGroup = new BeanFieldGroup<Missione>(Missione.class);
+		buildFieldGroup();
+		buildTabs();
+		content.addComponent(buildFooter());
+
+	}
+
+	private void buildFieldGroup() {
 		fieldGroup.setItemDataSource(missione);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-//			detailsWrapper.addComponent(buildGeneraleTab());
-//			detailsWrapper.addComponent(buildDatePeriodoMissione());
-//			detailsWrapper.addComponent(buildMissioneEstera());
-//			detailsWrapper.addComponent(buildAnticipazioniMonetarie());
+	}
 
-
-
-
-		content.addComponent(buildFooter());
-
+	private void buildTabs() {
+		// detailsWrapper.addComponent(buildGeneraleTab());
+		// detailsWrapper.addComponent(buildDatePeriodoMissione());
+		// detailsWrapper.addComponent(buildMissioneEstera());
+		// detailsWrapper.addComponent(buildAnticipazioniMonetarie());
 	}
 
 	private Component buildGeneraleTab() {
@@ -143,10 +127,10 @@ public class MissioneWindowAdmin extends Window {
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
-		
-		localitaField = (TextField)fieldGroup.buildAndBind("Località","localita");
+
+		localitaField = (TextField) fieldGroup.buildAndBind("Località", "localita");
 		details.addComponent(localitaField);
-		oggettoField = (TextField)fieldGroup.buildAndBind("Oggetto","oggetto");
+		oggettoField = (TextField) fieldGroup.buildAndBind("Oggetto", "oggetto");
 		details.addComponent(oggettoField);
 		fondoField = (TextField) fieldGroup.buildAndBind("Fondo", "fondo");
 		details.addComponent(fondoField);
@@ -154,45 +138,43 @@ public class MissioneWindowAdmin extends Window {
 		details.addComponent(gaeField);
 		distanzaField = (TextField) fieldGroup.buildAndBind("Distanza", "distanza");
 		details.addComponent(distanzaField);
-//		statoField =(ComboBox)fieldGroup.buildAndBind("Stato","stato",ComboBox.class);
-//		details.addComponent(statoField);
-		mezzoProprioField =(CheckBox)fieldGroup.buildAndBind("Mezzo Proprio","mezzoProprio",CheckBox.class);
+		// statoField
+		// =(ComboBox)fieldGroup.buildAndBind("Stato","stato",ComboBox.class);
+		// details.addComponent(statoField);
+		mezzoProprioField = (CheckBox) fieldGroup.buildAndBind("Mezzo Proprio", "mezzoProprio", CheckBox.class);
 		details.addComponent(mezzoProprioField);
-		
-		
+
 		mezzoProprioField.addValidator(new Validator() {
-			
+
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				Boolean v = (Boolean)value;
-				if(v && ((User)VaadinSession.getCurrent().getAttribute(User.class)).getMappaVeicolo().isEmpty())
+				Boolean v = (Boolean) value;
+				if (v && ((User) VaadinSession.getCurrent().getAttribute(User.class)).getMappaVeicolo().isEmpty())
 					throw new InvalidValueException(Utility.getMessage("no_veicolo"));
 			}
 		});
-		
-		missioneEsteraField = (CheckBox)fieldGroup.buildAndBind("Missione Estera","missioneEstera");
-		details.addComponent(missioneEsteraField);	
-		altroField = (TextField)fieldGroup.buildAndBind("Altro","altro");
-		details.addComponent(altroField);
-		
 
-		DateField fieldDataInserimento = (DateField)fieldGroup.buildAndBind("Data Inserimento","dataInserimento");
+		missioneEsteraField = (CheckBox) fieldGroup.buildAndBind("Missione Estera", "missioneEstera");
+		details.addComponent(missioneEsteraField);
+		altroField = (TextField) fieldGroup.buildAndBind("Altro", "altro");
+		details.addComponent(altroField);
+
+		DateField fieldDataInserimento = (DateField) fieldGroup.buildAndBind("Data Inserimento", "dataInserimento");
 		fieldDataInserimento.setReadOnly(true);
-//		fieldDataInserimento.setResolution(Resolution.MINUTE);
-//		fieldDataInserimento.setDateFormat("dd/MM/yyyy HH:mm");
+		// fieldDataInserimento.setResolution(Resolution.MINUTE);
+		// fieldDataInserimento.setDateFormat("dd/MM/yyyy HH:mm");
 		details.addComponent(fieldDataInserimento);
-		
-		
-		DateField fieldDataLastModified = (DateField)fieldGroup.buildAndBind("Data ultima modifica","dateLastModified");
+
+		DateField fieldDataLastModified = (DateField) fieldGroup.buildAndBind("Data ultima modifica",
+				"dateLastModified");
 		fieldDataLastModified.setReadOnly(true);
-//		fieldDataLastModified.setResolution(Resolution.MINUTE);
-//		fieldDataLastModified.setDateFormat("dd/MM/yyyy HH:mm");
+		// fieldDataLastModified.setResolution(Resolution.MINUTE);
+		// fieldDataLastModified.setDateFormat("dd/MM/yyyy HH:mm");
 		details.addComponent(fieldDataLastModified);
 
-		
 		return root;
 	}
-	
+
 	private Component buildDatePeriodoMissione() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Inizio\\Fine");
@@ -206,27 +188,26 @@ public class MissioneWindowAdmin extends Window {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		
-		inizioMissioneField = (DateField)fieldGroup.buildAndBind("Inizio Missione","datiPeriodoMissione.inizioMissione");
+		inizioMissioneField = (DateField) fieldGroup.buildAndBind("Inizio Missione",
+				"datiPeriodoMissione.inizioMissione");
 		details.addComponent(inizioMissioneField);
-		fineMissioneField = (DateField)fieldGroup.buildAndBind("Fine Missione","datiPeriodoMissione.fineMissione");
+		fineMissioneField = (DateField) fieldGroup.buildAndBind("Fine Missione", "datiPeriodoMissione.fineMissione");
 		details.addComponent(fineMissioneField);
 
-		
-		
 		fineMissioneField.addValidator(new Validator() {
-			
+
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				DateTime data = (DateTime)value;
-				if(inizioMissioneField.getValue() != null && inizioMissioneField.getValue()!=null && data.isBefore(inizioMissioneField.getValue().getTime()))
+				DateTime data = (DateTime) value;
+				if (inizioMissioneField.getValue() != null && inizioMissioneField.getValue() != null
+						&& data.isBefore(inizioMissioneField.getValue().getTime()))
 					throw new InvalidValueException(Utility.getMessage("data_error"));
 			}
 		});
-		
+
 		return root;
 	}
-	
+
 	private Component buildMissioneEstera() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Missione Estera");
@@ -239,37 +220,34 @@ public class MissioneWindowAdmin extends Window {
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
-		
-		
 
-		
-		trattamentoMissioneEsteraField =(ComboBox)fieldGroup.buildAndBind("Trattamento Rimborso","datiMissioneEstera.trattamentoMissioneEsteraEnum",ComboBox.class);
+		trattamentoMissioneEsteraField = (ComboBox) fieldGroup.buildAndBind("Trattamento Rimborso",
+				"datiMissioneEstera.trattamentoMissioneEsteraEnum", ComboBox.class);
 		details.addComponent(trattamentoMissioneEsteraField);
-		
-		
-		trattamentoMissioneEsteraField.addValidator(new Validator(){
+
+		trattamentoMissioneEsteraField.addValidator(new Validator() {
 
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				TrattamentoMissioneEsteraEnum v= (TrattamentoMissioneEsteraEnum)value;
-				if(missioneEsteraField.getValue() && (v == null)){
+				TrattamentoMissioneEsteraEnum v = (TrattamentoMissioneEsteraEnum) value;
+				if (missioneEsteraField.getValue() && (v == null)) {
 					throw new InvalidValueException(Utility.getMessage("checkbox_missione_error"));
 				}
-		
-				
+
 			}
-		
-			
+
 		});
-		
-		attraversamentoFrontieraAndataField = (DateField)fieldGroup.buildAndBind("Attraversamento Frontiera Andata","datiMissioneEstera.attraversamentoFrontieraAndata");
+
+		attraversamentoFrontieraAndataField = (DateField) fieldGroup.buildAndBind("Attraversamento Frontiera Andata",
+				"datiMissioneEstera.attraversamentoFrontieraAndata");
 		details.addComponent(attraversamentoFrontieraAndataField);
-		attraversamentoFrontieraRitornoField = (DateField)fieldGroup.buildAndBind("Attraversamento Frontiera Ritorno","datiMissioneEstera.attraversamentoFrontieraRitorno");
+		attraversamentoFrontieraRitornoField = (DateField) fieldGroup.buildAndBind("Attraversamento Frontiera Ritorno",
+				"datiMissioneEstera.attraversamentoFrontieraRitorno");
 		details.addComponent(attraversamentoFrontieraRitornoField);
 
 		return root;
 	}
-	
+
 	private Component buildAnticipazioniMonetarie() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Anticipazioni Monetarie");
@@ -282,58 +260,55 @@ public class MissioneWindowAdmin extends Window {
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
-		
-		
-		anticipazioniMonetarieField = (CheckBox)fieldGroup.buildAndBind("Anticipazioni Monetarie","datiAnticipoPagamenti.anticipazioniMonetarie");
-		details.addComponent(anticipazioniMonetarieField);	
-		
-		numeroMandatoField =(TextField)fieldGroup.buildAndBind("Numero Mandato CNR","datiAnticipoPagamenti.mandatoCNR");
+
+		anticipazioniMonetarieField = (CheckBox) fieldGroup.buildAndBind("Anticipazioni Monetarie",
+				"datiAnticipoPagamenti.anticipazioniMonetarie");
+		details.addComponent(anticipazioniMonetarieField);
+
+		numeroMandatoField = (TextField) fieldGroup.buildAndBind("Numero Mandato CNR",
+				"datiAnticipoPagamenti.mandatoCNR");
 		details.addComponent(numeroMandatoField);
-		
-		
-		numeroMandatoField.addValidator(new Validator(){
+
+		numeroMandatoField.addValidator(new Validator() {
 
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				String v= (String)value;
-				if((value == null || v.equals("")) && anticipazioniMonetarieField.getValue()){
+				String v = (String) value;
+				if ((value == null || v.equals("")) && anticipazioniMonetarieField.getValue()) {
 					throw new InvalidValueException(Utility.getMessage("numero_mandato_missione_errore"));
 				}
-		
-				
+
 			}
-		
-			
+
 		});
-		
-		speseMissioniAnticipateField =(TextField)fieldGroup.buildAndBind("Altre Spese di Missione Anticipate","datiAnticipoPagamenti.speseMissioniAnticipate");
+
+		speseMissioniAnticipateField = (TextField) fieldGroup.buildAndBind("Altre Spese di Missione Anticipate",
+				"datiAnticipoPagamenti.speseMissioniAnticipate");
 		details.addComponent(speseMissioniAnticipateField);
 
-		rimborsoDaTerziField = (CheckBox)fieldGroup.buildAndBind("Rimborso da Terzi","datiAnticipoPagamenti.rimborsoDaTerzi");
-		details.addComponent(rimborsoDaTerziField);	
-		
-		importoDaTerziField =(TextField)fieldGroup.buildAndBind("Importo da Terzi","datiAnticipoPagamenti.importoDaTerzi");
+		rimborsoDaTerziField = (CheckBox) fieldGroup.buildAndBind("Rimborso da Terzi",
+				"datiAnticipoPagamenti.rimborsoDaTerzi");
+		details.addComponent(rimborsoDaTerziField);
+
+		importoDaTerziField = (TextField) fieldGroup.buildAndBind("Importo da Terzi",
+				"datiAnticipoPagamenti.importoDaTerzi");
 		details.addComponent(importoDaTerziField);
-		
-		importoDaTerziField.addValidator(new Validator(){
+
+		importoDaTerziField.addValidator(new Validator() {
 
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				Double v= (Double)value;
-				if((v == null || v == 0) && rimborsoDaTerziField.getValue()){
+				Double v = (Double) value;
+				if ((v == null || v == 0) && rimborsoDaTerziField.getValue()) {
 					throw new InvalidValueException(Utility.getMessage("importo_da_terzi_errore"));
 				}
-		
-				
+
 			}
-		
-			
+
 		});
-		
+
 		return root;
 	}
-
-
 
 	private Component buildFooter() {
 		HorizontalLayout footer = new HorizontalLayout();
@@ -347,21 +322,21 @@ public class MissioneWindowAdmin extends Window {
 			public void buttonClick(ClickEvent event) {
 
 				try {
-					
+
 					for (Field<?> f : fieldGroup.getFields()) {
 						((AbstractField<?>) f).setValidationVisible(true);
 					}
-//					missioneEsteraField.validate();
-//					fineMissioneField.validate();
-//					trattamentoMissioneEsteraField.validate();
+					// missioneEsteraField.validate();
+					// fineMissioneField.validate();
+					// trattamentoMissioneEsteraField.validate();
 					fieldGroup.commit();
-					
-					BeanItem<Missione> beanItem = (BeanItem<Missione>)fieldGroup.getItemDataSource();
+
+					BeanItem<Missione> beanItem = (BeanItem<Missione>) fieldGroup.getItemDataSource();
 					Missione new_missione = beanItem.getBean();
 
-						DashboardEventBus.post(new MissioneAction(new_missione,modifica));
+					DashboardEventBus.post(new MissioneAction(new_missione, modifica));
 					close();
-					
+
 				} catch (InvalidValueException | CommitException e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
 							Type.ERROR_MESSAGE);
@@ -374,18 +349,12 @@ public class MissioneWindowAdmin extends Window {
 		footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
 		return footer;
 	}
-	
 
-
-	public static void open(final Missione missione,boolean modifica,ElencoMissioniTable elencoMissioniTable) {
+	public static void open(final Missione missione, boolean modifica, ElencoMissioniTable elencoMissioniTable) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new MissioneWindowAdmin(missione,modifica,elencoMissioniTable);
+		Window w = new MissioneWindowAdmin(missione, modifica, elencoMissioniTable);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}
-
-
-
-
 
 }

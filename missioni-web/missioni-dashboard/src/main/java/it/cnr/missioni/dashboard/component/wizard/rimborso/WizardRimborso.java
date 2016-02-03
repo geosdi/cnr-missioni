@@ -5,7 +5,7 @@ import org.vaadin.teemu.wizards.event.WizardCompletedEvent;
 import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
-import it.cnr.missioni.dashboard.component.window.AbstractWizard;
+import it.cnr.missioni.dashboard.component.window.IWizard;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.User;
@@ -13,7 +13,7 @@ import it.cnr.missioni.model.user.User;
 /**
  * @author Salvia Vito
  */
-public class WizardRimborso extends AbstractWizard {
+public class WizardRimborso extends IWizard.AbstractWizard{
 
 	private Missione missione;
 	private DatiGeneraliRimborsoStep datiGeneraliStep;

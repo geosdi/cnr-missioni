@@ -40,7 +40,7 @@ import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
-public class VeicoloWindow extends Window {
+public class VeicoloWindow  extends  IWindow.AbstractWindow  {
 
 	/**
 	 * 
@@ -64,44 +64,25 @@ public class VeicoloWindow extends Window {
 	private final User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
 
 	private VeicoloWindow(final Veicolo veicolo, boolean modifica) {
-
+		super();
 		this.veicolo = veicolo;
 		this.oldTarga = veicolo.getTarga();
 		this.modifica = modifica;
-
-		addStyleName("profile-window");
 		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		TabSheet detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
 		fieldGroup = new BeanFieldGroup<Veicolo>(Veicolo.class);
+		build();
+		buildFieldGroup();
+		detailsWrapper.addComponent(buildAnagraficaTab());
+		content.addComponent(buildFooter());
+
+	}
+	
+	private void buildFieldGroup(){
 		fieldGroup.setItemDataSource(this.veicolo);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-		detailsWrapper.addComponent(buildAnagraficaTab());
-
-		content.addComponent(buildFooter());
-
 	}
 
 	private Component buildAnagraficaTab() {

@@ -3,9 +3,6 @@ package it.cnr.missioni.dashboard.component.window;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
-
-import com.vaadin.addon.calendar.event.BasicEventProvider;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -15,10 +12,7 @@ import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
-import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Responsive;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
@@ -44,16 +38,14 @@ import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
-import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 
-public class PrenotazioneWindow extends Window {
+public class PrenotazioneWindow extends IWindow.AbstractWindow  {
 
 	/**
 	 * 
@@ -78,43 +70,25 @@ public class PrenotazioneWindow extends Window {
 	private PrenotazioneWindow(final Calendar calendarComponent, final PrenotazioneEvent prenotazione,
 			boolean modifica) {
 
+		super();
 		this.modifica = modifica;
 		this.prenotazione = prenotazione;
 		this.calendarComponent = calendarComponent;
-
-		addStyleName("profile-window");
 		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
+		build();
 		fieldGroupPrenotazione = new BeanFieldGroup<PrenotazioneEvent>(PrenotazioneEvent.class);
+		buildFieldGroup();
+		detailsWrapper.addComponent(buildPrenotazioneTab());
+
+	}
+
+	private void buildFieldGroup() {
 		fieldGroupPrenotazione.setItemDataSource(prenotazione);
 		fieldGroupPrenotazione.setBuffered(true);
 
 		fieldFactory = new BeanFieldGrouFactory();
 		fieldGroupPrenotazione.setFieldFactory(fieldFactory);
-		detailsWrapper.addComponent(buildPrenotazioneTab());
-
 	}
-
 	private Component buildPrenotazioneTab() {
 		VerticalLayout root = new VerticalLayout();
 		root.setCaption("Evento");

@@ -27,13 +27,14 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.admin.QualificaUserAction;
+import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.configuration.QualificaUser;
 
-public class QualificaUserWindow extends Window {
+public class QualificaUserWindow  extends IWindow.AbstractWindow  {
 
 
 	/**
@@ -55,46 +56,29 @@ public class QualificaUserWindow extends Window {
 	private final QualificaUser qualificaUser;
 
 	private QualificaUserWindow(final QualificaUser qualificaUser, boolean modifica) {
-
+		super();
 		this.qualificaUser = qualificaUser;
 		this.modifica = modifica;
 
-		addStyleName("profile-window");
 		setId(ID);
-		Responsive.makeResponsive(this);
-
-		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
-		setResizable(false);
-		setClosable(true);
-		setHeight(90.0f, Unit.PERCENTAGE);
-
-		VerticalLayout content = new VerticalLayout();
-		content.setSizeFull();
-		content.setMargin(new MarginInfo(true, false, false, false));
-		setContent(content);
-
-		TabSheet detailsWrapper = new TabSheet();
-		detailsWrapper.setSizeFull();
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-		content.addComponent(detailsWrapper);
-		content.setExpandRatio(detailsWrapper, 1f);
-
 		fieldGroup = new BeanFieldGroup<QualificaUser>(QualificaUser.class);
+		build();
+		buildFieldGroup();
+		detailsWrapper.addComponent(buildQualificaTab());
+
+		content.addComponent(buildFooter());
+
+	}
+	
+	private void buildFieldGroup(){
 		fieldGroup.setItemDataSource(this.qualificaUser);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
-		detailsWrapper.addComponent(buildAnagraficaTab());
-
-		content.addComponent(buildFooter());
-
 	}
 
-	private Component buildAnagraficaTab() {
+	private Component buildQualificaTab() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Qualifica");
 		root.setIcon(FontAwesome.USERS);

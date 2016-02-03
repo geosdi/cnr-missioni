@@ -7,15 +7,14 @@ import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import com.vaadin.server.Page;
 
-import it.cnr.missioni.dashboard.component.window.AbstractWizard;
+import it.cnr.missioni.dashboard.component.window.IWizard;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
  */
-public class WizardUser extends AbstractWizard {
+public class WizardUser extends IWizard.AbstractWizard {
 
 	private User user;
 
