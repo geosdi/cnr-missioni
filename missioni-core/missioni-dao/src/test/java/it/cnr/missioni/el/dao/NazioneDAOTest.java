@@ -18,7 +18,9 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 
@@ -52,10 +54,10 @@ public class NazioneDAOTest {
 
 	@Test
 	public void A_createNazioneTest() throws Exception {
-		creaQualificaUser();
+		creaNazione();
 		nazioneDAO.persist(listaNazione);
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_QUALIFICA_USER_CNR: {}\n", nazioneDAO.count().intValue());
+		logger.debug("############################NUMBER_ALL_NAZIONE: {}\n", nazioneDAO.count().intValue());
 	}
 
 	@Test
@@ -84,7 +86,7 @@ public class NazioneDAOTest {
 	}
 
 	@Test
-	public void D_updateQualificaUserTest() throws Exception {
+	public void D_updateNazioneTest() throws Exception {
 		Nazione nazione = new Nazione();
 		nazione.setId("03");
 		nazione.setValue("Svizzera");
@@ -107,6 +109,21 @@ public class NazioneDAOTest {
 		logger.debug("############################NUMBER_ALL_NAZIONE: {}\n", lista.size());
 		Assert.assertTrue("FIND  NAZIONE", lista.size() == 2);
 	}
+	
+	@Test
+	public void F_findByIdTest() throws Exception {
+		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("02");
+		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND NAZIONE BY ID", lista.size() == 1);
+		Assert.assertTrue("FIND  NAZIONE", lista.get(0).getId().equals("02"));
+	}
+	
+	@Test
+	public void F_findByIdTest_2() throws Exception {
+		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("03");
+		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND NAZIONE BY ID", lista.isEmpty());
+	}
 
 	//
 	//// @Test
@@ -114,7 +131,7 @@ public class NazioneDAOTest {
 	//// this.utenteDocIndexCreator.deleteIndex();
 	//// }
 
-	private void creaQualificaUser() {
+	private void creaNazione() {
 
 		Nazione nazione = new Nazione();
 		nazione.setId("01");

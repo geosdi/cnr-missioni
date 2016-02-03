@@ -18,8 +18,10 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 
@@ -80,7 +82,21 @@ public class RimborsoKmDAOTest {
 		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
 		Assert.assertTrue("FIND RIMBORSO KM", lista.size() == 1);
 	}
+	
+	@Test
+	public void F_findByIdTest() throws Exception {
+		RimborsoKmSearchBuilder rimborsoKmSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder().withId("01");
+		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
+		Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.size() == 1);
+		Assert.assertTrue("FIND  RIMBORSO KM BY ID", lista.get(0).getId().equals("01"));
+	}
 
+	@Test
+	public void F_findByIdTest_2() throws Exception {
+		RimborsoKmSearchBuilder rimborsoKmSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder().withId("02");
+		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
+		Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.isEmpty());
+	}
 
 
 }

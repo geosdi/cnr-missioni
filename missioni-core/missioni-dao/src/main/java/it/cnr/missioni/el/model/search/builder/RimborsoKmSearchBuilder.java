@@ -19,7 +19,6 @@ public class RimborsoKmSearchBuilder implements Serializable {
 	 */
 	private static final long serialVersionUID = -817549323873815355L;
 	private BooleanModelSearch booleanModelSearch;
-	private String value = null;
 	private String id;
 	private int size = 10;
 	private int from = 0;
@@ -32,33 +31,13 @@ public class RimborsoKmSearchBuilder implements Serializable {
 		return new RimborsoKmSearchBuilder();
 	}
 
-	public RimborsoKmSearchBuilder withValue(String value) {
-		this.setValue(value);
-		if (value != null && !value.trim().equals(""))
-			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.RIMBORSO_KM_FIELD_VALUE, value));
-		return self();
-	}
 
 	public RimborsoKmSearchBuilder withId(String id) {
 		this.setId(id);
 		if (id != null && !id.trim().equals(""))
 			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.RIMBORSO_KM_FIELD_ID, id, EnumBooleanType.MUST_NOT));
+					.add(new ExactSearch(SearchConstants.RIMBORSO_KM_FIELD_ID, id));
 		return self();
-	}
-
-	/**
-	 * @return the value
-	 */
-	public String getValue() {
-		return value;
-	}
-
-	/**
-	 * @param value
-	 */
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	public RimborsoKmSearchBuilder withSize(int size) {

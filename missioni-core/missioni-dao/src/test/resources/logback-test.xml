@@ -36,6 +36,8 @@
 		level="debug" />
 					<logger name="it.cnr.missioni.el.index.NazioneIndexCreator"
 		level="debug" />
+							<logger name="it.cnr.missioni.el.index.MassimaleIndexCreator"
+		level="debug" />
 	<logger name="it.cnr.missioni.el.dao.UserDAO" level="debug" />
 	<logger name="it.cnr.missioni.el.dao.MissioneDAO" level="debug" />
 	<logger name="it.cnr.missioni.el.dao.PrenotazioneDAO" level="debug" />
@@ -44,6 +46,8 @@
 	<logger name="it.cnr.missioni.el.dao.QualificaUserDAO" level="debug" />
 	<logger name="it.cnr.missioni.el.dao.TipologiaSpesaDAO" level="debug" />
 		<logger name="it.cnr.missioni.el.dao.NazioneDAO" level="debug" />
+				<logger name="it.cnr.missioni.el.dao.MassimaleDAO" level="debug" />
+		
 	<logger name="org.geosdi.geoplatform.experimental.el.dao" level="trace" />
 
 	<logger name="it.cnr.missioni.el.dao.UserDAOTest" level="debug" />
@@ -56,5 +60,7 @@
 	<logger name="it.cnr.missioni.el.dao.TipologiaSpesaDAOTest"
 		level="debug" />
 	<logger name="it.cnr.missioni.el.dao.NazioneDAOTest"
+		level="debug" />
+			<logger name="it.cnr.missioni.el.dao.MassimaleDAOTest"
 		level="debug" />
 </configuration>

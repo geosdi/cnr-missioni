@@ -6,7 +6,6 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
-import it.cnr.missioni.el.model.search.EnumBooleanType;
 import it.cnr.missioni.el.model.search.ExactSearch;
 
 /**
@@ -21,7 +20,6 @@ public class NazioneSearchBuilder implements Serializable {
 	 */
 	private static final long serialVersionUID = -807918615534715747L;
 	private BooleanModelSearch booleanModelSearch;
-	private String value = null;
 	private String id;
 	private int size = 10;
 	private int from = 0;
@@ -38,18 +36,11 @@ public class NazioneSearchBuilder implements Serializable {
 		return new NazioneSearchBuilder();
 	}
 
-	public NazioneSearchBuilder withValue(String value) {
-		this.setValue(value);
-		if (value != null && !value.trim().equals(""))
-			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_VALUE, value));
-		return self();
-	}
-
 	public NazioneSearchBuilder withId(String id) {
 		this.setId(id);
 		if (id != null && !id.trim().equals(""))
 			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id, EnumBooleanType.MUST_NOT));
+					.add(new ExactSearch(SearchConstants.NAZIONE_FIELD_ID, id));
 		return self();
 	}
 	
@@ -58,19 +49,6 @@ public class NazioneSearchBuilder implements Serializable {
 		return self();
 	}
 
-	/**
-	 * @return the value
-	 */
-	public String getValue() {
-		return value;
-	}
-
-	/**
-	 * @param value
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
 
 	public NazioneSearchBuilder withSize(int size) {
 		this.size = size;

@@ -7,13 +7,12 @@ import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import it.cnr.missioni.dashboard.component.window.IWizard;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
  */
-public class WizardRimborso extends IWizard.AbstractWizard{
+public class WizardRimborso extends IWizard.AbstractWizard {
 
 	private Missione missione;
 	private DatiGeneraliRimborsoStep datiGeneraliStep;
@@ -41,9 +40,7 @@ public class WizardRimborso extends IWizard.AbstractWizard{
 
 		getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
 
-		if ( missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum()
-						.equals(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()))
-			getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
+		getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
 		getWizard().addStep(this.riepilogoDatiRimborsoStep, "riepilogoDatiRimborso");
 	}
 
@@ -55,8 +52,8 @@ public class WizardRimborso extends IWizard.AbstractWizard{
 
 		if (getWizard().getParent() != null) {
 
-			if (event.getActivatedStep() instanceof FatturaRimborsoStep || 
-					event.getActivatedStep() instanceof RiepilogoDatiRimborsoStep )
+			if (event.getActivatedStep() instanceof FatturaRimborsoStep
+					|| event.getActivatedStep() instanceof RiepilogoDatiRimborsoStep)
 				getWizard().getParent().setHeight("70%");
 
 			else

@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 import it.cnr.missioni.model.configuration.QualificaUser;
 
 /**
@@ -33,7 +34,7 @@ public class MassimaleTest {
 	public void fatturaErrataTest() {
 		Massimale massimale = new Massimale();
 		Set<ConstraintViolation<Massimale>> constraintViolations = validator.validate(massimale);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 	}
 
 	@Test
@@ -41,8 +42,10 @@ public class MassimaleTest {
 		Massimale massimale = new Massimale();
 		massimale.setValue(new Double(60));
 		massimale.setAreaGeografica(AreaGeograficaEnum.A);
+		massimale.setLivello(LivelloUserEnum.I);
+		massimale.setDescrizione("Massimale 1");
 		Set<ConstraintViolation<Massimale>> constraintViolations = validator.validate(massimale);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(0, constraintViolations.size());
 	}
 
 

@@ -6,46 +6,64 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
+import it.cnr.missioni.el.model.search.ExactSearch;
 
 /**
  * @author Salvia Vito
  */
-public class TipologiaSpesaSearchBuilder implements Serializable {
+public class MassimaleSearchBuilder implements Serializable {
+
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -817549323873815355L;
+	private static final long serialVersionUID = 3676936353865160224L;
 	private BooleanModelSearch booleanModelSearch;
-	private boolean all;
+	private String value = null;
+	private String id;
 	private int size = 10;
 	private int from = 0;
 	
-	private String fieldSort = SearchConstants.TIPOLOGIA_SPESA_FIELD_VALUE;
+	private String fieldSort = SearchConstants.MASSIMALE_FIELD_DESCRIZIONE;
 	private SortOrder sortOrder = SortOrder.ASC;
 
-	private TipologiaSpesaSearchBuilder() {
+	private MassimaleSearchBuilder() {
 		booleanModelSearch = new BooleanModelSearch();
 	}
 
-	public static TipologiaSpesaSearchBuilder getTipologiaSpesaSearchBuilder() {
-		return new TipologiaSpesaSearchBuilder();
+	public static MassimaleSearchBuilder getMassimaleSearchBuilder() {
+		return new MassimaleSearchBuilder();
 	}
 
-
-	public TipologiaSpesaSearchBuilder withAll(boolean all) {
-		this.setAll(all);
+	public MassimaleSearchBuilder withId(String id) {
+		this.setId(id);
+		if (id != null && !id.trim().equals(""))
+			booleanModelSearch.getListaSearch()
+					.add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, id));
 		return self();
 	}
 
 
+	/**
+	 * @return the value
+	 */
+	public String getValue() {
+		return value;
+	}
 
-	public TipologiaSpesaSearchBuilder withSize(int size) {
+	/**
+	 * @param value
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public MassimaleSearchBuilder withSize(int size) {
 		this.size = size;
 		return self();
 	}
 
-	public TipologiaSpesaSearchBuilder withFrom(int from) {
+	public MassimaleSearchBuilder withFrom(int from) {
 		this.from = from;
 		return self();
 	}
@@ -69,17 +87,17 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @return the all
+	 * @return the id
 	 */
-	public boolean isAll() {
-		return all;
+	public String getId() {
+		return id;
 	}
 
 	/**
-	 * @param all
+	 * @param id
 	 */
-	public void setAll(boolean all) {
-		this.all = all;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**
@@ -109,6 +127,7 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 	public void setFrom(int from) {
 		this.from = from;
 	}
+
 
 	/**
 	 * @return the fieldSort
@@ -142,7 +161,7 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 	 * 
 	 * @return
 	 */
-	private TipologiaSpesaSearchBuilder self() {
+	private MassimaleSearchBuilder self() {
 		return this;
 	}
 

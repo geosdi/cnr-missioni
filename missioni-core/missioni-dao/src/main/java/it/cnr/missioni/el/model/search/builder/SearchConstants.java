@@ -51,6 +51,10 @@ public class SearchConstants {
 	
 	public static final String NAZIONE_FIELD_VALUE = "nazione.value";
 	public static final String NAZIONE_FIELD_ID = "nazione.id";
+	
+	public static final String MASSIMALE_FIELD_VALUE = "massimale.value";
+	public static final String MASSIMALE_FIELD_ID = "massimale.id";
+	public static final String MASSIMALE_FIELD_DESCRIZIONE = "massimale.descrizione";
 
 	public final static String MULTI_MATCH_ALL_FIELD = "_all";
 }

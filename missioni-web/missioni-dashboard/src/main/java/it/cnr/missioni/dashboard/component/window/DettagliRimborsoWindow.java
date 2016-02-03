@@ -34,16 +34,12 @@ public class DettagliRimborsoWindow  extends IWindow.AbstractWindow  {
 	 */
 
 	public static final String ID = "rimborsowindow";
-
-	private TabSheet detailsWrapper;
-
 	private Missione missione;
 
 	private DettagliRimborsoWindow(Missione missione) {
-
+		super();
 		this.missione = missione;
 		setId(ID);
-		Responsive.makeResponsive(this);
 		build();
 		buildTabs();
 

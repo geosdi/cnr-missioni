@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
 
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
@@ -16,7 +17,7 @@ import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
  */
 @XmlRootElement(name = "massimale")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","areaGeografica","livello" })
+@XmlType(propOrder = { "id", "value","areaGeografica","livello","descrizione" })
 public class Massimale implements Document {
 
 	/**
@@ -33,6 +34,8 @@ public class Massimale implements Document {
 	private AreaGeograficaEnum areaGeografica;
 	@NotNull
 	private LivelloUserEnum livello;
+	@NotBlank
+	private String descrizione;
 
 
 	/*
@@ -103,12 +106,26 @@ public class Massimale implements Document {
 	}
 
 	/**
+	 * @return the descrizione
+	 */
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	/**
+	 * @param descrizione 
+	 */
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Massimale [id=" + id + ", value=" + value + ", areaGeografica=" + areaGeografica + ", livello="
-				+ livello + "]";
+				+ livello + ", descrizione=" + descrizione + "]";
 	}
 
 
