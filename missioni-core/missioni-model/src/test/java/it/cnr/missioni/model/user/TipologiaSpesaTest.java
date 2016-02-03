@@ -31,14 +31,13 @@ public class TipologiaSpesaTest {
 	public void fatturaErrataTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
-		assertEquals(2, constraintViolations.size());
+		assertEquals(1, constraintViolations.size());
 	}
 
 	@Test
 	public void fatturaOkTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		tipologiaSpesa.setValue("VITTO");
-		tipologiaSpesa.setTipo(TipologiaSpesa.TipologiaSpesaEnum.ITALIA);
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
 		assertEquals(0, constraintViolations.size());
 	}

@@ -51,21 +51,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
-import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
-import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
-import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
-import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
 /**
+ * 
+ * @author Salvia Vito
  *
- * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
- * @email giuseppe.lascaleia@geosdi.org
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml" })

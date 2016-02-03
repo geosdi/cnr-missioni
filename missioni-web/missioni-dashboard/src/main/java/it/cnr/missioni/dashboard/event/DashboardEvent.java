@@ -13,6 +13,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -406,6 +407,42 @@ public abstract class DashboardEvent {
 	 */
 	public static class DisableButtonNewEvent {
 		
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la tabella tipologia spesa dopo un inserimento o un update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class TableTipologiaSpesaUpdatedEvent {
+
+		private TipologiaSpesaStore tipologiaSpesaStore;
+
+		/**
+		 * @param tipologiaSpesaStore
+		 */
+		public TableTipologiaSpesaUpdatedEvent(TipologiaSpesaStore tipologiaSpesaStore) {
+			this.tipologiaSpesaStore = tipologiaSpesaStore;
+		}
+
+		/**
+		 * @return the tipologiaSpesaStore
+		 */
+		public TipologiaSpesaStore getTipologiaSpesaStore() {
+			return tipologiaSpesaStore;
+		}
+
+		/**
+		 * @param tipologiaSpesaStore 
+		 */
+		public void setTipologiaSpesaStore(TipologiaSpesaStore tipologiaSpesaStore) {
+			this.tipologiaSpesaStore = tipologiaSpesaStore;
+		}
+
+
+
 	}
 	
 }

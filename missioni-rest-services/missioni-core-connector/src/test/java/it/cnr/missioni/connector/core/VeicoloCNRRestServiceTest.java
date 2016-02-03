@@ -35,8 +35,6 @@
  */
 package it.cnr.missioni.connector.core;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.junit.AfterClass;
@@ -59,9 +57,9 @@ import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
+ * 
+ * @author Salvia Vito
  *
- * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
- * @email giuseppe.lascaleia@geosdi.org
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml" })

@@ -49,11 +49,13 @@ import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
@@ -67,6 +69,7 @@ import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -413,6 +416,40 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .path("v1/rimborsoKm/updateRimborsoKm/")
                 .request(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(rimborsoKm,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
+    public TipologiaSpesaStore getTipologiaSpesaByQuery(TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/tipologiaSpesa/getTipologiaSpesaByQuery/")
+                .queryParam("from", tipologiaSpesaSearchBuilder.getFrom())
+                .queryParam("size", tipologiaSpesaSearchBuilder.getSize())
+                .queryParam("all", tipologiaSpesaSearchBuilder.isAll())
+                .request(MediaType.APPLICATION_JSON)
+                .get(TipologiaSpesaStore.class);
+    }
+    
+    public String addTipologiaSpesa(TipologiaSpesa tipologiaSpesa) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/tipologiaSpesa/addTipologiaSpesa/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(tipologiaSpesa,
+                        MediaType.APPLICATION_JSON), String.class);
+    }
+
+    public Boolean deleteTipologiaSpesa(String tipologiaSpesaID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/tipologiaSpesa/deleteTipologiaSpesa/")
+                .queryParam("tipologiaSpesaID", tipologiaSpesaID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateTipologiaSpesa(TipologiaSpesa tipologiaSpesa) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/tipologiaSpesa/updateTipologiaSpesa/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(tipologiaSpesa,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     

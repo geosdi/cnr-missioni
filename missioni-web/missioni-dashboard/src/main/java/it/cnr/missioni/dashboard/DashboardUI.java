@@ -27,6 +27,7 @@ import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.action.admin.NazioneAction;
 import it.cnr.missioni.dashboard.action.admin.QualificaUserAction;
 import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
+import it.cnr.missioni.dashboard.action.admin.TipologiaSpesaAction;
 import it.cnr.missioni.dashboard.action.admin.UpdateUserResponsabileGruppoAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
@@ -173,6 +174,11 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void nazioneRequested(final NazioneAction nazioneAction) {
 		nazioneAction.doAction();
+	}
+	
+	@Subscribe
+	public void tipologiaSpesaRequested(final TipologiaSpesaAction tipologiaSpesaAction) {
+		tipologiaSpesaAction.doAction();
 	}
 	
 	@Subscribe

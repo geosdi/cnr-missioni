@@ -13,11 +13,13 @@ import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
@@ -29,6 +31,7 @@ import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -295,6 +298,18 @@ public class ClientConnector {
 
 	/**
 	 * 
+	 * @param tipologiaSpesaSearchBuilder
+	 * @return
+	 * @throws Exception
+	 */
+	public static TipologiaSpesaStore getTipologiaSpesa(TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder)
+			throws Exception {
+		return missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
+
+	}
+
+	/**
+	 * 
 	 * @param qualificaUser
 	 * @return
 	 * @throws Exception
@@ -353,6 +368,27 @@ public class ClientConnector {
 	 */
 	public static void updateRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
 		missioniCoreClientConnector.updateRimborsoKm(rimborsoKm);
+
+	}
+
+	/**
+	 * 
+	 * @param tipologiaSpesa
+	 * @return
+	 * @throws Exception
+	 */
+	public static String addTipologiaSpesa(TipologiaSpesa tipologiaSpesa) throws Exception {
+		return missioniCoreClientConnector.addTipologiaSpesa(tipologiaSpesa);
+
+	}
+
+	/**
+	 * 
+	 * @param tipologiaSpesa
+	 * @throws Exception
+	 */
+	public static void updateTipologiaSpesa(TipologiaSpesa tipologiaSpesa) throws Exception {
+		missioniCoreClientConnector.updateTipologiaSpesa(tipologiaSpesa);
 
 	}
 

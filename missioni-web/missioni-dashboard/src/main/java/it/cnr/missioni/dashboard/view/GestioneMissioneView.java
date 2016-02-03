@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import javax.ws.rs.core.Response;
 
-
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.ItemClickEvent;
@@ -68,12 +67,11 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 
 	private VerticalLayout layoutTable;
 	private Button buttonDettagli;
-//	private Button buttonMail;
+	// private Button buttonMail;
 	private Button buttonRimborso;
 	private Button buttonPDF;
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
-
 
 	private User user;
 	private MissioneSearchBuilder missioneSearchBuilder;
@@ -294,8 +292,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione())
-						.build();
+				WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).build();
 			}
 
 		});
@@ -334,37 +331,17 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 		buttonDettagli.setDescription("Visualizza i dettagli della Missione");
 		buttonDettagli.setIcon(FontAwesome.EDIT);
 		buttonDettagli.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-		
+
 		buttonDettagli.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
 
 				DettagliMissioneWindow.open(selectedMissione);
-				
+
 			}
 
 		});
-
-//		buttonMail = new Button();
-//		buttonMail.setDescription("Invia Mail");
-//		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
-//		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
-//
-//		buttonMail.addClickListener(new Button.ClickListener() {
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				try {
-//					ClientConnector.sendMissioneMail(selectedMissione.getId());
-//					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
-//				} catch (Exception e) {
-//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
-//							Type.ERROR_MESSAGE);
-//				}
-//			}
-//
-//		});
 
 		buttonRimborso = new Button("Rimborso");
 		buttonRimborso.setDescription("Visualizza i dettagli del Rimborso");
@@ -384,10 +361,9 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 				} else {
 					rimborso = new Rimborso();
 					selectedMissione.setRimborso(rimborso);
-					WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso())
-					.withMissione(selectedMissione).build();
+					WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione)
+							.build();
 				}
-
 
 			}
 
@@ -398,7 +374,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-		
+
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
 			@Override
@@ -419,7 +395,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 		return layout;
 
 	}
-	
+
 	private StreamResource getResource() {
 		try {
 
@@ -444,7 +420,7 @@ public class GestioneMissioneView extends GestioneTemplateView implements View {
 	}
 
 	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonMail.setEnabled(enabled);
+		// this.buttonMail.setEnabled(enabled);
 		this.buttonDettagli.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonRimborso.setEnabled(enabled);

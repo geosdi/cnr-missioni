@@ -3,6 +3,7 @@ package it.cnr.missioni.el.model.search.builder;
 import java.io.Serializable;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.EnumBooleanType;
@@ -13,7 +14,6 @@ import it.cnr.missioni.el.model.search.ExactSearch;
  */
 public class TipologiaSpesaSearchBuilder implements Serializable {
 
-
 	/**
 	 * 
 	 */
@@ -22,8 +22,12 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 	private String value = null;
 	private String id;
 	private String tipo;
+	private boolean all;
 	private int size = 10;
 	private int from = 0;
+	
+	private String fieldSort = SearchConstants.TIPOLOGIA_SPESA_FIELD_VALUE;
+	private SortOrder sortOrder = SortOrder.ASC;
 
 	private TipologiaSpesaSearchBuilder() {
 		booleanModelSearch = new BooleanModelSearch();
@@ -36,7 +40,8 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 	public TipologiaSpesaSearchBuilder withValue(String value) {
 		this.setValue(value);
 		if (value != null && !value.trim().equals(""))
-			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_VALUE, value));
+			booleanModelSearch.getListaSearch()
+					.add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_VALUE, value));
 		return self();
 	}
 
@@ -47,12 +52,16 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 					.add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ID, id, EnumBooleanType.MUST_NOT));
 		return self();
 	}
-	
+
 	public TipologiaSpesaSearchBuilder withTipo(String tipo) {
 		this.tipo = tipo;
 		if (tipo != null && !tipo.trim().equals(""))
-			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_TIPO, tipo));
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_TIPO, tipo));
+		return self();
+	}
+
+	public TipologiaSpesaSearchBuilder withAll(boolean all) {
+		this.setAll(all);
 		return self();
 	}
 
@@ -120,10 +129,24 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param tipo 
+	 * @param tipo
 	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	/**
+	 * @return the all
+	 */
+	public boolean isAll() {
+		return all;
+	}
+
+	/**
+	 * @param all
+	 */
+	public void setAll(boolean all) {
+		this.all = all;
 	}
 
 	/**
@@ -152,6 +175,34 @@ public class TipologiaSpesaSearchBuilder implements Serializable {
 	 */
 	public void setFrom(int from) {
 		this.from = from;
+	}
+
+	/**
+	 * @return the fieldSort
+	 */
+	public String getFieldSort() {
+		return fieldSort;
+	}
+
+	/**
+	 * @param fieldSort 
+	 */
+	public void setFieldSort(String fieldSort) {
+		this.fieldSort = fieldSort;
+	}
+
+	/**
+	 * @return the sortOrder
+	 */
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	/**
+	 * @param sortOrder 
+	 */
+	public void setSortOrder(SortOrder sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 	/**

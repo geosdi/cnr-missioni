@@ -26,24 +26,7 @@ public class TipologiaSpesa implements Document {
 	private String id;
 	@NotNull
 	private String value;
-	@NotNull
-	private TipologiaSpesaEnum tipo;
 
-	public enum TipologiaSpesaEnum {
-		ESTERA("Estera"), ITALIA("Italia");
-
-		private final String value;
-
-		TipologiaSpesaEnum(String value) {
-			this.value = value;
-		}
-
-		@Override
-		public String toString() {
-			return this.value;
-		}
-
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -85,26 +68,14 @@ public class TipologiaSpesa implements Document {
 	}
 
 	/**
-	 * @return the tipo
-	 */
-	public TipologiaSpesaEnum getTipo() {
-		return tipo;
-	}
-
-	/**
-	 * @param tipo 
-	 */
-	public void setTipo(TipologiaSpesaEnum tipo) {
-		this.tipo = tipo;
-	}
-
-	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + "]";
+		return "TipologiaSpesa [id=" + id + ", value=" + value + "]";
 	}
+
+
 
 
 

@@ -9,6 +9,7 @@ import it.cnr.missioni.dashboard.view.HomeView;
 import it.cnr.missioni.dashboard.view.admin.GestioneNazioneView;
 import it.cnr.missioni.dashboard.view.admin.GestioneQualificaUserView;
 import it.cnr.missioni.dashboard.view.admin.GestioneRimborsoKmView;
+import it.cnr.missioni.dashboard.view.admin.GestioneTipologiaSpesaView;
 import it.cnr.missioni.dashboard.view.admin.GestioneUserAdminView;
 import it.cnr.missioni.dashboard.view.admin.GestioneVeicoloCNRView;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
@@ -30,6 +31,7 @@ public enum DashboardViewType {
     GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user",GestioneQualificaUserView.class, FontAwesome.USERS, true),
     GESTIONE_NAZIONE_ADMIN("gestione nazione",GestioneNazioneView.class, FontAwesome.GLOBE, true),
     GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km",GestioneRimborsoKmView.class, FontAwesome.EURO, true),
+    GESTIONE_TIPOLOGIA_SPESA_ADMIN("gestione tipologia spesa",GestioneTipologiaSpesaView.class, FontAwesome.LIST, true),
 
     ;
 

@@ -59,9 +59,17 @@ public class TipologiaSpesaDAO extends AbstractElasticSearchDAO<TipologiaSpesa> 
 
 		Page p = new Page(tipologiaSpesaSearchBuilder.getFrom(), tipologiaSpesaSearchBuilder.getSize());
 
+		
+		//carico tutte le nazioni per le combobox
+		int size = tipologiaSpesaSearchBuilder.getSize();
+		if (tipologiaSpesaSearchBuilder.isAll())
+			size = count().intValue();
+		
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(tipologiaSpesaSearchBuilder.buildQuery())
-				.setFrom(tipologiaSpesaSearchBuilder.getFrom()).setSize(tipologiaSpesaSearchBuilder.getSize()).execute()
+				.setFrom(tipologiaSpesaSearchBuilder.getFrom()).setSize(size)
+				.addSort(tipologiaSpesaSearchBuilder.getFieldSort(), tipologiaSpesaSearchBuilder.getSortOrder())
+				.execute()
 				.actionGet());
 
 		if (searchResponse.status() != RestStatus.OK) {

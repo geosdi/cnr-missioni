@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.model.configuration.TipologiaSpesa.TipologiaSpesaEnum;
 
 /**
  * @author Salvia Vito
@@ -74,7 +73,6 @@ public class TipologiaSpesaDAOTest {
 		TipologiaSpesa tipoligiaSpesa = new TipologiaSpesa();
 		tipoligiaSpesa.setId("03");
 		tipoligiaSpesa.setValue("Taxi");
-		tipoligiaSpesa.setTipo(TipologiaSpesaEnum.ITALIA);
 		
 		tipologiaSpesaDAO.persist(tipoligiaSpesa);
 		Thread.sleep(1000);
@@ -89,7 +87,6 @@ public class TipologiaSpesaDAOTest {
 		TipologiaSpesa tipoligiaSpesa = new TipologiaSpesa();
 		tipoligiaSpesa.setId("03");
 		tipoligiaSpesa.setValue("Taxi");
-		tipoligiaSpesa.setTipo(TipologiaSpesaEnum.ESTERA);
 		tipologiaSpesaDAO.update(tipoligiaSpesa);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n", tipologiaSpesaDAO.count().intValue());
@@ -112,13 +109,11 @@ public class TipologiaSpesaDAOTest {
 		TipologiaSpesa tipoligiaSpesa = new TipologiaSpesa();
 		tipoligiaSpesa.setId("01");
 		tipoligiaSpesa.setValue("Vitto");
-		tipoligiaSpesa.setTipo(TipologiaSpesaEnum.ITALIA);
 		listaTipoligiaSpesa.add(tipoligiaSpesa);
 		
 		tipoligiaSpesa = new TipologiaSpesa();
 		tipoligiaSpesa.setId("02");
 		tipoligiaSpesa.setValue("Albergo");
-		tipoligiaSpesa.setTipo(TipologiaSpesaEnum.ITALIA);
 		listaTipoligiaSpesa.add(tipoligiaSpesa);
 		
 	}

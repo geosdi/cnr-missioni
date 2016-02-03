@@ -37,7 +37,6 @@ package it.cnr.missioni.connector.core;
 
 import javax.annotation.Resource;
 
-import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,9 +51,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
-import it.cnr.missioni.model.prenotazione.Prenotazione;
-import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
+import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * 
@@ -64,7 +63,7 @@ import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml" })
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
-public class PrenotazioneRestServiceTest {
+public class TipologiaSpesaRestServiceTest {
 
 	static final String CORE_CONNECTOR_KEY = "MISSIONI_CORE_FILE_PROP";
 	//
@@ -96,47 +95,38 @@ public class PrenotazioneRestServiceTest {
 	}
 
 	@Test
-	public void A_testFindPrenotazione() throws Exception {
-		
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
-		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
-		Assert.assertNotNull(prenotazioniStore);
+	public void A_addTipologiaSpesaTest() throws Exception {
+		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
+		tipologiaSpesa.setId("03");
+		tipologiaSpesa.setValue("VITTO");
+		missioniCoreClientConnector.addTipologiaSpesa(tipologiaSpesa);
+		Thread.sleep(1000);
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
+		Assert.assertTrue("ADD TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 3);
 	}
 	
 	@Test
-	public void B_addPrenotazionetest() throws Exception {
-		Prenotazione p = new Prenotazione();
-		p.setId("03");
-		p.setDataFrom(new DateTime(2016,1,27,0,0));
-		p.setDataTo(new DateTime(2016,1,28,0,0));
-		missioniCoreClientConnector.addPrenotazione(p);
+	public void B_updateTipologiaSpesaTest() throws Exception {
+		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
+		tipologiaSpesa.setId("03");
+		tipologiaSpesa.setValue("PRANZO");
+		missioniCoreClientConnector.updateTipologiaSpesa(tipologiaSpesa);
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
-		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
-		Assert.assertTrue("Totale prenotazioni", prenotazioniStore.getPrenotazioni().size() == 3);
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
+		Assert.assertTrue("UPDATE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 3);
+
 	}
 	
 	@Test
-	public void C_updatePrenotazionetest() throws Exception {
-		Prenotazione p = new Prenotazione();
-		p.setId("03");
-		DateTime now = new DateTime();
-		p.setDataFrom(now);
-		p.setDataTo(now.plusDays(2));
-		missioniCoreClientConnector.updatePrenotazione(p);
+	public void C_deleteTipologiaSpesaTest() throws Exception {
+		missioniCoreClientConnector.deleteTipologiaSpesa("03");
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
-		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
-		Assert.assertTrue("Totale prenotazioni", prenotazioniStore.getPrenotazioni().size() == 3);
-	}
-	
-	@Test
-	public void D_deletePrenotazionetest() throws Exception {
-		missioniCoreClientConnector.deletePrenotazione("03");
-		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
-		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
-		Assert.assertTrue("Totale prenotazioni", prenotazioniStore.getPrenotazioni().size() == 2);
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
+		Assert.assertTrue("DELETE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 2);
+
 	}
 
 	

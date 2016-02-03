@@ -38,7 +38,6 @@ package it.cnr.missioni.connector.core;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ws.rs.core.Response;

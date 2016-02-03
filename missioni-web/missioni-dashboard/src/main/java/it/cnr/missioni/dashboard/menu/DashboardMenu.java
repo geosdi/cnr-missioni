@@ -169,6 +169,8 @@ public final class DashboardMenu extends CustomComponent {
 			menuItemsLayout.addComponent(menuItemComponent);
 			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_RIMBORSO_KM_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_TIPOLOGIA_SPESA_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
 
 		}
 
