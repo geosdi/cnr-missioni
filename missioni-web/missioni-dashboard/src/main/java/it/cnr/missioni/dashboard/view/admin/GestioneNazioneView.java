@@ -26,7 +26,7 @@ import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneNazioneView extends GestioneTemplateView implements View {
+public class GestioneNazioneView extends GestioneTemplateView {
 
 	/**
 	 * 
@@ -107,7 +107,7 @@ public class GestioneNazioneView extends GestioneTemplateView implements View {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				NazioneWindow.open(selectedNazione, false);
+				NazioneWindow.open(selectedNazione, true);
 
 			}
 

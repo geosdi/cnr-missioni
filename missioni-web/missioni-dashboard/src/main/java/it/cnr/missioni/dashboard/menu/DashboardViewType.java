@@ -6,6 +6,7 @@ import com.vaadin.server.Resource;
 
 import it.cnr.missioni.dashboard.view.PrenotazioneVeicoloCNRView;
 import it.cnr.missioni.dashboard.view.HomeView;
+import it.cnr.missioni.dashboard.view.admin.GestioneMassimaleView;
 import it.cnr.missioni.dashboard.view.admin.GestioneNazioneView;
 import it.cnr.missioni.dashboard.view.admin.GestioneQualificaUserView;
 import it.cnr.missioni.dashboard.view.admin.GestioneRimborsoKmView;
@@ -32,6 +33,7 @@ public enum DashboardViewType {
     GESTIONE_NAZIONE_ADMIN("gestione nazione",GestioneNazioneView.class, FontAwesome.GLOBE, true),
     GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km",GestioneRimborsoKmView.class, FontAwesome.EURO, true),
     GESTIONE_TIPOLOGIA_SPESA_ADMIN("gestione tipologia spesa",GestioneTipologiaSpesaView.class, FontAwesome.LIST, true),
+    GESTIONE_MASSIMALE_ADMIN("gestione massimale",GestioneMassimaleView.class, FontAwesome.EURO, true),
 
     ;
 

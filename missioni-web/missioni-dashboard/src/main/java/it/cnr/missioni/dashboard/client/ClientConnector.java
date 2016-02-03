@@ -8,6 +8,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
@@ -16,6 +17,7 @@ import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
@@ -25,6 +27,7 @@ import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
@@ -310,6 +313,17 @@ public class ClientConnector {
 
 	/**
 	 * 
+	 * @param massimaleSearchBuilder
+	 * @return
+	 * @throws Exception
+	 */
+	public static MassimaleStore getMassimale(MassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
+		return missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
+
+	}
+
+	/**
+	 * 
 	 * @param qualificaUser
 	 * @return
 	 * @throws Exception
@@ -389,6 +403,27 @@ public class ClientConnector {
 	 */
 	public static void updateTipologiaSpesa(TipologiaSpesa tipologiaSpesa) throws Exception {
 		missioniCoreClientConnector.updateTipologiaSpesa(tipologiaSpesa);
+
+	}
+
+	/**
+	 * 
+	 * @param massimale
+	 * @return
+	 * @throws Exception
+	 */
+	public static String addMassimale(Massimale massimale) throws Exception {
+		return missioniCoreClientConnector.addMassimale(massimale);
+
+	}
+
+	/**
+	 * 
+	 * @param massimale
+	 * @throws Exception
+	 */
+	public static void updateMassimale(Massimale massimale) throws Exception {
+		missioniCoreClientConnector.updateMassimale(massimale);
 
 	}
 

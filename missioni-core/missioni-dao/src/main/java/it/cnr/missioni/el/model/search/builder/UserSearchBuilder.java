@@ -52,21 +52,21 @@ public class UserSearchBuilder implements ISearchBuilder {
 
 	public UserSearchBuilder withNome(String nome) {
 		this.nome = nome;
-		if( nome != null &&!nome.equals("") )
+		if( nome != null &&!nome.trim().equals("") )
 		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_NOME, nome));
 		return self();
 	}
 
 	public UserSearchBuilder withCognome(String cognome) {
 		this.cognome = cognome;
-		if( cognome != null && !cognome.equals("")) 
+		if( cognome != null && !cognome.trim().equals("")) 
 		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_COGNOME, cognome));
 		return self();
 	}
 
 	public UserSearchBuilder withCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
-		if(codiceFiscale != null &&!codiceFiscale.equals("") )
+		if(codiceFiscale != null &&!codiceFiscale.trim().equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new PrefixSearch(SearchConstants.USER_FIELD_CODICE_FISCALE, codiceFiscale));
 		return self();
@@ -74,28 +74,28 @@ public class UserSearchBuilder implements ISearchBuilder {
 
 	public UserSearchBuilder withMatricola(String matricola) {
 		this.matricola = matricola;
-		if( matricola != null &&!matricola.equals("") )
+		if( matricola != null &&!matricola.trim().equals("") )
 		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola));
 		return self();
 	}
 
 	public UserSearchBuilder withUsername(String username) {
 		this.username = username;
-		if(username != null && !username.equals("") )
+		if(username != null && !username.trim().equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_USERNAME, username));
 		return self();
 	}
 
 	public UserSearchBuilder withTarga(String targa) {
 		this.targa = targa;
-		if(targa != null &&!targa.equals("") )
+		if(targa != null &&!targa.trim().equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_TARGA, targa));
 		return self();
 	}
 
 	public UserSearchBuilder withCartaCircolazione(String cartaCircolazione) {
 		this.cartaCircolazione = cartaCircolazione;
-		if( cartaCircolazione != null && !cartaCircolazione.equals("") )
+		if( cartaCircolazione != null && !cartaCircolazione.trim().equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione));
 		return self();
@@ -103,7 +103,7 @@ public class UserSearchBuilder implements ISearchBuilder {
 
 	public UserSearchBuilder withPolizzaAssicurativa(String polizzaAssicurativa) {
 		this.polizzaAssicurativa = polizzaAssicurativa;
-		if( polizzaAssicurativa != null && !polizzaAssicurativa.equals("") )
+		if( polizzaAssicurativa != null && !polizzaAssicurativa.trim().equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa));
 		return self();
@@ -111,21 +111,21 @@ public class UserSearchBuilder implements ISearchBuilder {
 
 	public UserSearchBuilder withIban(String iban) {
 		this.iban = iban;
-		if( iban != null && !iban.equals("") )
+		if( iban != null && !iban.trim().equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_IBAN, iban));
 		return self();
 	}
 
 	public UserSearchBuilder withMail(String mail) {
 		this.mail = mail;
-		if( mail!= null &&!mail.equals("") )
+		if( mail!= null &&!mail.trim().equals("") )
 		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_MAIL, mail));
 		return self();
 	}
 
 	public UserSearchBuilder withNotId(String notId) {
 		this.setNotId(notId);
-		if(notId != null &&!notId.equals("") )
+		if(notId != null &&!notId.trim().equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_ID, notId, EnumBooleanType.MUST_NOT));
 		return self();
@@ -133,7 +133,7 @@ public class UserSearchBuilder implements ISearchBuilder {
 
 	public UserSearchBuilder withNumeroPatente(String numeroPatente) {
 		this.numeroPatente = numeroPatente;
-		if( numeroPatente != null &&!numeroPatente.equals("") )
+		if( numeroPatente != null &&!numeroPatente.trim().equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_NUMERO_PATENTE, numeroPatente));
 		return self();
@@ -142,7 +142,7 @@ public class UserSearchBuilder implements ISearchBuilder {
 	
 	public UserSearchBuilder withMultiMatch(String multiMatchValue) {
 		this.multiMatchValue = multiMatchValue;
-		if (multiMatchValue != null && !multiMatchValue.equals(""))
+		if (multiMatchValue != null && !multiMatchValue.trim().equals(""))
 
 			booleanModelSearch.getListaSearch()
 					.add(new MultiMatchSearch(fieldMultiMatch, multiMatchValue));

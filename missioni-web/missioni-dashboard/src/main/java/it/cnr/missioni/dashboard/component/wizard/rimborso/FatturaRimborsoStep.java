@@ -14,7 +14,6 @@ import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
@@ -22,6 +21,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
@@ -32,13 +32,14 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.RimborsoAction;
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * @author Salvia Vito
@@ -46,7 +47,7 @@ import it.cnr.missioni.model.rimborso.Fattura;
 public class FatturaRimborsoStep implements WizardStep {
 
 	private TextField numeroFatturaField;
-	private TextField tipologiaSpesaField;
+	private ComboBox tipologiaSpesaField;
 	private TextField importoField;
 	private DateField dataField;
 	private TextField valutaField;
@@ -83,7 +84,24 @@ public class FatturaRimborsoStep implements WizardStep {
 		fieldGroup.setFieldFactory(fieldFactory);
 
 		numeroFatturaField = (TextField) fieldGroup.buildAndBind("Numero Fattura", "numeroFattura");
-		tipologiaSpesaField = (TextField) fieldGroup.buildAndBind("Tipologia Spesa", "tipologiaSpesa");
+		tipologiaSpesaField = new ComboBox("Tipologia Spesa");
+		tipologiaSpesaField.setValidationVisible(false);
+		tipologiaSpesaField.setImmediate(true);
+		try{
+			TipologiaSpesaStore tipologiaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder());
+			if(tipologiaStore != null){
+				tipologiaStore.getTipologiaSpesa().forEach(s->{
+					tipologiaSpesaField.addItem(s.getId());
+					tipologiaSpesaField.setItemCaption(s.getId(), s.getValue());
+				});
+			}
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+		fieldGroup.bind(tipologiaSpesaField, "idTipologiaSpesa");
+
+		
 		importoField = (TextField) fieldGroup.buildAndBind("Importo", "importo");
 		valutaField = (TextField) fieldGroup.buildAndBind("Valuta", "valuta");
 		altroField = (TextField) fieldGroup.buildAndBind("Altro", "altro");
@@ -129,6 +147,30 @@ public class FatturaRimborsoStep implements WizardStep {
 
 			}
 		});
+		
+		tipologiaSpesaField.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				if (value == null )
+					throw new InvalidValueException(Utility.getMessage("field_required"));
+
+			}
+
+		});
+		
+		tipologiaSpesaField.addBlurListener(new BlurListener() {
+
+			@Override
+			public void blur(BlurEvent event) {
+				try {
+					tipologiaSpesaField.validate();
+				} catch (Exception e) {
+					tipologiaSpesaField.setValidationVisible(true);
+				}
+			}
+		});
+		
 	}
 
 	private Component buildFatturaTab() {
@@ -209,6 +251,7 @@ public class FatturaRimborsoStep implements WizardStep {
 					if (new_fattura.getId() == null)
 						new_fattura.setId(UUID.randomUUID().toString());
 					new_fattura.setData(new DateTime(dataField.getValue()));
+					new_fattura.setShortDescriptionTipologiaSpesa(tipologiaSpesaField.getItemCaption(new_fattura.getIdTipologiaSpesa()));
 					missione.getRimborso().getMappaFattura().put(new_fattura.getId(), new_fattura);
 					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 

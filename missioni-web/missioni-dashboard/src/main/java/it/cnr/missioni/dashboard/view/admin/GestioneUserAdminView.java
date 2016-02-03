@@ -44,7 +44,7 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneUserAdminView extends GestioneTemplateView implements View {
+public class GestioneUserAdminView extends GestioneTemplateView {
 
 	/**
 	 * 

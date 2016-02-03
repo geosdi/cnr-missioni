@@ -62,14 +62,14 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 	public MissioneSearchBuilder withIdUser(String idUser) {
 		this.idUser = idUser;
 
-		if (idUser != null && !idUser.equals(""))
+		if (idUser != null && !idUser.trim().equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_ID_USER, idUser));
 		return self();
 	}
 
 	public MissioneSearchBuilder withStato(String stato) {
 		this.stato = stato;
-		if (stato != null && !stato.equals(""))
+		if (stato != null && !stato.trim().equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_STATO, stato));
 		return self();
 	}
@@ -93,14 +93,14 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 
 	public MissioneSearchBuilder withIdMissione(String idMissione) {
 		this.idMissione = idMissione;
-		if (idMissione != null && !idMissione.equals(""))
+		if (idMissione != null && !idMissione.trim().equals(""))
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_ID, idMissione));
 		return self();
 	}
 
 	public MissioneSearchBuilder withOggetto(String oggetto) {
 		this.oggetto = oggetto;
-		if (oggetto != null && !oggetto.equals(""))
+		if (oggetto != null && !oggetto.trim().equals(""))
 
 			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MISSIONE_FIELD_OGGETTO, oggetto,
 					EnumBooleanType.MUST, Operator.OR));
@@ -109,7 +109,7 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 
 	public MissioneSearchBuilder withMultiMatch(String multiMatchValue) {
 		this.multiMatchValue = multiMatchValue;
-		if (multiMatchValue != null && !multiMatchValue.equals(""))
+		if (multiMatchValue != null && !multiMatchValue.trim().equals(""))
 
 			booleanModelSearch.getListaSearch().add(new MultiMatchSearch(fieldMultiMatch, multiMatchValue));
 		return self();
@@ -117,7 +117,7 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 
 	public MissioneSearchBuilder withFieldExist(String fieldExist) {
 		this.fieldExist = fieldExist;
-		if (fieldExist != null && !fieldExist.equals(""))
+		if (fieldExist != null && !fieldExist.trim().equals(""))
 
 			booleanModelSearch.getListaSearch().add(new ExistFieldSearch(fieldExist));
 		return self();
@@ -125,7 +125,7 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 
 	public MissioneSearchBuilder withFieldNotExist(String fieldNotExist) {
 		this.fieldNotExist = fieldNotExist;
-		if (fieldNotExist != null && !fieldNotExist.equals(""))
+		if (fieldNotExist != null && !fieldNotExist.trim().equals(""))
 
 			booleanModelSearch.getListaSearch().add(new ExistFieldSearch(fieldNotExist, EnumBooleanType.MUST_NOT));
 		return self();

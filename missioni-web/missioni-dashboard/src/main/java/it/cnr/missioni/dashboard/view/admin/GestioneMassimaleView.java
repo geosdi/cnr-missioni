@@ -1,7 +1,6 @@
 package it.cnr.missioni.dashboard.view.admin;
 
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
@@ -15,37 +14,30 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.table.admin.ElencoNazioneTable;
-import it.cnr.missioni.dashboard.component.table.admin.ElencoTipologiaSpesaTable;
-import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
-import it.cnr.missioni.dashboard.component.window.admin.TipologiaSpesaWindow;
+import it.cnr.missioni.dashboard.component.table.admin.ElencoMassimaleTable;
+import it.cnr.missioni.dashboard.component.window.admin.MassimaleWindow;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
-import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
-import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneTipologiaSpesaView extends GestioneTemplateView {
+public class GestioneMassimaleView extends GestioneTemplateView  {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1136332279224937769L;
-	/**
-	 * 
-	 */
-	private ElencoTipologiaSpesaTable elencoTipologiaSpesaTable;
+	private static final long serialVersionUID = 9207649476781253454L;
+
+	private ElencoMassimaleTable elencoMassimaleTable;
 	private Button buttonModifica;
-	private TipologiaSpesa selectedTipologiaSpesa;
-	private TipologiaSpesaStore tipologiaSpesaStore;
+	private Massimale selectedMassimale;
+	private MassimaleStore massimaleStore;
 
-	public GestioneTipologiaSpesaView() {
+	public GestioneMassimaleView() {
 		super();
 	}
 
@@ -56,25 +48,25 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView {
 	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
-		this.elencoTipologiaSpesaTable = new ElencoTipologiaSpesaTable();
+		this.elencoMassimaleTable = new ElencoMassimaleTable();
 
 		try {
-			tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder());
-			this.elencoTipologiaSpesaTable.aggiornaTable(tipologiaSpesaStore);
+			massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder());
+			this.elencoMassimaleTable.aggiornaTable(massimaleStore);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
-		this.elencoTipologiaSpesaTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+		this.elencoMassimaleTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedTipologiaSpesa = (TipologiaSpesa) itemClickEvent.getItemId();
+				selectedMassimale = (Massimale) itemClickEvent.getItemId();
 				enableDisableButtons(true);
 			}
 		});
 
-		v.addComponent(this.elencoTipologiaSpesaTable);
-		v.setComponentAlignment(elencoTipologiaSpesaTable,
+		v.addComponent(this.elencoMassimaleTable);
+		v.setComponentAlignment(elencoMassimaleTable,
 				new Alignment(Bits.ALIGNMENT_VERTICAL_CENTER | Bits.ALIGNMENT_HORIZONTAL_CENTER));
 
 		return v;
@@ -86,16 +78,16 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView {
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNew = new Button("Aggiungi Tipologia Spesa");
+		final Button buttonNew = new Button("Aggiungi Massimale");
 		buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonNew.setIcon(FontAwesome.PLUS);
-		buttonNew.setDescription("Inserisce una nuova tipologia spesa");
+		buttonNew.setDescription("Inserisce un nuovo massimale");
 		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				TipologiaSpesaWindow.open(new TipologiaSpesa(), false);
+				MassimaleWindow.open(new Massimale(), false);
 			}
 
 		});
@@ -115,7 +107,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				TipologiaSpesaWindow.open(selectedTipologiaSpesa, true);
+				MassimaleWindow.open(selectedMassimale, true);
 
 			}
 

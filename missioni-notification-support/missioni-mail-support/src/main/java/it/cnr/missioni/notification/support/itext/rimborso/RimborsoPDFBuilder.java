@@ -165,7 +165,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         for (Fattura fattura : listaScontrini) {
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getData().toString(), fontNormal)));
-            tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getTipologiaSpesa(), fontNormal)));
+            tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getShortDescriptionTipologiaSpesa(), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getNumeroFattura().toString(), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getImporto() + "", fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getValuta() + "", fontNormal)));

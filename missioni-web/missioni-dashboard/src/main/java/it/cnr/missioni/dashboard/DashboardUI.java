@@ -24,6 +24,7 @@ import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
+import it.cnr.missioni.dashboard.action.admin.MassimaleAction;
 import it.cnr.missioni.dashboard.action.admin.NazioneAction;
 import it.cnr.missioni.dashboard.action.admin.QualificaUserAction;
 import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
@@ -184,6 +185,11 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void rimborsoKmRequested(final RimborsoKmAction rimborsoAction) {
 		rimborsoAction.doAction();
+	}
+	
+	@Subscribe
+	public void massimaleRequested(final MassimaleAction massimaleAction) {
+		massimaleAction.doAction();
 	}
 	
 	@Subscribe

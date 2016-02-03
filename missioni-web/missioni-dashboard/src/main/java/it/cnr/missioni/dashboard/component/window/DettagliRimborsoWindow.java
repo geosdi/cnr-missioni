@@ -2,15 +2,11 @@ package it.cnr.missioni.dashboard.component.window;
 
 import java.util.ArrayList;
 
-import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Responsive;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -42,28 +38,6 @@ public class DettagliRimborsoWindow  extends IWindow.AbstractWindow  {
 		setId(ID);
 		build();
 		buildTabs();
-
-//		setModal(true);
-//		setCloseShortcut(KeyCode.ESCAPE, null);
-//		setResizable(false);
-//		setClosable(true);
-//		setHeight(90.0f, Unit.PERCENTAGE);
-//
-//		VerticalLayout content = new VerticalLayout();
-//		content.setSizeFull();
-//		content.setMargin(new MarginInfo(true, false, false, false));
-//		setContent(content);
-//
-//		detailsWrapper = new TabSheet();
-//		detailsWrapper.setSizeFull();
-//		detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-//		detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-//		detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-//		content.addComponent(detailsWrapper);
-//		content.setExpandRatio(detailsWrapper, 1f);
-//
-//		detailsWrapper.addComponent(buildRimborsoTab());
-//		detailsWrapper.addComponent(buildFatturaTab());
 
 	}
 

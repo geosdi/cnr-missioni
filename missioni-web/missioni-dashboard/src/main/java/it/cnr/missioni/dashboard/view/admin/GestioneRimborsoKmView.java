@@ -30,7 +30,7 @@ import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneRimborsoKmView extends GestioneTemplateView implements View {
+public class GestioneRimborsoKmView extends GestioneTemplateView  {
 
 	/**
 	 * 
@@ -118,7 +118,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView implements View
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				RimborsoKmWindow.open(selectedRimborsoKm, false);
+				RimborsoKmWindow.open(selectedRimborsoKm, true);
 
 			}
 

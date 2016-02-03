@@ -45,7 +45,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneRimborsoView extends GestioneTemplateView implements View {
+public class GestioneRimborsoView extends GestioneTemplateView  {
 
 	/**
 	 * 

@@ -9,6 +9,7 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
@@ -439,6 +440,40 @@ public abstract class DashboardEvent {
 		 */
 		public void setTipologiaSpesaStore(TipologiaSpesaStore tipologiaSpesaStore) {
 			this.tipologiaSpesaStore = tipologiaSpesaStore;
+		}
+
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la tabella massimale dopo un inserimento o un update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class TableMassimaleUpdatedEvent {
+
+		private MassimaleStore massimaleStore;
+
+		/**
+		 * @param massimaleStore
+		 */
+		public TableMassimaleUpdatedEvent(MassimaleStore massimaleStore) {
+			this.massimaleStore = massimaleStore;
+		}
+
+		/**
+		 * @return the massimaleStore
+		 */
+		public MassimaleStore getMassimaleStore() {
+			return massimaleStore;
+		}
+
+		/**
+		 * @param massimaleStore 
+		 */
+		public void setMassimaleStore(MassimaleStore massimaleStore) {
+			this.massimaleStore = massimaleStore;
 		}
 
 

@@ -82,6 +82,7 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	 */
 	@Override
 	public void wizardCancelled(WizardCancelledEvent event) {
+		missione.setRimborso(null);
 		endWizard();
 	}
 

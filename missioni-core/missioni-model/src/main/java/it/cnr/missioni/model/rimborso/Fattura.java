@@ -15,19 +15,23 @@ public class Fattura implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4452123603076021709L;
+	/**
+	 * 
+	 */
 	private String id;
 	@NotNull
 	private Long numeroFattura;
 	@NotNull
 	private DateTime data;
-	@NotBlank
-	private String tipologiaSpesa;
 	@NotNull
 	private Double importo;
 	@NotBlank
 	private String valuta;
 	private String altro;
+	@NotBlank
+	private String idTipologiaSpesa;
+	private String shortDescriptionTipologiaSpesa;
 
 	/**
 	 * @return the id
@@ -71,19 +75,6 @@ public class Fattura implements Serializable{
 		this.data = data;
 	}
 
-	/**
-	 * @return the tipologiaSpesa
-	 */
-	public String getTipologiaSpesa() {
-		return tipologiaSpesa;
-	}
-
-	/**
-	 * @param tipologiaSpesa
-	 */
-	public void setTipologiaSpesa(String tipologiaSpesa) {
-		this.tipologiaSpesa = tipologiaSpesa;
-	}
 
 	/**
 	 * @return the importo
@@ -130,12 +121,41 @@ public class Fattura implements Serializable{
 	}
 
 	/**
+	 * @return the idTipologiaSpesa
+	 */
+	public String getIdTipologiaSpesa() {
+		return idTipologiaSpesa;
+	}
+
+	/**
+	 * @param idTipologiaSpesa 
+	 */
+	public void setIdTipologiaSpesa(String idTipologiaSpesa) {
+		this.idTipologiaSpesa = idTipologiaSpesa;
+	}
+
+	/**
+	 * @return the shortDescriptionTipologiaSpesa
+	 */
+	public String getShortDescriptionTipologiaSpesa() {
+		return shortDescriptionTipologiaSpesa;
+	}
+
+	/**
+	 * @param shortDescriptionTipologiaSpesa 
+	 */
+	public void setShortDescriptionTipologiaSpesa(String shortDescriptionTipologiaSpesa) {
+		this.shortDescriptionTipologiaSpesa = shortDescriptionTipologiaSpesa;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "Fattura [id=" + id + ", numeroFattura=" + numeroFattura + ", data=" + data + ", tipologiaSpesa="
-				+ tipologiaSpesa + ", importo=" + importo + ", valuta=" + valuta + ", altro=" + altro + "]";
+		return "Fattura [id=" + id + ", numeroFattura=" + numeroFattura + ", data=" + data + ", importo=" + importo
+				+ ", valuta=" + valuta + ", altro=" + altro + ", idTipologiaSpesa=" + idTipologiaSpesa
+				+ ", shortDescriptionTipologiaSpesa=" + shortDescriptionTipologiaSpesa + "]";
 	}
 
 

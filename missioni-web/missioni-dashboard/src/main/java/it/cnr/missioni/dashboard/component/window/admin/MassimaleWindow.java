@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.component.window.admin;
 
+import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -22,38 +23,43 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.admin.NazioneAction;
+import it.cnr.missioni.dashboard.action.admin.MassimaleAction;
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
-public class NazioneWindow extends IWindow.AbstractWindow {
+public class MassimaleWindow extends IWindow.AbstractWindow {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6599225757081293003L;
+	private static final long serialVersionUID = 5414281952989114531L;
 
-	public static final String ID = "nazionewindow";
+	public static final String ID = "massimalewindow";
 
-	private final BeanFieldGroup<Nazione> fieldGroup;
+	private final BeanFieldGroup<Massimale> fieldGroup;
 
 	private TextField valueField;
 	private ComboBox areagGeograficaField;
+	private ComboBox livelloField;
+	private TextField descrizioneField;
 	private boolean modifica;
 
-	private final Nazione nazione;
+	private final Massimale massimale;
 
-	private NazioneWindow(final Nazione nazione, boolean modifica) {
+	private MassimaleWindow(final Massimale massimale, boolean modifica) {
 
 		super();
-		this.nazione = nazione;
+		this.massimale = massimale;
 		this.modifica = modifica;
 		setId(ID);
-		fieldGroup = new BeanFieldGroup<Nazione>(Nazione.class);
+		fieldGroup = new BeanFieldGroup<Massimale>(Massimale.class);
 		build();
 		buildFieldGroup();
 		detailsWrapper.addComponent(buildAnagraficaTab());
@@ -63,7 +69,7 @@ public class NazioneWindow extends IWindow.AbstractWindow {
 	}
 
 	private void buildFieldGroup() {
-		fieldGroup.setItemDataSource(this.nazione);
+		fieldGroup.setItemDataSource(this.massimale);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
@@ -72,8 +78,8 @@ public class NazioneWindow extends IWindow.AbstractWindow {
 
 	private Component buildAnagraficaTab() {
 		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Nazione");
-		root.setIcon(FontAwesome.GLOBE);
+		root.setCaption("Massimale");
+		root.setIcon(FontAwesome.EURO);
 		root.setWidth(100.0f, Unit.PERCENTAGE);
 		root.setSpacing(true);
 		root.setMargin(true);
@@ -83,15 +89,52 @@ public class NazioneWindow extends IWindow.AbstractWindow {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		valueField = (TextField) fieldGroup.buildAndBind("Nazione", "value");
+		valueField = (TextField) fieldGroup.buildAndBind("Importo", "value");
 		details.addComponent(valueField);
 
 		areagGeograficaField = (ComboBox) fieldGroup.buildAndBind("Area Geografica", "areaGeografica", ComboBox.class);
 		details.addComponent(areagGeograficaField);
+
+		livelloField = (ComboBox) fieldGroup.buildAndBind("Livello", "livello", ComboBox.class);
+		details.addComponent(livelloField);
+
+		descrizioneField = (TextField) fieldGroup.buildAndBind("Descrizione", "descrizione");
+		details.addComponent(descrizioneField);
+
+		addValidator();
+		
 		return root;
 	}
 
 	private void addValidator() {
+
+		livelloField.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+
+				MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+						.withAreaGeografica(areagGeograficaField.getValue().toString())
+						.withLivello(livelloField.getValue().toString());
+				if (modifica)
+					massimaleSearchBuilder.withNotId(massimale.getId());
+
+				MassimaleStore massimaleStore = null;
+				
+				try {
+					massimaleStore = ClientConnector.getMassimale(massimaleSearchBuilder);
+
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				
+				if (massimaleStore != null)
+					throw new InvalidValueException(Utility.getMessage("livello_area_error"));
+
+			}
+
+		});
 
 	}
 
@@ -115,10 +158,10 @@ public class NazioneWindow extends IWindow.AbstractWindow {
 					// targaField.validate();
 					fieldGroup.commit();
 
-					BeanItem<Nazione> beanItem = (BeanItem<Nazione>) fieldGroup.getItemDataSource();
-					Nazione nazione = beanItem.getBean();
+					BeanItem<Massimale> beanItem = (BeanItem<Massimale>) fieldGroup.getItemDataSource();
+					Massimale massimale = beanItem.getBean();
 
-					DashboardEventBus.post(new NazioneAction(nazione, modifica));
+					DashboardEventBus.post(new MassimaleAction(massimale, modifica));
 					close();
 
 				} catch (InvalidValueException | CommitException e) {
@@ -134,9 +177,9 @@ public class NazioneWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final Nazione nazione, boolean modifica) {
+	public static void open(final Massimale massimale, boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new NazioneWindow(nazione, modifica);
+		Window w = new MassimaleWindow(massimale, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

@@ -23,7 +23,7 @@ import it.cnr.missioni.model.user.Veicolo;
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloView extends GestioneTemplateView implements View {
+public class GestioneVeicoloView extends GestioneTemplateView  {
 
 	/**
 	 * 

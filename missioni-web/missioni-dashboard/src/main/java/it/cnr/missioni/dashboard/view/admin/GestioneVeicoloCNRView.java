@@ -26,7 +26,7 @@ import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloCNRView extends GestioneTemplateView implements View {
+public class GestioneVeicoloCNRView extends GestioneTemplateView  {
 
 	/**
 	 * 

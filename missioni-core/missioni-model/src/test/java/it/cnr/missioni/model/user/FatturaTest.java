@@ -40,9 +40,9 @@ public class FatturaTest {
 		Fattura fattura = new Fattura();
 		fattura.setNumeroFattura(new Long(1));
 		fattura.setData(new DateTime());
-		fattura.setTipologiaSpesa("Pranzo");
 		fattura.setImporto(25.00);
 		fattura.setValuta("Euro");
+		fattura.setIdTipologiaSpesa("01");
 		Set<ConstraintViolation<Fattura>> constraintViolations = validator.validate(fattura);
 		assertEquals(0, constraintViolations.size());
 	}

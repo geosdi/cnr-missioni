@@ -31,7 +31,7 @@ import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneQualificaUserView extends GestioneTemplateView implements View {
+public class GestioneQualificaUserView extends GestioneTemplateView {
 
 	/**
 	 * 
@@ -120,7 +120,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView implements V
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				QualificaUserWindow.open(selectedQualificaUser, false);
+				QualificaUserWindow.open(selectedQualificaUser, true);
 
 			}
 

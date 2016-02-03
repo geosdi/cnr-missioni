@@ -183,7 +183,8 @@ public class MissioniNotificationDispatcherProdTest {
         fattura.setNumeroFattura(new Long(134));
         fattura.setData(new DateTime(2015, 11, 12, 13, 0, DateTimeZone.UTC));
         fattura.setImporto(89.8);
-        fattura.setTipologiaSpesa("Pernottamento");
+        fattura.setIdTipologiaSpesa("01");
+        fattura.setShortDescriptionTipologiaSpesa("Pernottamento");
         fattura.setValuta("Euro");
         fattura.setId("1111111111111");
 
@@ -191,7 +192,8 @@ public class MissioniNotificationDispatcherProdTest {
         fattura_2.setNumeroFattura(new Long(135));
         fattura_2.setData(new DateTime(2015, 11, 13, 13, 0, DateTimeZone.UTC));
         fattura_2.setImporto(89.8);
-        fattura_2.setTipologiaSpesa("Pernottamento");
+        fattura.setIdTipologiaSpesa("01");
+        fattura_2.setShortDescriptionTipologiaSpesa("Pernottamento");
         fattura_2.setValuta("Euro");
         fattura_2.setId("2222222222222");
 

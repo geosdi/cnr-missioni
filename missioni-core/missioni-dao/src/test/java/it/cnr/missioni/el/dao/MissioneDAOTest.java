@@ -348,16 +348,18 @@ public class MissioneDAOTest {
 		fattura.setNumeroFattura(new Long(134));
 		fattura.setData(new DateTime(2015, 11, 12, 13, 0, DateTimeZone.UTC));
 		fattura.setImporto(89.8);
-		fattura.setTipologiaSpesa("Pernottamento");
 		fattura.setValuta("Euro");
+		fattura.setIdTipologiaSpesa("01");
+		fattura.setShortDescriptionTipologiaSpesa("Vitto");
 		fattura.setId("1111111111111");
 
 		Fattura fattura_2 = new Fattura();
 		fattura_2.setNumeroFattura(new Long(135));
 		fattura_2.setData(new DateTime(2015, 11, 13, 13, 0, DateTimeZone.UTC));
 		fattura_2.setImporto(89.8);
-		fattura_2.setTipologiaSpesa("Pernottamento");
 		fattura_2.setValuta("Euro");
+		fattura_2.setIdTipologiaSpesa("02");
+		fattura_2.setShortDescriptionTipologiaSpesa("Albergo");
 		fattura_2.setId("2222222222222");
 
 		Rimborso rimborso = new Rimborso();
@@ -375,6 +377,9 @@ public class MissioneDAOTest {
 
 		missione = new Missione();
 		missione.setId("M_02");
+		missione.getDatiPeriodoMissione().setInizioMissione(new DateTime(2015, 02, 11, 13, 14, DateTimeZone.UTC));
+		missione.getDatiPeriodoMissione().setFineMissione(new DateTime(2015, 02, 15, 13, 14, DateTimeZone.UTC));
+
 		missione.setOggetto("Conferenza");
 		missione.setLocalita("Milano");
 		missione.setIdUser("01");
@@ -390,6 +395,8 @@ public class MissioneDAOTest {
 		missione.setId("M_03");
 		missione.setOggetto("Riunione prova");
 		missione.setLocalita("Milano");
+		missione.getDatiPeriodoMissione().setInizioMissione(new DateTime(2015, 02, 11, 13, 14, DateTimeZone.UTC));
+		missione.getDatiPeriodoMissione().setFineMissione(new DateTime(2015, 02, 15, 13, 14, DateTimeZone.UTC));
 		missione.setIdUser("02");
 		missione.setResponsabileGruppo("01");
 		missione.setShortResponsabileGruppo("Salvia Vito");
