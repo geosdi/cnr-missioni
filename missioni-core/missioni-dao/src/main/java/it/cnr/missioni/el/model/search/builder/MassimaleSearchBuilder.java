@@ -6,13 +6,13 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
+import it.cnr.missioni.el.model.search.EnumBooleanType;
 import it.cnr.missioni.el.model.search.ExactSearch;
 
 /**
  * @author Salvia Vito
  */
 public class MassimaleSearchBuilder implements Serializable {
-
 
 	/**
 	 * 
@@ -21,9 +21,12 @@ public class MassimaleSearchBuilder implements Serializable {
 	private BooleanModelSearch booleanModelSearch;
 	private String value = null;
 	private String id;
+	private String notId;
+	private String livello;
+	private String areaGeografica;
 	private int size = 10;
 	private int from = 0;
-	
+
 	private String fieldSort = SearchConstants.MASSIMALE_FIELD_DESCRIZIONE;
 	private SortOrder sortOrder = SortOrder.ASC;
 
@@ -38,11 +41,31 @@ public class MassimaleSearchBuilder implements Serializable {
 	public MassimaleSearchBuilder withId(String id) {
 		this.setId(id);
 		if (id != null && !id.trim().equals(""))
-			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, id));
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, id));
+		return self();
+	}
+	
+	public MassimaleSearchBuilder withNotId(String notId) {
+		this.notId = notId;
+		if (notId != null && !notId.trim().equals(""))
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, notId,EnumBooleanType.MUST_NOT));
 		return self();
 	}
 
+	public MassimaleSearchBuilder withLivello(String livello) {
+		this.setLivello(livello);
+		if (livello != null && !livello.trim().equals(""))
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_LIVELLO, livello));
+		return self();
+	}
+
+	public MassimaleSearchBuilder withAreaGeografica(String areaGeografica) {
+		this.setAreaGeografica(areaGeografica);
+		if (areaGeografica != null && !areaGeografica.trim().equals(""))
+			booleanModelSearch.getListaSearch()
+					.add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA, areaGeografica));
+		return self();
+	}
 
 	/**
 	 * @return the value
@@ -101,6 +124,48 @@ public class MassimaleSearchBuilder implements Serializable {
 	}
 
 	/**
+	 * @return the notId
+	 */
+	public String getNotId() {
+		return notId;
+	}
+
+	/**
+	 * @param notId 
+	 */
+	public void setNotId(String notId) {
+		this.notId = notId;
+	}
+
+	/**
+	 * @return the livello
+	 */
+	public String getLivello() {
+		return livello;
+	}
+
+	/**
+	 * @param livello
+	 */
+	public void setLivello(String livello) {
+		this.livello = livello;
+	}
+
+	/**
+	 * @return the areaGeografica
+	 */
+	public String getAreaGeografica() {
+		return areaGeografica;
+	}
+
+	/**
+	 * @param areaGeografica
+	 */
+	public void setAreaGeografica(String areaGeografica) {
+		this.areaGeografica = areaGeografica;
+	}
+
+	/**
 	 * @return the size
 	 */
 	public int getSize() {
@@ -128,7 +193,6 @@ public class MassimaleSearchBuilder implements Serializable {
 		this.from = from;
 	}
 
-
 	/**
 	 * @return the fieldSort
 	 */
@@ -137,7 +201,7 @@ public class MassimaleSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param fieldSort 
+	 * @param fieldSort
 	 */
 	public void setFieldSort(String fieldSort) {
 		this.fieldSort = fieldSort;
@@ -151,7 +215,7 @@ public class MassimaleSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @param sortOrder 
+	 * @param sortOrder
 	 */
 	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;

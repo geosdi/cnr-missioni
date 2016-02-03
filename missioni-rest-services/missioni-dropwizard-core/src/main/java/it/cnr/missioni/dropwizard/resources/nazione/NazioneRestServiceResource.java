@@ -27,14 +27,16 @@ public class NazioneRestServiceResource implements NazioneRestService {
 
 	/**
 	 * 
+	 * @param id
 	 * @param from
 	 * @param size
+	 * @param all
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public Response getNazioneByQuery(int from, int size,boolean all) throws Exception {
-		return Response.ok(this.nazioneDelegate.getNazioneByQuery(from, size, all)).build();
+	public Response getNazioneByQuery(String id, int from, int size, boolean all) throws Exception {
+		return Response.ok(this.nazioneDelegate.getNazioneByQuery(id, from, size, all)).build();
 
 	}
 

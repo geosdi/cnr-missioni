@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
@@ -13,6 +14,8 @@ import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
+
+import com.google.common.base.Preconditions;
 
 import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
@@ -77,6 +80,27 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
 		}
 
 		return new PageResult<RimborsoKm>(searchResponse.getHits().getTotalHits(), listaRimborsoKm);
+	}
+
+	
+	@Override
+	public RimborsoKm persist(RimborsoKm document) throws Exception {
+		logger.debug("#################Try to insert {}\n\n", document);
+		Preconditions.checkArgument((count().intValue() == 0), "Rimborso Km already inserted");
+		IndexResponse response;
+
+		if (document.isIdSetted()) {
+			response = this.elastichSearchClient.prepareIndex(getIndexName(), getIndexType(), document.getId())
+					.setSource(this.mapper.writeAsString(document)).get();
+		} else {
+			response = this.elastichSearchClient.prepareIndex(getIndexName(), getIndexType())
+					.setSource(this.mapper.writeAsString(document)).get();
+			document.setId(response.getId());
+			update(document);
+		}
+		logger.debug("##############{} Created : {}\n\n", this.mapper.getDocumentClassName(), response.isCreated());
+
+		return document;
 	}
 
 }

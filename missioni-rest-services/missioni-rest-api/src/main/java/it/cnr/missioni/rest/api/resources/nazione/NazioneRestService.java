@@ -26,6 +26,7 @@ public interface NazioneRestService {
 
 	/**
 	 * 
+	 * @param id
 	 * @param from
 	 * @param size
 	 * @param all
@@ -34,8 +35,8 @@ public interface NazioneRestService {
 	 */
 	@GET
 	@Path(value = NazioneServiceRSPathConfig.GET_NAZIONE_BY_QUERY)
-	Response getNazioneByQuery(@QueryParam(value = "from") int from, @QueryParam(value = "size") int size,
-			@QueryParam(value = "all") boolean all) throws Exception;
+	Response getNazioneByQuery(@QueryParam(value = "id") String id, @QueryParam(value = "from") int from,
+			@QueryParam(value = "size") int size, @QueryParam(value = "all") boolean all) throws Exception;
 
 	/**
 	 * 

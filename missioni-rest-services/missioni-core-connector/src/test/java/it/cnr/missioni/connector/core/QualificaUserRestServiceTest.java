@@ -56,9 +56,9 @@ import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 
 /**
+ * 
+ * @author Salvia Vito
  *
- * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
- * @email giuseppe.lascaleia@geosdi.org
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml" })

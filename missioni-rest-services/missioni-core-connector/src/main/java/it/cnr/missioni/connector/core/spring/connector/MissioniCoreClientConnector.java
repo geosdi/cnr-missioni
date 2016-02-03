@@ -44,6 +44,7 @@ import javax.ws.rs.core.Response;
 
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
@@ -52,6 +53,7 @@ import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
@@ -62,6 +64,7 @@ import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
@@ -357,6 +360,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
     public NazioneStore getNazioneByQuery(NazioneSearchBuilder nazioneSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/nazione/getNazioneByQuery/")
+                .queryParam("id", nazioneSearchBuilder.getId())
                 .queryParam("from", nazioneSearchBuilder.getFrom())
                 .queryParam("size", nazioneSearchBuilder.getSize())
                 .queryParam("all", nazioneSearchBuilder.isAll())
@@ -450,6 +454,42 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .path("v1/tipologiaSpesa/updateTipologiaSpesa/")
                 .request(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(tipologiaSpesa,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
+    public MassimaleStore getMassimaleByQuery(MassimaleSearchBuilder massimaleSpesaSearchBuilder) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/massimale/getMassimaleByQuery/")
+                .queryParam("from", massimaleSpesaSearchBuilder.getFrom())
+                .queryParam("size", massimaleSpesaSearchBuilder.getSize())
+                .queryParam("livello", massimaleSpesaSearchBuilder.getLivello())
+                .queryParam("areaGeografica", massimaleSpesaSearchBuilder.getAreaGeografica())
+                .queryParam("notId", massimaleSpesaSearchBuilder.getNotId())
+                .request(MediaType.APPLICATION_JSON)
+                .get(MassimaleStore.class);
+    }
+    
+    public String addMassimale(Massimale massimale) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/massimale/addMassimale/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(massimale,
+                        MediaType.APPLICATION_JSON), String.class);
+    }
+
+    public Boolean deleteMassimale(String massimaleID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/massimale/deleteMassimale/")
+                .queryParam("massimaleID", massimaleID)
+                .request(MediaType.APPLICATION_JSON)
+                .delete(Boolean.class);
+    }
+
+    public boolean updateMassimale(Massimale massimale) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/massimale/updateMassimale/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(massimale,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     

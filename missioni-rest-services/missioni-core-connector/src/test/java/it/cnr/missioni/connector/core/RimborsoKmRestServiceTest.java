@@ -95,7 +95,12 @@ public class RimborsoKmRestServiceTest {
 	}
 
 	@Test
-	public void A_addRimborsoKmTest() throws Exception {
+	public void A_deleteRimborsoKmTest() throws Exception {
+		missioniCoreClientConnector.deleteRimborsoKm("01");
+	}
+	
+	@Test
+	public void B_addRimborsoKmTest() throws Exception {
 		RimborsoKm rimborsoKm = new RimborsoKm();
 		rimborsoKm.setId("01");
 		rimborsoKm.setValue(new Double(0.36));
@@ -107,7 +112,7 @@ public class RimborsoKmRestServiceTest {
 	}
 	
 	@Test
-	public void B_updateRimborsoKmTest() throws Exception {
+	public void C_updateRimborsoKmTest() throws Exception {
 		RimborsoKm rimborsoKm = new RimborsoKm();
 		rimborsoKm.setId("01");
 		rimborsoKm.setValue(new Double(0.46));
@@ -119,15 +124,8 @@ public class RimborsoKmRestServiceTest {
 
 	}
 	
-	@Test
-	public void C_deleteRimborsoKmTest() throws Exception {
-		missioniCoreClientConnector.deleteRimborsoKm("01");
-		Thread.sleep(1000);
-		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
-		RimborsoKmStore rimborsoKmStore = missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoSearchBuilder);
-		Assert.assertNull("DELETE RIMBORSO KM", rimborsoKmStore);
 
-	}
+	
 
 	
 }

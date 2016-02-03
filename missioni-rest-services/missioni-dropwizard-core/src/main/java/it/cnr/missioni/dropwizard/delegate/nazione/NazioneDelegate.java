@@ -43,10 +43,10 @@ class NazioneDelegate implements INazioneDelegate {
 	 * @throws Exception
 	 */
 	@Override
-	public NazioneStore getNazioneByQuery(int from, int size,boolean all) throws Exception {
+	public NazioneStore getNazioneByQuery(String id,int from, int size,boolean all) throws Exception {
 
 		NazioneSearchBuilder nazioneUserSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withFrom(from)
-				.withSize(size).withAll(all);
+				.withSize(size).withAll(all).withId(id);
 
 		PageResult<Nazione> pageResult = this.nazioneDAO.findNazioneByQuery(nazioneUserSearchBuilder);
 		if (!pageResult.getResults().isEmpty()) {

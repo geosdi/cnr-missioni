@@ -130,6 +130,41 @@ public class MassimaleDAOTest {
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
 		Assert.assertTrue("FIND MASSIMALE BY ID", lista.isEmpty());
 	}
+	
+	@Test
+	public void G_findByLivelloAreaGeograficaTest() throws Exception {
+		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withLivello(LivelloUserEnum.I.name()).withAreaGeografica(AreaGeograficaEnum.A.name());
+		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
+		Assert.assertTrue("FIND MASSIMALE BY LIVELLO-AREA", lista.size() == 1);
+	}
+	
+	@Test
+	public void H_findByLivelloAreaGeograficaTest_2() throws Exception {
+		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name());
+		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
+		Assert.assertTrue("FIND MASSIMALE BY LIVELLO-AREA", lista.size() == 1);
+	}
+	
+	@Test
+	public void I_findByLivelloAreaGeograficaTest_3() throws Exception {
+		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.B.name());
+		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
+		Assert.assertTrue("FIND MASSIMALE BY LIVELLO-AREA", lista.isEmpty());
+	}
+	
+	@Test
+	public void L_findByIdNotTest() throws Exception {
+		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withNotId("02").withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name());
+		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
+		Assert.assertTrue("FIND MASSIMALE BY NOT ID", lista.isEmpty());
+	}
+	
+	@Test
+	public void L_findByIdNotTest_2() throws Exception {
+		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withNotId("01").withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name());
+		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
+		Assert.assertTrue("FIND MASSIMALE BY NOT ID", lista.size() == 1);
+	}
 
 	//
 	//// @Test
@@ -151,8 +186,8 @@ public class MassimaleDAOTest {
 		m = new Massimale();
 		m.setId("02");
 		m.setAreaGeografica(AreaGeograficaEnum.A);
-		m.setDescrizione("Tecnologi");
-		m.setLivello(LivelloUserEnum.I);
+		m.setDescrizione("CTER");
+		m.setLivello(LivelloUserEnum.IV);
 		m.setValue(new Double(120));
 		listaMassimale.add(m);
 

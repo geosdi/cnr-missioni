@@ -10,15 +10,16 @@ import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
  */
 public interface INazioneDelegate {
 
-/**
- * 
- * @param from
- * @param size
- * @param all
- * @return
- * @throws Exception
- */
-	NazioneStore getNazioneByQuery(int from, int size,boolean all) throws Exception;
+	/**
+	 * 
+	 * @param id
+	 * @param from
+	 * @param size
+	 * @param all
+	 * @return
+	 * @throws Exception
+	 */
+	NazioneStore getNazioneByQuery(String id,int from, int size,boolean all) throws Exception;
 
 	/**
 	 * 

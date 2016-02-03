@@ -52,17 +52,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
-import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
-import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 
 /**
+ * 
+ * @author Salvia Vito
  *
- * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
- * @email giuseppe.lascaleia@geosdi.org
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:applicationContext.xml" })
@@ -101,7 +98,7 @@ public class NazioneRestServiceTest {
 	@Test
 	public void A_addNazioneTest() throws Exception {
 		Nazione nazione = new Nazione();
-		nazione.setValue("Stati Uniti");
+		nazione.setValue("Giappone");
 		nazione.setId("03");
 		nazione.setAreaGeografica(AreaGeograficaEnum.E);
 		missioniCoreClientConnector.addNazione(nazione);
@@ -112,11 +109,11 @@ public class NazioneRestServiceTest {
 	}
 	
 	@Test
-	public void B_updateVeicolOCNRTest() throws Exception {
+	public void B_updateNazioneTest() throws Exception {
 		Nazione nazione = new Nazione();
-		nazione.setValue("Stati Uniti");
+		nazione.setValue("Austria");
 		nazione.setId("03");
-		nazione.setAreaGeografica(AreaGeograficaEnum.G);
+		nazione.setAreaGeografica(AreaGeograficaEnum.E);
 		missioniCoreClientConnector.updateNazione(nazione);
 		Thread.sleep(1000);
 		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
@@ -126,13 +123,28 @@ public class NazioneRestServiceTest {
 	}
 	
 	@Test
-	public void C_deleteVeicoloCNRTest() throws Exception {
+	public void C_deleteNazioneTest() throws Exception {
 		missioniCoreClientConnector.deleteNazione("03");
 		Thread.sleep(1000);
 		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("DELETE NAZIONE", nazioneStore.getTotale() == 2);
 
+	}
+	
+	@Test
+	public void D_findByIdTest() throws Exception {
+		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("02");
+		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
+		Assert.assertTrue("FIND NAZIONE BY ID", nazioneStore.getNazione().size() == 1);
+		Assert.assertTrue("FIND  NAZIONE", nazioneStore.getNazione().get(0).getId().equals("02"));
+	}
+	
+	@Test
+	public void E_findByIdTest_2() throws Exception {
+		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("03");
+		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
+		Assert.assertNull("FIND NAZIONE BY ID", nazioneStore);
 	}
 
 	

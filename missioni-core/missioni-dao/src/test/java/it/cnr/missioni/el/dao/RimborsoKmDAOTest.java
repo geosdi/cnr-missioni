@@ -52,9 +52,13 @@ public class RimborsoKmDAOTest {
 		Assert.assertNotNull(rimborsoKmDAO);
 	}
 
+	@Test
+	public void A_deleteRimborsoKmTest() throws Exception {
+		rimborsoKmDAO.delete("01");
+	}
 
 	@Test
-	public void C_addRimborsoKmtest() throws Exception {
+	public void B_addRimborsoKmtest() throws Exception {
 		
 		RimborsoKm rimborsoKm = new RimborsoKm();
 		rimborsoKm.setId("01");
@@ -69,7 +73,7 @@ public class RimborsoKmDAOTest {
 	}
 
 	@Test
-	public void D_updateRimborsoKmTest() throws Exception {
+	public void C_updateRimborsoKmTest() throws Exception {
 		RimborsoKm rimborsoKm = new RimborsoKm();
 		rimborsoKm.setId("01");
 		rimborsoKm.setValue(0.40);
@@ -84,7 +88,17 @@ public class RimborsoKmDAOTest {
 	}
 	
 	@Test
-	public void F_findByIdTest() throws Exception {
+	public void D_addRimborsoKmtest() throws Exception {
+		
+		RimborsoKm rimborsoKm = new RimborsoKm();
+		rimborsoKm.setId("02");
+		rimborsoKm.setValue(0.36);
+		rimborsoKmDAO.persist(rimborsoKm);
+	}
+
+	
+	@Test
+	public void E_findByIdTest() throws Exception {
 		RimborsoKmSearchBuilder rimborsoKmSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder().withId("01");
 		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
 		Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.size() == 1);
