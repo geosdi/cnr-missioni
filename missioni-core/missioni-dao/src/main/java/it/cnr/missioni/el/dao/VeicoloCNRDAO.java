@@ -57,18 +57,15 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
 		List<VeicoloCNR> listaVeicoliCNR = new ArrayList<VeicoloCNR>();
 		logger.debug("###############Try to find VeicoloCNR by Query: {}\n\n");
 
-		Page p = new Page(veicoloCNRSearchBuilder.getFrom(), veicoloCNRSearchBuilder.getSize());
 
-		//carico tutti i veicoli per le combobox
-		int size = veicoloCNRSearchBuilder.getSize();
-		if (veicoloCNRSearchBuilder.isAll())
-			size = count().intValue();
 		
-		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(veicoloCNRSearchBuilder.buildQuery())
-				.setFrom(veicoloCNRSearchBuilder.getFrom())
-				.setSize(size)
-				.execute().actionGet());
+		Page p = new Page(veicoloCNRSearchBuilder.getFrom(), veicoloCNRSearchBuilder.isAll() ?count().intValue():  veicoloCNRSearchBuilder.getSize());
+
+		
+		SearchResponse searchResponse = p
+				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
+						.setQuery(veicoloCNRSearchBuilder.buildQuery()))
+				.addSort(veicoloCNRSearchBuilder.getFieldSort(), veicoloCNRSearchBuilder.getSortOrder()).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

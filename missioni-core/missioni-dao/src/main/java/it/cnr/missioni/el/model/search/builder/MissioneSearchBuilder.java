@@ -1,7 +1,5 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import java.io.Serializable;
-
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.search.sort.SortOrder;
@@ -17,7 +15,7 @@ import it.cnr.missioni.el.model.search.MultiMatchSearch;
 /**
  * @author Salvia Vito
  */
-public class MissioneSearchBuilder implements Serializable {
+public class MissioneSearchBuilder implements ISearchBuilder {
 
 	/**
 	 * 

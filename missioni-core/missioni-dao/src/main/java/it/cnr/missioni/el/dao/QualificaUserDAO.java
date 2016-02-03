@@ -58,19 +58,14 @@ public class QualificaUserDAO extends AbstractElasticSearchDAO<QualificaUser> im
 		List<QualificaUser> listaQualificaUser = new ArrayList<QualificaUser>();
 		logger.debug("###############Try to find Qualifica User by Query: {}\n\n");
 
-		Page p = new Page(qualificaUserSearchBuilder.getFrom(), qualificaUserSearchBuilder.getSize());
+		
+		Page p = new Page(qualificaUserSearchBuilder.getFrom(), qualificaUserSearchBuilder.isAll() ? count().intValue():qualificaUserSearchBuilder.getSize());
 
-		// carico tutte le qualifiche per le combobox
-		int size = qualificaUserSearchBuilder.getSize();
-		if (qualificaUserSearchBuilder.isAll())
-			size = count().intValue();
 
-		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
-				.setTypes(getIndexType()).setQuery(qualificaUserSearchBuilder.buildQuery())
-				.setFrom(qualificaUserSearchBuilder.getFrom())
-				.setSize(size)
-				.addSort(qualificaUserSearchBuilder.getFieldSort(), qualificaUserSearchBuilder.getSortOrder()).execute()
-				.actionGet());
+		SearchResponse searchResponse = p
+				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
+						.setQuery(qualificaUserSearchBuilder.buildQuery()))
+				.addSort(qualificaUserSearchBuilder.getFieldSort(), qualificaUserSearchBuilder.getSortOrder()).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

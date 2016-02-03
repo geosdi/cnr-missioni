@@ -1,18 +1,15 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import java.io.Serializable;
-
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
-import it.cnr.missioni.el.model.search.EnumBooleanType;
 import it.cnr.missioni.el.model.search.ExactSearch;
 
 /**
  * @author Salvia Vito
  */
-public class QualificaUserSearchBuilder implements Serializable {
+public class QualificaUserSearchBuilder implements ISearchBuilder{
 
 
 	/**

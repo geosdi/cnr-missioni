@@ -1,8 +1,7 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import java.io.Serializable;
-
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.EnumBooleanType;
@@ -11,7 +10,7 @@ import it.cnr.missioni.el.model.search.ExactSearch;
 /**
  * @author Salvia Vito
  */
-public class VeicoloCNRSearchBuilder implements Serializable {
+public class VeicoloCNRSearchBuilder implements ISearchBuilder {
 
 	/**
 	 * 
@@ -26,6 +25,9 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 	private boolean all = false;
 	private int size = 10;
 	private int from = 0;
+	
+	private String fieldSort = SearchConstants.VEICOLO_CNR_FIELD_TIPO;
+	private SortOrder sortOrder = SortOrder.ASC;
 
 	private VeicoloCNRSearchBuilder() {
 		booleanModelSearch = new BooleanModelSearch();
@@ -216,6 +218,34 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 	 */
 	public void setFrom(int from) {
 		this.from = from;
+	}
+
+	/**
+	 * @return the fieldSort
+	 */
+	public String getFieldSort() {
+		return fieldSort;
+	}
+
+	/**
+	 * @param fieldSort 
+	 */
+	public void setFieldSort(String fieldSort) {
+		this.fieldSort = fieldSort;
+	}
+
+	/**
+	 * @return the sortOrder
+	 */
+	public SortOrder getSortOrder() {
+		return sortOrder;
+	}
+
+	/**
+	 * @param sortOrder 
+	 */
+	public void setSortOrder(SortOrder sortOrder) {
+		this.sortOrder = sortOrder;
 	}
 
 	/**

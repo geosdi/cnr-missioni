@@ -1,7 +1,5 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import java.io.Serializable;
-
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
@@ -10,7 +8,7 @@ import it.cnr.missioni.el.model.search.BooleanModelSearch;
 /**
  * @author Salvia Vito
  */
-public class TipologiaSpesaSearchBuilder implements Serializable {
+public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 
 	/**
 	 * 

@@ -1,7 +1,5 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import java.io.Serializable;
-
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
@@ -12,7 +10,7 @@ import it.cnr.missioni.el.model.search.ExactSearch;
 /**
  * @author Salvia Vito
  */
-public class MassimaleSearchBuilder implements Serializable {
+public class MassimaleSearchBuilder implements ISearchBuilder {
 
 	/**
 	 * 

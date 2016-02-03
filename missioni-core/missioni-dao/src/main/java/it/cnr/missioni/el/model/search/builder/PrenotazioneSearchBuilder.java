@@ -1,7 +1,5 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import java.io.Serializable;
-
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.joda.time.DateTime;
 
@@ -11,7 +9,7 @@ import it.cnr.missioni.el.model.search.DateRangeSearch;
 /**
  * @author Salvia Vito
  */
-public class PrenotazioneSearchBuilder implements Serializable {
+public class PrenotazioneSearchBuilder implements ISearchBuilder {
 
 	/**
 	 * 

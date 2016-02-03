@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
@@ -60,12 +59,11 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
 		List<RimborsoKm> listaRimborsoKm = new ArrayList<RimborsoKm>();
 		logger.debug("###############Try to find RimboroKm by Query: {}\n\n");
 
-		Page p = new Page(rimborsoKmSearchBuilder.getFrom(), rimborsoKmSearchBuilder.getSize());
 
 		SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
 				.setTypes(getIndexType()).setQuery(rimborsoKmSearchBuilder.buildQuery())
-				.setFrom(rimborsoKmSearchBuilder.getFrom()).setSize(rimborsoKmSearchBuilder.getSize()).execute()
-				.actionGet());
+				).execute()
+				.actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
 			throw new IllegalStateException("Error in Elastic Search Query.");

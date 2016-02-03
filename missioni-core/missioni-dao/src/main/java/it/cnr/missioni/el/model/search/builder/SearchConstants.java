@@ -37,6 +37,8 @@ public class SearchConstants {
 	public static final String VEICOLO_CNR_FIELD_CARTA_CIRCOLAZIONE = "veicoloCNR.cartaCircolazione";
 	public static final String VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA = "veicoloCNR.polizzaAssicurativa";
 	public static final String VEICOLO_CNR_FIELD_ID = "veicoloCNR.id";
+	public static final String VEICOLO_CNR_FIELD_TIPO = "veicoloCNR.tipo";
+
 
 	public static final String QUALIFICA_USER_FIELD_VALUE = "qualificaUser.value";
 	public static final String QUALIFICA_USER_FIELD_ID = "qualificaUser.id";

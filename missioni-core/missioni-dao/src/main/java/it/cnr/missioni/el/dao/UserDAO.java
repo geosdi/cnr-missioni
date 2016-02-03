@@ -36,17 +36,12 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 		List<User> listaUsers = new ArrayList<User>();
 		logger.debug("###############Try to find Users by Query: {}\n\n");
 
-		Page p = new Page(userSearchBuilder.getFrom(), userSearchBuilder.getSize());
 
-		//carico tutti gli user per le combobox
-		int size = userSearchBuilder.getSize();
-		if (userSearchBuilder.isAll())
-			size = count().intValue();
+		Page p = new Page(userSearchBuilder.getFrom(), userSearchBuilder.isAll() ? count().intValue():userSearchBuilder.getSize());
 
 		SearchResponse searchResponse = p
 				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
 						.setQuery(userSearchBuilder.buildQuery()))
-				.setFrom(userSearchBuilder.getFrom()).setSize(size)
 				.addSort(userSearchBuilder.getFieldSort(), userSearchBuilder.getSortOrder()).execute().actionGet();
 
 		if (searchResponse.status() != RestStatus.OK) {
