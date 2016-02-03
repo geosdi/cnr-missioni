@@ -10,6 +10,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.Missione;
 
 /**
@@ -69,6 +70,14 @@ public class TipoMissioneStep implements WizardStep {
 	@Override
 	public boolean onAdvance() {
 		missione.setMissioneEstera(optionGroup.getValue().equals("Italia") ? false : true);
+		
+		//reset dei valori in caos in cui si scelga prima missione estera e poi si cambi
+		if(!missione.isMissioneEstera()){
+			missione.setIdNazione(null);
+			missione.setShortDescriptionNazione(null);
+			missione.setDatiMissioneEstera(new DatiMissioneEstera());
+		}
+		
 		return true;
 	}
 

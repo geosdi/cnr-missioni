@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "id", "localita", "oggetto", "responsabileGruppo","shortResponsabileGruppo","motivazioniMezzoProprio","stato","fondo","GAE", "missioneEstera", "idUser","idVeicolo", "shortDescriptionVeicolo","dataInserimento",
-		"dateLastModified","mezzoProprio","distanza","datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
+		"dateLastModified","mezzoProprio","distanza","geoPoint","idNazione","shortDescriptionNazione","datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
 public class Missione implements Document {
 
     /**
@@ -46,6 +46,8 @@ public class Missione implements Document {
     @NotBlank
     private String distanza;
     private GeoPoint geoPoint;
+    private String  idNazione;
+    private String shortDescriptionNazione;
     @Valid
     private DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
     @Valid
@@ -357,6 +359,38 @@ public class Missione implements Document {
 
 
 	/**
+	 * @return the idNazione
+	 */
+	public String getIdNazione() {
+		return idNazione;
+	}
+
+
+	/**
+	 * @param idNazione 
+	 */
+	public void setIdNazione(String idNazione) {
+		this.idNazione = idNazione;
+	}
+
+
+	/**
+	 * @return the shortDescriptionNazione
+	 */
+	public String getShortDescriptionNazione() {
+		return shortDescriptionNazione;
+	}
+
+
+	/**
+	 * @param shortDescriptionNazione 
+	 */
+	public void setShortDescriptionNazione(String shortDescriptionNazione) {
+		this.shortDescriptionNazione = shortDescriptionNazione;
+	}
+
+
+	/**
 	 * @return the datiPeriodoMissione
 	 */
 	public DatiPeriodoMissione getDatiPeriodoMissione() {
@@ -440,9 +474,10 @@ public class Missione implements Document {
 				+ ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idVeicolo="
 				+ idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo + ", dataInserimento="
 				+ dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio=" + mezzoProprio
-				+ ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", datiPeriodoMissione=" + datiPeriodoMissione
-				+ ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti
-				+ ", rimborso=" + rimborso + "]";
+				+ ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
+				+ ", shortDescriptionNazione=" + shortDescriptionNazione + ", datiPeriodoMissione="
+				+ datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti="
+				+ datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
 	}
 
 

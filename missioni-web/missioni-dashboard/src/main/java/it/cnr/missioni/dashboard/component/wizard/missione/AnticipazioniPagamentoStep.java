@@ -20,9 +20,6 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.MissioneAction;
-import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
@@ -68,11 +65,11 @@ public class AnticipazioniPagamentoStep implements WizardStep {
 		fieldGroup.setFieldFactory(fieldFactory);
 
 		anticipazioniMonetarieField = (CheckBox) fieldGroup.buildAndBind("Anticipazioni Monetarie",
-				"anticipazioniMonetarie");
+				"anticipazioniMonetarie",CheckBox.class);
 		numeroMandatoField = (TextField) fieldGroup.buildAndBind("Numero Mandato CNR", "mandatoCNR");
 		speseMissioniAnticipateField = (TextField) fieldGroup.buildAndBind("Altre Spese di Missione Anticipate",
 				"speseMissioniAnticipate");
-		rimborsoDaTerziField = (CheckBox) fieldGroup.buildAndBind("Rimborso da Terzi", "rimborsoDaTerzi");
+		rimborsoDaTerziField = (CheckBox) fieldGroup.buildAndBind("Rimborso da Terzi", "rimborsoDaTerzi",CheckBox.class);
 		importoDaTerziField = (TextField) fieldGroup.buildAndBind("Importo da Terzi", "importoDaTerzi");
 
 		numeroMandatoField.addValidator(new Validator() {

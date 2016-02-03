@@ -5,6 +5,7 @@ import org.vaadin.teemu.wizards.WizardStep;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
@@ -26,9 +27,11 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
+import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 
 /**
  * @author Salvia Vito
@@ -40,6 +43,7 @@ public class LocalitaOggettoStep implements WizardStep {
 	private ComboBox listaLocalitaField;
 	private GeocoderStore geocoderStore;
 	private TextField distanzaField;
+	private ComboBox listaNazioneField;
 
 	private BeanFieldGroup<Missione> fieldGroup;
 	private HorizontalLayout mainLayout;;
@@ -73,6 +77,24 @@ public class LocalitaOggettoStep implements WizardStep {
 		oggettoField = (TextField) fieldGroup.buildAndBind("Oggetto", "oggetto");
 		distanzaField = (TextField) fieldGroup.buildAndBind("Distanza", "distanza");
 		distanzaField.setEnabled(false);
+
+		listaNazioneField = new ComboBox("Nazione");
+		listaNazioneField.setImmediate(true);
+		listaNazioneField.setValidationVisible(false);
+		fieldGroup.bind(listaNazioneField, "idNazione");
+		try {
+			NazioneStore nazioneStore = ClientConnector
+					.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withAll(true));
+			if (nazioneStore != null) {
+				nazioneStore.getNazione().forEach(c -> {
+					listaNazioneField.addItem(c.getId());
+					listaNazioneField.setItemCaption(c.getId(), c.getValue());
+				});
+			}
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
 	}
 
 	private Component buildGeneraleTab() {
@@ -96,9 +118,10 @@ public class LocalitaOggettoStep implements WizardStep {
 		details.addComponent(listaLocalitaField);
 		details.addComponent(oggettoField);
 		details.addComponent(distanzaField);
-
+		if (missione.isMissioneEstera())
+			details.addComponent(listaNazioneField);
 		addListener();
-		
+
 		return mainLayout;
 	}
 
@@ -112,6 +135,18 @@ public class LocalitaOggettoStep implements WizardStep {
 					listaLocalitaField.validate();
 				} catch (Exception e) {
 					listaLocalitaField.setValidationVisible(true);
+				}
+			}
+		});
+
+		listaNazioneField.addBlurListener(new BlurListener() {
+
+			@Override
+			public void blur(BlurEvent event) {
+				try {
+					listaNazioneField.validate();
+				} catch (Exception e) {
+					listaNazioneField.setValidationVisible(true);
 				}
 			}
 		});
@@ -133,6 +168,18 @@ public class LocalitaOggettoStep implements WizardStep {
 			}
 		});
 
+		listaNazioneField.addValidator(new Validator() {
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+
+				if (value == null && missione.isMissioneEstera())
+					throw new InvalidValueException(Utility.getMessage("nazione_error"));
+
+			}
+
+		});
+
 		localitaField.addValueChangeListener(new ValueChangeListener() {
 
 			@Override
@@ -148,14 +195,11 @@ public class LocalitaOggettoStep implements WizardStep {
 						if (geocoderStore.getGeocoderResponses() != null) {
 
 							geocoderStore.getGeocoderResponses().forEach(c -> {
-								listaLocalitaField.addItem(c.getLat()
-										 + "-" + c.getLon());
-								 listaLocalitaField.setItemCaption(c.getLat()
-								 + "-" + c.getLon(),
-								 c.getFormattedAddress());
+								listaLocalitaField.addItem(c.getLat() + "-" + c.getLon());
+								listaLocalitaField.setItemCaption(c.getLat() + "-" + c.getLon(),
+										c.getFormattedAddress());
 							});
-						}
-						else{
+						} else {
 							Utility.getNotification(Utility.getMessage("error_message"),
 									Utility.getMessage("localita_error"), Type.ERROR_MESSAGE);
 						}
@@ -177,17 +221,23 @@ public class LocalitaOggettoStep implements WizardStep {
 			}
 			localitaField.validate();
 			oggettoField.validate();
+			listaNazioneField.validate();
 
 			BeanItem<Missione> beanItem = (BeanItem<Missione>) fieldGroup.getItemDataSource();
 			missione = beanItem.getBean();
 			missione.setOggetto(oggettoField.getValue());
 			missione.setLocalita(localitaField.getValue());
 			missione.setDistanza(distanzaField.getValue());
-			
-			String[] latLng = ((String)listaLocalitaField.getValue()).split("-");
-			GeoPoint geoPoint  = new GeoPoint(Double.parseDouble(latLng[0]),Double.parseDouble(latLng[1]));
+			if(missione.isMissioneEstera()){
+				missione.setIdNazione(listaNazioneField.getValue().toString());
+				missione.setShortDescriptionNazione(listaNazioneField.getItemCaption(missione.getIdNazione()));
+			}
+		
+
+			String[] latLng = ((String) listaLocalitaField.getValue()).split("-");
+			GeoPoint geoPoint = new GeoPoint(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1]));
 			missione.setGeoPoint(geoPoint);
-			
+
 			return true;
 		} catch (InvalidValueException e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
