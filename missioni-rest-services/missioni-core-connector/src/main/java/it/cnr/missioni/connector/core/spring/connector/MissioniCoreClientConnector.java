@@ -158,7 +158,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("polizzaAssicurativa", userSearchBuilder.getPolizzaAssicurativa())
                 .queryParam("iban", userSearchBuilder.getIban())
                 .queryParam("mail", userSearchBuilder.getMail())
-                .queryParam("id", userSearchBuilder.getId())
+                .queryParam("notId", userSearchBuilder.getNotId())
                 .queryParam("responsabileGruppo", userSearchBuilder.isResponsabileGruppo())
                 .queryParam("all", userSearchBuilder.isAll())
                 .queryParam("from", userSearchBuilder.getFrom())
@@ -168,12 +168,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
     }
 
 
-    public Long addUser(User user) throws Exception {
+    public String addUser(User user) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/users/addUser/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(user,
-                        MediaType.APPLICATION_JSON), Long.class);
+                        MediaType.APPLICATION_JSON), String.class);
     }
 
     public Boolean deleteUser(String userID) throws Exception {
@@ -235,7 +235,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("targa", veicoloCNRSearchBuilder.getTarga())
                 .queryParam("cartaCircolazione", veicoloCNRSearchBuilder.getCartaCircolazione())
                 .queryParam("polizzaAssicurativa", veicoloCNRSearchBuilder.getPolizzaAssicurativa())
-                .queryParam("id", veicoloCNRSearchBuilder.getId())
+                .queryParam("notId", veicoloCNRSearchBuilder.getNotId())
                 .queryParam("from", veicoloCNRSearchBuilder.getFrom())
                 .queryParam("size", veicoloCNRSearchBuilder.getSize())
                 .queryParam("all", veicoloCNRSearchBuilder.isAll())

@@ -22,7 +22,7 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 	private String targa;
 	private String cartaCircolazione;
 	private String polizzaAssicurativa;
-	private String id;
+	private String notId;
 	private boolean all = false;
 	private int size = 10;
 	private int from = 0;
@@ -65,11 +65,11 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 		return self();
 	}
 
-	public VeicoloCNRSearchBuilder withId(String id) {
-		this.setId(id);
-		if (id != null && !id.trim().equals(""))
+	public VeicoloCNRSearchBuilder withNotId(String notId) {
+		this.notId = notId;
+		if (notId != null && !notId.trim().equals(""))
 			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, id, EnumBooleanType.MUST_NOT));
+					.add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, notId, EnumBooleanType.MUST_NOT));
 		return self();
 	}
 
@@ -163,17 +163,17 @@ public class VeicoloCNRSearchBuilder implements Serializable {
 	}
 
 	/**
-	 * @return the id
+	 * @return the notId
 	 */
-	public String getId() {
-		return id;
+	public String getNotId() {
+		return notId;
 	}
 
 	/**
-	 * @param id
+	 * @param notId 
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setNotId(String notId) {
+		this.notId = notId;
 	}
 
 	/**

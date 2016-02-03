@@ -31,13 +31,29 @@ public interface UsersRestService {
 	 * @return {@link Response}
 	 * @throws Exception
 	 */
-//	@GET
-//	@Path(value = UsersServiceRSPathConfig.GET_ALL_USERS_PATH)
-//	Response getLastUsers() throws Exception;
+	// @GET
+	// @Path(value = UsersServiceRSPathConfig.GET_ALL_USERS_PATH)
+	// Response getLastUsers() throws Exception;
 
 	/**
-	 * @param userName
-	 * @return {@link Response}
+	 * 
+	 * @param nome
+	 * @param cognome
+	 * @param codiceFiscale
+	 * @param matricola
+	 * @param username
+	 * @param targa
+	 * @param numeroPatente
+	 * @param cartaCircolazione
+	 * @param polizzaAssicurativa
+	 * @param iban
+	 * @param mail
+	 * @param notId
+	 * @param responsabileGruppo
+	 * @param all
+	 * @param from
+	 * @param size
+	 * @return
 	 * @throws Exception
 	 */
 	@GET
@@ -45,17 +61,14 @@ public interface UsersRestService {
 	Response getUserByQuery(@QueryParam(value = "nome") String nome, @QueryParam(value = "cognome") String cognome,
 			@QueryParam(value = "codiceFiscale") String codiceFiscale,
 			@QueryParam(value = "matricola") String matricola, @QueryParam(value = "username") String username,
-			@QueryParam(value = "targa") String targa,
-			@QueryParam(value = "numeroPatente") String numeroPatente,
+			@QueryParam(value = "targa") String targa, @QueryParam(value = "numeroPatente") String numeroPatente,
 			@QueryParam(value = "cartaCircolazione") String cartaCircolazione,
 			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
 			@QueryParam(value = "iban") String iban, @QueryParam(value = "mail") String mail,
-			@QueryParam(value = "id") String id,
+			@QueryParam(value = "notId") String notId,
 			@QueryParam(value = "responsabileGruppo") Boolean responsabileGruppo,
-			@QueryParam(value = "all") boolean all,
-			@QueryParam(value = "from") int from,
-			@QueryParam(value = "size") int size
-			) throws Exception;
+			@QueryParam(value = "all") boolean all, @QueryParam(value = "from") int from,
+			@QueryParam(value = "size") int size) throws Exception;
 
 	/**
 	 * @param user

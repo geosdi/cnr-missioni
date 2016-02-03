@@ -29,7 +29,7 @@ public interface VeicoloCNRRestService {
 	 * @param targa
 	 * @param cartaCircolazione
 	 * @param polizzaAssicurativa
-	 * @param id
+	 * @param notId
 	 * @param from
 	 * @param size
 	 * @param all
@@ -40,9 +40,9 @@ public interface VeicoloCNRRestService {
 	@Path(value = VeicoloCNRServiceRSPathConfig.GET_VEICOLO_CNR_BY_QUERY)
 	Response getVeicoloCNRByQuery(@QueryParam(value = "stato") String stato, @QueryParam(value = "targa") String targa,
 			@QueryParam(value = "cartaCircolazione") String cartaCircolazione,
-			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa, @QueryParam(value = "id") String id,
-			@QueryParam(value = "from") int from, @QueryParam(value = "size") int size,
-			@QueryParam(value = "all") boolean all) throws Exception;
+			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
+			@QueryParam(value = "notId") String notId, @QueryParam(value = "from") int from,
+			@QueryParam(value = "size") int size, @QueryParam(value = "all") boolean all) throws Exception;
 
 	/**
 	 * 

@@ -34,31 +34,27 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 	@Resource(name = "veicoloCNRDAO")
 	private IVeicoloCNRDAO veicoloCNRDAO;
 
-/**
- * 
- * @param stato
- * @param targa
- * @param cartaCircolazione
- * @param polizzaAssicurtiva
- * @param id
- * @param from
- * @param size
- * @param all
- * @return
- * @throws Exception
- */
+	/**
+	 * 
+	 * @param stato
+	 * @param targa
+	 * @param cartaCircolazione
+	 * @param polizzaAssicurtiva
+	 * @param notId
+	 * @param from
+	 * @param size
+	 * @param all
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
-	public VeicoloCNRStore getVeicoloCNRByQuery(String stato,String targa,String cartaCircolazione,String polizzaAssicurtiva,String id, int from, int size,boolean all) throws Exception {
+	public VeicoloCNRStore getVeicoloCNRByQuery(String stato, String targa, String cartaCircolazione,
+			String polizzaAssicurtiva, String notId, int from, int size, boolean all) throws Exception {
 
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().withStato(stato)
-				.withCartaCircolazione(cartaCircolazione)
-				.withPolizzaAssicurativa(polizzaAssicurtiva)
-				.withTarga(targa)
-				.withId(id)
-				.withFrom(from).withSize(size)
-				.withAll(all);
+		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+				.withStato(stato).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurtiva)
+				.withTarga(targa).withNotId(notId).withFrom(from).withSize(size).withAll(all);
 
-		
 		PageResult<VeicoloCNR> pageResult = this.veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		if (!pageResult.getResults().isEmpty()) {
 			VeicoloCNRStore veicoloCNRStore = new VeicoloCNRStore();
@@ -80,9 +76,9 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 		if ((veicoloCNR == null)) {
 			throw new IllegalParameterFault("The Parameter veicoloCNR must not be null");
 		}
-		if(veicoloCNR.getId() == null)
+		if (veicoloCNR.getId() == null)
 			veicoloCNR.setId(gen.generate().toString());
-		return  this.veicoloCNRDAO.persist(veicoloCNR).getId();
+		return this.veicoloCNRDAO.persist(veicoloCNR).getId();
 
 	}
 

@@ -115,7 +115,7 @@ public class VeicoloCNRWindow extends IWindow.AbstractWindow {
 					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
 							.getVeicoloCNRSearchBuilder().withTarga(targaField.getValue());
 					if (modifica)
-						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
+						veicoloCNRSearchBuilder.withNotId(veicoloCNR.getId());
 					VeicoloCNRStore veicoloCNRStore = null;
 					try {
 						veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
@@ -138,7 +138,7 @@ public class VeicoloCNRWindow extends IWindow.AbstractWindow {
 					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
 							.getVeicoloCNRSearchBuilder().withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
 					if (modifica)
-						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
+						veicoloCNRSearchBuilder.withNotId(veicoloCNR.getId());
 					VeicoloCNRStore veicoloCNRStore = null;
 					try {
 						veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
@@ -161,7 +161,7 @@ public class VeicoloCNRWindow extends IWindow.AbstractWindow {
 					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
 							.getVeicoloCNRSearchBuilder().withCartaCircolazione(cartaCircolazioneField.getValue());
 					if (modifica)
-						veicoloCNRSearchBuilder.withId(veicoloCNR.getId());
+						veicoloCNRSearchBuilder.withNotId(veicoloCNR.getId());
 					VeicoloCNRStore veicoloCNRStore = null;
 					try {
 						veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);

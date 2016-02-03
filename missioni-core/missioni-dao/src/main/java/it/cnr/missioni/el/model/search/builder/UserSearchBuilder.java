@@ -33,7 +33,7 @@ public class UserSearchBuilder implements Serializable {
 	private String targa = null;
 	private String cartaCircolazione = null;
 	private String polizzaAssicurativa = null;
-	private String id = null;
+	private String notId;
 	private String multiMatchValue;
 	private String fieldMultiMatch = "user.anagrafica.nome,user.anagrafica.cognome,user.anagrafica.codiceFiscale,user.datiCNR.matricola,user.datiCNR.mail";
 	private Boolean responsabileGruppo = null;
@@ -125,11 +125,11 @@ public class UserSearchBuilder implements Serializable {
 		return self();
 	}
 
-	public UserSearchBuilder withId(String id) {
-		this.id = id;
-		if(id != null &&!id.equals("") )
+	public UserSearchBuilder withNotId(String notId) {
+		this.setNotId(notId);
+		if(notId != null &&!notId.equals("") )
 		booleanModelSearch.getListaSearch()
-				.add(new ExactSearch(SearchConstants.USER_FIELD_ID, id, EnumBooleanType.MUST_NOT));
+				.add(new ExactSearch(SearchConstants.USER_FIELD_ID, notId, EnumBooleanType.MUST_NOT));
 		return self();
 	}
 
@@ -351,18 +351,19 @@ public class UserSearchBuilder implements Serializable {
 		this.polizzaAssicurativa = polizzaAssicurativa;
 	}
 
+
 	/**
-	 * @return the id
+	 * @return the notId
 	 */
-	public String getId() {
-		return id;
+	public String getNotId() {
+		return notId;
 	}
 
 	/**
-	 * @param id
+	 * @param notId 
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setNotId(String notId) {
+		this.notId = notId;
 	}
 
 	/**

@@ -31,14 +31,21 @@ public class VeicoloCNRRestServiceResource implements VeicoloCNRRestService {
 	/**
 	 * 
 	 * @param stato
+	 * @param targa
+	 * @param cartaCircolazione
+	 * @param polizzaAssicurativa
+	 * @param notId
 	 * @param from
 	 * @param size
+	 * @param all
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public Response getVeicoloCNRByQuery(String stato,String targa,String cartaCircolazione,String polizzaAssicurativa,String id, int from, int size,boolean all) throws Exception {
-		return Response.ok(this.veicoloCNRDelegate.getVeicoloCNRByQuery(stato, targa,cartaCircolazione,polizzaAssicurativa,id,from, size,all)).build();
+	public Response getVeicoloCNRByQuery(String stato, String targa, String cartaCircolazione,
+			String polizzaAssicurativa, String notId, int from, int size, boolean all) throws Exception {
+		return Response.ok(this.veicoloCNRDelegate.getVeicoloCNRByQuery(stato, targa, cartaCircolazione,
+				polizzaAssicurativa, notId, from, size, all)).build();
 	}
 
 	/**

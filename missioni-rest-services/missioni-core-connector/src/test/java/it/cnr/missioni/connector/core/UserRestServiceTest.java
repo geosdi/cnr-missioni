@@ -54,6 +54,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.user.Anagrafica;
+import it.cnr.missioni.model.user.Credenziali;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
@@ -88,28 +90,38 @@ public class UserRestServiceTest {
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
-
-	@Test
-	public void A_testFindUserByUsername() throws Exception {
-
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
-		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertNotNull(userStore);
-		logger.debug("############################USER_ID FOUND{}\n", userStore);
-	}
-
-	@Test
-	public void B_testFindUserByUsernameErrata() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
-		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		logger.debug("############################USER_ID FOUND{}\n", userStore);
-		Assert.assertNull(userStore);
-	}
+//
+//	@Test
+//	public void A_testFindUserByUsername() throws Exception {
+//
+//		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
+//		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+//		Assert.assertNotNull(userStore);
+//		logger.debug("############################USER_ID FOUND{}\n", userStore);
+//	}
+//
+//	@Test
+//	public void B_testFindUserByUsernameErrata() throws Exception {
+//		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
+//		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+//		logger.debug("############################USER_ID FOUND{}\n", userStore);
+//		Assert.assertNull(userStore);
+//	}
 
 	@Test
 	public void C_testInsertUser() throws Exception {
 		User user = new User();
 		user.setId("04");
+		Anagrafica anagrafica = new Anagrafica();
+		anagrafica.setCognome("Gialli");
+		anagrafica.setNome("Giuseppe");
+		Credenziali credenziali = new Credenziali();
+		credenziali.setUsername("giuseppe.Gialli");
+		credenziali.setPassword(credenziali.md5hash("giuseppegialli"));
+		user.setCredenziali(credenziali);
+		user.setAnagrafica(anagrafica);
+		user.setRegistrazioneCompletata(false);
+		user.setResponsabileGruppo(false);
 		missioniCoreClientConnector.addUser(user);
 		Thread.sleep(1000);
 		logger.debug("############################INSERT USER\n");
@@ -120,6 +132,7 @@ public class UserRestServiceTest {
 	public void D_testUpdateUser() throws Exception {
 		User user = new User();
 		user.setId("04");
+		user.getAnagrafica().setNome("Marco");
 		missioniCoreClientConnector.updateUser(user);
 		logger.debug("############################UPDATE USER\n");
 
@@ -211,7 +224,7 @@ public class UserRestServiceTest {
 	@Test
 	public void Q_testUserByIDMustNot() throws Exception {
 		Thread.sleep(1000);
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID MUST NOT{}\n", userStore.getUsers().size());
 		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 2);
@@ -221,7 +234,7 @@ public class UserRestServiceTest {
 	@Test
 	public void R_testUserByCodiceFiscale() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withCodiceFiscale("slvvtttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);

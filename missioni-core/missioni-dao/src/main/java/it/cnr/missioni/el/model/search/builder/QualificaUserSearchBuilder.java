@@ -24,7 +24,6 @@ public class QualificaUserSearchBuilder implements Serializable {
 	 */
 	private BooleanModelSearch booleanModelSearch;
 	private String value = null;
-	private String id;
 	private int size = 10;
 	private int from = 0;
 	private boolean all = false;
@@ -47,13 +46,6 @@ public class QualificaUserSearchBuilder implements Serializable {
 		return self();
 	}
 
-	public QualificaUserSearchBuilder withId(String id) {
-		this.setId(id);
-		if (id != null && !id.trim().equals(""))
-			booleanModelSearch.getListaSearch()
-					.add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id, EnumBooleanType.MUST_NOT));
-		return self();
-	}
 	
 	public QualificaUserSearchBuilder withAll(boolean all) {
 		this.all = all;
@@ -100,20 +92,6 @@ public class QualificaUserSearchBuilder implements Serializable {
 	 */
 	public void setBooleanModelSearch(BooleanModelSearch booleanModelSearch) {
 		this.booleanModelSearch = booleanModelSearch;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	/**

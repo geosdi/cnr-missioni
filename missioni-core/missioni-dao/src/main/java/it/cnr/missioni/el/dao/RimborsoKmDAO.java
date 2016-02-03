@@ -87,20 +87,7 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
 	public RimborsoKm persist(RimborsoKm document) throws Exception {
 		logger.debug("#################Try to insert {}\n\n", document);
 		Preconditions.checkArgument((count().intValue() == 0), "Rimborso Km already inserted");
-		IndexResponse response;
-
-		if (document.isIdSetted()) {
-			response = this.elastichSearchClient.prepareIndex(getIndexName(), getIndexType(), document.getId())
-					.setSource(this.mapper.writeAsString(document)).get();
-		} else {
-			response = this.elastichSearchClient.prepareIndex(getIndexName(), getIndexType())
-					.setSource(this.mapper.writeAsString(document)).get();
-			document.setId(response.getId());
-			update(document);
-		}
-		logger.debug("##############{} Created : {}\n\n", this.mapper.getDocumentClassName(), response.isCreated());
-
-		return document;
+		return super.persist(document);
 	}
 
 }

@@ -47,7 +47,9 @@ class UserDelegate implements IUserDelegate {
 	 * @param polizzaAssicurativa
 	 * @param iban
 	 * @param mail
-	 * @param id
+	 * @param notId
+	 * @param responsabileGruppo
+	 * @param all
 	 * @param from
 	 * @param size
 	 * @return
@@ -56,16 +58,14 @@ class UserDelegate implements IUserDelegate {
 	@Override
 	public UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola,
 			String username, String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa,
-			String iban, String mail, String id,Boolean responsabileGruppo,boolean all, int from, int size) throws Exception {
+			String iban, String mail, String notId, Boolean responsabileGruppo, boolean all, int from, int size)
+					throws Exception {
 
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
 				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione)
-				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withId(id)
-				.withResponsabileGruppo(responsabileGruppo)
-				.withAll(all)
-				.withFrom(from)
-				.withSize(size);
+				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withNotId(notId)
+				.withResponsabileGruppo(responsabileGruppo).withAll(all).withFrom(from).withSize(size);
 
 		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
 		if (!pageResult.getResults().isEmpty()) {
@@ -98,9 +98,9 @@ class UserDelegate implements IUserDelegate {
 		if ((user == null)) {
 			throw new IllegalParameterFault("The Parameter user must not be null");
 		}
-		if(user.getId() == null)
+		if (user.getId() == null)
 			user.setId(gen.generate().toString());
-		return  this.userDAO.persist(user).getId();
+		return this.userDAO.persist(user).getId();
 
 	}
 

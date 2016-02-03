@@ -175,7 +175,7 @@ public class UserDAOTest {
 
 	@Test
 	public void M_testUserByIDMustNot() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		// logger.debug("############################USER_ID FOUND{}\n",
 		// userStore);
@@ -185,7 +185,7 @@ public class UserDAOTest {
 
 	@Test
 	public void N_testUserByIDCodiceFiscale() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withCodiceFiscale("slvvttttttttttttt");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
@@ -194,7 +194,7 @@ public class UserDAOTest {
 
 	@Test
 	public void O_testUserByIDIban() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withIban("0000000000000000");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
@@ -203,7 +203,7 @@ public class UserDAOTest {
 
 	@Test
 	public void P_testUserByIDMatricola() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withMatricola("1111111");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
@@ -212,7 +212,7 @@ public class UserDAOTest {
 
 	@Test
 	public void P_testUserByIDMail() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withMail("vito.salvia@gmail.com");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
@@ -221,7 +221,7 @@ public class UserDAOTest {
 
 	@Test
 	public void Q_testUserByIDTarga() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withTarga("AA111BB");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
@@ -230,7 +230,7 @@ public class UserDAOTest {
 
 	@Test
 	public void R_testUserByIDPolizza() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withPolizzaAssicurativa("A1B2");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
@@ -239,7 +239,7 @@ public class UserDAOTest {
 
 	@Test
 	public void S_testUserByIDCartaCircolazione() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01")
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withCartaCircolazione("12234");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 0);

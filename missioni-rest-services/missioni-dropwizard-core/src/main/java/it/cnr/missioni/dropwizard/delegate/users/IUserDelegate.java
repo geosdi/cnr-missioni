@@ -9,45 +9,46 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
  *
  */
 public interface IUserDelegate {
-	
-/**
- * 
- * @param username
- * @param password
- * @return
- * @throws Exception
- */
-	 Boolean authorize(String username, String password) throws Exception;
 
-/**
- * 
- * @param nome
- * @param cognome
- * @param codiceFiscale
- * @param matricola
- * @param username
- * @param targa
- * @param numeroPatente
- * @param cartaCircolazione
- * @param polizzaAssicurativa
- * @param iban
- * @param mail
- * @param id
- * @param responsabileGruppo
- * @param all
- * @param from
- * @param size
- * @return
- * @throws Exception
- */
-	 UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
-				String targa,String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban, String mail, String id,Boolean responsabileGruppo,boolean all,int from,int size) throws Exception;
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	Boolean authorize(String username, String password) throws Exception;
 
-/**
- * 
- * @return
- * @throws Exception
- */
+	/**
+	 * 
+	 * @param nome
+	 * @param cognome
+	 * @param codiceFiscale
+	 * @param matricola
+	 * @param username
+	 * @param targa
+	 * @param numeroPatente
+	 * @param cartaCircolazione
+	 * @param polizzaAssicurativa
+	 * @param iban
+	 * @param mail
+	 * @param notId
+	 * @param responsabileGruppo
+	 * @param all
+	 * @param from
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
+	UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
+			String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
+			String mail, String notId, Boolean responsabileGruppo, boolean all, int from, int size) throws Exception;
+
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	UserStore getLastUserMissions() throws Exception;
 
 	/**
@@ -58,19 +59,19 @@ public interface IUserDelegate {
 	 */
 	String addUser(User user) throws Exception;
 
-/**
- * 
- * @param user
- * @return
- * @throws Exception
- */
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 * @throws Exception
+	 */
 	Boolean updateUser(User user) throws Exception;
 
-/**
- * 
- * @param userID
- * @return
- * @throws Exception
- */
+	/**
+	 * 
+	 * @param userID
+	 * @return
+	 * @throws Exception
+	 */
 	Boolean deleteUser(String userID) throws Exception;
 }

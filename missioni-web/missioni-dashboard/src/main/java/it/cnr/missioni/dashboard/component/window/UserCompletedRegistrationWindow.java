@@ -324,7 +324,7 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 			public void validate(Object value) throws InvalidValueException {
 
 				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-						.withCodiceFiscale(codiceFiscaleField.getValue()).withId(user.getId());
+						.withCodiceFiscale(codiceFiscaleField.getValue()).withNotId(user.getId());
 
 				UserStore userStore = null;
 				try {
@@ -346,7 +346,7 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 
 				if (value != null) {
 					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-							.withMatricola(matricolaField.getValue()).withId(user.getId());
+							.withMatricola(matricolaField.getValue()).withNotId(user.getId());
 					UserStore userStore = null;
 					try {
 						userStore = ClientConnector.getUser(userSearchBuilder);
@@ -367,7 +367,7 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 				if (value != null) {
 
 					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-							.withIban(ibanField.getValue()).withId(user.getId());
+							.withIban(ibanField.getValue()).withNotId(user.getId());
 					UserStore userStore = null;
 					try {
 						userStore = ClientConnector.getUser(userSearchBuilder);
@@ -389,7 +389,7 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 				if (value != null) {
 
 					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-							.withMail(mailField.getValue()).withId(user.getId());
+							.withMail(mailField.getValue()).withNotId(user.getId());
 
 					UserStore userStore = null;
 					try {
@@ -410,7 +410,7 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
 					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
-							.withNumeroPatente(numeroPatenteField.getValue()).withId(user.getId());
+							.withNumeroPatente(numeroPatenteField.getValue()).withNotId(user.getId());
 					UserStore userStore = null;
 					try {
 						userStore = ClientConnector.getUser(userSearchBuilder);

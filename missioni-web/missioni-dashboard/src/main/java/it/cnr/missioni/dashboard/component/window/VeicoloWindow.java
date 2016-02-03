@@ -125,7 +125,7 @@ public class VeicoloWindow  extends  IWindow.AbstractWindow  {
 					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
 							.withTarga(targaField.getValue());
 					if (modifica)
-						userSearchBuilder.withId(user.getId());
+						userSearchBuilder.withNotId(user.getId());
 					UserStore userStore = null;
 					try {
 						userStore = ClientConnector.getUser(userSearchBuilder);
@@ -148,7 +148,7 @@ public class VeicoloWindow  extends  IWindow.AbstractWindow  {
 					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
 							.withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
 					if (modifica)
-						userSearchBuilder.withId(user.getId());
+						userSearchBuilder.withNotId(user.getId());
 					UserStore userStore = null;
 					try {
 						userStore = ClientConnector.getUser(userSearchBuilder);
@@ -171,7 +171,7 @@ public class VeicoloWindow  extends  IWindow.AbstractWindow  {
 					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
 							.withCartaCircolazione(cartaCircolazioneField.getValue());
 					if (modifica)
-						userSearchBuilder.withId(user.getId());
+						userSearchBuilder.withNotId(user.getId());
 					UserStore userStore = null;
 					try {
 						userStore = ClientConnector.getUser(userSearchBuilder);
