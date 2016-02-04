@@ -33,6 +33,7 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
 public class MassimaleWindow extends IWindow.AbstractWindow {
@@ -114,11 +115,10 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 
-				String s = (String) value;
-				if (s != null && areagGeograficaField.getValue() != null) {
+				if (value != null && areagGeograficaField.getValue() != null) {
 
 					MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
-							.withAreaGeografica(areagGeograficaField.getValue().toString()).withLivello(s);
+							.withAreaGeografica(areagGeograficaField.getValue().toString()).withLivello(((LivelloUserEnum)value).name());
 					if (modifica)
 						massimaleSearchBuilder.withNotId(massimale.getId());
 
