@@ -163,7 +163,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         //
         PdfPTable tableLocalita = new PdfPTable(2);
-        PdfPCell cellLocalita = new PdfPCell(new Paragraph("LocalitU+00E0", fontBold));
+        PdfPCell cellLocalita = new PdfPCell(new Paragraph("Localit"+new Character('\u00E0'), fontBold));
         cellLocalita.setBorder(Rectangle.NO_BORDER);
         tableLocalita.addCell(cellLocalita);
         PdfPCell cellLocalita2 = new PdfPCell(new Paragraph(missione.getLocalita(), fontNormal));
@@ -182,7 +182,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         
         String tipoVeicolo = missione.isMezzoProprio() ? "Veicolo Proprio" : "Veicolo CNR";
         
-        PdfPCell cellDisposizioni2 = new PdfPCell(new Paragraph(tipoVeicolo+" - "+missione.getMotivazioniMezzoProprio(), fontNormal));
+        PdfPCell cellDisposizioni2 = new PdfPCell(new Paragraph(tipoVeicolo+" - "+(missione.getMotivazioniMezzoProprio()!=null ? missione.getMotivazioniMezzoProprio()!=null : ""), fontNormal));
         // cellOggetto2.setNoWrap(false);
         tableLocalita.addCell(cellDisposizioni2);
         document.add(tableLocalita);
@@ -191,7 +191,8 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         document.add(paragraphObbligo);
 
         Chunk chunkDurata = (new Chunk("Durata:", fontBold));
-        Chunk chunkData = (new Chunk(" Data Inizio:", fontBold));
+        Chunk chunkDataInizio = (new Chunk(" Data Inizio:", fontBold));
+        Chunk chunkDataFine = (new Chunk(" Data Fine:", fontBold));
 
         String caption;
 
@@ -211,8 +212,11 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         paragraphData.add(chunkDurata);
         paragraphData.add(chunkDurata2);
         paragraphData.add("\t");
-        paragraphData.add(chunkData);
+        paragraphData.add(chunkDataInizio);
         paragraphData.add(chunkData1);
+        paragraphData.add("\t");
+        paragraphData.add(chunkDataFine);
+        paragraphData.add(chunkData2);
         paragraphData.add("\t");
         document.add(paragraphData);
 
@@ -232,11 +236,13 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         PdfPTable tableFondo = new PdfPTable(2);
         Paragraph paragraphFondo = new Paragraph();
-        paragraphFondo.add(new Chunk("Fondo: "+missione.getFondo(),fontNormal));
+        paragraphFondo.add(new Chunk("Fondo: "+(missione.getFondo() != null ? missione.getFondo() : ""),fontNormal));
         paragraphFondo.add("\n");
-        paragraphFondo.add(new Chunk("GAE: "+missione.getGAE(),fontNormal));
+        paragraphFondo.add(new Chunk("GAE: "+(missione.getGAE()!= null ? missione.getGAE() : ""),fontNormal));
         paragraphFondo.add("\n");
         paragraphFondo.add(new Chunk("CUP:",fontNormal));
+        paragraphFondo.add("\n");
+        paragraphFondo.add(new Chunk("Responsabile Gruppo:"+missione.getShortResponsabileGruppo(),fontNormal));
         tableFondo.addCell(new PdfPCell(paragraphFondo));
         PdfPCell cellFirmaResponsabile = new PdfPCell(new Paragraph("Firma Responsabile fondo:", fontBold));
         cellFirmaResponsabile.setMinimumHeight(40f);
