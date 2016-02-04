@@ -2,6 +2,7 @@
 	"tipologiaSpesa": {
 		"id" : "01",
 		"value" : "VITTO",
-		"tipo" : "ESTERA"
+		"tipo" : "ESTERA",
+		"checkMassimale" : true
 		}
 }

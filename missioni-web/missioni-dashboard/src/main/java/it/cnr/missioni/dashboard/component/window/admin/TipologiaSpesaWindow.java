@@ -11,6 +11,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
@@ -44,6 +45,8 @@ public class TipologiaSpesaWindow extends IWindow.AbstractWindow {
 	private final BeanFieldGroup<TipologiaSpesa> fieldGroup;
 
 	private TextField valueField;
+	private ComboBox tipoField;
+	private CheckBox checkMassimaleField;
 	private boolean modifica;
 
 	private final TipologiaSpesa tipologiaSpesa;
@@ -85,8 +88,12 @@ public class TipologiaSpesaWindow extends IWindow.AbstractWindow {
 		root.setExpandRatio(details, 1);
 
 		valueField = (TextField) fieldGroup.buildAndBind("Tipologia Spesa", "value");
-		details.addComponent(valueField);
+		tipoField = (ComboBox)fieldGroup.buildAndBind("Tipo","tipo",ComboBox.class);
+		checkMassimaleField = (CheckBox)fieldGroup.buildAndBind("Massimale","checkMassimale",CheckBox.class);
 
+		details.addComponent(valueField);
+		details.addComponent(tipoField);
+		details.addComponent(checkMassimaleField);
 		return root;
 	}
 
