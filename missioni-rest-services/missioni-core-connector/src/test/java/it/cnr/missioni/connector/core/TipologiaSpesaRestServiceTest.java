@@ -35,6 +35,8 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.AfterClass;
@@ -53,6 +55,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
@@ -97,36 +100,58 @@ public class TipologiaSpesaRestServiceTest {
 	@Test
 	public void A_addTipologiaSpesaTest() throws Exception {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
-		tipologiaSpesa.setId("03");
+		tipologiaSpesa.setId("05");
 		tipologiaSpesa.setValue("VITTO");
 		missioniCoreClientConnector.addTipologiaSpesa(tipologiaSpesa);
 		Thread.sleep(1000);
 		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
-		Assert.assertTrue("ADD TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 3);
+		Assert.assertTrue("ADD TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 5);
 	}
 	
 	@Test
 	public void B_updateTipologiaSpesaTest() throws Exception {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
-		tipologiaSpesa.setId("03");
+		tipologiaSpesa.setId("05");
 		tipologiaSpesa.setValue("PRANZO");
 		missioniCoreClientConnector.updateTipologiaSpesa(tipologiaSpesa);
 		Thread.sleep(1000);
 		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
-		Assert.assertTrue("UPDATE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 3);
+		Assert.assertTrue("UPDATE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 5);
 
 	}
 	
 	@Test
 	public void C_deleteTipologiaSpesaTest() throws Exception {
-		missioniCoreClientConnector.deleteTipologiaSpesa("03");
+		missioniCoreClientConnector.deleteTipologiaSpesa("05");
 		Thread.sleep(1000);
 		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
-		Assert.assertTrue("DELETE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 2);
+		Assert.assertTrue("DELETE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 4);
 
+	}
+	
+	@Test
+	public void F_findTipologiaSpesaTipoTest() throws Exception {
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(TipoSpesaEnum.ESTERA.name());
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
+		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
+	}
+	
+	@Test
+	public void G_findTipologiaSpesaTipoTest() throws Exception {
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(TipoSpesaEnum.ITALIA.name());
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
+		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
+	}
+	
+	@Test
+	public void G_findTipologiaSpesaIdTest() throws Exception {
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("03");
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
+		Assert.assertTrue("FIND  TIPOLOGIA SPESA ID", tipologiaSpesaStore.getTipologiaSpesa().size() == 1);
+		Assert.assertTrue("FIND  TIPOLOGIA ID", tipologiaSpesaStore.getTipologiaSpesa().get(0).getId().equals("03"));
 	}
 
 	

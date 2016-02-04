@@ -426,6 +426,8 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
     public TipologiaSpesaStore getTipologiaSpesaByQuery(TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/tipologiaSpesa/getTipologiaSpesaByQuery/")
+                .queryParam("id", tipologiaSpesaSearchBuilder.getId())
+                .queryParam("tipo", tipologiaSpesaSearchBuilder.getTipo())
                 .queryParam("from", tipologiaSpesaSearchBuilder.getFrom())
                 .queryParam("size", tipologiaSpesaSearchBuilder.getSize())
                 .queryParam("all", tipologiaSpesaSearchBuilder.isAll())

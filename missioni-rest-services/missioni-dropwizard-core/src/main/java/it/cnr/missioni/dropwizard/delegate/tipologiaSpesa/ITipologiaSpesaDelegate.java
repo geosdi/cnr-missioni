@@ -12,13 +12,15 @@ public interface ITipologiaSpesaDelegate {
 
 	/**
 	 * 
+	 * @param id
+	 * @param tipo
 	 * @param from
 	 * @param size
 	 * @param all
 	 * @return
 	 * @throws Exception
 	 */
-	TipologiaSpesaStore getTipologiaSpesaByQuery(int from, int size, boolean all) throws Exception;
+	TipologiaSpesaStore getTipologiaSpesaByQuery(String id,String tipo,int from, int size, boolean all) throws Exception;
 
 	/**
 	 * 

@@ -4,6 +4,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
 import it.cnr.missioni.el.model.search.BooleanModelSearch;
+import it.cnr.missioni.el.model.search.ExactSearch;
 
 /**
  * @author Salvia Vito
@@ -16,6 +17,8 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 	private static final long serialVersionUID = -817549323873815355L;
 	private BooleanModelSearch booleanModelSearch;
 	private boolean all;
+	private String id;
+	private String tipo;
 	private int size = 10;
 	private int from = 0;
 	
@@ -35,7 +38,20 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 		this.setAll(all);
 		return self();
 	}
+	
+	public TipologiaSpesaSearchBuilder withId(String id) {
+		this.setId(id);
+		if (id != null && !id.trim().equals(""))
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ID, id));
+		return self();
+	}
 
+	public TipologiaSpesaSearchBuilder withTipo(String tipo) {
+		this.tipo = tipo;
+		if (tipo != null && !tipo.trim().equals(""))
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_TIPO, tipo));
+		return self();
+	}
 
 
 	public TipologiaSpesaSearchBuilder withSize(int size) {
@@ -74,10 +90,38 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 	}
 
 	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id 
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
 	 * @param all
 	 */
 	public void setAll(boolean all) {
 		this.all = all;
+	}
+
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo 
+	 */
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	/**

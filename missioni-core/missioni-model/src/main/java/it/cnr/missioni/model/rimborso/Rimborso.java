@@ -8,9 +8,7 @@ import javax.validation.constraints.Min;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.joda.time.Hours;
-import org.joda.time.Period;
 
 import it.cnr.missioni.model.adapter.FatturaMapAdapter;
 import it.cnr.missioni.model.configuration.Massimale;
@@ -151,6 +149,15 @@ public class Rimborso implements Serializable {
 		this.mappaFattura = mappaFattura;
 	}
 
+	/**
+	 * 
+	 * Calcolo del TAM per le missioni estere
+	 * 
+	 * @param massimale
+	 * @param dataAttraversamentoFrontieraAndata
+	 * @param dataAttraversamentoFrontieraRitorno
+	 * @return
+	 */
 	public double calcolaTotaleTAM(Massimale massimale, DateTime dataAttraversamentoFrontieraAndata,
 			DateTime dataAttraversamentoFrontieraRitorno) {
 		double t = 0.0;
