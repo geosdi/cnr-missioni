@@ -285,7 +285,17 @@ public class MissioneRestServiceTest {
 	@Test
 	public void Z_getDistanceForMissione() throws Exception {
 
-		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector.getDistanceForMissione("Tito Scalo", "Roma");
+		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector.getDistanceForMissione("Tito Scalo", "Madrid");
+
+		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distanceResponce.getDistance());
+
+	}
+	
+	
+	@Test
+	public void Z_getDistanceForMissione_2() throws Exception {
+
+		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector.getDistanceForMissione("Tito Scalo", "New York");
 
 		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distanceResponce.getDistance());
 

@@ -31,6 +31,9 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 import javax.annotation.Resource;
 import javax.ws.rs.core.StreamingOutput;
 
@@ -180,7 +183,7 @@ class MissioneDelegate implements IMissioneDelegate {
 				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 						: this.cnrMissioniItaliaEmail.getEmail()),
 				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
-		return  this.missioneDAO.persist(missione).getId();
+		return this.missioneDAO.persist(missione).getId();
 	}
 
 	@Override
@@ -304,10 +307,56 @@ class MissioneDelegate implements IMissioneDelegate {
 
 		DistanceMatrixRow distanceMatrixRow = distanceMatrix.rows[0];
 		DistanceMatrixElement element = distanceMatrixRow.elements[0];
+
 		if (element.status == DistanceMatrixElementStatus.NOT_FOUND) {
 			throw new IllegalParameterFault("Error in Geocoding the Start and End Location to have Distance");
+		}
+
+		if (element.status == DistanceMatrixElementStatus.ZERO_RESULTS) {
+			GeocoderStore geocoderEnd = getGeocoderStoreForMissioneLocation(end);
+			GeocoderStore geocoderStart = getGeocoderStoreForMissioneLocation(start);
+			String distance = distance(geocoderStart.getGeocoderResponses().get(0).getLat(),
+					geocoderStart.getGeocoderResponses().get(0).getLon(),
+					geocoderEnd.getGeocoderResponses().get(0).getLat(),
+					geocoderEnd.getGeocoderResponses().get(0).getLon());
+
+			return new DistanceResponse.MissioneDistanceResponse(distance, "");
 		}
 		return new DistanceResponse.MissioneDistanceResponse(element.distance.humanReadable,
 				element.duration.humanReadable);
 	}
+
+	/**
+	 * 
+	 * Calcola la distanza dati 2 punti. Usata nel caso in cui la distanza tra start e end non è
+	 * percorribile tramite auto
+	 * 
+	 * @param lat1
+	 * @param lon1
+	 * @param lat2
+	 * @param lon2
+	 * @return
+	 */
+	public static String distance(double lat1, double lon1, double lat2, double lon2) {
+		double theta = lon1 - lon2;
+		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2))
+				+ Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+		dist = dist * 1.609344;
+
+		DecimalFormat decimalFormatLocalIT = (DecimalFormat) DecimalFormat.getInstance(Locale.ITALY);
+		return decimalFormatLocalIT.format(dist) + " km";
+	}
+
+	private static double deg2rad(double deg) {
+		return (deg * Math.PI / 180.0);
+	}
+
+	// This function converts radians to decimal degrees
+	private static double rad2deg(double rad) {
+		return (rad * 180 / Math.PI);
+	}
+
 }
