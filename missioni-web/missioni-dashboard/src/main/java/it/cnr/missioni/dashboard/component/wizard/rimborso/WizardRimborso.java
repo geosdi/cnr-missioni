@@ -1,13 +1,27 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
+import org.joda.time.Days;
+import org.joda.time.Hours;
 import org.vaadin.teemu.wizards.event.WizardCancelledEvent;
 import org.vaadin.teemu.wizards.event.WizardCompletedEvent;
 import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
+import com.vaadin.ui.Notification.Type;
+
+import it.cnr.missioni.dashboard.DashboardUI;
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.IWizard;
+import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
 /**
  * @author Salvia Vito
@@ -30,18 +44,56 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 
 		buildWizard();
 
-		this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione.getRimborso());
-		this.datiGeneraliStep.bindFieldGroup();
+		Rimborso rimborso = missione.getRimborso();
 
-		this.fatturaRimborsoStep = new FatturaRimborsoStep(missione);
-		this.fatturaRimborsoStep.bindFieldGroup();
+		// calcolo del TAM
+		try {
 
-		riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione);
+			int days = 0;
+			
+			if (missione.getDatiMissioneEstera()
+					.getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO) {
+				Nazione nazione = ClientConnector
+						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+						.getNazione().get(0);
+				MassimaleStore massimaleStore = ClientConnector
+						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+								.withAreaGeografica(nazione.getAreaGeografica().name()));
 
-		getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
+			//se non inserito il massimale oer quel livello e area geografica non creo il wizard
+				if (massimaleStore != null) {
 
-		getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
-		getWizard().addStep(this.riepilogoDatiRimborsoStep, "riepilogoDatiRimborso");
+
+					rimborso.calcolaTotaleTAM(massimaleStore.getMassimale().get(0),
+							missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
+							missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
+					
+				days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(), missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
+							.getDays();
+
+				}
+
+			}
+			
+			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione.getRimborso(),days);
+			this.datiGeneraliStep.bindFieldGroup();
+
+			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione);
+			this.fatturaRimborsoStep.bindFieldGroup();
+
+			riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione);
+
+			getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
+
+			getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
+			getWizard().addStep(this.riepilogoDatiRimborsoStep, "riepilogoDatiRimborso");
+
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 	/**

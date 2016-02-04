@@ -14,6 +14,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
@@ -29,19 +30,21 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 
 	private TextField avvisoPagamentoField;
 	private TextField anticipazionePagamentoField;
-	private TextField totaleField;
+	private TextField totaleTAM;
 
 	private BeanFieldGroup<Rimborso> fieldGroup;
 	private HorizontalLayout mainLayout;;
 
 	private Rimborso rimborso;
+	private int days;
 
 	public String getCaption() {
 		return "Step 1";
 	}
 
-	public DatiGeneraliRimborsoStep(Rimborso rimborso) {
+	public DatiGeneraliRimborsoStep(Rimborso rimborso,int days) {
 		this.rimborso = rimborso;
+		this.days = days;
 
 	}
 
@@ -58,7 +61,7 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 
 		avvisoPagamentoField = (TextField) fieldGroup.buildAndBind("Avviso Pagamento", "avvisoPagamento");
 		anticipazionePagamentoField = (TextField) fieldGroup.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
-		totaleField = (TextField) fieldGroup.buildAndBind("Totale", "totale");
+		totaleTAM = (TextField) fieldGroup.buildAndBind("TAM", "totaleTAM");
 	}
 
 	private Component buildGeneraleTab() {
@@ -77,8 +80,8 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 
 		details.addComponent(avvisoPagamentoField);
 		details.addComponent(anticipazionePagamentoField);
-		details.addComponent(totaleField);
-		totaleField.setReadOnly(true);
+		details.addComponent(new Label("GG all'estero: "+this.days+"\tTot. lordo TAM: "+(rimborso.getTotaleTAM() != null ? rimborso.getTotaleTAM() : 0)));
+		totaleTAM.setReadOnly(true);
 //		details.addComponent(fieldDataInserimentoField);
 //		details.addComponent(fieldDataLastModifiedField);
 
