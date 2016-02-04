@@ -75,7 +75,7 @@ public class WizardSetupWindow extends Window {
 		setVisible(true);
 		Responsive.makeResponsive(this);
 		setModal(true);
-		setCloseShortcut(KeyCode.ESCAPE, null);
+//		setCloseShortcut(KeyCode.ESCAPE, null);
 		setResizable(false);
 		setClosable(false);
 		setHeight("55%");

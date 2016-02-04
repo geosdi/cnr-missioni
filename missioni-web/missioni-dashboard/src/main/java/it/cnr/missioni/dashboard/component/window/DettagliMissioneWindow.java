@@ -61,8 +61,6 @@ public class DettagliMissioneWindow extends IWindow.AbstractWindow {
 		details.addComponent(new Label("Tipo Missione: " + tipoMissione));
 		details.addComponent(new Label("Località: " + missione.getLocalita()));
 		details.addComponent(new Label("Oggetto: " + missione.getOggetto()));
-		details.addComponent(new Label("Fondo: " + missione.getFondo()));
-		details.addComponent(new Label("GAE: " + missione.getGAE()));
 		details.addComponent(new Label("Distanza: " + missione.getDistanza()));
 		details.addComponent(new Label("Data Inserimento: " + missione.getDataInserimento()));
 		details.addComponent(new Label("Data Ultima Modifica: " + missione.getDateLastModified()));
@@ -84,8 +82,8 @@ public class DettagliMissioneWindow extends IWindow.AbstractWindow {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		details.addComponent(new Label("Fondo: " + missione.getFondo()));
-		details.addComponent(new Label("GAE: " + missione.getGAE()));
+		details.addComponent(new Label("Fondo: "+(missione.getFondo() != null ?  missione.getFondo():"")));
+		details.addComponent(new Label("GAE: " + (missione.getGAE() != null ?  missione.getGAE() : "")));
 		details.addComponent(new Label("Responsabile Gruppo: " + missione.getShortResponsabileGruppo()));
 
 		return root;
@@ -156,7 +154,7 @@ public class DettagliMissioneWindow extends IWindow.AbstractWindow {
 		String tipoVeicolo = missione.isMezzoProprio() ? "Veicolo Proprio" : "Veicolo CNR";
 
 		details.addComponent(new Label("Trattamento Rimborso: "
-				+ missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().values()));
+				+ missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
 		details.addComponent(new Label("Attraversamento Frontiera Andata: "
 				+ missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
 		details.addComponent(new Label("Attraversamento Frontiera Ritorno: "
@@ -180,9 +178,9 @@ public class DettagliMissioneWindow extends IWindow.AbstractWindow {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 		details.addComponent(new Label(
-				"Anticipazioni Monetarie: " + missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie()));
+				"Anticipazioni Monetarie: " + (missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie() ? "Si" : "No")));
 
-		details.addComponent(new Label("Numero Mandato CNR: " + missione.getDatiAnticipoPagamenti().getMandatoCNR()));
+		details.addComponent(new Label("Numero Mandato CNR: " + (missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() != null : "")));
 		details.addComponent(new Label("Altre Spese di Missione Anticipate: "
 				+ missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate()));
 		details.addComponent(

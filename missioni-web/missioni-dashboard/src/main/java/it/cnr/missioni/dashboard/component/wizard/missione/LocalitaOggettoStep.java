@@ -150,23 +150,45 @@ public class LocalitaOggettoStep implements WizardStep {
 				}
 			}
 		});
-
-		listaLocalitaField.addValueChangeListener(new ValueChangeListener() {
+		
+		listaLocalitaField.addBlurListener(new BlurListener(){
 
 			@Override
-			public void valueChange(ValueChangeEvent event) {
-
+			public void blur(BlurEvent event) {
 				try {
+					
+				System.out.println();
+					
+				String localita = listaLocalitaField.getItemCaption(listaLocalitaField.getValue());
+				
 					DistanceResponse.MissioneDistanceResponse distance = ClientConnector
-							.getDistanceForMissione("Tito Scalo", localitaField.getValue());
+							.getDistanceForMissione("Tito Scalo",localita);
 					distanzaField.setValue(distance.getDistance());
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
-				}
-
+				}				
 			}
+			
 		});
+
+//		listaLocalitaField.addValueChangeListener(new ValueChangeListener() {
+//
+//			@Override
+//			public void valueChange(ValueChangeEvent event) {
+//
+//				try {
+//					DistanceResponse.MissioneDistanceResponse distance = ClientConnector
+//							.getDistanceForMissione("Tito Scalo", localitaField.getValue());
+//					distanzaField.setValue(distance.getDistance());
+//				} catch (Exception e) {
+//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+//							Type.ERROR_MESSAGE);
+//				}
+//
+//			}
+//		});
+		
 
 		listaNazioneField.addValidator(new Validator() {
 
@@ -195,8 +217,8 @@ public class LocalitaOggettoStep implements WizardStep {
 						if (geocoderStore.getGeocoderResponses() != null) {
 
 							geocoderStore.getGeocoderResponses().forEach(c -> {
-								listaLocalitaField.addItem(c.getLat() + "-" + c.getLon());
-								listaLocalitaField.setItemCaption(c.getLat() + "-" + c.getLon(),
+								listaLocalitaField.addItem(c.getLat() + "/" + c.getLon());
+								listaLocalitaField.setItemCaption(c.getLat() + "/" + c.getLon(),
 										c.getFormattedAddress());
 							});
 						} else {
@@ -234,7 +256,7 @@ public class LocalitaOggettoStep implements WizardStep {
 			}
 		
 
-			String[] latLng = ((String) listaLocalitaField.getValue()).split("-");
+			String[] latLng = ((String) listaLocalitaField.getValue()).split("/");
 			GeoPoint geoPoint = new GeoPoint(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1]));
 			missione.setGeoPoint(geoPoint);
 

@@ -64,8 +64,8 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 		details.addComponent(buildLabel("Tipo Missione: ",tipoMissione));
 		details.addComponent(buildLabel("Località: " , missione.getLocalita()));
 		details.addComponent(buildLabel("Oggetto: " , missione.getOggetto()));
-		details.addComponent(buildLabel("Fondo: " , missione.getFondo()));
-		details.addComponent(buildLabel("GAE: " , missione.getGAE()));
+		details.addComponent(buildLabel("Fondo: " , missione.getFondo() != null ? missione.getFondo() : ""));
+		details.addComponent(buildLabel("GAE: " , missione.getGAE() != null ? missione.getGAE() : ""));
 		details.addComponent(buildLabel("Responsabile Gruppo: " , missione.getShortResponsabileGruppo()));
 		details.addComponent(buildLabel("Distanza: " , missione.getDistanza()));
 		details.addComponent(buildLabel("Veicolo: " , tipoVeicolo));
@@ -90,7 +90,7 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 		details.addComponent(buildLabel(
 				"Anticipazioni Monetarie: " , missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie() ? "Si" : "No"));
 
-		details.addComponent(buildLabel("Numero Mandato CNR: " , missione.getDatiAnticipoPagamenti().getMandatoCNR()));
+		details.addComponent(buildLabel("Numero Mandato CNR: " , missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() : "" ));
 		details.addComponent(buildLabel("Altre Spese di Missione Anticipate: ", Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate())));
 		details.addComponent(
 				buildLabel("Rimborso da Terzi: " ,  Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));

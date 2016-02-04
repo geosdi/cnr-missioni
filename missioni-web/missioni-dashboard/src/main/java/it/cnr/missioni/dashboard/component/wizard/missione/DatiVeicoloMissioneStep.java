@@ -47,6 +47,7 @@ public class DatiVeicoloMissioneStep implements WizardStep {
 
 	private static final String VEICOLO_CNR = "Veicolo CNR";
 	private static final String VEICOLO_PROPRIO = "Veicolo Proprio";
+	private static final String ALTRO = "ALTRO";
 
 	private Missione missione;
 
@@ -66,7 +67,7 @@ public class DatiVeicoloMissioneStep implements WizardStep {
 	public void bindFieldGroup() {
 
 		optionGroupMezzo = new OptionGroup("Veicolo");
-		optionGroupMezzo.addItems(VEICOLO_PROPRIO, VEICOLO_CNR);
+		optionGroupMezzo.addItems(VEICOLO_CNR,VEICOLO_PROPRIO,ALTRO);
 
 		optionGroupMezzo.select(VEICOLO_CNR);
 
@@ -129,7 +130,7 @@ public class DatiVeicoloMissioneStep implements WizardStep {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR)) {
+				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR) || optionGroupMezzo.getValue().equals(ALTRO)) {
 					motivazioneMezzoProprio.setValue(null);
 					motivazioneMezzoProprio.setReadOnly(true);
 					motivazioneMezzoProprio.setValidationVisible(false);
