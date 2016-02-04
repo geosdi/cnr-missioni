@@ -4,6 +4,7 @@
 		"value" : 120,
 		"areaGeografica" : "A",
 		"descrizione" : "Massimale Ricercatore",
-		"livello" : "I"
+		"livello" : "I",
+		"tipo" : "RIMBORSO_DOCUMENTATO"
 	}
 }

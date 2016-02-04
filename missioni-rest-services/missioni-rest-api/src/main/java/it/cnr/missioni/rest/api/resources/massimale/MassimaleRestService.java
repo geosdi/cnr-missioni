@@ -24,15 +24,22 @@ import it.cnr.missioni.rest.api.path.massimale.MassimaleServiceRSPathConfig;
 @Consumes(value = MediaType.APPLICATION_JSON)
 public interface MassimaleRestService {
 
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param from
+ * @param size
+ * @param livello
+ * @param areaGeografica
+ * @param notId
+ * @param tipo
+ * @return
+ * @throws Exception
+ */
 	@GET
 	@Path(value = MassimaleServiceRSPathConfig.GET_MASSIMALE_BY_QUERY)
-	Response getMassimaleByQuery(@QueryParam(value = "from") int from,@QueryParam(value = "size") int size,@QueryParam(value = "livello") String livello,@QueryParam(value = "areaGeografica") String areaGeografica,@QueryParam(value = "notId") String notId) throws Exception;
+	Response getMassimaleByQuery(@QueryParam(value = "from") int from, @QueryParam(value = "size") int size,
+			@QueryParam(value = "livello") String livello, @QueryParam(value = "areaGeografica") String areaGeografica,
+			@QueryParam(value = "notId") String notId,@QueryParam(value = "tipo") String tipo) throws Exception;
 
 	/**
 	 * 

@@ -20,7 +20,8 @@ public interface ITipologiaSpesaDelegate {
 	 * @return
 	 * @throws Exception
 	 */
-	TipologiaSpesaStore getTipologiaSpesaByQuery(String id,String tipo,int from, int size, boolean all) throws Exception;
+	TipologiaSpesaStore getTipologiaSpesaByQuery(String id, String tipo, int from, int size, boolean all)
+			throws Exception;
 
 	/**
 	 * 

@@ -467,6 +467,8 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("livello", massimaleSpesaSearchBuilder.getLivello())
                 .queryParam("areaGeografica", massimaleSpesaSearchBuilder.getAreaGeografica())
                 .queryParam("notId", massimaleSpesaSearchBuilder.getNotId())
+                .queryParam("tipo", massimaleSpesaSearchBuilder.getTipo())
+//                .queryParam("id", massimaleSpesaSearchBuilder.getId())
                 .request(MediaType.APPLICATION_JSON)
                 .get(MassimaleStore.class);
     }

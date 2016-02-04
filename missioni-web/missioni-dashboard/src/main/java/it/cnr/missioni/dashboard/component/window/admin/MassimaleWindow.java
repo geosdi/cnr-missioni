@@ -50,6 +50,7 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 	private TextField valueField;
 	private ComboBox areagGeograficaField;
 	private ComboBox livelloField;
+	private ComboBox tipoField;
 	private TextField descrizioneField;
 	private boolean modifica;
 
@@ -100,6 +101,9 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 		livelloField = (ComboBox) fieldGroup.buildAndBind("Livello", "livello", ComboBox.class);
 		details.addComponent(livelloField);
 
+		tipoField = (ComboBox) fieldGroup.buildAndBind("Tipo", "tipo", ComboBox.class);
+		details.addComponent(tipoField);
+		
 		descrizioneField = (TextField) fieldGroup.buildAndBind("Descrizione", "descrizione");
 		details.addComponent(descrizioneField);
 

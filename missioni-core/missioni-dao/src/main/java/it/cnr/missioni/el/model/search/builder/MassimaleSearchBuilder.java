@@ -22,6 +22,7 @@ public class MassimaleSearchBuilder implements ISearchBuilder {
 	private String notId;
 	private String livello;
 	private String areaGeografica;
+	private String tipo;
 	private int size = 10;
 	private int from = 0;
 
@@ -62,6 +63,14 @@ public class MassimaleSearchBuilder implements ISearchBuilder {
 		if (areaGeografica != null && !areaGeografica.trim().equals(""))
 			booleanModelSearch.getListaSearch()
 					.add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA, areaGeografica));
+		return self();
+	}
+	
+	public MassimaleSearchBuilder withTipo(String tipo) {
+		this.tipo = tipo;
+		if (tipo != null && !tipo.trim().equals(""))
+			booleanModelSearch.getListaSearch()
+					.add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_TIPO, tipo));
 		return self();
 	}
 
@@ -161,6 +170,20 @@ public class MassimaleSearchBuilder implements ISearchBuilder {
 	 */
 	public void setAreaGeografica(String areaGeografica) {
 		this.areaGeografica = areaGeografica;
+	}
+
+	/**
+	 * @return the tipo
+	 */
+	public String getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo 
+	 */
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	/**

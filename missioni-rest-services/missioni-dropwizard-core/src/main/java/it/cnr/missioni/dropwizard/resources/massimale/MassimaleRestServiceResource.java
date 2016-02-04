@@ -32,13 +32,14 @@ public class MassimaleRestServiceResource implements MassimaleRestService {
 	 * @param livello
 	 * @param areaGeografica
 	 * @param notId
+	 * @param tipo
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public Response getMassimaleByQuery(int from, int size, String livello, String areaGeografica, String notId)
-			throws Exception {
-		return Response.ok(this.massimaleDelegate.getMassimaleByQuery(from, size, livello, areaGeografica, notId))
+	public Response getMassimaleByQuery(int from, int size, String livello, String areaGeografica, String notId,
+			String tipo) throws Exception {
+		return Response.ok(this.massimaleDelegate.getMassimaleByQuery(from, size, livello, areaGeografica, notId, tipo))
 				.build();
 
 	}

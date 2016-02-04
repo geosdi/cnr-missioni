@@ -10,6 +10,7 @@ import org.geosdi.geoplatform.experimental.el.api.model.Document;
 import org.hibernate.validator.constraints.NotBlank;
 
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 
 /**
@@ -17,7 +18,7 @@ import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
  */
 @XmlRootElement(name = "massimale")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","areaGeografica","livello","descrizione" })
+@XmlType(propOrder = { "id", "value","areaGeografica","livello","descrizione","tipo"})
 public class Massimale implements Document {
 
 	/**
@@ -36,6 +37,9 @@ public class Massimale implements Document {
 	private LivelloUserEnum livello;
 	@NotBlank
 	private String descrizione;
+	@NotNull
+	private TrattamentoMissioneEsteraEnum tipo;
+
 
 
 
@@ -122,12 +126,26 @@ public class Massimale implements Document {
 	}
 
 	/**
+	 * @return the tipo
+	 */
+	public TrattamentoMissioneEsteraEnum getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo 
+	 */
+	public void setTipo(TrattamentoMissioneEsteraEnum tipo) {
+		this.tipo = tipo;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Massimale [id=" + id + ", value=" + value + ", areaGeografica=" + areaGeografica + ", livello="
-				+ livello + ", descrizione=" + descrizione + "]";
+				+ livello + ", descrizione=" + descrizione + ", tipo=" + tipo + "]";
 	}
 
 
