@@ -13,7 +13,7 @@ import org.geosdi.geoplatform.experimental.el.api.model.Document;
  */
 @XmlRootElement(name = "tipologiaSpesa")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","tipologiaSpesa" })
+@XmlType(propOrder = { "id", "value","tipo","checkMassimale" })
 public class TipologiaSpesa implements Document {
 
 	/**
@@ -26,7 +26,13 @@ public class TipologiaSpesa implements Document {
 	private String id;
 	@NotNull
 	private String value;
-
+	@NotNull
+	private TipoSpesaEnum tipo;
+	private boolean checkMassimale;
+	
+	public enum TipoSpesaEnum{
+		ESTERA,ITALIA;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -68,11 +74,40 @@ public class TipologiaSpesa implements Document {
 	}
 
 	/**
+	 * @return the tipo
+	 */
+	public TipoSpesaEnum getTipo() {
+		return tipo;
+	}
+
+	/**
+	 * @param tipo 
+	 */
+	public void setTipo(TipoSpesaEnum tipo) {
+		this.tipo = tipo;
+	}
+
+	/**
+	 * @return the checkMassimale
+	 */
+	public boolean isCheckMassimale() {
+		return checkMassimale;
+	}
+
+	/**
+	 * @param checkMassimale 
+	 */
+	public void setCheckMassimale(boolean checkMassimale) {
+		this.checkMassimale = checkMassimale;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "TipologiaSpesa [id=" + id + ", value=" + value + "]";
+		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + ", checkMassimale=" + checkMassimale
+				+ "]";
 	}
 
 

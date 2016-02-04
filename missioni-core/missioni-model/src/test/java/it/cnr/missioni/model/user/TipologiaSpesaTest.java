@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 
 /**
  * @author Salvia Vito
@@ -31,13 +32,14 @@ public class TipologiaSpesaTest {
 	public void fatturaErrataTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
-		assertEquals(1, constraintViolations.size());
+		assertEquals(2, constraintViolations.size());
 	}
 
 	@Test
 	public void fatturaOkTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		tipologiaSpesa.setValue("VITTO");
+		tipologiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
 		assertEquals(0, constraintViolations.size());
 	}

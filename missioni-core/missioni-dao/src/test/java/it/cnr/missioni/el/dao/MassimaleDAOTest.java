@@ -19,9 +19,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
-import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 

@@ -1,5 +1,6 @@
 package it.cnr.missioni.model.user;
 
+
 import static org.junit.Assert.assertEquals;
 
 import java.util.Set;
@@ -10,10 +11,14 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.joda.time.DateTime;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.rimborso.Rimborso;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 
 /**
  * @author Salvia Vito
@@ -43,6 +48,31 @@ public class RimborsoTest {
 		rimborso.setDataRimborso(new DateTime());
 		Set<ConstraintViolation<Rimborso>> constraintViolations = validator.validate(rimborso);
 		assertEquals(0, constraintViolations.size());
+	}
+	
+	@Test
+	public void massimaleEsteroTest(){
+		Massimale m = new Massimale();
+		m.setAreaGeografica(AreaGeograficaEnum.A);
+		m.setLivello(LivelloUserEnum.I);
+		m.setValue(new Double(120));
+		
+		Rimborso r = new Rimborso();
+		double t = r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,8,0));
+		Assert.assertTrue("TAM", t == 120);		
+	}
+	
+	@Test
+	public void massimaleEsteroTest_2(){
+		Massimale m = new Massimale();
+		m.setAreaGeografica(AreaGeograficaEnum.A);
+		m.setLivello(LivelloUserEnum.I);
+		m.setValue(new Double(120));
+		
+		Rimborso r = new Rimborso();
+		double t = r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,20,1));
+		Assert.assertTrue("TAM", t == 180);	
+		
 	}
 
 }

@@ -156,7 +156,7 @@ public final class DashboardMenu extends CustomComponent {
 
 		// Creazione menù admin
 		if (user.isRegistrazioneCompletata()
-				&& user.getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_SEMPLICE) {
+				&& user.getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN) {
 			menuItemsLayout.addComponent(new Label("<hr />", ContentMode.HTML));
 			menuItemsLayout.addComponent(new Label("Menù Admin"));
 			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);

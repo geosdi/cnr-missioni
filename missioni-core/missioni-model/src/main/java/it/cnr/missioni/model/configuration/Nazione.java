@@ -27,7 +27,7 @@ public class Nazione implements Document {
 	private AreaGeograficaEnum areaGeografica;
 
 	public enum AreaGeograficaEnum {
-		A,B,C,D,E,F,G;
+		ITALIA,A,B,C,D,E,F,G;
 	}
 
 	/*

@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 
 /**
  * @author Salvia Vito
@@ -108,12 +109,16 @@ public class TipologiaSpesaDAOTest {
 	private void creaTipologiaSpesa(){
 		TipologiaSpesa tipoligiaSpesa = new TipologiaSpesa();
 		tipoligiaSpesa.setId("01");
-		tipoligiaSpesa.setValue("Vitto");
+		tipoligiaSpesa.setValue("Aereo");
+		tipoligiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
+		tipoligiaSpesa.setCheckMassimale(false);
 		listaTipoligiaSpesa.add(tipoligiaSpesa);
 		
-		tipoligiaSpesa = new TipologiaSpesa();
+		 tipoligiaSpesa = new TipologiaSpesa();
 		tipoligiaSpesa.setId("02");
-		tipoligiaSpesa.setValue("Albergo");
+		tipoligiaSpesa.setValue("Vitto");
+		tipoligiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
+		tipoligiaSpesa.setCheckMassimale(true);
 		listaTipoligiaSpesa.add(tipoligiaSpesa);
 		
 	}

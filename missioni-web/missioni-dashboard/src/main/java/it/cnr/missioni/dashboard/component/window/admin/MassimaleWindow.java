@@ -32,6 +32,7 @@ import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
 public class MassimaleWindow extends IWindow.AbstractWindow {
@@ -102,7 +103,7 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 		details.addComponent(descrizioneField);
 
 		addValidator();
-		
+
 		return root;
 	}
 
@@ -113,25 +114,28 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 
-				MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
-						.withAreaGeografica(areagGeograficaField.getValue().toString())
-						.withLivello(livelloField.getValue().toString());
-				if (modifica)
-					massimaleSearchBuilder.withNotId(massimale.getId());
+				String s = (String) value;
+				if (s != null && areagGeograficaField.getValue() != null) {
 
-				MassimaleStore massimaleStore = null;
-				
-				try {
-					massimaleStore = ClientConnector.getMassimale(massimaleSearchBuilder);
+					MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+							.withAreaGeografica(areagGeograficaField.getValue().toString()).withLivello(s);
+					if (modifica)
+						massimaleSearchBuilder.withNotId(massimale.getId());
 
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
+					MassimaleStore massimaleStore = null;
+
+					try {
+						massimaleStore = ClientConnector.getMassimale(massimaleSearchBuilder);
+
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+
+					if (massimaleStore != null)
+						throw new InvalidValueException(Utility.getMessage("livello_area_error"));
+
 				}
-				
-				if (massimaleStore != null)
-					throw new InvalidValueException(Utility.getMessage("livello_area_error"));
-
 			}
 
 		});

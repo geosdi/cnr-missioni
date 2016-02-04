@@ -8,13 +8,17 @@ import javax.validation.constraints.Min;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
+import org.joda.time.Period;
 
 import it.cnr.missioni.model.adapter.FatturaMapAdapter;
+import it.cnr.missioni.model.configuration.Massimale;
 
 /**
  * @author Salvia Vito
  */
-public class Rimborso  implements Serializable{
+public class Rimborso implements Serializable {
 
 	/**
 	 * 
@@ -24,12 +28,12 @@ public class Rimborso  implements Serializable{
 	private DateTime dataRimborso;
 	private DateTime dateLastModified;
 	private Double totale;
+	private Double totaleTAM;
 	private String avvisoPagamento;
 	@Min(value = 0)
 	private Double anticipazionePagamento;
 	@XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
 	private Map<String, Fattura> mappaFattura = new HashMap<String, Fattura>();
-	
 
 	/**
 	 * @return the numeroOrdine
@@ -39,7 +43,7 @@ public class Rimborso  implements Serializable{
 	}
 
 	/**
-	 * @param numeroOrdine 
+	 * @param numeroOrdine
 	 */
 	public void setNumeroOrdine(Long numeroOrdine) {
 		this.numeroOrdine = numeroOrdine;
@@ -67,29 +71,42 @@ public class Rimborso  implements Serializable{
 	}
 
 	/**
-	 * @param dateLastModified 
+	 * @param dateLastModified
 	 */
 	public void setDateLastModified(DateTime dateLastModified) {
 		this.dateLastModified = dateLastModified;
 	}
-
 
 	/**
 	 * @return the totale
 	 */
 	public Double getTotale() {
 		double t = 0.0;
-		for(Fattura f : this.mappaFattura.values())
+		for (Fattura f : this.mappaFattura.values())
 			t += f.getImporto();
-		
+
 		return t;
 	}
 
 	/**
-	 * @param totale 
+	 * @param totale
 	 */
 	public void setTotale(Double totale) {
 		this.totale = totale;
+	}
+
+	/**
+	 * @return the totaleTAM
+	 */
+	public Double getTotaleTAM() {
+		return totaleTAM;
+	}
+
+	/**
+	 * @param totaleTAM
+	 */
+	public void setTotaleTAM(Double totaleTAM) {
+		this.totaleTAM = totaleTAM;
 	}
 
 	/**
@@ -100,7 +117,7 @@ public class Rimborso  implements Serializable{
 	}
 
 	/**
-	 * @param avvisoPagamento 
+	 * @param avvisoPagamento
 	 */
 	public void setAvvisoPagamento(String avvisoPagamento) {
 		this.avvisoPagamento = avvisoPagamento;
@@ -114,7 +131,7 @@ public class Rimborso  implements Serializable{
 	}
 
 	/**
-	 * @param anticipazionePagamento 
+	 * @param anticipazionePagamento
 	 */
 	public void setAnticipazionePagamento(Double anticipazionePagamento) {
 		this.anticipazionePagamento = anticipazionePagamento;
@@ -128,13 +145,29 @@ public class Rimborso  implements Serializable{
 	}
 
 	/**
-	 * @param mappaFattura 
+	 * @param mappaFattura
 	 */
 	public void setMappaFattura(Map<String, Fattura> mappaFattura) {
 		this.mappaFattura = mappaFattura;
 	}
 
+	public double calcolaTotaleTAM(Massimale massimale, DateTime dataAttraversamentoFrontieraAndata,
+			DateTime dataAttraversamentoFrontieraRitorno) {
+		double t = 0.0;
 
+		// Calcolo delle ore della missione all'estero
+		int hours = Hours.hoursBetween(dataAttraversamentoFrontieraAndata, dataAttraversamentoFrontieraRitorno)
+				.getHours();
+
+		// a partire da un giorno
+		if (hours >= 24) {
+			// ogni 12 ore
+			int num = hours / 12;
+			t = (massimale.getValue() * num) / 2.0;
+		}
+
+		return t;
+	}
 
 	/**
 	 * @return
@@ -143,13 +176,7 @@ public class Rimborso  implements Serializable{
 	public String toString() {
 		return "Rimborso [numeroOrdine=" + numeroOrdine + ", dataRimborso=" + dataRimborso + ", dateLastModified="
 				+ dateLastModified + ", totale=" + totale + ", avvisoPagamento=" + avvisoPagamento
-				+ ", anticipazionePagamento=" + anticipazionePagamento + ", mappaFattura=" + mappaFattura+"]";
+				+ ", anticipazionePagamento=" + anticipazionePagamento + ", mappaFattura=" + mappaFattura + "]";
 	}
-
-
-
-
-
-
 
 }

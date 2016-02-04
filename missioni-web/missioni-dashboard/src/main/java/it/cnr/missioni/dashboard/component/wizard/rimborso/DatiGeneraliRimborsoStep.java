@@ -11,7 +11,6 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -31,8 +30,6 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 	private TextField avvisoPagamentoField;
 	private TextField anticipazionePagamentoField;
 	private TextField totaleField;
-//	private DateField fieldDataInserimentoField;
-//	private DateField fieldDataLastModifiedField;
 
 	private BeanFieldGroup<Rimborso> fieldGroup;
 	private HorizontalLayout mainLayout;;
@@ -62,14 +59,6 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		avvisoPagamentoField = (TextField) fieldGroup.buildAndBind("Avviso Pagamento", "avvisoPagamento");
 		anticipazionePagamentoField = (TextField) fieldGroup.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
 		totaleField = (TextField) fieldGroup.buildAndBind("Totale", "totale");
-
-//		fieldDataInserimentoField = (DateField) fieldGroup.buildAndBind("Data Inserimento", "dataRimborso");
-//		fieldDataInserimentoField.setReadOnly(true);
-//		fieldDataLastModifiedField = (DateField) fieldGroup.buildAndBind("Data ultima modifica", "dateLastModified");
-//		fieldDataLastModifiedField.setReadOnly(true);
-
-
-
 	}
 
 	private Component buildGeneraleTab() {

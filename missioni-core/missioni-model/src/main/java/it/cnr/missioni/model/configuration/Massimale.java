@@ -38,6 +38,8 @@ public class Massimale implements Document {
 	private String descrizione;
 
 
+
+
 	/*
 	 * (non-Javadoc)
 	 *

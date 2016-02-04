@@ -313,7 +313,7 @@ public class UserDAOTest {
 		anagrafica.setLuogoNascita("Potenza");
 		credenziali = new Credenziali();
 		credenziali.setUsername("vito.salvia");
-		credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
+		credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_ADMIN);
 		credenziali.setPassword(credenziali.md5hash("vitosalvia"));
 		user.setCredenziali(credenziali);
 		user.setAnagrafica(anagrafica);
