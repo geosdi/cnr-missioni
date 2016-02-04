@@ -58,8 +58,8 @@ public class RimborsoTest {
 		m.setValue(new Double(120));
 		
 		Rimborso r = new Rimborso();
-		double t = r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,8,0));
-		Assert.assertTrue("TAM", t == 120);		
+		r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,8,0));
+		Assert.assertTrue("TAM", r.getTotaleTAM() == 120);		
 	}
 	
 	@Test
@@ -70,8 +70,8 @@ public class RimborsoTest {
 		m.setValue(new Double(120));
 		
 		Rimborso r = new Rimborso();
-		double t = r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,20,1));
-		Assert.assertTrue("TAM", t == 180);	
+		 r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,20,1));
+		Assert.assertTrue("TAM", r.getTotaleTAM() == 180);	
 		
 	}
 

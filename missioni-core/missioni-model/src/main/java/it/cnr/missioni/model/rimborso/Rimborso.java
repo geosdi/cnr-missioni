@@ -156,9 +156,8 @@ public class Rimborso implements Serializable {
 	 * @param massimale
 	 * @param dataAttraversamentoFrontieraAndata
 	 * @param dataAttraversamentoFrontieraRitorno
-	 * @return
 	 */
-	public double calcolaTotaleTAM(Massimale massimale, DateTime dataAttraversamentoFrontieraAndata,
+	public void calcolaTotaleTAM(Massimale massimale, DateTime dataAttraversamentoFrontieraAndata,
 			DateTime dataAttraversamentoFrontieraRitorno) {
 		double t = 0.0;
 
@@ -173,7 +172,7 @@ public class Rimborso implements Serializable {
 			t = (massimale.getValue() * num) / 2.0;
 		}
 
-		return t;
+		this.totaleTAM = t;
 	}
 
 	/**
