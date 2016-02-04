@@ -1,7 +1,6 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
 import org.joda.time.Days;
-import org.joda.time.Hours;
 import org.vaadin.teemu.wizards.event.WizardCancelledEvent;
 import org.vaadin.teemu.wizards.event.WizardCompletedEvent;
 import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
@@ -15,7 +14,6 @@ import it.cnr.missioni.dashboard.component.window.IWizard;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
@@ -76,7 +74,7 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 
 			}
 			
-			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione.getRimborso(),days);
+			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione.getRimborso(),days,missione.isMezzoProprio());
 			this.datiGeneraliStep.bindFieldGroup();
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione);

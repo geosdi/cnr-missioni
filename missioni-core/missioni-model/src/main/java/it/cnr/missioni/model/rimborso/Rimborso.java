@@ -25,9 +25,12 @@ public class Rimborso implements Serializable {
 	private Long numeroOrdine;
 	private DateTime dataRimborso;
 	private DateTime dateLastModified;
-	private Double totale;
-	private Double totaleTAM;
+	private Double totale = 0.0;
+	private Double totaleTAM = 0.0;
 	private String avvisoPagamento;
+	@Min(value = 0)
+	private double totKm;
+	private double rimborsoKm = 0.0;
 	@Min(value = 0)
 	private Double anticipazionePagamento;
 	@XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
@@ -122,6 +125,34 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
+	 * @return the totKm
+	 */
+	public double getTotKm() {
+		return totKm;
+	}
+
+	/**
+	 * @param totKm 
+	 */
+	public void setTotKm(double totKm) {
+		this.totKm = totKm;
+	}
+
+	/**
+	 * @return the rimborsoKm
+	 */
+	public double getRimborsoKm() {
+		return rimborsoKm;
+	}
+
+	/**
+	 * @param rimborsoKm 
+	 */
+	public void setRimborsoKm(double rimborsoKm) {
+		this.rimborsoKm = rimborsoKm;
+	}
+
+	/**
 	 * @return the anticipazionePagamento
 	 */
 	public Double getAnticipazionePagamento() {
@@ -181,8 +212,9 @@ public class Rimborso implements Serializable {
 	@Override
 	public String toString() {
 		return "Rimborso [numeroOrdine=" + numeroOrdine + ", dataRimborso=" + dataRimborso + ", dateLastModified="
-				+ dateLastModified + ", totale=" + totale + ", avvisoPagamento=" + avvisoPagamento
-				+ ", anticipazionePagamento=" + anticipazionePagamento + ", mappaFattura=" + mappaFattura + "]";
+				+ dateLastModified + ", totale=" + totale + ", totaleTAM=" + totaleTAM + ", avvisoPagamento="
+				+ avvisoPagamento + ", totKm=" + totKm + ", rimborsoKm=" + rimborsoKm + ", anticipazionePagamento="
+				+ anticipazionePagamento + ", mappaFattura=" + mappaFattura + "]";
 	}
 
 }

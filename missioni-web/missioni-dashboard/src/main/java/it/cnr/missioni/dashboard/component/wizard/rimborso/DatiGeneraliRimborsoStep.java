@@ -1,7 +1,11 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
+import java.text.NumberFormat;
+
 import org.vaadin.teemu.wizards.WizardStep;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -19,9 +23,12 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
 import it.cnr.missioni.model.rimborso.Rimborso;
+import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
 /**
  * @author Salvia Vito
@@ -30,21 +37,25 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 
 	private TextField avvisoPagamentoField;
 	private TextField anticipazionePagamentoField;
-	private TextField totaleTAM;
+	private TextField totKmField;
+	private Label labelTotRimborsoKm = new Label("Tot. Rimborso km: ");
 
 	private BeanFieldGroup<Rimborso> fieldGroup;
 	private HorizontalLayout mainLayout;;
 
 	private Rimborso rimborso;
-	private int days;
+	private final int days;
+	private final boolean mezzoProprio;
+	private double totRimborsoKm = 0.0;;
 
 	public String getCaption() {
 		return "Step 1";
 	}
 
-	public DatiGeneraliRimborsoStep(Rimborso rimborso,int days) {
+	public DatiGeneraliRimborsoStep(Rimborso rimborso, int days, boolean mezzoProprio) {
 		this.rimborso = rimborso;
 		this.days = days;
+		this.mezzoProprio = mezzoProprio;
 
 	}
 
@@ -60,8 +71,10 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		fieldGroup.setFieldFactory(fieldFactory);
 
 		avvisoPagamentoField = (TextField) fieldGroup.buildAndBind("Avviso Pagamento", "avvisoPagamento");
-		anticipazionePagamentoField = (TextField) fieldGroup.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
-		totaleTAM = (TextField) fieldGroup.buildAndBind("TAM", "totaleTAM");
+		anticipazionePagamentoField = (TextField) fieldGroup.buildAndBind("Anticipazione Pagamento",
+				"anticipazionePagamento");
+		totKmField = (TextField) fieldGroup.buildAndBind("Km da rimborsare", "totKm");
+
 	}
 
 	private Component buildGeneraleTab() {
@@ -80,12 +93,47 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 
 		details.addComponent(avvisoPagamentoField);
 		details.addComponent(anticipazionePagamentoField);
-		details.addComponent(new Label("GG all'estero: "+this.days+"\tTot. lordo TAM: "+(rimborso.getTotaleTAM() != null ? rimborso.getTotaleTAM() : 0)));
-		totaleTAM.setReadOnly(true);
-//		details.addComponent(fieldDataInserimentoField);
-//		details.addComponent(fieldDataLastModifiedField);
+		if (mezzoProprio) {
+			details.addComponent(totKmField);
+			details.addComponent(labelTotRimborsoKm);
+
+		}
+		details.addComponent(new Label("GG all'estero: " + this.days + "\tTot. lordo TAM: "
+				+ (rimborso.getTotaleTAM() != null ? rimborso.getTotaleTAM() : 0)));
+
+		addListener();
 
 		return mainLayout;
+	}
+
+	private void addListener() {
+
+		totKmField.addValueChangeListener(new ValueChangeListener() {
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+
+				try {
+					RimborsoKmStore rimborsoKmStore = ClientConnector
+							.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+					if (rimborsoKmStore != null) {
+						
+						NumberFormat f = NumberFormat.getInstance(); // Gets a NumberFormat with the default locale, you can specify a Locale as first parameter (like Locale.FRENCH)
+						double number = f.parse(totKmField.getValue()).doubleValue();
+						
+						totRimborsoKm = number
+								* rimborsoKmStore.getRimborsoKm().get(0).getValue();
+
+					}
+					labelTotRimborsoKm.setValue("Tot. Rimborso km: " + totRimborsoKm);
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+			}
+
+		});
+
 	}
 
 	public boolean onAdvance() {
@@ -94,10 +142,10 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 				((AbstractField<?>) f).setValidationVisible(true);
 			}
 			fieldGroup.commit();
-			
-			BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>)fieldGroup.getItemDataSource();
-			rimborso = beanItem.getBean();
 
+			BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) fieldGroup.getItemDataSource();
+			rimborso = beanItem.getBean();
+			rimborso.setRimborsoKm(totRimborsoKm);
 			return true;
 		} catch (InvalidValueException | CommitException e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
