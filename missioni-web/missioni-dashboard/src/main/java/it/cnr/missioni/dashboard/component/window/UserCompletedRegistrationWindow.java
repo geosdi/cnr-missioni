@@ -291,7 +291,7 @@ public class UserCompletedRegistrationWindow extends IWindow.AbstractWindow {
 				
 				MassimaleStore massimaleStore = ClientConnector
 						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+								.withLivello(user.getDatiCNR().getLivello().name())
 								.withAreaGeografica(a.name())
 								.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
 				if(massimaleStore != null)
@@ -299,14 +299,14 @@ public class UserCompletedRegistrationWindow extends IWindow.AbstractWindow {
 					
 				 massimaleStore = ClientConnector
 							.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-									.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+									.withLivello(user.getDatiCNR().getLivello().name())
 									.withAreaGeografica(a.name())
 									.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
 					if(massimaleStore != null)
 						massimaleRimborsoDocumentato = massimaleStore.getMassimale().get(0).getValue();
 				
 				if(massimaleStore != null)
-				details.addComponent(new Label("<b>Area geografica: </b>" + a.name() + " <b>TAM:</b> "+Double.toString(massimaleTAM)+" <b>Rimborso documentato:</b> "+Double.toString(massimaleRimborsoDocumentato), ContentMode.HTML));
+				details.addComponent(new Label("<b>Area geografica: </b>" + a.name() + " <b>TAM:</b> "+Double.toString(massimaleTAM)+" €"+"<b>Rimborso documentato:</b> "+Double.toString(massimaleRimborsoDocumentato)+" €", ContentMode.HTML));
 
 			} catch (Exception e) {
 				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
