@@ -58,7 +58,7 @@ public class QualificaUserDAOTest {
 	}
 
 	@Test
-	public void B_findVeicoloCNRTest() throws Exception {
+	public void B_findQualificaTest() throws Exception {
 		QualificaUserSearchBuilder qualificaSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 		List<QualificaUser> lista = qualificaUserDAO.findQualificaUserByQuery(qualificaSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", lista.size());
