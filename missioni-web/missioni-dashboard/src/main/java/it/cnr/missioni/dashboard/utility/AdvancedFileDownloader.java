@@ -21,9 +21,13 @@ import com.vaadin.ui.AbstractComponent;
 public class AdvancedFileDownloader extends FileDownloader {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1377598357403435904L;
+
+	/**
      *
      */
-    private static final long serialVersionUID = 7914516170514586601L;
     private static final boolean DEBUG_MODE = true;
 
     private static final Logger logger = java.util.logging.Logger
