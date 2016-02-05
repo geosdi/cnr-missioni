@@ -1,7 +1,10 @@
 package it.cnr.missioni.dashboard.view.admin;
 
+import java.util.Collection;
+
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
+
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
@@ -10,6 +13,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -17,6 +21,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoVeicoliCNRTable;
 import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
@@ -26,7 +32,7 @@ import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloCNRView extends GestioneTemplateView  {
+public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 	/**
 	 * 
@@ -39,7 +45,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView  {
 	private Button buttonModifica;
 	private VeicoloCNR selectedVeicoloCNR;
 	private VeicoloCNRStore veicoloCNRStore;
-
+	private VeicoloCNRSearchBuilder veicoloCNRSearchBuilder;
 
 	public GestioneVeicoloCNRView() {
 		super();
@@ -51,11 +57,12 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView  {
 	 */
 	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
+	
 
 		this.elencoVeicoliCNRTable = new ElencoVeicoliCNRTable();
+		veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
 
 		try {
-			VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
 			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
 			this.elencoVeicoliCNRTable.aggiornaTable(veicoloCNRStore);
 		} catch (Exception e) {
@@ -135,17 +142,57 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView  {
 	 */
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+		veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+		try {
+			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
+			if (veicoloCNRStore != null)
+				buildPagination(veicoloCNRStore.getTotale());
+			addListenerPagination();
+
+		} catch (Exception e)
+
+		{
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
 
 	}
-
+	
 	/**
 	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
 	 */
-	@Override
-	protected void buildComboPage() {
-		// TODO Auto-generated method stub
+	protected void addListenerPagination() {
+		
+		pagingComponent.addListener(new LazyPagingComponentListener<VeicoloCNR>(itemsArea) {
 
+
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7027884787586196600L;
+
+			@Override
+			protected Collection<VeicoloCNR> getItemsList(int startIndex, int endIndex) {
+
+				try {
+					veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder.withFrom(startIndex));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				DashboardEventBus.post(new  DashboardEvent.TableVeicoliCNRUpdatedEvent(veicoloCNRStore) );
+				return veicoloCNRStore != null ? veicoloCNRStore.getVeicoliCNR() : null;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, VeicoloCNR item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**
@@ -157,7 +204,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView  {
 		return null;
 	}
 
-	protected  Component buildFilter(){
+	protected Component buildFilter() {
 		return null;
 	}
 

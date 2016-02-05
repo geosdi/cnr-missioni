@@ -1,8 +1,11 @@
 package it.cnr.missioni.dashboard.view;
 
 import java.io.InputStream;
+import java.util.Collection;
 
 import javax.ws.rs.core.Response;
+
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -18,14 +21,17 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
 import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
@@ -39,13 +45,14 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneRimborsoView extends GestioneTemplateView  {
+public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 	/**
 	 * 
@@ -55,7 +62,6 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 	 * 
 	 */
 	private ElencoRimborsiTable elencoRimborsiTable;
-	private ComboBox selectPage;
 	private TextField idMissioneField;
 	private DateField dataFromInserimentoMissioneField;
 	private DateField dataToInserimentoMissioneField;
@@ -64,13 +70,12 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 
 	private VerticalLayout layoutTable;
 	private Button buttonModifica;
-//	private Button buttonMail;
+	// private Button buttonMail;
 	private Button buttonMissione;
 	private Button buttonPDF;
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
 
-	private User user;
 	private MissioneSearchBuilder missioneSearchBuilder;
 
 	private MissioniStore missioniStore;
@@ -87,6 +92,9 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoRimborsiTable = new ElencoRimborsiTable();
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())
+				.withFieldExist("missione.rimborso")
+				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
 
 		this.elencoRimborsiTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
@@ -98,7 +106,6 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 
 		try {
 			missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			buildComboPage();
 
 			this.elencoRimborsiTable.aggiornaTable(missioniStore);
 
@@ -108,7 +115,6 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 		}
 
 		HorizontalLayout layoutSelectPage = new HorizontalLayout();
-		layoutSelectPage.addComponent(this.selectPage);
 
 		layoutSelectPage.setMargin(true);
 		v.addComponent(this.elencoRimborsiTable);
@@ -233,46 +239,6 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 	// });
 	// }
 
-	/**
-	 * Costruisce la Select per la paginazione
-	 */
-	protected void buildComboPage() {
-		this.selectPage = new ComboBox();
-		this.selectPage.removeAllItems();
-		if (missioniStore != null) {
-			long totale = missioniStore.getTotale();
-			long totPage = totale % missioneSearchBuilder.getSize() == 0 ? totale / missioneSearchBuilder.getSize()
-					: 1 + (totale / missioneSearchBuilder.getSize());
-			this.selectPage.setValue(1);
-			// selectPage.setNullSelectionAllowed(false);
-			this.selectPage.setImmediate(true);
-			this.selectPage.setInputPrompt("Seleziona Pagina");
-			for (int j = 1; j <= totPage; j++) {
-				this.selectPage.addItem(j);
-				this.selectPage.setItemCaption(j, Integer.toString(j));
-			}
-
-			this.selectPage.addValueChangeListener(new ValueChangeListener() {
-				@Override
-				public void valueChange(ValueChangeEvent event) {
-					int nextPage = Integer.parseInt(String.valueOf(event.getProperty().getValue()));
-					int from = (nextPage - 1) * missioneSearchBuilder.getSize();
-					missioneSearchBuilder.setFrom(from);
-					try {
-						missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-
-						elencoRimborsiTable.aggiornaTable(missioniStore);
-
-					} catch (Exception e) {
-						Utility.getNotification(Utility.getMessage("error_message"),
-								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
-					}
-				}
-			});
-		}
-
-	}
-
 	@Override
 	public void enter(final ViewChangeEvent event) {
 
@@ -290,7 +256,6 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 				try {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-					buildComboPage();
 					DashboardEventBus.post(new DashboardEvent.TableRimborsiUpdatedEvent(missioniStore));
 
 				} catch (Exception e) {
@@ -322,25 +287,27 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 
 		});
 
-//		buttonMail = new Button();
-//		buttonMail.setDescription("Invia Mail");
-//		buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
-//		buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
-//
-//		buttonMail.addClickListener(new Button.ClickListener() {
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				try {
-//					ClientConnector.sendRimborsoMail(selectedMissione.getId());
-//					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
-//				} catch (Exception e) {
-//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("mail_error"),
-//							Type.ERROR_MESSAGE);
-//				}
-//			}
-//
-//		});
+		// buttonMail = new Button();
+		// buttonMail.setDescription("Invia Mail");
+		// buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
+		// buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		//
+		// buttonMail.addClickListener(new Button.ClickListener() {
+		//
+		// @Override
+		// public void buttonClick(ClickEvent event) {
+		// try {
+		// ClientConnector.sendRimborsoMail(selectedMissione.getId());
+		// Utility.getNotification(Utility.getMessage("success_message"), null,
+		// Type.HUMANIZED_MESSAGE);
+		// } catch (Exception e) {
+		// Utility.getNotification(Utility.getMessage("error_message"),
+		// Utility.getMessage("mail_error"),
+		// Type.ERROR_MESSAGE);
+		// }
+		// }
+		//
+		// });
 
 		buttonMissione = new Button("Missone");
 		buttonMissione.setDescription("Visualizza i dati della Missione");
@@ -363,7 +330,6 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonPDF.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-
 
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
@@ -416,7 +382,7 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 	}
 
 	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonMail.setEnabled(enabled);
+		// this.buttonMail.setEnabled(enabled);
 		this.buttonModifica.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonMissione.setEnabled(enabled);
@@ -428,11 +394,51 @@ public class GestioneRimborsoView extends GestioneTemplateView  {
 	 */
 	@Override
 	protected void initialize() {
-		this.user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId())
-				.withFieldExist("missione.rimborso")
-				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
 
+			if (missioniStore != null)
+				buildPagination(missioniStore.getTotale());
+			addListenerPagination();
+
+
+	}
+	
+	/**
+	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
+	 */
+	protected void addListenerPagination() {
+		
+		pagingComponent.addListener(new LazyPagingComponentListener<Missione>(itemsArea) {
+
+
+
+
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1085832384947148622L;
+
+			@Override
+			protected Collection<Missione> getItemsList(int startIndex, int endIndex) {
+
+				try {
+					missioniStore = ClientConnector.getMissione(missioneSearchBuilder.withFrom(startIndex));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				DashboardEventBus.post(new  DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore) );
+				return missioniStore != null ? missioniStore.getMissioni() : null;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, Missione item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**

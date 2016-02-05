@@ -1,13 +1,13 @@
 package it.cnr.missioni.dashboard.view;
 
 import java.io.InputStream;
+import java.util.Collection;
 
 import javax.ws.rs.core.Response;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
+
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
@@ -18,14 +18,17 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
 import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
@@ -48,7 +51,7 @@ import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneMissioneView extends GestioneTemplateView  {
+public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	/**
 	 * 
@@ -58,7 +61,6 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 	 * 
 	 */
 	private ElencoMissioniTable elencoMissioniTable;
-	private ComboBox selectPage;
 	private TextField idMissioneField;
 	private DateField dataFromInserimentoMissioneField;
 	private DateField dataToInserimentoMissioneField;
@@ -73,7 +75,6 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
 
-	private User user;
 	private MissioneSearchBuilder missioneSearchBuilder;
 	private MissioniStore missioniStore;
 
@@ -84,9 +85,46 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 	}
 
 	protected void initialize() {
-		this.user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(user.getId());
 
+		if (missioniStore != null)
+			buildPagination(missioniStore.getTotale());
+		addListenerPagination();
+
+	}
+
+	/**
+	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
+	 */
+	protected void addListenerPagination() {
+
+		pagingComponent.addListener(new LazyPagingComponentListener<Missione>(itemsArea) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5762496116323381908L;
+
+			@Override
+			protected Collection<Missione> getItemsList(int startIndex, int endIndex) {
+
+				try {
+					missioniStore = ClientConnector.getMissione(missioneSearchBuilder.withFrom(startIndex));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore));
+				return missioniStore != null ? missioniStore.getMissioni() : null;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, Missione item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**
@@ -97,6 +135,7 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoMissioniTable = new ElencoMissioniTable();
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId());
 
 		this.elencoMissioniTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
@@ -108,7 +147,6 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 
 		try {
 			missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			buildComboPage();
 			this.elencoMissioniTable.aggiornaTable(missioniStore);
 
 		} catch (Exception e) {
@@ -117,7 +155,6 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 		}
 
 		HorizontalLayout layoutSelectPage = new HorizontalLayout();
-		layoutSelectPage.addComponent(this.selectPage);
 
 		layoutSelectPage.setMargin(true);
 		v.addComponent(this.elencoMissioniTable);
@@ -242,45 +279,6 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 	// });
 	// }
 
-	/**
-	 * Costruisce la Select per la paginazione
-	 */
-	protected void buildComboPage() {
-		this.selectPage = new ComboBox();
-		this.selectPage.removeAllItems();
-		if (missioniStore != null) {
-			long totale = missioniStore.getTotale();
-			long totPage = totale % missioneSearchBuilder.getSize() == 0 ? totale / missioneSearchBuilder.getSize()
-					: 1 + (totale / missioneSearchBuilder.getSize());
-			this.selectPage.setValue(1);
-			// selectPage.setNullSelectionAllowed(false);
-			this.selectPage.setImmediate(true);
-			this.selectPage.setInputPrompt("Seleziona Pagina");
-			for (int j = 1; j <= totPage; j++) {
-				this.selectPage.addItem(j);
-				this.selectPage.setItemCaption(j, Integer.toString(j));
-			}
-
-			this.selectPage.addValueChangeListener(new ValueChangeListener() {
-				@Override
-				public void valueChange(ValueChangeEvent event) {
-					int nextPage = Integer.parseInt(String.valueOf(event.getProperty().getValue()));
-					int from = (nextPage - 1) * missioneSearchBuilder.getSize();
-					missioneSearchBuilder.setFrom(from);
-					try {
-						missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-						elencoMissioniTable.aggiornaTable(missioniStore);
-
-					} catch (Exception e) {
-						Utility.getNotification(Utility.getMessage("error_message"),
-								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
-					}
-				}
-			});
-		}
-
-	}
-
 	protected Button createButtonNew() {
 		final Button buttonNewMissione = new Button("Nuova Missione");
 		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -311,7 +309,6 @@ public class GestioneMissioneView extends GestioneTemplateView  {
 				try {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-					buildComboPage();
 					DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore));
 
 				} catch (Exception e) {

@@ -1,7 +1,10 @@
 package it.cnr.missioni.dashboard.view.admin;
 
+import java.util.Collection;
+
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
+
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
@@ -10,28 +13,26 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoQualificaUserTable;
-import it.cnr.missioni.dashboard.component.table.admin.ElencoVeicoliCNRTable;
 import it.cnr.missioni.dashboard.component.window.admin.QualificaUserWindow;
-import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.configuration.QualificaUser;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
-import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneQualificaUserView extends GestioneTemplateView {
+public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUser> {
 
 	/**
 	 * 
@@ -47,7 +48,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView {
 	private Button buttonModifica;
 	private QualificaUser selectedQualificaUser;
 	private QualificaUserStore qualificaUserStore;
-
+	private QualificaUserSearchBuilder qualificaUserSearchBuilder;
 
 	public GestioneQualificaUserView() {
 		super();
@@ -61,9 +62,8 @@ public class GestioneQualificaUserView extends GestioneTemplateView {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoQualificaUserTable = new ElencoQualificaUserTable();
-
+		this.qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 		try {
-			QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 			qualificaUserStore = ClientConnector.getQualificaUser(qualificaUserSearchBuilder);
 			this.elencoQualificaUserTable.aggiornaTable(qualificaUserStore);
 		} catch (Exception e) {
@@ -143,17 +143,46 @@ public class GestioneQualificaUserView extends GestioneTemplateView {
 	 */
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+		if (qualificaUserStore != null)
+			buildPagination(qualificaUserStore.getTotale());
+		addListenerPagination();
 
 	}
 
 	/**
 	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
 	 */
-	@Override
-	protected void buildComboPage() {
-		// TODO Auto-generated method stub
+	protected void addListenerPagination() {
 
+		pagingComponent.addListener(new LazyPagingComponentListener<QualificaUser>(itemsArea) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1524083863677631755L;
+
+			@Override
+			protected Collection<QualificaUser> getItemsList(int startIndex, int endIndex) {
+
+				try {
+					qualificaUserStore = ClientConnector
+							.getQualificaUser(qualificaUserSearchBuilder.withFrom(startIndex));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				DashboardEventBus.post(new DashboardEvent.TableQualificaUserUpdatedEvent(qualificaUserStore));
+				return qualificaUserStore != null ? qualificaUserStore.getQualificaUser() : null;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, QualificaUser item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**
@@ -165,7 +194,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView {
 		return null;
 	}
 
-	protected  Component buildFilter(){
+	protected Component buildFilter() {
 		return null;
 	}
 

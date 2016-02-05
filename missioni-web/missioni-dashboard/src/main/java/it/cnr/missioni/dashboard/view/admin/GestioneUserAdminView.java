@@ -1,27 +1,22 @@
 package it.cnr.missioni.dashboard.view.admin;
 
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import java.util.Collection;
+
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
+
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.ShortcutAction.KeyCode;
-import com.vaadin.event.ShortcutListener;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Responsive;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -30,21 +25,18 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoUserTable;
 import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
-import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
-import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneUserAdminView extends GestioneTemplateView {
+public class GestioneUserAdminView extends GestioneTemplateView<User> {
 
 	/**
 	 * 
@@ -54,7 +46,6 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 	 * 
 	 */
 	private ElencoUserTable elencoUserTable;
-	private ComboBox selectPage = new ComboBox();
 	private TextField idMissioneField;
 	private DateField dataFromInserimentoMissioneField;
 	private DateField dataToInserimentoMissioneField;
@@ -66,50 +57,51 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 	private TextField multiMatchField;
 	private VerticalLayout layoutForm;
 	private User selectedUser;
-	
-		
-	private UserSearchBuilder userSearchBuilder ;
+
+	private UserSearchBuilder userSearchBuilder;
 	private UserStore userStore;
 
 	// private CssLayout panel = new CssLayout();
 
 	public GestioneUserAdminView() {
-//		addStyleName(ValoTheme.PANEL_BORDERLESS);
-//		addStyleName("missione-view");
-//		setSizeFull();
-//		DashboardEventBus.register(this);
-//		setHeight("96%");
-//		setWidth("98%");
-//		addStyleName(ValoTheme.LAYOUT_CARD);
-//		addStyleName("panel-view");
-//		Responsive.makeResponsive(this);
-//
-//		CssLayout toolbar = new CssLayout();
-//		toolbar.setWidth("100%");
-//		toolbar.setStyleName("toolbar-search");
-//		HorizontalLayout fullTextsearchLayout = new HorizontalLayout(buildFilter(), createButtonSearch());
-//		fullTextsearchLayout.setSpacing(true);
-//		fullTextsearchLayout.setStyleName("full-text-search");
-//
-//
-//		layoutTable = buildTable();
-//		layoutTable.setStyleName("layout-table-missione");
-//
-//		GridLayout buttonsLayout = buildButtonsSelectedUser();
-//		buttonsLayout.setSpacing(true);
-//		buttonsLayout.setStyleName("buttons-layout");
-//		
-//		
-//		toolbar.addComponent(fullTextsearchLayout);
-//		addComponent(toolbar);
-////		setExpandRatio(toolbar, new Float(1));
-////		addComponent(layoutForm);
-////		Animator.animate(layoutForm, new Css().translateY("1000px")).duration(5000);
-////		setExpandRatio(layoutForm, new Float(0.1));
-//		addComponent(layoutTable);
-//		addComponent(buttonsLayout);
-//		setExpandRatio(layoutTable, new Float(1));
-//		setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
+		// addStyleName(ValoTheme.PANEL_BORDERLESS);
+		// addStyleName("missione-view");
+		// setSizeFull();
+		// DashboardEventBus.register(this);
+		// setHeight("96%");
+		// setWidth("98%");
+		// addStyleName(ValoTheme.LAYOUT_CARD);
+		// addStyleName("panel-view");
+		// Responsive.makeResponsive(this);
+		//
+		// CssLayout toolbar = new CssLayout();
+		// toolbar.setWidth("100%");
+		// toolbar.setStyleName("toolbar-search");
+		// HorizontalLayout fullTextsearchLayout = new
+		// HorizontalLayout(buildFilter(), createButtonSearch());
+		// fullTextsearchLayout.setSpacing(true);
+		// fullTextsearchLayout.setStyleName("full-text-search");
+		//
+		//
+		// layoutTable = buildTable();
+		// layoutTable.setStyleName("layout-table-missione");
+		//
+		// GridLayout buttonsLayout = buildButtonsSelectedUser();
+		// buttonsLayout.setSpacing(true);
+		// buttonsLayout.setStyleName("buttons-layout");
+		//
+		//
+		// toolbar.addComponent(fullTextsearchLayout);
+		// addComponent(toolbar);
+		//// setExpandRatio(toolbar, new Float(1));
+		//// addComponent(layoutForm);
+		//// Animator.animate(layoutForm, new
+		// Css().translateY("1000px")).duration(5000);
+		//// setExpandRatio(layoutForm, new Float(0.1));
+		// addComponent(layoutTable);
+		// addComponent(buttonsLayout);
+		// setExpandRatio(layoutTable, new Float(1));
+		// setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
 	}
 
 	/**
@@ -119,19 +111,19 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
 
-		this.elencoUserTable = new ElencoUserTable();
 
+		this.userSearchBuilder = UserSearchBuilder.getUserSearchBuilder();
+		this.elencoUserTable = new ElencoUserTable();
 		this.elencoUserTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedUser = (User)itemClickEvent.getItemId();
+				selectedUser = (User) itemClickEvent.getItemId();
 				enableDisableButtons(true);
 			}
 		});
 
 		try {
 			userStore = ClientConnector.getUser(userSearchBuilder);
-			buildComboPage();
 			this.elencoUserTable.aggiornaTable(userStore);
 
 		} catch (Exception e) {
@@ -140,7 +132,7 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 		}
 
 		HorizontalLayout layoutSelectPage = new HorizontalLayout();
-		layoutSelectPage.addComponent(this.selectPage);
+
 
 		layoutSelectPage.setMargin(true);
 		v.addComponent(this.elencoUserTable);
@@ -265,52 +257,51 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 	// });
 	// }
 
-	/**
-	 * Costruisce la Select per la paginazione
-	 */
-	protected void buildComboPage() {
-		this.selectPage = new ComboBox();
-		this.selectPage.removeAllItems();
-		if (userStore != null) {
-			long totale = userStore.getTotale();
-			long totPage = totale % userSearchBuilder.getSize() == 0 ? totale / userSearchBuilder.getSize()
-					: 1 + (totale / userSearchBuilder.getSize());
-			this.selectPage.setValue(1);
-			// selectPage.setNullSelectionAllowed(false);
-			this.selectPage.setImmediate(true);
-			this.selectPage.setInputPrompt("Seleziona Pagina");
-			for (int j = 1; j <= totPage; j++) {
-				this.selectPage.addItem(j);
-				this.selectPage.setItemCaption(j, Integer.toString(j));
-			}
-
-			this.selectPage.addValueChangeListener(new ValueChangeListener() {
-				@Override
-				public void valueChange(ValueChangeEvent event) {
-					int nextPage = Integer.parseInt(String.valueOf(event.getProperty().getValue()));
-					int from = (nextPage - 1) * userSearchBuilder.getSize();
-					userSearchBuilder.setFrom(from);
-					try {
-						userStore = ClientConnector.getUser(userSearchBuilder);
-						elencoUserTable.aggiornaTable(userStore);
-
-					} catch (Exception e) {
-						Utility.getNotification(Utility.getMessage("error_message"),
-								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
-					}
-				}
-			});
-		}
-
-	}
+	// /**
+	// * Costruisce la Select per la paginazione
+	// */
+	// protected void buildComboPage() {
+	// this.selectPage = new ComboBox();
+	// this.selectPage.removeAllItems();
+	// if (userStore != null) {
+	// long totale = userStore.getTotale();
+	// long totPage = totale % userSearchBuilder.getSize() == 0 ? totale /
+	// userSearchBuilder.getSize()
+	// : 1 + (totale / userSearchBuilder.getSize());
+	// this.selectPage.setValue(1);
+	// // selectPage.setNullSelectionAllowed(false);
+	// this.selectPage.setImmediate(true);
+	// this.selectPage.setInputPrompt("Seleziona Pagina");
+	// for (int j = 1; j <= totPage; j++) {
+	// this.selectPage.addItem(j);
+	// this.selectPage.setItemCaption(j, Integer.toString(j));
+	// }
+	//
+	// this.selectPage.addValueChangeListener(new ValueChangeListener() {
+	// @Override
+	// public void valueChange(ValueChangeEvent event) {
+	// int nextPage =
+	// Integer.parseInt(String.valueOf(event.getProperty().getValue()));
+	// int from = (nextPage - 1) * userSearchBuilder.getSize();
+	// userSearchBuilder.setFrom(from);
+	// try {
+	// userStore = ClientConnector.getUser(userSearchBuilder);
+	// elencoUserTable.aggiornaTable(userStore);
+	//
+	// } catch (Exception e) {
+	// Utility.getNotification(Utility.getMessage("error_message"),
+	// Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+	// }
+	// }
+	// });
+	// }
+	//
+	// }
 
 	@Override
 	public void enter(final ViewChangeEvent event) {
 
 	}
-
-				
-
 
 	protected Button createButtonSearch() {
 		final Button buttonCerca = new Button();
@@ -324,15 +315,11 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 				try {
 					userSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					userStore = ClientConnector.getUser(userSearchBuilder);
-					buildComboPage();
-					 DashboardEventBus.post(new
-					 DashboardEvent.TableUserUpdatedEvent(userStore));
-					 
-			 
+					DashboardEventBus.post(new DashboardEvent.TableUserUpdatedEvent(userStore));
 
-//					 Animator anim = new Animator(new Label("Animate Me!"));
+					// Animator anim = new Animator(new Label("Animate Me!"));
 
-//					 layoutForm.setVisible(true);
+					// layoutForm.setVisible(true);
 
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -357,12 +344,11 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				UserCompletedRegistrationWindow.open(selectedUser,true);
+				UserCompletedRegistrationWindow.open(selectedUser, true);
 
 			}
-			
-		});
 
+		});
 
 		layout.addComponents(buttonEdit);
 
@@ -376,12 +362,52 @@ public class GestioneUserAdminView extends GestioneTemplateView {
 		this.buttonEdit.setEnabled(enabled);
 	}
 
-
 	/**
 	 * 
 	 */
 	protected void initialize() {
-		this.userSearchBuilder =  UserSearchBuilder.getUserSearchBuilder();
+		if (userStore != null)
+			buildPagination(userStore.getTotale());
+		addListenerPagination();
+	}
+
+	/**
+	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
+	 */
+	protected void addListenerPagination() {
+
+		pagingComponent.addListener(new LazyPagingComponentListener<User>(itemsArea) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2537782371968033967L;
+
+			/**
+			 * 
+			 */
+
+			@Override
+			protected Collection<User> getItemsList(int startIndex, int endIndex) {
+
+				try {
+					userStore = ClientConnector.getUser(userSearchBuilder.withFrom(startIndex));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				DashboardEventBus.post(new DashboardEvent.TableUserUpdatedEvent(userStore));
+				return userStore != null ? userStore.getUsers() : null;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, User item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**

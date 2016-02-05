@@ -1,6 +1,10 @@
 package it.cnr.missioni.dashboard.view;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.View;
@@ -10,20 +14,28 @@ import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneVeicoloView extends GestioneTemplateView  {
+public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 	/**
 	 * 
@@ -51,7 +63,8 @@ public class GestioneVeicoloView extends GestioneTemplateView  {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoVeicoliTable = new ElencoVeicoliTable();
-		this.elencoVeicoliTable .aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
+		this.elencoVeicoliTable
+				.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
 
 		this.elencoVeicoliTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
@@ -127,17 +140,49 @@ public class GestioneVeicoloView extends GestioneTemplateView  {
 	 */
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+
+		buildPagination(
+				new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
+		addListenerPagination();
 
 	}
-
+	
 	/**
 	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
 	 */
-	@Override
-	protected void buildComboPage() {
-		// TODO Auto-generated method stub
+	protected void addListenerPagination() {
+		
+		pagingComponent.addListener(new LazyPagingComponentListener<Veicolo>(itemsArea) {
 
+
+
+
+			@Override
+			protected Collection<Veicolo> getItemsList(int startIndex, int endIndex) {
+				
+				
+				List<Veicolo> listaVeicolo = new ArrayList<Veicolo>();
+				DashboardUI.getCurrentUser().getMappaVeicolo().values().forEach(v ->{
+					int i = 0;
+					while(i <= endIndex){
+						listaVeicolo.add(v);
+					}
+				});
+				
+				
+				
+				DashboardEventBus.post(new  DashboardEvent.TableVeicoliUpdatedEvent(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values())) );
+				return listaVeicolo;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, Veicolo item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**
@@ -149,7 +194,7 @@ public class GestioneVeicoloView extends GestioneTemplateView  {
 		return null;
 	}
 
-	protected  Component buildFilter(){
+	protected Component buildFilter() {
 		return null;
 	}
 

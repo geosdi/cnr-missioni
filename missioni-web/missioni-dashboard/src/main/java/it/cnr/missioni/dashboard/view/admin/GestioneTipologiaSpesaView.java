@@ -1,7 +1,10 @@
 package it.cnr.missioni.dashboard.view.admin;
 
+import java.util.Collection;
+
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
+
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
@@ -10,28 +13,26 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.table.admin.ElencoNazioneTable;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoTipologiaSpesaTable;
-import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
 import it.cnr.missioni.dashboard.component.window.admin.TipologiaSpesaWindow;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
-import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * @author Salvia Vito
  */
-public class GestioneTipologiaSpesaView extends GestioneTemplateView {
+public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSpesa> {
 
 	/**
 	 * 
@@ -44,6 +45,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView {
 	private Button buttonModifica;
 	private TipologiaSpesa selectedTipologiaSpesa;
 	private TipologiaSpesaStore tipologiaSpesaStore;
+	private TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder;
 
 	public GestioneTipologiaSpesaView() {
 		super();
@@ -57,9 +59,10 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoTipologiaSpesaTable = new ElencoTipologiaSpesaTable();
+		this.tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 
 		try {
-			tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder());
+			tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(tipologiaSpesaSearchBuilder);
 			this.elencoTipologiaSpesaTable.aggiornaTable(tipologiaSpesaStore);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -138,17 +141,46 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView {
 	 */
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+		if (tipologiaSpesaStore != null)
+			buildPagination(tipologiaSpesaStore.getTotale());
+		addListenerPagination();
 
 	}
 
 	/**
 	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
 	 */
-	@Override
-	protected void buildComboPage() {
-		// TODO Auto-generated method stub
+	protected void addListenerPagination() {
 
+		pagingComponent.addListener(new LazyPagingComponentListener<TipologiaSpesa>(itemsArea) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3631013947031172499L;
+
+			@Override
+			protected Collection<TipologiaSpesa> getItemsList(int startIndex, int endIndex) {
+
+				try {
+					tipologiaSpesaStore = ClientConnector
+							.getTipologiaSpesa(tipologiaSpesaSearchBuilder.withFrom(startIndex));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				DashboardEventBus.post(new DashboardEvent.TableTipologiaSpesaUpdatedEvent(tipologiaSpesaStore));
+				return tipologiaSpesaStore != null ? tipologiaSpesaStore.getTipologiaSpesa() : null;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, TipologiaSpesa item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**

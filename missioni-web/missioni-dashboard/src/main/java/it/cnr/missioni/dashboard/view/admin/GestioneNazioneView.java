@@ -1,7 +1,10 @@
 package it.cnr.missioni.dashboard.view.admin;
 
+import java.util.Collection;
+
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
+
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
@@ -10,6 +13,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -17,6 +21,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoNazioneTable;
 import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
@@ -26,7 +32,7 @@ import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneNazioneView extends GestioneTemplateView {
+public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 	/**
 	 * 
@@ -36,6 +42,7 @@ public class GestioneNazioneView extends GestioneTemplateView {
 	private Button buttonModifica;
 	private Nazione selectedNazione;
 	private NazioneStore nazioneStore;
+	private NazioneSearchBuilder nazioneSearchBuilder;
 
 	public GestioneNazioneView() {
 		super();
@@ -49,15 +56,21 @@ public class GestioneNazioneView extends GestioneTemplateView {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoNazioneTable = new ElencoNazioneTable();
+		this.nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
 
 		try {
-			nazioneStore = ClientConnector.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder());
+			nazioneStore = ClientConnector.getNazione(nazioneSearchBuilder);
 			this.elencoNazioneTable.aggiornaTable(nazioneStore);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
 		this.elencoNazioneTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -5989135363149394894L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedNazione = (Nazione) itemClickEvent.getItemId();
@@ -85,6 +98,11 @@ public class GestioneNazioneView extends GestioneTemplateView {
 		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -9055323128504245147L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				NazioneWindow.open(new Nazione(), false);
@@ -104,6 +122,11 @@ public class GestioneNazioneView extends GestioneTemplateView {
 		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2128352915934713836L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -130,17 +153,45 @@ public class GestioneNazioneView extends GestioneTemplateView {
 	 */
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
 
+		if (nazioneStore != null)
+			buildPagination(nazioneStore.getTotale());
+		addListenerPagination();
 	}
 
 	/**
 	 * 
+	 * Aggiunge il listener alla paginazione
+	 * 
 	 */
-	@Override
-	protected void buildComboPage() {
-		// TODO Auto-generated method stub
+	protected void addListenerPagination() {
 
+		pagingComponent.addListener(new LazyPagingComponentListener<Nazione>(itemsArea) {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4769881945185530673L;
+
+			@Override
+			protected Collection<Nazione> getItemsList(int startIndex, int endIndex) {
+
+				try {
+					nazioneStore = ClientConnector.getNazione(nazioneSearchBuilder.withFrom(startIndex));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				DashboardEventBus.post(new DashboardEvent.TableNazioneUpdatedEvent(nazioneStore));
+				return nazioneStore != null ? nazioneStore.getNazione() : null;
+
+			}
+
+			@Override
+			protected Component displayItem(int index, Nazione item) {
+				return new Label(item.toString());
+			}
+		});
 	}
 
 	/**

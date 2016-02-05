@@ -30,7 +30,7 @@ import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 /**
  * @author Salvia Vito
  */
-public class GestioneRimborsoKmView extends GestioneTemplateView  {
+public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 
 	/**
 	 * 
@@ -144,16 +144,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView  {
 		// TODO Auto-generated method stub
 
 	}
-
-	/**
-	 * 
-	 */
-	@Override
-	protected void buildComboPage() {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	/**
 	 * @return
 	 */
@@ -175,6 +166,15 @@ public class GestioneRimborsoKmView extends GestioneTemplateView  {
 	@Subscribe
 	public void disabledButtonNew(final DisableButtonNewEvent disableButtonNew) {
 		this.buttonNew.setVisible(false);
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void addListenerPagination() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
