@@ -77,7 +77,7 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 					new BeanItemContainer<Fattura>(Fattura.class, ((List<Fattura>)lista)));
 
 			setVisibleColumns("numeroFattura", "data", "shortDescriptionTipologiaSpesa", "valuta", "altro", "importo");
-			setColumnHeaders("Numero Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo");
+			setColumnHeaders("Numero Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo €");
 			setId("numeroFattura");
 			Object[] properties = { "data", "numeroFattura" };
 			boolean[] ordering = { false, false };
@@ -92,7 +92,7 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 
 	public void aggiornaTotale(double totale) {
 		DecimalFormat df = new DecimalFormat("#0.00");
-		setColumnFooter("importo", "Tot.: " + df.format(totale));
+		setColumnFooter("importo", "Tot. €: " + df.format(totale));
 	}
 
 	@Override

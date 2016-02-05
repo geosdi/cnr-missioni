@@ -182,10 +182,10 @@ public class DettagliMissioneWindow extends IWindow.AbstractWindow {
 
 		details.addComponent(new Label("Numero Mandato CNR: " + (missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() != null : "")));
 		details.addComponent(new Label("Altre Spese di Missione Anticipate: "
-				+ missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate()));
+				+ missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate()+" €"));
 		details.addComponent(
-				new Label("Rimborso da Terzi: " + missione.getDatiAnticipoPagamenti().getImportoDaTerzi()));
-		details.addComponent(new Label("Importo da Terzi: " + missione.getDatiAnticipoPagamenti().getImportoDaTerzi()));
+				new Label("Rimborso da Terzi: " +( missione.getDatiAnticipoPagamenti().isRimborsoDaTerzi() ? "Si" : "No")));
+		details.addComponent(new Label("Importo da Terzi: " + missione.getDatiAnticipoPagamenti().getImportoDaTerzi()+" €"));
 
 		return root;
 
