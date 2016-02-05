@@ -61,15 +61,16 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 
 
-		details.addComponent(buildLabel("Avviso Pagamento: " , missione.getRimborso().getAvvisoPagamento()));
+		details.addComponent(buildLabel("Avviso Pagamento: " , (missione.getRimborso().getAvvisoPagamento() != null ? missione.getRimborso().getAvvisoPagamento() : "")));
 		details.addComponent(buildLabel("Anticipazione Pagamento: " ,missione.getRimborso().getAnticipazionePagamento() != null ?  Double.toString(missione.getRimborso().getAnticipazionePagamento()) : "0.0"));
 		if(missione.isMezzoProprio())
 			details.addComponent(buildLabel("Rimborso KM: ",Double.toString(missione.getRimborso().getRimborsoKm())));
 		details.addComponent(buildLabel("Tot. lordo TAM: " , Double.toString(missione.getRimborso().getTotaleTAM())));
-		details.addComponent(buildLabel("Totale: " , Double.toString(missione.getRimborso().getTotale())));
+		details.addComponent(buildLabel("Totale Fatture: " , Double.toString(missione.getRimborso().getTotale())));
 		
 		
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
+		elencoFattureTable.setStyleName("margin-table_fatture");
 		elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
 		root.addComponent(elencoFattureTable);
 		

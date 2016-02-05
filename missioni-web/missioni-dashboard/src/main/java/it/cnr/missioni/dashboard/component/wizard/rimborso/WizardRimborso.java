@@ -57,12 +57,9 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 				MassimaleStore massimaleStore = ClientConnector
 						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
 								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
-								.withAreaGeografica(nazione.getAreaGeografica().name()));
+								.withAreaGeografica(nazione.getAreaGeografica().name()).withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
 
-			//se non inserito il massimale oer quel livello e area geografica non creo il wizard
 				if (massimaleStore != null) {
-
-
 					rimborso.calcolaTotaleTAM(massimaleStore.getMassimale().get(0),
 							missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
 							missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());

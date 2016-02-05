@@ -13,6 +13,7 @@ import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
@@ -98,8 +99,15 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 			details.addComponent(labelTotRimborsoKm);
 
 		}
-		details.addComponent(new Label("GG all'estero: " + this.days + "\tTot. lordo TAM: "
-				+ (rimborso.getTotaleTAM() != null ? rimborso.getTotaleTAM() : 0)));
+		
+		Label l = new Label("<b>GG all'estero:</b> " + this.days + "\t<b>Tot. lordo TAM:</b> "
+				+ (rimborso.getTotaleTAM() != null ? rimborso.getTotaleTAM() : 0),ContentMode.HTML);
+//		l.setStyleName(ValoTheme.LABEL_LIGHT);
+		l.addStyleName(ValoTheme.LABEL_H3);
+		l.addStyleName(ValoTheme.LABEL_LIGHT);
+
+
+		details.addComponent(l);
 
 		addListener();
 

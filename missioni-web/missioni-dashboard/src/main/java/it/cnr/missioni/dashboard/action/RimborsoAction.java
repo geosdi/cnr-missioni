@@ -32,6 +32,10 @@ public class RimborsoAction implements IAction {
 				missione.getRimborso().setDataRimborso(new DateTime());
 			missione.getRimborso().setDateLastModified(new DateTime());
 
+			
+//			long numberRimborso = (ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso"))).getTotale();
+//			missione.getRimborso().setNumeroOrdine(numberRimborso+1);
+			
 			ClientConnector.updateMissione(missione);
 
 			Thread.sleep(1000);
