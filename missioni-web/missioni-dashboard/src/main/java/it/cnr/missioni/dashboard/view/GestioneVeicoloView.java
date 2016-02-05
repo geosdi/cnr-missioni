@@ -46,7 +46,6 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	 */
 	private ElencoVeicoliTable elencoVeicoliTable;
 	private VerticalLayout layoutTable;
-	private Button buttonModifica;
 	private Veicolo selectedVeicolo;
 
 	// private CssLayout panel = new CssLayout();
@@ -87,13 +86,9 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNewVeicolo = new Button("Nuovo Veicolo");
-		buttonNewVeicolo.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNewVeicolo.setIcon(FontAwesome.PLUS);
-		buttonNewVeicolo.setDescription("Aggiunge un nuovo Veicolo");
-		buttonNewVeicolo.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-
-		buttonNewVeicolo.addClickListener(new Button.ClickListener() {
+		
+		buttonNew = buildButton("Nuovo Veicolo", "Aggiunge un nuovo Veicolo",FontAwesome.FILE_PDF_O);
+		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -101,17 +96,13 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 			}
 
 		});
-		return buttonNewVeicolo;
+		return buttonNew;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button("Modifica");
-		buttonModifica.setDescription("Modifica i dati del vieicolo");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonModifica = buildButton("Modifica", "Modifica i dati del vieicolo",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 

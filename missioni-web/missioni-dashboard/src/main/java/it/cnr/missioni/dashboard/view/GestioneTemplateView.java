@@ -9,6 +9,7 @@ import org.vaadin.pagingcomponent.utilities.FakeList;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.FontIcon;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -35,6 +36,14 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	protected TextField multiMatchField;
 	protected PagingComponent<T> pagingComponent;
 	protected final VerticalLayout itemsArea = new VerticalLayout();
+	protected Button buttonCerca;
+	protected Button buttonNew;
+	protected Button buttonDettagli;
+	protected Button buttonModifica;
+	protected Button buttonRimborso;
+	protected Button buttonPDF;
+	protected Button buttonMissione;
+
 
 	// private CssLayout panel = new CssLayout();
 
@@ -75,7 +84,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 		Button buttonNew = createButtonNew();
 		if (buttonNew != null)
 			newObjectLayout.addComponent(createButtonNew());
-		newObjectLayout.addComponent(buildButtons());
+		newObjectLayout.addComponent(addActionButtons());
 
 		newObjectLayout.setSpacing(true);
 		newObjectLayout.setStyleName("button-new-object");
@@ -91,6 +100,16 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 		setExpandRatio(layoutTable, new Float(1));
 	}
 
+	protected Button buildButton(String caption,String description,FontIcon icon){
+		Button b = new Button(caption);
+		b.setDescription(description);
+		b.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		b.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		b.setIcon(icon);
+
+		return b;
+	}
+	
 	/**
 	 * * @param totale
 	 */
@@ -117,6 +136,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 		setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
 
 	}
+	
 
 	protected abstract VerticalLayout buildTable();
 
@@ -126,7 +146,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
 	protected abstract Button createButtonSearch();
 
-	protected abstract GridLayout buildButtons();
+	protected abstract GridLayout addActionButtons();
 
 	protected abstract void addListenerPagination();
 

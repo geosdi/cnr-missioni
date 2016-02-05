@@ -39,7 +39,6 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	 */
 	private static final long serialVersionUID = 8210899238444116295L;
 	private ElencoNazioneTable elencoNazioneTable;
-	private Button buttonModifica;
 	private Nazione selectedNazione;
 	private NazioneStore nazioneStore;
 	private NazioneSearchBuilder nazioneSearchBuilder;
@@ -91,11 +90,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNew = new Button("Aggiungi Nazione");
-		buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNew.setIcon(FontAwesome.PLUS);
-		buttonNew.setDescription("Inserisce una nuova nazione");
-		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonNew = buildButton("Aggiungi Nazione", "Inserisce una nuova nazione",FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -112,14 +107,10 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 		return buttonNew;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button("Modifica");
-		buttonModifica.setDescription("Modifica");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 

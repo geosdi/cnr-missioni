@@ -37,8 +37,6 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	 */
 	private static final long serialVersionUID = 8210899238444116295L;
 	private ElencoRimborsoKmTable elencoRimborsoKmTable;
-	private Button buttonModifica;
-	private Button buttonNew;
 	private RimborsoKm selectedRimborsoKm;
 	private RimborsoKmStore rimborsoKmStore;
 
@@ -89,11 +87,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	}
 
 	protected Button createButtonNew() {
-		this.buttonNew = new Button("Aggiungi Rimborso Km");
-		this.buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		this.buttonNew.setIcon(FontAwesome.PLUS);
-		this.buttonNew.setDescription("Inserisce un nuovo rimborso km");
-		this.buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonNew = buildButton("Aggiungi Rimborso Km", "Inserisce un nuovo rimborso km",FontAwesome.PLUS);
 		this.buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -105,14 +99,10 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		return buttonNew;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button("Modifica");
-		buttonModifica.setDescription("Modifica");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
@@ -141,7 +131,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	 */
 	@Override
 	protected void initialize() {
-		// TODO Auto-generated method stub
+		buildPagination(rimborsoKmStore.getTotale());
 
 	}
 	

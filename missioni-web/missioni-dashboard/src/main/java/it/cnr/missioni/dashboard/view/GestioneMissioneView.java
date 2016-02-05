@@ -68,10 +68,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	private TextField oggettoMissioneField;
 
 	private VerticalLayout layoutTable;
-	private Button buttonDettagli;
-	// private Button buttonMail;
-	private Button buttonRimborso;
-	private Button buttonPDF;
+
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
 
@@ -280,13 +277,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	// }
 
 	protected Button createButtonNew() {
-		final Button buttonNewMissione = new Button("Nuova Missione");
-		buttonNewMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNewMissione.setIcon(FontAwesome.PLUS);
-		buttonNewMissione.setDescription("Crea una nuova Missione");
-		buttonNewMissione.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-
-		buttonNewMissione.addClickListener(new Button.ClickListener() {
+		buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione",FontAwesome.PLUS);
+		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -294,14 +286,11 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			}
 
 		});
-		return buttonNewMissione;
+		return buttonNew;
 	}
 
 	protected Button createButtonSearch() {
-		final Button buttonCerca = new Button();
-		buttonCerca.setIcon(FontAwesome.SEARCH);
-		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonCerca.setDescription("Ricerca full text");
+		buttonCerca = buildButton("", "Ricerca full text",FontAwesome.SEARCH);
 		buttonCerca.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
@@ -321,13 +310,10 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		return buttonCerca;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonDettagli = new Button("Dettagli");
-		buttonDettagli.setDescription("Visualizza i dettagli della Missione");
-		buttonDettagli.setIcon(FontAwesome.EDIT);
-		buttonDettagli.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli della Missione",FontAwesome.EDIT);
 
 		buttonDettagli.addClickListener(new Button.ClickListener() {
 
@@ -339,12 +325,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			}
 
 		});
-
-		buttonRimborso = new Button("Rimborso");
-		buttonRimborso.setDescription("Visualizza i dettagli del Rimborso");
-		buttonRimborso.setIcon(FontAwesome.EURO);
-		buttonRimborso.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonRimborso.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonRimborso = buildButton("Rimborso", "Visualizza i dettagli del Rimborso",FontAwesome.EURO);
 		buttonRimborso.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -366,11 +347,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 		});
 
-		buttonPDF = new Button("PDF");
-		buttonPDF.setDescription("Download del PDF");
-		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
-		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonPDF.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonPDF = buildButton("PDF", "Download del PDF",FontAwesome.FILE_PDF_O);
 
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {

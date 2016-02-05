@@ -42,7 +42,6 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	 * 
 	 */
 	private ElencoTipologiaSpesaTable elencoTipologiaSpesaTable;
-	private Button buttonModifica;
 	private TipologiaSpesa selectedTipologiaSpesa;
 	private TipologiaSpesaStore tipologiaSpesaStore;
 	private TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder;
@@ -89,11 +88,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNew = new Button("Aggiungi Tipologia Spesa");
-		buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNew.setIcon(FontAwesome.PLUS);
-		buttonNew.setDescription("Inserisce una nuova tipologia spesa");
-		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonNew = buildButton("Aggiungi Tipologia Spesa", "Inserisce una nuova tipologia spesa",FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -105,14 +100,10 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 		return buttonNew;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button("Modifica");
-		buttonModifica.setDescription("Modifica");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 

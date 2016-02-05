@@ -69,10 +69,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	private TextField oggettoMissioneField;
 
 	private VerticalLayout layoutTable;
-	private Button buttonModifica;
-	// private Button buttonMail;
-	private Button buttonMissione;
-	private Button buttonPDF;
 	private VerticalLayout layoutForm;
 	private Missione selectedMissione;
 
@@ -245,7 +241,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	}
 
 	protected Button createButtonSearch() {
-		final Button buttonCerca = new Button();
+		buttonCerca = new Button();
 		buttonCerca.setIcon(FontAwesome.SEARCH);
 		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonCerca.setDescription("Ricerca full text");
@@ -268,16 +264,12 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		return buttonCerca;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button("Dettagli");
-		buttonModifica.setDescription("Visualizza i dettagli del Rimborso");
-		buttonModifica.setIcon(FontAwesome.EDIT);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-
-		buttonModifica.addClickListener(new Button.ClickListener() {
+		
+		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso",FontAwesome.EDIT);
+		buttonDettagli.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -287,33 +279,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 		});
 
-		// buttonMail = new Button();
-		// buttonMail.setDescription("Invia Mail");
-		// buttonMail.setIcon(FontAwesome.MAIL_FORWARD);
-		// buttonMail.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		//
-		// buttonMail.addClickListener(new Button.ClickListener() {
-		//
-		// @Override
-		// public void buttonClick(ClickEvent event) {
-		// try {
-		// ClientConnector.sendRimborsoMail(selectedMissione.getId());
-		// Utility.getNotification(Utility.getMessage("success_message"), null,
-		// Type.HUMANIZED_MESSAGE);
-		// } catch (Exception e) {
-		// Utility.getNotification(Utility.getMessage("error_message"),
-		// Utility.getMessage("mail_error"),
-		// Type.ERROR_MESSAGE);
-		// }
-		// }
-		//
-		// });
 
-		buttonMissione = new Button("Missone");
-		buttonMissione.setDescription("Visualizza i dati della Missione");
-		buttonMissione.setIcon(FontAwesome.SUITCASE);
-		buttonMissione.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonMissione.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonMissione = buildButton("Missone", "Visualizza i dati della Missione",FontAwesome.SUITCASE);
 
 		buttonMissione.addClickListener(new Button.ClickListener() {
 
@@ -324,12 +291,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 			}
 
 		});
-
-		buttonPDF = new Button("PDF");
-		buttonPDF.setDescription("Download del PDF");
-		buttonPDF.setIcon(FontAwesome.FILE_PDF_O);
-		buttonPDF.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonPDF.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonPDF = buildButton("PDF", "Download del PDF", FontAwesome.FILE_PDF_O);
 
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
@@ -351,7 +313,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 		downloaderForLink.extend(buttonPDF);
 
-		layout.addComponents(buttonModifica, buttonMissione, buttonPDF);
+		layout.addComponents(buttonDettagli, buttonMissione, buttonPDF);
 
 		enableDisableButtons(false);
 
@@ -383,7 +345,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 	protected void enableDisableButtons(boolean enabled) {
 		// this.buttonMail.setEnabled(enabled);
-		this.buttonModifica.setEnabled(enabled);
+		this.buttonDettagli.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonMissione.setEnabled(enabled);
 

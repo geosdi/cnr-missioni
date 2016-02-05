@@ -53,7 +53,6 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	private TextField oggettoMissioneField;
 
 	private VerticalLayout layoutTable;
-	private Button buttonEdit;
 	private TextField multiMatchField;
 	private VerticalLayout layoutForm;
 	private User selectedUser;
@@ -304,10 +303,8 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	}
 
 	protected Button createButtonSearch() {
-		final Button buttonCerca = new Button();
-		buttonCerca.setIcon(FontAwesome.SEARCH);
-		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonCerca.setDescription("Ricerca full text");
+		
+		buttonCerca = buildButton("", "Ricerca full text",FontAwesome.SEARCH);
 		buttonCerca.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
@@ -331,16 +328,11 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		return buttonCerca;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
+		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli dell'user",FontAwesome.EDIT);
 
-		buttonEdit = new Button("Dettagli");
-		buttonEdit.setDescription("Visualizza i dettagli dell'user");
-		buttonEdit.setIcon(FontAwesome.EDIT);
-		buttonEdit.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonEdit.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
-
-		buttonEdit.addClickListener(new Button.ClickListener() {
+		buttonDettagli.addClickListener(new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -350,7 +342,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 
 		});
 
-		layout.addComponents(buttonEdit);
+		layout.addComponents(buttonDettagli);
 
 		enableDisableButtons(false);
 
@@ -359,7 +351,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	}
 
 	protected void enableDisableButtons(boolean enabled) {
-		this.buttonEdit.setEnabled(enabled);
+		this.buttonDettagli.setEnabled(enabled);
 	}
 
 	/**

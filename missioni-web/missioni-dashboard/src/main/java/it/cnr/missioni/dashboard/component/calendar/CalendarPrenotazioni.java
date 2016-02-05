@@ -220,11 +220,16 @@ public class CalendarPrenotazioni implements Serializable {
 			}
 		});
 
-		monthButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		weekButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		dayButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		prevButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		nextButton.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		monthButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		monthButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		weekButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		weekButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		dayButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		dayButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		prevButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		prevButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		nextButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		prevButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);		
 
 		nextButton.setIcon(FontAwesome.FORWARD);
 		prevButton.setIcon(FontAwesome.BACKWARD);

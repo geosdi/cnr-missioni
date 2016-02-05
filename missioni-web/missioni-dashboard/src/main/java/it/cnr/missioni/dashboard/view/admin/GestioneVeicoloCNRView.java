@@ -42,7 +42,6 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	 * 
 	 */
 	private ElencoVeicoliCNRTable elencoVeicoliCNRTable;
-	private Button buttonModifica;
 	private VeicoloCNR selectedVeicoloCNR;
 	private VeicoloCNRStore veicoloCNRStore;
 	private VeicoloCNRSearchBuilder veicoloCNRSearchBuilder;
@@ -90,11 +89,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNew = new Button("Aggiungi Veicolo CNR");
-		buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNew.setIcon(FontAwesome.PLUS);
-		buttonNew.setDescription("Inserisce un nuovo veicolo CNR");
-		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonNew = buildButton("Aggiungi Veicolo CNR", "Inserisce un nuovo veicolo CNR",FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -106,14 +101,10 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 		return buttonNew;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button("Modifica");
-		buttonModifica.setDescription("Modifica");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 

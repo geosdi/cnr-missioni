@@ -40,7 +40,6 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	private static final long serialVersionUID = 9207649476781253454L;
 
 	private ElencoMassimaleTable elencoMassimaleTable;
-	private Button buttonModifica;
 	private Massimale selectedMassimale;
 	private MassimaleStore massimaleStore;
 	private MassimaleSearchBuilder massimaleSearchBuilder;
@@ -91,11 +90,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	}
 
 	protected Button createButtonNew() {
-		final Button buttonNew = new Button("Aggiungi Massimale");
-		buttonNew.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonNew.setIcon(FontAwesome.PLUS);
-		buttonNew.setDescription("Inserisce un nuovo massimale");
-		buttonNew.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonNew = buildButton("Aggiungi Massimale", "Inserisce un nuovo massimale",FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -112,14 +107,11 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 		return buttonNew;
 	}
 
-	protected GridLayout buildButtons() {
+	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = new Button("Modifica");
-		buttonModifica.setDescription("Modifica");
-		buttonModifica.setIcon(FontAwesome.PENCIL);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonModifica.setStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
+		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
+
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
