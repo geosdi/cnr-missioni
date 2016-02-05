@@ -12,4 +12,6 @@ public interface ISearchBuilder extends Serializable{
 	
 	BoolQueryBuilder buildQuery();
 	
+	ISearchBuilder withFrom(int from);
+	
 }

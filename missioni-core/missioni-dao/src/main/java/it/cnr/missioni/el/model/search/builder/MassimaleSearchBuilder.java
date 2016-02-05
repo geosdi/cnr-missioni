@@ -250,4 +250,5 @@ public class MassimaleSearchBuilder implements ISearchBuilder {
 		return this;
 	}
 
+
 }

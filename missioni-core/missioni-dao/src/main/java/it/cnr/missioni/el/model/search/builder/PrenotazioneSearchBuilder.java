@@ -96,4 +96,14 @@ public class PrenotazioneSearchBuilder implements ISearchBuilder {
 		return this;
 	}
 
+	/**
+	 * @param from
+	 * @return
+	 */
+	@Override
+	public ISearchBuilder withFrom(int from) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
