@@ -272,7 +272,7 @@ public class UserCompletedRegistrationWindow extends IWindow.AbstractWindow {
 
 	private Component buildMassimaleTab() {
 		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Massimali");
+		root.setCaption("Info Massimali");
 		root.setIcon(FontAwesome.EURO);
 		root.setWidth(100.0f, Unit.PERCENTAGE);
 		root.setSpacing(true);
