@@ -13,6 +13,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.shared.ui.datefield.Resolution;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -24,6 +25,7 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
@@ -32,19 +34,24 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
-public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
+public class UserCompletedRegistrationWindow extends IWindow.AbstractWindow {
 
 	/**
 	 * 
@@ -91,22 +98,22 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 		addValidator();
 
 	}
-	
-	private void buildTabs(){
+
+	private void buildTabs() {
 		detailsWrapper.addComponent(buildAnagraficaTab());
 		detailsWrapper.addComponent(buildResidenzaTab());
 		detailsWrapper.addComponent(buildPatenteTab());
-		detailsWrapper.addComponent(buildDatiCNR());
+		detailsWrapper.addComponent(buildDatiCNRTab());
+		detailsWrapper.addComponent(buildMassimaleTab());
 	}
-	
-	private void buildFieldGroup(){
+
+	private void buildFieldGroup() {
 		fieldGroup.setItemDataSource(user);
 		fieldGroup.setBuffered(true);
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
 	}
-	
 
 	private Component buildAnagraficaTab() {
 		HorizontalLayout root = new HorizontalLayout();
@@ -180,7 +187,7 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 		return root;
 	}
 
-	private Component buildDatiCNR() {
+	private Component buildDatiCNRTab() {
 		HorizontalLayout root = new HorizontalLayout();
 		root.setCaption("Dati CNR");
 		root.setIcon(FontAwesome.INSTITUTION);
@@ -202,8 +209,7 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 
 			QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
 					.getQualificaUserSearchBuilder().withAll(true);
-			QualificaUserStore qualificaStore = ClientConnector
-					.getQualificaUser(qualificaUserSearchBuilder);
+			QualificaUserStore qualificaStore = ClientConnector.getQualificaUser(qualificaUserSearchBuilder);
 			qualificaStore.getQualificaUser().forEach(q -> {
 				qualificaField.addItem(q.getId());
 				qualificaField.setItemCaption(q.getId(), q.getValue());
@@ -264,6 +270,53 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 		return root;
 	}
 
+	private Component buildMassimaleTab() {
+		HorizontalLayout root = new HorizontalLayout();
+		root.setCaption("Massimali");
+		root.setIcon(FontAwesome.EURO);
+		root.setWidth(100.0f, Unit.PERCENTAGE);
+		root.setSpacing(true);
+		root.setMargin(true);
+
+		FormLayout details = new FormLayout();
+		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		root.addComponent(details);
+		root.setExpandRatio(details, 1);
+
+		for (AreaGeograficaEnum a : AreaGeograficaEnum.values()) {
+			try {
+				
+				double massimaleTAM = 0.0;
+				double massimaleRimborsoDocumentato = 0.0;
+				
+				MassimaleStore massimaleStore = ClientConnector
+						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+								.withAreaGeografica(a.name())
+								.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
+				if(massimaleStore != null)
+					massimaleTAM = massimaleStore.getMassimale().get(0).getValue();
+					
+				 massimaleStore = ClientConnector
+							.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+									.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+									.withAreaGeografica(a.name())
+									.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
+					if(massimaleStore != null)
+						massimaleRimborsoDocumentato = massimaleStore.getMassimale().get(0).getValue();
+				
+				if(massimaleStore != null)
+				details.addComponent(new Label("<b>Area geografica: </b>" + a.name() + " <b>TAM:</b> "+Double.toString(massimaleTAM)+" <b>Rimborso documentato:</b> "+Double.toString(massimaleRimborsoDocumentato), ContentMode.HTML));
+
+			} catch (Exception e) {
+				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+						Type.ERROR_MESSAGE);
+			}
+		}
+
+		return root;
+	}
+
 	private Component buildFooter() {
 		HorizontalLayout footer = new HorizontalLayout();
 		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
@@ -286,8 +339,9 @@ public class UserCompletedRegistrationWindow extends  IWindow.AbstractWindow  {
 
 					new_user.getDatiCNR()
 							.setDescrizioneQualifica(qualificaField.getItemCaption(qualificaField.getValue()));
-					new_user.getDatiCNR().setShortDescriptionDatoreLavoro(listaUserField.getItemCaption(listaUserField.getValue()));
-					
+					new_user.getDatiCNR()
+							.setShortDescriptionDatoreLavoro(listaUserField.getItemCaption(listaUserField.getValue()));
+
 					DashboardEventBus.post(new UpdateUserAction(new_user));
 					close();
 
