@@ -7,11 +7,8 @@ import org.joda.time.DateTime;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 

@@ -5,13 +5,11 @@ import java.util.List;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliUpdatedEvent;
-import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 
 /**

@@ -17,7 +17,6 @@ import com.vaadin.ui.Notification.Type;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * @author Salvia Vito

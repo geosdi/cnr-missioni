@@ -4,10 +4,6 @@ import java.util.List;
 
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
-import it.cnr.missioni.model.configuration.RimborsoKm;
-import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.rimborso.Rimborso;
-import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;

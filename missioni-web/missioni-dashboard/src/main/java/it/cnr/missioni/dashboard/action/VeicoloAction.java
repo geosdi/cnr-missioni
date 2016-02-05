@@ -1,7 +1,6 @@
 package it.cnr.missioni.dashboard.action;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;

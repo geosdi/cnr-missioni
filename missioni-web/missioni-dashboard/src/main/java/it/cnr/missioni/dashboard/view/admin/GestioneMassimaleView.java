@@ -16,7 +16,6 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoMassimaleTable;
@@ -90,7 +89,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	}
 
 	protected Button createButtonNew() {
-		buttonNew = buildButton("Aggiungi Massimale", "Inserisce un nuovo massimale",FontAwesome.PLUS);
+		buttonNew = buildButton("Aggiungi Massimale", "Inserisce un nuovo massimale", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -110,8 +109,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
-
+		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
@@ -193,7 +191,6 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	 */
 	@Override
 	protected Button createButtonSearch() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

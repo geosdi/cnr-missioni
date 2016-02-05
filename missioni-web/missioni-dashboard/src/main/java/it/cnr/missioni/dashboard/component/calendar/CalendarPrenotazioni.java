@@ -10,7 +10,6 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.addon.calendar.event.CalendarEditableEventProvider;
 import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.event.CalendarEventProvider;
 import com.vaadin.addon.calendar.ui.Calendar;
@@ -21,9 +20,7 @@ import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectEvent;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClickHandler;
-import com.vaadin.addon.calendar.ui.ContainerEventProvider;
 import com.vaadin.addon.calendar.ui.handler.BasicDateClickHandler;
-import com.vaadin.data.Container.Indexed;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.MarginInfo;

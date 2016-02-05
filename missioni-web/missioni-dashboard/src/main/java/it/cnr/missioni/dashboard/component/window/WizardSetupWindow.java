@@ -1,7 +1,6 @@
 package it.cnr.missioni.dashboard.component.window;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Responsive;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.UI;
