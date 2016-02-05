@@ -310,6 +310,15 @@ public class MissioneDAOTest {
 	}
 	
 	
+	@Test
+	public void V_findRimborsoExsist() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withFieldExist("missione.rimborso");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 1);
+	}
+	
 	// @Test
 	// public void tearDown() throws Exception {
 	// this.missioneDocIndexCreator.deleteIndex();
