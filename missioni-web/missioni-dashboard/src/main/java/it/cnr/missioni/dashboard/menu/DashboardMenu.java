@@ -47,7 +47,6 @@ public final class DashboardMenu extends CustomComponent {
 	public static final String REPORTS_BADGE_ID = "dashboard-menu-reports-badge";
 	public static final String NOTIFICATIONS_BADGE_ID = "dashboard-menu-notifications-badge";
 	private static final String STYLE_VISIBLE = "valo-menu-visible";
-	private Label reportsBadge;
 	private MenuItem settingsItem;
 	private User user = DashboardUI.getCurrentUser();
 	private CssLayout menuItemsLayout;
@@ -92,7 +91,6 @@ public final class DashboardMenu extends CustomComponent {
 		return logoWrapper;
 	}
 
-
 	private MenuBar buildUserMenu() {
 		// settings = new MenuBar();
 		settings.addStyleName("user-menu");
@@ -103,6 +101,11 @@ public final class DashboardMenu extends CustomComponent {
 		// se la registrazione è completata
 		if (user.isRegistrazioneCompletata()) {
 			settingsItem.addItem("Edit Profile", new Command() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -866924513489337812L;
+
 				@Override
 				public void menuSelected(final MenuItem selectedItem) {
 					UserCompletedRegistrationWindow.open(user, false);
@@ -112,6 +115,11 @@ public final class DashboardMenu extends CustomComponent {
 			settingsItem.addSeparator();
 		}
 		settingsItem.addItem("Cambia Password", new Command() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5022549575366839928L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				CredenzialiWindow.open((User) (VaadinSession.getCurrent().getAttribute(User.class.getName())), false);
@@ -120,6 +128,11 @@ public final class DashboardMenu extends CustomComponent {
 
 		settingsItem.addSeparator();
 		settingsItem.addItem("Logout", new Command() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2415817666648296659L;
+
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
 				DashboardEventBus.post(new UserLoggedOutEvent());
@@ -136,8 +149,7 @@ public final class DashboardMenu extends CustomComponent {
 
 			// se l'user ha completato la registrazione
 			if (user.isRegistrazioneCompletata() && (view == DashboardViewType.GESTIONE_VEICOLO_PROPRIO
-					|| view == DashboardViewType.GESTIONE_RIMBORSO 
-							|| view == DashboardViewType.CALENDARIO 
+					|| view == DashboardViewType.GESTIONE_RIMBORSO || view == DashboardViewType.CALENDARIO
 					|| view == DashboardViewType.GESTIONE_MISSIONE)) {
 
 				// if (user.isRegistrazioneCompletata()) {
@@ -155,11 +167,13 @@ public final class DashboardMenu extends CustomComponent {
 		}
 
 		// Creazione menù admin
-		if (user.isRegistrazioneCompletata()
-				&& user.getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN) {
+		if (user.isRegistrazioneCompletata() && user.getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN) {
 			menuItemsLayout.addComponent(new Label("<hr />", ContentMode.HTML));
 			menuItemsLayout.addComponent(new Label("Menù Admin"));
-			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
+
+			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.HOME_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
 			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_VEICOLO_CNR_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
@@ -203,7 +217,6 @@ public final class DashboardMenu extends CustomComponent {
 		getCompositionRoot().removeStyleName(STYLE_VISIBLE);
 	}
 
-
 	@Subscribe
 	public void updateUserName(final ProfileUpdatedEvent event) {
 
@@ -211,7 +224,8 @@ public final class DashboardMenu extends CustomComponent {
 			settingsItem.setText(DashboardUI.getCurrentUser().getCredenziali().getUsername());
 
 		else
-			settingsItem.setText(DashboardUI.getCurrentUser().getAnagrafica().getCognome() + " " + user.getAnagrafica().getNome());
+			settingsItem.setText(
+					DashboardUI.getCurrentUser().getAnagrafica().getCognome() + " " + user.getAnagrafica().getNome());
 	}
 
 	public final class ValoMenuItemButton extends Button {
@@ -233,6 +247,11 @@ public final class DashboardMenu extends CustomComponent {
 			DashboardEventBus.register(this);
 
 			addClickListener(new ClickListener() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -1918881911840117255L;
+
 				@Override
 				public void buttonClick(final ClickEvent event) {
 

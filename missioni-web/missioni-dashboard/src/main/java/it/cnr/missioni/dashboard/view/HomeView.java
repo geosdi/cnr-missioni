@@ -20,7 +20,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
@@ -39,10 +38,9 @@ import it.cnr.missioni.dashboard.notification.DashboardNotification;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
-import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
-public final class HomeView extends Panel implements View {
+public  class HomeView extends Panel implements View {
 
 	/**
 	 * 
@@ -56,13 +54,13 @@ public final class HomeView extends Panel implements View {
 
 	private CssLayout dashboardPanels;
 	private final VerticalLayout root;
-	private ElencoMissioniTable elencoMissioniTable;
-	private ElencoRimborsiTable elencoRimborsiTable;
+	protected ElencoMissioniTable elencoMissioniTable;
+	protected ElencoRimborsiTable elencoRimborsiTable;
 	private Window notificationsWindow;
 	private NotificationsButton notificationsButton;
 	private CalendarPrenotazioni calendar;
 
-	private User user = DashboardUI.getCurrentUser();
+
 
 	public HomeView() {
 
@@ -111,18 +109,6 @@ public final class HomeView extends Panel implements View {
 		l.setCaption("Ultime Missioni");
 		l.setSizeFull();
 		elencoMissioniTable = new ElencoMissioniTable();
-
-//		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-//				.withIdUser(user.getId());
-//
-//		try {
-//			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-//			elencoMissioniTable.aggiornaTable(missioniStore);
-//		} catch (Exception e) {
-//			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-//					Type.ERROR_MESSAGE);
-//		}
-
 		l.addComponent(elencoMissioniTable);
 
 		Component p = createContentWrapper(l);
@@ -143,18 +129,6 @@ public final class HomeView extends Panel implements View {
 		l.setCaption("Ultimi Rimborsi");
 		l.setSizeFull();
 		elencoRimborsiTable = new ElencoRimborsiTable();
-
-//		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-//				.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO).withIdUser(user.getId());
-//
-//		try {
-//			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-//			elencoRimborsiTable.aggiornaTable(missioniStore);
-//		} catch (Exception e) {
-//			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-//					Type.ERROR_MESSAGE);
-//		}
-
 		l.addComponent(elencoRimborsiTable);
 		Component p = createContentWrapper(l);
 		p.setId("tableRimborsi");
@@ -240,8 +214,8 @@ public final class HomeView extends Panel implements View {
 	@Override
 	public void enter(final ViewChangeEvent event) {
 		try {
-			MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-					.withIdUser(user.getId());
+			 MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+			.withIdUser(DashboardUI.getCurrentUser().getId()); ;
 			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
 			elencoMissioniTable.aggiornaTable(missioniStore);
 
