@@ -185,7 +185,11 @@ public class CalendarPrenotazioni implements Serializable {
 
 		monthButton = new Button("Mese", new ClickListener() {
 
-			private static final long serialVersionUID = 1L;
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4681033617026135027L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -195,7 +199,11 @@ public class CalendarPrenotazioni implements Serializable {
 
 		weekButton = new Button("Settimana", new ClickListener() {
 
-			private static final long serialVersionUID = 1L;
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2946257329173001870L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -208,7 +216,11 @@ public class CalendarPrenotazioni implements Serializable {
 
 		dayButton = new Button("Giorno", new ClickListener() {
 
-			private static final long serialVersionUID = 1L;
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4869635114067013308L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -220,7 +232,11 @@ public class CalendarPrenotazioni implements Serializable {
 		});
 
 		nextButton = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6795124780982940969L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -229,7 +245,11 @@ public class CalendarPrenotazioni implements Serializable {
 		});
 
 		prevButton = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1918853730365477105L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
