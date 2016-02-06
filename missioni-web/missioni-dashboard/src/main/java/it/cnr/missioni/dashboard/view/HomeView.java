@@ -225,30 +225,6 @@ public final class HomeView extends Panel implements View {
 			}
 		});
 		max.setStyleName("icon-only");
-		MenuItem root = tools.addItem("", FontAwesome.COG, null);
-		root.addItem("Configure", new Command() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 7967080645845509438L;
-
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				Notification.show("Not implemented in this demo");
-			}
-		});
-		root.addSeparator();
-		root.addItem("Close", new Command() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7758314449866999973L;
-
-			@Override
-			public void menuSelected(final MenuItem selectedItem) {
-				Notification.show("Not implemented in this demo");
-			}
-		});
 
 		toolbar.addComponents(caption, tools);
 		toolbar.setExpandRatio(caption, 1);
