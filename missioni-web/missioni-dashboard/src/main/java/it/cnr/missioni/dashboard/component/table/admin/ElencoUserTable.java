@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 
 import org.joda.time.DateTime;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CheckBox;
@@ -13,7 +12,6 @@ import com.vaadin.ui.Table;
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.component.table.ITable;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableUserUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -124,16 +122,6 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 
 		}
 		return super.formatPropertyValue(rowId, colId, property);
-	}
-
-	/**
-	 * 
-	 * Aggiorna la table user a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableUser(TableUserUpdatedEvent tableUserUpdatedEvent) {
-		aggiornaTable(tableUserUpdatedEvent.getUserStore());
 	}
 
 }

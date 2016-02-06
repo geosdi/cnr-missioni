@@ -1,7 +1,5 @@
 package it.cnr.missioni.dashboard.action;
 
-import java.util.ArrayList;
-
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
@@ -53,7 +51,7 @@ public class VeicoloAction implements IAction {
 			VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
 			Utility.getNotification(Utility.getMessage("success_message"),null,
 					Type.HUMANIZED_MESSAGE);
-			DashboardEventBus.post(new  DashboardEvent.TableVeicoliUpdatedEvent(new ArrayList<Veicolo>(user.getMappaVeicolo().values())) );
+			DashboardEventBus.post(new  DashboardEvent.TableVeicoliUpdatedEvent() );
 			return true;
 
 		} catch (Exception e) {

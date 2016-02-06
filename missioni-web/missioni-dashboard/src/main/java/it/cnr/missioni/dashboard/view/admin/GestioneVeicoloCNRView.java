@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -20,8 +21,7 @@ import com.vaadin.ui.VerticalLayout;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoVeicoliCNRTable;
 import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliCNRUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
@@ -173,7 +173,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new  DashboardEvent.TableVeicoliCNRUpdatedEvent(veicoloCNRStore) );
+				elencoVeicoliCNRTable.aggiornaTable(veicoloCNRStore);
 				return veicoloCNRStore != null ? veicoloCNRStore.getVeicoliCNR() : null;
 
 			}
@@ -196,6 +196,25 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 	protected Component buildFilter() {
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableVeicoloCNR(final TableVeicoliCNRUpdatedEvent event) {
+
+		try {
+			this.veicoloCNRStore = ClientConnector.getVeicoloCNR(this.veicoloCNRSearchBuilder);
+			elencoVeicoliCNRTable.aggiornaTable(this.veicoloCNRStore);
+			updatePagination(veicoloCNRStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

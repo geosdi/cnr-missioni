@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -20,8 +21,7 @@ import com.vaadin.ui.VerticalLayout;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoQualificaUserTable;
 import it.cnr.missioni.dashboard.component.window.admin.QualificaUserWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableQualificaUserUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
@@ -69,6 +69,11 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 					Type.ERROR_MESSAGE);
 		}
 		this.elencoQualificaUserTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6096596473626952913L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedQualificaUser = (QualificaUser) itemClickEvent.getItemId();
@@ -92,6 +97,11 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 		buttonNew = buildButton("Aggiungi Qualifica", "Inserisce una nuova qualifica",FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 182973545327593771L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				QualificaUserWindow.open(new QualificaUser(), false);
@@ -107,6 +117,11 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7581719058706756833L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -163,7 +178,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new DashboardEvent.TableQualificaUserUpdatedEvent(qualificaUserStore));
+				elencoQualificaUserTable.aggiornaTable(qualificaUserStore);
 				return qualificaUserStore != null ? qualificaUserStore.getQualificaUser() : null;
 
 			}
@@ -186,6 +201,25 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 	protected Component buildFilter() {
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableQualificaUser(final TableQualificaUserUpdatedEvent event) {
+
+		try {
+			this.qualificaUserStore = ClientConnector.getQualificaUser(this.qualificaUserSearchBuilder);
+			elencoQualificaUserTable.aggiornaTable(this.qualificaUserStore);
+			updatePagination(qualificaUserStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

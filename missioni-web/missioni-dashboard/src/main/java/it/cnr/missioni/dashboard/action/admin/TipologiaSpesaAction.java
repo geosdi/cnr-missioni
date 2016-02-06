@@ -7,9 +7,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * @author Salvia Vito
@@ -39,9 +37,7 @@ public class TipologiaSpesaAction implements IAction {
 			Utility.getNotification(Utility.getMessage("success_message"),null,
 					Type.HUMANIZED_MESSAGE);
 				
-			//ricarico  le tipologie
-			TipologiaSpesaStore nazioneStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder());
-			DashboardEventBus.post(new  DashboardEvent.TableTipologiaSpesaUpdatedEvent(nazioneStore) );
+			DashboardEventBus.post(new  DashboardEvent.TableTipologiaSpesaUpdatedEvent() );
 			return true;
 
 		} catch (Exception e) {

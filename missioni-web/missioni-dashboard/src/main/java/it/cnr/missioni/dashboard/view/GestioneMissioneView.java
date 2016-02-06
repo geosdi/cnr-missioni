@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -33,8 +34,7 @@ import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
@@ -108,7 +108,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore));
+				elencoMissioniTable.aggiornaTable(missioniStore);
 				return missioniStore != null ? missioniStore.getMissioni() : null;
 
 			}
@@ -294,7 +294,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 				try {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-					DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore));
+					elencoMissioniTable.aggiornaTable(missioniStore);
 
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -398,6 +398,25 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	@Override
 	public void enter(final ViewChangeEvent event) {
+
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableMissione(final TableMissioniUpdateUpdatedEvent event) {
+
+		try {
+			this.missioniStore = ClientConnector.getMissione(this.missioneSearchBuilder);
+			elencoMissioniTable.aggiornaTable(this.missioniStore);
+			updatePagination(missioniStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
 
 	}
 

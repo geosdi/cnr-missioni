@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -31,8 +32,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
 import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
 import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
@@ -86,6 +86,11 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
 
 		this.elencoRimborsiTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 8533964899401961490L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedMissione = (Missione) itemClickEvent.getItemId();
@@ -239,13 +244,18 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		buttonCerca.setDescription("Ricerca full text");
 		buttonCerca.addClickListener(new Button.ClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4994850358099629357L;
+
 			@Override
 			public void buttonClick(final ClickEvent event) {
 
 				try {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-					DashboardEventBus.post(new DashboardEvent.TableRimborsiUpdatedEvent(missioniStore));
+					elencoRimborsiTable.aggiornaTable(missioniStore);
 
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -264,6 +274,11 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso",FontAwesome.EDIT);
 		buttonDettagli.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8783796549904544814L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				DettagliRimborsoWindow.open(selectedMissione);
@@ -276,6 +291,11 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		buttonMissione = buildButton("Missone", "Visualizza i dati della Missione",FontAwesome.SUITCASE);
 
 		buttonMissione.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2610578422556405210L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -321,6 +341,11 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 			InputStream is = r.readEntity(InputStream.class);
 
 			StreamResource stream = new StreamResource(new StreamSource() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 8737605368476795000L;
+
 				@Override
 				public InputStream getStream() {
 					return is;
@@ -384,7 +409,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new  DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore) );
+				elencoRimborsiTable.aggiornaTable(missioniStore);
 				return missioniStore != null ? missioniStore.getMissioni() : null;
 
 			}
@@ -403,6 +428,25 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	protected Button createButtonNew() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableMissione(final TableRimborsiUpdatedEvent event) {
+
+		try {
+			this.missioniStore = ClientConnector.getMissione(this.missioneSearchBuilder);
+			elencoRimborsiTable.aggiornaTable(this.missioniStore);
+			updatePagination(missioniStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

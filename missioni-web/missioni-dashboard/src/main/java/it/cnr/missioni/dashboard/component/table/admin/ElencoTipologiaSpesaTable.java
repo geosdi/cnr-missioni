@@ -1,6 +1,5 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -8,7 +7,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 import it.cnr.missioni.dashboard.component.table.ITable;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableTipologiaSpesaUpdatedEvent;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
@@ -73,14 +71,5 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
 
 	}
 
-	/**
-	 * 
-	 * Aggiorna la table tipologia spesa a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableTipologiaSpesa(final TableTipologiaSpesaUpdatedEvent tableTipologiaSpesaUpdatedEvent) {
-		aggiornaTable(tableTipologiaSpesaUpdatedEvent.getTipologiaSpesaStore());
-	}
 
 }

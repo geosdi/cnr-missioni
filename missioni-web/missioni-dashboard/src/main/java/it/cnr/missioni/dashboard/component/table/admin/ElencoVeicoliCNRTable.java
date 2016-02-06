@@ -1,10 +1,8 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
 
 import it.cnr.missioni.dashboard.component.table.ITable;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliCNRUpdatedEvent;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -57,18 +55,6 @@ public final class ElencoVeicoliCNRTable extends ITable.AbstractTable{
 
 		}
 
-	}
-
-
-
-	/**
-	 * 
-	 * Aggiorna la table veicoli a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableCNRVeicoli(final TableVeicoliCNRUpdatedEvent tableVeicoliCNRUpdatedEvent) {
-		aggiornaTable(tableVeicoliCNRUpdatedEvent.getVeicoloCNRStore());
 	}
 
 }

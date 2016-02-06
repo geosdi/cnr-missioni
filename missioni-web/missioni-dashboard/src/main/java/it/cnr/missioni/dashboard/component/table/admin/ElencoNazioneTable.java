@@ -1,10 +1,8 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
 
 import it.cnr.missioni.dashboard.component.table.ITable;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableNazioneUpdatedEvent;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 
@@ -48,14 +46,5 @@ public final class ElencoNazioneTable extends ITable.AbstractTable {
 
 	}
 
-	/**
-	 * 
-	 * Aggiorna la table nazione a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableNazione(final TableNazioneUpdatedEvent tableNazioneUpdatedEvent) {
-		aggiornaTable(tableNazioneUpdatedEvent.getNazioneStore());
-	}
 
 }

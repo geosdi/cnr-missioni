@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -20,8 +21,7 @@ import com.vaadin.ui.VerticalLayout;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoMassimaleTable;
 import it.cnr.missioni.dashboard.component.window.admin.MassimaleWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableMassimaleUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
@@ -174,7 +174,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new DashboardEvent.TableMassimaleUpdatedEvent(massimaleStore));
+				elencoMassimaleTable.aggiornaTable(massimaleStore);
 				return massimaleStore != null ? massimaleStore.getMassimale() : null;
 
 			}
@@ -196,6 +196,25 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 	protected Component buildFilter() {
 		return null;
+	}
+
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableNazione(final TableMassimaleUpdatedEvent event) {
+
+		try {
+			this.massimaleStore = ClientConnector.getMassimale(this.massimaleSearchBuilder);
+			elencoMassimaleTable.aggiornaTable(this.massimaleStore);
+			updatePagination(massimaleStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

@@ -1,10 +1,8 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
 
 import it.cnr.missioni.dashboard.component.table.ITable;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableMassimaleUpdatedEvent;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
@@ -50,16 +48,6 @@ public final class ElencoMassimaleTable extends ITable.AbstractTable {
 
 		}
 
-	}
-
-	/**
-	 * 
-	 * Aggiorna la table massimale a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableNazione(final TableMassimaleUpdatedEvent tableMassimaleUpdatedEvent) {
-		aggiornaTable(tableMassimaleUpdatedEvent.getMassimaleStore());
 	}
 
 }

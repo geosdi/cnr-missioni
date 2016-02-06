@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -20,8 +21,7 @@ import com.vaadin.ui.VerticalLayout;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoNazioneTable;
 import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableNazioneUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
@@ -172,7 +172,9 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new DashboardEvent.TableNazioneUpdatedEvent(nazioneStore));
+				
+				
+				elencoNazioneTable.aggiornaTable(nazioneStore);
 				return nazioneStore != null ? nazioneStore.getNazione() : null;
 
 			}
@@ -195,6 +197,25 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 	protected Component buildFilter() {
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableNazione(final TableNazioneUpdatedEvent event) {
+
+		try {
+			this.nazioneStore = ClientConnector.getNazione(this.nazioneSearchBuilder);
+			elencoNazioneTable.aggiornaTable(this.nazioneStore);
+			updatePagination(nazioneStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

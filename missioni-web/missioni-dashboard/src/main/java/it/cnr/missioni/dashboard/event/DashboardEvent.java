@@ -5,10 +5,7 @@ import java.util.List;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
 import it.cnr.missioni.model.user.Veicolo;
-import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
-import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
-import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -101,30 +98,6 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableVeicoliUpdatedEvent {
 		
-		private List<Veicolo> lista;
-
-		/**
-		 * @param lista
-		 */
-		public TableVeicoliUpdatedEvent(List<Veicolo> lista) {
-			this.lista = lista;
-		}
-
-		/**
-		 * @return the lista
-		 */
-		public List<Veicolo> getLista() {
-			return lista;
-		}
-
-		/**
-		 * @param lista 
-		 */
-		public void setLista(List<Veicolo> lista) {
-			this.lista = lista;
-		}
-		
-		
 	}
 
 	/**
@@ -136,29 +109,6 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableMissioniUpdateUpdatedEvent {
 
-		private MissioniStore missioniStore;
-
-		/**
-		 * @param missioniStore
-		 */
-		public TableMissioniUpdateUpdatedEvent(MissioniStore missioniStore) {
-			this.missioniStore = missioniStore;
-		}
-
-		/**
-		 * @return the missioniStore
-		 */
-		public MissioniStore getMissioniStore() {
-			return missioniStore;
-		}
-
-		/**
-		 * @param missioniStore
-		 */
-		public void setMissioniStore(MissioniStore missioniStore) {
-			this.missioniStore = missioniStore;
-		}
-
 	}
 
 	/**
@@ -169,28 +119,6 @@ public abstract class DashboardEvent {
 
 	public static class TableRimborsiUpdatedEvent {
 
-		private MissioniStore missioniStore;
-
-		/**
-		 * @param missioniStore
-		 */
-		public TableRimborsiUpdatedEvent(MissioniStore missioniStore) {
-			this.missioniStore = missioniStore;
-		}
-
-		/**
-		 * @return the missioniStore
-		 */
-		public MissioniStore getMissioniStore() {
-			return missioniStore;
-		}
-
-		/**
-		 * @param missioniStore
-		 */
-		public void setMissioniStore(MissioniStore missioniStore) {
-			this.missioniStore = missioniStore;
-		}
 
 	}
 
@@ -203,28 +131,6 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableUserUpdatedEvent {
 
-		private UserStore userStore;
-
-		/**
-		 * @param missioniStore
-		 */
-		public TableUserUpdatedEvent(UserStore userStore) {
-			this.setUserStore(userStore);
-		}
-
-		/**
-		 * @return the userStore
-		 */
-		public UserStore getUserStore() {
-			return userStore;
-		}
-
-		/**
-		 * @param userStore
-		 */
-		public void setUserStore(UserStore userStore) {
-			this.userStore = userStore;
-		}
 
 	}
 
@@ -267,29 +173,6 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableVeicoliCNRUpdatedEvent {
 
-		private VeicoloCNRStore veicoloCNRStore;
-
-		/**
-		 * @param veicoloCNRStore
-		 */
-		public TableVeicoliCNRUpdatedEvent(VeicoloCNRStore veicoloCNRStore) {
-			this.veicoloCNRStore = veicoloCNRStore;
-		}
-
-		/**
-		 * @return the veicoloCNRStore
-		 */
-		public VeicoloCNRStore getVeicoloCNRStore() {
-			return veicoloCNRStore;
-		}
-
-		/**
-		 * @param veicoloCNRStore
-		 */
-		public void setVeicoloCNRStore(VeicoloCNRStore veicoloCNRStore) {
-			this.veicoloCNRStore = veicoloCNRStore;
-		}
-
 	}
 
 	/**
@@ -301,29 +184,6 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableQualificaUserUpdatedEvent {
 
-		private QualificaUserStore qualificaStore;
-
-		/**
-		 * @param veicoloCNRStore
-		 */
-		public TableQualificaUserUpdatedEvent(QualificaUserStore qualificaStore) {
-			this.setQualificaStore(qualificaStore);
-		}
-
-		/**
-		 * @return the qualificaStore
-		 */
-		public QualificaUserStore getQualificaStore() {
-			return qualificaStore;
-		}
-
-		/**
-		 * @param qualificaStore
-		 */
-		public void setQualificaStore(QualificaUserStore qualificaStore) {
-			this.qualificaStore = qualificaStore;
-		}
-
 	}
 
 	/**
@@ -334,29 +194,6 @@ public abstract class DashboardEvent {
 	 *
 	 */
 	public static class TableNazioneUpdatedEvent {
-
-		private NazioneStore nazioneStore;
-
-		/**
-		 * @param veicoloCNRStore
-		 */
-		public TableNazioneUpdatedEvent(NazioneStore nazioneStore) {
-			this.setNazioneStore(nazioneStore);
-		}
-
-		/**
-		 * @return the nazioneStore
-		 */
-		public NazioneStore getNazioneStore() {
-			return nazioneStore;
-		}
-
-		/**
-		 * @param nazioneStore
-		 */
-		public void setNazioneStore(NazioneStore nazioneStore) {
-			this.nazioneStore = nazioneStore;
-		}
 
 	}
 
@@ -415,29 +252,6 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableTipologiaSpesaUpdatedEvent {
 
-		private TipologiaSpesaStore tipologiaSpesaStore;
-
-		/**
-		 * @param tipologiaSpesaStore
-		 */
-		public TableTipologiaSpesaUpdatedEvent(TipologiaSpesaStore tipologiaSpesaStore) {
-			this.tipologiaSpesaStore = tipologiaSpesaStore;
-		}
-
-		/**
-		 * @return the tipologiaSpesaStore
-		 */
-		public TipologiaSpesaStore getTipologiaSpesaStore() {
-			return tipologiaSpesaStore;
-		}
-
-		/**
-		 * @param tipologiaSpesaStore 
-		 */
-		public void setTipologiaSpesaStore(TipologiaSpesaStore tipologiaSpesaStore) {
-			this.tipologiaSpesaStore = tipologiaSpesaStore;
-		}
-
 	}
 	
 	/**
@@ -448,31 +262,6 @@ public abstract class DashboardEvent {
 	 *
 	 */
 	public static class TableMassimaleUpdatedEvent {
-
-		private MassimaleStore massimaleStore;
-
-		/**
-		 * @param massimaleStore
-		 */
-		public TableMassimaleUpdatedEvent(MassimaleStore massimaleStore) {
-			this.massimaleStore = massimaleStore;
-		}
-
-		/**
-		 * @return the massimaleStore
-		 */
-		public MassimaleStore getMassimaleStore() {
-			return massimaleStore;
-		}
-
-		/**
-		 * @param massimaleStore 
-		 */
-		public void setMassimaleStore(MassimaleStore massimaleStore) {
-			this.massimaleStore = massimaleStore;
-		}
-
-
 
 	}
 	

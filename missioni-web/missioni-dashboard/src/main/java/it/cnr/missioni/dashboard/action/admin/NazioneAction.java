@@ -7,9 +7,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 
 /**
  * @author Salvia Vito
@@ -39,9 +37,7 @@ public class NazioneAction implements IAction {
 			Utility.getNotification(Utility.getMessage("success_message"),null,
 					Type.HUMANIZED_MESSAGE);
 				
-			//ricarico  le nazioni
-			NazioneStore nazioneStore = ClientConnector.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder());
-			DashboardEventBus.post(new  DashboardEvent.TableNazioneUpdatedEvent(nazioneStore) );
+			DashboardEventBus.post(new  DashboardEvent.TableNazioneUpdatedEvent() );
 			return true;
 
 		} catch (Exception e) {

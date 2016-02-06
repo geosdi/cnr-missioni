@@ -2,14 +2,12 @@ package it.cnr.missioni.dashboard.component.table;
 
 import java.util.List;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliUpdatedEvent;
 import it.cnr.missioni.model.user.Veicolo;
 
 /**
@@ -63,17 +61,6 @@ public final class ElencoVeicoliTable extends ITable.AbstractTable {
 
 		}
 
-	}
-
-
-	/**
-	 * 
-	 * Aggiorna la table veicoli a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableVeicoli(final TableVeicoliUpdatedEvent tableVeicoliUpdatedEvent) {
-		aggiornaTable(tableVeicoliUpdatedEvent.getLista());
 	}
 
 

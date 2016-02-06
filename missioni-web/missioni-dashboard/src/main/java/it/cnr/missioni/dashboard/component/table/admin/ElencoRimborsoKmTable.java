@@ -1,10 +1,8 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.util.BeanItemContainer;
 
 import it.cnr.missioni.dashboard.component.table.ITable;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsoKmUpdatedEvent;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
@@ -47,14 +45,6 @@ public final class ElencoRimborsoKmTable extends ITable.AbstractTable {
 
 	}
 
-	/**
-	 * 
-	 * Aggiorna la table a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableRimborsoKm(final TableRimborsoKmUpdatedEvent tableRimborsoKmUpdatedEvent) {
-		aggiornaTable(tableRimborsoKmUpdatedEvent.getRimborsoKmStore());
-	}
+
 
 }

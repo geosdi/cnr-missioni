@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -20,8 +21,7 @@ import com.vaadin.ui.VerticalLayout;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoTipologiaSpesaTable;
 import it.cnr.missioni.dashboard.component.window.admin.TipologiaSpesaWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableTipologiaSpesaUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
@@ -67,6 +67,11 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 					Type.ERROR_MESSAGE);
 		}
 		this.elencoTipologiaSpesaTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7822436082056338124L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedTipologiaSpesa = (TipologiaSpesa) itemClickEvent.getItemId();
@@ -90,6 +95,11 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 		buttonNew = buildButton("Aggiungi Tipologia Spesa", "Inserisce una nuova tipologia spesa",FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6191290822465375120L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				TipologiaSpesaWindow.open(new TipologiaSpesa(), false);
@@ -105,6 +115,11 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8375255955679741739L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -161,7 +176,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new DashboardEvent.TableTipologiaSpesaUpdatedEvent(tipologiaSpesaStore));
+				elencoTipologiaSpesaTable.aggiornaTable(tipologiaSpesaStore);
 				return tipologiaSpesaStore != null ? tipologiaSpesaStore.getTipologiaSpesa() : null;
 
 			}
@@ -184,6 +199,25 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 
 	protected Component buildFilter() {
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableTipologiaSpesa(final TableTipologiaSpesaUpdatedEvent event) {
+
+		try {
+			this.tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(this.tipologiaSpesaSearchBuilder);
+			elencoTipologiaSpesaTable.aggiornaTable(this.tipologiaSpesaStore);
+			updatePagination(tipologiaSpesaStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

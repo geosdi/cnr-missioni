@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -23,8 +24,7 @@ import com.vaadin.ui.VerticalLayout;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoUserTable;
 import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableUserUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
@@ -112,6 +112,11 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		this.userSearchBuilder = UserSearchBuilder.getUserSearchBuilder();
 		this.elencoUserTable = new ElencoUserTable();
 		this.elencoUserTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1826612705343869714L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedUser = (User) itemClickEvent.getItemId();
@@ -304,18 +309,18 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		
 		buttonCerca = buildButton("", "Ricerca full text",FontAwesome.SEARCH);
 		buttonCerca.addClickListener(new Button.ClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2401290057230222368L;
+
 			@Override
 			public void buttonClick(final ClickEvent event) {
 
 				try {
 					userSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					userStore = ClientConnector.getUser(userSearchBuilder);
-					DashboardEventBus.post(new DashboardEvent.TableUserUpdatedEvent(userStore));
-
-					// Animator anim = new Animator(new Label("Animate Me!"));
-
-					// layoutForm.setVisible(true);
-
+					elencoUserTable.aggiornaTable(userStore);
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
@@ -331,6 +336,11 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli dell'user",FontAwesome.EDIT);
 
 		buttonDettagli.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7939532417002125241L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -388,7 +398,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				DashboardEventBus.post(new DashboardEvent.TableUserUpdatedEvent(userStore));
+				elencoUserTable.aggiornaTable(userStore);
 				return userStore != null ? userStore.getUsers() : null;
 
 			}
@@ -407,6 +417,25 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	protected Button createButtonNew() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableUser(final TableUserUpdatedEvent event) {
+
+		try {
+			this.userStore = ClientConnector.getUser(this.userSearchBuilder);
+			elencoUserTable.aggiornaTable(this.userStore);
+			updatePagination(userStore.getTotale());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

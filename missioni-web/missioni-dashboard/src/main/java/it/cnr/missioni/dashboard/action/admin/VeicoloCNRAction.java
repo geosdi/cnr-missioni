@@ -7,9 +7,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /**
  * @author Salvia Vito
@@ -39,9 +37,7 @@ public class VeicoloCNRAction implements IAction {
 			Utility.getNotification(Utility.getMessage("success_message"),null,
 					Type.HUMANIZED_MESSAGE);
 				
-			//ricarico i veicoli
-			VeicoloCNRStore veicoloCNRStore = ClientConnector.getVeicoloCNR(VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder());
-			DashboardEventBus.post(new  DashboardEvent.TableVeicoliCNRUpdatedEvent(veicoloCNRStore) );
+			DashboardEventBus.post(new  DashboardEvent.TableVeicoliCNRUpdatedEvent() );
 			return true;
 
 		} catch (Exception e) {

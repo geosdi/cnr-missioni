@@ -128,14 +128,18 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 			pagingComponent.getComponentsManager().getElementsBuilder().getButtonPrevious().setCaption("Precendente");
 //		this.pagingComponent
 //				.setVisible(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale ? true : false);
-		
-		
-		
 		addComponent(this.pagingComponent);
 		pagingComponent.setStyleName("pagination");
 		setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
 
 	}
+	
+	protected void updatePagination(Long totale){
+		List<T> fakeList = new FakeList<T>(totale.intValue());
+		Builder<T> builder = PagingComponent.paginate(fakeList);
+		pagingComponent = builder.build();
+	}
+	
 	
 
 	protected abstract VerticalLayout buildTable();

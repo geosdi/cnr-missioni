@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
@@ -16,13 +17,14 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliUpdatedEvent;
+import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.user.Veicolo;
 
 /**
@@ -59,6 +61,11 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 				.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
 
 		this.elencoVeicoliTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5017833149328634827L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedVeicolo = (Veicolo) itemClickEvent.getItemId();
@@ -83,6 +90,11 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 		buttonNew = buildButton("Nuovo Veicolo", "Aggiunge un nuovo Veicolo",FontAwesome.FILE_PDF_O);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4326582344154509066L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				VeicoloWindow.open(new Veicolo(), false);
@@ -98,6 +110,11 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 		buttonModifica = buildButton("Modifica", "Modifica i dati del vieicolo",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4764560187783814285L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -143,6 +160,11 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3136362902223702835L;
+
 			@Override
 			protected Collection<Veicolo> getItemsList(int startIndex, int endIndex) {
 				
@@ -156,8 +178,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 				});
 				
 				
-				
-				DashboardEventBus.post(new  DashboardEvent.TableVeicoliUpdatedEvent(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values())) );
+				elencoVeicoliTable.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
 				return listaVeicolo;
 
 			}
@@ -180,6 +201,25 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 	protected Component buildFilter() {
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableMissione(final TableVeicoliUpdatedEvent event) {
+
+		try {
+			this.elencoVeicoliTable
+			.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
+			updatePagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+
 	}
 
 }

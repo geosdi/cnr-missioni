@@ -117,6 +117,11 @@ public class CalendarPrenotazioni implements Serializable {
 	private void addListener() {
 		getCalendarComponent().setHandler(new BasicDateClickHandler() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1038308797415286263L;
+
 			@Override
 			public void dateClick(DateClickEvent event) {
 				// let BasicDateClickHandler handle calendar dates, and update
@@ -129,6 +134,11 @@ public class CalendarPrenotazioni implements Serializable {
 
 		getCalendarComponent().setHandler(new EventClickHandler() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1884486780975341603L;
+
 			public void eventClick(EventClick event) {
 
 				// solamente le la prenotazione appartiene all'utente loggato
@@ -140,6 +150,11 @@ public class CalendarPrenotazioni implements Serializable {
 
 		getCalendarComponent().setHandler(new RangeSelectHandler() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4617125157294854765L;
+
 			public void rangeSelect(RangeSelectEvent event) {
 
 				handleRangeSelect(event);
@@ -148,6 +163,11 @@ public class CalendarPrenotazioni implements Serializable {
 		});
 
 		getCalendarComponent().setHandler(new BasicDateClickHandler() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4442209950706045534L;
 
 			@Override
 			public void dateClick(DateClickEvent event) {
@@ -226,7 +246,7 @@ public class CalendarPrenotazioni implements Serializable {
 		prevButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		prevButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);
 		nextButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		prevButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);		
+		nextButton.addStyleName(ValoTheme.BUTTON_BORDERLESS_COLORED);		
 
 		nextButton.setIcon(FontAwesome.FORWARD);
 		prevButton.setIcon(FontAwesome.BACKWARD);

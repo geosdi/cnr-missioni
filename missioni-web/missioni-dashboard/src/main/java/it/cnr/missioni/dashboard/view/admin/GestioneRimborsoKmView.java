@@ -17,6 +17,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoRimborsoKmTable;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoKmWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.DisableButtonNewEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsoKmUpdatedEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
@@ -64,6 +65,11 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 					Type.ERROR_MESSAGE);
 		}
 		this.elencoRimborsoKmTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -3431149668543463964L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedRimborsoKm = (RimborsoKm) itemClickEvent.getItemId();
@@ -87,6 +93,11 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		buttonNew = buildButton("Aggiungi Rimborso Km", "Inserisce un nuovo rimborso km",FontAwesome.PLUS);
 		this.buttonNew.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4653736027093331024L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				RimborsoKmWindow.open(new RimborsoKm(), false);
@@ -102,6 +113,11 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2268707095518228299L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -162,6 +178,16 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	protected void addListenerPagination() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la table a seguito di un inserimento o modifica
+	 * 
+	 */
+	@Subscribe
+	public void aggiornaTableRimborsoKm(final TableRimborsoKmUpdatedEvent event) {
+		elencoRimborsoKmTable.aggiornaTable(rimborsoKmStore);
 	}
 
 }

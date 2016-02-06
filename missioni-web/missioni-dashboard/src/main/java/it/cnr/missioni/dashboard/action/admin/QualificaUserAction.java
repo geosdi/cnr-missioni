@@ -7,9 +7,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.QualificaUser;
-import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 
 /**
  * @author Salvia Vito
@@ -39,9 +37,7 @@ public class QualificaUserAction implements IAction {
 			Utility.getNotification(Utility.getMessage("success_message"),null,
 					Type.HUMANIZED_MESSAGE);
 				
-			//ricarico  le qualifiche
-			QualificaUserStore qualificaUserStore = ClientConnector.getQualificaUser(QualificaUserSearchBuilder.getQualificaUserSearchBuilder());
-			DashboardEventBus.post(new  DashboardEvent.TableQualificaUserUpdatedEvent(qualificaUserStore) );
+			DashboardEventBus.post(new  DashboardEvent.TableQualificaUserUpdatedEvent() );
 			return true;
 
 		} catch (Exception e) {

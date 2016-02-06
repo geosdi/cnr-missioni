@@ -9,11 +9,9 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.user.Veicolo;
-import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
  * @author Salvia Vito
@@ -53,11 +51,7 @@ public class MissioneAction implements IAction {
 
 
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
-
-			//ricarica tutte le missioni per aggiornare la table
-			MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId());
-			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent(missioniStore));
+			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent());
 			
 			return true;
 

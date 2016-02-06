@@ -4,11 +4,9 @@ import java.text.SimpleDateFormat;
 
 import org.joda.time.DateTime;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
@@ -90,14 +88,5 @@ public final class ElencoRimborsiTable  extends ITable.AbstractTable  {
 		return super.formatPropertyValue(rowId, colId, property);
 	}
 
-	/**
-	 * 
-	 * Aggiorna la table rimborsi a seguito di un inserimento o modifica
-	 * 
-	 */
-	@Subscribe
-	public void aggiornaTableMissioni(TableRimborsiUpdatedEvent tableRimborsiUpdatedEvent) {
-		aggiornaTable(tableRimborsiUpdatedEvent.getMissioniStore());
-	}
 
 }
