@@ -14,6 +14,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.PostViewChangeEvent;
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 
 @SuppressWarnings("serial")
 public class DashboardNavigator extends Navigator {
@@ -22,12 +23,15 @@ public class DashboardNavigator extends Navigator {
     private static final String TRACKER_ID = null;// "UA-658457-6";
     private GoogleAnalyticsTracker tracker;
 
-    private static final DashboardViewType ERROR_VIEW = DashboardViewType.HOME;
+    private static  DashboardViewType ERROR_VIEW ;
     private ViewProvider errorViewProvider;
 
     public DashboardNavigator(final ComponentContainer container) {
         super(UI.getCurrent(), container);
-
+        if(DashboardUI.getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN)
+        	ERROR_VIEW = DashboardViewType.HOME_ADMIN;
+        else
+        	ERROR_VIEW = DashboardViewType.HOME;
         String host = getUI().getPage().getLocation().getHost();
         if (TRACKER_ID != null && host.endsWith("demo.vaadin.com")) {
             initGATracker(TRACKER_ID);

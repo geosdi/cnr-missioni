@@ -109,13 +109,6 @@ public final class DashboardUI extends UI  {
 
 		if (loginAction.doAction()) {			
 			updateContent();
-//			Runnable runnable = () -> {
-//				User u = DashboardUI.getCurrentUser();
-//				WizardSetupWindow.getWizardSetup().withTipo("user").withUser(u).build();
-//			};
-//
-//			Thread thread = new Thread(runnable);
-//			thread.start();
 		}
 
 	}
