@@ -7,6 +7,7 @@ import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.*;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
@@ -87,6 +88,8 @@ public class MissioniNotificationDispatcherProdTest {
                                 .withMissione(buildMissioneTest())));
         Thread.sleep(4000);
     }
+    
+    
 
     @Test
     public void createFileTest() throws Exception {
@@ -96,7 +99,32 @@ public class MissioniNotificationDispatcherProdTest {
                 .withMissione(buildMissioneTest())
                 .withFile(new File("./target/Missione.pdf")).build();
     }
+    
+    @Test
+    public void dispatchAddVeicoloMailProdTest() throws Exception {
+    	
+    	PDFBuilder pdfBuilder = MissionePDFBuilder
+                .newPDFBuilder();
+    	pdfBuilder.setMezzoProprio(true);
+    	pdfBuilder.withUser(buildUserTest())
+                .withMissione(buildMissioneTest()).withVeicolo(buildVeicoloTest());
 
+    	
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
+                .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com",
+                        "vito.salvia@gmail.com", pdfBuilder));
+        Thread.sleep(6000);
+    }
+
+    Veicolo buildVeicoloTest(){
+    	Veicolo v = new Veicolo();
+    	v.setTipo("01");
+    	v.setCartaCircolazione("Carta:123");
+    	v.setPolizzaAssicurativa("Polizza:AAAA");
+    	v.setTipo("FORD");
+    	return v;
+    }
+    
     User buildUserTest() {
         User user = new User();
         Anagrafica anagrafica = null;
@@ -163,6 +191,7 @@ public class MissioniNotificationDispatcherProdTest {
         missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
         missione.setMezzoProprio(true);
         missione.setDistanza("100.00 Km");
+        missione.setMotivazioniMezzoProprio("prova");
         DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
         dati.setAnticipazioniMonetarie(true);
         dati.setMandatoCNR("AA11");
