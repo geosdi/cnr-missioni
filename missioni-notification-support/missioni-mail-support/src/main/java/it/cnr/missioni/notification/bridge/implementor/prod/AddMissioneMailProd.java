@@ -59,6 +59,15 @@ public class AddMissioneMailProd extends MissioniMailProd {
                 pdfBuilder.build();
                 message.addAttachment(file.getName(), file);
                 missioniMessagePreparator.addAttachment(file);
+                if(pdfBuilder.isMezzoProprio()){
+
+                    Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userName), ".pdf");
+                    File fileVeicolo = tempFilePathVeicolo.toFile();
+                    pdfBuilder.withFileVeicolo(fileVeicolo);
+                    pdfBuilder.buildVeicolo();
+                    message.addAttachment(fileVeicolo.getName(), fileVeicolo);
+                    missioniMessagePreparator.addAttachment(fileVeicolo);
+                }
 
             }
         });

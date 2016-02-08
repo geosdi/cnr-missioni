@@ -9,10 +9,12 @@ import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.model.validator.ICNRMissionValidator;
 import it.cnr.missioni.notification.dispatcher.MissioniMailDispatcher;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.spring.configuration.CNRMissioniEmail;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
@@ -93,12 +95,19 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+		if(missione.isMezzoProprio()){
+			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
+			Veicolo veicolo = user.getVeicoloPrincipale();
+			pdfBuilder.withVeicolo(veicolo);
+		}
 
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 						: this.cnrMissioniItaliaEmail.getEmail()),
-				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+				pdfBuilder));
 
 		return Boolean.TRUE;
 	}
@@ -178,11 +187,18 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+		if(missione.isMezzoProprio()){
+			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
+			Veicolo veicolo = user.getVeicoloPrincipale();
+			pdfBuilder.withVeicolo(veicolo);
+		}
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 						: this.cnrMissioniItaliaEmail.getEmail()),
-				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+				pdfBuilder));
 		return this.missioneDAO.persist(missione).getId();
 	}
 
@@ -200,18 +216,26 @@ class MissioneDelegate implements IMissioneDelegate {
 			missione.getRimborso().setNumeroOrdine(this.missioneDAO.getMaxNumeroOrdineRimborso());
 		this.missioneDAO.update(missione);
 
+		
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+		if(missione.isMezzoProprio()){
+			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
+			Veicolo veicolo = user.getVeicoloPrincipale();
+			pdfBuilder.withVeicolo(veicolo);
+		}
+		
 		if (missione.isRimborsoSetted()) {
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
 					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 					(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 							: this.cnrMissioniItaliaEmail.getEmail()),
-					missione.getId(), RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+					missione.getId(), pdfBuilder));
 		} else {
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
 					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 					(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 							: this.cnrMissioniItaliaEmail.getEmail()),
-					MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+					pdfBuilder));
 		}
 		return Boolean.TRUE;
 	}

@@ -9,6 +9,7 @@ import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -230,4 +231,15 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
     public IPDFBuilderType getType() {
         return PDFBuilderType.RIMBORSO_PDF_BUIDER;
     }
+
+	/**
+	 * @throws Exception
+	 */
+	@Override
+	public void buildVeicolo() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

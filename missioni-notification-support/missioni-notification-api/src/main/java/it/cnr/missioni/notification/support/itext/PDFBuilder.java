@@ -3,6 +3,7 @@ package it.cnr.missioni.notification.support.itext;
 import com.google.common.base.Preconditions;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -24,12 +25,23 @@ public interface PDFBuilder {
      * @return {@link PDFBuilder}
      */
     PDFBuilder withMissione(Missione missione);
-
+    
+    /**
+     * @param veicolo
+     * @return {@link PDFBuilder}
+     */
+    PDFBuilder withVeicolo(Veicolo veicolo);
     /**
      * @param file
      * @return {@link PDFBuilder}
      */
     PDFBuilder withFile(File file);
+    
+    /**
+     * @param file
+     * @return {@link PDFBuilder}
+     */
+    PDFBuilder withFileVeicolo(File fileVeicolo);
 
     /**
      * @param outputStream
@@ -46,6 +58,23 @@ public interface PDFBuilder {
      * @throws Exception
      */
     void build() throws Exception;
+    
+    /**
+     * @throws Exception
+     */
+    void buildVeicolo() throws Exception;
+    
+    /**
+     * 
+     * @return
+     */
+    boolean isMezzoProprio();
+    
+    /**
+     * 
+     * @param isMezzoProprio
+     */    
+    public void setMezzoProprio(boolean isMezzoProprio) ;
 
     /**
      *
@@ -93,8 +122,11 @@ public interface PDFBuilder {
 
         protected User user;
         protected Missione missione;
+        protected Veicolo veicolo;
         protected File file;
+        protected File fileVeicolo;
         protected OutputStream outputStream;
+        private boolean isMezzoProprio;
 
         protected AbstractPDFBuilder() {
         }
@@ -118,6 +150,16 @@ public interface PDFBuilder {
             this.missione = missione;
             return self();
         }
+        
+        /**
+         * @param veicolo
+         * @return {@link PDFBuilder}
+         */
+        @Override
+        public PDFBuilder withVeicolo(Veicolo veicolo) {
+            this.veicolo = veicolo;
+            return self();
+        }
 
 
         /**
@@ -127,6 +169,16 @@ public interface PDFBuilder {
         @Override
         public PDFBuilder withFile(File file) {
             this.file = file;
+            return self();
+        }
+        
+        /**
+         * @param fileVeicolo
+         * @return {@link File}
+         */
+        @Override
+        public PDFBuilder withFileVeicolo(File fileVeicolo) {
+            this.fileVeicolo = fileVeicolo;
             return self();
         }
 
@@ -141,6 +193,20 @@ public interface PDFBuilder {
         }
 
         /**
+		 * @return the isMezzoProprio
+		 */
+		public boolean isMezzoProprio() {
+			return isMezzoProprio;
+		}
+
+		/**
+		 * @param isMezzoProprio 
+		 */
+		public void setMezzoProprio(boolean isMezzoProprio) {
+			this.isMezzoProprio = isMezzoProprio;
+		}
+
+		/**
          * @throws Exception
          */
         protected void checkArguments() throws Exception {
