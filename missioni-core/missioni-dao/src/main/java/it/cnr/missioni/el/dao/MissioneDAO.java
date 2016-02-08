@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.StatoEnum;
 
 /**
  * @author Salvia Vito
@@ -104,7 +105,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 
 		bucketsByStato.forEach(bucketByStato -> {
 
-			statisticheMissioni.getMappaStatistiche().put(bucketByStato.getKey().toString(),
+			statisticheMissioni.getMappaStatistiche().put(((StatoEnum)bucketByStato.getKey()).getStato(),
 					bucketByStato.getDocCount());
 
 			});

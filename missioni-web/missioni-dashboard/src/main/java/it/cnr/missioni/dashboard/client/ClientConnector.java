@@ -8,6 +8,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
+import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
@@ -433,6 +434,16 @@ public class ClientConnector {
 	 */
 	public static void updateMassimale(Massimale massimale) throws Exception {
 		missioniCoreClientConnector.updateMassimale(massimale);
+
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public static StatisticheMissioni getStatisticheMissioni( ) throws Exception {
+		return missioniCoreClientConnector.getStatistiche();
 
 	}
 

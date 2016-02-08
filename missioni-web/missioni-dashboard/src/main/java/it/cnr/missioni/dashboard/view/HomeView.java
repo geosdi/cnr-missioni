@@ -103,7 +103,7 @@ public  class HomeView extends Panel implements View {
 	 * 
 	 * @return Component
 	 */
-	private Component buildTableMissioni() {
+	private Component buildPanelTopLeft() {
 
 		CssLayout l = new CssLayout();
 		l.setCaption("Ultime Missioni");
@@ -123,7 +123,7 @@ public  class HomeView extends Panel implements View {
 	 * 
 	 * @return Component
 	 */
-	private Component buildTableRimborsi() {
+	private Component buildPanelTopRight() {
 
 		CssLayout l = new CssLayout();
 		l.setCaption("Ultimi Rimborsi");
@@ -136,7 +136,7 @@ public  class HomeView extends Panel implements View {
 
 	}
 
-	private Component buildCalendar() {
+	protected Component buildPanelBottom() {
 
 		calendar = new CalendarPrenotazioni("100%", "200px");
 		calendar.initContent();
@@ -152,14 +152,14 @@ public  class HomeView extends Panel implements View {
 		dashboardPanels = new CssLayout();
 		dashboardPanels.addStyleName("dashboard-panels");
 		Responsive.makeResponsive(dashboardPanels);
-		dashboardPanels.addComponent(buildTableMissioni());
-		dashboardPanels.addComponent(buildTableRimborsi());
-		dashboardPanels.addComponent(buildCalendar());
+		dashboardPanels.addComponent(buildPanelTopLeft());
+		dashboardPanels.addComponent(buildPanelTopRight());
+		dashboardPanels.addComponent(buildPanelBottom());
 		return dashboardPanels;
 	}
 
 
-	private Component createContentWrapper(final Component content) {
+	protected Component createContentWrapper(final Component content) {
 		final CssLayout slot = new CssLayout();
 		slot.addStyleName("dashboard-panel-slot");
 

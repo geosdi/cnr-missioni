@@ -37,22 +37,22 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 		super();
 		buildTable();
 		
-		addGeneratedColumn("stato", new ColumnGenerator() {
-
-			@Override
-			public Object generateCell(final Table source, final Object itemId, Object columnId) {
-
-				Missione missione = (Missione) itemId;
-				Label l = new Label(missione.getStato().getStato());
-				if (missione.getStato() == StatoEnum.PAGATA) {
-					l.setStyleName(ValoTheme.LABEL_SUCCESS);
-				}
-				else{
-					l.setStyleName(ValoTheme.LABEL_FAILURE);
-				}
-				return l;
-			}
-		});
+//		addGeneratedColumn("stato", new ColumnGenerator() {
+//
+//			@Override
+//			public Object generateCell(final Table source, final Object itemId, Object columnId) {
+//
+//				Missione missione = (Missione) itemId;
+//				Label l = new Label(missione.getStato().getStato());
+//				if (missione.getStato() == StatoEnum.PAGATA) {
+//					l.setStyleName(ValoTheme.LABEL_SUCCESS);
+//				}
+//				else{
+//					l.setStyleName(ValoTheme.LABEL_FAILURE);
+//				}
+//				return l;
+//			}
+//		});
 	}
 
 
