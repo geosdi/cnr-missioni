@@ -157,4 +157,13 @@ public interface MissioneRestService {
     @Path(value = MissioneServiceRSPathConfig.GET_DISTANCE_FOR_MISSIONE_PATH)
     Response getDistanceForMissione(@QueryParam(value = "start") String start,
             @QueryParam(value = "end") String end) throws Exception;
+    
+    /**
+     * 
+     * @return
+     * @throws Exception
+     */
+    @GET
+    @Path(value = MissioneServiceRSPathConfig.GET_STATISTICHE)
+    Response getStatistiche() throws Exception;
 }

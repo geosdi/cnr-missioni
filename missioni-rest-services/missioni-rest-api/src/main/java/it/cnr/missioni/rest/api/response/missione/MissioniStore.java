@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import it.cnr.missioni.model.missione.Missione;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -24,6 +26,8 @@ public class MissioniStore implements Serializable {
     @JsonProperty(value = "missioni", required = false)
     private List<Missione> missioni;
     private long totale;
+    
+
 
     public MissioniStore() {
     }
@@ -63,6 +67,8 @@ public class MissioniStore implements Serializable {
 	public void setTotale(long totale) {
 		this.totale = totale;
 	}
+
+
 
 	@Override
     public boolean equals(Object o) {

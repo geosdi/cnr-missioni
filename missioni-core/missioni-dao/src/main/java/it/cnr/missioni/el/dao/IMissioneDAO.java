@@ -3,6 +3,7 @@ package it.cnr.missioni.el.dao;
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 
+import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 
@@ -26,4 +27,11 @@ public interface IMissioneDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<
 	 * @throws Exception
 	 */
 	long getMaxNumeroOrdineRimborso() throws Exception;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public StatisticheMissioni getStatisticheMissioni() throws Exception;
 }

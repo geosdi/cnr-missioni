@@ -35,8 +35,6 @@
  */
 package it.cnr.missioni.connector.core.spring.connector;
 
-import java.io.File;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -44,6 +42,7 @@ import javax.ws.rs.core.Response;
 
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
+import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
@@ -65,7 +64,6 @@ import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
-import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
@@ -505,6 +503,13 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(massimale,
                         MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
+    public StatisticheMissioni getStatistiche()  throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/getStatistiche/")
+                .request(MediaType.APPLICATION_JSON)
+                .get(StatisticheMissioni.class);
     }
     
     @Override

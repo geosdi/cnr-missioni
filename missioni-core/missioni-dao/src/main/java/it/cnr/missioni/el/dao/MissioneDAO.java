@@ -1,33 +1,26 @@
 package it.cnr.missioni.el.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.search.MultiMatchQuery.QueryBuilder;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.max.Max;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
+import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.StatoEnum;
-import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -53,8 +46,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 		SearchResponse searchResponse = p
 				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
 						.setQuery(missioneSearchBuilder.buildQuery()))
-				.setFrom(missioneSearchBuilder.getFrom())
-				.setSize(missioneSearchBuilder.getSize())
+				.setFrom(missioneSearchBuilder.getFrom()).setSize(missioneSearchBuilder.getSize())
 				.addSort(missioneSearchBuilder.getFieldSort(), missioneSearchBuilder.getSortOrder()).execute()
 				.actionGet();
 
@@ -76,11 +68,51 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 		long value = 0;
 
 		SearchResponse sr = this.elastichSearchClient.prepareSearch(getIndexName())
-				.addAggregation(AggregationBuilders.max("max_numero_ordine_rimborso").field("missione.rimborso.numeroOrdine")).execute().actionGet();
+				.addAggregation(
+						AggregationBuilders.max("max_numero_ordine_rimborso").field("missione.rimborso.numeroOrdine"))
+				.execute().actionGet();
 		Max agg = sr.getAggregations().get("max_numero_ordine_rimborso");
-		value = (long) agg.getValue()+1;
+		value = (long) agg.getValue() + 1;
 
 		return value;
+	}
+
+/**
+ * 
+ * @return
+ * @throws Exception
+ */
+	@Override
+	public StatisticheMissioni getStatisticheMissioni() throws Exception {
+		logger.debug("###############Try to find Neet in ALL Comune: {}\n\n");
+
+
+		SearchResponse searchResponse = this.elastichSearchClient.prepareSearch(getIndexName())
+
+				.addAggregation(
+						AggregationBuilders.terms("by_stato").field("missione.stato").size(0))
+				.setTypes(getIndexType()).execute().actionGet();
+
+		if (searchResponse.status() != RestStatus.OK) {
+			throw new IllegalStateException("Error in Elastic Search Query.");
+		}
+
+		StatisticheMissioni statisticheMissioni = new StatisticheMissioni();
+
+		Terms termsByComune = searchResponse.getAggregations().get("by_stato");
+		Collection<Terms.Bucket> bucketsByStato = termsByComune.getBuckets();
+
+		bucketsByStato.forEach(bucketByStato -> {
+
+			statisticheMissioni.getMappaStatistiche().put(bucketByStato.getKey().toString(),
+					bucketByStato.getDocCount());
+
+			});
+
+
+
+	return statisticheMissioni;
+
 	}
 
 	/**

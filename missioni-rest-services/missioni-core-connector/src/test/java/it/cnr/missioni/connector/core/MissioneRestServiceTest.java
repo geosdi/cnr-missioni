@@ -59,6 +59,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
+import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
@@ -315,6 +316,13 @@ public class MissioneRestServiceTest {
 				.withFieldNotExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI",missioniStore.getMissioni().size() == 2);
+	}
+	
+	@Test
+	public void getStatistiche() throws Exception {
+
+		StatisticheMissioni statisticheMissioni = missioniCoreClientConnector.getStatistiche();
+//		Assert.assertTrue("FIND STATISTICHE",missioniStore.getMissioni().size() == 2);
 	}
 	
 }

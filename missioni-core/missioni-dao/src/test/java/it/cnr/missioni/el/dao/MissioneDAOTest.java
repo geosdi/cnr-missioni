@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
@@ -317,6 +318,12 @@ public class MissioneDAOTest {
 				.withFieldExist("missione.rimborso");
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 1);
+	}
+	
+	@Test
+	public void V_getStatistiche() throws Exception {
+		StatisticheMissioni statisticheMissioni = this.missioneDAO.getStatisticheMissioni();
+		Assert.assertTrue("FIND STATISTICHE", statisticheMissioni.getMappaStatistiche().get(StatoEnum.PRESA_IN_CARICO) == 2);
 	}
 	
 	// @Test

@@ -169,4 +169,14 @@ public class MissioneRestServiceResource implements MissioneRestService {
     public Response getDistanceForMissione(String start, String end) throws Exception {
         return Response.ok(this.missioneDelegate.getDistanceForMissione(start, end)).build();
     }
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Response getStatistiche() throws Exception {
+        return Response.ok(this.missioneDelegate.getStatistiche()).build();
+
+	}
 }

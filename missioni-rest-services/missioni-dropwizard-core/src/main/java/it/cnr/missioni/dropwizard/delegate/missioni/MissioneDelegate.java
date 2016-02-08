@@ -6,6 +6,7 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.google.maps.model.*;
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
+import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
@@ -46,14 +47,11 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.ws.rs.core.StreamingOutput;
 
-
-
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
 class MissioneDelegate implements IMissioneDelegate {
-
 
 	static {
 		gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
@@ -105,18 +103,18 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-		
+
 		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
-		if(missione.isMezzoProprio()){
+		if (missione.isMezzoProprio()) {
 			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
 			Veicolo veicolo = user.getVeicoloPrincipale();
 			pdfBuilder.withVeicolo(veicolo);
 		}
 
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
-				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
-						: this.cnrMissioniItaliaEmail.getEmail()),
+				user.getAnagrafica().getNome(),
+				user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+						? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
 				pdfBuilder));
 
 		return Boolean.TRUE;
@@ -197,17 +195,17 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-		
+
 		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
-		if(missione.isMezzoProprio()){
+		if (missione.isMezzoProprio()) {
 			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
 			Veicolo veicolo = user.getVeicoloPrincipale();
 			pdfBuilder.withVeicolo(veicolo);
 		}
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
-				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
-						: this.cnrMissioniItaliaEmail.getEmail()),
+				user.getAnagrafica().getNome(),
+				user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+						? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
 				pdfBuilder));
 		return this.missioneDAO.persist(missione).getId();
 	}
@@ -226,25 +224,24 @@ class MissioneDelegate implements IMissioneDelegate {
 			missione.getRimborso().setNumeroOrdine(this.missioneDAO.getMaxNumeroOrdineRimborso());
 		this.missioneDAO.update(missione);
 
-		
 		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
-		if(missione.isMezzoProprio()){
+		if (missione.isMezzoProprio()) {
 			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
 			Veicolo veicolo = user.getVeicoloPrincipale();
 			pdfBuilder.withVeicolo(veicolo);
 		}
-		
+
 		if (missione.isRimborsoSetted()) {
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
-					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-					(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
-							: this.cnrMissioniItaliaEmail.getEmail()),
+					user.getAnagrafica().getNome(),
+					user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+							? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
 					missione.getId(), pdfBuilder));
 		} else {
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
-					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-					(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
-							: this.cnrMissioniItaliaEmail.getEmail()),
+					user.getAnagrafica().getNome(),
+					user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+							? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
 					pdfBuilder));
 		}
 		return Boolean.TRUE;
@@ -278,7 +275,7 @@ class MissioneDelegate implements IMissioneDelegate {
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 		return new MissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
 	}
-	
+
 	/**
 	 * @param missionID
 	 * @return {@link StreamingOutput}
@@ -292,13 +289,13 @@ class MissioneDelegate implements IMissioneDelegate {
 		Missione missione = this.missioneDAO.find(missionID);
 		if (missione == null)
 			throw new ResourceNotFoundFault("La Missione con ID : " + missionID + " non esiste");
-		
-		
+
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 		Veicolo veicolo = user.getMappaVeicolo().get(missione.getIdVeicolo());
-		return new VeicoloMissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withVeicolo(veicolo));
+		return new VeicoloMissioneStreaming(
+				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withVeicolo(veicolo));
 	}
 
 	/**
@@ -384,8 +381,8 @@ class MissioneDelegate implements IMissioneDelegate {
 
 	/**
 	 * 
-	 * Calcola la distanza dati 2 punti. Usata nel caso in cui la distanza tra start e end non è
-	 * percorribile tramite auto
+	 * Calcola la distanza dati 2 punti. Usata nel caso in cui la distanza tra
+	 * start e end non è percorribile tramite auto
 	 * 
 	 * @param lat1
 	 * @param lon1
@@ -413,5 +410,14 @@ class MissioneDelegate implements IMissioneDelegate {
 	// This function converts radians to decimal degrees
 	private static double rad2deg(double rad) {
 		return (rad * 180 / Math.PI);
+	}
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public StatisticheMissioni getStatistiche() throws Exception {
+		return this.missioneDAO.getStatisticheMissioni();
 	}
 }
