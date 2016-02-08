@@ -110,7 +110,7 @@ public class DatiCNRUserStep implements WizardStep {
 		}
 
 		listaUserField.setValidationVisible(false);
-		fieldGroup.bind(listaUserField, "datiCNR.datoreLavoro");
+		fieldGroup.bind(listaUserField, "datoreLavoro");
 
 		addValidator();
 	}
