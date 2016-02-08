@@ -33,6 +33,7 @@ import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.geosdi.geoplatform.support.google.spring.services.distance.GPDistanceMatrixService;
+import org.geosdi.geoplatform.support.google.spring.services.distance.Unit;
 import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -45,11 +46,14 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.ws.rs.core.StreamingOutput;
 
+
+
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
 class MissioneDelegate implements IMissioneDelegate {
+
 
 	static {
 		gen = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
@@ -410,5 +414,4 @@ class MissioneDelegate implements IMissioneDelegate {
 	private static double rad2deg(double rad) {
 		return (rad * 180 / Math.PI);
 	}
-
 }
