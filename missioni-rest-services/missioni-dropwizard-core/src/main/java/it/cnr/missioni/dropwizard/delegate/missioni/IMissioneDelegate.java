@@ -82,6 +82,13 @@ public interface IMissioneDelegate {
      * @throws Exception
      */
     StreamingOutput downloadMissioneAsPdf(String missionID) throws Exception;
+    
+    /**
+     * @param missionID
+     * @return {@link StreamingOutput}
+     * @throws Exception
+     */
+    StreamingOutput downloadVeicoloMissioneAsPdf(String missionID) throws Exception;
 
     /**
      * @param missionID

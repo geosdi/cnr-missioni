@@ -125,6 +125,17 @@ public class MissioneRestServiceResource implements MissioneRestService {
         return Response.ok(this.missioneDelegate.downloadMissioneAsPdf(missionID))
                 .header("Content-Disposition", "attachment; filename=Missione.pdf").build();
     }
+    
+    /**
+     * @param missionID
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response downloadVeicoloMissioneAsPdf(String missionID) throws Exception {
+        return Response.ok(this.missioneDelegate.downloadVeicoloMissioneAsPdf(missionID))
+                .header("Content-Disposition", "attachment; filename=Missione.pdf").build();
+    }
 
     /**
      * @param missionID

@@ -234,6 +234,15 @@ public class ClientConnector {
 	public static Response downloadMissioneAsPdf(String missioneID) throws Exception {
 		return missioniCoreClientConnector.downloadMissioneAsPdf(missioneID);
 	}
+	
+	/**
+	 * 
+	 * @param missioneID
+	 * @throws Exception
+	 */
+	public static Response downloadVeicoloMissioneAsPdf(String missioneID) throws Exception {
+		return missioniCoreClientConnector.downloadVeicoloMissioneAsPdf(missioneID);
+	}
 
 	/**
 	 * 

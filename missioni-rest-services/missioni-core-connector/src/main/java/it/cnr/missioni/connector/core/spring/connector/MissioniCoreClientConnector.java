@@ -297,6 +297,16 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(Response.class);
     }
     
+    public Response downloadVeicoloMissioneAsPdf(String missioneID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/downloadVeicoloMissioneAsPdf/")
+                .queryParam("missionID", missioneID)
+                .request("application/pdf")
+                
+                .get(Response.class);
+    }
+    
+    
     public Response downloadRimborsoMissioneAsPdf(String missioneID) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/downloadRimborsoMissioneAsPdf/")

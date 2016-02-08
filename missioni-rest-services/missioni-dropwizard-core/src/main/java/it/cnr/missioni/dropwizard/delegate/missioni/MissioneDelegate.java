@@ -7,6 +7,8 @@ import com.google.maps.model.*;
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -22,7 +24,10 @@ import it.cnr.missioni.rest.api.response.geocoder.GeocoderResponse;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import it.cnr.missioni.rest.api.response.missione.VeicoloMissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
+import it.cnr.missioni.rest.api.response.user.UserStore;
+
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
@@ -34,6 +39,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
@@ -267,6 +273,28 @@ class MissioneDelegate implements IMissioneDelegate {
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 		return new MissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
+	}
+	
+	/**
+	 * @param missionID
+	 * @return {@link StreamingOutput}
+	 * @throws Exception
+	 */
+	@Override
+	public StreamingOutput downloadVeicoloMissioneAsPdf(String missionID) throws Exception {
+		if ((missionID == null) || (missionID.isEmpty())) {
+			throw new IllegalParameterFault("The Parameter missioneID must not be null " + "or an Empty String.");
+		}
+		Missione missione = this.missioneDAO.find(missionID);
+		if (missione == null)
+			throw new ResourceNotFoundFault("La Missione con ID : " + missionID + " non esiste");
+		
+		
+		User user = this.userDAO.find(missione.getIdUser());
+		if (user == null)
+			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		Veicolo veicolo = user.getMappaVeicolo().get(missione.getIdVeicolo());
+		return new VeicoloMissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withVeicolo(veicolo));
 	}
 
 	/**
