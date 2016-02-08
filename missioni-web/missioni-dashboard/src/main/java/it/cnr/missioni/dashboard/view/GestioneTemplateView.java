@@ -43,6 +43,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	protected Button buttonRimborso;
 	protected Button buttonPDF;
 	protected Button buttonMissione;
+	protected Button buttonVeicoloMissionePDF;
 
 
 	// private CssLayout panel = new CssLayout();

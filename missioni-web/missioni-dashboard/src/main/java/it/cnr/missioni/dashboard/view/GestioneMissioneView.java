@@ -343,7 +343,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 		});
 
-		buttonPDF = buildButton("PDF", "Download del PDF",FontAwesome.FILE_PDF_O);
+		buttonPDF = buildButton("PDF MISSIONE", "Download del PDF",FontAwesome.FILE_PDF_O);
 
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
@@ -357,8 +357,26 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		});
 
 		downloaderForLink.extend(buttonPDF);
+		
+		buttonVeicoloMissionePDF = buildButton("PDF VEICOLO", "Download del PDF",FontAwesome.FILE_PDF_O);
 
-		layout.addComponents(buttonDettagli, buttonRimborso, buttonPDF);
+		final AdvancedFileDownloader veicoloDownloaderForLink = new AdvancedFileDownloader();
+		veicoloDownloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
+			@Override
+			public void beforeDownload(DownloaderEvent downloadEvent) {
+
+				veicoloDownloaderForLink.setFileDownloadResource(getResourceVeicolo());
+
+			}
+
+		});
+
+		veicoloDownloaderForLink.extend(buttonVeicoloMissionePDF);
+
+		layout.addComponents(buttonDettagli, buttonRimborso, buttonPDF,buttonVeicoloMissionePDF);
+		
+
+
 
 		enableDisableButtons(false);
 
@@ -388,12 +406,41 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		}
 		return null;
 	}
+	
+	private StreamResource getResourceVeicolo() {
+		try {
+
+			Response r = ClientConnector.downloadVeicoloMissioneAsPdf(selectedMissione.getId());
+
+			InputStream is = r.readEntity(InputStream.class);
+
+			StreamResource stream = new StreamResource(new StreamSource() {
+				@Override
+				public InputStream getStream() {
+					return is;
+				}
+			}, "moduloMezzoProprio.pdf");
+
+			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
+			return stream;
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+		return null;
+	}
 
 	protected void enableDisableButtons(boolean enabled) {
 		// this.buttonMail.setEnabled(enabled);
 		this.buttonDettagli.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonRimborso.setEnabled(enabled);
+	
+		if(selectedMissione != null && selectedMissione.isMezzoProprio())
+			buttonVeicoloMissionePDF.setEnabled(true);
+		if(selectedMissione == null || !selectedMissione.isMezzoProprio())
+			buttonVeicoloMissionePDF.setEnabled(false);
+	
 	}
 
 	@Override
