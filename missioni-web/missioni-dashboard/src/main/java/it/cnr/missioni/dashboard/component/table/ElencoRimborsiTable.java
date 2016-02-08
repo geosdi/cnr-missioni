@@ -54,16 +54,36 @@ public final class ElencoRimborsiTable  extends ITable.AbstractTable  {
 			Object[] properties = { "rimborso.dataRimborso", "rimborso.numeroOrdine" };
 			boolean[] ordering = { false, true };
 			sort(properties, ordering);
-//			setColumnWidth("dataInserimento", 160);
-//			setColumnWidth("oggetto", 160);
 			setColumnExpandRatio("oggetto", 2);
 			setColumnExpandRatio("localita", 1);
-//			setColumnExpandRatio("id", 1);
-			// setColumnExpandRatio("dataInserimento",1);
 		}
-		// else{
-		// setVisible(false);
-		// }
+
+	}
+	
+	public <T> void aggiornaTableAdmin(T missioniStore) {
+		this.removeAllItems();
+
+		if (missioniStore != null) {
+			
+			BeanItemContainer<Missione> listaMissioni =
+				    new BeanItemContainer<Missione>(Missione.class);
+			listaMissioni.addNestedContainerProperty("rimborso.numeroOrdine");
+			listaMissioni.addNestedContainerProperty("rimborso.dataRimborso");
+			listaMissioni.addNestedContainerProperty("rimborso.totale");
+			listaMissioni.addAll(((MissioniStore)missioniStore).getMissioni());
+
+			
+			setVisible(true);
+			setContainerDataSource(listaMissioni);
+			setVisibleColumns("shortResponsabileGruppo","rimborso.numeroOrdine","rimborso.dataRimborso","rimborso.totale","oggetto","localita");
+			setColumnHeaders("User","Numero Ordine","Data Rimborso","Totale","Oggetto","Località");
+			setId("rimborso.numeroOrdine");
+			Object[] properties = { "rimborso.dataRimborso", "rimborso.numeroOrdine" };
+			boolean[] ordering = { false, true };
+			sort(properties, ordering);
+			setColumnExpandRatio("oggetto", 2);
+			setColumnExpandRatio("localita", 1);
+		}
 
 	}
 

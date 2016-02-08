@@ -24,18 +24,16 @@ public final class AdminHomeView extends HomeView {
 
 	}
 	
-	// E' necessario ricaricare le tabelle missioni e rimborsi, perchè l'evento
-	// di ricerca si protrae anche nella homeview
 	@Override
 	public void enter(final ViewChangeEvent event) {
 		try {
 			 MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder(); 
 			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			elencoMissioniTable.aggiornaTable(missioniStore);
+			elencoMissioniTable.aggiornaTableAdmin(missioniStore);
 
 			missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 					.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO);
-			elencoRimborsiTable.aggiornaTable(missioniStore);
+			elencoRimborsiTable.aggiornaTableAdmin(missioniStore);
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
