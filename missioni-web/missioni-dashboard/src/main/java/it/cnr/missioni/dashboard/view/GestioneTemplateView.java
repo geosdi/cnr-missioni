@@ -132,7 +132,8 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 		addComponent(this.pagingComponent);
 		pagingComponent.setStyleName("pagination");
 		setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
-
+		addComponent(layoutTable);
+		setExpandRatio(layoutTable, new Float(1));
 	}
 	
 	protected void updatePagination(Long totale){
