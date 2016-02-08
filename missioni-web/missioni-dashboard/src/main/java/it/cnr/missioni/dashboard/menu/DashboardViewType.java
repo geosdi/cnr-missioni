@@ -24,18 +24,18 @@ public enum DashboardViewType {
 
     HOME("home", HomeView.class, FontAwesome.HOME, true) ,
     COMPLETA_REGISTRAZIONE("completa registrazione",null, FontAwesome.USER, true),
-    GESTIONE_MISSIONE("gestione missione",GestioneMissioneView.class, FontAwesome.SUITCASE, true),
-    GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
-    GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio",GestioneVeicoloView.class, FontAwesome.CAR, true),
-    CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, true),
-    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, true)
+    GESTIONE_MISSIONE("gestione missione",GestioneMissioneView.class, FontAwesome.SUITCASE, false),
+    GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, false),
+    GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio",GestioneVeicoloView.class, FontAwesome.CAR, false),
+    CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, false),
+    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, false)
     ,
-    GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneVeicoloCNRView.class, FontAwesome.CAR, true),
-    GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user",GestioneQualificaUserView.class, FontAwesome.USERS, true),
-    GESTIONE_NAZIONE_ADMIN("gestione nazione",GestioneNazioneView.class, FontAwesome.GLOBE, true),
-    GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km",GestioneRimborsoKmView.class, FontAwesome.EURO, true),
-    GESTIONE_TIPOLOGIA_SPESA_ADMIN("gestione tipologia spesa",GestioneTipologiaSpesaView.class, FontAwesome.LIST, true),
-    GESTIONE_MASSIMALE_ADMIN("gestione massimale",GestioneMassimaleView.class, FontAwesome.EURO, true),
+    GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneVeicoloCNRView.class, FontAwesome.CAR, false),
+    GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user",GestioneQualificaUserView.class, FontAwesome.USERS, false),
+    GESTIONE_NAZIONE_ADMIN("gestione nazione",GestioneNazioneView.class, FontAwesome.GLOBE, false),
+    GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km",GestioneRimborsoKmView.class, FontAwesome.EURO, false),
+    GESTIONE_TIPOLOGIA_SPESA_ADMIN("gestione tipologia spesa",GestioneTipologiaSpesaView.class, FontAwesome.LIST, false),
+    GESTIONE_MASSIMALE_ADMIN("gestione massimale",GestioneMassimaleView.class, FontAwesome.EURO, false),
 
     ;
 
