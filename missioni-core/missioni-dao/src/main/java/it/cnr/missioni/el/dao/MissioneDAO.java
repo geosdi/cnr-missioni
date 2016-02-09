@@ -85,7 +85,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
  */
 	@Override
 	public StatisticheMissioni getStatisticheMissioni() throws Exception {
-		logger.debug("###############Try to find Neet in ALL Comune: {}\n\n");
+		logger.debug("###############Try to find Statistiche: {}\n\n");
 
 
 		SearchResponse searchResponse = this.elastichSearchClient.prepareSearch(getIndexName())
@@ -105,7 +105,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 
 		bucketsByStato.forEach(bucketByStato -> {
 
-			statisticheMissioni.getMappaStatistiche().put(((StatoEnum)bucketByStato.getKey()).getStato(),
+			statisticheMissioni.getMappaStatistiche().put(StatoEnum.getStatoEnum(bucketByStato.getKey().toString().toUpperCase()),
 					bucketByStato.getDocCount());
 
 			});

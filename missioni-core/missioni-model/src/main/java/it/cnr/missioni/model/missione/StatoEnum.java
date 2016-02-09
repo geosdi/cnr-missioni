@@ -8,11 +8,11 @@ public enum StatoEnum {
 			"Stand by"), PAGATA("Pagata");
 
 	private final String stato;
-	private static Map<String, StatoEnum> mappa = new HashMap<String, StatoEnum>();
+	private static Map<String, String> mappa = new HashMap<String, String>();
 
 	static {
 		for (StatoEnum s : StatoEnum.values()) {
-			mappa.put(s.stato, s);
+			mappa.put(s.name(),s.stato);
 		}
 	}
 
@@ -20,19 +20,12 @@ public enum StatoEnum {
 		this.stato = stato;
 	}
 
-	public static StatoEnum getStatoEnum(String stato) {
-		return mappa.get(stato);
+	public static String getStatoEnum(String name) {
+		return mappa.get(name);
 	}
 
 	public String getStato() {
 		return stato;
 	}
 
-	public static Map<String, StatoEnum> getMappa() {
-		return mappa;
-	}
-
-	public static void setMappa(Map<String, StatoEnum> mappa) {
-		StatoEnum.mappa = mappa;
-	}
 }
