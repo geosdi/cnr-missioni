@@ -57,10 +57,6 @@ public class UserSearchBuilder implements ISearchBuilder {
 		return self();
 	}
 	
-	public UserSearchBuilder withOnlyAdmin(boolean onlyAdmin) {
-		booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_ONLY_ADMIN, onlyAdmin));
-		return self();
-	}
 
 	public UserSearchBuilder withCognome(String cognome) {
 		this.cognome = cognome;
