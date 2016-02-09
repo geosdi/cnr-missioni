@@ -6,13 +6,16 @@ import org.joda.time.DateTime;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
+import it.cnr.missioni.dashboard.action.UpdateUserByAdminAction;
 import it.cnr.missioni.dashboard.component.table.ITable;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
@@ -54,14 +57,15 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 			listaUser.addNestedContainerProperty("anagrafica.cognome");
 			listaUser.addNestedContainerProperty("anagrafica.nome");
 			listaUser.addNestedContainerProperty("anagrafica.codiceFiscale");
+			listaUser.addNestedContainerProperty("credenziali.ruoloUtente");
 			listaUser.addNestedContainerProperty("datiCNR.matricola");
 
 			listaUser.addAll(((UserStore)userStore).getUsers());
 			
 			setVisible(true);
 			setContainerDataSource(listaUser);
-			setVisibleColumns("responsabileGruppo","anagrafica.cognome", "anagrafica.nome", "anagrafica.codiceFiscale", "datiCNR.matricola");
-			setColumnHeaders("Responsabile Gruppo","Cognome", "Nome", "Codice Fiscale", "Matricola");
+			setVisibleColumns("responsabileGruppo","credenziali.ruoloUtente","anagrafica.cognome", "anagrafica.nome", "anagrafica.codiceFiscale", "datiCNR.matricola");
+			setColumnHeaders("Responsabile Gruppo","Admin","Cognome", "Nome", "Codice Fiscale", "Matricola");
 			setId("id");
 			Object[] properties = { "anagrafica.cognome", "anagrafica.nome" };
 			boolean[] ordering = { true, true };
@@ -88,8 +92,32 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 							
 							User user = ((User)itemId);
 							user.setResponsabileGruppo(cb.getValue());
-							DashboardUI.getCurrentUser().setResponsabileGruppo(cb.getValue());
-							DashboardEventBus.post(new UpdateUserAction(user));
+							DashboardEventBus.post(new UpdateUserByAdminAction(user));
+
+						}
+					});
+			        
+
+			        return cb;
+			      }
+			    });
+			
+			addGeneratedColumn("credenziali.ruoloUtente", new Table.ColumnGenerator() {
+			      @Override
+			      public Object generateCell(Table source, final Object itemId, Object columnId) {
+//			        boolean selected = selectedItemIds.contains(itemId);
+			        /* When the chekboc value changes, add/remove the itemId from the selectedItemIds set */
+			        final CheckBox cb = new CheckBox("",((User)itemId).getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN ? true : false);
+			        
+			        cb.addValueChangeListener(new ValueChangeListener() {
+						
+
+						@Override
+						public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+							
+							User user = ((User)itemId);
+							user.getCredenziali().setRuoloUtente(cb.getValue() ? RuoloUserEnum.UTENTE_ADMIN : RuoloUserEnum.UTENTE_SEMPLICE);
+							DashboardEventBus.post(new UpdateUserByAdminAction(user));
 
 						}
 					});

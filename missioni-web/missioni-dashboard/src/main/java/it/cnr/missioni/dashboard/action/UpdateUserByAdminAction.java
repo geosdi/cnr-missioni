@@ -15,33 +15,21 @@ import it.cnr.missioni.model.user.User;
 /**
  * @author Salvia Vito
  */
-public class UpdateUserAction implements IAction {
+public class UpdateUserByAdminAction implements IAction {
 
 	private User user;
 
-	public UpdateUserAction(User user ) {
+	public UpdateUserByAdminAction(User user ) {
 		this.user = user;
 	}
 
 	public boolean doAction() {
 
 		try {
-			boolean value = user.isRegistrazioneCompletata();
-			user.setRegistrazioneCompletata(true);
 			user.setDateLastModified(new DateTime());
-			user.getCredenziali().setPassword(user.getCredenziali().getPassword());
-			user.getCredenziali().setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
 			ClientConnector.updateUser(user);
-			VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
-
-
-			DashboardEventBus.post(new  DashboardEvent.ProfileUpdatedEvent() );
-			if(!value)
-				DashboardEventBus.post(new  DashboardEvent.MenuUpdateEvent() );
-			
 			Utility.getNotification(Utility.getMessage("success_message"), null,
 					Type.HUMANIZED_MESSAGE);
-			
 			return true;
 
 		} catch (Exception e) {
