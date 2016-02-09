@@ -179,7 +179,7 @@ public class UserDAOTest {
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		// logger.debug("############################USER_ID FOUND{}\n",
 		// userStore);
-		Assert.assertTrue("FIND USER BY ID", lista.size() == 2);
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 3);
 
 	}
 
@@ -289,7 +289,7 @@ public class UserDAOTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(false).withAll(true);
 
 		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
-		Assert.assertTrue("FIND ALL USER", lista.size() == 2);
+		Assert.assertTrue("FIND ALL USER", lista.size() == 3);
 	}
 	
 	//
@@ -377,6 +377,17 @@ public class UserDAOTest {
 		user.setCredenziali(credenziali);
 		user.setAnagrafica(anagrafica);
 		user.setRegistrazioneCompletata(false);
+		user.setResponsabileGruppo(false);
+		listaUsers.add(user);
+		
+		user = new User();
+		user.setId("04");
+		anagrafica = new Anagrafica();
+		credenziali = new Credenziali();
+		credenziali.setUsername("admin");
+		credenziali.setPassword(credenziali.md5hash("admin"));
+		user.setCredenziali(credenziali);
+		user.setRegistrazioneCompletata(true);
 		user.setResponsabileGruppo(false);
 		listaUsers.add(user);
 
