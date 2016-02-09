@@ -7,15 +7,16 @@ import org.joda.time.DateTime;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Resource;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
-import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
@@ -37,22 +38,22 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 		super();
 		buildTable();
 		
-//		addGeneratedColumn("stato", new ColumnGenerator() {
-//
-//			@Override
-//			public Object generateCell(final Table source, final Object itemId, Object columnId) {
-//
-//				Missione missione = (Missione) itemId;
-//				Label l = new Label(missione.getStato().getStato());
-//				if (missione.getStato() == StatoEnum.PAGATA) {
-//					l.setStyleName(ValoTheme.LABEL_SUCCESS);
-//				}
-//				else{
-//					l.setStyleName(ValoTheme.LABEL_FAILURE);
-//				}
-//				return l;
-//			}
-//		});
+		addGeneratedColumn("id", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(final Table source, final Object itemId, Object columnId) {
+
+				Missione missione = (Missione) itemId;
+				Resource res = null;
+				if (missione.getStato() == StatoEnum.PAGATA) {
+					 res = new ThemeResource("img/circle_green_16_ns.png"); // get the resource depending the integer value 
+				}
+				else{
+					 res = new ThemeResource("img/serve-red-circle-icone-8206-16.png"); // get the resource depending the integer value 
+				}
+	            return new Image(missione.getStato().getStato(), res);
+			}
+		});
 	}
 
 
@@ -67,17 +68,17 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 		if (missioniStore != null) {
 			setVisible(true);
 			setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore)missioniStore).getMissioni()));
-			setVisibleColumns("localita", "oggetto", "stato", "dataInserimento");
-			setColumnHeaders("Località", "Oggetto", "Stato", "Data Inserimento");
+			setVisibleColumns("id","localita", "oggetto", "stato", "dataInserimento");
+			setColumnHeaders("","Località", "Oggetto", "Stato", "Data Inserimento");
 			setId("id");
-			Object[] properties = { "dataInserimento", "id" };
+			Object[] properties = { "dataInserimento"};
 			boolean[] ordering = { false, true };
 			sort(properties, ordering);
 			setColumnWidth("dataInserimento", 160);
 			setColumnWidth("oggetto", 160);
 			setColumnExpandRatio("oggetto", 2);
 			setColumnExpandRatio("localita", 2);
-			setColumnExpandRatio("id", 1);
+			setColumnWidth("id", 30);
 		}
 
 	}
@@ -93,18 +94,17 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 		if (missioniStore != null) {
 			setVisible(true);
 			setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore)missioniStore).getMissioni()));
-			setVisibleColumns("shortResponsabileGruppo","localita", "oggetto", "stato", "dataInserimento");
-			setColumnHeaders("User","Localita", "Oggetto", "Stato", "Data Inserimento");
+			setVisibleColumns("id","shortResponsabileGruppo","localita", "oggetto", "stato", "dataInserimento");
+			setColumnHeaders("","User","Localita", "Oggetto", "Stato", "Data Inserimento");
 			setId("id");
-			Object[] properties = { "dataInserimento", "id" };
+			Object[] properties = { "dataInserimento"};
 			boolean[] ordering = { false, true };
 			sort(properties, ordering);
 			setColumnWidth("dataInserimento", 160);
 			setColumnWidth("oggetto", 160);
 			setColumnExpandRatio("oggetto", 2);
 			setColumnExpandRatio("localita", 2);
-			setColumnExpandRatio("id", 1);
-		}
+			setColumnWidth("id", 30);		}
 
 	}
 	
