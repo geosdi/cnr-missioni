@@ -23,6 +23,7 @@ import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
+import it.cnr.missioni.dashboard.action.UpdateUserByAdminAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.action.admin.MassimaleAction;
 import it.cnr.missioni.dashboard.action.admin.NazioneAction;
@@ -118,6 +119,11 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void userRegistrationRequested(final RegistrationUserAction registrationUserAction) {
 		registrationUserAction.doAction();
+	}
+	
+	@Subscribe
+	public void userUpdateUserByAdminRequested(final UpdateUserByAdminAction updateUserByAdminAction) {
+		updateUserByAdminAction.doAction();
 	}
 	
 	@Subscribe
