@@ -111,7 +111,7 @@ public class UserRestServiceTest {
 	@Test
 	public void C_testInsertUser() throws Exception {
 		User user = new User();
-		user.setId("04");
+		user.setId("05");
 		Anagrafica anagrafica = new Anagrafica();
 		anagrafica.setCognome("Gialli");
 		anagrafica.setNome("Giuseppe");
@@ -131,7 +131,7 @@ public class UserRestServiceTest {
 	@Test
 	public void D_testUpdateUser() throws Exception {
 		User user = new User();
-		user.setId("04");
+		user.setId("05");
 		user.getAnagrafica().setNome("Marco");
 		missioniCoreClientConnector.updateUser(user);
 		logger.debug("############################UPDATE USER\n");
@@ -140,7 +140,7 @@ public class UserRestServiceTest {
 
 	@Test
 	public void E_testDeleteUser() throws Exception {
-		missioniCoreClientConnector.deleteUser("04");
+		missioniCoreClientConnector.deleteUser("05");
 		logger.debug("############################DELETE USER\n");
 
 	}
@@ -227,7 +227,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNotId("01");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID MUST NOT{}\n", userStore.getUsers().size());
-		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 2);
+		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 3);
 
 	}
 
@@ -258,7 +258,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(false)
 				.withAll(true);
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() == 2);
+		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() ==3);
 	}
 
 }

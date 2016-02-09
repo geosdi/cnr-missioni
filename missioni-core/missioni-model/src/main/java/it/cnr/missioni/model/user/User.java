@@ -151,6 +151,9 @@ public class User implements Document {
 	}
 
 
+
+
+
 	/**
 	 * @return the anagrafica
 	 */
@@ -248,8 +251,9 @@ public class User implements Document {
 	public String toString() {
 		return "User [id=" + id + ", dataRegistrazione=" + dataRegistrazione + ", dateLastModified=" + dateLastModified
 				+ ", registrazioneCompletata=" + registrazioneCompletata + ", responsabileGruppo=" + responsabileGruppo
-				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente=" + patente + ", datiCNR="
-				+ datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo + "]";
+				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente="
+				+ patente + ", datiCNR=" + datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo
+				+ "]";
 	}
 	
 	

@@ -386,8 +386,9 @@ public class UserDAOTest {
 		credenziali = new Credenziali();
 		credenziali.setUsername("admin");
 		credenziali.setPassword(credenziali.md5hash("admin"));
+		credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_ADMIN);
 		user.setCredenziali(credenziali);
-		user.setRegistrazioneCompletata(true);
+		user.setRegistrazioneCompletata(false);
 		user.setResponsabileGruppo(false);
 		listaUsers.add(user);
 
