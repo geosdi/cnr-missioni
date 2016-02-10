@@ -6,12 +6,9 @@ import org.joda.time.DateTime;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 
-import it.cnr.missioni.dashboard.DashboardUI;
-import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserByAdminAction;
 import it.cnr.missioni.dashboard.component.table.ITable;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
@@ -70,22 +67,25 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 			Object[] properties = { "anagrafica.cognome", "anagrafica.nome" };
 			boolean[] ordering = { true, true };
 			sort(properties, ordering);
-//			setColumnWidth("dataInserimento", 160);
-//			setColumnWidth("oggetto", 160);
-//			setColumnExpandRatio("oggetto", 2);
-//			setColumnExpandRatio("localita", 2);
-//			setColumnExpandRatio("id", 1);
-			// setColumnExpandRatio("dataInserimento",1);
+
 			
 			addGeneratedColumn("responsabileGruppo", new Table.ColumnGenerator() {
-			      @Override
+			      /**
+				 * 
+				 */
+				private static final long serialVersionUID = 6589113831511771042L;
+
+				@Override
 			      public Object generateCell(Table source, final Object itemId, Object columnId) {
-//			        boolean selected = selectedItemIds.contains(itemId);
-			        /* When the chekboc value changes, add/remove the itemId from the selectedItemIds set */
 			        final CheckBox cb = new CheckBox("",((User)itemId).isResponsabileGruppo());
 			        
 			        cb.addValueChangeListener(new ValueChangeListener() {
 						
+
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = 2555372007125474494L;
 
 						@Override
 						public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
@@ -103,14 +103,22 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 			    });
 			
 			addGeneratedColumn("credenziali.ruoloUtente", new Table.ColumnGenerator() {
-			      @Override
+			      /**
+				 * 
+				 */
+				private static final long serialVersionUID = 2981409762119298531L;
+
+				@Override
 			      public Object generateCell(Table source, final Object itemId, Object columnId) {
-//			        boolean selected = selectedItemIds.contains(itemId);
-			        /* When the chekboc value changes, add/remove the itemId from the selectedItemIds set */
 			        final CheckBox cb = new CheckBox("",((User)itemId).getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN ? true : false);
 			        
 			        cb.addValueChangeListener(new ValueChangeListener() {
 						
+
+						/**
+						 * 
+						 */
+						private static final long serialVersionUID = -1318077294324314158L;
 
 						@Override
 						public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
