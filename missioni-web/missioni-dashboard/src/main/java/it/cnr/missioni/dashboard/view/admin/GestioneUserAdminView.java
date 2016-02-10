@@ -366,8 +366,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	 * 
 	 */
 	protected void initialize() {
-		if (userStore != null)
-			buildPagination(userStore.getTotale());
+		buildPagination(userStore != null ? userStore.getTotale() : 0);
 		addListenerPagination();
 	}
 

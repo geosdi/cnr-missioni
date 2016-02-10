@@ -67,6 +67,11 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 					Type.ERROR_MESSAGE);
 		}
 		this.elencoVeicoliCNRTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1048174507029941634L;
+
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedVeicoloCNR = (VeicoloCNR) itemClickEvent.getItemId();
@@ -90,6 +95,11 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 		buttonNew = buildButton("Aggiungi Veicolo CNR", "Inserisce un nuovo veicolo CNR", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6878805730356757023L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				VeicoloCNRWindow.open(new VeicoloCNR(), false);
@@ -105,6 +115,11 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -3239582768973595404L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -131,12 +146,8 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	 */
 	@Override
 	protected void initialize() {
-
-		if (veicoloCNRStore != null) {
-			buildPagination(veicoloCNRStore.getTotale());
-			addListenerPagination();
-		}
-
+		buildPagination(veicoloCNRStore != null ? veicoloCNRStore.getTotale() : 0);
+		addListenerPagination();
 	}
 
 	/**

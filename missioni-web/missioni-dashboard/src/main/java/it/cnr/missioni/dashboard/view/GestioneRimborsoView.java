@@ -373,11 +373,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	 */
 	@Override
 	protected void initialize() {
-
-		if (missioniStore != null) {
-			buildPagination(missioniStore.getTotale());
-			addListenerPagination();
-		}
+		buildPagination(missioniStore != null ? missioniStore.getTotale() : 0);
+		addListenerPagination();
 
 	}
 

@@ -94,7 +94,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 	}
 
 	protected Button createButtonNew() {
-		buttonNew = buildButton("Aggiungi Qualifica", "Inserisce una nuova qualifica",FontAwesome.PLUS);
+		buttonNew = buildButton("Aggiungi Qualifica", "Inserisce una nuova qualifica", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -114,7 +114,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
+		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
@@ -148,10 +148,8 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 	 */
 	@Override
 	protected void initialize() {
-		if (qualificaUserStore != null){
-			buildPagination(qualificaUserStore.getTotale());
+		buildPagination(qualificaUserStore != null ? qualificaUserStore.getTotale() : 0);
 		addListenerPagination();
-		}
 
 	}
 
@@ -203,10 +201,11 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 	protected Component buildFilter() {
 		return null;
 	}
-	
+
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe

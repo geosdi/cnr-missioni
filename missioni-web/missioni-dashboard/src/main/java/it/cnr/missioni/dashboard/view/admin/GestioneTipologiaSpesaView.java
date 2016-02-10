@@ -146,10 +146,8 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	 */
 	@Override
 	protected void initialize() {
-		if (tipologiaSpesaStore != null) {
-			buildPagination(tipologiaSpesaStore.getTotale());
-			addListenerPagination();
-		}
+		buildPagination(tipologiaSpesaStore != null ? tipologiaSpesaStore.getTotale() : 0);
+		addListenerPagination();
 
 	}
 

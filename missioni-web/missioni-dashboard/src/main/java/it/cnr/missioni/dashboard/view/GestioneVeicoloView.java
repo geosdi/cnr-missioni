@@ -141,11 +141,9 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	 */
 	@Override
 	protected void initialize() {
-
-		if (!DashboardUI.getCurrentUser().getMappaVeicolo().isEmpty()) {
-			buildPagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
-			addListenerPagination();
-		}
+		buildPagination(!DashboardUI.getCurrentUser().getMappaVeicolo().isEmpty()
+				? new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()) : 0);
+		addListenerPagination();
 
 	}
 

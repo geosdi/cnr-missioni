@@ -143,11 +143,8 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	 */
 	@Override
 	protected void initialize() {
-
-		if (nazioneStore != null) {
-			buildPagination(nazioneStore.getTotale());
-			addListenerPagination();
-		}
+		buildPagination(nazioneStore != null ? nazioneStore.getTotale() : 0);
+		addListenerPagination();
 	}
 
 	/**

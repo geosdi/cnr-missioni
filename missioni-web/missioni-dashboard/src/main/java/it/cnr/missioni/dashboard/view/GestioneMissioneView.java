@@ -79,11 +79,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	protected void initialize() {
 
-		if (missioniStore != null) {
-			buildPagination(missioniStore.getTotale());
+		buildPagination(missioniStore != null ? missioniStore.getTotale() : 0);
 			addListenerPagination();
-		}
-
 	}
 
 	/**
