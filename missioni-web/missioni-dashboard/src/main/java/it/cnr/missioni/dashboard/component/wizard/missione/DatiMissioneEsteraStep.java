@@ -208,6 +208,10 @@ public class DatiMissioneEsteraStep implements WizardStep {
 
 	public boolean onAdvance() {
 
+		if (!missione.isMissioneEstera()) {
+			return true;
+		}else{
+		
 		boolean check = true;
 
 		for (Field<?> f : fieldGroup.getFields()) {
@@ -231,7 +235,7 @@ public class DatiMissioneEsteraStep implements WizardStep {
 			check = false;
 		}
 
-		if (check) {
+		if (check && missione.isMissioneEstera()) {
 			BeanItem<DatiMissioneEstera> beanItem = (BeanItem<DatiMissioneEstera>) fieldGroup.getItemDataSource();
 			DatiMissioneEstera new_datiMissioneEstera = beanItem.getBean();
 			missione.setDatiMissioneEstera(new_datiMissioneEstera);
@@ -244,6 +248,7 @@ public class DatiMissioneEsteraStep implements WizardStep {
 					Type.ERROR_MESSAGE);
 		}
 		return check;
+		}
 
 	}
 
