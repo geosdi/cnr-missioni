@@ -86,8 +86,8 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	}
 
 	protected Button createButtonNew() {
-		
-		buttonNew = buildButton("Nuovo Veicolo", "Aggiunge un nuovo Veicolo",FontAwesome.PLUS);
+
+		buttonNew = buildButton("Nuovo Veicolo", "Aggiunge un nuovo Veicolo", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -107,7 +107,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = buildButton("Modifica", "Modifica i dati del vieicolo",FontAwesome.PENCIL);
+		buttonModifica = buildButton("Modifica", "Modifica i dati del vieicolo", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
@@ -142,23 +142,21 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	@Override
 	protected void initialize() {
 
-		buildPagination(
-				new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
-		addListenerPagination();
+		if (!DashboardUI.getCurrentUser().getMappaVeicolo().isEmpty()) {
+			buildPagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
+			addListenerPagination();
+		}
 
 	}
-	
+
 	/**
 	 * 
 	 * Aggiunge il listener alla paginazione
 	 * 
 	 */
 	protected void addListenerPagination() {
-		
+
 		pagingComponent.addListener(new LazyPagingComponentListener<Veicolo>(itemsArea) {
-
-
-
 
 			/**
 			 * 
@@ -167,18 +165,17 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 			@Override
 			protected Collection<Veicolo> getItemsList(int startIndex, int endIndex) {
-				
-				
+
 				List<Veicolo> listaVeicolo = new ArrayList<Veicolo>();
-				DashboardUI.getCurrentUser().getMappaVeicolo().values().forEach(v ->{
+				DashboardUI.getCurrentUser().getMappaVeicolo().values().forEach(v -> {
 					int i = 0;
-					while(i <= endIndex){
+					while (i <= endIndex) {
 						listaVeicolo.add(v);
 					}
 				});
-				
-				
-				elencoVeicoliTable.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
+
+				elencoVeicoliTable
+						.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
 				return listaVeicolo;
 
 			}
@@ -202,10 +199,11 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	protected Component buildFilter() {
 		return null;
 	}
-	
+
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe
@@ -213,7 +211,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 		try {
 			this.elencoVeicoliTable
-			.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
+					.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
 			updatePagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
