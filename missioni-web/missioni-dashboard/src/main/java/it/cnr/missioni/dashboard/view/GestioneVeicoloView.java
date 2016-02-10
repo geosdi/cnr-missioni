@@ -87,7 +87,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 	protected Button createButtonNew() {
 		
-		buttonNew = buildButton("Nuovo Veicolo", "Aggiunge un nuovo Veicolo",FontAwesome.FILE_PDF_O);
+		buttonNew = buildButton("Nuovo Veicolo", "Aggiunge un nuovo Veicolo",FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
