@@ -20,7 +20,7 @@ import it.cnr.missioni.dashboard.view.GestioneVeicoloView;
 
 
 public enum DashboardViewType {
-    HOME_ADMIN("home admin",AdminHomeView.class, FontAwesome.USER_MD, true),
+    HOME_ADMIN("home admin",AdminHomeView.class, FontAwesome.HOME, true),
 
     HOME("home", HomeView.class, FontAwesome.HOME, true) ,
     COMPLETA_REGISTRAZIONE("completa registrazione",null, FontAwesome.USER, true),
