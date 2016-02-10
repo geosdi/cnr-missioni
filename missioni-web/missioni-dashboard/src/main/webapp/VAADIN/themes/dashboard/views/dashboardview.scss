@@ -322,6 +322,8 @@
 	margin:1% !important;
 }
 
+
+
 //GESTIONE TEMPLATE
 .v-horizontallayout-full-text-search{
 	margin-right:1% !important;
@@ -337,8 +339,7 @@
 
 
 .v-slot-toolbar-search{
-	margin-top:1% !important;
-	margin-bottom:3% !important;
+	margin-top:2% !important;
 }
 
 .v-vertical > .v-spacing {
@@ -354,6 +355,10 @@
 	height:auto !important;
 }
 
+.v-slot-layout-pagination{
+	margin-top:2% !important;
+}
+
 .v-slot-tableFatture{
 	margin-top:4%;
 }
@@ -365,6 +370,8 @@
 .v-slot-pagination{
 	margin-top:2% !important;
 }
+
+
 
 
 //CALENDAR
