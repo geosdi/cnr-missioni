@@ -44,6 +44,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	protected Button buttonPDF;
 	protected Button buttonMissione;
 	protected Button buttonVeicoloMissionePDF;
+	private VerticalLayout layoutPagination = new VerticalLayout();
 
 
 	// private CssLayout panel = new CssLayout();
@@ -56,7 +57,6 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
 	private void build() {
 		addStyleName(ValoTheme.PANEL_BORDERLESS);
-		addStyleName("missione-view");
 		setSizeFull();
 		DashboardEventBus.register(this);
 		setHeight("96%");
@@ -64,6 +64,10 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 		addStyleName(ValoTheme.LAYOUT_CARD);
 		addStyleName("panel-view");
 		Responsive.makeResponsive(this);
+
+		layoutPagination.setHeight(50, Unit.PIXELS);
+		layoutPagination.setWidth(100, Unit.PERCENTAGE);
+		layoutPagination.setStyleName("layout-pagination");
 
 		HorizontalLayout toolbar = new HorizontalLayout();
 		toolbar.setWidth("100%");
@@ -96,9 +100,11 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 		toolbar.addComponent(fullTextsearchLayout);
 		toolbar.setComponentAlignment(fullTextsearchLayout, Alignment.BOTTOM_RIGHT);
 		addComponent(toolbar);
-		addComponent(layoutTable);
+		
+		addComponent(layoutPagination);
 		addComponent(layoutTable);
 		setExpandRatio(layoutTable, new Float(1));
+
 	}
 
 	protected Button buildButton(String caption,String description,FontIcon icon){
@@ -127,19 +133,19 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 			pagingComponent.getComponentsManager().getElementsBuilder().getButtonNext().setCaption("Successiva");
 		if (pagingComponent.getComponentsManager().getElementsBuilder().getButtonPrevious() != null)
 			pagingComponent.getComponentsManager().getElementsBuilder().getButtonPrevious().setCaption("Precendente");
-//		this.pagingComponent
-//				.setVisible(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale ? true : false);
-		addComponent(this.pagingComponent);
-		pagingComponent.setStyleName("pagination");
-		setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
-		addComponent(layoutTable);
-		setExpandRatio(layoutTable, new Float(1));
+		this.pagingComponent
+				.setVisible(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale ? true : false);
+		layoutPagination.addComponent(this.pagingComponent);
+		layoutPagination.setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
+
 	}
 	
 	protected void updatePagination(Long totale){
 		List<T> fakeList = new FakeList<T>(totale.intValue());
 		Builder<T> builder = PagingComponent.paginate(fakeList);
 		pagingComponent = builder.build();
+		this.pagingComponent
+		.setVisible(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale ? true : false);
 	}
 	
 	
