@@ -89,7 +89,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	}
 
 	protected Button createButtonNew() {
-		buttonNew = buildButton("Aggiungi Nazione", "Inserisce una nuova nazione",FontAwesome.PLUS);
+		buttonNew = buildButton("Aggiungi Nazione", "Inserisce una nuova nazione", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -109,7 +109,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
+		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
@@ -144,9 +144,10 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	@Override
 	protected void initialize() {
 
-		if (nazioneStore != null)
+		if (nazioneStore != null) {
 			buildPagination(nazioneStore.getTotale());
-		addListenerPagination();
+			addListenerPagination();
+		}
 	}
 
 	/**
@@ -172,8 +173,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				
-				
+
 				elencoNazioneTable.aggiornaTable(nazioneStore);
 				return nazioneStore != null ? nazioneStore.getNazione() : null;
 
@@ -198,10 +198,11 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	protected Component buildFilter() {
 		return null;
 	}
-	
+
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe

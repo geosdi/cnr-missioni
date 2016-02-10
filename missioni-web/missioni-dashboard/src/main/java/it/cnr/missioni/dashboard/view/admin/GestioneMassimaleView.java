@@ -146,9 +146,10 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	@Override
 	protected void initialize() {
 
-		if (massimaleStore != null)
+		if (massimaleStore != null) {
 			buildPagination(massimaleStore.getTotale());
-		addListenerPagination();
+			addListenerPagination();
+		}
 	}
 
 	/**
@@ -200,7 +201,8 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe

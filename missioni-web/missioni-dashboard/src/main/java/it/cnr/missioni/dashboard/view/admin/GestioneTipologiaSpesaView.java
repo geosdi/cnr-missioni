@@ -92,7 +92,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	}
 
 	protected Button createButtonNew() {
-		buttonNew = buildButton("Aggiungi Tipologia Spesa", "Inserisce una nuova tipologia spesa",FontAwesome.PLUS);
+		buttonNew = buildButton("Aggiungi Tipologia Spesa", "Inserisce una nuova tipologia spesa", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -112,7 +112,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
+		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
@@ -146,9 +146,10 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	 */
 	@Override
 	protected void initialize() {
-		if (tipologiaSpesaStore != null)
+		if (tipologiaSpesaStore != null) {
 			buildPagination(tipologiaSpesaStore.getTotale());
-		addListenerPagination();
+			addListenerPagination();
+		}
 
 	}
 
@@ -200,10 +201,11 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	protected Component buildFilter() {
 		return null;
 	}
-	
+
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe

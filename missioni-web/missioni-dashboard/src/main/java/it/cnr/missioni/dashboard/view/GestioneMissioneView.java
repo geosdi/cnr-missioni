@@ -79,9 +79,10 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	protected void initialize() {
 
-		if (missioniStore != null)
+		if (missioniStore != null) {
 			buildPagination(missioniStore.getTotale());
-		addListenerPagination();
+			addListenerPagination();
+		}
 
 	}
 
@@ -128,7 +129,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoMissioniTable = new ElencoMissioniTable();
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId());
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(DashboardUI.getCurrentUser().getId());
 
 		this.elencoMissioniTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			@Override
@@ -273,7 +275,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	// }
 
 	protected Button createButtonNew() {
-		buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione",FontAwesome.PLUS);
+		buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -286,7 +288,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected Button createButtonSearch() {
-		buttonCerca = buildButton("", "Ricerca full text",FontAwesome.SEARCH);
+		buttonCerca = buildButton("", "Ricerca full text", FontAwesome.SEARCH);
 		buttonCerca.addClickListener(new Button.ClickListener() {
 			@Override
 			public void buttonClick(final ClickEvent event) {
@@ -309,7 +311,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli della Missione",FontAwesome.EDIT);
+		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli della Missione", FontAwesome.EDIT);
 
 		buttonDettagli.addClickListener(new Button.ClickListener() {
 
@@ -321,7 +323,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			}
 
 		});
-		buttonRimborso = buildButton("Rimborso", "Visualizza i dettagli del Rimborso",FontAwesome.EURO);
+		buttonRimborso = buildButton("Rimborso", "Visualizza i dettagli del Rimborso", FontAwesome.EURO);
 		buttonRimborso.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -343,7 +345,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 		});
 
-		buttonPDF = buildButton("PDF MISSIONE", "Download del PDF",FontAwesome.FILE_PDF_O);
+		buttonPDF = buildButton("PDF MISSIONE", "Download del PDF", FontAwesome.FILE_PDF_O);
 
 		final AdvancedFileDownloader downloaderForLink = new AdvancedFileDownloader();
 		downloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
@@ -357,8 +359,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		});
 
 		downloaderForLink.extend(buttonPDF);
-		
-		buttonVeicoloMissionePDF = buildButton("PDF VEICOLO", "Download del PDF",FontAwesome.FILE_PDF_O);
+
+		buttonVeicoloMissionePDF = buildButton("PDF VEICOLO", "Download del PDF", FontAwesome.FILE_PDF_O);
 
 		final AdvancedFileDownloader veicoloDownloaderForLink = new AdvancedFileDownloader();
 		veicoloDownloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
@@ -373,10 +375,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 		veicoloDownloaderForLink.extend(buttonVeicoloMissionePDF);
 
-		layout.addComponents(buttonDettagli, buttonRimborso, buttonPDF,buttonVeicoloMissionePDF);
-		
-
-
+		layout.addComponents(buttonDettagli, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
 
 		enableDisableButtons(false);
 
@@ -406,7 +405,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		}
 		return null;
 	}
-	
+
 	private StreamResource getResourceVeicolo() {
 		try {
 
@@ -435,22 +434,23 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		this.buttonDettagli.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonRimborso.setEnabled(enabled);
-	
-		if(selectedMissione != null && selectedMissione.isMezzoProprio())
+
+		if (selectedMissione != null && selectedMissione.isMezzoProprio())
 			buttonVeicoloMissionePDF.setEnabled(true);
-		if(selectedMissione == null || !selectedMissione.isMezzoProprio())
+		if (selectedMissione == null || !selectedMissione.isMezzoProprio())
 			buttonVeicoloMissionePDF.setEnabled(false);
-	
+
 	}
 
 	@Override
 	public void enter(final ViewChangeEvent event) {
 
 	}
-	
+
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe

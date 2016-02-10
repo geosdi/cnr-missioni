@@ -55,7 +55,6 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	 */
 	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
-	
 
 		this.elencoVeicoliCNRTable = new ElencoVeicoliCNRTable();
 		veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
@@ -88,7 +87,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	}
 
 	protected Button createButtonNew() {
-		buttonNew = buildButton("Aggiungi Veicolo CNR", "Inserisce un nuovo veicolo CNR",FontAwesome.PLUS);
+		buttonNew = buildButton("Aggiungi Veicolo CNR", "Inserisce un nuovo veicolo CNR", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
 			@Override
@@ -103,7 +102,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
+		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
 
@@ -132,32 +131,22 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	 */
 	@Override
 	protected void initialize() {
-		veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
-		try {
-			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
-			if (veicoloCNRStore != null)
-				buildPagination(veicoloCNRStore.getTotale());
+
+		if (veicoloCNRStore != null) {
+			buildPagination(veicoloCNRStore.getTotale());
 			addListenerPagination();
-
-		} catch (Exception e)
-
-		{
-			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-					Type.ERROR_MESSAGE);
 		}
 
 	}
-	
+
 	/**
 	 * 
 	 * Aggiunge il listener alla paginazione
 	 * 
 	 */
 	protected void addListenerPagination() {
-		
+
 		pagingComponent.addListener(new LazyPagingComponentListener<VeicoloCNR>(itemsArea) {
-
-
 
 			/**
 			 * 
@@ -197,10 +186,11 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	protected Component buildFilter() {
 		return null;
 	}
-	
+
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe

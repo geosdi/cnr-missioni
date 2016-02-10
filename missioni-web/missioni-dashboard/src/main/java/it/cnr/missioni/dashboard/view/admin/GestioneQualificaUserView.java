@@ -148,9 +148,10 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 	 */
 	@Override
 	protected void initialize() {
-		if (qualificaUserStore != null)
+		if (qualificaUserStore != null){
 			buildPagination(qualificaUserStore.getTotale());
 		addListenerPagination();
+		}
 
 	}
 

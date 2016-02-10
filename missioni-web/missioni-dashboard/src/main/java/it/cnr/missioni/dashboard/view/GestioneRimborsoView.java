@@ -81,8 +81,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoRimborsiTable = new ElencoRimborsiTable();
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())
-				.withFieldExist("missione.rimborso")
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(DashboardUI.getCurrentUser().getId()).withFieldExist("missione.rimborso")
 				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
 
 		this.elencoRimborsiTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
@@ -270,8 +270,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		
-		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso",FontAwesome.EDIT);
+
+		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso", FontAwesome.EDIT);
 		buttonDettagli.addClickListener(new Button.ClickListener() {
 
 			/**
@@ -287,8 +287,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 		});
 
-
-		buttonMissione = buildButton("Missone", "Visualizza i dati della Missione",FontAwesome.SUITCASE);
+		buttonMissione = buildButton("Missone", "Visualizza i dati della Missione", FontAwesome.SUITCASE);
 
 		buttonMissione.addClickListener(new Button.ClickListener() {
 
@@ -375,25 +374,21 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	@Override
 	protected void initialize() {
 
-			if (missioniStore != null)
-				buildPagination(missioniStore.getTotale());
+		if (missioniStore != null) {
+			buildPagination(missioniStore.getTotale());
 			addListenerPagination();
-
+		}
 
 	}
-	
+
 	/**
 	 * 
 	 * Aggiunge il listener alla paginazione
 	 * 
 	 */
 	protected void addListenerPagination() {
-		
+
 		pagingComponent.addListener(new LazyPagingComponentListener<Missione>(itemsArea) {
-
-
-
-
 
 			/**
 			 * 
@@ -429,10 +424,11 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * 
-	 * Aggiorna la table e la paginazione a seguito di un inserimento o una modifica
+	 * Aggiorna la table e la paginazione a seguito di un inserimento o una
+	 * modifica
 	 * 
 	 */
 	@Subscribe
