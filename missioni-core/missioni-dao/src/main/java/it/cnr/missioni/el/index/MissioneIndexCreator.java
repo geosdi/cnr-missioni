@@ -92,7 +92,17 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
     	.field("type", "string")
     	.endObject()
     	.startObject("geoPoint")
-    	.field("type", "geo_point")
+    	.startObject("properties") 	
+    	.startObject("geohash")
+    	.field("type", "string")
+    	.endObject() 	
+    	.startObject("lat")
+    	.field("type", "double")
+    	.endObject()
+    	.startObject("lon")
+    	.field("type", "double")
+    	.endObject()
+    	.endObject() 	
     	.endObject()
     	
     	//DATI ANTICIPO PAGAMENTI
