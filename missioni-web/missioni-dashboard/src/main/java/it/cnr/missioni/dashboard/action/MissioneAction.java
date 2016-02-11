@@ -29,7 +29,7 @@ public class MissioneAction implements IAction {
 	public boolean doAction() {
 
 		try {
-
+			missione.setDateLastModified(new DateTime());
 			// se inseriamo una nuova missione
 			if (!modifica) {
 				missione.setDataInserimento(new DateTime());
@@ -45,7 +45,6 @@ public class MissioneAction implements IAction {
 				Thread.sleep(1000);
 				ClientConnector.sendMissioneMail(id);
 			} else {
-				missione.setDateLastModified(new DateTime());
 				ClientConnector.updateMissione(missione);
 			}
 
