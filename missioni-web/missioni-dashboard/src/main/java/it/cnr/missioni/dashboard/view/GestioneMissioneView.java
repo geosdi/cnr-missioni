@@ -385,7 +385,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	}
 
-	private StreamResource getResource() {
+	protected StreamResource getResource() {
 		try {
 
 			Response r = ClientConnector.downloadMissioneAsPdf(selectedMissione.getId());
@@ -408,7 +408,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		return null;
 	}
 
-	private StreamResource getResourceVeicolo() {
+	protected StreamResource getResourceVeicolo() {
 		try {
 
 			Response r = ClientConnector.downloadVeicoloMissioneAsPdf(selectedMissione.getId());
