@@ -233,7 +233,7 @@ public class LocalitaOggettoStep implements WizardStep {
 			BeanItem<Missione> beanItem = (BeanItem<Missione>) fieldGroup.getItemDataSource();
 			missione = beanItem.getBean();
 			missione.setOggetto(oggettoField.getValue());
-			missione.setLocalita(localitaField.getValue());
+			missione.setLocalita(listaLocalitaField.getItemCaption(listaLocalitaField.getValue()));
 			missione.setDistanza(distanzaField.getValue());
 			if(missione.isMissioneEstera()){
 				missione.setIdNazione(listaNazioneField.getValue().toString());
