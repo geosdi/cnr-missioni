@@ -113,7 +113,8 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 		build();
 		buildFieldGroup();
 		buildTabs();
-		content.addComponent(buildFooter());
+		if(!missione.isRimborsoSetted())
+			content.addComponent(buildFooter());
 
 	}
 
@@ -135,6 +136,7 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 
 		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
 		fieldGroup.setFieldFactory(fieldFactory);
+
 	}
 
 	private void buildTabs() {
@@ -145,6 +147,9 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 		if(missione.isMissioneEstera())
 			detailsWrapper.addComponent(buildMissioneEstera());
 		detailsWrapper.addComponent(buildAnticipazioniMonetarie());
+		if(!missione.isRimborsoSetted()){
+			fieldGroup.setReadOnly(true);
+		}
 		addValidator();
 	}
 	
