@@ -1,15 +1,14 @@
 package it.cnr.missioni.rest.api.response.missione;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import it.cnr.missioni.model.missione.Missione;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import it.cnr.missioni.model.missione.Missione;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -17,7 +16,7 @@ import java.util.Objects;
  */
 @JsonRootName(value = "MissioniStore")
 @JsonPropertyOrder(value = {"userID", "missioni","totale"})
-public class MissioniStore implements Serializable {
+public class MissioniStore implements Serializable  {
 
     private static final long serialVersionUID = -1456652972409122182L;
     //
