@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import it.cnr.missioni.model.configuration.Massimale;
-import it.cnr.missioni.model.configuration.Nazione;
 
 /**
  * 
