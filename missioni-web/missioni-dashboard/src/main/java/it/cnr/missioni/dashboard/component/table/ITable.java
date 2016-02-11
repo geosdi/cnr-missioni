@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.component.table;
 
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
