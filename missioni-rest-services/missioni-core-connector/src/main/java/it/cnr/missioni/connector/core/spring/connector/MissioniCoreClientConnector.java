@@ -157,6 +157,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("iban", userSearchBuilder.getIban())
                 .queryParam("mail", userSearchBuilder.getMail())
                 .queryParam("notId", userSearchBuilder.getNotId())
+                .queryParam("id", userSearchBuilder.getId())
                 .queryParam("responsabileGruppo", userSearchBuilder.isResponsabileGruppo())
                 .queryParam("all", userSearchBuilder.isAll())
                 .queryParam("from", userSearchBuilder.getFrom())
