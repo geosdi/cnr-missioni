@@ -2,11 +2,9 @@ package it.cnr.missioni.dashboard.view.admin;
 
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.calendar.CalendarPrenotazioni;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoStatisticheMissioniTable;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.HomeView;
