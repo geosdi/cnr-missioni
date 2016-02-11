@@ -32,6 +32,7 @@ public class UserSearchBuilder implements ISearchBuilder {
 	private String cartaCircolazione = null;
 	private String polizzaAssicurativa = null;
 	private String notId;
+	private String id;
 	private String multiMatchValue;
 	private String fieldMultiMatch = "user.anagrafica.nome,user.anagrafica.cognome,user.anagrafica.codiceFiscale,user.datiCNR.matricola,user.datiCNR.mail";
 	private Boolean responsabileGruppo = null;
@@ -129,6 +130,14 @@ public class UserSearchBuilder implements ISearchBuilder {
 		if(notId != null &&!notId.trim().equals("") )
 		booleanModelSearch.getListaSearch()
 				.add(new ExactSearch(SearchConstants.USER_FIELD_ID, notId, EnumBooleanType.MUST_NOT));
+		return self();
+	}
+	
+	public UserSearchBuilder withId(String id) {
+		this.setId( id);
+		if( id != null &&! id.trim().equals("") )
+		booleanModelSearch.getListaSearch()
+				.add(new ExactSearch(SearchConstants.USER_FIELD_ID, id));
 		return self();
 	}
 
@@ -363,6 +372,20 @@ public class UserSearchBuilder implements ISearchBuilder {
 	 */
 	public void setNotId(String notId) {
 		this.notId = notId;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id 
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**

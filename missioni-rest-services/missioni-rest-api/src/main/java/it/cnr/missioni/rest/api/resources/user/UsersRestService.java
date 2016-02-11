@@ -35,27 +35,28 @@ public interface UsersRestService {
 	// @Path(value = UsersServiceRSPathConfig.GET_ALL_USERS_PATH)
 	// Response getLastUsers() throws Exception;
 
-	/**
-	 * 
-	 * @param nome
-	 * @param cognome
-	 * @param codiceFiscale
-	 * @param matricola
-	 * @param username
-	 * @param targa
-	 * @param numeroPatente
-	 * @param cartaCircolazione
-	 * @param polizzaAssicurativa
-	 * @param iban
-	 * @param mail
-	 * @param notId
-	 * @param responsabileGruppo
-	 * @param all
-	 * @param from
-	 * @param size
-	 * @return
-	 * @throws Exception
-	 */
+/**
+ * 
+ * @param nome
+ * @param cognome
+ * @param codiceFiscale
+ * @param matricola
+ * @param username
+ * @param targa
+ * @param numeroPatente
+ * @param cartaCircolazione
+ * @param polizzaAssicurativa
+ * @param iban
+ * @param mail
+ * @param id
+ * @param notId
+ * @param responsabileGruppo
+ * @param all
+ * @param from
+ * @param size
+ * @return
+ * @throws Exception
+ */
 	@GET
 	@Path(value = UsersServiceRSPathConfig.GET_USER_BY_QUERY)
 	Response getUserByQuery(@QueryParam(value = "nome") String nome, @QueryParam(value = "cognome") String cognome,
@@ -66,6 +67,7 @@ public interface UsersRestService {
 			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
 			@QueryParam(value = "iban") String iban, @QueryParam(value = "mail") String mail,
 			@QueryParam(value = "notId") String notId,
+			@QueryParam(value = "id") String id,
 			@QueryParam(value = "responsabileGruppo") Boolean responsabileGruppo,
 			@QueryParam(value = "all") boolean all, @QueryParam(value = "from") int from,
 			@QueryParam(value = "size") int size) throws Exception;

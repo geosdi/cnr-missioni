@@ -47,34 +47,36 @@ public class UserRestServiceResource implements UsersRestService {
 	// return null;
 	// }
 
-/**
- * 
- * @param nome
- * @param cognome
- * @param codiceFiscale
- * @param matricola
- * @param username
- * @param targa
- * @param numeroPatente
- * @param cartaCircolazione
- * @param polizzaAssicurativa
- * @param iban
- * @param mail
- * @param notId
- * @param responsabileGruppo
- * @param all
- * @param from
- * @param size
- * @return
- * @throws Exception
- */
+	/**
+	 * 
+	 * @param nome
+	 * @param cognome
+	 * @param codiceFiscale
+	 * @param matricola
+	 * @param username
+	 * @param targa
+	 * @param numeroPatente
+	 * @param cartaCircolazione
+	 * @param polizzaAssicurativa
+	 * @param iban
+	 * @param mail
+	 * @param notId
+	 * @param id
+	 * @param responsabileGruppo
+	 * @param all
+	 * @param from
+	 * @param size
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public Response getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
 			String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
-			String mail, String notId, Boolean responsabileGruppo, boolean all, int from, int size) throws Exception {
+			String mail, String notId, String id, Boolean responsabileGruppo, boolean all, int from, int size)
+					throws Exception {
 		return Response.ok(this.userDelegate.getUserByQuery(nome, cognome, codiceFiscale, matricola, username, targa,
-				numeroPatente, cartaCircolazione, polizzaAssicurativa, iban, mail, notId, responsabileGruppo, all, from,
-				size)).build();
+				numeroPatente, cartaCircolazione, polizzaAssicurativa, iban, mail, notId, id, responsabileGruppo, all,
+				from, size)).build();
 	}
 
 	/**

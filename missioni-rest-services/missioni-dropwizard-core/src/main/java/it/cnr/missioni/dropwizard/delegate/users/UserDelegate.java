@@ -48,6 +48,7 @@ class UserDelegate implements IUserDelegate {
 	 * @param iban
 	 * @param mail
 	 * @param notId
+	 * @param id
 	 * @param responsabileGruppo
 	 * @param all
 	 * @param from
@@ -58,13 +59,14 @@ class UserDelegate implements IUserDelegate {
 	@Override
 	public UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola,
 			String username, String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa,
-			String iban, String mail, String notId, Boolean responsabileGruppo, boolean all, int from, int size)
-					throws Exception {
+			String iban, String mail, String notId, String id, Boolean responsabileGruppo, boolean all, int from,
+			int size) throws Exception {
 
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
 				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione)
 				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withNotId(notId)
+				.withId(id)
 				.withResponsabileGruppo(responsabileGruppo).withAll(all).withFrom(from).withSize(size);
 
 		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
