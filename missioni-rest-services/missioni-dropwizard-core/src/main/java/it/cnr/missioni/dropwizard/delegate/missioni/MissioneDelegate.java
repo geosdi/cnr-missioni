@@ -220,16 +220,11 @@ class MissioneDelegate implements IMissioneDelegate {
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 
-		if (missione.isRimborsoSetted() != null && missione.getRimborso().getNumeroOrdine() == null)
+		if (missione.isRimborsoSetted() && missione.getRimborso().getNumeroOrdine() == null)
 			missione.getRimborso().setNumeroOrdine(this.missioneDAO.getMaxNumeroOrdineRimborso());
 		this.missioneDAO.update(missione);
 
 		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
-		if (missione.isMezzoProprio()) {
-			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
-			Veicolo veicolo = user.getVeicoloPrincipale();
-			pdfBuilder.withVeicolo(veicolo);
-		}
 
 		if (missione.isRimborsoSetted()) {
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
@@ -238,11 +233,16 @@ class MissioneDelegate implements IMissioneDelegate {
 							? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
 					missione.getId(), pdfBuilder));
 		} else {
-			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
-					user.getAnagrafica().getNome(),
-					user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
-							? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
-					pdfBuilder));
+
+			if (missione.isMezzoProprio()) {
+				pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
+				Veicolo veicolo = user.getVeicoloPrincipale();
+				pdfBuilder.withVeicolo(veicolo);
+			}
+
+			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateMissioneMessage(
+					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
+					missione.getId(), pdfBuilder));
 		}
 		return Boolean.TRUE;
 	}
