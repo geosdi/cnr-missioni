@@ -241,7 +241,7 @@ class MissioneDelegate implements IMissioneDelegate {
 			}
 
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateMissioneMessage(
-					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
+					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), missione.getStato().getStato(),user.getDatiCNR().getMail(),
 					missione.getId(), pdfBuilder));
 		}
 		return Boolean.TRUE;
