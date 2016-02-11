@@ -24,6 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.TipologiaSpesaWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableTipologiaSpesaUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
+import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
@@ -48,6 +49,10 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	public GestioneTipologiaSpesaView() {
 		super();
 	}
+	
+	protected void inizialize() {
+		this.tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+	}
 
 	/**
 	 * 
@@ -57,7 +62,6 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoTipologiaSpesaTable = new ElencoTipologiaSpesaTable();
-		this.tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 
 		try {
 			tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(tipologiaSpesaSearchBuilder);
@@ -91,7 +95,12 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 
 	}
 
-	protected Button createButtonNew() {
+
+
+	protected GridLayout addActionButtons() {
+		GridLayout layout = new GridLayout(5, 1);
+		layout.setSpacing(true);
+		
 		buttonNew = buildButton("Aggiungi Tipologia Spesa", "Inserisce una nuova tipologia spesa", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -106,12 +115,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 			}
 
 		});
-		return buttonNew;
-	}
-
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
-		layout.setSpacing(true);
+		
 		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
@@ -129,7 +133,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 
 		});
 
-		layout.addComponents(buttonModifica);
+		layout.addComponents(buttonNew,buttonModifica);
 
 		enableDisableButtons(false);
 
@@ -145,7 +149,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(tipologiaSpesaStore != null ? tipologiaSpesaStore.getTotale() : 0);
 		addListenerPagination();
 

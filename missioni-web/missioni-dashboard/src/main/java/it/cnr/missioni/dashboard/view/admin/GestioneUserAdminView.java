@@ -58,47 +58,12 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	private UserSearchBuilder userSearchBuilder;
 	private UserStore userStore;
 
-	// private CssLayout panel = new CssLayout();
-
 	public GestioneUserAdminView() {
-		// addStyleName(ValoTheme.PANEL_BORDERLESS);
-		// addStyleName("missione-view");
-		// setSizeFull();
-		// DashboardEventBus.register(this);
-		// setHeight("96%");
-		// setWidth("98%");
-		// addStyleName(ValoTheme.LAYOUT_CARD);
-		// addStyleName("panel-view");
-		// Responsive.makeResponsive(this);
-		//
-		// CssLayout toolbar = new CssLayout();
-		// toolbar.setWidth("100%");
-		// toolbar.setStyleName("toolbar-search");
-		// HorizontalLayout fullTextsearchLayout = new
-		// HorizontalLayout(buildFilter(), createButtonSearch());
-		// fullTextsearchLayout.setSpacing(true);
-		// fullTextsearchLayout.setStyleName("full-text-search");
-		//
-		//
-		// layoutTable = buildTable();
-		// layoutTable.setStyleName("layout-table-missione");
-		//
-		// GridLayout buttonsLayout = buildButtonsSelectedUser();
-		// buttonsLayout.setSpacing(true);
-		// buttonsLayout.setStyleName("buttons-layout");
-		//
-		//
-		// toolbar.addComponent(fullTextsearchLayout);
-		// addComponent(toolbar);
-		//// setExpandRatio(toolbar, new Float(1));
-		//// addComponent(layoutForm);
-		//// Animator.animate(layoutForm, new
-		// Css().translateY("1000px")).duration(5000);
-		//// setExpandRatio(layoutForm, new Float(0.1));
-		// addComponent(layoutTable);
-		// addComponent(buttonsLayout);
-		// setExpandRatio(layoutTable, new Float(1));
-		// setComponentAlignment(buttonsLayout, Alignment.TOP_CENTER);
+		super();
+	}
+	
+	protected void inizialize() {
+		this.userSearchBuilder = UserSearchBuilder.getUserSearchBuilder();
 	}
 
 	/**
@@ -109,7 +74,6 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		VerticalLayout v = new VerticalLayout();
 
 
-		this.userSearchBuilder = UserSearchBuilder.getUserSearchBuilder();
 		this.elencoUserTable = new ElencoUserTable();
 		this.elencoUserTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			/**
@@ -365,7 +329,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	/**
 	 * 
 	 */
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(userStore != null ? userStore.getTotale() : 0);
 		addListenerPagination();
 	}
@@ -383,10 +347,6 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 			 * 
 			 */
 			private static final long serialVersionUID = 2537782371968033967L;
-
-			/**
-			 * 
-			 */
 
 			@Override
 			protected Collection<User> getItemsList(int startIndex, int endIndex) {
@@ -409,14 +369,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		});
 	}
 
-	/**
-	 * @return
-	 */
-	@Override
-	protected Button createButtonNew() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	/**
 	 * 

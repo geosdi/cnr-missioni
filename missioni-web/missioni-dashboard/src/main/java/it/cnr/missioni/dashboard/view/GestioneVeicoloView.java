@@ -25,6 +25,8 @@ import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.model.user.Veicolo;
 
 /**
@@ -40,14 +42,15 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	 * 
 	 */
 	private ElencoVeicoliTable elencoVeicoliTable;
-	private VerticalLayout layoutTable;
 	private Veicolo selectedVeicolo;
 
-	// private CssLayout panel = new CssLayout();
 
 	public GestioneVeicoloView() {
 		super();
 	}
+	
+	protected void inizialize() {
+		}
 
 	/**
 	 * 
@@ -85,8 +88,12 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 	}
 
-	protected Button createButtonNew() {
 
+	protected GridLayout addActionButtons() {
+		GridLayout layout = new GridLayout(5, 1);
+		layout.setSpacing(true);
+		
+		
 		buttonNew = buildButton("Nuovo Veicolo", "Aggiunge un nuovo Veicolo", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -101,12 +108,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 			}
 
 		});
-		return buttonNew;
-	}
-
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
-		layout.setSpacing(true);
+		
 		buttonModifica = buildButton("Modifica", "Modifica i dati del vieicolo", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
@@ -124,7 +126,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 		});
 
-		layout.addComponents(buttonModifica);
+		layout.addComponents(buttonNew,buttonModifica);
 
 		enableDisableButtons(false);
 
@@ -140,7 +142,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(!DashboardUI.getCurrentUser().getMappaVeicolo().isEmpty()
 				? new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()) : 0);
 		addListenerPagination();

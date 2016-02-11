@@ -46,12 +46,10 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	protected Button buttonVeicoloMissionePDF;
 	private VerticalLayout layoutPagination = new VerticalLayout();
 
-
-	// private CssLayout panel = new CssLayout();
-
 	public GestioneTemplateView() {
+		inizialize();
 		build();
-		initialize();
+		initPagination();
 
 	}
 
@@ -86,9 +84,6 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
 		HorizontalLayout newObjectLayout = new HorizontalLayout();
 
-		Button buttonNew = createButtonNew();
-		if (buttonNew != null)
-			newObjectLayout.addComponent(createButtonNew());
 		newObjectLayout.addComponent(addActionButtons());
 
 		newObjectLayout.setSpacing(true);
@@ -151,10 +146,12 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	
 
 	protected abstract VerticalLayout buildTable();
+	
 
-	protected abstract void initialize();
 
-	protected abstract Button createButtonNew();
+	protected abstract void initPagination();
+	
+	protected abstract void inizialize();
 
 	protected abstract Button createButtonSearch();
 

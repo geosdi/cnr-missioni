@@ -24,6 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.QualificaUserWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableQualificaUserUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
@@ -50,6 +51,10 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 	public GestioneQualificaUserView() {
 		super();
+	}
+	
+	protected void inizialize() {
+		this.qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 	}
 
 	/**
@@ -93,7 +98,12 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 	}
 
-	protected Button createButtonNew() {
+
+
+	protected GridLayout addActionButtons() {
+		GridLayout layout = new GridLayout(5, 1);
+		layout.setSpacing(true);
+		
 		buttonNew = buildButton("Aggiungi Qualifica", "Inserisce una nuova qualifica", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -108,12 +118,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 			}
 
 		});
-		return buttonNew;
-	}
-
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
-		layout.setSpacing(true);
+		
 		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
@@ -131,7 +136,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 		});
 
-		layout.addComponents(buttonModifica);
+		layout.addComponents(buttonNew,buttonModifica);
 
 		enableDisableButtons(false);
 
@@ -147,7 +152,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(qualificaUserStore != null ? qualificaUserStore.getTotale() : 0);
 		addListenerPagination();
 

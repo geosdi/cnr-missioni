@@ -39,6 +39,7 @@ import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
+import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
@@ -73,6 +74,12 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		super();
 	}
 
+	protected void inizialize() {
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(DashboardUI.getCurrentUser().getId()).withFieldExist("missione.rimborso")
+				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+		}
+	
 	/**
 	 * 
 	 * @return VerticalLayout
@@ -81,9 +88,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoRimborsiTable = new ElencoRimborsiTable();
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser(DashboardUI.getCurrentUser().getId()).withFieldExist("missione.rimborso")
-				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+
 
 		this.elencoRimborsiTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			/**
@@ -372,7 +377,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(missioniStore != null ? missioniStore.getTotale() : 0);
 		addListenerPagination();
 
@@ -413,14 +418,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		});
 	}
 
-	/**
-	 * @return
-	 */
-	@Override
-	protected Button createButtonNew() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * 

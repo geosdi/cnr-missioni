@@ -66,21 +66,26 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	private VerticalLayout layoutTable;
 
 	private VerticalLayout layoutForm;
-	private Missione selectedMissione;
+	protected Missione selectedMissione;
 
-	private MissioneSearchBuilder missioneSearchBuilder;
+	protected MissioneSearchBuilder missioneSearchBuilder;
 	private MissioniStore missioniStore;
 
 	// private CssLayout panel = new CssLayout();
 
 	public GestioneMissioneView() {
 		super();
+		
 	}
 
-	protected void initialize() {
-
+	protected void initPagination() {
 		buildPagination(missioniStore != null ? missioniStore.getTotale() : 0);
-			addListenerPagination();
+		addListenerPagination();
+	}
+	
+	protected void inizialize() {
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(DashboardUI.getCurrentUser().getId());
 	}
 
 	/**
@@ -271,18 +276,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	// });
 	// }
 
-	protected Button createButtonNew() {
-		buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione", FontAwesome.PLUS);
-		buttonNew.addClickListener(new Button.ClickListener() {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).build();
-			}
-
-		});
-		return buttonNew;
-	}
 
 	protected Button createButtonSearch() {
 		buttonCerca = buildButton("", "Ricerca full text", FontAwesome.SEARCH);
@@ -306,8 +300,19 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
+		GridLayout layout = new GridLayout(5, 1);
 		layout.setSpacing(true);
+		
+		buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione", FontAwesome.PLUS);
+		buttonNew.addClickListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).build();
+			}
+
+		});
+		
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli della Missione", FontAwesome.EDIT);
 
 		buttonDettagli.addClickListener(new Button.ClickListener() {
@@ -372,7 +377,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 		veicoloDownloaderForLink.extend(buttonVeicoloMissionePDF);
 
-		layout.addComponents(buttonDettagli, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
+		layout.addComponents(buttonNew,buttonDettagli, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
 
 		enableDisableButtons(false);
 
@@ -427,7 +432,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void enableDisableButtons(boolean enabled) {
-		// this.buttonMail.setEnabled(enabled);
 		this.buttonDettagli.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
 		this.buttonRimborso.setEnabled(enabled);

@@ -26,6 +26,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.TableMassimaleUpdatedEvent
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
@@ -48,13 +49,17 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 		super();
 	}
 
+	protected void inizialize() {
+		this.massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
+	}
+
 	/**
 	 * 
 	 * @return VerticalLayout
 	 */
 	protected VerticalLayout buildTable() {
 		VerticalLayout v = new VerticalLayout();
-		this.massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
+
 		try {
 			massimaleStore = ClientConnector.getMassimale(massimaleSearchBuilder);
 		} catch (Exception e) {
@@ -89,7 +94,10 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 	}
 
-	protected Button createButtonNew() {
+	protected GridLayout addActionButtons() {
+		GridLayout layout = new GridLayout(5, 1);
+		layout.setSpacing(true);
+
 		buttonNew = buildButton("Aggiungi Massimale", "Inserisce un nuovo massimale", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -104,12 +112,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 			}
 
 		});
-		return buttonNew;
-	}
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
-		layout.setSpacing(true);
 		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
@@ -145,7 +148,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(massimaleStore != null ? massimaleStore.getTotale() : 0);
 
 		addListenerPagination();

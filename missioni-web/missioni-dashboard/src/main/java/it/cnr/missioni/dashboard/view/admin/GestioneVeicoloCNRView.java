@@ -49,6 +49,10 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 		super();
 	}
 
+	protected void inizialize() {
+		veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+	}
+	
 	/**
 	 * 
 	 * @return VerticalLayout
@@ -57,7 +61,6 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoVeicoliCNRTable = new ElencoVeicoliCNRTable();
-		veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
 
 		try {
 			veicoloCNRStore = ClientConnector.getVeicoloCNR(veicoloCNRSearchBuilder);
@@ -91,7 +94,10 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 	}
 
-	protected Button createButtonNew() {
+
+	protected GridLayout addActionButtons() {
+		GridLayout layout = new GridLayout(5, 1);
+		layout.setSpacing(true);
 		buttonNew = buildButton("Aggiungi Veicolo CNR", "Inserisce un nuovo veicolo CNR", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -106,12 +112,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 			}
 
 		});
-		return buttonNew;
-	}
-
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
-		layout.setSpacing(true);
+		
 		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
@@ -129,7 +130,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 		});
 
-		layout.addComponents(buttonModifica);
+		layout.addComponents(buttonNew,buttonModifica);
 
 		enableDisableButtons(false);
 
@@ -145,7 +146,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(veicoloCNRStore != null ? veicoloCNRStore.getTotale() : 0);
 		addListenerPagination();
 	}

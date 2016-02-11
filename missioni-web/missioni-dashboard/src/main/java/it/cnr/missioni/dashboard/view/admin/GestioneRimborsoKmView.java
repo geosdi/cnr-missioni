@@ -43,6 +43,10 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		DashboardEventBus.register(this);
 	}
 
+	protected void inizialize() {
+
+	}
+	
 	/**
 	 * 
 	 * @return VerticalLayout
@@ -89,7 +93,12 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 
 	}
 
-	protected Button createButtonNew() {
+
+
+	protected GridLayout addActionButtons() {
+		GridLayout layout = new GridLayout(5, 1);
+		layout.setSpacing(true);
+		
 		buttonNew = buildButton("Aggiungi Rimborso Km", "Inserisce un nuovo rimborso km",FontAwesome.PLUS);
 		this.buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -104,12 +113,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 			}
 
 		});
-		return buttonNew;
-	}
-
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
-		layout.setSpacing(true);
+		
 		buttonModifica = buildButton("Modifica", "Modifica",FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
@@ -127,7 +131,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 
 		});
 
-		layout.addComponents(buttonModifica);
+		layout.addComponents(buttonNew,buttonModifica);
 
 		enableDisableButtons(false);
 
@@ -143,7 +147,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(rimborsoKmStore.getTotale());
 
 	}

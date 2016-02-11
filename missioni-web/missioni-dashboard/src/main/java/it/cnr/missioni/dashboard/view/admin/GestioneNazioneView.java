@@ -24,6 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableNazioneUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
@@ -46,6 +47,10 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 		super();
 	}
 
+	protected void inizialize() {
+		this.nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+	}
+
 	/**
 	 * 
 	 * @return VerticalLayout
@@ -54,7 +59,6 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoNazioneTable = new ElencoNazioneTable();
-		this.nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
 
 		try {
 			nazioneStore = ClientConnector.getNazione(nazioneSearchBuilder);
@@ -88,7 +92,12 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 	}
 
-	protected Button createButtonNew() {
+
+	protected GridLayout addActionButtons() {
+		GridLayout layout = new GridLayout(5, 1);
+		layout.setSpacing(true);
+		
+		
 		buttonNew = buildButton("Aggiungi Nazione", "Inserisce una nuova nazione", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -103,12 +112,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 			}
 
 		});
-		return buttonNew;
-	}
-
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
-		layout.setSpacing(true);
+		
 		buttonModifica = buildButton("Modifica", "Modifica", FontAwesome.PENCIL);
 
 		buttonModifica.addClickListener(new Button.ClickListener() {
@@ -126,7 +130,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 		});
 
-		layout.addComponents(buttonModifica);
+		layout.addComponents(buttonNew,buttonModifica);
 
 		enableDisableButtons(false);
 
@@ -142,7 +146,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	 * 
 	 */
 	@Override
-	protected void initialize() {
+	protected void initPagination() {
 		buildPagination(nazioneStore != null ? nazioneStore.getTotale() : 0);
 		addListenerPagination();
 	}
