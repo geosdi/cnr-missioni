@@ -135,6 +135,7 @@ public class FondoGAEStep implements WizardStep {
 			missione = beanItem.getBean();
 			missione.setGAE(GAEField.getValue());
 			missione.setFondo(fondoField.getValue());
+			missione.setResponsabileGruppo(listaResponsabiliGruppoField.getValue().toString());
 			missione.setShortResponsabileGruppo(listaResponsabiliGruppoField.getItemCaption(listaResponsabiliGruppoField.getValue()));
 			
 			return true;
