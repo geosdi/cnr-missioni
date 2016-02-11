@@ -68,14 +68,20 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 	public long getMaxNumeroOrdineRimborso() throws Exception {
 		long value = 0;
 
-		SearchResponse sr = this.elastichSearchClient.prepareSearch(getIndexName())
-				.addAggregation(
-						AggregationBuilders.max("max_numero_ordine_rimborso").field("missione.rimborso.numeroOrdine"))
-				.execute().actionGet();
-		Max agg = sr.getAggregations().get("max_numero_ordine_rimborso");
-		value = (long) agg.getValue() + 1;
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso");
+		List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
 
-		return value;
+		return lista.size()+1;
+		
+//		SearchResponse sr = this.elastichSearchClient.prepareSearch(getIndexName())
+//				.addAggregation(
+//						AggregationBuilders.max("max_numero_ordine_rimborso").field("missione.rimborso.numeroOrdine"))
+//				.execute().actionGet();
+//		Max agg = sr.getAggregations().get("max_numero_ordine_rimborso");
+//		if(agg.getValue() == null)
+//			return 1;
+//		else
+//		return (long) agg.getValue() + 1;;
 	}
 
 /**

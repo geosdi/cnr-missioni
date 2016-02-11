@@ -326,6 +326,14 @@ public class MissioneDAOTest {
 		Assert.assertTrue("FIND STATISTICHE", statisticheMissioni.getMappaStatistiche().get(StatoEnum.PRESA_IN_CARICO) == 2);
 	}
 	
+	@Test
+	public void V_getMaxNumOrdineMissione() throws Exception {
+		long n = this.missioneDAO.getMaxNumeroOrdineRimborso();
+		 logger.debug("############################MAX_NUM_ORDINE_MISSIONE : {}\n",
+		 n);
+
+	}
+	
 	// @Test
 	// public void tearDown() throws Exception {
 	// this.missioneDocIndexCreator.deleteIndex();
