@@ -4,7 +4,13 @@
     <div>
         <p>Gentile ${userName} ${userSurname}, la sua missione con ID : ${missioneID}
            &egrave; stata modificata.
-        </p>
+         </p>
+         <p>
+           Stato missione : ${stato}.
+         </p>
+         <p>
+           In allegato il pdf che riepiloga i dati inseriti.
+         </p>
     </div>
 </body>
 </html>
