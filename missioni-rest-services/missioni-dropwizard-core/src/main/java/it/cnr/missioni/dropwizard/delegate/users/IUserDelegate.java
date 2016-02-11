@@ -33,6 +33,7 @@ public interface IUserDelegate {
 	 * @param iban
 	 * @param mail
 	 * @param notId
+	 * @param id
 	 * @param responsabileGruppo
 	 * @param all
 	 * @param from
@@ -42,7 +43,8 @@ public interface IUserDelegate {
 	 */
 	UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
 			String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
-			String mail, String notId, Boolean responsabileGruppo, boolean all, int from, int size) throws Exception;
+			String mail, String notId, String id, Boolean responsabileGruppo, boolean all, int from, int size)
+					throws Exception;
 
 	/**
 	 * 
