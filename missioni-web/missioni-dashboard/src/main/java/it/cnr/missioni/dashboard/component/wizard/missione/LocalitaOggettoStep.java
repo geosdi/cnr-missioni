@@ -156,14 +156,16 @@ public class LocalitaOggettoStep implements WizardStep {
 			@Override
 			public void blur(BlurEvent event) {
 				try {
-					
-				System.out.println();
-					
+										
 				String localita = listaLocalitaField.getItemCaption(listaLocalitaField.getValue());
-				
+				if(localita != null){
 					DistanceResponse.MissioneDistanceResponse distance = ClientConnector
 							.getDistanceForMissione("Tito Scalo",localita);
 					distanzaField.setValue(distance.getDistance());
+				}
+				else{
+					distanzaField.setValue(null);
+				}
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
@@ -171,23 +173,6 @@ public class LocalitaOggettoStep implements WizardStep {
 			}
 			
 		});
-
-//		listaLocalitaField.addValueChangeListener(new ValueChangeListener() {
-//
-//			@Override
-//			public void valueChange(ValueChangeEvent event) {
-//
-//				try {
-//					DistanceResponse.MissioneDistanceResponse distance = ClientConnector
-//							.getDistanceForMissione("Tito Scalo", localitaField.getValue());
-//					distanzaField.setValue(distance.getDistance());
-//				} catch (Exception e) {
-//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-//							Type.ERROR_MESSAGE);
-//				}
-//
-//			}
-//		});
 		
 
 		listaNazioneField.addValidator(new Validator() {
