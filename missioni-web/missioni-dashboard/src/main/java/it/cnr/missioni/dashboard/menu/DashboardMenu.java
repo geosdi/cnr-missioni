@@ -173,6 +173,8 @@ public final class DashboardMenu extends CustomComponent {
 
 			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.HOME_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_MISSIONE_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
 			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
 			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_VEICOLO_CNR_ADMIN);
