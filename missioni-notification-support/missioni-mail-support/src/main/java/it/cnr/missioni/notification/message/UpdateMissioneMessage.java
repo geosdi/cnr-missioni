@@ -15,13 +15,15 @@ public class UpdateMissioneMessage extends CNRMissioniMessage {
 
     private final String missioneID;
     private final PDFBuilder missionePDFBuilder;
+    private final String stato;
 
 
-    public UpdateMissioneMessage(String userName, String userSurname, String userEmail,
+    public UpdateMissioneMessage(String userName, String userSurname,String stato, String userEmail,
             String theMissioneID, PDFBuilder theMissionePDFBuilder) {
         super(userName, userSurname, userEmail);
         this.missionePDFBuilder = theMissionePDFBuilder;
         this.missioneID = theMissioneID;
+        this.stato = stato;
     }
 
     /**
@@ -39,6 +41,8 @@ public class UpdateMissioneMessage extends CNRMissioniMessage {
     protected void injectParameters(Map<String, Object> map) {
         map.put("missioneID", this.missioneID);
         map.put("missionePDFBuilder", this.missionePDFBuilder);
+        map.put("stato", this.stato);
+
 
     }
 }

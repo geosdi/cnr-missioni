@@ -29,7 +29,7 @@ public interface NotificationMessageFactory {
      * @param missioneID
      * @return {@link  UpdateMissioneMessage}
      */
-    UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname, String userEmail,
+    UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname,String stato, String userEmail,
     		String missioneID, PDFBuilder pdfBuilder);
 
     /**

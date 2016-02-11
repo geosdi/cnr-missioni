@@ -42,6 +42,8 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 			String userSurname = (String) message.getMessageParameters().get("userSurname");
 			String userEmail = (String) message.getMessageParameters().get("userEmail");
 			String missioneID = (String) message.getMessageParameters().get("missioneID");
+			String stato = (String) message.getMessageParameters().get("stato");
+
 			PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 
 			@Override
@@ -52,6 +54,7 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 				model.put("userName", userName);
 				model.put("userSurname", userSurname);
 				model.put("missioneID", missioneID);
+				model.put("stato", stato);
 
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 						"template/updateMissioneMailNotification.html.vm", "UTF-8", model);
