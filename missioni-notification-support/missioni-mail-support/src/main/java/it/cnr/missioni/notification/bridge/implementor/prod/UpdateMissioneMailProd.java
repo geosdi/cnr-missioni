@@ -3,6 +3,7 @@ package it.cnr.missioni.notification.bridge.implementor.prod;
 import it.cnr.missioni.notification.bridge.implementor.Implementor;
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
 import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
@@ -11,6 +12,10 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.mail.internet.MimeMessage;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,59 +25,78 @@ import java.util.Map;
  */
 public class UpdateMissioneMailProd extends MissioniMailProd {
 
-    /**
-     * @param message
-     * @param velocityEngine
-     * @param gpMailDetail
-     * @return {@link MimeMessagePreparator}
-     * @throws Exception
-     */
-    @Override
-    public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
-            VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-        IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
-        missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
+	/**
+	 * @param message
+	 * @param velocityEngine
+	 * @param gpMailDetail
+	 * @return {@link MimeMessagePreparator}
+	 * @throws Exception
+	 */
+	@Override
+	public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+			VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
+		IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
+		missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-            String userName = (String) message.getMessageParameters().get("userName");
-            String userSurname = (String) message.getMessageParameters().get("userSurname");
-            String userEmail = (String) message.getMessageParameters().get("userEmail");
-            String cnrMissioniEmail = (String) message.getMessageParameters().get("cnrMissioniEmail");
-            String missioneID = (String) message.getMessageParameters().get("missioneID");
+			String userName = (String) message.getMessageParameters().get("userName");
+			String userSurname = (String) message.getMessageParameters().get("userSurname");
+			String userEmail = (String) message.getMessageParameters().get("userEmail");
+			String missioneID = (String) message.getMessageParameters().get("missioneID");
+			PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 
-            @Override
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.FALSE);
-                message.setTo(new String[]{userEmail, cnrMissioniEmail});
-                Map model = new HashMap();
-                model.put("userName", userName);
-                model.put("userSurname", userSurname);
-                model.put("missioneID", missioneID);
-                String messageText = VelocityEngineUtils
-                        .mergeTemplateIntoString(velocityEngine,
-                                "template/updateMissioneMailNotification.html.vm", "UTF-8", model);
-                message.setText(messageText, Boolean.TRUE);
-            }
-        });
-        return missioniMessagePreparator;
-    }
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
+				message.setTo(new String[] { userEmail });
+				Map model = new HashMap();
+				model.put("userName", userName);
+				model.put("userSurname", userSurname);
+				model.put("missioneID", missioneID);
 
-    /**
-     * @return {@link Implementor.ImplementorKey}
-     */
-    @Override
-    public Implementor.ImplementorKey getKey() {
-        return MissioniMailImplementor.NotificationMessageType.MODIFICA_MISSIONE_MAIL_PROD;
-    }
+				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+						"template/updateMissioneMailNotification.html.vm", "UTF-8", model);
+				message.setText(messageText, Boolean.TRUE);
 
-    /**
-     * <p>
-     * Specify if {@link Implementor.ImplementorKey} is valid or not
-     * </p>
-     *
-     * @return {@link Boolean}
-     */
-    @Override
-    public Boolean isImplementorValid() {
-        return Boolean.TRUE;
-    }
+				Path tempFilePath = Files.createTempFile("Missione - ".concat(userName), ".pdf");
+				File file = tempFilePath.toFile();
+
+				pdfBuilder.withFile(file);
+				pdfBuilder.build();
+				message.addAttachment(file.getName(), file);
+				missioniMessagePreparator.addAttachment(file);
+				
+				if (pdfBuilder.isMezzoProprio()) {
+
+					Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userName), ".pdf");
+					File fileVeicolo = tempFilePathVeicolo.toFile();
+					pdfBuilder.withFileVeicolo(fileVeicolo);
+					pdfBuilder.buildVeicolo();
+					message.addAttachment(fileVeicolo.getName(), fileVeicolo);
+					missioniMessagePreparator.addAttachment(fileVeicolo);
+				}
+
+			}
+		});
+		return missioniMessagePreparator;
+	}
+
+	/**
+	 * @return {@link Implementor.ImplementorKey}
+	 */
+	@Override
+	public Implementor.ImplementorKey getKey() {
+		return MissioniMailImplementor.NotificationMessageType.MODIFICA_MISSIONE_MAIL_PROD;
+	}
+
+	/**
+	 * <p>
+	 * Specify if {@link Implementor.ImplementorKey} is valid or not
+	 * </p>
+	 *
+	 * @return {@link Boolean}
+	 */
+	@Override
+	public Boolean isImplementorValid() {
+		return Boolean.TRUE;
+	}
 }

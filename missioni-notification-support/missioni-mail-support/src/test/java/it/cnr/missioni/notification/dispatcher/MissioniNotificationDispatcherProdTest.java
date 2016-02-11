@@ -80,7 +80,7 @@ public class MissioniNotificationDispatcherProdTest {
     @Test
     public void dispatchUpdateMissioneMailProdTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildUpdateMissioneMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
+                .buildUpdateMissioneMessage("Giuseppe", "La Scaleia",
                         "vito.salvia@gmail.com", UUID.randomUUID().toString(),
                         MissionePDFBuilder
                                 .newPDFBuilder()

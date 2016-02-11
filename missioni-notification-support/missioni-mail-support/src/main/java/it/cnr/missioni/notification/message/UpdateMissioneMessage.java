@@ -11,13 +11,16 @@ import java.util.Map;
  * @email giuseppe.lascaleia@geosdi.org
  */
 @Immutable
-public class UpdateMissioneMessage extends AddMissioneMessage {
+public class UpdateMissioneMessage extends CNRMissioniMessage {
 
     private final String missioneID;
+    private final PDFBuilder missionePDFBuilder;
+
 
     public UpdateMissioneMessage(String userName, String userSurname, String userEmail,
-            String theCnrMissioniEmail, String theMissioneID, PDFBuilder theMissionePDFBuilder) {
-        super(userName, userSurname, userEmail, theCnrMissioniEmail, theMissionePDFBuilder);
+            String theMissioneID, PDFBuilder theMissionePDFBuilder) {
+        super(userName, userSurname, userEmail);
+        this.missionePDFBuilder = theMissionePDFBuilder;
         this.missioneID = theMissioneID;
     }
 
@@ -34,7 +37,8 @@ public class UpdateMissioneMessage extends AddMissioneMessage {
      */
     @Override
     protected void injectParameters(Map<String, Object> map) {
-        super.injectParameters(map);
         map.put("missioneID", this.missioneID);
+        map.put("missionePDFBuilder", this.missionePDFBuilder);
+
     }
 }
