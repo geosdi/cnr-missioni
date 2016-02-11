@@ -292,6 +292,24 @@ public class UserDAOTest {
 		Assert.assertTrue("FIND ALL USER", lista.size() == 3);
 	}
 	
+	@Test
+	public void V_findByIdNotPresent() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("10");
+
+		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
+		Assert.assertTrue("FIND USER BY ID", lista.isEmpty());
+	}
+	
+	@Test
+	public void V_findById() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01");
+
+		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
+		Assert.assertTrue("FIND USER BY ID", lista.size() == 1);
+	}
+	
 	//
 	//// @Test
 	//// public void tearDown() throws Exception {

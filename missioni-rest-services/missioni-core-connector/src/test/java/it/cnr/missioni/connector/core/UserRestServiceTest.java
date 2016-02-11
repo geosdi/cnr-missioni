@@ -90,23 +90,23 @@ public class UserRestServiceTest {
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
-//
-//	@Test
-//	public void A_testFindUserByUsername() throws Exception {
-//
-//		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
-//		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-//		Assert.assertNotNull(userStore);
-//		logger.debug("############################USER_ID FOUND{}\n", userStore);
-//	}
-//
-//	@Test
-//	public void B_testFindUserByUsernameErrata() throws Exception {
-//		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
-//		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-//		logger.debug("############################USER_ID FOUND{}\n", userStore);
-//		Assert.assertNull(userStore);
-//	}
+
+	@Test
+	public void A_testFindUserByUsername() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		Assert.assertNotNull(userStore);
+		logger.debug("############################USER_ID FOUND{}\n", userStore);
+	}
+
+	@Test
+	public void B_testFindUserByUsernameErrata() throws Exception {
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		logger.debug("############################USER_ID FOUND{}\n", userStore);
+		Assert.assertNull(userStore);
+	}
 
 	@Test
 	public void C_testInsertUser() throws Exception {
@@ -259,6 +259,24 @@ public class UserRestServiceTest {
 				.withAll(true);
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() ==3);
+	}
+	
+	@Test
+	public void U_findByIdNotPresent() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("10");
+
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		Assert.assertNull("FIND USER BY ID", userStore);
+	}
+	
+	@Test
+	public void U__findById() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("01");
+
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 1);
 	}
 
 }
