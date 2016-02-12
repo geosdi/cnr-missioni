@@ -139,6 +139,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 
 		numeroOrdineField = (TextField) fieldGroupRimborso.buildAndBind("Numero Ordine", "numeroOrdine");
 		details.addComponent(numeroOrdineField);
+		numeroOrdineField.setReadOnly(true);
 		avvisoPagamentoField = (TextField) fieldGroupRimborso.buildAndBind("Avviso Pagamento", "avvisoPagamento");
 		details.addComponent(avvisoPagamentoField);
 		anticipazionePagamentoField = (TextField) fieldGroupRimborso.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
