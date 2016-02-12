@@ -80,13 +80,16 @@ public class DatiCNRUserStep implements WizardStep {
 
 			QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
 					.getQualificaUserSearchBuilder().withAll(true);
-			QualificaUserStore qualificaStore = ClientConnector
-					.getQualificaUser(qualificaUserSearchBuilder);
-			qualificaStore.getQualificaUser().forEach(q -> {
-				qualificaField.addItem(q.getId());
-				qualificaField.setItemCaption(q.getId(), q.getValue());
-			});
+			QualificaUserStore qualificaStore = ClientConnector.getQualificaUser(qualificaUserSearchBuilder);
 
+			if (qualificaStore != null) {
+
+				qualificaStore.getQualificaUser().forEach(q -> {
+					qualificaField.addItem(q.getId());
+					qualificaField.setItemCaption(q.getId(), q.getValue());
+				});
+
+			}
 			matricolaField = (TextField) fieldGroup.buildAndBind("Matricola", "matricola");
 			codiceTerzoField = (TextField) fieldGroup.buildAndBind("Codice Terzo", "codiceTerzo");
 			mailField = (TextField) fieldGroup.buildAndBind("Mail", "mail");
@@ -98,26 +101,34 @@ public class DatiCNRUserStep implements WizardStep {
 
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 
-			userStore.getUsers().forEach(u -> {
-				listaUserField.addItem(u.getId());
-				listaUserField.setItemCaption(u.getId(),
-						u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
-			});
+			if (userStore != null) {
 
+				userStore.getUsers().forEach(u -> {
+					listaUserField.addItem(u.getId());
+					listaUserField.setItemCaption(u.getId(),
+							u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
+				});
+
+			}
+			fieldGroup.bind(listaUserField, "datoreLavoro");
+			listaUserField.setValidationVisible(false);
+
+			addValidator();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
 
-		listaUserField.setValidationVisible(false);
-		fieldGroup.bind(listaUserField, "datoreLavoro");
-
-		addValidator();
 	}
 
 	private void addValidator() {
 
 		listaUserField.addBlurListener(new BlurListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1734096536441537831L;
 
 			@Override
 			public void blur(BlurEvent event) {
@@ -131,6 +142,11 @@ public class DatiCNRUserStep implements WizardStep {
 		});
 
 		matricolaField.addValidator(new Validator() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7182213817460538048L;
+
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
@@ -152,6 +168,11 @@ public class DatiCNRUserStep implements WizardStep {
 		});
 
 		mailField.addValidator(new Validator() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2497182427630850798L;
+
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
@@ -172,6 +193,11 @@ public class DatiCNRUserStep implements WizardStep {
 		});
 
 		ibanField.addValidator(new Validator() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2821415643000513181L;
+
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {

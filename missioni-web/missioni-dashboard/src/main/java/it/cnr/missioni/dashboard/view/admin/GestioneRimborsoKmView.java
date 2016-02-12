@@ -148,7 +148,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	 */
 	@Override
 	protected void initPagination() {
-		buildPagination(rimborsoKmStore.getTotale());
+		buildPagination(rimborsoKmStore !=null ? rimborsoKmStore.getTotale() : 0);
 
 	}
 	
