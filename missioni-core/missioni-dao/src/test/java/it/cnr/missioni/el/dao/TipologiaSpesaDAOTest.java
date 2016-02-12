@@ -33,7 +33,7 @@ public class TipologiaSpesaDAOTest {
 	@GeoPlatformLog
 	static Logger logger;
 	@Resource(name = "missioniIndexConfigurator")
-	private GPIndexConfigurator tipologiaSpesaDocIndexConfigurator;
+	private GPIndexConfigurator missioniDocIndexConfigurator;
 
 	@Resource(name = "tipologiaSpesaIndexCreator")
 	private GPIndexCreator tipoligiaSpesaDocIndexCreator;
@@ -45,7 +45,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Before
 	public void setUp() {
-		Assert.assertNotNull(tipologiaSpesaDocIndexConfigurator);
+		Assert.assertNotNull(missioniDocIndexConfigurator);
 		Assert.assertNotNull(tipoligiaSpesaDocIndexCreator);
 		Assert.assertNotNull(tipologiaSpesaDAO);
 	}
