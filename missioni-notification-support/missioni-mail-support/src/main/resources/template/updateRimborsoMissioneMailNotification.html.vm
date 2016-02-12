@@ -2,8 +2,8 @@
 <body>
     <h3>CNR : Sistema Missioni</h3>
     <div>
-        <p>Gentile ${userName} ${userSurname}, il suo rimborso con ID : ${rimborsoID}
-           &egrave; stata modificata.
+        <p>Gentile ${userName} ${userSurname}, il suo rimborso con numero ordine : ${rimborsoID}
+           &egrave; stato modificato.
         </p>
          <p>
            Stato missione : ${stato}.
