@@ -203,12 +203,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
 
 
 
-    public Long addPrenotazione(Prenotazione prenotazione) throws Exception {
+    public String addPrenotazione(Prenotazione prenotazione) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/prenotazioni/addPrenotazione/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(prenotazione,
-                        MediaType.APPLICATION_JSON), Long.class);
+                        MediaType.APPLICATION_JSON), String.class);
     }
 
     public Boolean deletePrenotazione(String prenotazioneID) throws Exception {
