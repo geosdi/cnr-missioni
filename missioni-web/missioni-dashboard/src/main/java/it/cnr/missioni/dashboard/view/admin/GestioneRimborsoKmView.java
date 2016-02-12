@@ -191,7 +191,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	 */
 	@Subscribe
 	public void aggiornaTableRimborsoKm(final TableRimborsoKmUpdatedEvent event) {
-		elencoRimborsoKmTable.aggiornaTable(rimborsoKmStore);
+		elencoRimborsoKmTable.aggiornaTable(event.getRimborsoKmStore());
 	}
 
 }
