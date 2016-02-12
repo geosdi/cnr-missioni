@@ -97,6 +97,14 @@ public interface MissioneRestService {
     @Path(value = MissioneServiceRSPathConfig.NOTIFY_MISSIONE_ADMINISTRATION_PATH)
     Response notifyMissionAdministration(NotificationMissionRequest request) throws Exception;
 
+    /**
+     * @param request
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @POST
+    @Path(value = MissioneServiceRSPathConfig.NOTIFY_UPDATE_RIMBORSO_MISSIONE_ADMINISTRATION_PATH)
+    Response notifyUpdateRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception;
 
     /**
      * @param request
