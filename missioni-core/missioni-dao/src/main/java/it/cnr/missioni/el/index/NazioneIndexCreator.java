@@ -9,10 +9,7 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.index.settings.MissioneIndexSettings;
 import it.cnr.missioni.el.index.settings.NazioneIndexSettings;
-import it.cnr.missioni.el.index.settings.RimborsoKmIndexSettings;
-import it.cnr.missioni.el.index.settings.UserIndexSettings;
 
 
 /**
@@ -26,6 +23,7 @@ public class NazioneIndexCreator extends GPAbstractIndexCreator {
         return NazioneIndexSettings.NAZIONE_DOC_INDEX_SETTINGS.getValue();
     }
     
+
     protected void preparePutMapping() throws Exception {
     	XContentBuilder xContentBuilder = jsonBuilder()
     	.startObject()
