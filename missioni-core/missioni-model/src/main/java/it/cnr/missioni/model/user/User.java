@@ -1,12 +1,10 @@
 package it.cnr.missioni.model.user;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,7 +12,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
-import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 import it.cnr.missioni.model.adapter.VeicoloMapAdapter;
