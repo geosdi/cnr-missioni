@@ -94,27 +94,33 @@ public class PrenotazioneRestServiceTest {
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
-
+	
 	@Test
 	public void A_testFindPrenotazione() throws Exception {
 		
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
 		Assert.assertNotNull(prenotazioniStore);
 	}
-	
+
 	@Test
 	public void B_addPrenotazionetest() throws Exception {
 		Prenotazione p = new Prenotazione();
 		p.setId("03");
 		p.setDataFrom(new DateTime(2016,1,27,0,0));
 		p.setDataTo(new DateTime(2016,1,28,0,0));
+		p.setAllDay(false);
+		p.setIdUser("01");
 		missioniCoreClientConnector.addPrenotazione(p);
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
 		Assert.assertTrue("Totale prenotazioni", prenotazioniStore.getPrenotazioni().size() == 3);
 	}
+	
+
+
+	
 	
 	@Test
 	public void C_updatePrenotazionetest() throws Exception {
@@ -125,7 +131,7 @@ public class PrenotazioneRestServiceTest {
 		p.setDataTo(now.plusDays(2));
 		missioniCoreClientConnector.updatePrenotazione(p);
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
 		Assert.assertTrue("Totale prenotazioni", prenotazioniStore.getPrenotazioni().size() == 3);
 	}
@@ -134,7 +140,7 @@ public class PrenotazioneRestServiceTest {
 	public void D_deletePrenotazionetest() throws Exception {
 		missioniCoreClientConnector.deletePrenotazione("03");
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
 		Assert.assertTrue("Totale prenotazioni", prenotazioniStore.getPrenotazioni().size() == 2);
 	}
