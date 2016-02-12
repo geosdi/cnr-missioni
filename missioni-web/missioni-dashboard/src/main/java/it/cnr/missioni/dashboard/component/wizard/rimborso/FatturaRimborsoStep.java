@@ -242,7 +242,6 @@ public class FatturaRimborsoStep implements WizardStep {
 			}
 		});
 
-		
 		importoField.addBlurListener(new BlurListener() {
 
 			@Override
@@ -252,9 +251,6 @@ public class FatturaRimborsoStep implements WizardStep {
 			}
 		});
 
-		
-
-		
 		// tipologiaSpesaField.addValidator(new Validator() {
 		//
 		// @Override
@@ -352,9 +348,9 @@ public class FatturaRimborsoStep implements WizardStep {
 				}
 
 				if (check) {
-					
-//					checkMassimale(tipologiaSpesaField.getValue().toString());
-					
+
+					// checkMassimale(tipologiaSpesaField.getValue().toString());
+
 					BeanItem<Fattura> beanItem = (BeanItem<Fattura>) fieldGroup.getItemDataSource();
 					Fattura new_fattura = beanItem.getBean();
 
@@ -397,33 +393,37 @@ public class FatturaRimborsoStep implements WizardStep {
 			TipologiaSpesaStore tipologiaStore = ClientConnector
 					.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId(id));
 
-			TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
-			if (tipologiaSpesa.isCheckMassimale()) {
+			if (tipologiaStore != null) {
 
-				String areaGeografica;
-				if (missione.isMissioneEstera()) {
-					Nazione nazione = ClientConnector
-							.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-							.getNazione().get(0);
-					areaGeografica = nazione.getAreaGeografica().name();
-				}else{
-					areaGeografica = AreaGeograficaEnum.ITALIA.name();
-				}
-				MassimaleStore massimaleStore = ClientConnector
-						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
-								.withAreaGeografica(areaGeografica)
-								.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
-				
-				if(massimaleStore != null){
-					Massimale massimale = massimaleStore.getMassimale().get(0);
-					NumberFormat f = NumberFormat.getInstance(); 
-					double number = f.parse(importoField.getValue()).doubleValue();
-					
-					if(number > massimale.getValue())
-						importoField.setValue(massimale.getValue().toString());
-				}
+				TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
+				if (tipologiaSpesa.isCheckMassimale()) {
 
+					String areaGeografica;
+					if (missione.isMissioneEstera()) {
+						Nazione nazione = ClientConnector
+								.getNazione(
+										NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+								.getNazione().get(0);
+						areaGeografica = nazione.getAreaGeografica().name();
+					} else {
+						areaGeografica = AreaGeograficaEnum.ITALIA.name();
+					}
+					MassimaleStore massimaleStore = ClientConnector
+							.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+									.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+									.withAreaGeografica(areaGeografica)
+									.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
+
+					if (massimaleStore != null) {
+						Massimale massimale = massimaleStore.getMassimale().get(0);
+						NumberFormat f = NumberFormat.getInstance();
+						double number = f.parse(importoField.getValue()).doubleValue();
+
+						if (number > massimale.getValue())
+							importoField.setValue(massimale.getValue().toString());
+					}
+
+				}
 			}
 
 		} catch (Exception e) {
