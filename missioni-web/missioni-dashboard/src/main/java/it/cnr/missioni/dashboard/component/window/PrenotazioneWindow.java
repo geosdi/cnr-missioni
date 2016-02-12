@@ -61,7 +61,6 @@ public class PrenotazioneWindow extends IWindow.AbstractWindow  {
 	private DateField dataFrom;
 	private DateField dataTo;
 	private ComboBox veicoliCNRField;
-	private TabSheet detailsWrapper;
 	private boolean isPresent = false;
 	private boolean modifica;
 	private Calendar calendarComponent;
