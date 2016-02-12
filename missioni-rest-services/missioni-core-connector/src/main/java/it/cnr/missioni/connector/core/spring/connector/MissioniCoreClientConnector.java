@@ -140,6 +140,15 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(missione,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
+    
+    public boolean updateRimborso(Missione missione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/updateRimborso/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(missione,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+
 
     public UserStore getUserByQuery(UserSearchBuilder userSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL()

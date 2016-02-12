@@ -146,6 +146,25 @@ class MissioneDelegate implements IMissioneDelegate {
 
 		return Boolean.TRUE;
 	}
+	
+	@Override
+	public Boolean updateRimborso(Missione missione) throws Exception {
+		if ((missione == null)) {
+			throw new IllegalParameterFault("The Parameter missione must not be null ");
+		}
+
+		this.missioneDAO.update(missione);
+		User user = this.userDAO.find(missione.getIdUser());
+		if (user == null)
+			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+
+		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
+				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
+				user.getDatiCNR().getMail(),missione.getRimborso().getNumeroOrdine().toString(),missione.getStato().getStato()
+				, RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+
+		return Boolean.TRUE;
+	}
 
 	@Override
 	public MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,

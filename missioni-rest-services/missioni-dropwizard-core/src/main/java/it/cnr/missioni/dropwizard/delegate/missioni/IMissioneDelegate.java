@@ -79,6 +79,13 @@ public interface IMissioneDelegate {
 	Boolean notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception;
 
 	/**
+	 * @param missione
+	 * @return {@link Boolean}
+	 * @throws Exception
+	 */
+	Boolean updateRimborso(Missione missione) throws Exception;
+	
+	/**
 	 * @param missionID
 	 * @return {@link StreamingOutput}
 	 * @throws Exception

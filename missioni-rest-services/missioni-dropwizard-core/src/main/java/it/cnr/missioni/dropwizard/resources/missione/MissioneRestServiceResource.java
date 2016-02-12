@@ -114,6 +114,16 @@ public class MissioneRestServiceResource implements MissioneRestService {
     public Response notifyRimborsoMissionAdministration(NotificationMissionRequest request) throws Exception {
         return Response.ok(this.missioneDelegate.notifyRimborsoMissionAdministration(request)).build();
     }
+    
+    /**
+     * @param missione
+     * @return {@link Response}
+     * @throws Exception
+     */
+    @Override
+    public Response updateRimborso(Missione missione) throws Exception {
+        return Response.ok(this.missioneDelegate.updateRimborso(missione)).build();
+    }
 
     /**
      * @param missionID
