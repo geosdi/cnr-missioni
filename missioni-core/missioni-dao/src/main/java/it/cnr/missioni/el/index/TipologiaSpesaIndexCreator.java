@@ -23,6 +23,8 @@ public class TipologiaSpesaIndexCreator extends GPAbstractIndexCreator {
         return TipologiaSpesaIndexSettings.TIPOLOGIA_SPESA_DOC_INDEX_SETTINGS.getValue();
     }
     
+
+    
     protected void preparePutMapping() throws Exception {
     	XContentBuilder xContentBuilder = jsonBuilder()
     	.startObject()
