@@ -69,7 +69,7 @@ public class PrenotazioneDAOTest {
 		prenotazioneDAO.persist(p);
 		Thread.sleep(1000);
 		
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 3);
 		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", prenotazioneDAO.count().intValue());
@@ -85,7 +85,7 @@ public class PrenotazioneDAOTest {
 		p.setDataTo(now.plusDays(2));
 		prenotazioneDAO.update(p);
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 3);
 		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", prenotazioneDAO.count().intValue());
