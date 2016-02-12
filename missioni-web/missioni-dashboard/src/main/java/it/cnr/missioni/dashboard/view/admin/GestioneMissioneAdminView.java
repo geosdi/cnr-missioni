@@ -5,19 +5,13 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
 
-import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
-import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
-import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.component.window.admin.MissioneWindowAdmin;
-import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
-import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
+import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.rimborso.Rimborso;
 
 /**
  * @author Salvia Vito
@@ -40,10 +34,15 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 	protected GridLayout addActionButtons() {
 		GridLayout layout = new GridLayout(4, 1);
 		layout.setSpacing(true);
-		
+
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli della Missione", FontAwesome.EDIT);
 
 		buttonDettagli.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2762532096338441183L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -56,20 +55,14 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		buttonRimborso = buildButton("Rimborso", "Visualizza i dettagli del Rimborso", FontAwesome.EURO);
 		buttonRimborso.addClickListener(new Button.ClickListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7097735360065445590L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
-				Rimborso rimborso = null;
-				// se è già associato il rimborso
-				if (selectedMissione.getRimborso() != null) {
-					rimborso = selectedMissione.getRimborso();
-					DettagliRimborsoWindow.open(selectedMissione);
-
-				} else {
-					rimborso = new Rimborso();
-					selectedMissione.setRimborso(rimborso);
-					WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione)
-							.build();
-				}
+				RimborsoWindowAdmin.open(selectedMissione);
 
 			}
 
@@ -112,11 +105,15 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		return layout;
 
 	}
-	
+
 	protected void enableDisableButtons(boolean enabled) {
 		this.buttonDettagli.setEnabled(enabled);
 		this.buttonPDF.setEnabled(enabled);
-		this.buttonRimborso.setEnabled(enabled);
+
+		if (selectedMissione != null && selectedMissione.isRimborsoSetted())
+			this.buttonRimborso.setEnabled(true);
+		if (selectedMissione == null || !selectedMissione.isRimborsoSetted())
+			this.buttonRimborso.setEnabled(false);
 
 		if (selectedMissione != null && selectedMissione.isMezzoProprio())
 			buttonVeicoloMissionePDF.setEnabled(true);
