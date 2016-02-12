@@ -261,7 +261,7 @@ public class UserDAOTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
 				.withMultiMatch("Paolo Salvia");
 		List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
-		Assert.assertTrue("FIND ALL USER", lista.size() == 2);
+		Assert.assertTrue("FIND ALL USER", lista.size() == 1);
 	}
 
 	@Test
