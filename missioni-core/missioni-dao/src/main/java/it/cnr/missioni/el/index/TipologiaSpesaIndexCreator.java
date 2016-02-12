@@ -9,7 +9,6 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.index.settings.QualificaUserIndexSettings;
 import it.cnr.missioni.el.index.settings.TipologiaSpesaIndexSettings;
 
 
@@ -45,8 +44,6 @@ public class TipologiaSpesaIndexCreator extends GPAbstractIndexCreator {
     	.field("type", "boolean")
     	.endObject()
     	
-
-
     	.endObject()
     	.endObject()
     	.endObject()
