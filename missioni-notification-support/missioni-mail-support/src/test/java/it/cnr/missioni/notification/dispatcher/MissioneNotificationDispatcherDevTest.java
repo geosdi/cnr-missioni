@@ -71,4 +71,11 @@ public class MissioneNotificationDispatcherDevTest {
                 .buildAddRimborsoMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
                         "vito.salvia@gmail.com", UUID.randomUUID().toString(), RimborsoPDFBuilder.newPDFBuilder()));
     }
+    
+    @Test
+    public void dispatchUpdateRimborsoMissioneMailDevTest() throws Exception {
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
+                .buildUpdateRimborsoMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com", UUID.randomUUID().toString(),"Pagata", RimborsoPDFBuilder.newPDFBuilder()));
+    }
+    
 }

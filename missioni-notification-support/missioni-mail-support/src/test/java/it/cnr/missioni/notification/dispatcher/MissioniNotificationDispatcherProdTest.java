@@ -1,32 +1,48 @@
 package it.cnr.missioni.notification.dispatcher;
 
-import it.cnr.missioni.model.configuration.QualificaUser;
-import it.cnr.missioni.model.missione.*;
-import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.model.rimborso.Rimborso;
-import it.cnr.missioni.model.user.*;
-import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
-import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
-import it.cnr.missioni.notification.support.itext.PDFBuilder;
-import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
-import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.junit.*;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.annotation.Resource;
+import static it.cnr.missioni.notification.mail.CNRMissioniEmailTest.GP_MAIL_KEY;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static it.cnr.missioni.notification.mail.CNRMissioniEmailTest.GP_MAIL_KEY;
+import javax.annotation.Resource;
+
+import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
+import it.cnr.missioni.model.missione.DatiMissioneEstera;
+import it.cnr.missioni.model.missione.DatiPeriodoMissione;
+import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.StatoEnum;
+import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.model.rimborso.Rimborso;
+import it.cnr.missioni.model.user.Anagrafica;
+import it.cnr.missioni.model.user.Credenziali;
+import it.cnr.missioni.model.user.DatiCNR;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
+import it.cnr.missioni.model.user.Patente;
+import it.cnr.missioni.model.user.Residenza;
+import it.cnr.missioni.model.user.RuoloUserEnum;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
+import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
+import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
+import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -116,6 +132,21 @@ public class MissioniNotificationDispatcherProdTest {
         Thread.sleep(6000);
     }
 
+    @Test
+    public void dispatchUpdateRimborsoMissioneMailProdTest() throws Exception {
+    	
+    	PDFBuilder pdfBuilder = RimborsoPDFBuilder
+                .newPDFBuilder();
+    	    	pdfBuilder.withUser(buildUserTest())
+                .withMissione(buildMissioneTest());
+
+    	
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
+                .buildUpdateRimborsoMessage("Vito", "Salvia", "vito.salvia@gmail.com",
+                		UUID.randomUUID().toString(),"Pagata", pdfBuilder));
+        Thread.sleep(6000);
+    }
+    
     Veicolo buildVeicoloTest(){
     	Veicolo v = new Veicolo();
     	v.setTipo("01");
