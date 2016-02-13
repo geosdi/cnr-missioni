@@ -54,13 +54,11 @@ class TipologiaSpesaDelegate implements ITipologiaSpesaDelegate {
 
 		PageResult<TipologiaSpesa> pageResult = this.tipologiaSpesaDAO
 				.findTipologiaSpesaByQuery(tipologiaSpesaUserSearchBuilder);
-		if (!pageResult.getResults().isEmpty()) {
-			TipologiaSpesaStore tipologiaSpesaStore = new TipologiaSpesaStore();
-			tipologiaSpesaStore.setTipologiaSpesa(pageResult.getResults());
-			tipologiaSpesaStore.setTotale(pageResult.getTotal());
-			return tipologiaSpesaStore;
-		} else
-			return null;
+		TipologiaSpesaStore tipologiaSpesaStore = new TipologiaSpesaStore();
+		tipologiaSpesaStore.setTipologiaSpesa(pageResult.getResults());
+		tipologiaSpesaStore.setTotale(pageResult.getTotal());
+		return tipologiaSpesaStore;
+
 	}
 
 	/**

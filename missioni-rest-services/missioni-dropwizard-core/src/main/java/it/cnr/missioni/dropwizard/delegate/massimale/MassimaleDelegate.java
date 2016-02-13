@@ -51,16 +51,15 @@ class MassimaleDelegate implements IMassimaleDelegate {
 			String tipo) throws Exception {
 
 		MassimaleSearchBuilder massimaleUserSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
-				.withFrom(from).withSize(size).withLivello(livello).withAreaGeografica(areaGeografica).withNotId(notId).withTipo(tipo);
+				.withFrom(from).withSize(size).withLivello(livello).withAreaGeografica(areaGeografica).withNotId(notId)
+				.withTipo(tipo);
 
 		PageResult<Massimale> pageResult = this.massimaleDAO.findMassimaleByQuery(massimaleUserSearchBuilder);
-		if (!pageResult.getResults().isEmpty()) {
-			MassimaleStore massimaleStore = new MassimaleStore();
-			massimaleStore.setMassimale(pageResult.getResults());
-			massimaleStore.setTotale(pageResult.getTotal());
-			return massimaleStore;
-		} else
-			return null;
+		MassimaleStore massimaleStore = new MassimaleStore();
+		massimaleStore.setMassimale(pageResult.getResults());
+		massimaleStore.setTotale(pageResult.getTotal());
+		return massimaleStore;
+
 	}
 
 	/**

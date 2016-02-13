@@ -43,20 +43,19 @@ class QualificaUserDelegate implements IQualificaUserDelegate {
 	 * @throws Exception
 	 */
 	@Override
-	public QualificaUserStore getQualificaUserByQuery(int from, int size,boolean all) throws Exception {
+	public QualificaUserStore getQualificaUserByQuery(int from, int size, boolean all) throws Exception {
 
 		QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
 				.getQualificaUserSearchBuilder().withFrom(from).withSize(size).withAll(all);
 
 		PageResult<QualificaUser> pageResult = this.qualificaUserDAO
 				.findQualificaUserByQuery(qualificaUserSearchBuilder);
-		if (!pageResult.getResults().isEmpty()) {
-			QualificaUserStore qualificaUserStore = new QualificaUserStore();
-			qualificaUserStore.setQualificaUser(pageResult.getResults());
-			qualificaUserStore.setTotale(pageResult.getTotal());
-			return qualificaUserStore;
-		} else
-			return null;
+
+		QualificaUserStore qualificaUserStore = new QualificaUserStore();
+		qualificaUserStore.setQualificaUser(pageResult.getResults());
+		qualificaUserStore.setTotale(pageResult.getTotal());
+		return qualificaUserStore;
+
 	}
 
 	/**

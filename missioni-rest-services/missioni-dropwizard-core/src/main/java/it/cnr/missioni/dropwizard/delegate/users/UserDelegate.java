@@ -65,18 +65,15 @@ class UserDelegate implements IUserDelegate {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
 				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione)
-				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withNotId(notId)
-				.withId(id)
+				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withNotId(notId).withId(id)
 				.withResponsabileGruppo(responsabileGruppo).withAll(all).withFrom(from).withSize(size);
 
 		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
-		if (!pageResult.getResults().isEmpty()) {
-			UserStore userStore = new UserStore();
-			userStore.setUsers(pageResult.getResults());
-			userStore.setTotale(pageResult.getTotal());
-			return userStore;
-		} else
-			return null;
+		UserStore userStore = new UserStore();
+		userStore.setUsers(pageResult.getResults());
+		userStore.setTotale(pageResult.getTotal());
+		return userStore;
+
 	}
 
 	/**

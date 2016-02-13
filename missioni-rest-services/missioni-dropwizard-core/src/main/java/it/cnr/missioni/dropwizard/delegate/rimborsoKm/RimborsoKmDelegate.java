@@ -46,13 +46,10 @@ class RimborsoKmDelegate implements IRimborsoKmDelegate {
 		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
 
 		PageResult<RimborsoKm> pageResult = this.rimborsoKmDAO.findRimborsoKmByQuery(rimborsoSearchBuilder);
-		if (!pageResult.getResults().isEmpty()) {
-			RimborsoKmStore rimborsoKmStore = new RimborsoKmStore();
-			rimborsoKmStore.setRimborsoKm(pageResult.getResults());
-			rimborsoKmStore.setTotale(pageResult.getTotal());
-			return rimborsoKmStore;
-		} else
-			return null;
+		RimborsoKmStore rimborsoKmStore = new RimborsoKmStore();
+		rimborsoKmStore.setRimborsoKm(pageResult.getResults());
+		rimborsoKmStore.setTotale(pageResult.getTotal());
+		return rimborsoKmStore;
 	}
 
 	/**

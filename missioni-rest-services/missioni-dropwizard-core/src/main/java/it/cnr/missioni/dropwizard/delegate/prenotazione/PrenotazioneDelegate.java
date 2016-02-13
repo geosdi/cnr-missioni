@@ -46,7 +46,7 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 		if ((prenotazione == null)) {
 			throw new IllegalParameterFault("The Parameter prenotazione must not be null");
 		}
-		if(prenotazione.getId() == null)
+		if (prenotazione.getId() == null)
 			prenotazione.setId(gen.generate().toString());
 		return this.prenotazioneDAO.persist(prenotazione).getId();
 
@@ -93,13 +93,10 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 				.withRangeData(new DateTime(dataFrom), new DateTime(dataTo));
 		PageResult<Prenotazione> pageResult = this.prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder);
 
-		if (!pageResult.getResults().isEmpty()) {
-			PrenotazioniStore prenotazioniStore = new PrenotazioniStore();
-			prenotazioniStore.setPrenotazioni(pageResult.getResults());
-			prenotazioniStore.setTotale(pageResult.getTotal());
-			return prenotazioniStore;
-		} else
-			return null;
+		PrenotazioniStore prenotazioniStore = new PrenotazioniStore();
+		prenotazioniStore.setPrenotazioni(pageResult.getResults());
+		prenotazioniStore.setTotale(pageResult.getTotal());
+		return prenotazioniStore;
 	}
 
 }

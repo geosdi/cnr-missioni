@@ -146,7 +146,7 @@ class MissioneDelegate implements IMissioneDelegate {
 
 		return Boolean.TRUE;
 	}
-	
+
 	@Override
 	public Boolean updateRimborso(Missione missione) throws Exception {
 		if ((missione == null)) {
@@ -159,9 +159,9 @@ class MissioneDelegate implements IMissioneDelegate {
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
-				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
-				user.getDatiCNR().getMail(),missione.getRimborso().getNumeroOrdine().toString(),missione.getStato().getStato()
-				, RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
+				missione.getRimborso().getNumeroOrdine().toString(), missione.getStato().getStato(),
+				RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
 
 		return Boolean.TRUE;
 	}
@@ -187,13 +187,10 @@ class MissioneDelegate implements IMissioneDelegate {
 				.withRangeDataRimborso(fromRimborso, toRimborso).withOggetto(oggetto).withMultiMatch(multiMatch)
 				.withFieldExist(fieldExist).withFieldNotExist(fieldNotExist).withFrom(from).withSize(size);
 		PageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
-		if (!pageResult.getResults().isEmpty()) {
-			MissioniStore missioniStore = new MissioniStore();
-			missioniStore.setMissioni(pageResult.getResults());
-			missioniStore.setTotale(pageResult.getTotal());
-			return missioniStore;
-		} else
-			return null;
+		MissioniStore missioniStore = new MissioniStore();
+		missioniStore.setMissioni(pageResult.getResults());
+		missioniStore.setTotale(pageResult.getTotal());
+		return missioniStore;
 
 	}
 
@@ -260,8 +257,8 @@ class MissioneDelegate implements IMissioneDelegate {
 			}
 
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateMissioneMessage(
-					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), missione.getStato().getStato(),user.getDatiCNR().getMail(),
-					missione.getId(), pdfBuilder));
+					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), missione.getStato().getStato(),
+					user.getDatiCNR().getMail(), missione.getId(), pdfBuilder));
 		}
 		return Boolean.TRUE;
 	}
