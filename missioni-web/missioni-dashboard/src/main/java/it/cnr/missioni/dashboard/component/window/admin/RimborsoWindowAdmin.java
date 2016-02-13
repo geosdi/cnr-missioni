@@ -31,6 +31,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.RimborsoAction;
+import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.component.window.IWindow;
@@ -42,6 +43,7 @@ import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
@@ -53,7 +55,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1118586137070207948L;
+	private static final long serialVersionUID = -8551406658251796691L;
 
 	public static final String ID = "rimborsoadminwindow";
 
@@ -65,6 +67,8 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 	private TextField numeroOrdineField;
 	private TextField avvisoPagamentoField;
 	private TextField anticipazionePagamentoField;
+	private ComboBox statoField;
+
 	
 	//FIELD FATTURA
 	private TextField numeroFatturaField;
@@ -95,6 +99,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		build();
 		buildFieldGroup();
 		buildTabs();
+		content.addComponent(buildFooter());
 //		fieldGroupRimborso = new BeanFieldGroup<Rimborso>(Rimborso.class);
 //		fieldGroupRimborso.setItemDataSource(rimborso);
 //		fieldGroupRimborso.setBuffered(true);
@@ -144,7 +149,22 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		details.addComponent(avvisoPagamentoField);
 		anticipazionePagamentoField = (TextField) fieldGroupRimborso.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
 		details.addComponent(anticipazionePagamentoField);
+		statoField = new ComboBox("Stato");
+		
+		
+		statoField.setImmediate(true);
+		statoField.setValidationVisible(false);
+		StatoEnum[] lista = StatoEnum.values();
 
+		for (StatoEnum s : lista) {
+			statoField.addItem(s);
+			statoField.setItemCaption(s, s.getStato());
+		}
+		
+		statoField.select(missione.getStato());
+		details.addComponent(statoField);
+		
+		
 		DateField fieldDataRegistrazione = (DateField)fieldGroupRimborso.buildAndBind("Data Rimborso","dataRimborso");
 		fieldDataRegistrazione.setReadOnly(true);
 		fieldDataRegistrazione.setResolution(Resolution.MINUTE);
@@ -160,40 +180,40 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		
 		HorizontalLayout footer = new HorizontalLayout();
 		root.addComponent(footer);
-		Button ok = new Button("OK");
-		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		ok.addClickListener(new ClickListener() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 8007185581159515333L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-
-				try {
-					
-					
-					for (Field<?> f : fieldGroupRimborso.getFields()) {
-						((AbstractField<?>) f).setValidationVisible(true);
-					}
-					fieldGroupRimborso.commit();
-
-					BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) fieldGroupRimborso.getItemDataSource();
-					Rimborso new_rimborso = beanItem.getBean();
-					
-					DashboardEventBus.post(new RimborsoAction(missione));
-					detailsWrapper.getTab(1).setEnabled(true);
-
-				} catch (InvalidValueException | CommitException e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
-							Type.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		ok.focus();
-		footer.addComponent(ok);
+//		Button ok = new Button("OK");
+//		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+//		ok.addClickListener(new ClickListener() {
+//			/**
+//			 * 
+//			 */
+//			private static final long serialVersionUID = 8007185581159515333L;
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//
+//				try {
+//					
+//					
+//					for (Field<?> f : fieldGroupRimborso.getFields()) {
+//						((AbstractField<?>) f).setValidationVisible(true);
+//					}
+//					fieldGroupRimborso.commit();
+//
+//					BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) fieldGroupRimborso.getItemDataSource();
+//					Rimborso new_rimborso = beanItem.getBean();
+//					missione.setRimborso(new_rimborso);
+//					DashboardEventBus.post(new UpdateRimborsoAction(missione));
+//					detailsWrapper.getTab(1).setEnabled(true);
+//
+//				} catch (InvalidValueException | CommitException e) {
+//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
+//							Type.ERROR_MESSAGE);
+//				}
+//
+//			}
+//		});
+//		ok.focus();
+//		footer.addComponent(ok);
 		root.setComponentAlignment(footer, Alignment.BOTTOM_RIGHT);
 		return root;
 	}
@@ -264,59 +284,60 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 
 
 		
-		Button reset = new Button("Reset");
-		reset.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		reset.addClickListener(new ClickListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 3448301358809646724L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				fattura = new Fattura();
-				aggiornaFatturaTab(fattura);
-				
-			}
-			
-		});
-				
-		Button ok = new Button("OK");
-		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		ok.addClickListener(new ClickListener() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -1516426501992135874L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-
-				try {
-					
-					
-					for (Field<?> f : fieldGroupRimborso.getFields()) {
-						((AbstractField<?>) f).setValidationVisible(true);
-					}
-					fieldGroupRimborso.commit();
-
-					BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) fieldGroupRimborso.getItemDataSource();
-					Rimborso new_rimborso = beanItem.getBean();
-					
-					DashboardEventBus.post(new RimborsoAction(missione));
-					close();
-
-				} catch (InvalidValueException | CommitException e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
-							Type.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		ok.focus();
-		footer.addComponent(ok);
-		footer.addComponent(reset);
+//		Button reset = new Button("Reset");
+//		reset.addStyleName(ValoTheme.BUTTON_PRIMARY);
+//		reset.addClickListener(new ClickListener() {
+//
+//			/**
+//			 * 
+//			 */
+//			private static final long serialVersionUID = 3448301358809646724L;
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//				fattura = new Fattura();
+//				aggiornaFatturaTab(fattura);
+//				
+//			}
+//			
+//		});
+//				
+//		Button ok = new Button("OK");
+//		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+//		ok.addClickListener(new ClickListener() {
+//			/**
+//			 * 
+//			 */
+//			private static final long serialVersionUID = -1516426501992135874L;
+//
+//			@Override
+//			public void buttonClick(ClickEvent event) {
+//
+//				try {
+//					
+//					
+//					for (Field<?> f : fieldGroupRimborso.getFields()) {
+//						((AbstractField<?>) f).setValidationVisible(true);
+//					}
+//					fieldGroupRimborso.commit();
+//
+//					BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) fieldGroupRimborso.getItemDataSource();
+//					Rimborso new_rimborso = beanItem.getBean();
+//					missione.setRimborso(new_rimborso);
+//					
+//					DashboardEventBus.post(new UpdateRimborsoAction(missione));
+//					close();
+//
+//				} catch (InvalidValueException | CommitException e) {
+//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
+//							Type.ERROR_MESSAGE);
+//				}
+//
+//			}
+//		});
+//		ok.focus();
+//		footer.addComponent(ok);
+//		footer.addComponent(reset);
 		root.setComponentAlignment(footer, Alignment.BOTTOM_RIGHT);
 		
 		return root;
@@ -386,8 +407,8 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 
 					BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) fieldGroupRimborso.getItemDataSource();
 					Rimborso new_rimborso = beanItem.getBean();
-					
-					DashboardEventBus.post(new RimborsoAction(missione));
+					missione.setRimborso(new_rimborso);
+					DashboardEventBus.post(new UpdateRimborsoAction(missione));
 					close();
 
 				} catch (InvalidValueException | CommitException e) {
