@@ -31,7 +31,7 @@ import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
 import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
-import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
+import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
@@ -286,7 +286,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				DettagliRimborsoWindow.open(selectedMissione);
+				RimborsoWindowAdmin.open(selectedMissione,false);
 
 			}
 

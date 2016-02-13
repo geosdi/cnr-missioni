@@ -62,7 +62,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				RimborsoWindowAdmin.open(selectedMissione);
+				RimborsoWindowAdmin.open(selectedMissione,selectedMissione.getRimborso().isPagata() ? false : true);
 
 			}
 

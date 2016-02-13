@@ -71,11 +71,11 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 
 			}
 			
-			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione.getRimborso(),days,missione.isMezzoProprio());
-			this.datiGeneraliStep.bindFieldGroup();
+			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione.getRimborso(),days,missione.isMezzoProprio(),true);
+//			this.datiGeneraliStep.bindFieldGroup();
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione);
-			this.fatturaRimborsoStep.bindFieldGroup();
+//			this.fatturaRimborsoStep.bindFieldGroup();
 
 			riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione);
 

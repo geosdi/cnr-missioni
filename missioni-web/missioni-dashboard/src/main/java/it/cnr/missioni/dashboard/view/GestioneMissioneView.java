@@ -30,8 +30,8 @@ import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
 import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
-import it.cnr.missioni.dashboard.component.window.DettagliRimborsoWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
+import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
@@ -334,7 +334,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 				// se è già associato il rimborso
 				if (selectedMissione.getRimborso() != null) {
 					rimborso = selectedMissione.getRimborso();
-					DettagliRimborsoWindow.open(selectedMissione);
+					RimborsoWindowAdmin.open(selectedMissione,false);
 
 				} else {
 					rimborso = new Rimborso();
