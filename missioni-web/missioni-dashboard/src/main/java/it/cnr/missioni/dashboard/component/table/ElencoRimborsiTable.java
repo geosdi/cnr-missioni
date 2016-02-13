@@ -36,7 +36,7 @@ public final class ElencoRimborsiTable  extends ITable.AbstractTable  {
 	public <T> void aggiornaTable(T missioniStore) {
 		this.removeAllItems();
 
-		if (missioniStore != null) {
+		if (((MissioniStore)missioniStore).getTotale() > 0) {
 			
 			BeanItemContainer<Missione> listaMissioni =
 				    new BeanItemContainer<Missione>(Missione.class);

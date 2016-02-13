@@ -46,7 +46,7 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 	public <T> void aggiornaTable(T userStore) {
 		this.removeAllItems();
 
-		if (userStore != null) {
+		if (((UserStore)userStore).getTotale() > 0) {
 			
 			
 			BeanItemContainer<User> listaUser =

@@ -28,7 +28,7 @@ public final class ElencoRimborsoKmTable extends ITable.AbstractTable {
 	public <T> void aggiornaTable(T rimborsoKmStore) {
 		this.removeAllItems();
 
-		if (rimborsoKmStore != null) {
+		if (((RimborsoKmStore)rimborsoKmStore).getTotale() > 0) {
 
 			setVisible(true);
 			setContainerDataSource(new BeanItemContainer<RimborsoKm>(RimborsoKm.class,

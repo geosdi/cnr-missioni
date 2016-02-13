@@ -29,7 +29,7 @@ public final class ElencoNazioneTable extends ITable.AbstractTable {
 	public <T> void aggiornaTable(T nazioneStore) {
 		this.removeAllItems();
 
-		if (nazioneStore != null) {
+		if (((NazioneStore)nazioneStore).getTotale() > 0) {
 
 			setVisible(true);
 			setContainerDataSource(

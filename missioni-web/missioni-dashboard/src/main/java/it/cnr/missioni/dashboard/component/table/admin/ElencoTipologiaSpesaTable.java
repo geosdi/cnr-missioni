@@ -54,7 +54,7 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
 	public <T> void aggiornaTable(T tipologiaSpesaStore) {
 		this.removeAllItems();
 
-		if (tipologiaSpesaStore != null) {
+		if (((TipologiaSpesaStore)tipologiaSpesaStore).getTotale() > 0) {
 
 			setVisible(true);
 			setContainerDataSource(

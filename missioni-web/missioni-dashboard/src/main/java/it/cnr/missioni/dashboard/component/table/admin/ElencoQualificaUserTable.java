@@ -34,7 +34,7 @@ public final class ElencoQualificaUserTable extends ITable.AbstractTable {
 	public <T> void aggiornaTable(T qualificaUserStore) {
 		this.removeAllItems();
 
-		if (qualificaUserStore != null) {
+		if (((QualificaUserStore)qualificaUserStore).getTotale() > 0) {
 
 			setVisible(true);
 			setContainerDataSource(

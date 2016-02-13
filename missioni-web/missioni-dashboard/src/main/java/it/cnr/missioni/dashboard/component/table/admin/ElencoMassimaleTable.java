@@ -33,7 +33,7 @@ public final class ElencoMassimaleTable extends ITable.AbstractTable {
 	public <T> void aggiornaTable(T massimaleStore) {
 		this.removeAllItems();
 
-		if (massimaleStore != null) {
+		if (((MassimaleStore)massimaleStore ).getTotale() > 0) {
 
 			setVisible(true);
 			setContainerDataSource(

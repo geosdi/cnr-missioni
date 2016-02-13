@@ -29,7 +29,7 @@ public final class ElencoVeicoliCNRTable extends ITable.AbstractTable{
 	public <T> void aggiornaTable(T veicoloCNRStore) {
 		this.removeAllItems();
 
-		if (veicoloCNRStore != null) {
+		if (((VeicoloCNRStore)veicoloCNRStore).getTotale() > 0) {
 			
 			
 			BeanItemContainer<VeicoloCNR> listaVeicoliCNR=

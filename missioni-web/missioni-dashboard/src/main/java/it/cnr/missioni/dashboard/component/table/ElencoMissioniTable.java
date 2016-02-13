@@ -63,7 +63,7 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 	public <T> void aggiornaTable(T missioniStore) {
 		this.removeAllItems();
 
-		if (missioniStore != null) {
+		if (((MissioniStore)missioniStore).getTotale() > 0) {
 			setVisible(true);
 			setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore)missioniStore).getMissioni()));
 			setVisibleColumns("id","localita", "oggetto", "stato", "dataInserimento");
