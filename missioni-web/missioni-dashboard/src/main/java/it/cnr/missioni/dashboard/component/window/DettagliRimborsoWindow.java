@@ -61,6 +61,8 @@ public class DettagliRimborsoWindow  extends IWindow.AbstractWindow  {
 
 		details.addComponent(new Label("Numero Ordine: " + missione.getRimborso().getNumeroOrdine()));
 		details.addComponent(new Label("Avviso Pagamento : " + missione.getRimborso().getAvvisoPagamento()));
+		details.addComponent(new Label("Pagata : "  + (missione.getRimborso().isPagata() ? "Si" : "No")));
+
 		details.addComponent(
 				new Label("Anticipazione Pagamento : " + missione.getRimborso().getAnticipazionePagamento()+" €"));
 		details.addComponent(new Label("Data Inserimento : " + missione.getRimborso().getDataRimborso()));
