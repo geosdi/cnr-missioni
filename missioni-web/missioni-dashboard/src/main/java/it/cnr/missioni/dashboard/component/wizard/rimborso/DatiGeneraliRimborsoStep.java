@@ -124,7 +124,7 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 				try {
 					RimborsoKmStore rimborsoKmStore = ClientConnector
 							.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
-					if (rimborsoKmStore != null) {
+					if (rimborsoKmStore.getTotale() > 0) {
 						
 						NumberFormat f = NumberFormat.getInstance(); // Gets a NumberFormat with the default locale, you can specify a Locale as first parameter (like Locale.FRENCH)
 						double number = f.parse(totKmField.getValue()).doubleValue();

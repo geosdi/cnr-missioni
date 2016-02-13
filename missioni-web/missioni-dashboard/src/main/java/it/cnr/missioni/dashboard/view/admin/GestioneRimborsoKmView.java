@@ -59,7 +59,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		try {
 			rimborsoKmStore = ClientConnector.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
 
-			if (rimborsoKmStore == null)
+			if (rimborsoKmStore.getTotale() == 0)
 				buttonNew.setVisible(true);
 			else
 				buttonNew.setVisible(false);
