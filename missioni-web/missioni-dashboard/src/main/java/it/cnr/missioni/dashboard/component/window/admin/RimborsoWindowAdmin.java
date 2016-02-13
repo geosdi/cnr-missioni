@@ -2,6 +2,9 @@ package it.cnr.missioni.dashboard.component.window.admin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.joda.time.DateTime;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -17,6 +20,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
@@ -67,8 +71,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 	private TextField numeroOrdineField;
 	private TextField avvisoPagamentoField;
 	private TextField anticipazionePagamentoField;
-	private ComboBox statoField;
-
+	private CheckBox pagataField;
 	
 	//FIELD FATTURA
 	private TextField numeroFatturaField;
@@ -80,6 +83,9 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 	
 	private List<TipologiaSpesa> listaTipologiaSpesaItalia = new ArrayList<TipologiaSpesa>();
 	private List<TipologiaSpesa> listaTipologiaSpesaEstera = new ArrayList<TipologiaSpesa>();
+	
+	private ElencoFattureTable elencoFattureTable;
+
 	
 	
 	private Rimborso rimborso;
@@ -100,19 +106,6 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		buildFieldGroup();
 		buildTabs();
 		content.addComponent(buildFooter());
-//		fieldGroupRimborso = new BeanFieldGroup<Rimborso>(Rimborso.class);
-//		fieldGroupRimborso.setItemDataSource(rimborso);
-//		fieldGroupRimborso.setBuffered(true);
-//
-//		 fieldFactory = new BeanFieldGrouFactory();
-//		fieldGroupRimborso.setFieldFactory(fieldFactory);
-//		detailsWrapper.addComponent(buildRimborsoTab());
-//		detailsWrapper.addComponent(buildFatturaTab());
-//
-//		if(rimborso.getNumeroOrdine() == null)
-//			detailsWrapper.getTab(1).setEnabled(false);
-//		else
-//			detailsWrapper.getTab(1).setEnabled(true);
 	}
 
 	private void buildTabs(){
@@ -149,20 +142,8 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		details.addComponent(avvisoPagamentoField);
 		anticipazionePagamentoField = (TextField) fieldGroupRimborso.buildAndBind("Anticipazione Pagamento", "anticipazionePagamento");
 		details.addComponent(anticipazionePagamentoField);
-		statoField = new ComboBox("Stato");
-		
-		
-		statoField.setImmediate(true);
-		statoField.setValidationVisible(false);
-		StatoEnum[] lista = StatoEnum.values();
-
-		for (StatoEnum s : lista) {
-			statoField.addItem(s);
-			statoField.setItemCaption(s, s.getStato());
-		}
-		
-		statoField.select(missione.getStato());
-		details.addComponent(statoField);
+		pagataField = (CheckBox) fieldGroupRimborso.buildAndBind("Pagata", "pagata",CheckBox.class);
+		details.addComponent(pagataField);
 		
 		
 		DateField fieldDataRegistrazione = (DateField)fieldGroupRimborso.buildAndBind("Data Rimborso","dataRimborso");
@@ -245,8 +226,14 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		HorizontalLayout footer = new HorizontalLayout();
+		footer.setSpacing(true);
 		root.addComponent(footer);
-		root.addComponent(new ElencoFattureTable(fieldGroupFattura,missione));
+		
+		elencoFattureTable = new ElencoFattureTable(fieldGroupFattura, missione);
+		// elencoFattureTable.setStyleName("elencoFatture");
+		elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
+		root.addComponent(elencoFattureTable);
+		
 //		fatturaLayout.setExpandRatio(details, 1);
 		
 
@@ -284,60 +271,82 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 
 
 		
-//		Button reset = new Button("Reset");
-//		reset.addStyleName(ValoTheme.BUTTON_PRIMARY);
-//		reset.addClickListener(new ClickListener() {
-//
-//			/**
-//			 * 
-//			 */
-//			private static final long serialVersionUID = 3448301358809646724L;
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//				fattura = new Fattura();
-//				aggiornaFatturaTab(fattura);
-//				
-//			}
-//			
-//		});
-//				
-//		Button ok = new Button("OK");
-//		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-//		ok.addClickListener(new ClickListener() {
-//			/**
-//			 * 
-//			 */
-//			private static final long serialVersionUID = -1516426501992135874L;
-//
-//			@Override
-//			public void buttonClick(ClickEvent event) {
-//
-//				try {
-//					
-//					
-//					for (Field<?> f : fieldGroupRimborso.getFields()) {
-//						((AbstractField<?>) f).setValidationVisible(true);
-//					}
-//					fieldGroupRimborso.commit();
-//
-//					BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) fieldGroupRimborso.getItemDataSource();
-//					Rimborso new_rimborso = beanItem.getBean();
-//					missione.setRimborso(new_rimborso);
-//					
-//					DashboardEventBus.post(new UpdateRimborsoAction(missione));
-//					close();
-//
-//				} catch (InvalidValueException | CommitException e) {
-//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
-//							Type.ERROR_MESSAGE);
-//				}
-//
-//			}
-//		});
-//		ok.focus();
-//		footer.addComponent(ok);
-//		footer.addComponent(reset);
+		Button reset = new Button("Reset");
+		reset.addStyleName(ValoTheme.BUTTON_PRIMARY);
+
+		reset.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				fieldGroupFattura.discard();
+				aggiornaFatturaTab(new Fattura());
+
+			}
+
+		});
+
+		Button ok = new Button("OK");
+		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+		ok.addClickListener(new ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+				boolean check = true;
+
+				dataField.setValidationVisible(true);
+				for (Field<?> f : fieldGroupFattura.getFields()) {
+					((AbstractField<?>) f).setValidationVisible(true);
+				}
+
+				try {
+
+					fieldGroupFattura.commit();
+				} catch (InvalidValueException | CommitException e) {
+
+					check = false;
+				}
+
+				try {
+					dataField.validate();
+				} catch (InvalidValueException e) {
+					check = false;
+				}
+
+				if (check) {
+
+					// checkMassimale(tipologiaSpesaField.getValue().toString());
+
+					BeanItem<Fattura> beanItem = (BeanItem<Fattura>) fieldGroupFattura.getItemDataSource();
+					Fattura new_fattura = beanItem.getBean();
+
+					// se la fattura è nuova creo un ID
+					if (new_fattura.getId() == null)
+						new_fattura.setId(UUID.randomUUID().toString());
+					new_fattura.setData(new DateTime(dataField.getValue()));
+					new_fattura.setShortDescriptionTipologiaSpesa(
+							tipologiaSpesaField.getItemCaption(new_fattura.getIdTipologiaSpesa()));
+					missione.getRimborso().getMappaFattura().put(new_fattura.getId(), new_fattura);
+					Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
+
+					// ripulisco la form
+					for (Field<?> f : fieldGroupFattura.getFields()) {
+						((AbstractField<?>) f).setValidationVisible(false);
+					}
+					// aggiorno la tabella
+					aggiornaFatturaTab(new Fattura());
+					elencoFattureTable
+							.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
+					elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
+				} else {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
+							Type.ERROR_MESSAGE);
+				}
+
+			}
+		});
+		ok.focus();
+		footer.addComponent(ok);
+		footer.addComponent(reset);
 		root.setComponentAlignment(footer, Alignment.BOTTOM_RIGHT);
 		
 		return root;
