@@ -102,7 +102,7 @@ public interface MissioneRestService {
      * @return {@link Response}
      * @throws Exception
      */
-    @POST
+    @PUT
     @Path(value = MissioneServiceRSPathConfig.UPDATE_RIMBORSO)
     Response updateRimborso(Missione missione) throws Exception;
 
