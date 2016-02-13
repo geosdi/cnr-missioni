@@ -36,12 +36,17 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 		
 		addGeneratedColumn("stato", new ColumnGenerator() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1135658612453220960L;
+
 			@Override
 			public Object generateCell(final Table source, final Object itemId, Object columnId) {
 
 				Missione missione = (Missione) itemId;
 				Resource res = null;
-				if (missione.getStato() == StatoEnum.PAGATA) {
+				if (missione.getRimborso() != null && missione.getRimborso().isPagata()) {
 					 res = new ThemeResource("img/circle_green_16_ns.png"); // get the resource depending the integer value 
 				}
 				else{
