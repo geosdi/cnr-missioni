@@ -68,8 +68,6 @@ public class ClientConnector {
 
 	/**
 	 * 
-	 * Aggiunge un nuovo user
-	 * 
 	 * @param user
 	 * @throws Exception
 	 */
@@ -79,8 +77,6 @@ public class ClientConnector {
 	}
 
 	/**
-	 * 
-	 * Aggiorna un user esistente
 	 * 
 	 * @param user
 	 * @throws Exception
@@ -92,8 +88,6 @@ public class ClientConnector {
 
 	/**
 	 * 
-	 * Ricerca users
-	 * 
 	 * @param userSearchBuilder
 	 * @return
 	 * @throws Exception
@@ -102,11 +96,9 @@ public class ClientConnector {
 		return missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 	}
 
-	/**
+	/***
 	 * 
-	 * Ricerca missioni
-	 * 
-	 * @param userSearchBuilder
+	 * @param missioneSearchBuilder
 	 * @return
 	 * @throws Exception
 	 */
@@ -116,9 +108,8 @@ public class ClientConnector {
 
 	/**
 	 * 
-	 * Aggiunge una nuova missione
-	 * 
-	 * @param user
+	 * @param missione
+	 * @return
 	 * @throws Exception
 	 */
 	public static String addMissione(Missione missione) throws Exception {
@@ -128,13 +119,21 @@ public class ClientConnector {
 
 	/**
 	 * 
-	 * Aggiorna una missione esistente
-	 * 
-	 * @param user
+	 * @param missione
 	 * @throws Exception
 	 */
 	public static void updateMissione(Missione missione) throws Exception {
 		missioniCoreClientConnector.updateMissione(missione);
+
+	}
+
+	/**
+	 * 
+	 * @param missione
+	 * @throws Exception
+	 */
+	public static void updateRimborso(Missione missione) throws Exception {
+		missioniCoreClientConnector.updateRimborso(missione);
 
 	}
 
@@ -235,7 +234,7 @@ public class ClientConnector {
 	public static Response downloadMissioneAsPdf(String missioneID) throws Exception {
 		return missioniCoreClientConnector.downloadMissioneAsPdf(missioneID);
 	}
-	
+
 	/**
 	 * 
 	 * @param missioneID
@@ -436,13 +435,13 @@ public class ClientConnector {
 		missioniCoreClientConnector.updateMassimale(massimale);
 
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	public static StatisticheMissioni getStatisticheMissioni( ) throws Exception {
+	public static StatisticheMissioni getStatisticheMissioni() throws Exception {
 		return missioniCoreClientConnector.getStatistiche();
 
 	}
