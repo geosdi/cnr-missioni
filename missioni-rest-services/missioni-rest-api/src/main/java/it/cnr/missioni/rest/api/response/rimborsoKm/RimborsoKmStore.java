@@ -6,6 +6,7 @@
 package it.cnr.missioni.rest.api.response.rimborsoKm;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,7 +30,7 @@ public class RimborsoKmStore implements Serializable {
 	 * 
 	 */
 	@JsonProperty(value = "rimborsoKm", required = false)
-	private List<RimborsoKm> rimborsoKm;
+	private List<RimborsoKm> rimborsoKm = new ArrayList<RimborsoKm>();
 	private long totale;
 
 	public RimborsoKmStore() {
