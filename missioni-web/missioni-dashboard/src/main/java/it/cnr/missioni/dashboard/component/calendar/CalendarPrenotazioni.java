@@ -35,6 +35,7 @@ import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.PrenotazioneWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CalendarUpdateEvent;
@@ -142,9 +143,9 @@ public class CalendarPrenotazioni implements Serializable {
 			public void eventClick(EventClick event) {
 
 				// solamente le la prenotazione appartiene all'utente loggato
-				if (((User) VaadinSession.getCurrent().getAttribute(User.class)).getId()
+				if (DashboardUI.getCurrentUser().getId()
 						.equals(((PrenotazioneEvent) event.getCalendarEvent()).getIdUser()))
-					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), true);
+					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), ((PrenotazioneEvent) event.getCalendarEvent()).getId() == null ? false : true);
 			}
 		});
 

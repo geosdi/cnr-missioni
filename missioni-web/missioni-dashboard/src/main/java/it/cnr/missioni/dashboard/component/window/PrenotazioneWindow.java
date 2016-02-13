@@ -228,7 +228,9 @@ public class PrenotazioneWindow extends IWindow.AbstractWindow  {
 			}
 		});
 
-		footer.addComponents(ok,delete);
+		footer.addComponent(ok);
+		if(modifica)
+			footer.addComponent(delete);
 		footer.setSpacing(true);
 		root.setComponentAlignment(footer, Alignment.MIDDLE_CENTER);
 		return root;
