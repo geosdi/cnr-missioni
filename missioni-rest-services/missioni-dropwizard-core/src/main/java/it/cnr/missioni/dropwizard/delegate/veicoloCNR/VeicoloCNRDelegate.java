@@ -56,13 +56,11 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 				.withTarga(targa).withNotId(notId).withFrom(from).withSize(size).withAll(all);
 
 		PageResult<VeicoloCNR> pageResult = this.veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder);
-		if (!pageResult.getResults().isEmpty()) {
-			VeicoloCNRStore veicoloCNRStore = new VeicoloCNRStore();
-			veicoloCNRStore.setVeicoliCNR(pageResult.getResults());
-			veicoloCNRStore.setTotale(pageResult.getTotal());
-			return veicoloCNRStore;
-		} else
-			return null;
+		VeicoloCNRStore veicoloCNRStore = new VeicoloCNRStore();
+		veicoloCNRStore.setTotale(pageResult.getTotal());
+		veicoloCNRStore.setVeicoliCNR(pageResult.getResults());
+		return veicoloCNRStore;
+
 	}
 
 	/**

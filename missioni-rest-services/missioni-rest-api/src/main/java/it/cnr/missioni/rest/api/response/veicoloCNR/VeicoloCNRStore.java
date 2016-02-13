@@ -6,6 +6,7 @@
 package it.cnr.missioni.rest.api.response.veicoloCNR;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +27,7 @@ public class VeicoloCNRStore implements Serializable {
 	 */
 	private static final long serialVersionUID = -6427571746594415833L;
 	@JsonProperty(value = "veicoliCNR", required = false)
-    private List<VeicoloCNR> veicoliCNR;
+    private List<VeicoloCNR> veicoliCNR = new ArrayList<VeicoloCNR>();
     private long totale;
 
     public VeicoloCNRStore() {
