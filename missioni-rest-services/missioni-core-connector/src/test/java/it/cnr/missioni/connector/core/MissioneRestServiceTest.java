@@ -121,7 +121,7 @@ public class MissioneRestServiceTest {
 				.withIdMissione("03");
 
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertNull(missioniStore);
+		Assert.assertTrue(missioniStore.getTotale() == 0);
 	}
 
 	@Test
@@ -265,7 +265,7 @@ public class MissioneRestServiceTest {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("02")
 				.withFieldExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertNull(missioniStore);
+		Assert.assertTrue(missioniStore.getTotale() == 0);
 	}
 
 	@Test

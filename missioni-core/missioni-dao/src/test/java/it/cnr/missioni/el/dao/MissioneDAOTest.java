@@ -323,7 +323,7 @@ public class MissioneDAOTest {
 	@Test
 	public void V_getStatistiche() throws Exception {
 		StatisticheMissioni statisticheMissioni = this.missioneDAO.getStatisticheMissioni();
-		Assert.assertTrue("FIND STATISTICHE", statisticheMissioni.getMappaStatistiche().get(StatoEnum.PRESA_IN_CARICO) == 2);
+		Assert.assertTrue("FIND STATISTICHE", statisticheMissioni.getMappaStatistiche().get(StatoEnum.PRESA_IN_CARICO.getStato()) == 2);
 	}
 	
 	@Test

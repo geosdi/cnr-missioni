@@ -108,7 +108,7 @@ public class RimborsoKmRestServiceTest {
 		Thread.sleep(1000);
 		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
 		RimborsoKmStore rimborsoKmStore = missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoSearchBuilder);
-		Assert.assertNotNull("ADD RIMBORSO KM", rimborsoKmStore);
+		Assert.assertTrue("ADD RIMBORSO KM", rimborsoKmStore.getTotale() == 1);
 	}
 	
 	@Test
@@ -120,7 +120,7 @@ public class RimborsoKmRestServiceTest {
 		Thread.sleep(1000);
 		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
 		RimborsoKmStore rimborsoKmStore = missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoSearchBuilder);
-		Assert.assertNotNull("UPDATE RIMBORSO KM", rimborsoKmStore);
+		Assert.assertTrue("UPDATE RIMBORSO KM", rimborsoKmStore.getTotale() == 1);
 
 	}
 	

@@ -100,7 +100,7 @@ public class PrenotazioneRestServiceTest {
 		
 		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
-		Assert.assertNotNull(prenotazioniStore);
+		Assert.assertTrue(prenotazioniStore.getTotale() == 2);
 	}
 
 	@Test

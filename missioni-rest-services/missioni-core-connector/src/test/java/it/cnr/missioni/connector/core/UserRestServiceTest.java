@@ -105,7 +105,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
-		Assert.assertNull(userStore);
+		Assert.assertTrue(userStore.getTotale() == 0);
 	}
 
 	@Test
@@ -149,7 +149,7 @@ public class UserRestServiceTest {
 	public void F_findUserByCognome() throws Exception {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withCognome("Salv");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertNotNull(userStore);
+		Assert.assertTrue(userStore.getTotale() == 1);
 	}
 
 	@Test
@@ -157,7 +157,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vi");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
-		Assert.assertNotNull(userStore);
+		Assert.assertTrue(userStore.getTotale() == 1);
 	}
 
 	@Test
@@ -166,7 +166,7 @@ public class UserRestServiceTest {
 				.withCognome("salvia").withMatricola("1111111").withCodiceFiscale("slvvtttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
-		Assert.assertNotNull(userStore);
+		Assert.assertTrue(userStore.getTotale() == 1);
 	}
 
 	@Test
@@ -184,7 +184,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome("Vito")
 				.withCognome("salvia").withMatricola("4111111").withCodiceFiscale("slvvttttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertTrue("FIND USER BY ALL", userStore == null);
+		Assert.assertTrue("FIND USER BY ALL", userStore.getTotale() == 0);
 	}
 
 	@Test
@@ -198,7 +198,7 @@ public class UserRestServiceTest {
 	public void N_findUserByMatricolaErrata() throws Exception {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("2111111");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertTrue("FIND USER BY MATRICOLA ERRATA", userStore == null);
+		Assert.assertTrue("FIND USER BY MATRICOLA ERRATA", userStore.getTotale() == 0);
 	}
 
 	@Test
@@ -207,7 +207,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withTarga("AA111BB");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
-		Assert.assertNotNull(userStore);
+		Assert.assertTrue(userStore.getTotale() == 1);
 
 	}
 
@@ -217,7 +217,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withTarga("AA111CC");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
-		Assert.assertNull(userStore);
+		Assert.assertTrue(userStore.getTotale() == 0);
 
 	}
 
@@ -238,7 +238,7 @@ public class UserRestServiceTest {
 				.withCodiceFiscale("slvvtttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
-		Assert.assertNull("FIND USER BY ID", userStore);
+		Assert.assertTrue("FIND USER BY ID", userStore.getTotale() == 0);
 
 	}
 
@@ -267,7 +267,7 @@ public class UserRestServiceTest {
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId("10");
 
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertNull("FIND USER BY ID", userStore);
+		Assert.assertTrue("FIND USER BY ID", userStore.getTotale() == 0);
 	}
 	
 	@Test

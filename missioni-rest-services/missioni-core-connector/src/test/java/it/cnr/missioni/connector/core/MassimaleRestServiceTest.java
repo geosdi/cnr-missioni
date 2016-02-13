@@ -183,7 +183,7 @@ public class MassimaleRestServiceTest {
 				.withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.C.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
 		MassimaleStore massimaleStore = missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
-		Assert.assertNull("FIND MASSIMALE BY LIVELLO-AREA", massimaleStore);
+		Assert.assertTrue("FIND MASSIMALE BY LIVELLO-AREA", massimaleStore.getTotale() == 0);
 	}
 
 	@Test
@@ -192,7 +192,7 @@ public class MassimaleRestServiceTest {
 				.withNotId("10").withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
 		MassimaleStore massimaleStore = missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
-		Assert.assertNull("FIND MASSIMALE BY LIVELLO-AREA", massimaleStore);
+		Assert.assertTrue("FIND MASSIMALE BY LIVELLO-AREA", massimaleStore.getTotale() == 0);
 	}
 
 	@Test
@@ -201,7 +201,7 @@ public class MassimaleRestServiceTest {
 				.withNotId("01").withLivello(LivelloUserEnum.I.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
 		MassimaleStore massimaleStore = missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
-		Assert.assertNull("FIND MASSIMALE BY LIVELLO-AREA", massimaleStore);
+		Assert.assertTrue("FIND MASSIMALE BY LIVELLO-AREA", massimaleStore.getTotale() == 0);
 	}
 
 	

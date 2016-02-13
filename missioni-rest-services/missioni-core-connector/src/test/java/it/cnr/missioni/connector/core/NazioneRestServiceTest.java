@@ -144,7 +144,7 @@ public class NazioneRestServiceTest {
 	public void E_findByIdTest_2() throws Exception {
 		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("03");
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
-		Assert.assertNull("FIND NAZIONE BY ID", nazioneStore);
+		Assert.assertTrue("FIND NAZIONE BY ID", nazioneStore.getTotale() == 0);
 	}
 
 	
