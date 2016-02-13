@@ -6,6 +6,7 @@
 package it.cnr.missioni.rest.api.response.qualificaUser;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +27,7 @@ public class QualificaUserStore implements Serializable {
 	 */
 	private static final long serialVersionUID = 4920026196206410573L;
 	@JsonProperty(value = "qualificaUser", required = false)
-	private List<QualificaUser> qualificaUser;
+	private List<QualificaUser> qualificaUser = new ArrayList<QualificaUser>();
 	private long totale;
 
 	public QualificaUserStore() {

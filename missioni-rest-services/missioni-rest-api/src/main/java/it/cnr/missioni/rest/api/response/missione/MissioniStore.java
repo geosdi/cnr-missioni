@@ -1,6 +1,7 @@
 package it.cnr.missioni.rest.api.response.missione;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +24,7 @@ public class MissioniStore implements Serializable  {
     @JsonProperty(value = "userID", required = true)
     private String userID;
     @JsonProperty(value = "missioni", required = false)
-    private List<Missione> missioni;
+    private List<Missione> missioni = new ArrayList<Missione>();
     private long totale;
     
 

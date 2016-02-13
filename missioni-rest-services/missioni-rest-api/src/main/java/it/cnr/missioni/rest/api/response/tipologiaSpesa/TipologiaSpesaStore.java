@@ -1,6 +1,7 @@
 package it.cnr.missioni.rest.api.response.tipologiaSpesa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +22,7 @@ public class TipologiaSpesaStore implements Serializable {
 	 */
 	private static final long serialVersionUID = 3124640562143124819L;
 	@JsonProperty(value = "tipologiaSpesa", required = false)
-    private List<TipologiaSpesa> tipologiaSpesa;
+    private List<TipologiaSpesa> tipologiaSpesa = new ArrayList<TipologiaSpesa>();
     private long totale;
 
     public TipologiaSpesaStore() {

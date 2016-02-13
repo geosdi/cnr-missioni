@@ -1,6 +1,7 @@
 package it.cnr.missioni.rest.api.response.prenotazione;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -23,7 +24,7 @@ public class PrenotazioniStore implements Serializable {
 	 */
 	private static final long serialVersionUID = -6233708924211248278L;
 	@JsonProperty(value = "prenotazioni", required = false)
-	private List<Prenotazione> prenotazioni;
+	private List<Prenotazione> prenotazioni = new ArrayList<Prenotazione>();
 	private long totale;
 
 	public PrenotazioniStore() {

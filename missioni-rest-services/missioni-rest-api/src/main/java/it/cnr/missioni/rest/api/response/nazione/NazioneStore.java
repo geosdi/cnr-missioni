@@ -6,6 +6,7 @@
 package it.cnr.missioni.rest.api.response.nazione;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +27,7 @@ public class NazioneStore implements Serializable {
 	 */
 	private static final long serialVersionUID = -3414629973051200861L;
 	@JsonProperty(value = "nazione", required = false)
-	private List<Nazione> nazione;
+	private List<Nazione> nazione = new ArrayList<Nazione>();
 	private long totale;
 
 	public NazioneStore() {

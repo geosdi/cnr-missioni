@@ -6,6 +6,7 @@
 package it.cnr.missioni.rest.api.response.massimale;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,7 +30,7 @@ public class MassimaleStore implements Serializable {
 	 * 
 	 */
 	@JsonProperty(value = "massimale", required = false)
-	private List<Massimale> massimale;
+	private List<Massimale> massimale = new ArrayList<Massimale>();
 	private long totale;
 
 	/**

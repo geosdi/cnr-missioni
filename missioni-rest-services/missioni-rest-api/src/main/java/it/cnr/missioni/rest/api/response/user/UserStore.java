@@ -6,6 +6,7 @@
 package it.cnr.missioni.rest.api.response.user;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +23,7 @@ public class UserStore implements Serializable {
 
     private static final long serialVersionUID = -7592733477679041238L;
     @JsonProperty(value = "users", required = false)
-    private List<User> users;
+    private List<User> users = new ArrayList<User>();
     private long totale;
 
     public UserStore() {
