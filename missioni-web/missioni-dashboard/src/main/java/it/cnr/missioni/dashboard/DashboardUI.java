@@ -30,6 +30,7 @@ import it.cnr.missioni.dashboard.action.admin.NazioneAction;
 import it.cnr.missioni.dashboard.action.admin.QualificaUserAction;
 import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
 import it.cnr.missioni.dashboard.action.admin.TipologiaSpesaAction;
+import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.action.admin.UpdateUserResponsabileGruppoAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
@@ -149,6 +150,11 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void rimborsoRequested(final RimborsoAction rimborsoAction) {
 		rimborsoAction.doAction();
+	}
+	
+	@Subscribe
+	public void updateRimborsoRequested(final UpdateRimborsoAction updateRimborsoAction) {
+		updateRimborsoAction.doAction();
 	}
 	
 	@Subscribe
