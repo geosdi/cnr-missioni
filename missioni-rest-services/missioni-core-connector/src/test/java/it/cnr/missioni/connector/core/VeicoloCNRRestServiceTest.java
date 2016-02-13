@@ -159,7 +159,7 @@ public class VeicoloCNRRestServiceTest {
 				.withTarga("6575").withNotId("02");
 		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		Thread.sleep(1000);	
-		Assert.assertNull("FIND  VEICOLO CNR", veicoloCNRStore);
+		Assert.assertTrue("FIND  VEICOLO CNR", veicoloCNRStore.getVeicoliCNR().isEmpty());
 
 	}
 
@@ -169,7 +169,7 @@ public class VeicoloCNRRestServiceTest {
 				.withCartaCircolazione("carta 456").withNotId("02");
 		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		Thread.sleep(1000);		
-		Assert.assertNull("FIND  VEICOLO CNR", veicoloCNRStore);
+		Assert.assertTrue("FIND  VEICOLO CNR", veicoloCNRStore.getTotale() == 0);
 
 	}
 	
@@ -179,7 +179,7 @@ public class VeicoloCNRRestServiceTest {
 				.withPolizzaAssicurativa("polizza 2").withNotId("02");
 		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		Thread.sleep(1000);		
-		Assert.assertNull("FIND  VEICOLO CNR", veicoloCNRStore);
+		Assert.assertTrue("FIND  VEICOLO CNR", veicoloCNRStore.getVeicoliCNR().isEmpty());
 
 	}
 	
