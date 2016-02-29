@@ -16,6 +16,14 @@ public enum TrattamentoMissioneEsteraEnum {
 		}
 		return null;
 	}
+	
+	public static TrattamentoMissioneEsteraEnum getTrattamentoMissioneEstera(String stato){
+		for(TrattamentoMissioneEsteraEnum t : TrattamentoMissioneEsteraEnum.values()){
+			if(t.getStato().equals(stato))
+				return t;
+		}
+		return null;
+	}
 
 	public String getStato() {
 		return stato;
