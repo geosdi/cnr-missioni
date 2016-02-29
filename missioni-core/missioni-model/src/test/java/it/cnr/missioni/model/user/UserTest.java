@@ -158,12 +158,13 @@ public class UserTest {
 		Veicolo veicolo = new Veicolo();
 		
 		Set<ConstraintViolation<Veicolo>> constraintViolations = validator.validate(veicolo);
-		assertEquals(4, constraintViolations.size());
+		assertEquals(5, constraintViolations.size());
 	}
 
 	@Test
 	public void veicoloOkTest() {
 		Veicolo veicolo = new Veicolo();
+		veicolo.setId("aaaaqqqq");
 		veicolo.setTipo("Ford");
 		veicolo.setTarga("AA111BBB");
 		veicolo.setCartaCircolazione("carta");

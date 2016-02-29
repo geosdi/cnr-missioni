@@ -152,7 +152,7 @@ public class UserDAOTest {
 	@Test
 	public void H_findUserByMatricola() throws Exception {
 
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("1111111");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withSearchType("exact").withMatricola("1111111");
 		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
 		Assert.assertTrue("FIND USER BY MATRICOLA", lista.size() == 1);
 	}
@@ -309,6 +309,14 @@ public class UserDAOTest {
 		Assert.assertTrue("FIND USER BY ID", lista.size() == 1);
 	}
 	
+//	@Test
+//	public void E_findUserByMatricola() throws Exception {
+//
+//		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withSearchType("exact").withMatricola("1111111");
+//		List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
+//		Assert.assertTrue("FIND USER BY MATRICOLA", lista.size() == 1);
+//	}
+	
 	//
 	//// @Test
 	//// public void tearDown() throws Exception {
@@ -340,8 +348,9 @@ public class UserDAOTest {
 		veicolo.setCartaCircolazione("12234");
 		veicolo.setPolizzaAssicurativa("A1B2");
 		veicolo.setVeicoloPrincipale(true);
+		veicolo.setId("01");
 		Map<String, Veicolo> mappaVeicoli = new HashMap<String, Veicolo>();
-		mappaVeicoli.put(veicolo.getTarga(), veicolo);
+		mappaVeicoli.put(veicolo.getId(), veicolo);
 		user.setMappaVeicolo(mappaVeicoli);
 		DatiCNR datiCNR = new DatiCNR();
 		datiCNR.setDatoreLavoro("02");
