@@ -63,7 +63,7 @@ public final class ElencoRimborsiTable  extends ITable.AbstractTable  {
 	public <T> void aggiornaTableAdmin(T missioniStore) {
 		this.removeAllItems();
 
-		if (missioniStore != null) {
+		if (((MissioniStore)missioniStore).getTotale() > 0) {
 			
 			BeanItemContainer<Missione> listaMissioni =
 				    new BeanItemContainer<Missione>(Missione.class);
@@ -106,6 +106,17 @@ public final class ElencoRimborsiTable  extends ITable.AbstractTable  {
 
 		}
 		return super.formatPropertyValue(rowId, colId, property);
+	}
+
+
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

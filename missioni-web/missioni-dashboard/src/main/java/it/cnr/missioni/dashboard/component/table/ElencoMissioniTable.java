@@ -33,30 +33,7 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 	public ElencoMissioniTable() {
 		super();
 		buildTable();
-		
-		addGeneratedColumn("stato", new ColumnGenerator() {
 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -1135658612453220960L;
-
-			@Override
-			public Object generateCell(final Table source, final Object itemId, Object columnId) {
-
-				Missione missione = (Missione) itemId;
-				Resource res = null;
-				if (missione.getRimborso() != null && missione.getRimborso().isPagata()) {
-					 res = new ThemeResource("img/circle_green_16_ns.png"); // get the resource depending the integer value 
-				}
-				else{
-					 res = new ThemeResource("img/serve-red-circle-icone-8206-16.png"); // get the resource depending the integer value 
-				}
-				Image i = new Image(missione.getStato().getStato(), res);
-				i.setDescription(missione.getStato().getStato());
-	            return i;
-			}
-		});
 	}
 
 
@@ -94,7 +71,7 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 	public <T> void aggiornaTableAdmin(T missioniStore) {
 		this.removeAllItems();
 
-		if (missioniStore != null) {
+		if (((MissioniStore)missioniStore).getTotale() > 0) {
 			setVisible(true);
 			setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore)missioniStore).getMissioni()));
 			setVisibleColumns("id","shortResponsabileGruppo","localita", "oggetto", "stato", "dataInserimento");
@@ -132,6 +109,37 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 
 		}
 		return super.formatPropertyValue(rowId, colId, property);
+	}
+
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		addGeneratedColumn("stato", new ColumnGenerator() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -1135658612453220960L;
+
+			@Override
+			public Object generateCell(final Table source, final Object itemId, Object columnId) {
+
+				Missione missione = (Missione) itemId;
+				Resource res = null;
+				if (missione.getRimborso() != null && missione.getRimborso().isPagata()) {
+					 res = new ThemeResource("img/circle_green_16_ns.png"); // get the resource depending the integer value 
+				}
+				else{
+					 res = new ThemeResource("img/serve-red-circle-icone-8206-16.png"); // get the resource depending the integer value 
+				}
+				Image i = new Image(missione.getStato().getStato(), res);
+				i.setDescription(missione.getStato().getStato());
+	            return i;
+			}
+		});		
 	}
 
 

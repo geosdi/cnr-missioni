@@ -57,4 +57,14 @@ public final class ElencoVeicoliCNRTable extends ITable.AbstractTable{
 
 	}
 
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

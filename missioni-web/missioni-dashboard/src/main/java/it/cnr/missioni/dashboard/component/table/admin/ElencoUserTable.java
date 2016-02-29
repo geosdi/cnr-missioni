@@ -63,77 +63,13 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 			setContainerDataSource(listaUser);
 			setVisibleColumns("responsabileGruppo","credenziali.ruoloUtente","anagrafica.cognome", "anagrafica.nome", "anagrafica.codiceFiscale", "datiCNR.matricola");
 			setColumnHeaders("Responsabile Gruppo","Admin","Cognome", "Nome", "Codice Fiscale", "Matricola");
+			setColumnWidth("responsabileGruppo", 150);
+			setColumnWidth("credenziali.ruoloUtente", 70);
 			setId("id");
 			Object[] properties = { "anagrafica.cognome", "anagrafica.nome" };
 			boolean[] ordering = { true, true };
 			sort(properties, ordering);
 
-			
-			addGeneratedColumn("responsabileGruppo", new Table.ColumnGenerator() {
-			      /**
-				 * 
-				 */
-				private static final long serialVersionUID = 6589113831511771042L;
-
-				@Override
-			      public Object generateCell(Table source, final Object itemId, Object columnId) {
-			        final CheckBox cb = new CheckBox("",((User)itemId).isResponsabileGruppo());
-			        
-			        cb.addValueChangeListener(new ValueChangeListener() {
-						
-
-						/**
-						 * 
-						 */
-						private static final long serialVersionUID = 2555372007125474494L;
-
-						@Override
-						public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
-							
-							User user = ((User)itemId);
-							user.setResponsabileGruppo(cb.getValue());
-							DashboardEventBus.post(new UpdateUserByAdminAction(user));
-
-						}
-					});
-			        
-
-			        return cb;
-			      }
-			    });
-			
-			addGeneratedColumn("credenziali.ruoloUtente", new Table.ColumnGenerator() {
-			      /**
-				 * 
-				 */
-				private static final long serialVersionUID = 2981409762119298531L;
-
-				@Override
-			      public Object generateCell(Table source, final Object itemId, Object columnId) {
-			        final CheckBox cb = new CheckBox("",((User)itemId).getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN ? true : false);
-			        
-			        cb.addValueChangeListener(new ValueChangeListener() {
-						
-
-						/**
-						 * 
-						 */
-						private static final long serialVersionUID = -1318077294324314158L;
-
-						@Override
-						public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
-							
-							User user = ((User)itemId);
-							user.getCredenziali().setRuoloUtente(cb.getValue() ? RuoloUserEnum.UTENTE_ADMIN : RuoloUserEnum.UTENTE_SEMPLICE);
-							DashboardEventBus.post(new UpdateUserByAdminAction(user));
-
-						}
-					});
-			        
-
-			        return cb;
-			      }
-			    });
 			
 		}
 
@@ -158,6 +94,82 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 
 		}
 		return super.formatPropertyValue(rowId, colId, property);
+	}
+
+
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+
+		
+		addGeneratedColumn("responsabileGruppo", new Table.ColumnGenerator() {
+		      /**
+			 * 
+			 */
+			private static final long serialVersionUID = 6589113831511771042L;
+
+			@Override
+		      public Object generateCell(Table source, final Object itemId, Object columnId) {
+		        final CheckBox cb = new CheckBox("",((User)itemId).isResponsabileGruppo());
+		        
+		        cb.addValueChangeListener(new ValueChangeListener() {
+					
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 2555372007125474494L;
+
+					@Override
+					public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+						
+						User user = ((User)itemId);
+						user.setResponsabileGruppo(cb.getValue());
+						DashboardEventBus.post(new UpdateUserByAdminAction(user));
+
+					}
+				});
+		        
+
+		        return cb;
+		      }
+		    });
+		
+		addGeneratedColumn("credenziali.ruoloUtente", new Table.ColumnGenerator() {
+		      /**
+			 * 
+			 */
+			private static final long serialVersionUID = 2981409762119298531L;
+
+			@Override
+		      public Object generateCell(Table source, final Object itemId, Object columnId) {
+		        final CheckBox cb = new CheckBox("",((User)itemId).getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN ? true : false);
+		        
+		        cb.addValueChangeListener(new ValueChangeListener() {
+					
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -1318077294324314158L;
+
+					@Override
+					public void valueChange(com.vaadin.data.Property.ValueChangeEvent event) {
+						
+						User user = ((User)itemId);
+						user.getCredenziali().setRuoloUtente(cb.getValue() ? RuoloUserEnum.UTENTE_ADMIN : RuoloUserEnum.UTENTE_SEMPLICE);
+						DashboardEventBus.post(new UpdateUserByAdminAction(user));
+
+					}
+				});
+		        
+
+		        return cb;
+		      }
+		    });		
 	}
 
 }

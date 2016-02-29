@@ -50,4 +50,15 @@ public final class ElencoMassimaleTable extends ITable.AbstractTable {
 
 	}
 
+
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

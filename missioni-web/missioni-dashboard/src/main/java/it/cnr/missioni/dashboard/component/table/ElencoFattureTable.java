@@ -12,6 +12,7 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Action;
 import com.vaadin.event.Action.Handler;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -28,12 +29,14 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 	 */
 	private static final long serialVersionUID = -6369755826586396817L;
 	private BeanFieldGroup<Fattura> beanFieldGroup;
+	private DateField dateField;
 	private Missione missione;
 
-	public ElencoFattureTable(BeanFieldGroup<Fattura> beanFieldGroup, Missione missione) {
+	public ElencoFattureTable(BeanFieldGroup<Fattura> beanFieldGroup,DateField dateField, Missione missione) {
 		super();
 		buildTable();
 		this.beanFieldGroup = beanFieldGroup;
+		this.dateField = dateField;
 		this.missione = missione;
 		addActionHandler(new TransactionsActionHandler());
 
@@ -123,6 +126,7 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 		public void handleAction(final Action action, final Object sender, final Object target) {
 			if (action == seleziona) {
 				beanFieldGroup.setItemDataSource((Fattura) target);
+				dateField.setValue(((Fattura) target).getData().toDate());
 			}
 			if (action == elimina) {
 				missione.getRimborso().getMappaFattura().remove(((Fattura) target).getId());
@@ -136,6 +140,15 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 		public Action[] getActions(final Object target, final Object sender) {
 			return new Action[] { seleziona, elimina };
 		}
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

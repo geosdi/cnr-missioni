@@ -45,6 +45,15 @@ public final class ElencoRimborsoKmTable extends ITable.AbstractTable {
 
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

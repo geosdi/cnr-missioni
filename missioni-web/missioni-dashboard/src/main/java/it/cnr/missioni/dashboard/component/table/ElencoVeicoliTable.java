@@ -23,21 +23,7 @@ public final class ElencoVeicoliTable extends ITable.AbstractTable {
 	public ElencoVeicoliTable() {
 		super();
 		buildTable();
-		addGeneratedColumn("veicoloPrincipale", new ColumnGenerator() {
 
-			@Override
-			public Object generateCell(final Table source, final Object itemId, Object columnId) {
-
-				Veicolo v = (Veicolo) itemId;
-				if (v.isVeicoloPrincipale()) {
-					Label l = new Label();
-					l.setContentMode(ContentMode.HTML);
-					l.setValue(FontAwesome.CHECK.getHtml());
-					return l;
-				}
-				return null;
-			}
-		});
 	}
 
 
@@ -55,12 +41,40 @@ public final class ElencoVeicoliTable extends ITable.AbstractTable {
 			setColumnHeaders("Tipo", "targa", "Carta Circolazione", "Polizza Assicurativa", "Veicolo Principale");
 			setId("targa");
 			Object[] properties = { "tipo", "targa" };
-			boolean[] ordering = { true, false };
+			boolean[] ordering = { false, false };
 			sort(properties, ordering);
 			setId("targa");
 
 		}
 
+	}
+
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		addGeneratedColumn("veicoloPrincipale", new ColumnGenerator() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4545280611752519667L;
+
+			@Override
+			public Object generateCell(final Table source, final Object itemId, Object columnId) {
+
+				Veicolo v = (Veicolo) itemId;
+				if (v.isVeicoloPrincipale()) {
+					Label l = new Label();
+					l.setContentMode(ContentMode.HTML);
+					l.setValue(FontAwesome.CHECK.getHtml());
+					return l;
+				}
+				return null;
+			}
+		});		
 	}
 
 

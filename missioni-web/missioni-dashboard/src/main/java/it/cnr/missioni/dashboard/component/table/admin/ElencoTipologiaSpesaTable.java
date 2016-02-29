@@ -27,21 +27,7 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
 		super();
 		buildTable();
 		
-		addGeneratedColumn("checkMassimale", new ColumnGenerator() {
 
-			@Override
-			public Object generateCell(final Table source, final Object itemId, Object columnId) {
-
-				TipologiaSpesa t = (TipologiaSpesa) itemId;
-				if (t.isCheckMassimale()) {
-					Label l = new Label();
-					l.setContentMode(ContentMode.HTML);
-					l.setValue(FontAwesome.CHECK.getHtml());
-					return l;
-				}
-				return null;
-			}
-		});
 		
 	}
 
@@ -69,6 +55,30 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
 
 		}
 
+	}
+
+
+
+	/**
+	 * 
+	 */
+	@Override
+	public void addGeneratedColumn() {
+		addGeneratedColumn("checkMassimale", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(final Table source, final Object itemId, Object columnId) {
+
+				TipologiaSpesa t = (TipologiaSpesa) itemId;
+				if (t.isCheckMassimale()) {
+					Label l = new Label();
+					l.setContentMode(ContentMode.HTML);
+					l.setValue(FontAwesome.CHECK.getHtml());
+					return l;
+				}
+				return null;
+			}
+		});		
 	}
 
 
