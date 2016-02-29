@@ -72,8 +72,8 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 */
 	@Override
 	public  UpdateRimborsoMessage buildUpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-			String rimborsoID,String stato, PDFBuilder pdfBuilder) {
-		return new UpdateRimborsoMessage(userName, userSurname, userEmail, rimborsoID,stato, pdfBuilder);
+			String rimborsoID,String pagata,String mandatoPagamento, PDFBuilder pdfBuilder) {
+		return new UpdateRimborsoMessage(userName, userSurname, userEmail, rimborsoID,pagata,mandatoPagamento, pdfBuilder);
 	}
 
 }
