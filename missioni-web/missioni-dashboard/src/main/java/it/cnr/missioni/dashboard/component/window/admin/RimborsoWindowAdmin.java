@@ -4,28 +4,22 @@ import org.joda.time.Days;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.tab.rimborso.DatiGeneraliTabLayout;
-import it.cnr.missioni.dashboard.component.tab.rimborso.FatturaTabLayout;
+import it.cnr.missioni.dashboard.component.form.rimborso.DatiGeneraliRimborsoForm;
+import it.cnr.missioni.dashboard.component.form.rimborso.FatturaRimborsoForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
@@ -51,16 +45,20 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 	private Rimborso rimborso;
 	private Missione missione;
 	private boolean enabled;
+	private boolean modifica;
+	private boolean isAdmin;
 	
-	private DatiGeneraliTabLayout datiGeneraliTab;
-	private FatturaTabLayout fatturaTab;
+	private DatiGeneraliRimborsoForm datiGeneraliForm;
+	private FatturaRimborsoForm fatturaForm;
 
-	private RimborsoWindowAdmin(final Missione missione,boolean enabled) {
+	private RimborsoWindowAdmin(final Missione missione,boolean modifica,boolean enabled,boolean isAdmin) {
 		super();
 		this.missione = missione;
 		this.rimborso = missione.getRimborso();
 		this.enabled = enabled;
-
+		this.modifica = modifica;
+		this.isAdmin = isAdmin;
+		
 		addStyleName("profile-window");
 		setId(ID);
 		Responsive.makeResponsive(this);
@@ -72,19 +70,12 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 	}
 
 	private void buildTabs() {
-		detailsWrapper.addComponent(buildRimborsoTab());
-		detailsWrapper.addComponent(buildFatturaTab());
+		buildRimborsoTab();
+		buildFatturaTab();
 	}
 
 
-	private Component buildRimborsoTab() {
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Rimborso");
-		root.setIcon(FontAwesome.MONEY);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-		
+	private void buildRimborsoTab() {
 		
 		int days = 0;
 		
@@ -109,52 +100,28 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 						Type.ERROR_MESSAGE);
 			}
-
-
-				
+		}
+		
+		if(missione.isMissioneEstera())
 			days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(), missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
-						.getDays();
-
-			}
-
-	
+			.getDays();
 		
-		this.datiGeneraliTab = new DatiGeneraliTabLayout(missione.getRimborso(), days, missione.isMezzoProprio(),enabled);
-		root.addComponent(datiGeneraliTab);
-		root.setExpandRatio(datiGeneraliTab, 1);
+		this.datiGeneraliForm = new  DatiGeneraliRimborsoForm(missione, days,isAdmin, enabled,modifica);
+		detailsWrapper.addComponent(buildTab("Generale", FontAwesome.USER, this.datiGeneraliForm ));
 
-
-		HorizontalLayout footer = new HorizontalLayout();
-		root.addComponent(footer);
-		root.setComponentAlignment(footer, Alignment.BOTTOM_RIGHT);
-		return root;
 	}
 
 
 
-	private Component buildFatturaTab() {
+	private void buildFatturaTab() {
 
+		this.fatturaForm =  new FatturaRimborsoForm(missione,isAdmin,enabled,modifica);
+		detailsWrapper.addComponent(buildTab("Fattura", FontAwesome.EURO, this.fatturaForm ));
 
-		VerticalLayout root = new VerticalLayout();
-		
-		fatturaTab = new FatturaTabLayout(this.missione,this.enabled);
-		root.addComponent(fatturaTab);
-
-		root.setCaption("Fattura");
-		root.setIcon(FontAwesome.BARCODE);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-
-		return root;
 	}
 
-	private Component buildFooter() {
-		HorizontalLayout footer = new HorizontalLayout();
-		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
-		footer.setWidth(100.0f, Unit.PERCENTAGE);
+	protected Component buildFooter() {
 
-		Button ok = new Button("OK");
 		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		ok.addClickListener(new ClickListener() {
 			/**
@@ -164,20 +131,11 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-
-				try {
-
-					for (Field<?> f : datiGeneraliTab.getFieldGroup().getFields()) {
-						((AbstractField<?>) f).setValidationVisible(true);
-					}
-					datiGeneraliTab.getFieldGroup().commit();
-
-					BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) datiGeneraliTab.getFieldGroup().getItemDataSource();
-					Rimborso new_rimborso = beanItem.getBean();
-					missione.setRimborso(new_rimborso);
-					DashboardEventBus.post(new UpdateRimborsoAction(missione));
-					close();
-
+				try{
+				Rimborso r = datiGeneraliForm.validate();
+				missione.setRimborso(r);
+				DashboardEventBus.post(new UpdateRimborsoAction(missione));
+				close();
 				} catch (InvalidValueException | CommitException e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
 							Type.ERROR_MESSAGE);
@@ -191,9 +149,9 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final Missione missione,boolean enabled) {
+	public static void open(final Missione missione,boolean modifica,boolean enabled,boolean isAdmin) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new RimborsoWindowAdmin(missione,enabled);
+		Window w = new RimborsoWindowAdmin(missione,modifica,enabled,isAdmin);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

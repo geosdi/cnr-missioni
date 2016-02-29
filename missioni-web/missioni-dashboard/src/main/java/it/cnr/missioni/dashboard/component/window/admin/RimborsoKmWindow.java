@@ -6,6 +6,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -22,6 +23,8 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
+import it.cnr.missioni.dashboard.component.form.qualificaUser.QualificaUserForm;
+import it.cnr.missioni.dashboard.component.form.rimborsoKm.RimborsoKmForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
@@ -39,13 +42,11 @@ public class RimborsoKmWindow extends IWindow.AbstractWindow {
 	private static final long serialVersionUID = 5484936598745173136L;
 
 	public static final String ID = "rimborsoKmwindow";
+	private RimborsoKmForm rimborsoKmForm;
 
-	private final BeanFieldGroup<RimborsoKm> fieldGroup;
-
-	private TextField valueField;
-	private boolean modifica;
 
 	private final RimborsoKm rimborsoKm;
+	private boolean modifica;
 
 	private RimborsoKmWindow(final RimborsoKm rimborsoKm, boolean modifica) {
 		super();
@@ -53,69 +54,39 @@ public class RimborsoKmWindow extends IWindow.AbstractWindow {
 		this.modifica = modifica;
 
 		setId(ID);
-		fieldGroup = new BeanFieldGroup<RimborsoKm>(RimborsoKm.class);
 		build();
-		buildFieldGroup();
-		detailsWrapper.addComponent(buildRimborsoKmTab());
+		detailsWrapper.addComponent(addTab());
 
 		content.addComponent(buildFooter());
 
 	}
 	
-	private void buildFieldGroup(){
-		fieldGroup.setItemDataSource(this.rimborsoKm);
-		fieldGroup.setBuffered(true);
-
-		FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
-		fieldGroup.setFieldFactory(fieldFactory);
-	}
-
-	private Component buildRimborsoKmTab() {
+	private HorizontalLayout addTab() {
+		this.rimborsoKmForm = new RimborsoKmForm(rimborsoKm,true,true,modifica);
 		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Rimborso Km");
+		root.setCaption("Rimborso");
 		root.setIcon(FontAwesome.EURO);
 		root.setWidth(100.0f, Unit.PERCENTAGE);
 		root.setSpacing(true);
 		root.setMargin(true);
-
-		FormLayout details = new FormLayout();
-		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-		root.addComponent(details);
-		root.setExpandRatio(details, 1);
-
-		valueField = (TextField) fieldGroup.buildAndBind("Valore", "value");
-		details.addComponent(valueField);
-		
+		root.addComponent(this.rimborsoKmForm);
 		return root;
 	}
 
-	private void addValidator() {
+	protected Component buildFooter() {
 
-	}
-
-	private Component buildFooter() {
-		HorizontalLayout footer = new HorizontalLayout();
-		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
-		footer.setWidth(100.0f, Unit.PERCENTAGE);
-
-		Button ok = new Button("OK");
 		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		ok.addClickListener(new ClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 4140141100852159590L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 
 				try {
-
-					for (Field<?> f : fieldGroup.getFields()) {
-						((AbstractField<?>) f).setValidationVisible(true);
-					}
-
-					// targaField.validate();
-					fieldGroup.commit();
-
-					BeanItem<RimborsoKm> beanItem = (BeanItem<RimborsoKm>) fieldGroup.getItemDataSource();
-					RimborsoKm rimborsoKm = beanItem.getBean();
-
+					RimborsoKm rimborsoKm = rimborsoKmForm.validate();
 					DashboardEventBus.post(new RimborsoKmAction(rimborsoKm, modifica));
 					close();
 

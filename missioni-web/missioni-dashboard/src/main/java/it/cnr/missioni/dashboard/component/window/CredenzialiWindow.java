@@ -11,7 +11,6 @@ import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -27,11 +26,14 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.RegistrationUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.user.UserStore;
 
 public class CredenzialiWindow extends IWindow.AbstractWindow {
 
@@ -87,6 +89,34 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 		User user = beanItem.getBean();
 
 		usernameField = (TextField) fieldGroup.buildAndBind("Username", "credenziali.username");
+		
+		usernameField.addValidator(new Validator(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -9137656929603215054L;
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				UserStore userStore = null;
+				try{
+				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername(usernameField.getValue());
+				
+				 userStore = ClientConnector.getUser(userSearchBuilder);
+			
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				
+				
+				if (userStore.getTotale() > 0)
+					throw new InvalidValueException(Utility.getMessage("user_already_inserted"));	
+			}
+			
+		});
+		
 		if (!registration)
 			usernameField.setReadOnly(true);
 		passwordField = (PasswordField) fieldGroup.buildAndBind("Password", "credenziali.password",
@@ -119,6 +149,11 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 
 		passwordRepeatField.addBlurListener(new BlurListener() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3773767384576999765L;
+
 			@Override
 			public void blur(BlurEvent event) {
 				try {
@@ -132,13 +167,11 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 
 		return root;
 	}
+	
+	
 
-	private Component buildFooter() {
-		HorizontalLayout footer = new HorizontalLayout();
-		footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
-		footer.setWidth(100.0f, Unit.PERCENTAGE);
+	protected Component buildFooter() {
 
-		Button ok = new Button("OK");
 		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		ok.addClickListener(new ClickListener() {
 			@Override
