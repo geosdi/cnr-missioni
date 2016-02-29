@@ -271,46 +271,40 @@ public class MissioneDAOTest {
 		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 1);
 	}
 
-	
 	@Test
 	public void V_findByMaxNumeroOrdineMissione() throws Exception {
 
 		Long max = this.missioneDAO.getMaxNumeroOrdineRimborso();
 		Assert.assertTrue("FIND ALL MISSIONI", max == 2);
 	}
-	
+
 	@Test
 	public void V_findNumeroRimboroUser() throws Exception {
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser("01")
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01")
 				.withFieldExist("missione.rimborso");
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 1);
 	}
-	
+
 	@Test
 	public void V_findNumeroRimboroUser2() throws Exception {
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser("02")
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("02")
 				.withFieldExist("missione.rimborso");
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 0);
 	}
-	
+
 	@Test
 	public void V_findMissioneNoRimborso() throws Exception {
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withFieldNotExist("missione.rimborso")
-				.withIdUser("01")
-				.withStato(StatoEnum.INSERITA.name());
+				.withFieldNotExist("missione.rimborso").withIdUser("01").withStato(StatoEnum.INSERITA.name());
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 0);
 	}
-	
-	
+
 	@Test
 	public void V_findRimborsoExsist() throws Exception {
 
@@ -319,21 +313,21 @@ public class MissioneDAOTest {
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 1);
 	}
-	
+
 	@Test
 	public void V_getStatistiche() throws Exception {
 		StatisticheMissioni statisticheMissioni = this.missioneDAO.getStatisticheMissioni();
-		Assert.assertTrue("FIND STATISTICHE", statisticheMissioni.getMappaStatistiche().get(StatoEnum.PRESA_IN_CARICO.getStato()) == 2);
+		Assert.assertTrue("FIND STATISTICHE",
+				statisticheMissioni.getMappaStatistiche().get(StatoEnum.PRESA_IN_CARICO.getStato()) == 2);
 	}
-	
+
 	@Test
 	public void V_getMaxNumOrdineMissione() throws Exception {
 		long n = this.missioneDAO.getMaxNumeroOrdineRimborso();
-		 logger.debug("############################MAX_NUM_ORDINE_MISSIONE : {}\n",
-		 n);
+		logger.debug("############################MAX_NUM_ORDINE_MISSIONE : {}\n", n);
 
 	}
-	
+
 	// @Test
 	// public void tearDown() throws Exception {
 	// this.missioneDocIndexCreator.deleteIndex();
@@ -351,11 +345,12 @@ public class MissioneDAOTest {
 		missione.setGAE("GAE");
 		missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
 		missione.setMezzoProprio(true);
+		missione.setTipoVeicolo("Veicolo Proprio");
 		missione.setResponsabileGruppo("01");
 		missione.setShortResponsabileGruppo("Salvia Vito");
 		missione.setIdVeicolo("AA111BB");
 		missione.setShortDescriptionVeicolo("Ford Fiesta");
-		missione.setGeoPoint(new GeoPoint(41.9027835,12.4963655));
+		missione.setGeoPoint(new GeoPoint(41.9027835, 12.4963655));
 		missione.setDistanza("353 Km");
 		DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
 		dati.setAnticipazioniMonetarie(true);
@@ -411,8 +406,10 @@ public class MissioneDAOTest {
 		missione.setShortResponsabileGruppo("Salvia Vito");
 		missione.setStato(StatoEnum.PRESA_IN_CARICO);
 		missione.setDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
-		missione.setGeoPoint(new GeoPoint(45.4654219,9.1859243));
+		missione.setGeoPoint(new GeoPoint(45.4654219, 9.1859243));
 		missione.setDistanza("901 Km");
+		missione.setTipoVeicolo("Veicolo Proprio");
+		missione.setMezzoProprio(true);
 		listaMissioni.add(missione);
 
 		missione = new Missione();
@@ -426,8 +423,10 @@ public class MissioneDAOTest {
 		missione.setShortResponsabileGruppo("Salvia Vito");
 		missione.setStato(StatoEnum.APPROVATA);
 		missione.setDataInserimento(new DateTime(2015, 11, 23, 0, 0, DateTimeZone.UTC));
-		missione.setGeoPoint(new GeoPoint(45.4654219,9.1859243));
+		missione.setGeoPoint(new GeoPoint(45.4654219, 9.1859243));
 		missione.setDistanza("901 Km");
+		missione.setTipoVeicolo("Veicolo Proprio");
+		missione.setMezzoProprio(true);
 		listaMissioni.add(missione);
 	}
 
