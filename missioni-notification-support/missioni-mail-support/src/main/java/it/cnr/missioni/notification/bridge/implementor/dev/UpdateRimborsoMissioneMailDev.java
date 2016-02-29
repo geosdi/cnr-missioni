@@ -27,13 +27,16 @@ public class UpdateRimborsoMissioneMailDev extends MissioniMailDev {
         String userName = (String) message.getMessageParameters().get("userName");
         String userSurname = (String) message.getMessageParameters().get("userSurname");
         String rimborsoID = (String) message.getMessageParameters().get("rimborsoID");
-        String stato = (String) message.getMessageParameters().get("stato");
+        String pagata = (String) message.getMessageParameters().get("pagata");
+        String mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
+
 
         Map model = new HashMap();
         model.put("userName", userName);
         model.put("userSurname", userSurname);
         model.put("rimborsoID", rimborsoID);
-        model.put("stato", stato);
+        model.put("stato", pagata);
+        model.put("mandatoPagamento", mandatoPagamento);
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 "template/updateRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
     }

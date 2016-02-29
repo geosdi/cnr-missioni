@@ -43,7 +43,9 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
             String userSurname = (String) message.getMessageParameters().get("userSurname");
             String userEmail = (String) message.getMessageParameters().get("userEmail");
             String rimborsoID = (String) message.getMessageParameters().get("rimborsoID");
-            String stato = (String) message.getMessageParameters().get("stato");
+            String pagata = (String) message.getMessageParameters().get("pagata");
+            String mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
+
             PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
 
             @Override
@@ -54,7 +56,9 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
                 model.put("userName", userName);
                 model.put("userSurname", userSurname);
                 model.put("rimborsoID", rimborsoID);
-                model.put("stato", stato);
+                model.put("pagata", pagata);
+                model.put("mandatoPagamento", mandatoPagamento);
+
 
                 String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                         "template/updateRimborsoMissioneMailNotification.html.vm", "UTF-8", model);

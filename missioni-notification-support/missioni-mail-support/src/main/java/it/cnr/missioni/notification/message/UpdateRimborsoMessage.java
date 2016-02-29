@@ -15,13 +15,16 @@ public class UpdateRimborsoMessage extends CNRMissioniMessage {
 
     private final PDFBuilder rimborsoPDFBuilder;
     private final String rimborsoID;
-    private String stato;
+    private String pagata;
+    private String mandatoPagamento;
+
 
     public UpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-             String theRimborsoID, String theStato, PDFBuilder theRimborsoPDFBuilder) {
+             String theRimborsoID, String thePagata,String theMandatoPagamento, PDFBuilder theRimborsoPDFBuilder) {
         super(userName, userSurname, userEmail);
         this.rimborsoID = theRimborsoID;
-        this.stato = theStato;
+        this.pagata = thePagata;
+        this.mandatoPagamento = theMandatoPagamento;
         this.rimborsoPDFBuilder = theRimborsoPDFBuilder;
     }
 
@@ -39,7 +42,8 @@ public class UpdateRimborsoMessage extends CNRMissioniMessage {
     @Override
     protected void injectParameters(Map<String, Object> map) {
         map.put("rimborsoID", this.rimborsoID);
-        map.put("stato", this.stato);
+        map.put("pagata", this.pagata);
+        map.put("mandatoPagamento", this.mandatoPagamento);
         map.put("rimborsoPDFBuilder", this.rimborsoPDFBuilder);
     }
 }
