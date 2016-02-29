@@ -183,7 +183,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		String tipoVeicolo = missione.isMezzoProprio() ? "Veicolo Proprio" : "Veicolo CNR";
 
 		PdfPCell cellDisposizioni2 = new PdfPCell(new Paragraph(tipoVeicolo + " - "
-				+ (missione.getMotivazioniMezzoProprio().isEmpty() ? missione.getMotivazioniMezzoProprio() : "" ),
+				+ (missione.getMotivazioniMezzoProprio() != null ? missione.getMotivazioniMezzoProprio() : "" ),
 				fontNormal));
 		// cellOggetto2.setNoWrap(false);
 		tableLocalita.addCell(cellDisposizioni2);
