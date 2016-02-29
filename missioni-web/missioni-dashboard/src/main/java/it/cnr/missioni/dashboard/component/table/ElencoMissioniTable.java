@@ -12,7 +12,6 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Table;
 
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
