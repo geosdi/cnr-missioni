@@ -56,8 +56,8 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 		root.addComponent(details);
 //		root.setExpandRatio(details, 1);
 
-		String tipoMissione = missione.isMissioneEstera() ? "Italia" : "Estera";
-		String tipoVeicolo = missione.isMezzoProprio() ? "Veicolo Proprio" : "Veicolo CNR";
+		String tipoMissione = missione.isMissioneEstera() ? "Estera" : "Italia";
+		String tipoVeicolo = missione.getTipoVeicolo();
 
 		
 
@@ -104,6 +104,11 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 		ConfirmDialog.show(UI.getCurrent(), "Conferma",
 				"La missione inserita non potrà essere più modificata. Verrà inviata una mail all'amministratore con i dati della missione inserita.",
 				"Ok", "No", new ConfirmDialog.Listener() {
+
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = -7447338746066450343L;
 
 					public void onClose(ConfirmDialog dialog) {
 						if (dialog.isConfirmed()) {
