@@ -18,9 +18,7 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 
