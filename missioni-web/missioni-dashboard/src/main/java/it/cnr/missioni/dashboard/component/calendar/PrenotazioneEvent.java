@@ -23,11 +23,11 @@ public class PrenotazioneEvent extends BasicEvent implements CalendarEditableEve
 	private String descrizione;
 	@NotBlank
 	private String veicolo;
-	
 	@NotNull
 	private Date end;
 	@NotNull
 	private Date start;
+	private boolean allDay;
 	
 	/**
 	 * @return the id
@@ -112,6 +112,20 @@ public class PrenotazioneEvent extends BasicEvent implements CalendarEditableEve
 	 */
 	public void setStart(Date start) {
 		this.start = start;
+	}
+
+	/**
+	 * @return the allDay
+	 */
+	public boolean isAllDay() {
+		return allDay;
+	}
+
+	/**
+	 * @param allDay 
+	 */
+	public void setAllDay(boolean allDay) {
+		this.allDay = allDay;
 	}
 
 	/**
