@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -33,6 +34,7 @@ public class Missione implements Document {
 	private String responsabileGruppo;
 	private String shortResponsabileGruppo;
 	private String motivazioniMezzoProprio;
+	@NotNull
     private StatoEnum stato;
     private String fondo;
     private String GAE;
@@ -48,6 +50,8 @@ public class Missione implements Document {
     private GeoPoint geoPoint;
     private String  idNazione;
     private String shortDescriptionNazione;
+    
+    private String tipoVeicolo = "Veicolo CNR";
     @Valid
     private DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
     @Valid
@@ -391,6 +395,22 @@ public class Missione implements Document {
 
 
 	/**
+	 * @return the tipoVeicolo
+	 */
+	public String getTipoVeicolo() {
+		return tipoVeicolo;
+	}
+
+
+	/**
+	 * @param tipoVeicolo 
+	 */
+	public void setTipoVeicolo(String tipoVeicolo) {
+		this.tipoVeicolo = tipoVeicolo;
+	}
+
+
+	/**
 	 * @return the datiPeriodoMissione
 	 */
 	public DatiPeriodoMissione getDatiPeriodoMissione() {
@@ -475,9 +495,9 @@ public class Missione implements Document {
 				+ idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo + ", dataInserimento="
 				+ dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio=" + mezzoProprio
 				+ ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
-				+ ", shortDescriptionNazione=" + shortDescriptionNazione + ", datiPeriodoMissione="
-				+ datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti="
-				+ datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
+				+ ", shortDescriptionNazione=" + shortDescriptionNazione + ", tipoVeicolo=" + tipoVeicolo
+				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
+				+ ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
 	}
 
 
