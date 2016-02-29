@@ -1,15 +1,8 @@
 package it.cnr.missioni.dashboard.event;
 
-import java.util.List;
-
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
-import it.cnr.missioni.model.user.Veicolo;
-import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
-import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
-import it.cnr.missioni.rest.api.response.user.UserStore;
-import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
 /*
  * Event bus events used in Dashboard are listed here as inner classes.
@@ -44,19 +37,7 @@ public abstract class DashboardEvent {
 	public static class NotificationsCountUpdatedEvent {
 	}
 
-	// public static final class ReportsCountUpdatedEvent {
-	// private final int count;
-	//
-	// public ReportsCountUpdatedEvent(final int count) {
-	// this.count = count;
-	// }
-	//
-	// public int getCount() {
-	// return count;
-	// }
-	//
-	// }
-	//
+
 	public static final class PostViewChangeEvent {
 		private final DashboardViewType view;
 
@@ -263,6 +244,40 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableMassimaleUpdatedEvent {
 
+	}
+	
+	/**
+	 * 
+	 * Aggiorna la tabella massimale dopo un inserimento o un update
+	 * 
+	 * @author Salvia Vito
+	 *
+	 */
+	public static class AggiornaDatiMissioneEsteraEvent {
+
+		private boolean status;
+
+		/**
+		 * @param status
+		 */
+		public AggiornaDatiMissioneEsteraEvent(boolean status) {
+			this.status = status;
+		}
+
+		/**
+		 * @return the status
+		 */
+		public boolean isStatus() {
+			return status;
+		}
+
+		/**
+		 * @param status 
+		 */
+		public void setStatus(boolean status) {
+			this.status = status;
+		}
+		
 	}
 	
 }
