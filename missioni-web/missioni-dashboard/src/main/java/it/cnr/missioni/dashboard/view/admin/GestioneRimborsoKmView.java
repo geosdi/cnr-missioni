@@ -77,7 +77,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedRimborsoKm = (RimborsoKm) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -133,15 +133,15 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 
 		layout.addComponents(buttonNew,buttonModifica);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonModifica.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonModifica.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -192,6 +192,24 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 	@Subscribe
 	public void aggiornaTableRimborsoKm(final TableRimborsoKmUpdatedEvent event) {
 		elencoRimborsoKmTable.aggiornaTable(event.getRimborsoKmStore());
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonModifica.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonModifica.setEnabled(false);
+		
 	}
 
 }

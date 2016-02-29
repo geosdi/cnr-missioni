@@ -72,7 +72,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedVeicolo = (Veicolo) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -128,15 +128,15 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 		layout.addComponents(buttonNew,buttonModifica);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonModifica.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonModifica.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -218,6 +218,24 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonModifica.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonModifica.setEnabled(false);
+		
 	}
 
 }

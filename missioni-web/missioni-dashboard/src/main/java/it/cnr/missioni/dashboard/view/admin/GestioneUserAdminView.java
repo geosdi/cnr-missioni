@@ -23,7 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoUserTable;
-import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
+import it.cnr.missioni.dashboard.component.window.UserWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableUserUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
@@ -51,7 +51,6 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	private TextField oggettoMissioneField;
 
 	private VerticalLayout layoutTable;
-	private TextField multiMatchField;
 	private VerticalLayout layoutForm;
 	private User selectedUser;
 
@@ -84,7 +83,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedUser = (User) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -308,7 +307,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				UserCompletedRegistrationWindow.open(selectedUser, true);
+				UserWindow.open(selectedUser, true);
 
 			}
 
@@ -316,15 +315,15 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 
 		layout.addComponents(buttonDettagli);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonDettagli.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonDettagli.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -388,6 +387,24 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonDettagli.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonDettagli.setEnabled(false);
+		
 	}
 
 }

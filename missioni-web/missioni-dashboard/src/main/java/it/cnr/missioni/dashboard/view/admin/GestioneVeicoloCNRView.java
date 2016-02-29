@@ -78,7 +78,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedVeicoloCNR = (VeicoloCNR) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -132,15 +132,15 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 		layout.addComponents(buttonNew,buttonModifica);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonModifica.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonModifica.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -217,6 +217,24 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonModifica.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonModifica.setEnabled(false);
+		
 	}
 
 }

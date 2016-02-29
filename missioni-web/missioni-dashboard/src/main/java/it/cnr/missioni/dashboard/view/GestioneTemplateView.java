@@ -159,7 +159,12 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
 	protected abstract void addListenerPagination();
 
-	protected abstract void enableDisableButtons(boolean enabled);
+//	protected abstract void enableDisableButtons(boolean enabled);
+	
+	protected abstract void enableButtons( );
+	
+	protected abstract void disableButtons( );
+
 
 	protected Component buildFilter() {
 		multiMatchField = new TextField();

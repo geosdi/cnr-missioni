@@ -76,7 +76,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedNazione = (Nazione) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -132,15 +132,15 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 		layout.addComponents(buttonNew,buttonModifica);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonModifica.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonModifica.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -218,6 +218,24 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonModifica.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonModifica.setEnabled(false);
+		
 	}
 
 }

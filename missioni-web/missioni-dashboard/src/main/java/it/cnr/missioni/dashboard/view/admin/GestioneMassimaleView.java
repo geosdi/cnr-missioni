@@ -78,7 +78,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedMassimale = (Massimale) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -130,17 +130,17 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 		});
 
-		layout.addComponents(buttonModifica);
+		layout.addComponents(buttonNew,buttonModifica);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonModifica.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonModifica.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -208,7 +208,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	 * 
 	 */
 	@Subscribe
-	public void aggiornaTableNazione(final TableMassimaleUpdatedEvent event) {
+	public void aggiornaTableMassimale(final TableMassimaleUpdatedEvent event) {
 
 		try {
 			this.massimaleStore = ClientConnector.getMassimale(this.massimaleSearchBuilder);
@@ -219,6 +219,24 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonModifica.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonModifica.setEnabled(false);
+		
 	}
 
 }

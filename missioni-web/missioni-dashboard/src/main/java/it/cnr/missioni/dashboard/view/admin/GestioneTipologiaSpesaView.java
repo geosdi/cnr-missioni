@@ -79,7 +79,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedTipologiaSpesa = (TipologiaSpesa) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -135,15 +135,15 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 
 		layout.addComponents(buttonNew,buttonModifica);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonModifica.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonModifica.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -222,6 +222,24 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonModifica.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonModifica.setEnabled(false);
+		
 	}
 
 }

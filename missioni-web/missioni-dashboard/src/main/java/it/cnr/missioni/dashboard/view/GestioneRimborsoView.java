@@ -30,7 +30,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoRimborsiTable;
-import it.cnr.missioni.dashboard.component.window.DettagliMissioneWindow;
+import it.cnr.missioni.dashboard.component.window.admin.MissioneWindowAdmin;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsiUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
@@ -64,9 +64,9 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 	private VerticalLayout layoutTable;
 	private VerticalLayout layoutForm;
-	private Missione selectedMissione;
+	protected Missione selectedMissione;
 
-	private MissioneSearchBuilder missioneSearchBuilder;
+	protected MissioneSearchBuilder missioneSearchBuilder;
 
 	private MissioniStore missioniStore;
 
@@ -99,7 +99,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedMissione = (Missione) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -277,20 +277,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		layout.setSpacing(true);
 
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso", FontAwesome.EDIT);
-		buttonDettagli.addClickListener(new Button.ClickListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -8783796549904544814L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				RimborsoWindowAdmin.open(selectedMissione,false);
-
-			}
-
-		});
+		buildButtonDettagli();
 
 		buttonMissione = buildButton("Missone", "Visualizza i dati della Missione", FontAwesome.SUITCASE);
 
@@ -303,7 +290,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				DettagliMissioneWindow.open(selectedMissione);
+				MissioneWindowAdmin.open(selectedMissione,false,false);
 
 			}
 
@@ -332,10 +319,27 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 		layout.addComponents(buttonDettagli, buttonMissione, buttonPDF);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
+	}
+	
+	protected void buildButtonDettagli(){
+		buttonDettagli.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8783796549904544814L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				RimborsoWindowAdmin.open(selectedMissione,true,false,false);
+
+			}
+
+		});
 	}
 
 	private StreamResource getResource() {
@@ -365,13 +369,13 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		return null;
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		// this.buttonMail.setEnabled(enabled);
-		this.buttonDettagli.setEnabled(enabled);
-		this.buttonPDF.setEnabled(enabled);
-		this.buttonMissione.setEnabled(enabled);
-
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		// this.buttonMail.setEnabled(enabled);
+//		this.buttonDettagli.setEnabled(enabled);
+//		this.buttonPDF.setEnabled(enabled);
+//		this.buttonMissione.setEnabled(enabled);
+//
+//	}
 
 	/**
 	 * 
@@ -437,6 +441,26 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonDettagli.setEnabled(true);
+		this.buttonPDF.setEnabled(true);
+		this.buttonMissione.setEnabled(true);		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonDettagli.setEnabled(false);
+		this.buttonPDF.setEnabled(false);
+		this.buttonMissione.setEnabled(false);		
 	}
 
 }

@@ -82,7 +82,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedQualificaUser = (QualificaUser) itemClickEvent.getItemId();
-				enableDisableButtons(true);
+				enableButtons();
 			}
 		});
 
@@ -138,15 +138,15 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 		layout.addComponents(buttonNew,buttonModifica);
 
-		enableDisableButtons(false);
+		disableButtons();
 
 		return layout;
 
 	}
 
-	protected void enableDisableButtons(boolean enabled) {
-		this.buttonModifica.setEnabled(enabled);
-	}
+//	protected void enableDisableButtons(boolean enabled) {
+//		this.buttonModifica.setEnabled(enabled);
+//	}
 
 	/**
 	 * 
@@ -225,6 +225,24 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void enableButtons() {
+		this.buttonModifica.setEnabled(true);
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void disableButtons() {
+		this.buttonModifica.setEnabled(false);
+		
 	}
 
 }
