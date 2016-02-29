@@ -19,7 +19,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.component.window.CredenzialiWindow;
-import it.cnr.missioni.dashboard.component.window.UserCompletedRegistrationWindow;
+import it.cnr.missioni.dashboard.component.window.UserWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.component.wizard.user.WizardUser;
 import it.cnr.missioni.dashboard.event.DashboardEvent.MenuUpdateEvent;
@@ -108,7 +108,7 @@ public final class DashboardMenu extends CustomComponent {
 
 				@Override
 				public void menuSelected(final MenuItem selectedItem) {
-					UserCompletedRegistrationWindow.open(user, false);
+					UserWindow.open(user, false);
 				}
 			});
 
@@ -174,6 +174,8 @@ public final class DashboardMenu extends CustomComponent {
 			Component menuItemComponent = new ValoMenuItemButton(DashboardViewType.HOME_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
 			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_MISSIONE_ADMIN);
+			menuItemsLayout.addComponent(menuItemComponent);
+			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_RIMBORSO_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
 			menuItemComponent = new ValoMenuItemButton(DashboardViewType.GESTIONE_USER_ADMIN);
 			menuItemsLayout.addComponent(menuItemComponent);
