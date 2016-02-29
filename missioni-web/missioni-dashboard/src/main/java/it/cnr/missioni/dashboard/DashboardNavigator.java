@@ -32,6 +32,7 @@ public class DashboardNavigator extends Navigator {
         	ERROR_VIEW = DashboardViewType.HOME_ADMIN;
         else
         	ERROR_VIEW = DashboardViewType.HOME;
+        
         String host = getUI().getPage().getLocation().getHost();
         if (TRACKER_ID != null && host.endsWith("demo.vaadin.com")) {
             initGATracker(TRACKER_ID);
