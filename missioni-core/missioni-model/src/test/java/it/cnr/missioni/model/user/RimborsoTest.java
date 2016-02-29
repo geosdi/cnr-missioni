@@ -46,6 +46,7 @@ public class RimborsoTest {
 		Rimborso rimborso = new Rimborso();
 		rimborso.setAnticipazionePagamento(new Double(300));
 		rimborso.setDataRimborso(new DateTime());
+		rimborso.setMandatoPagamento("01");
 		Set<ConstraintViolation<Rimborso>> constraintViolations = validator.validate(rimborso);
 		assertEquals(0, constraintViolations.size());
 	}

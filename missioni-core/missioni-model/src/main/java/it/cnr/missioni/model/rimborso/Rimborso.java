@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
@@ -22,6 +23,8 @@ public class Rimborso implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8658916823848446391L;
+	@NotNull
+	private String mandatoPagamento;
 	private Long numeroOrdine;
 	private DateTime dataRimborso;
 	private DateTime dateLastModified;
@@ -29,14 +32,28 @@ public class Rimborso implements Serializable {
 	private Double totaleTAM = 0.0;
 	private String avvisoPagamento;
 	@Min(value = 0)
-	private double totKm;
-	private double rimborsoKm = 0.0;
+	private Double totKm;
+	private Double rimborsoKm = 0.0;
 	@Min(value = 0)
 	private Double anticipazionePagamento;
-	private double totaleDovuto;
+	private Double totaleDovuto;
 	private boolean pagata;
 	@XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
 	private Map<String, Fattura> mappaFattura = new HashMap<String, Fattura>();
+
+	/**
+	 * @return the mandatoPagamento
+	 */
+	public String getMandatoPagamento() {
+		return mandatoPagamento;
+	}
+
+	/**
+	 * @param mandatoPagamento 
+	 */
+	public void setMandatoPagamento(String mandatoPagamento) {
+		this.mandatoPagamento = mandatoPagamento;
+	}
 
 	/**
 	 * @return the numeroOrdine
@@ -129,28 +146,28 @@ public class Rimborso implements Serializable {
 	/**
 	 * @return the totKm
 	 */
-	public double getTotKm() {
+	public Double getTotKm() {
 		return totKm;
 	}
 
 	/**
 	 * @param totKm 
 	 */
-	public void setTotKm(double totKm) {
+	public void setTotKm(Double totKm) {
 		this.totKm = totKm;
 	}
 
 	/**
 	 * @return the rimborsoKm
 	 */
-	public double getRimborsoKm() {
+	public Double getRimborsoKm() {
 		return rimborsoKm;
 	}
 
 	/**
 	 * @param rimborsoKm 
 	 */
-	public void setRimborsoKm(double rimborsoKm) {
+	public void setRimborsoKm(Double rimborsoKm) {
 		this.rimborsoKm = rimborsoKm;
 	}
 
@@ -171,14 +188,14 @@ public class Rimborso implements Serializable {
 	/**
 	 * @return the totaleDovuto
 	 */
-	public double getTotaleDovuto() {
+	public Double getTotaleDovuto() {
 		return totaleDovuto;
 	}
 
 	/**
 	 * @param totaleDovuto 
 	 */
-	public void setTotaleDovuto(double totaleDovuto) {
+	public void setTotaleDovuto(Double totaleDovuto) {
 		this.totaleDovuto = totaleDovuto;
 	}
 
@@ -241,11 +258,11 @@ public class Rimborso implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Rimborso [numeroOrdine=" + numeroOrdine + ", dataRimborso=" + dataRimborso + ", dateLastModified="
-				+ dateLastModified + ", totale=" + totale + ", totaleTAM=" + totaleTAM + ", avvisoPagamento="
-				+ avvisoPagamento + ", totKm=" + totKm + ", rimborsoKm=" + rimborsoKm + ", anticipazionePagamento="
-				+ anticipazionePagamento + ", totaleDovuto=" + totaleDovuto + ", pagata=" + pagata + ", mappaFattura="
-				+ mappaFattura + "]";
+		return "Rimborso [mandatoPagamento=" + mandatoPagamento + ", numeroOrdine=" + numeroOrdine + ", dataRimborso="
+				+ dataRimborso + ", dateLastModified=" + dateLastModified + ", totale=" + totale + ", totaleTAM="
+				+ totaleTAM + ", avvisoPagamento=" + avvisoPagamento + ", totKm=" + totKm + ", rimborsoKm=" + rimborsoKm
+				+ ", anticipazionePagamento=" + anticipazionePagamento + ", totaleDovuto=" + totaleDovuto + ", pagata="
+				+ pagata + ", mappaFattura=" + mappaFattura + "]";
 	}
 
 }
