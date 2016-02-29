@@ -47,7 +47,7 @@ import it.cnr.missioni.model.user.User;
 @Theme("dashboard")
 @Widgetset("it.cnr.missioni.dashboard.DashboardWidgetSet")
 @Title("Missioni Dashboard")
-public final class DashboardUI extends UI  {
+public final class DashboardUI extends UI {
 
 	/**
 	 * 
@@ -60,7 +60,7 @@ public final class DashboardUI extends UI  {
 	 * actually accessed.
 	 */
 	private final DashboardEventBus dashboardEventbus = new DashboardEventBus();
-	private  INotificationProvider notificationProvider = new NotificationProvider();
+	private INotificationProvider notificationProvider = new NotificationProvider();
 
 	@Override
 	protected void init(final VaadinRequest request) {
@@ -88,17 +88,13 @@ public final class DashboardUI extends UI  {
 	 * Otherwise login view is shown.
 	 */
 	private void updateContent() {
-
-		// if (user != null && "admin".equals(user.getRole())) {
 		if (getCurrentUser() != null) {
-		
+
 			// Authenticated user
 			setContent(new MainView());
 			removeStyleName("loginview");
 			getNavigator().navigateTo(getNavigator().getState());
 			notificationProvider.check();
-
-			
 
 		} else {
 			setContent(new LoginView());
@@ -109,94 +105,92 @@ public final class DashboardUI extends UI  {
 	@Subscribe
 	public void userLoginRequested(final LoginAction loginAction) throws InterruptedException {
 
-		if (loginAction.doAction()) {			
+		if (loginAction.doAction()) {
 			updateContent();
 		}
 
 	}
-	
-	
 
 	@Subscribe
 	public void userRegistrationRequested(final RegistrationUserAction registrationUserAction) {
 		registrationUserAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void userUpdateUserByAdminRequested(final UpdateUserByAdminAction updateUserByAdminAction) {
 		updateUserByAdminAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void userUpdateUserRequested(final UpdateUserAction updateUserAction) {
 		updateUserAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void userUpdateUserRequested(final UpdateUserResponsabileGruppoAction updateUserResponsabileGruppoAction) {
 		updateUserResponsabileGruppoAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void veicoloRequested(final VeicoloAction veicoloAction) {
 		veicoloAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void missioneRequested(final MissioneAction missioneAction) {
 		missioneAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void rimborsoRequested(final RimborsoAction rimborsoAction) {
 		rimborsoAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void updateRimborsoRequested(final UpdateRimborsoAction updateRimborsoAction) {
 		updateRimborsoAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void prenotazioneRequested(final AddUpdatePrenotazioneAction prenotazioneAction) {
 		prenotazioneAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void prenotazioneRequested(final DeletePrenotazioneAction deleteAction) {
 		deleteAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void veicoloCNRRequested(final VeicoloCNRAction veicoloCNRAction) {
 		veicoloCNRAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void qualificaUserRequested(final QualificaUserAction qualificaUserAction) {
 		qualificaUserAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void nazioneRequested(final NazioneAction nazioneAction) {
 		nazioneAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void tipologiaSpesaRequested(final TipologiaSpesaAction tipologiaSpesaAction) {
 		tipologiaSpesaAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void rimborsoKmRequested(final RimborsoKmAction rimborsoAction) {
 		rimborsoAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void massimaleRequested(final MassimaleAction massimaleAction) {
 		massimaleAction.doAction();
 	}
-	
+
 	@Subscribe
 	public void userLoggedOut(final UserLoggedOutEvent event) {
 		// When the user logs out, current VaadinSession gets closed and the
@@ -216,19 +210,17 @@ public final class DashboardUI extends UI  {
 	public static DashboardEventBus getDashboardEventbus() {
 		return ((DashboardUI) getCurrent()).dashboardEventbus;
 	}
-	
-    /**
-     * @return An instance for accessing the  services layer.
-     */
-    public static INotificationProvider getDataProvider() { 	
-        return ((DashboardUI) getCurrent()).notificationProvider;
-    }
-    
-    
 
-	//Ritorna l'utente che si è loggato al sistema
-	public static User getCurrentUser(){
+	/**
+	 * @return An instance for accessing the services layer.
+	 */
+	public static INotificationProvider getDataProvider() {
+		return ((DashboardUI) getCurrent()).notificationProvider;
+	}
+
+	// Ritorna l'utente che si è loggato al sistema
+	public static User getCurrentUser() {
 		return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
 	}
-	
+
 }
