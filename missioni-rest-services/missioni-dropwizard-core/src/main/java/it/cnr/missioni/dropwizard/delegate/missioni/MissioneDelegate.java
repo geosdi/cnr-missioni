@@ -1,15 +1,35 @@
 package it.cnr.missioni.dropwizard.delegate.missioni;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
+import javax.annotation.Resource;
+import javax.ws.rs.core.StreamingOutput;
+
+import org.geosdi.geoplatform.exception.IllegalParameterFault;
+import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
+import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
+import org.geosdi.geoplatform.support.google.spring.services.distance.GPDistanceMatrixService;
+import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import com.google.maps.model.*;
+import com.google.maps.model.DistanceMatrix;
+import com.google.maps.model.DistanceMatrixElement;
+import com.google.maps.model.DistanceMatrixElementStatus;
+import com.google.maps.model.DistanceMatrixRow;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.TravelMode;
+
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -27,25 +47,6 @@ import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.VeicoloMissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
-import it.cnr.missioni.rest.api.response.user.UserStore;
-
-import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
-import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
-import org.geosdi.geoplatform.support.google.spring.services.distance.GPDistanceMatrixService;
-import org.geosdi.geoplatform.support.google.spring.services.distance.Unit;
-import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Locale;
-
-import javax.annotation.Resource;
-import javax.ws.rs.core.StreamingOutput;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -160,7 +161,7 @@ class MissioneDelegate implements IMissioneDelegate {
 
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-				missione.getRimborso().getNumeroOrdine().toString(), missione.getStato().getStato(),
+				missione.getRimborso().getNumeroOrdine().toString(), missione.getRimborso().isPagata() ? "Si": "No",missione.getRimborso().getMandatoPagamento()!= null ? missione.getRimborso().getMandatoPagamento() : "",
 				RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
 
 		return Boolean.TRUE;
