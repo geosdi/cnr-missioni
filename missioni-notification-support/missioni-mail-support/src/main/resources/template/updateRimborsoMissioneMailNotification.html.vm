@@ -6,7 +6,10 @@
            &egrave; stato modificato.
         </p>
          <p>
-           Stato missione : ${stato}.
+           Pagata : ${pagata}.
+         </p>
+         <p>
+           Mandato di Pagamento : ${mandatoPagamento}.
          </p>
          <p>
            In allegato il pdf che riepiloga i dati inseriti.
