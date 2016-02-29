@@ -18,6 +18,14 @@ public enum StatoEnum {
 	StatoEnum(String stato) {
 		this.stato = stato;
 	}
+	
+	public static StatoEnum getStatoE(String value){
+		for(StatoEnum s : StatoEnum.values()){
+			if(s.name().equals(value))
+				return s;
+		}
+		return null;
+	}
 
 	public static String getStatoEnum(String name) {
 		return mappa.get(name);
