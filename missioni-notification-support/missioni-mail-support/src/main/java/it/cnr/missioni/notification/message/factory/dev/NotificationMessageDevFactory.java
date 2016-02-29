@@ -95,8 +95,8 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 	 */
 	@Override
 	public UpdateRimborsoMessage buildUpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-			String rimborsoID, String pagata,String mandatoPagamento, PDFBuilder pdfBuilder) {
-		return new UpdateRimborsoMessage(userName, userSurname, userEmail, rimborsoID, pagata,mandatoPagamento, pdfBuilder) {
+			String rimborsoID, String pagata,String avvisoPagamento, PDFBuilder pdfBuilder) {
+		return new UpdateRimborsoMessage(userName, userSurname, userEmail, rimborsoID, pagata,avvisoPagamento, pdfBuilder) {
 
 			@Override
 			public MissioniMailImplementor.NotificationMessageType getNotificationMessageType() {

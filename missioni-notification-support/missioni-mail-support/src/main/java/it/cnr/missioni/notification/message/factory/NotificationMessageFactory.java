@@ -56,5 +56,5 @@ public interface NotificationMessageFactory {
 	 * @return
 	 */
 	UpdateRimborsoMessage buildUpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-			String rimborsoID, String pagata,String mandatoPagamento, PDFBuilder pdfBuilder);
+			String rimborsoID, String pagata,String avvisoPagamento, PDFBuilder pdfBuilder);
 }
