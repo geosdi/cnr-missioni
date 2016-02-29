@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Salvia Vito
@@ -21,7 +22,7 @@ public class Nazione implements Document {
 	 */
 	private static final long serialVersionUID = 4941402788908984171L;
 	private String id;
-	@NotNull
+	@NotBlank
 	private String value;
 	@NotNull
 	private AreaGeograficaEnum areaGeografica;
