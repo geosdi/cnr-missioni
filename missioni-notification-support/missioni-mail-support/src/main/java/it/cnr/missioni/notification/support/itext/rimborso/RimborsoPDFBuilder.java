@@ -42,10 +42,11 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         String dataFine = missione.getDatiPeriodoMissione().getFineMissione().toString();
         String dataAttraversamentoFrontieraAndata = "";
         String dataAttraversamentoFrontieraRitorno = "";
-        if (missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata() != null)
+        if (missione.isMissioneEstera()){
             dataAttraversamentoFrontieraAndata = missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString();
-        if (missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno() != null)
             dataAttraversamentoFrontieraRitorno = missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toString();
+
+        }
 
 
         List<Fattura> listaScontrini = new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values());
