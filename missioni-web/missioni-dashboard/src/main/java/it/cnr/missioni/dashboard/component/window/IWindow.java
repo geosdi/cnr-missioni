@@ -1,8 +1,13 @@
 package it.cnr.missioni.dashboard.component.window;
 
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -27,6 +32,8 @@ public interface IWindow {
 		private String ID;
 		protected VerticalLayout content;
 		protected TabSheet detailsWrapper;
+		protected HorizontalLayout footer ;
+		protected Button ok;
 
 		public void build() {
 			addStyleName("profile-window");
@@ -49,8 +56,29 @@ public interface IWindow {
 			detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
 			content.addComponent(detailsWrapper);
 			content.setExpandRatio(detailsWrapper, 1f);
+			
+			this.footer = new HorizontalLayout();
+			this.footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
+			this.footer.setWidth(100.0f, Unit.PERCENTAGE);
+			
+			ok = new Button("OK");
+			ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+			
+		}
+		
+		protected HorizontalLayout buildTab(String caption,FontAwesome icon,Layout content){
+			HorizontalLayout root = new HorizontalLayout();
+			root.setCaption(caption);
+			root.setIcon(icon);
+			root.setWidth(100.0f, Unit.PERCENTAGE);
+			root.setSpacing(true);
+			root.setMargin(true);
+			root.addComponent(content);
+			return root;
 		}
 
+		protected abstract Component buildFooter();
+		
 		/**
 		 * @return the iD
 		 */
