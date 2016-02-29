@@ -27,7 +27,7 @@ public class LoginAction implements IAction {
 			try {
 				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername(username);
 				UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-				if (userStore == null) {
+				if (userStore.getTotale() == 0) {
 					Utility.getNotification(Utility.getMessage("error_message"),
 							Utility.getMessage("username_not_present"), Type.ERROR_MESSAGE);
 					return false;
@@ -37,6 +37,7 @@ public class LoginAction implements IAction {
 
 					return false;
 				} else {
+					
 					VaadinSession.getCurrent().setAttribute(User.class.getName(), user);
 					Utility.getNotification(Utility.getMessage("success_message"), null,
 							Type.HUMANIZED_MESSAGE);
