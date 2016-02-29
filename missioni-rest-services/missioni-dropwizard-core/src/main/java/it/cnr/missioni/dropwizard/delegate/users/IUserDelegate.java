@@ -35,6 +35,7 @@ public interface IUserDelegate {
 	 * @param notId
 	 * @param id
 	 * @param responsabileGruppo
+	 * @param multiMatch
 	 * @param all
 	 * @param from
 	 * @param size
@@ -43,8 +44,8 @@ public interface IUserDelegate {
 	 */
 	UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
 			String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
-			String mail, String notId, String id, Boolean responsabileGruppo, boolean all, int from, int size)
-					throws Exception;
+			String mail, String notId, String id, Boolean responsabileGruppo, String multiMatch,String searchType, boolean all, int from,
+			int size) throws Exception;
 
 	/**
 	 * 
