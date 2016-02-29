@@ -11,6 +11,7 @@ import it.cnr.missioni.dashboard.view.admin.GestioneMassimaleView;
 import it.cnr.missioni.dashboard.view.admin.GestioneMissioneAdminView;
 import it.cnr.missioni.dashboard.view.admin.GestioneNazioneView;
 import it.cnr.missioni.dashboard.view.admin.GestioneQualificaUserView;
+import it.cnr.missioni.dashboard.view.admin.GestioneRimborsoAdminView;
 import it.cnr.missioni.dashboard.view.admin.GestioneRimborsoKmView;
 import it.cnr.missioni.dashboard.view.admin.GestioneTipologiaSpesaView;
 import it.cnr.missioni.dashboard.view.admin.GestioneUserAdminView;
@@ -29,11 +30,12 @@ public enum DashboardViewType {
     GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, false),
     GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio",GestioneVeicoloView.class, FontAwesome.CAR, false),
     CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, false),
-    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USER, false)
+    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USERS, false)
     ,
     GESTIONE_MISSIONE_ADMIN("gestione missione admin",GestioneMissioneAdminView.class, FontAwesome.SUITCASE, false),
+    GESTIONE_RIMBORSO_ADMIN("gestione rimborso admin",GestioneRimborsoAdminView.class, FontAwesome.EURO, false),
     GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneVeicoloCNRView.class, FontAwesome.CAR, false),
-    GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user",GestioneQualificaUserView.class, FontAwesome.USERS, false),
+    GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user",GestioneQualificaUserView.class, FontAwesome.GRADUATION_CAP, false),
     GESTIONE_NAZIONE_ADMIN("gestione nazione",GestioneNazioneView.class, FontAwesome.GLOBE, false),
     GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km",GestioneRimborsoKmView.class, FontAwesome.EURO, false),
     GESTIONE_TIPOLOGIA_SPESA_ADMIN("gestione tipologia spesa",GestioneTipologiaSpesaView.class, FontAwesome.LIST, false),
