@@ -1,6 +1,5 @@
 package it.cnr.missioni.dashboard.component.table;
 
-import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -14,6 +13,8 @@ public interface ITable{
 	 void  buildTable();
 	 
 	 <T>  void aggiornaTable(T store);
+	 
+	 void addGeneratedColumn();
 	
 	public abstract class AbstractTable extends Table  implements ITable{
 
@@ -44,9 +45,11 @@ public interface ITable{
 			setVisible(false);
 			setImmediate(true);
 			setNullSelectionAllowed(false);
-
+			addGeneratedColumn();
 		}
 		
+		
+		public abstract void addGeneratedColumn();
 		
 	}
 	
