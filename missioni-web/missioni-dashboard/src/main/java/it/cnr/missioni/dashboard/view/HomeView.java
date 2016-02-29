@@ -37,10 +37,8 @@ import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.notification.DashboardNotification;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.SearchConstants;
-import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
-public  class HomeView extends Panel implements View {
+public class HomeView extends Panel implements View {
 
 	/**
 	 * 
@@ -59,8 +57,6 @@ public  class HomeView extends Panel implements View {
 	private Window notificationsWindow;
 	private NotificationsButton notificationsButton;
 	private CalendarPrenotazioni calendar;
-
-
 
 	public HomeView() {
 
@@ -158,7 +154,6 @@ public  class HomeView extends Panel implements View {
 		return dashboardPanels;
 	}
 
-
 	protected Component createContentWrapper(final Component content) {
 		final CssLayout slot = new CssLayout();
 		slot.addStyleName("dashboard-panel-slot");
@@ -214,14 +209,11 @@ public  class HomeView extends Panel implements View {
 	@Override
 	public void enter(final ViewChangeEvent event) {
 		try {
-			 MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-			.withIdUser(DashboardUI.getCurrentUser().getId()); ;
-			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			elencoMissioniTable.aggiornaTable(missioniStore);
+			elencoMissioniTable.aggiornaTable(ClientConnector.getMissione(
+					MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())));
 
-			missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-					.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO);
-			elencoRimborsiTable.aggiornaTable(missioniStore);
+			elencoRimborsiTable.aggiornaTable(ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
+					.withFieldExist("missione.rimborso").withIdUser(DashboardUI.getCurrentUser().getId())));
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),

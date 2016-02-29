@@ -11,7 +11,6 @@ import it.cnr.missioni.dashboard.view.HomeView;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
-import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 public final class AdminHomeView extends HomeView {
 
@@ -30,13 +29,10 @@ public final class AdminHomeView extends HomeView {
 	@Override
 	public void enter(final ViewChangeEvent event) {
 		try {
-			 MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder(); 
-			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			elencoMissioniTable.aggiornaTableAdmin(missioniStore);
+			elencoMissioniTable.aggiornaTableAdmin(ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()));
 
-			missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-					.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO);
-			elencoRimborsiTable.aggiornaTableAdmin(missioniStore);
+			elencoRimborsiTable.aggiornaTableAdmin(ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
+					.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO)));
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
