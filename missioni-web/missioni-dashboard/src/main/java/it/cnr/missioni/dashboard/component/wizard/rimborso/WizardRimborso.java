@@ -48,34 +48,35 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 		try {
 
 			int days = 0;
-			
-			if (missione.getDatiMissioneEstera()
-					.getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO) {
+			if (missione.isMissioneEstera()) {
+				// if (missione.getDatiMissioneEstera()
+				// .getTrattamentoMissioneEsteraEnum() ==
+				// TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO) {
 				Nazione nazione = ClientConnector
 						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
 						.getNazione().get(0);
 				MassimaleStore massimaleStore = ClientConnector
 						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
 								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
-								.withAreaGeografica(nazione.getAreaGeografica().name()).withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
+								.withAreaGeografica(nazione.getAreaGeografica().name())
+								.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
 
-				if (massimaleStore != null) {
+				if (massimaleStore.getTotale() > 0) {
 					rimborso.calcolaTotaleTAM(massimaleStore.getMassimale().get(0),
 							missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
 							missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
-					
-				days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(), missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
-							.getDays();
 
 				}
+				days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
+						missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()).getDays();
 
 			}
-			
-			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione.getRimborso(),days,missione.isMezzoProprio(),true);
-//			this.datiGeneraliStep.bindFieldGroup();
+
+			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione, days);
+			// this.datiGeneraliStep.bindFieldGroup();
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione);
-//			this.fatturaRimborsoStep.bindFieldGroup();
+			// this.fatturaRimborsoStep.bindFieldGroup();
 
 			riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione);
 
@@ -104,7 +105,7 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 				getWizard().getParent().setHeight("70%");
 
 			else
-				getWizard().getParent().setHeight("50%");
+				getWizard().getParent().setHeight("45%");
 		}
 	}
 

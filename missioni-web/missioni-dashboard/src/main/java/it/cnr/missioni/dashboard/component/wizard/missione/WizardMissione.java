@@ -12,7 +12,7 @@ import it.cnr.missioni.model.user.User;
 /**
  * @author Salvia Vito
  */
-public class WizardMissione extends IWizard.AbstractWizard{
+public class WizardMissione extends IWizard.AbstractWizard {
 
 	private Missione missione;
 	private DatiMissioneEsteraStep missioneEsteraStep;
@@ -20,9 +20,9 @@ public class WizardMissione extends IWizard.AbstractWizard{
 	private FondoGAEStep fondoGAEStep;
 	private LocalitaOggettoStep localitaOggettoStep;
 	private TipoMissioneStep tipoMissioneStep;
-	private DatiVeicoloMissioneStep datiGeneraliStep;
 	private AnticipazioniPagamentoStep anticipazioniPagamentoStep;
 	private RiepilogoDatiMissioneStep ripilogoDatiStep;
+	private DatiVeicoloMissioneStep datiVeicoloMissioneStep;
 
 	public WizardMissione() {
 	}
@@ -35,31 +35,20 @@ public class WizardMissione extends IWizard.AbstractWizard{
 
 		buildWizard();
 
-		DatiVeicoloMissioneStep datiGeneraliStep = new DatiVeicoloMissioneStep(missione);
-		datiGeneraliStep.bindFieldGroup();
-
+		this.datiVeicoloMissioneStep = new DatiVeicoloMissioneStep(missione);
 		this.tipoMissioneStep = new TipoMissioneStep(missione);
-
 		this.localitaOggettoStep = new LocalitaOggettoStep(missione);
-		this.localitaOggettoStep.bindFieldGroup();
-
 		this.fondoGAEStep = new FondoGAEStep(missione);
-		this.fondoGAEStep.bindFieldGroup();
-
 		this.datiPeriodoMissioneStep = new DatiPeriodoMissioneStep(missione.getDatiPeriodoMissione(), missione);
-		this.datiPeriodoMissioneStep.bindFieldGroup();
-
 		this.missioneEsteraStep = new DatiMissioneEsteraStep(missione.getDatiMissioneEstera(), missione);
-		this.missioneEsteraStep.bindFieldGroup();
 
 		this.anticipazioniPagamentoStep = new AnticipazioniPagamentoStep(missione);
-		this.anticipazioniPagamentoStep.bindFieldGroup();
 		ripilogoDatiStep = new RiepilogoDatiMissioneStep(missione);
 
 		getWizard().addStep(tipoMissioneStep, "tipoMissione");
 		getWizard().addStep(localitaOggettoStep, "localitaOggetto");
 		getWizard().addStep(fondoGAEStep, "fondoGAE");
-		getWizard().addStep(datiGeneraliStep, "datiGenerali");
+		getWizard().addStep(datiVeicoloMissioneStep, "datiGenerali");
 		getWizard().addStep(datiPeriodoMissioneStep, "inizioFine");
 		getWizard().addStep(missioneEsteraStep, "missioneEstera");
 		getWizard().addStep(anticipazioniPagamentoStep, "anticipazioniPagamento");
@@ -72,10 +61,6 @@ public class WizardMissione extends IWizard.AbstractWizard{
 	 */
 	@Override
 	public void activeStepChanged(WizardStepActivationEvent event) {
-		if (event.getActivatedStep() instanceof DatiMissioneEsteraStep) {
-			this.missioneEsteraStep.addDateRange();
-			this.missioneEsteraStep.addValidator();
-		}
 
 	}
 

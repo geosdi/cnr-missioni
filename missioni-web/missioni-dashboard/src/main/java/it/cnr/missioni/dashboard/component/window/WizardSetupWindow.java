@@ -77,7 +77,7 @@ public class WizardSetupWindow extends Window {
 //		setCloseShortcut(KeyCode.ESCAPE, null);
 		setResizable(false);
 		setClosable(false);
-		setHeight("55%");
+		setHeight("45%");
 		setWidth("40%");
 
 

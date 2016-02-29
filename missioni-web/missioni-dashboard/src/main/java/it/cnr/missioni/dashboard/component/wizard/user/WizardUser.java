@@ -31,16 +31,9 @@ public class WizardUser extends IWizard.AbstractWizard {
 		buildWizard();
 		
 		AnagraficaUserStep anagraficaStep = new AnagraficaUserStep(user);
-		anagraficaStep.bindFieldGroup();
-
 		ResidenzaUserStep residenzaUserStep = new ResidenzaUserStep(user);
-		residenzaUserStep.bindFieldGroup();
-
 		PatenteUserStep patenteUserStep = new PatenteUserStep(user);
-		patenteUserStep.bindFieldGroup();
-
 		DatiCNRUserStep datiCNRUserStep = new DatiCNRUserStep(user);
-		datiCNRUserStep.bindFieldGroup();
 
 		getWizard().addStep(anagraficaStep, "anagrafica");
 		getWizard().addStep(residenzaUserStep, "residenza");
