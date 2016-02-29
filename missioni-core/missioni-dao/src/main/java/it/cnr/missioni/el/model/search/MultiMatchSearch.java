@@ -1,5 +1,6 @@
 package it.cnr.missioni.el.model.search;
 
+import org.elasticsearch.index.query.MultiMatchQueryBuilder.Type;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
@@ -31,7 +32,7 @@ public class MultiMatchSearch extends AbstractBooleanSearch<Object> implements I
         logger.trace("####################Called {} #internalBooleanSearch with parameters " +
                 "field : {} - value : {}\n\n", getClass().getSimpleName(), field, value);
 		
-		return QueryBuilders.multiMatchQuery(value, field.split(","));
+		return QueryBuilders.multiMatchQuery(value, field.split(",")).type(Type.PHRASE_PREFIX);
 	}
 	
 
