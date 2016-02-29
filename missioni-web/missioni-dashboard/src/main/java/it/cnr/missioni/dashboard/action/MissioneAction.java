@@ -35,7 +35,7 @@ public class MissioneAction implements IAction {
 				missione.setDataInserimento(new DateTime());
 				if(missione.isMezzoProprio()){
 					Veicolo v = DashboardUI.getCurrentUser().getVeicoloPrincipale();
-					missione.setIdVeicolo(v.getTarga());
+					missione.setIdVeicolo(v.getId());
 					missione.setShortDescriptionVeicolo(v.getTipo());
 				}
 				missione.setIdUser(DashboardUI.getCurrentUser().getId());
