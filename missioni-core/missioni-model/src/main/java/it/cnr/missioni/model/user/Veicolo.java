@@ -17,6 +17,8 @@ public class Veicolo  implements Serializable{
 	 * 
 	 */
 	@NotBlank
+	private String id;
+	@NotBlank
 	private String tipo;
 	@NotBlank
 	private String targa;
@@ -25,6 +27,20 @@ public class Veicolo  implements Serializable{
 	@NotBlank
 	private String polizzaAssicurativa;
 	private boolean veicoloPrincipale;
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id 
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the tipo
@@ -101,7 +117,7 @@ public class Veicolo  implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "Veicolo [tipo=" + tipo + ", targa=" + targa + ", cartaCircolazione=" + cartaCircolazione
+		return "Veicolo [id=" + id + ", tipo=" + tipo + ", targa=" + targa + ", cartaCircolazione=" + cartaCircolazione
 				+ ", polizzaAssicurativa=" + polizzaAssicurativa + ", veicoloPrincipale=" + veicoloPrincipale + "]";
 	}
 
