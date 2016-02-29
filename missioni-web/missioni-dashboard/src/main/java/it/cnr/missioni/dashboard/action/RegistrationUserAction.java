@@ -16,7 +16,7 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
  */
 public class RegistrationUserAction implements IAction {
 
-private User user;
+	private User user;
 
 	public RegistrationUserAction(User user) {
 		this.user = user;
@@ -25,29 +25,16 @@ private User user;
 	public boolean doAction() {
 
 		try {
-			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername(user.getCredenziali().getUsername());
-			
-			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-			
-			
-			if(userStore != null){
-				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("user_already_inserted"),
-						Type.ERROR_MESSAGE);
-				return false;
-			}else{
-				user.setRegistrazioneCompletata(false);
-				user.setDataRegistrazione(new DateTime());
-				user.setDateLastModified(new DateTime());
-				user.getCredenziali().setPassword(user.getCredenziali().md5hash(user.getCredenziali().getPassword()));
-				user.getCredenziali().setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
-				ClientConnector.addUser(user);
-				Utility.getNotification(Utility.getMessage("success_message"),null,
-						Type.HUMANIZED_MESSAGE);
 
+			user.setRegistrazioneCompletata(false);
+			user.setDataRegistrazione(new DateTime());
+			user.setDateLastModified(new DateTime());
+			user.getCredenziali().setPassword(user.getCredenziali().md5hash(user.getCredenziali().getPassword()));
+			user.getCredenziali().setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
+			ClientConnector.addUser(user);
+			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 
-				return true;
-			}
-			
+			return true;
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
