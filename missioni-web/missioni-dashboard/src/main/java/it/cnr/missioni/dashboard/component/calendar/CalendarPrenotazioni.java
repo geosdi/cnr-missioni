@@ -143,8 +143,8 @@ public class CalendarPrenotazioni implements Serializable {
 			public void eventClick(EventClick event) {
 
 				// solamente le la prenotazione appartiene all'utente loggato
-				if (DashboardUI.getCurrentUser().getId()
-						.equals(((PrenotazioneEvent) event.getCalendarEvent()).getIdUser()))
+//				if (DashboardUI.getCurrentUser().getId()
+//						.equals(((PrenotazioneEvent) event.getCalendarEvent()).getIdUser()))
 					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), ((PrenotazioneEvent) event.getCalendarEvent()).getId() == null ? false : true);
 			}
 		});

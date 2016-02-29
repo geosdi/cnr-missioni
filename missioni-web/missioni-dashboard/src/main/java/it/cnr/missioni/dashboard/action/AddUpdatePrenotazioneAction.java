@@ -2,9 +2,9 @@ package it.cnr.missioni.dashboard.action;
 
 import org.joda.time.DateTime;
 
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Notification.Type;
 
+import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
@@ -37,7 +37,7 @@ public class AddUpdatePrenotazioneAction implements IAction {
 			prenotazione.setIdVeicoloCNR(prenotazioneEvent.getVeicolo());
 			prenotazione.setAllDay(prenotazioneEvent.isAllDay());
 
-			User user = (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
+			User user = DashboardUI.getCurrentUser();
 
 			prenotazione.setIdUser(user.getId());
 
@@ -46,9 +46,10 @@ public class AddUpdatePrenotazioneAction implements IAction {
 
 			if (!modifica)
 				ClientConnector.addPrenotazione(prenotazione);
-			else
+			else{
+				prenotazione.setId(prenotazioneEvent.getId());
 				ClientConnector.updatePrenotazione(prenotazione);
-
+			}
 			Thread.sleep(1000);
 			prenotazioneEvent.setCaption(prenotazione.getDescrizione());
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
