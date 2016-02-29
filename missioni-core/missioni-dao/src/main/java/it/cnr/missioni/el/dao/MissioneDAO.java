@@ -11,7 +11,6 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.metrics.max.Max;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
@@ -73,15 +72,6 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 
 		return lista.size()+1;
 		
-//		SearchResponse sr = this.elastichSearchClient.prepareSearch(getIndexName())
-//				.addAggregation(
-//						AggregationBuilders.max("max_numero_ordine_rimborso").field("missione.rimborso.numeroOrdine"))
-//				.execute().actionGet();
-//		Max agg = sr.getAggregations().get("max_numero_ordine_rimborso");
-//		if(agg.getValue() == null)
-//			return 1;
-//		else
-//		return (long) agg.getValue() + 1;;
 	}
 
 /**
