@@ -72,10 +72,10 @@ public class UserRestServiceResource implements UsersRestService {
 	@Override
 	public Response getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola, String username,
 			String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
-			String mail, String notId, String id, Boolean responsabileGruppo, boolean all, int from, int size)
+			String mail, String notId, String id, Boolean responsabileGruppo,String multiMatch,String searchType, boolean all, int from, int size)
 					throws Exception {
 		return Response.ok(this.userDelegate.getUserByQuery(nome, cognome, codiceFiscale, matricola, username, targa,
-				numeroPatente, cartaCircolazione, polizzaAssicurativa, iban, mail, notId, id, responsabileGruppo, all,
+				numeroPatente, cartaCircolazione, polizzaAssicurativa, iban, mail, notId, id, responsabileGruppo,multiMatch,searchType, all,
 				from, size)).build();
 	}
 

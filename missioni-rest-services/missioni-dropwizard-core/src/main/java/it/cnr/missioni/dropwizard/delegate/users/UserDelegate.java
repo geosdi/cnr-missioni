@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import com.itextpdf.text.log.SysoCounter;
 
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
@@ -50,6 +51,7 @@ class UserDelegate implements IUserDelegate {
 	 * @param notId
 	 * @param id
 	 * @param responsabileGruppo
+	 * @param multiMatch
 	 * @param all
 	 * @param from
 	 * @param size
@@ -59,15 +61,20 @@ class UserDelegate implements IUserDelegate {
 	@Override
 	public UserStore getUserByQuery(String nome, String cognome, String codiceFiscale, String matricola,
 			String username, String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa,
-			String iban, String mail, String notId, String id, Boolean responsabileGruppo, boolean all, int from,
-			int size) throws Exception {
+			String iban, String mail, String notId, String id, Boolean responsabileGruppo, String multiMatch,String searchType,
+			boolean all, int from, int size) throws Exception {
 
 		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
-				.withCognome(cognome).withCodiceFiscale(codiceFiscale).withMatricola(matricola).withUsername(username)
+				.withCognome(cognome).withCodiceFiscale(codiceFiscale)
+				.withSearchType(searchType)
+				.withMatricola(matricola).withUsername(username)
 				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione)
 				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withNotId(notId).withId(id)
-				.withResponsabileGruppo(responsabileGruppo).withAll(all).withFrom(from).withSize(size);
+				.withMultiMatch(multiMatch).withResponsabileGruppo(responsabileGruppo).withAll(all).withFrom(from)
 
+				.withSize(size);
+
+		
 		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
 		UserStore userStore = new UserStore();
 		userStore.setUsers(pageResult.getResults());

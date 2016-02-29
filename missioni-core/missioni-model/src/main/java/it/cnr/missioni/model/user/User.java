@@ -1,6 +1,7 @@
 package it.cnr.missioni.model.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,8 +22,8 @@ import it.cnr.missioni.model.adapter.VeicoloMapAdapter;
  */
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "dataRegistrazione","dateLastModified","registrazioneCompletata", "responsabileGruppo","anagrafica", "residenza", "patente", "datiCNR", "credenziali",
-		"mappaVeicolo" })
+@XmlType(propOrder = { "id", "dataRegistrazione", "dateLastModified", "registrazioneCompletata", "responsabileGruppo",
+		"anagrafica", "residenza", "patente", "datiCNR", "credenziali", "mappaVeicolo" })
 public class User implements Document {
 
 	/**
@@ -31,12 +32,12 @@ public class User implements Document {
 	private static final long serialVersionUID = -479690150958936950L;
 
 	private String id;
-	
+
 	private DateTime dataRegistrazione;
 	private DateTime dateLastModified;
 	private boolean registrazioneCompletata;
 	private boolean responsabileGruppo;
-	
+
 	@Valid
 	private Anagrafica anagrafica = new Anagrafica();
 	@Valid
@@ -48,22 +49,15 @@ public class User implements Document {
 	@Valid
 	private Credenziali credenziali = new Credenziali();
 	@XmlJavaTypeAdapter(value = VeicoloMapAdapter.class)
-	private Map<String, Veicolo> mappaVeicolo = new HashMap<String, Veicolo>(){
-		@Override
-        public Veicolo put(String key, Veicolo value) {
-            return super.put(key.toUpperCase(), value);
-        }
-	};
+	private Map<String, Veicolo> mappaVeicolo=new HashMap<String,Veicolo>(){@Override public Veicolo put(String key,Veicolo value){return super.put(key.toUpperCase(),value);}};
 
-	
-	public boolean isVeicoloPrincipaleSettato(){
-		for(Veicolo v : mappaVeicolo.values()){
-			if(v.isVeicoloPrincipale())
+	public boolean isVeicoloPrincipaleSettato() {
+		for (Veicolo v : mappaVeicolo.values()) {
+			if (v.isVeicoloPrincipale())
 				return true;
 		}
 		return false;
 	}
-	
 
 	/*
 	 * (non-Javadoc)
@@ -112,7 +106,7 @@ public class User implements Document {
 	}
 
 	/**
-	 * @param dateLastModified 
+	 * @param dateLastModified
 	 */
 	public void setDateLastModified(DateTime dateLastModified) {
 		this.dateLastModified = dateLastModified;
@@ -126,7 +120,7 @@ public class User implements Document {
 	}
 
 	/**
-	 * @param registrazioneCompletata 
+	 * @param registrazioneCompletata
 	 */
 	public void setRegistrazioneCompletata(boolean registrazioneCompletata) {
 		this.registrazioneCompletata = registrazioneCompletata;
@@ -139,17 +133,12 @@ public class User implements Document {
 		return responsabileGruppo;
 	}
 
-
 	/**
-	 * @param responsabileGruppo 
+	 * @param responsabileGruppo
 	 */
 	public void setResponsabileGruppo(boolean responsabileGruppo) {
 		this.responsabileGruppo = responsabileGruppo;
 	}
-
-
-
-
 
 	/**
 	 * @return the anagrafica
@@ -234,10 +223,55 @@ public class User implements Document {
 	public void setMappaVeicolo(Map<String, Veicolo> mappaVeicolo) {
 		this.mappaVeicolo = mappaVeicolo;
 	}
-	
-	public Veicolo getVeicoloPrincipale(){
-		if(!mappaVeicolo.isEmpty())
-			return (this.mappaVeicolo.values().stream().filter(v -> v.isVeicoloPrincipale()).collect(Collectors.toList())).get(0);
+
+	public Veicolo getVeicoloPrincipale() {
+		if (!mappaVeicolo.isEmpty())
+			return (this.mappaVeicolo.values().stream().filter(v -> v.isVeicoloPrincipale())
+					.collect(Collectors.toList())).get(0);
+		return null;
+	}
+
+	public Veicolo getVeicoloWithTarga(String targa, String id) {
+		if (!mappaVeicolo.isEmpty()) {
+			
+			List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getTarga().equalsIgnoreCase(targa)).collect(Collectors.toList());
+			
+			if (id != null){
+				lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
+			}
+				
+			return lista.isEmpty() ? null : lista.get(0);
+		}
+		return null;
+
+	}
+
+	public Veicolo getVeicoloWithCartaCircolazione(String cartaCircolazione, String id) {
+		
+		if (!mappaVeicolo.isEmpty()) {
+			
+			List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getCartaCircolazione().equalsIgnoreCase(cartaCircolazione)).collect(Collectors.toList());
+			
+			if (id != null){
+				lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
+			}
+				
+			return lista.isEmpty() ? null : lista.get(0);
+		}
+		return null;
+	}
+
+	public Veicolo getVeicoloWithPolizzaAssicurativa(String polizzaAssicurativa, String id) {
+		if (!mappaVeicolo.isEmpty()) {
+			
+			List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getPolizzaAssicurativa().equalsIgnoreCase(polizzaAssicurativa)).collect(Collectors.toList());
+			
+			if (id != null){
+				lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
+			}
+				
+			return lista.isEmpty() ? null : lista.get(0);
+		}
 		return null;
 	}
 
@@ -248,11 +282,8 @@ public class User implements Document {
 	public String toString() {
 		return "User [id=" + id + ", dataRegistrazione=" + dataRegistrazione + ", dateLastModified=" + dateLastModified
 				+ ", registrazioneCompletata=" + registrazioneCompletata + ", responsabileGruppo=" + responsabileGruppo
-				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente="
-				+ patente + ", datiCNR=" + datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo
-				+ "]";
+				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente=" + patente + ", datiCNR="
+				+ datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo + "]";
 	}
-	
-	
 
 }

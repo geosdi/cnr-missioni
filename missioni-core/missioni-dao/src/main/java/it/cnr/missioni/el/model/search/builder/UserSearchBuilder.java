@@ -19,6 +19,9 @@ public class UserSearchBuilder implements ISearchBuilder {
 	 */
 	private static final long serialVersionUID = -4387150079550066147L;
 
+
+	
+	private String searchType = "prefix";
 	private BooleanModelSearch booleanModelSearch;
 	private String nome = null;
 	private String cognome = null;
@@ -51,10 +54,17 @@ public class UserSearchBuilder implements ISearchBuilder {
 		return new UserSearchBuilder();
 	}
 
+
+
 	public UserSearchBuilder withNome(String nome) {
 		this.nome = nome;
 		if( nome != null &&!nome.trim().equals("") )
 		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_NOME, nome));
+		return self();
+	}
+	
+	public UserSearchBuilder withSearchType(String searchType) {
+		this.setSearchType(searchType);
 		return self();
 	}
 	
@@ -76,8 +86,13 @@ public class UserSearchBuilder implements ISearchBuilder {
 
 	public UserSearchBuilder withMatricola(String matricola) {
 		this.matricola = matricola;
-		if( matricola != null &&!matricola.trim().equals("") )
-		booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola));
+		if( matricola != null &&!matricola.trim().equals("") ){
+			if(searchType.equals("prefix") || searchType == null){
+				booleanModelSearch.getListaSearch().add(new PrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola));
+			}else{
+				booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola));
+			}
+		}
 		return self();
 	}
 
@@ -203,6 +218,20 @@ public class UserSearchBuilder implements ISearchBuilder {
 	 */
 	public void setBooleanModelSearch(BooleanModelSearch booleanModelSearch) {
 		this.booleanModelSearch = booleanModelSearch;
+	}
+	
+	/**
+	 * @return the searchType
+	 */
+	public String getSearchType() {
+		return searchType;
+	}
+
+	/**
+	 * @param searchType 
+	 */
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
 	}
 
 	/**

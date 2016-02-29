@@ -189,14 +189,14 @@ public class UserRestServiceTest {
 
 	@Test
 	public void M_findUserByMatricola() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("1111111");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withSearchType("exact").withMatricola("1111111");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA", userStore.getUsers().size() == 1);
 	}
 
 	@Test
 	public void N_findUserByMatricolaErrata() throws Exception {
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("2111111");
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withMatricola("1111111q");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY MATRICOLA ERRATA", userStore.getTotale() == 0);
 	}
