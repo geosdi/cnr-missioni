@@ -138,9 +138,9 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	 */
 	@Override
 	protected void initPagination() {
-		buildPagination(!DashboardUI.getCurrentUser().getMappaVeicolo().isEmpty()
-				? new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()) : 0);
-		addListenerPagination();
+//		buildPagination(!DashboardUI.getCurrentUser().getMappaVeicolo().isEmpty()
+//				? new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()) : 0);
+//		addListenerPagination();
 
 	}
 
@@ -208,8 +208,8 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 			this.elencoVeicoliTable
 					.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
 			
-			buildPagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
-			addListenerPagination();
+//			buildPagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
+//			addListenerPagination();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
