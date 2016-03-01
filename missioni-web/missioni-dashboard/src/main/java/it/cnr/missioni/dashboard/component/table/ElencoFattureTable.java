@@ -119,6 +119,10 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 	 *
 	 */
 	private class TransactionsActionHandler implements Handler {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6206311197910127065L;
 		private final Action seleziona = new Action("Seleziona");
 		private final Action elimina = new Action("Elimina");
 

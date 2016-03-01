@@ -66,6 +66,11 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
 	public void addGeneratedColumn() {
 		addGeneratedColumn("checkMassimale", new ColumnGenerator() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1667056005984020872L;
+
 			@Override
 			public Object generateCell(final Table source, final Object itemId, Object columnId) {
 
