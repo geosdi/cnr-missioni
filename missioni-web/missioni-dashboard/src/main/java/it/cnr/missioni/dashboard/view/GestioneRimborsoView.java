@@ -435,8 +435,9 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		try {
 			this.missioniStore = ClientConnector.getMissione(this.missioneSearchBuilder);
 			elencoRimborsiTable.aggiornaTable(this.missioniStore);
-			updatePagination(missioniStore.getTotale());
-		} catch (Exception e) {
+			buildPagination(missioniStore.getTotale());
+			addListenerPagination();		
+			} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}

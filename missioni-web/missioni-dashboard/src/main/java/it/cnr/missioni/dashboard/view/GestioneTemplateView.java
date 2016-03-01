@@ -120,29 +120,35 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 		List<T> fakeList = new FakeList<T>(totale.intValue());
 		Builder<T> builder = PagingComponent.paginate(fakeList);
 		pagingComponent = builder.build();
-		if (pagingComponent.getComponentsManager().getElementsBuilder().getButtonFirst() != null)
-			pagingComponent.getComponentsManager().getElementsBuilder().getButtonFirst().setCaption("Prima");
-		if (pagingComponent.getComponentsManager().getElementsBuilder().getButtonLast() != null)
-			pagingComponent.getComponentsManager().getElementsBuilder().getButtonLast().setCaption("Ultima");
-		if (pagingComponent.getComponentsManager().getElementsBuilder().getButtonNext() != null)
-			pagingComponent.getComponentsManager().getElementsBuilder().getButtonNext().setCaption("Successiva");
-		if (pagingComponent.getComponentsManager().getElementsBuilder().getButtonPrevious() != null)
-			pagingComponent.getComponentsManager().getElementsBuilder().getButtonPrevious().setCaption("Precendente");
+		setVisibleButtons(totale);
 		this.pagingComponent
 				.setVisible(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale ? true : false);
-		layoutPagination.addComponent(this.pagingComponent);
-		layoutPagination.setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
+
 
 	}
 	
-	protected void updatePagination(Long totale){
-		List<T> fakeList = new FakeList<T>(totale.intValue());
-		Builder<T> builder = PagingComponent.paginate(fakeList);
-		pagingComponent = builder.build();
-		this.pagingComponent
-		.setVisible(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale ? true : false);
-	}
+//	protected void updatePagination(Long totale){
+//		List<T> fakeList = new FakeList<T>(totale.intValue());
+//		Builder<T> builder = PagingComponent.paginate(fakeList);
+//		pagingComponent = builder.build();
+//		layoutPagination.addComponent(this.pagingComponent);
+//		layoutPagination.setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
+//
+//	}
 	
+	private void setVisibleButtons(Long totale){
+		layoutPagination.removeAllComponents();
+		layoutPagination.addComponent(this.pagingComponent);
+		layoutPagination.setComponentAlignment(pagingComponent, Alignment.MIDDLE_CENTER);
+		if(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale){
+			pagingComponent.getComponentsManager().getElementsBuilder().getButtonFirst().setCaption("Prima");
+			pagingComponent.getComponentsManager().getElementsBuilder().getButtonLast().setCaption("Ultima");
+			pagingComponent.getComponentsManager().getElementsBuilder().getButtonNext().setCaption("Successiva");
+			pagingComponent.getComponentsManager().getElementsBuilder().getButtonPrevious().setCaption("Precendente");
+
+
+		}
+	}
 	
 
 	protected abstract VerticalLayout buildTable();
@@ -158,8 +164,6 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	protected abstract GridLayout addActionButtons();
 
 	protected abstract void addListenerPagination();
-
-//	protected abstract void enableDisableButtons(boolean enabled);
 	
 	protected abstract void enableButtons( );
 	

@@ -384,7 +384,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		try {
 			this.missioniStore = ClientConnector.getMissione(this.missioneSearchBuilder);
 			elencoMissioniTable.aggiornaTable(this.missioniStore);
-			updatePagination(missioniStore.getTotale());
+			buildPagination(missioniStore.getTotale());
+			addListenerPagination();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

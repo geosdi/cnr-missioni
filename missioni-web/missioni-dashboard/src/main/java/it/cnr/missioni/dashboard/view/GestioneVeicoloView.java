@@ -25,8 +25,6 @@ import it.cnr.missioni.dashboard.component.table.ElencoVeicoliTable;
 import it.cnr.missioni.dashboard.component.window.VeicoloWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.model.user.Veicolo;
 
 /**
@@ -134,9 +132,6 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 	}
 
-//	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonModifica.setEnabled(enabled);
-//	}
 
 	/**
 	 * 
@@ -212,7 +207,9 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 		try {
 			this.elencoVeicoliTable
 					.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
-			updatePagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
+			
+			buildPagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
+			addListenerPagination();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

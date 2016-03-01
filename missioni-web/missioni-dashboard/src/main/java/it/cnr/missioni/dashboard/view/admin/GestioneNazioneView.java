@@ -24,7 +24,6 @@ import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableNazioneUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
@@ -138,16 +137,12 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 	}
 
-//	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonModifica.setEnabled(enabled);
-//	}
-
 	/**
 	 * 
 	 */
 	@Override
 	protected void initPagination() {
-		buildPagination(nazioneStore != null ? nazioneStore.getTotale() : 0);
+		buildPagination(nazioneStore.getTotale());
 		addListenerPagination();
 	}
 
@@ -212,7 +207,8 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 		try {
 			this.nazioneStore = ClientConnector.getNazione(this.nazioneSearchBuilder);
 			elencoNazioneTable.aggiornaTable(this.nazioneStore);
-			updatePagination(nazioneStore.getTotale());
+			buildPagination(nazioneStore.getTotale());
+			addListenerPagination();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

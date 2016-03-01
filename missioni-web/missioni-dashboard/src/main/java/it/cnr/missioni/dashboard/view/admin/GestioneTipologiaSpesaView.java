@@ -216,8 +216,9 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 		try {
 			this.tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(this.tipologiaSpesaSearchBuilder);
 			elencoTipologiaSpesaTable.aggiornaTable(this.tipologiaSpesaStore);
-			updatePagination(tipologiaSpesaStore.getTotale());
-		} catch (Exception e) {
+			buildPagination(tipologiaSpesaStore.getTotale());
+			addListenerPagination();			
+			} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}

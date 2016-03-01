@@ -130,7 +130,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 		});
 
-		layout.addComponents(buttonNew,buttonModifica);
+		layout.addComponents(buttonNew, buttonModifica);
 
 		disableButtons();
 
@@ -138,9 +138,9 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 	}
 
-//	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonModifica.setEnabled(enabled);
-//	}
+	// protected void enableDisableButtons(boolean enabled) {
+	// this.buttonModifica.setEnabled(enabled);
+	// }
 
 	/**
 	 * 
@@ -213,7 +213,8 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 		try {
 			this.massimaleStore = ClientConnector.getMassimale(this.massimaleSearchBuilder);
 			elencoMassimaleTable.aggiornaTable(this.massimaleStore);
-			updatePagination(massimaleStore.getTotale());
+			buildPagination(massimaleStore.getTotale());
+			addListenerPagination();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
@@ -227,7 +228,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	@Override
 	protected void enableButtons() {
 		this.buttonModifica.setEnabled(true);
-		
+
 	}
 
 	/**
@@ -236,7 +237,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	@Override
 	protected void disableButtons() {
 		this.buttonModifica.setEnabled(false);
-		
+
 	}
 
 }

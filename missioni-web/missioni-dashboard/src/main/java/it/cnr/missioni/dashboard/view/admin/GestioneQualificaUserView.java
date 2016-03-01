@@ -219,8 +219,9 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 		try {
 			this.qualificaUserStore = ClientConnector.getQualificaUser(this.qualificaUserSearchBuilder);
 			elencoQualificaUserTable.aggiornaTable(this.qualificaUserStore);
-			updatePagination(qualificaUserStore.getTotale());
-		} catch (Exception e) {
+			buildPagination(qualificaUserStore.getTotale());
+			addListenerPagination();		
+			} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
