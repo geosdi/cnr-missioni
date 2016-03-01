@@ -18,12 +18,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -39,7 +37,6 @@ import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
@@ -56,14 +53,14 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	 * 
 	 */
 	private ElencoRimborsiTable elencoRimborsiTable;
-	private TextField idMissioneField;
-	private DateField dataFromInserimentoMissioneField;
-	private DateField dataToInserimentoMissioneField;
-	private TextField numeroOrdineRimborsoField;
-	private TextField oggettoMissioneField;
-
-	private VerticalLayout layoutTable;
-	private VerticalLayout layoutForm;
+//	private TextField idMissioneField;
+//	private DateField dataFromInserimentoMissioneField;
+//	private DateField dataToInserimentoMissioneField;
+//	private TextField numeroOrdineRimborsoField;
+//	private TextField oggettoMissioneField;
+//
+//	private VerticalLayout layoutTable;
+//	private VerticalLayout layoutForm;
 	protected Missione selectedMissione;
 
 	protected MissioneSearchBuilder missioneSearchBuilder;
@@ -368,14 +365,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		}
 		return null;
 	}
-
-//	protected void enableDisableButtons(boolean enabled) {
-//		// this.buttonMail.setEnabled(enabled);
-//		this.buttonDettagli.setEnabled(enabled);
-//		this.buttonPDF.setEnabled(enabled);
-//		this.buttonMissione.setEnabled(enabled);
-//
-//	}
 
 	/**
 	 * 

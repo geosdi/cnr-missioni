@@ -138,9 +138,6 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 	}
 
-//	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonModifica.setEnabled(enabled);
-//	}
 
 	/**
 	 * 

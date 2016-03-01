@@ -18,7 +18,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
-import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.admin.ElencoMassimaleTable;
 import it.cnr.missioni.dashboard.component.window.admin.MassimaleWindow;
@@ -26,7 +25,6 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.TableMassimaleUpdatedEvent
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
@@ -138,9 +136,6 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 	}
 
-	// protected void enableDisableButtons(boolean enabled) {
-	// this.buttonModifica.setEnabled(enabled);
-	// }
 
 	/**
 	 * 

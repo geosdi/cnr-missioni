@@ -24,7 +24,6 @@ import it.cnr.missioni.dashboard.component.window.admin.TipologiaSpesaWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableTipologiaSpesaUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
@@ -141,9 +140,6 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 
 	}
 
-//	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonModifica.setEnabled(enabled);
-//	}
 
 	/**
 	 * 

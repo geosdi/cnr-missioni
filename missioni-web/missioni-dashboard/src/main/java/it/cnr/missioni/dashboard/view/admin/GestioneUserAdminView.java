@@ -13,12 +13,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
@@ -40,18 +38,8 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	 * 
 	 */
 	private static final long serialVersionUID = 93612577398232810L;
-	/**
-	 * 
-	 */
-	private ElencoUserTable elencoUserTable;
-	private TextField idMissioneField;
-	private DateField dataFromInserimentoMissioneField;
-	private DateField dataToInserimentoMissioneField;
-	private TextField numeroOrdineRimborsoField;
-	private TextField oggettoMissioneField;
 
-	private VerticalLayout layoutTable;
-	private VerticalLayout layoutForm;
+	private ElencoUserTable elencoUserTable;
 	private User selectedUser;
 
 	private UserSearchBuilder userSearchBuilder;
@@ -110,158 +98,6 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		return v;
 	}
 
-	/**
-	 * 
-	 * Costruisce la form di ricerca
-	 * 
-	 * @return HorizontalLayout
-	 */
-	// private HorizontalLayout buildForm() {
-	// HorizontalLayout v = new HorizontalLayout();
-	// v.setMargin(true);
-	// FormLayout form = new FormLayout();
-	// form.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-	// form.setSizeUndefined();
-	// v.setWidth("98%");
-	// final ComboBox statoSelect = new ComboBox();
-	// statoSelect.setCaption("Stato");
-	//
-	// Map<String, StatoEnum> mappaS = StatoEnum.getMappa();
-	//
-	// mappaS.values().forEach(s -> {
-	// statoSelect.addItem(s);
-	// statoSelect.setItemCaption(s, s.getStato());
-	// });
-	//
-	// idMissioneField = new TextField();
-	// idMissioneField.setCaption("Id Missione");
-	// dataFromInserimentoMissioneField = new DateField("Data dal");
-	// dataToInserimentoMissioneField = new DateField("Data al");
-	// dataToInserimentoMissioneField.setImmediate(true);
-	// dataFromInserimentoMissioneField.setValidationVisible(false);
-	// numeroOrdineRimborsoField = new TextField("Numero Rimborso");
-	// oggettoMissioneField = new TextField("Oggetto Missione");
-	//
-	// addValidator();
-	//
-	// form.addComponent(statoSelect);
-	// form.addComponent(idMissioneField);
-	// form.addComponent(oggettoMissioneField);
-	// form.addComponent(numeroOrdineRimborsoField);
-	// form.addComponent(dataFromInserimentoMissioneField);
-	// form.addComponent(dataToInserimentoMissioneField);
-	// final Button buttonCerca = new Button("Cerca");
-	// buttonCerca.setEnabled(true);
-	// buttonCerca.addStyleName(ValoTheme.BUTTON_PRIMARY);
-	//
-	// buttonCerca.addClickListener(new Button.ClickListener() {
-	// public void buttonClick(ClickEvent event) {
-	//
-	// DateTime from = null;
-	// DateTime to = null;
-	// String stato = null;
-	// // se il valore della form è null JODATIME ritorna comunque la
-	// // data odierna
-	// if (dataFromInserimentoMissioneField.getValue() != null)
-	// from = new DateTime(dataFromInserimentoMissioneField.getValue());
-	// if (dataToInserimentoMissioneField.getValue() != null)
-	// to = new DateTime(dataToInserimentoMissioneField.getValue());
-	// if (statoSelect.getValue() != null)
-	// stato = ((StatoEnum) statoSelect.getValue()).name();
-	//
-	// missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-	// .withOggetto(oggettoMissioneField.getValue())
-	// .withNumeroOrdineMissione(numeroOrdineRimborsoField.getValue())
-	// .withIdMissione(idMissioneField.getValue()).withStato(stato).withIdUser(user.getId())
-	// .withRangeDataInserimento(from, to);
-	//
-	// try {
-	// missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-	// elencoMissioniTable.aggiornaTable(missioniStore);
-	// } catch (Exception e) {
-	// Utility.getNotification(Utility.getMessage("error_message"),
-	// Utility.getMessage("request_error"),
-	// Type.ERROR_MESSAGE);
-	// }
-	// }
-	// });
-	//
-	// form.addComponent(buttonCerca);
-	// v.addComponent(form);
-	// v.setComponentAlignment(form, new
-	// Alignment(Bits.ALIGNMENT_HORIZONTAL_CENTER));
-	// v.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
-	// return v;
-	// }
-	//
-	// private void addValidator() {
-	//
-	// dataToInserimentoMissioneField.addValidator(new Validator() {
-	//
-	// @Override
-	// public void validate(Object value) throws InvalidValueException {
-	// Date v = (Date) value;
-	// if (v != null && v.before(dataFromInserimentoMissioneField.getValue()))
-	// throw new InvalidValueException(Utility.getMessage("data_range_error"));
-	//
-	// }
-	//
-	// });
-	//
-	// dataToInserimentoMissioneField.addBlurListener(new BlurListener() {
-	//
-	// @Override
-	// public void blur(BlurEvent event) {
-	// try {
-	// dataFromInserimentoMissioneField.validate();
-	// } catch (Exception e) {
-	// dataFromInserimentoMissioneField.setValidationVisible(true);
-	// }
-	//
-	// }
-	// });
-	// }
-
-	// /**
-	// * Costruisce la Select per la paginazione
-	// */
-	// protected void buildComboPage() {
-	// this.selectPage = new ComboBox();
-	// this.selectPage.removeAllItems();
-	// if (userStore != null) {
-	// long totale = userStore.getTotale();
-	// long totPage = totale % userSearchBuilder.getSize() == 0 ? totale /
-	// userSearchBuilder.getSize()
-	// : 1 + (totale / userSearchBuilder.getSize());
-	// this.selectPage.setValue(1);
-	// // selectPage.setNullSelectionAllowed(false);
-	// this.selectPage.setImmediate(true);
-	// this.selectPage.setInputPrompt("Seleziona Pagina");
-	// for (int j = 1; j <= totPage; j++) {
-	// this.selectPage.addItem(j);
-	// this.selectPage.setItemCaption(j, Integer.toString(j));
-	// }
-	//
-	// this.selectPage.addValueChangeListener(new ValueChangeListener() {
-	// @Override
-	// public void valueChange(ValueChangeEvent event) {
-	// int nextPage =
-	// Integer.parseInt(String.valueOf(event.getProperty().getValue()));
-	// int from = (nextPage - 1) * userSearchBuilder.getSize();
-	// userSearchBuilder.setFrom(from);
-	// try {
-	// userStore = ClientConnector.getUser(userSearchBuilder);
-	// elencoUserTable.aggiornaTable(userStore);
-	//
-	// } catch (Exception e) {
-	// Utility.getNotification(Utility.getMessage("error_message"),
-	// Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
-	// }
-	// }
-	// });
-	// }
-	//
-	// }
 
 	@Override
 	public void enter(final ViewChangeEvent event) {
@@ -321,9 +157,6 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 
 	}
 
-//	protected void enableDisableButtons(boolean enabled) {
-//		this.buttonDettagli.setEnabled(enabled);
-//	}
 
 	/**
 	 * 
