@@ -35,8 +35,8 @@ public final class ElencoNazioneTable extends ITable.AbstractTable {
 			setContainerDataSource(
 					new BeanItemContainer<Nazione>(Nazione.class, ((NazioneStore)nazioneStore).getNazione()));
 
-			setVisibleColumns("value");
-			setColumnHeaders("Nazione");
+			setVisibleColumns("value","areaGeografica");
+			setColumnHeaders("Nazione","Area Geografica");
 			Object[] properties = { "value" };
 			boolean[] ordering = { true };
 			sort(properties, ordering);
