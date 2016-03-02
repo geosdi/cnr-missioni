@@ -29,6 +29,11 @@ import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
  */
 public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3176387859311468306L;
+
 	@Override
 	public <T extends Field> T createField(Class<?> type, Class<T> fieldType) {
 		T field = null;
@@ -92,8 +97,10 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 		BListener listener = new BListener(comboBox);
 		comboBox.addBlurListener(listener);
 		for (StatoEnum s : lista) {
-			comboBox.addItem(s);
-			comboBox.setItemCaption(s, s.getStato());
+			if(s != StatoEnum.PAGATA){
+				comboBox.addItem(s);
+				comboBox.setItemCaption(s, s.getStato());
+			}
 		}
 
 		field = (T) comboBox;
@@ -166,6 +173,11 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 	 *
 	 */
 	public class DateTimeConverter implements Converter<Date, DateTime> {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6389154856677729962L;
+
 		@Override
 		public Class<DateTime> getModelType() {
 			return DateTime.class;
@@ -221,6 +233,10 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 	 */
 	static class BListener implements BlurListener {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -6722845037728924352L;
 		Field<?> f;
 
 		/**
@@ -247,6 +263,11 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 
 	private static class CustomeStringToDoubleConverter extends StringToDoubleConverter {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -8378981781086601780L;
+
 		@Override
 		protected NumberFormat getFormat(Locale locale) {
 			NumberFormat format = super.getFormat(locale);
@@ -258,6 +279,11 @@ public class BeanFieldGrouFactory extends DefaultFieldGroupFieldFactory {
 	}
 
 	public static class ConverterFactory extends DefaultConverterFactory {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -5604318645600543506L;
+
 		@Override
 		protected <PRESENTATION, MODEL> Converter<PRESENTATION, MODEL> findConverter(
 				Class<PRESENTATION> presentationType, Class<MODEL> modelType) {
