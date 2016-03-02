@@ -21,11 +21,11 @@ public class PrenotazioneEvent extends BasicEvent implements CalendarEditableEve
 	private String id;
 	private String idUser;
 	private String descrizione;
-	@NotBlank
+	@NotBlank(message="Obbligatorio")
 	private String veicolo;
-	@NotNull
+	@NotNull(message="Obbligatorio")
 	private Date end;
-	@NotNull
+	@NotNull(message="Obbligatorio")
 	private Date start;
 	private boolean allDay;
 	
