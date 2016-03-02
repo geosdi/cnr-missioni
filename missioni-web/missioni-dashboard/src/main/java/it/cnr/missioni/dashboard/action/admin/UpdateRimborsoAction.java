@@ -10,6 +10,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.StatoEnum;
 
 /**
  * @author Salvia Vito
@@ -27,6 +28,9 @@ public class UpdateRimborsoAction implements IAction {
 		try {
 
 			missione.getRimborso().setDateLastModified(new DateTime());
+			
+			if(missione.getRimborso().isPagata())
+				missione.setStato(StatoEnum.PAGATA);
 			
 			ClientConnector.updateRimborso(missione);
 			Thread.sleep(1000);	
