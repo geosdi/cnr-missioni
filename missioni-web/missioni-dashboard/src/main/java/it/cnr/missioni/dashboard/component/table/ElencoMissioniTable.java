@@ -47,8 +47,8 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 		if (((MissioniStore)missioniStore).getTotale() > 0) {
 			setVisible(true);
 			setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore)missioniStore).getMissioni()));
-			setVisibleColumns("id","localita", "oggetto", "stato", "dataInserimento");
-			setColumnHeaders("Id","Località", "Oggetto", "Stato", "Data Inserimento");
+			setVisibleColumns("localita", "oggetto", "stato", "dataInserimento");
+			setColumnHeaders("Località", "Oggetto", "Stato", "Data Inserimento");
 			setId("id");
 			Object[] properties = { "dataInserimento"};
 			boolean[] ordering = { false };
@@ -73,8 +73,8 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
 		if (((MissioniStore)missioniStore).getTotale() > 0) {
 			setVisible(true);
 			setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore)missioniStore).getMissioni()));
-			setVisibleColumns("id","shortResponsabileGruppo","localita", "oggetto", "stato", "dataInserimento");
-			setColumnHeaders("Id","User","Localita", "Oggetto", "Stato", "Data Inserimento");
+			setVisibleColumns("shortUser","localita", "oggetto", "stato", "dataInserimento");
+			setColumnHeaders("User","Localita", "Oggetto", "Stato", "Data Inserimento");
 			setId("id");
 			Object[] properties = { "dataInserimento"};
 			boolean[] ordering = { false };

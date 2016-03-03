@@ -75,7 +75,7 @@ public final class ElencoRimborsiTable  extends ITable.AbstractTable  {
 			
 			setVisible(true);
 			setContainerDataSource(listaMissioni);
-			setVisibleColumns("shortResponsabileGruppo","rimborso.numeroOrdine","rimborso.dataRimborso","rimborso.totale","oggetto","localita");
+			setVisibleColumns("shortUser","rimborso.numeroOrdine","rimborso.dataRimborso","rimborso.totale","oggetto","localita");
 			setColumnHeaders("User","Numero Ordine","Data Rimborso","Totale","Oggetto","Località");
 			setId("rimborso.numeroOrdine");
 			Object[] properties = { "rimborso.dataRimborso", "rimborso.numeroOrdine" };
