@@ -33,5 +33,13 @@ public interface IMissioneDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<
 	 * @return
 	 * @throws Exception
 	 */
+	String getMaxNumeroMissioneAnno() throws Exception;
+
+	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public StatisticheMissioni getStatisticheMissioni() throws Exception;
 }

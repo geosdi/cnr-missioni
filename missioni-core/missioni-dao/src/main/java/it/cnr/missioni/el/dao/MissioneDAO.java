@@ -15,6 +15,7 @@ import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
@@ -64,6 +65,11 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 		return new PageResult<Missione>(searchResponse.getHits().getTotalHits(), listaMissioni);
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public long getMaxNumeroOrdineRimborso() throws Exception {
 		long value = 0;
 
@@ -71,6 +77,26 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 		List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
 
 		return lista.size()+1;
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String getMaxNumeroMissioneAnno() throws Exception {
+		long value = 0;
+
+		DateTime now = new DateTime();
+		DateTime from = now.withDayOfMonth(1).withMonthOfYear(1);
+		DateTime to = now.withYear(now.getYear()).withDayOfMonth(31).withMonthOfYear(12);
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withRangeDataInserimento(from,to);
+		List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
+
+		return (lista.size()+1)+"-"+now.getYear();
 		
 	}
 
