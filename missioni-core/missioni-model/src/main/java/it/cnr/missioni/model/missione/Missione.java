@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "localita", "oggetto", "responsabileGruppo","shortResponsabileGruppo","motivazioniMezzoProprio","stato","fondo","GAE", "missioneEstera", "idUser","idVeicolo", "shortDescriptionVeicolo","dataInserimento",
+@XmlType(propOrder = { "id", "localita", "oggetto", "responsabileGruppo","shortResponsabileGruppo","shortUser","motivazioniMezzoProprio","stato","fondo","GAE", "missioneEstera", "idUser","idVeicolo", "shortDescriptionVeicolo","dataInserimento",
 		"dateLastModified","mezzoProprio","distanza","geoPoint","idNazione","shortDescriptionNazione","datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
 public class Missione implements Document {
 
@@ -33,6 +33,7 @@ public class Missione implements Document {
     @NotBlank
 	private String responsabileGruppo;
 	private String shortResponsabileGruppo;
+	private String shortUser;
 	private String motivazioniMezzoProprio;
 	@NotNull
     private StatoEnum stato;
@@ -151,6 +152,22 @@ public class Missione implements Document {
 	 */
 	public void setShortResponsabileGruppo(String shortResponsabileGruppo) {
 		this.shortResponsabileGruppo = shortResponsabileGruppo;
+	}
+
+
+	/**
+	 * @return the shortUser
+	 */
+	public String getShortUser() {
+		return shortUser;
+	}
+
+
+	/**
+	 * @param shortUser 
+	 */
+	public void setShortUser(String shortUser) {
+		this.shortUser = shortUser;
 	}
 
 
@@ -489,9 +506,9 @@ public class Missione implements Document {
 	@Override
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", responsabileGruppo="
-				+ responsabileGruppo + ", shortResponsabileGruppo=" + shortResponsabileGruppo
-				+ ", motivazioniMezzoProprio=" + motivazioniMezzoProprio + ", stato=" + stato + ", fondo=" + fondo
-				+ ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idVeicolo="
+				+ responsabileGruppo + ", shortResponsabileGruppo=" + shortResponsabileGruppo + ", shortUser="
+				+ shortUser + ", motivazioniMezzoProprio=" + motivazioniMezzoProprio + ", stato=" + stato + ", fondo="
+				+ fondo + ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idVeicolo="
 				+ idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo + ", dataInserimento="
 				+ dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio=" + mezzoProprio
 				+ ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
