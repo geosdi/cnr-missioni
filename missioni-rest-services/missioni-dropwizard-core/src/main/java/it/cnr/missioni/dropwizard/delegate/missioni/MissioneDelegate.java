@@ -162,7 +162,7 @@ class MissioneDelegate implements IMissioneDelegate {
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 				missione.getRimborso().getNumeroOrdine().toString(), missione.getRimborso().isPagata() ? "Si": "No",missione.getRimborso().getMandatoPagamento()!= null ? missione.getRimborso().getMandatoPagamento() : "",
-				RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+				missione.getRimborso().getTotaleDovuto(),RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
 
 		return Boolean.TRUE;
 	}
@@ -206,7 +206,8 @@ class MissioneDelegate implements IMissioneDelegate {
 			throw new IllegalParameterFault("The Parameter missione must not be null ");
 		}
 		if (missione.getId() == null)
-			missione.setId(gen.generate().toString());
+			missione.setId(this.missioneDAO.getMaxNumeroMissioneAnno());
+//			missione.setId(gen.generate().toString());
 		this.missioneDAO.persist(missione);
 
 		User user = this.userDAO.find(missione.getIdUser());
