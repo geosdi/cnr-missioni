@@ -79,8 +79,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		
 		int days = 0;
 		
-		if (missione.getDatiMissioneEstera()
-				.getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO) {
+		if (missione.isMissioneEstera()) {
 
 			try {
 				Nazione nazione = ClientConnector
