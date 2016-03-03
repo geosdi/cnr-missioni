@@ -5,17 +5,14 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -127,7 +124,7 @@ public class UserWindow extends IWindow.AbstractWindow {
 				if (massimaleStore.getTotale() > 0)
 					massimaleRimborsoDocumentato = massimaleStore.getMassimale().get(0).getValue();
 				details.addComponent(new Label("<b>Area geografica: </b>" + a.name() + " <b>TAM:</b> "
-						+ Double.toString(massimaleTAM) + " €" + "<b>Rimborso documentato:</b> "
+						+ Double.toString(massimaleTAM) + " € " + "<b>Rimborso documentato:</b> "
 						+ Double.toString(massimaleRimborsoDocumentato) + " €", ContentMode.HTML));
 
 			} catch (Exception e) {
