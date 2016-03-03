@@ -51,6 +51,9 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		});
 	}
 	
+	protected void aggiornaTable(){
+		this.elencoMissioniTable.aggiornaTableAdmin(missioniStore);
+	}
 	
 	protected void buildButtonRimborso(){
 		buttonRimborso.addClickListener(new Button.ClickListener() {

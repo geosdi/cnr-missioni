@@ -55,11 +55,11 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	/**
 	 * 
 	 */
-	private ElencoMissioniTable elencoMissioniTable;
+	protected ElencoMissioniTable elencoMissioniTable;
 	protected Missione selectedMissione;
 	protected GridLayout layout;
 	protected MissioneSearchBuilder missioneSearchBuilder;
-	private MissioniStore missioniStore;
+	protected MissioniStore missioniStore;
 
 
 	public GestioneMissioneView() {
@@ -137,7 +137,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 		try {
 			missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			this.elencoMissioniTable.aggiornaTable(missioniStore);
+			aggiornaTable();
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -157,6 +157,11 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		return v;
 	}
 
+	
+	protected void aggiornaTable(){
+		this.elencoMissioniTable.aggiornaTable(missioniStore);
+	}
+	
 	protected Button createButtonSearch() {
 		buttonCerca = buildButton("", "Ricerca full text", FontAwesome.SEARCH);
 		buttonCerca.addClickListener(new Button.ClickListener() {
