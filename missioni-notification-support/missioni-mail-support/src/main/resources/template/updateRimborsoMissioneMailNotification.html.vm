@@ -11,7 +11,7 @@
          <p>
            Mandato di Pagamento : ${mandatoPagamento}.
          </p>
-          p>
+         <p>
            Totale Dovuto : ${totaleDovuto}.
          </p>
          <p>
