@@ -214,7 +214,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 
 				@Override
 				public void validate(Object value) throws InvalidValueException {
-					if ((value == null || ((String) value).isEmpty()) && pagataField.getValue())
+					if ((value == null) && pagataField.getValue())
 						throw new InvalidValueException(Utility.getMessage("totale_dovuto_error"));
 
 				}
