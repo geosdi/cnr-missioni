@@ -41,6 +41,7 @@ public class MissioneAction implements IAction {
 				missione.setIdUser(DashboardUI.getCurrentUser().getId());
 				missione.setDataInserimento(new DateTime());
 				missione.setStato(StatoEnum.INSERITA);
+				missione.setShortUser(DashboardUI.getCurrentUser().getAnagrafica().getCognome()+ " "+DashboardUI.getCurrentUser().getAnagrafica().getNome());
 				String id = ClientConnector.addMissione(missione);
 				Thread.sleep(1000);
 				ClientConnector.sendMissioneMail(id);
