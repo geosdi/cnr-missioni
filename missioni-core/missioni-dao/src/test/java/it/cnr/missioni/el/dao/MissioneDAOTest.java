@@ -352,6 +352,7 @@ public class MissioneDAOTest {
 		missione.setShortDescriptionVeicolo("Ford Fiesta");
 		missione.setGeoPoint(new GeoPoint(41.9027835, 12.4963655));
 		missione.setDistanza("353 Km");
+		missione.setShortUser("Salvia Vito");
 		DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
 		dati.setAnticipazioniMonetarie(true);
 		dati.setMandatoCNR("AA11");
@@ -402,6 +403,7 @@ public class MissioneDAOTest {
 		missione.setOggetto("Conferenza");
 		missione.setLocalita("Milano");
 		missione.setIdUser("01");
+		missione.setShortUser("Salvia Vito");
 		missione.setResponsabileGruppo("01");
 		missione.setShortResponsabileGruppo("Salvia Vito");
 		missione.setStato(StatoEnum.PRESA_IN_CARICO);
@@ -419,6 +421,7 @@ public class MissioneDAOTest {
 		missione.getDatiPeriodoMissione().setInizioMissione(new DateTime(2015, 02, 11, 13, 14, DateTimeZone.UTC));
 		missione.getDatiPeriodoMissione().setFineMissione(new DateTime(2015, 02, 15, 13, 14, DateTimeZone.UTC));
 		missione.setIdUser("02");
+		missione.setShortUser("Franco Luigi");
 		missione.setResponsabileGruppo("01");
 		missione.setShortResponsabileGruppo("Salvia Vito");
 		missione.setStato(StatoEnum.APPROVATA);
