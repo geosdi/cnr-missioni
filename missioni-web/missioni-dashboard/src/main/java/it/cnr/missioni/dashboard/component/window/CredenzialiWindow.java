@@ -85,8 +85,8 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-		BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
-		User user = beanItem.getBean();
+//		BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
+//		User user = beanItem.getBean();
 
 		usernameField = (TextField) fieldGroup.buildAndBind("Username", "credenziali.username");
 		
@@ -174,6 +174,11 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 
 		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
 		ok.addClickListener(new ClickListener() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -3753680701483343820L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 
