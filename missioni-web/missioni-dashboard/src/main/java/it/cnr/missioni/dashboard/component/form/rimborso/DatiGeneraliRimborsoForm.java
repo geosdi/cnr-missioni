@@ -40,6 +40,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 	private TextField totKmField;
 	private TextField mandatoPagamentoField;
 	private CheckBox pagataField;
+	private TextField totaleDovutoField;
 	private Label labelTotRimborsoKm = new Label("Tot. Rimborso km: ");
 
 	private Missione missione;
@@ -71,9 +72,12 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 
 		if (isAdmin || modifica) {
 			mandatoPagamentoField = (TextField) getFieldGroup().buildAndBind("Mandato di Pagamento", "mandatoPagamento");
-			pagataField = (CheckBox) getFieldGroup().buildAndBind("pagata", "pagata", CheckBox.class);
+			pagataField = (CheckBox) getFieldGroup().buildAndBind("Pagata", "pagata", CheckBox.class);
+			totaleDovutoField = (TextField) getFieldGroup().buildAndBind("Tot.Dovuto", "totaleDovuto");
+
 			addComponent(pagataField);
 			addComponent(mandatoPagamentoField);
+			addComponent(totaleDovutoField);
 
 		}
 		addComponent(avvisoPagamentoField);
@@ -81,8 +85,11 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		if (mezzoProprio) {
 			addComponent(totKmField);
 			addComponent(labelTotRimborsoKm);
-
+			if(modifica){
+				setTotaleRimborsoKM();
+			}
 		}
+
 
 		if (missione.isMissioneEstera()) {
 			Label l = new Label("<b>GG all'estero:</b> " + this.days + "\t<b>Tot. lordo TAM:</b> "
@@ -94,6 +101,25 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		}
 		addListener();
 		addValidator();
+	}
+	
+	private void  setTotaleRimborsoKM(){
+		try {
+			RimborsoKmStore rimborsoKmStore = ClientConnector
+					.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+			if (rimborsoKmStore.getTotale() > 0) {
+
+				NumberFormat f = NumberFormat.getInstance();
+				double number = f.parse(totKmField.getValue()).doubleValue();
+
+				setTotRimborsoKm(number * rimborsoKmStore.getRimborsoKm().get(0).getValue());
+
+			}
+			labelTotRimborsoKm.setValue("Tot. Rimborso km: " + getTotRimborsoKm());
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
 	}
 
 	public void addListener() {
@@ -107,23 +133,24 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
+				setTotaleRimborsoKM();
 
-				try {
-					RimborsoKmStore rimborsoKmStore = ClientConnector
-							.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
-					if (rimborsoKmStore.getTotale() > 0) {
-
-						NumberFormat f = NumberFormat.getInstance();
-						double number = f.parse(totKmField.getValue()).doubleValue();
-
-						setTotRimborsoKm(number * rimborsoKmStore.getRimborsoKm().get(0).getValue());
-
-					}
-					labelTotRimborsoKm.setValue("Tot. Rimborso km: " + getTotRimborsoKm());
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
-				}
+//				try {
+//					RimborsoKmStore rimborsoKmStore = ClientConnector
+//							.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+//					if (rimborsoKmStore.getTotale() > 0) {
+//
+//						NumberFormat f = NumberFormat.getInstance();
+//						double number = f.parse(totKmField.getValue()).doubleValue();
+//
+//						setTotRimborsoKm(number * rimborsoKmStore.getRimborsoKm().get(0).getValue());
+//
+//					}
+//					labelTotRimborsoKm.setValue("Tot. Rimborso km: " + getTotRimborsoKm());
+//				} catch (Exception e) {
+//					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+//							Type.ERROR_MESSAGE);
+//				}
 			}
 
 		});
@@ -173,6 +200,22 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 				public void validate(Object value) throws InvalidValueException {
 					if ((value == null || ((String) value).isEmpty()) && pagataField.getValue())
 						throw new InvalidValueException(Utility.getMessage("mandato_pagamento_error"));
+
+				}
+
+			});
+			
+			totaleDovutoField.addValidator(new Validator() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 419080222173379095L;
+
+				@Override
+				public void validate(Object value) throws InvalidValueException {
+					if ((value == null || ((String) value).isEmpty()) && pagataField.getValue())
+						throw new InvalidValueException(Utility.getMessage("totale_dovuto_error"));
 
 				}
 
