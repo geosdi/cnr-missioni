@@ -120,7 +120,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoMissioniTable = new ElencoMissioniTable();
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder();
 
 		this.elencoMissioniTable.addItemClickListener(new ItemClickEvent.ItemClickListener() {
 			/**
