@@ -35,7 +35,7 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 	private String multiMatchValue;
 	private String fieldExist;
 	private String fieldNotExist;
-	private String fieldMultiMatch = "missione.localita,missione.oggetto,missione.id";
+	private String fieldMultiMatch = "missione.localita,missione.oggetto,missione.id,missione.shortUser";
 	private int size = 10;
 	private int from = 0;
 	private String fieldSort = SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO;

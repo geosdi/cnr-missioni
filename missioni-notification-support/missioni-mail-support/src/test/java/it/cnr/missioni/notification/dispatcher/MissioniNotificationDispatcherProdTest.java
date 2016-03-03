@@ -143,7 +143,7 @@ public class MissioniNotificationDispatcherProdTest {
     	
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildUpdateRimborsoMessage("Vito", "Salvia", "vito.salvia@gmail.com",
-                		UUID.randomUUID().toString(),"Si","01", pdfBuilder));
+                		UUID.randomUUID().toString(),"Si","01", new Double(130),pdfBuilder));
         Thread.sleep(6000);
     }
     

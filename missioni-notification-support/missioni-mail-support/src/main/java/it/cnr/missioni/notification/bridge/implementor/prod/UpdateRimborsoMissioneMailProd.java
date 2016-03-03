@@ -45,6 +45,7 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
             String rimborsoID = (String) message.getMessageParameters().get("rimborsoID");
             String pagata = (String) message.getMessageParameters().get("pagata");
             String mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
+            Double totaleDovuto = (Double) message.getMessageParameters().get("totaleDovuto");
 
             PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
 
@@ -58,6 +59,7 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
                 model.put("rimborsoID", rimborsoID);
                 model.put("pagata", pagata);
                 model.put("mandatoPagamento", mandatoPagamento);
+                model.put("totaleDovuto", totaleDovuto);
 
 
                 String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,

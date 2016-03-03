@@ -11,6 +11,9 @@
          <p>
            Mandato di Pagamento : ${mandatoPagamento}.
          </p>
+          p>
+           Totale Dovuto : ${totaleDovuto}.
+         </p>
          <p>
            In allegato il pdf che riepiloga i dati inseriti.
          </p>

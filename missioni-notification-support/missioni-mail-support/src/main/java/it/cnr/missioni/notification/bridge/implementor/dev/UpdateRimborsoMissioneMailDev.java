@@ -29,6 +29,7 @@ public class UpdateRimborsoMissioneMailDev extends MissioniMailDev {
         String rimborsoID = (String) message.getMessageParameters().get("rimborsoID");
         String pagata = (String) message.getMessageParameters().get("pagata");
         String mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
+        Double totaleDovuto = (Double) message.getMessageParameters().get("totaleDovuto");
 
 
         Map model = new HashMap();
@@ -37,6 +38,8 @@ public class UpdateRimborsoMissioneMailDev extends MissioniMailDev {
         model.put("rimborsoID", rimborsoID);
         model.put("stato", pagata);
         model.put("mandatoPagamento", mandatoPagamento);
+        model.put("totaleDovuto", totaleDovuto);
+
         return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 "template/updateRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
     }
