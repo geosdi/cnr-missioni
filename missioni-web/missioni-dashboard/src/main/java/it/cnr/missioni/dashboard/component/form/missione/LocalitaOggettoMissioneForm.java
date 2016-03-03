@@ -74,7 +74,7 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 		
 		oggettoField = (TextField) getFieldGroup().buildAndBind("Oggetto", "oggetto");
 		distanzaField = (TextField) getFieldGroup().buildAndBind("Distanza", "distanza");
-		distanzaField.setReadOnly(true);
+		distanzaField.setEnabled(false);
 
 		listaNazioneField = new ComboBox("Nazione");
 		listaNazioneField.setImmediate(true);
