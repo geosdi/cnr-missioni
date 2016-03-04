@@ -251,7 +251,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		tableFondo.addCell(cellFirmaResponsabile);
 		document.add(tableFondo);
 
-		Paragraph paragraphDirettore = new Paragraph("\n\nIl Direttore\nProf. Vincenzo Lapenna\n");
+		Paragraph paragraphDirettore = new Paragraph("\n\nIl Direttore\Dott. Vincenzo Lapenna\n");
 		paragraphDirettore.setAlignment(Paragraph.ALIGN_RIGHT);
 		document.add(paragraphDirettore);
 
