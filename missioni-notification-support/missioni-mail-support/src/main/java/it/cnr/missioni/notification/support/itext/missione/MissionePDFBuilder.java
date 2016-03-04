@@ -21,9 +21,13 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 	private static final Logger logger = LoggerFactory.getLogger(MissionePDFBuilder.class);
 
-	private Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
-	private Font fontNormal = new Font(Font.FontFamily.TIMES_ROMAN, 9);
-	private Font fontNormal6 = new Font(Font.FontFamily.TIMES_ROMAN, 6);
+//	private Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
+//	private Font fontNormal = new Font(Font.FontFamily.TIMES_ROMAN, 9);
+//	private Font fontNormal6 = new Font(Font.FontFamily.TIMES_ROMAN, 6);
+	private Font fontBold6 = FontFactory.getFont("Times-Roman", 6, Font.BOLD);
+	private Font fontNormal6 = FontFactory.getFont("Times-Roman", 6);
+	private Font fontNormal = FontFactory.getFont("Times-Roman", 9);
+	private Font fontBold = FontFactory.getFont("Times-Roman", 9, Font.BOLD);
 
 	protected MissionePDFBuilder() {
 	}
@@ -251,7 +255,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		tableFondo.addCell(cellFirmaResponsabile);
 		document.add(tableFondo);
 
-		Paragraph paragraphDirettore = new Paragraph("\n\nIl Direttore\Dott. Vincenzo Lapenna\n");
+		Paragraph paragraphDirettore = new Paragraph("\n\nIl Direttore\nDott. Vincenzo Lapenna\n");
 		paragraphDirettore.setAlignment(Paragraph.ALIGN_RIGHT);
 		document.add(paragraphDirettore);
 
@@ -334,24 +338,18 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 				fontNormal);
 
 		document.add(paragraphInformazione);
+		
+		document.add(new Paragraph("Ai sensi di quanto disposto dall'articolo 6 c. 12 del D.L. 78/2010, dalla circolare n.36 del 22/10/2010 del Ministero dell'Economia e delle\n"
+				+ "Finanze - Dipartimento della Ragioneria Generale dello Stato e della delibera della Corte dei COnti a Sezioni Riunite n.8/CONTR/11 del 7\n"
+				+ "febbraio 2011, si allega alla presente la copia dei tariffari forniti dagli esercenti dei trasporti pubblici per le tratte sopra indicate.",fontBold6));
+		
 		document.add(new Paragraph("Il Richiedente\n\n"));
+		
+		document.add(new Paragraph("\n\nNel rispetto delle disposizioni normative in matteria (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. - Dip.tp della\n"
+				+ "ragioneria Generale dello Stato e delibera della Corte dei Conti a Sezioni riunite n. 8/CONTR/11 del 7  febbraio 2011) e trattandosi\n"
+				+ " di una circostanza eccezionale e non ricorrente,si autorizza l'uso del mezzo proprio per le seguenti motivazioni:\n"
+				+ missione.getMotivazioniMezzoProprio(),fontBold6));
 
-		Chunk underline4 = new Chunk(
-				"Si autorizza l' uso del mezzo proprio, ai sensi dell' art.9 della Legge 417/78 per le seguenti motivazioni");
-
-		underline4.setUnderline(0.2f, -2f);
-		Paragraph paragraphUnderline4 = new Paragraph("\n\n", fontBold);
-		paragraphUnderline4.add(underline4);
-		paragraphUnderline4.setAlignment(Element.ALIGN_CENTER);
-		document.add(paragraphUnderline4);
-
-		Chunk underlineM = new Chunk("Motivazioni");
-		underlineM.setUnderline(0.2f, -2f);
-		Paragraph paragraphUnderlineM = new Paragraph("\n\n", fontBold);
-		paragraphUnderlineM.add(underlineM);
-		document.add(paragraphUnderlineM);
-
-		document.add(new Paragraph(missione.getMotivazioniMezzoProprio(), fontBold));
 
 		Paragraph paragraphDirettore = new Paragraph("Visto si Autorizza\t\nIl Dirigente");
 		paragraphDirettore.setAlignment(Paragraph.ALIGN_RIGHT);
