@@ -159,10 +159,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 
-		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
-				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-				missione.getRimborso().getNumeroOrdine().toString(), missione.getRimborso().isPagata() ? "Si": "No",missione.getRimborso().getMandatoPagamento()!= null ? missione.getRimborso().getMandatoPagamento() : "",
-				missione.getRimborso().getTotaleDovuto(),RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+//		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
+//				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
+//				missione.getRimborso().getNumeroOrdine().toString(), missione.getRimborso().isPagata() ? "Si": "No",missione.getRimborso().getMandatoPagamento()!= null ? missione.getRimborso().getMandatoPagamento() : "",
+//				missione.getRimborso().getTotaleDovuto(),RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
 
 		return Boolean.TRUE;
 	}
