@@ -220,9 +220,11 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 		for (Field<?> f : getFieldGroup().getFields()) {
 			((AbstractField<?>) f).setValidationVisible(true);
 		}
-		localitaField.validate();
+		listaLocalitaField.setValidationVisible(true);
+		listaLocalitaField.validate();
 		oggettoField.validate();
-		listaNazioneField.validate();
+		if (bean.isMissioneEstera()) 
+			listaNazioneField.validate();
 
 		bean.setOggetto(oggettoField.getValue());
 		bean.setLocalita(listaLocalitaField.getItemCaption(listaLocalitaField.getValue()));
