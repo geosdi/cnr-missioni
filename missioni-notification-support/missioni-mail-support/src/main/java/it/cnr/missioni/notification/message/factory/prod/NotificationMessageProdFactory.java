@@ -1,5 +1,6 @@
 package it.cnr.missioni.notification.message.factory.prod;
 
+import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
@@ -27,8 +28,8 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 */
 	@Override
 	public AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
-			String cnrMissioniEmail, PDFBuilder pdfBuilder) {
-		return new AddMissioneMessage(userName, userSurname, userEmail, cnrMissioniEmail, pdfBuilder);
+			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder) {
+		return new AddMissioneMessage(userName, userSurname, userEmail, responsabileMail, cnrMissioniEmail, pdfBuilder);
 	}
 
 	/**
@@ -67,13 +68,45 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 * @param userEmail
 	 * @param missioneID
 	 * @param pdfBuilder
-	 * @return 
+	 * @return
 	 * @return
 	 */
 	@Override
-	public  UpdateRimborsoMessage buildUpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-			String rimborsoID,String pagata,String avvisoPagamento,Double importoDovuto, PDFBuilder pdfBuilder) {
-		return new UpdateRimborsoMessage(userName, userSurname, userEmail, rimborsoID,pagata,avvisoPagamento,importoDovuto, pdfBuilder);
+	public UpdateRimborsoMessage buildUpdateRimborsoMessage(String userName, String userSurname, String userEmail,
+			String rimborsoID, String pagata, String avvisoPagamento, Double importoDovuto, PDFBuilder pdfBuilder) {
+		return new UpdateRimborsoMessage(userName, userSurname, userEmail, rimborsoID, pagata, avvisoPagamento,
+				importoDovuto, pdfBuilder);
+	}
+
+	/**
+	 * 
+	 * @param userName
+	 * @param userSurname
+	 * @param userEmail
+	 * @param cnrMissioniEmail
+	 * @param pdfBuilder
+	 * @return
+	 */
+	@Override
+	public AddAnticipoPagamentoMessage buildAddAnticipoPagamentoMessage(String userName, String userSurname,
+			String userEmail, String cnrMissioniEmail,String missioneID, PDFBuilder pdfBuilder) {
+		return new AddAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder);
+	}
+
+	/**
+	 * @param userName
+	 * @param userSurname
+	 * @param userEmail
+	 * @param cnrMissioniEmail
+	 * @param missioneID
+	 * @param pdfBuilder
+	 * @return
+	 */
+	@Override
+	public AddAnticipoPagamentoMessage buildUpdateAnticipoPagamentoMessage(String userName, String userSurname,
+			String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
+		return new AddAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder);
+
 	}
 
 }

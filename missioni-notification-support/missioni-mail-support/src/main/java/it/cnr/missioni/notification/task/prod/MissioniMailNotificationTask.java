@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
  */
 @Production
 @Component(value = "missioniMailNotificationTask")
-public class MissioniMailNotificationTask implements IMissioniMailNotificationTask<IMissioniMessagePreparator, IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
+public class MissioniMailNotificationTask implements IMissioniMailNotificationTask<IMissioniMessagePreparator[], IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
 
     @GeoPlatformLog
     private static Logger logger;
@@ -40,18 +40,26 @@ public class MissioniMailNotificationTask implements IMissioniMailNotificationTa
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@ {} start Notification "
                         + "Task {}\n", Thread.currentThread().getName(),
                 getAsyncTaskType());
-        IMissioniMessagePreparator missioniMessagePreparator = null;
+        IMissioniMessagePreparator[] missioniMessagePreparator = null;
 
         try {
             missioniMessagePreparator = prepareMessage(theMissioneNotificationMessage);
-            this.gpMailSpringSender.send(missioniMessagePreparator.getMimeMessagePreparator());
+
+            for(int i = 0; i<missioniMessagePreparator.length;i++){
+                this.gpMailSpringSender.send(missioniMessagePreparator[i].getMimeMessagePreparator());
+            }
         } catch (Exception ex) {
             logger.error("####################MAIL_ASYNC_TASK_EXCEPTION : {}\n", ex.getMessage());
             ex.printStackTrace();
             return new AsyncResult<>(Boolean.FALSE);
         } finally {
             if (missioniMessagePreparator != null) {
-                missioniMessagePreparator.deleteAttachments();
+            	
+                for(int i = 0; i<missioniMessagePreparator.length;i++){
+                    missioniMessagePreparator[i].deleteAttachments();
+
+                }
+            	
             }
         }
 
@@ -60,8 +68,9 @@ public class MissioniMailNotificationTask implements IMissioniMailNotificationTa
         return new AsyncResult<>(Boolean.TRUE);
     }
 
+
     @Override
-    public IMissioniMessagePreparator prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
+    public IMissioniMessagePreparator[] prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
         return ((MissioniMailImplementor<IMissioniMessagePreparator>) missioniMailImplementor
                 .getImplementorByKey(theMissioneNotificationMessage.getNotificationMessageType()))
                 .prepareMessage(theMissioneNotificationMessage, gpSpringVelocityEngine, gpMailSpringDetail);

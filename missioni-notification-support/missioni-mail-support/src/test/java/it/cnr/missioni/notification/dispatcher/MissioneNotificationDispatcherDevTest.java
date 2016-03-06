@@ -1,6 +1,7 @@
 package it.cnr.missioni.notification.dispatcher;
 
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
+import it.cnr.missioni.notification.support.itext.anticipoPagamento.AnticipoPagamentoPDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
@@ -54,7 +55,7 @@ public class MissioneNotificationDispatcherDevTest {
     @Test
     public void dispatchAddMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
-                .buildAddMissioneMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
+                .buildAddMissioneMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com","",
                         "vito.salvia@gmail.com", MissionePDFBuilder.newPDFBuilder()));
     }
 
@@ -68,7 +69,7 @@ public class MissioneNotificationDispatcherDevTest {
     @Test
     public void dispatchAddRimborsoMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
-                .buildAddRimborsoMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
+                .buildAddRimborsoMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com",
                         "vito.salvia@gmail.com", UUID.randomUUID().toString(), RimborsoPDFBuilder.newPDFBuilder()));
     }
     
@@ -76,6 +77,20 @@ public class MissioneNotificationDispatcherDevTest {
     public void dispatchUpdateRimborsoMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
                 .buildUpdateRimborsoMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com", UUID.randomUUID().toString(),"Si","01",new Double(130), RimborsoPDFBuilder.newPDFBuilder()));
+    }
+    
+    @Test
+    public void dispatchAddAnticipoPagamentoMailDevTest() throws Exception {
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
+                .buildAddAnticipoPagamentoMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com",
+                        "vito.salvia@gmail.com","01", AnticipoPagamentoPDFBuilder.newPDFBuilder()));
+    }
+    
+    @Test
+    public void dispatchUpdateAnticipoPagamentoMailDevTest() throws Exception {
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
+                .buildUpdateAnticipoPagamentoMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com",
+                        "vito.salvia@gmail.com","01", AnticipoPagamentoPDFBuilder.newPDFBuilder()));
     }
     
 }

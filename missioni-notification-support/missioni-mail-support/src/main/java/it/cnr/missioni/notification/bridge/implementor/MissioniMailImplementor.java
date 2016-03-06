@@ -1,8 +1,9 @@
 package it.cnr.missioni.notification.bridge.implementor;
 
-import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
+
+import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -10,14 +11,14 @@ import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
  */
 public interface MissioniMailImplementor<MESSAGE extends Object> extends Implementor {
 
-    /**
+	   /**
      * @param message
      * @param velocityEngine
      * @param gpMailDetail
      * @return {@link MESSAGE}
      * @throws Exception
      */
-    MESSAGE prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    MESSAGE[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception;
 
     default String mailImplementorInfo() {
@@ -33,8 +34,12 @@ public interface MissioniMailImplementor<MESSAGE extends Object> extends Impleme
     enum NotificationMessageType implements ImplementorKey {
         AGGIUNGI_MISSIONE_MAIL_PROD("AGGIUNGI_MISSIONE_MAIL_PROD"),
         AGGIUNGI_MISSIONE_MAIL_DEV("AGGIUNGI_MISSIONE_MAIL_DEV"),
+        AGGIUNGI_ANTICIPO_PAGAMENTO_MAIL_DEV("AGGIUNGI_ANTICIPO_PAGAMENTO_MAIL_DEV"),
+        AGGIUNGI_ANTICIPO_PAGAMENTO_MAIL_PROD("AGGIUNGI_ANTICIPO_PAGAMENTO_MAIL_PROD"),
         MODIFICA_MISSIONE_MAIL_PROD("MODIFICA_MISSIONE_MAIL_PROD"),
         MODIFICA_MISSIONE_MAIL_DEV("MODIFICA_MISSIONE_MAIL_DEV"),
+        MODIFICA_ANTICIPO_PAGAMENTO_MAIL_DEV("MODIFICA_ANTICIPO_PAGAMENTO_MAIL_DEV"),
+        MODIFICA_ANTICIPO_PAGAMENTO_MAIL_PROD("MODIFICA_ANTICIPO_PAGAMENTO_MAIL_PROD"),
         RICHIESTA_RIMBORSO_MISSIONE_MAIL_PROD("RICHIESTA_RIMBORSO_MISSIONE_MAIL_PROD"),
         RICHIESTA_RIMBORSO_MISSIONE_MAIL_DEV("RICHIESTA_RIMBORSO_MISSIONE_MAIL_DEV"),
         RIMBORSO_MISSIONE_EFFETTUATO_MAIL_PROD("RIMBORSO_MISSIONE_EFFETTUATO_MAIL_PROD"),

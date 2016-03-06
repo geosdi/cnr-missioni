@@ -28,6 +28,7 @@ import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.Anagrafica;
@@ -41,6 +42,7 @@ import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
+import it.cnr.missioni.notification.support.itext.anticipoPagamento.AnticipoPagamentoPDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 
@@ -85,8 +87,8 @@ public class MissioniNotificationDispatcherProdTest {
     @Test
     public void dispatchAddMissioneMailProdTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildAddMissioneMessage("Giuseppe", "La Scaleia", "glascaleia@gmail.com",
-                        "francesco.izzi@gmail.com", MissionePDFBuilder
+                .buildAddMissioneMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com","vito.salvia@alice.it",
+                        "vito.salvia@gmail.com", MissionePDFBuilder
                                 .newPDFBuilder()
                                 .withUser(buildUserTest())
                                 .withMissione(buildMissioneTest())));
@@ -127,7 +129,7 @@ public class MissioniNotificationDispatcherProdTest {
 
     	
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com",
+                .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com","",
                         "vito.salvia@gmail.com", pdfBuilder));
         Thread.sleep(6000);
     }
@@ -147,6 +149,22 @@ public class MissioniNotificationDispatcherProdTest {
         Thread.sleep(6000);
     }
     
+    @Test
+    public void dispatchAddAnticipoPagamentoMailProdTest() throws Exception {
+    	
+    	PDFBuilder pdfBuilder = AnticipoPagamentoPDFBuilder
+                .newPDFBuilder();
+    	    	pdfBuilder.withUser(buildUserTest())
+    	    	.withFile(new File("./target/AnticipoPagamento.pdf"))
+                .withMissione(buildMissioneTest());
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
+                .buildAddAnticipoPagamentoMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
+                		UUID.randomUUID().toString(),pdfBuilder));
+        Thread.sleep(6000);
+    }
+    
+
+    
     Veicolo buildVeicoloTest(){
     	Veicolo v = new Veicolo();
     	v.setTipo("01");
@@ -155,6 +173,8 @@ public class MissioniNotificationDispatcherProdTest {
     	v.setTipo("FORD");
     	return v;
     }
+    
+
     
     User buildUserTest() {
         User user = new User();
@@ -222,21 +242,16 @@ public class MissioniNotificationDispatcherProdTest {
         missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
         missione.setMezzoProprio(true);
         missione.setDistanza("100.00 Km");
-        missione.setMotivazioniMezzoProprio("prova");
-        DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
-        dati.setAnticipazioniMonetarie(true);
-        dati.setMandatoCNR("AA11");
-        dati.setRimborsoDaTerzi(false);
-        dati.setSpeseMissioniAnticipate(102.00);
-        missione.setDatiAnticipoPagamenti(dati);
+        missione.setMotivazioni("prova");
         DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
         datiPeriodoMissione.setInizioMissione(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
         datiPeriodoMissione.setFineMissione(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
         missione.setDatiPeriodoMissione(datiPeriodoMissione);
-
+        
         DatiMissioneEstera datiMissioneEstera = new DatiMissioneEstera();
         datiMissioneEstera.setAttraversamentoFrontieraAndata(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
         datiMissioneEstera.setAttraversamentoFrontieraRitorno(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
+        datiMissioneEstera.setTrattamentoMissioneEsteraEnum(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         missione.setDatiMissioneEstera(datiMissioneEstera);
 
         Fattura fattura = new Fattura();

@@ -1,0 +1,11 @@
+<html>
+<body>
+    <h3>CNR : Sistema Missioni</h3>
+    <div>
+        <p>Gentile ${userName} ${userSurname}, l'anticipo di pagamento
+        per la missione con ID : ${missioneID} è stata modificata. In allegato
+           il pdf che riepiloga i dati inseriti.
+        </p>
+    </div>
+</body>
+</html>

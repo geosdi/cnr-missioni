@@ -69,7 +69,7 @@ public class MissioniNotificationMailTest {
                         gpMailSpringDetail.getFromName());
                 message.setReplyTo(gpMailSpringDetail.getReplayToName());
                 message.setSubject("Test Missioni");
-                message.setTo(new String[]{"giuseppe.lascaleia@geosdi.org", "vito.salvia@gmail.com"});
+                message.setTo(new String[]{"vito.salvia@gmail.com", "vito.salvia@gmail.com"});
                 message.setText("This is a test");
             }
 

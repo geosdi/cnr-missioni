@@ -1,6 +1,7 @@
 package it.cnr.missioni.notification.message.factory.dev;
 
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
+import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
@@ -22,14 +23,15 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 	 * @param userName
 	 * @param userSurname
 	 * @param userEmail
+	 * @param responsabileMail
 	 * @param cnrMissioniEmail
 	 * @param pdfBuilder
 	 * @return {@link String AddMissioneMessage}
 	 */
 	@Override
-	public AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
+	public AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,String responsabileMail,
 			String cnrMissioniEmail, PDFBuilder pdfBuilder) {
-		return new AddMissioneMessage(userName, userSurname, userEmail, cnrMissioniEmail, pdfBuilder) {
+		return new AddMissioneMessage(userName, userSurname, userEmail,responsabileMail, cnrMissioniEmail, pdfBuilder) {
 
 			/**
 			 * @return {@link MissioniMailImplementor.NotificationMessageType}
@@ -104,4 +106,55 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 			}
 		};
 	}
+	
+	/**
+	 * 
+	 * @param userName
+	 * @param userSurname
+	 * @param userEmail
+	 * @param cnrMissioniEmail
+	 * @param pdfBuilder
+	 * @return
+	 */
+	@Override
+	public AddAnticipoPagamentoMessage buildAddAnticipoPagamentoMessage(String userName, String userSurname, String userEmail,
+			String cnrMissioniEmail,String missioneID, PDFBuilder pdfBuilder) {
+		return new AddAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder) {
+
+			/**
+			 * @return {@link MissioniMailImplementor.NotificationMessageType}
+			 */
+			@Override
+			public MissioniMailImplementor.NotificationMessageType getNotificationMessageType() {
+				return MissioniMailImplementor.NotificationMessageType.AGGIUNGI_ANTICIPO_PAGAMENTO_MAIL_DEV;
+			}
+		};
+	}
+
+	/**
+	 * @param userName
+	 * @param userSurname
+	 * @param userEmail
+	 * @param cnrMissioniEmail
+	 * @param missioneID
+	 * @param pdfBuilder
+	 * @return
+	 */
+	@Override
+	public AddAnticipoPagamentoMessage buildUpdateAnticipoPagamentoMessage(String userName, String userSurname,
+			String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
+		return new AddAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder) {
+
+			/**
+			 * @return {@link MissioniMailImplementor.NotificationMessageType}
+			 */
+			@Override
+			public MissioniMailImplementor.NotificationMessageType getNotificationMessageType() {
+				return MissioniMailImplementor.NotificationMessageType.MODIFICA_ANTICIPO_PAGAMENTO_MAIL_DEV;
+			}
+		};
+	}
+	
+	
+	
 }

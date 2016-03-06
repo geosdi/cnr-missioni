@@ -1,7 +1,10 @@
 package it.cnr.missioni.notification.task.dev;
 
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
+import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
+import it.cnr.missioni.notification.task.IMissioniMailNotificationTask.IMissioneNotificationMessage;
+
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.configurator.bootstrap.Develop;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
@@ -19,7 +22,7 @@ import java.util.concurrent.Future;
  */
 @Develop
 @Component(value = "missioniMailNotificationDevTask")
-public class MissioniMailNotificationDevTask implements IMissioniMailNotificationTask<String, IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
+public class MissioniMailNotificationDevTask implements IMissioniMailNotificationTask<String[], IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
 
     @GeoPlatformLog
     private static Logger logger;
@@ -39,7 +42,7 @@ public class MissioniMailNotificationDevTask implements IMissioniMailNotificatio
     }
 
     @Override
-    public String prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
+    public String[] prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
         return ((MissioniMailImplementor<String>) missioniMailImplementor
                 .getImplementorByKey(theMissioneNotificationMessage.getNotificationMessageType()))
                 .prepareMessage(theMissioneNotificationMessage, gpSpringVelocityEngine, gpMailSpringDetail);
