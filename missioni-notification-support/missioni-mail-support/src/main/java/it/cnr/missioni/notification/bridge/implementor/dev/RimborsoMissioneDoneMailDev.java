@@ -18,7 +18,7 @@ public class RimborsoMissioneDoneMailDev extends MissioniMailDev {
      * @throws Exception
      */
     @Override
-    public String prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public String[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
         return null;
     }

@@ -22,7 +22,7 @@ public class UpdateMissioneMailDev extends MissioniMailDev {
      * @throws Exception
      */
     @Override
-    public String prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public String[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
         String userName = (String) message.getMessageParameters().get("userName");
         String userSurname = (String) message.getMessageParameters().get("userSurname");
@@ -35,9 +35,10 @@ public class UpdateMissioneMailDev extends MissioniMailDev {
         model.put("userSurname", userSurname);
         model.put("missioneID", missioneID);
         model.put("stato", stato);
-
-        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+        String[] lista = new String[1];
+        lista[0] = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 "template/updateMissioneMailNotification.html.vm", "UTF-8", model);
+        return lista;
     }
 
     /**

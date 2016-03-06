@@ -21,6 +21,14 @@ import java.util.Map;
  * @email giuseppe.lascaleia@geosdi.org
  */
 public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
+	
+    private String userName;
+    private String userSurname;
+    private String userEmail;
+    private String cnrMissioniEmail;
+    private String missioneID;
+    private PDFBuilder pdfBuilder;
+    private File file;
 
     /**
      * @param message
@@ -30,18 +38,24 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public IMissioniMessagePreparator[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-        IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
-        missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
-
-            String userName = (String) message.getMessageParameters().get("userName");
-            String userSurname = (String) message.getMessageParameters().get("userSurname");
-            String userEmail = (String) message.getMessageParameters().get("userEmail");
-            String cnrMissioniEmail = (String) message.getMessageParameters().get("cnrMissioniEmail");
-            String missioneID = (String) message.getMessageParameters().get("missioneID");
-            PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
-
+    	
+        IMissioniMessagePreparator[] lista = new IMissioniMessagePreparator[2];
+         this.userName = (String) message.getMessageParameters().get("userName");
+         this.userSurname = (String) message.getMessageParameters().get("userSurname");
+         this.userEmail = (String) message.getMessageParameters().get("userEmail");
+         this.cnrMissioniEmail = (String) message.getMessageParameters().get("cnrMissioniEmail");
+         this.missioneID = (String) message.getMessageParameters().get("missioneID");
+         this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
+         
+         Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userName), ".pdf");
+         this.file = tempFilePath.toFile();
+         pdfBuilder.withFile(file);
+         pdfBuilder.build();
+         
+        IMissioniMessagePreparator missioniMessagePreparatorUser = super.createMissioniMessagePreparator();
+        missioniMessagePreparatorUser.setMimeMessagePreparator(new MimeMessagePreparator() {
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
@@ -51,21 +65,41 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
                 model.put("userSurname", userSurname);
                 model.put("missioneID", missioneID);
                 String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                        "template/addRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
+                        "template/addRimborsoMailNotificationUser.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
-
-                Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userName), ".pdf");
-                File file = tempFilePath.toFile();
-
-                pdfBuilder.withFile(file);
-                pdfBuilder.build();
-                message.addAttachment(file.getName(), file);
-                missioniMessagePreparator.addAttachment(file);
+                createAttachment(message, missioniMessagePreparatorUser);
 
             }
         });
-        return missioniMessagePreparator;
+        lista[0] = missioniMessagePreparatorUser;
+        
+        IMissioniMessagePreparator missioniMessagePreparatorAdmin = super.createMissioniMessagePreparator();
+        missioniMessagePreparatorAdmin.setMimeMessagePreparator(new MimeMessagePreparator() {
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
+                message.setTo(new String[]{userEmail, cnrMissioniEmail});
+                Map model = new HashMap();
+                model.put("userName", userName);
+                model.put("userSurname", userSurname);
+                model.put("missioneID", missioneID);
+                String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                        "template/addRimborsoMailNotificationAdmin.html.vm", "UTF-8", model);
+                message.setText(messageText, Boolean.TRUE);
+                createAttachment(message, missioniMessagePreparatorAdmin);
+
+            }
+        });
+        lista[1] = missioniMessagePreparatorAdmin;
+        
+        return lista;
     }
+    
+	private void createAttachment(MimeMessageHelper message, IMissioniMessagePreparator missioniMessagePreparator)
+			throws Exception {
+        message.addAttachment(file.getName(), file);
+        missioniMessagePreparator.addAttachment(file);
+	}
 
     /**
      * @return {@link ImplementorKey}

@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-public class RequestMissioneRimborsoMailDev extends MissioniMailDev {
+public class UpdateAnticipoPagamentoMailDev extends MissioniMailDev {
 
     /**
      * @param message
@@ -28,13 +28,14 @@ public class RequestMissioneRimborsoMailDev extends MissioniMailDev {
         String userSurname = (String) message.getMessageParameters().get("userSurname");
         String missioneID = (String) message.getMessageParameters().get("missioneID");
 
+
         Map model = new HashMap();
         model.put("userName", userName);
         model.put("userSurname", userSurname);
         model.put("missioneID", missioneID);
         String[] lista = new String[1];
         lista[0] = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                "template/addRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
+                "template/updateAnticipoPagamentoMailMotificationUser.html.vm", "UTF-8", model);
         return lista;
     }
 
@@ -43,7 +44,7 @@ public class RequestMissioneRimborsoMailDev extends MissioniMailDev {
      */
     @Override
     public ImplementorKey getKey() {
-        return NotificationMessageType.RICHIESTA_RIMBORSO_MISSIONE_MAIL_DEV;
+        return NotificationMessageType.MODIFICA_ANTICIPO_PAGAMENTO_MAIL_DEV;
     }
 
     /**

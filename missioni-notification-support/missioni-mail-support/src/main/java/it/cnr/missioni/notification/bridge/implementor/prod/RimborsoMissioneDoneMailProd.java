@@ -20,7 +20,7 @@ public class RimborsoMissioneDoneMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public IMissioniMessagePreparator[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
         return null;
     }

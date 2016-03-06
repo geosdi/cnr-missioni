@@ -171,13 +171,11 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		cellLocalita.setBorder(Rectangle.NO_BORDER);
 		tableLocalita.addCell(cellLocalita);
 		PdfPCell cellLocalita2 = new PdfPCell(new Paragraph(missione.getLocalita(), fontNormal));
-		// cellOggetto2.setNoWrap(false);
 		tableLocalita.addCell(cellLocalita2);
 		PdfPCell cellDistanza = new PdfPCell(new Paragraph("Distanza dalla sede di servizio km:", fontBold));
 		cellDistanza.setBorder(Rectangle.NO_BORDER);
 		tableLocalita.addCell(cellDistanza);
 		PdfPCell cellDistanza2 = new PdfPCell(new Paragraph("" + missione.getDistanza(), fontNormal));
-		// cellOggetto2.setNoWrap(false);
 		tableLocalita.addCell(cellDistanza2);
 
 		PdfPCell cellDisposizioni = new PdfPCell(new Paragraph("Altre disposizioni:", fontBold));
@@ -187,10 +185,25 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		String tipoVeicolo = missione.isMezzoProprio() ? "Veicolo Proprio" : "Veicolo CNR";
 
 		PdfPCell cellDisposizioni2 = new PdfPCell(new Paragraph(tipoVeicolo + " - "
-				+ (missione.getMotivazioniMezzoProprio() != null ? missione.getMotivazioniMezzoProprio() : "" ),
+				+ (missione.getMotivazioni() != null ? missione.getMotivazioni() : "" ),
 				fontNormal));
 		// cellOggetto2.setNoWrap(false);
 		tableLocalita.addCell(cellDisposizioni2);
+		
+		if(missione.isMissioneEstera()){
+			PdfPCell cellMissioneEstera = new PdfPCell(new Paragraph("Tipologia Rimborso", fontBold));
+			cellMissioneEstera.setBorder(Rectangle.NO_BORDER);
+			tableLocalita.addCell(cellMissioneEstera);
+			PdfPCell cellMissioneEstera2 = new PdfPCell(new Paragraph(missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato(), fontNormal));
+			tableLocalita.addCell(cellMissioneEstera2);
+		}
+		if(missione.getTipoVeicolo().equals("NOLEGGIO")){
+			PdfPCell cellNoleggio = new PdfPCell(new Paragraph("Noleggio Auto", fontBold));
+			cellNoleggio.setBorder(Rectangle.NO_BORDER);
+			tableLocalita.addCell(cellNoleggio);
+			PdfPCell cellNoleggio2 = new PdfPCell(new Paragraph(missione.getMotivazioni(), fontNormal));
+			tableLocalita.addCell(cellNoleggio2);
+		}
 		document.add(tableLocalita);
 
 		Paragraph paragraphObbligo = new Paragraph();
@@ -226,15 +239,15 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		paragraphData.add("\t");
 		document.add(paragraphData);
 
-		Chunk chunkUnderline = new Chunk("Le spese non documentate non possono venire rimborsate."
-				+ "Per spese effettuate in valuta, ove non sia allegata distinta bancaria di cambio, " + "il rimborso "
-				+ new Character('\u00E8') + " disposto al cambio ufficiale UIC " + "o cambio di parit"
-				+ new Character('\u00E0') + " vigente per la valuta all" + new Character('\u2032')
-				+ " epoca in cui le spese vennero sostenute.");
-		chunkUnderline.setUnderline(0.2f, -2f);
-		Paragraph paragraphUnderline = new Paragraph("\n", fontBold);
-		paragraphUnderline.add(chunkUnderline);
-		document.add(paragraphUnderline);
+//		Chunk chunkUnderline = new Chunk("Le spese non documentate non possono venire rimborsate."
+//				+ "Per spese effettuate in valuta, ove non sia allegata distinta bancaria di cambio, " + "il rimborso "
+//				+ new Character('\u00E8') + " disposto al cambio ufficiale UIC " + "o cambio di parit"
+//				+ new Character('\u00E0') + " vigente per la valuta all" + new Character('\u2032')
+//				+ " epoca in cui le spese vennero sostenute.");
+//		chunkUnderline.setUnderline(0.2f, -2f);
+//		Paragraph paragraphUnderline = new Paragraph("\n", fontBold);
+//		paragraphUnderline.add(chunkUnderline);
+//		document.add(paragraphUnderline);
 
 		document.add(new Paragraph("\n"));
 
@@ -248,9 +261,9 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		paragraphFondo.add("\n");
 		paragraphFondo.add(new Chunk("CUP:", fontNormal));
 		paragraphFondo.add("\n");
-		paragraphFondo.add(new Chunk("Responsabile Gruppo:" + missione.getShortResponsabileGruppo(), fontNormal));
+		paragraphFondo.add(new Chunk("A seguito di:" + missione.getShortUserSeguito(), fontNormal));
 		tableFondo.addCell(new PdfPCell(paragraphFondo));
-		PdfPCell cellFirmaResponsabile = new PdfPCell(new Paragraph("Firma Responsabile fondo:", fontBold));
+		PdfPCell cellFirmaResponsabile = new PdfPCell(new Paragraph("Responsabile fondo:"+missione.getShortResponsabileGruppo(), fontBold));
 		cellFirmaResponsabile.setMinimumHeight(40f);
 		tableFondo.addCell(cellFirmaResponsabile);
 		document.add(tableFondo);
@@ -262,7 +275,8 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Chunk underline = new Chunk(
 				"Avvertenza:Ai fini dell" + new Character('\u2032') + " ammissione a pagamento della missione "
 						+ "il presente modulo e quello di richiesta rimborso devono essere compilati in ogni "
-						+ "loro parte, depennando eventuali dizioni che non interessino.");
+						+ "loro parte, depennando eventuali dizioni che non interessino.\n Le spese non documentate non possono venire rimborsate. Per spese effettuate in valuta, ove non sia\n"
+						+ "allegata distanta bancaria di cambio, il rimborso è disposto al cambio vigente alla data d'inizio missione.");
 
 		underline.setUnderline(0.2f, -2f);
 		Paragraph paragraphFooter = new Paragraph("\n\n\n\n\n\n", new Font());
@@ -348,7 +362,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.add(new Paragraph("\n\nNel rispetto delle disposizioni normative in matteria (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. - Dip.tp della\n"
 				+ "ragioneria Generale dello Stato e delibera della Corte dei Conti a Sezioni riunite n. 8/CONTR/11 del 7  febbraio 2011) e trattandosi\n"
 				+ " di una circostanza eccezionale e non ricorrente,si autorizza l'uso del mezzo proprio per le seguenti motivazioni:\n"
-				+ missione.getMotivazioniMezzoProprio(),fontBold6));
+				+ missione.getMotivazioni(),fontBold6));
 
 
 		Paragraph paragraphDirettore = new Paragraph("Visto si Autorizza\t\nIl Dirigente");

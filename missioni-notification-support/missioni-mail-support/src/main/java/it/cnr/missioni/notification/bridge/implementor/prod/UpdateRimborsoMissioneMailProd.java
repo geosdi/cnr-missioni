@@ -34,8 +34,10 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public IMissioniMessagePreparator prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public IMissioniMessagePreparator[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
+        IMissioniMessagePreparator[] lista = new IMissioniMessagePreparator[1];
+
         IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
         missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
@@ -46,9 +48,8 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
             String pagata = (String) message.getMessageParameters().get("pagata");
             String mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
             Double totaleDovuto = (Double) message.getMessageParameters().get("totaleDovuto");
-
+            
             PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
-
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
@@ -76,7 +77,8 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
 
             }
         });
-        return missioniMessagePreparator;
+        lista[0] = missioniMessagePreparator;
+        return lista;
     }
 
     /**

@@ -23,7 +23,7 @@ import java.util.Map;
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
  * @email giuseppe.lascaleia@geosdi.org
  */
-public class UpdateMissioneMailProd extends MissioniMailProd {
+public class UpdateAnticipoPagamentoMailProd extends MissioniMailProd {
 
 	/**
 	 * @param message
@@ -46,9 +46,8 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 			String userSurname = (String) message.getMessageParameters().get("userSurname");
 			String userEmail = (String) message.getMessageParameters().get("userEmail");
 			String missioneID = (String) message.getMessageParameters().get("missioneID");
-			String stato = (String) message.getMessageParameters().get("stato");
 
-			PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
+			PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("anticipoPagamentoPDFBuilder");
 
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
@@ -58,13 +57,12 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 				model.put("userName", userName);
 				model.put("userSurname", userSurname);
 				model.put("missioneID", missioneID);
-				model.put("stato", stato);
 
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-						"template/updateMissioneMailNotification.html.vm", "UTF-8", model);
+						"template/updateAnticipoPagamentoMailNotification.html.vm", "UTF-8", model);
 				message.setText(messageText, Boolean.TRUE);
 
-				Path tempFilePath = Files.createTempFile("Missione - ".concat(userName), ".pdf");
+				Path tempFilePath = Files.createTempFile("Anticipo Pagamento".concat("-").concat(missioneID).concat("-") .concat(userName), ".pdf");
 				File file = tempFilePath.toFile();
 
 				pdfBuilder.withFile(file);
@@ -72,15 +70,6 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 				message.addAttachment(file.getName(), file);
 				missioniMessagePreparator.addAttachment(file);
 				
-				if (pdfBuilder.isMezzoProprio()) {
-
-					Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userName), ".pdf");
-					File fileVeicolo = tempFilePathVeicolo.toFile();
-					pdfBuilder.withFileVeicolo(fileVeicolo);
-					pdfBuilder.buildVeicolo();
-					message.addAttachment(fileVeicolo.getName(), fileVeicolo);
-					missioniMessagePreparator.addAttachment(fileVeicolo);
-				}
 
 			}
 		});
@@ -93,7 +82,7 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 	 */
 	@Override
 	public Implementor.ImplementorKey getKey() {
-		return MissioniMailImplementor.NotificationMessageType.MODIFICA_MISSIONE_MAIL_PROD;
+		return MissioniMailImplementor.NotificationMessageType.MODIFICA_ANTICIPO_PAGAMENTO_MAIL_PROD;
 	}
 
 	/**

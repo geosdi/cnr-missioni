@@ -22,7 +22,7 @@ public class UpdateRimborsoMissioneMailDev extends MissioniMailDev {
      * @throws Exception
      */
     @Override
-    public String prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public String[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
         String userName = (String) message.getMessageParameters().get("userName");
         String userSurname = (String) message.getMessageParameters().get("userSurname");
@@ -39,9 +39,10 @@ public class UpdateRimborsoMissioneMailDev extends MissioniMailDev {
         model.put("stato", pagata);
         model.put("mandatoPagamento", mandatoPagamento);
         model.put("totaleDovuto", totaleDovuto);
-
-        return VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+        String[] lista = new String[1];
+        lista[0] = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 "template/updateRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
+        return lista;
     }
 
     /**
