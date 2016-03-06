@@ -1,5 +1,9 @@
 it.cnr.missioni.notification.bridge.implementor.dev.AddMissioneMailDev
 it.cnr.missioni.notification.bridge.implementor.prod.AddMissioneMailProd
+it.cnr.missioni.notification.bridge.implementor.prod.AddAnticipoPagamentoMailProd
+it.cnr.missioni.notification.bridge.implementor.prod.UpdateAnticipoPagamentoMailProd
+it.cnr.missioni.notification.bridge.implementor.dev.AddAnticipoPagamentoMailDev
+it.cnr.missioni.notification.bridge.implementor.dev.UpdateAnticipoPagamentoMailDev
 it.cnr.missioni.notification.bridge.implementor.dev.UpdateMissioneMailDev
 it.cnr.missioni.notification.bridge.implementor.prod.UpdateMissioneMailProd
 it.cnr.missioni.notification.bridge.implementor.dev.RequestMissioneRimborsoMailDev
