@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,7 +38,6 @@ public class User implements Document {
 	private DateTime dateLastModified;
 	private boolean registrazioneCompletata;
 	private boolean responsabileGruppo;
-
 	@Valid
 	private Anagrafica anagrafica = new Anagrafica();
 	@Valid
@@ -58,6 +58,8 @@ public class User implements Document {
 		}
 		return false;
 	}
+	
+
 
 	/*
 	 * (non-Javadoc)
@@ -139,6 +141,8 @@ public class User implements Document {
 	public void setResponsabileGruppo(boolean responsabileGruppo) {
 		this.responsabileGruppo = responsabileGruppo;
 	}
+
+
 
 	/**
 	 * @return the anagrafica
@@ -282,8 +286,9 @@ public class User implements Document {
 	public String toString() {
 		return "User [id=" + id + ", dataRegistrazione=" + dataRegistrazione + ", dateLastModified=" + dateLastModified
 				+ ", registrazioneCompletata=" + registrazioneCompletata + ", responsabileGruppo=" + responsabileGruppo
-				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente=" + patente + ", datiCNR="
-				+ datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo + "]";
+				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente="
+				+ patente + ", datiCNR=" + datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo
+				+ "]";
 	}
 
 }

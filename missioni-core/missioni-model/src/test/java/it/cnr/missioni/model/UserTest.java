@@ -1,4 +1,4 @@
-package it.cnr.missioni.model.user;
+package it.cnr.missioni.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,6 +15,15 @@ import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import it.cnr.missioni.model.user.Anagrafica;
+import it.cnr.missioni.model.user.Anagrafica.Genere;
+import it.cnr.missioni.model.user.Credenziali;
+import it.cnr.missioni.model.user.DatiCNR;
+import it.cnr.missioni.model.user.Patente;
+import it.cnr.missioni.model.user.Residenza;
+import it.cnr.missioni.model.user.RuoloUserEnum;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 
 /**
@@ -55,7 +64,7 @@ public class UserTest {
 		user.setAnagrafica(anagrafica);
 
 		Set<ConstraintViolation<Anagrafica>> constraintViolations = validator.validate(anagrafica);
-		assertEquals(5, constraintViolations.size());
+		assertEquals(6, constraintViolations.size());
 	}
 
 	@Test
@@ -67,11 +76,11 @@ public class UserTest {
 		anagrafica.setCognome("Salvia");
 		anagrafica.setNome("Vito");
 		anagrafica.setLuogoNascita("Potenza");
+		anagrafica.setGenere(Genere.UOMO);
 		DateTime now = new DateTime();
 		DateTime d = now.minusDays(1);
 		anagrafica.setDataNascita(d);
 		user.setAnagrafica(anagrafica);
-
 		Set<ConstraintViolation<Anagrafica>> constraintViolations = validator.validate(anagrafica);
 		assertEquals(0, constraintViolations.size());
 	}
@@ -158,7 +167,7 @@ public class UserTest {
 		Veicolo veicolo = new Veicolo();
 		
 		Set<ConstraintViolation<Veicolo>> constraintViolations = validator.validate(veicolo);
-		assertEquals(5, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 	}
 
 	@Test

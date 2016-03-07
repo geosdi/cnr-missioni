@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
+
 /**
  * @author Salvia Vito
  */
@@ -29,6 +30,12 @@ public class Anagrafica implements Serializable{
 	private DateTime dataNascita;
 	@NotBlank
 	private String luogoNascita;
+	@NotNull
+	private Genere genere;
+	
+	public enum Genere{
+		UOMO,DONNA;
+	}
 
 	/**
 	 * @return the nome
@@ -100,13 +107,27 @@ public class Anagrafica implements Serializable{
 		this.luogoNascita = luogoNascita;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the genere
+	 */
+	public Genere getGenere() {
+		return genere;
+	}
+
+	/**
+	 * @param genere 
+	 */
+	public void setGenere(Genere genere) {
+		this.genere = genere;
+	}
+
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Anagrafica [nome=" + nome + ", cognome=" + cognome + ", codiceFiscale=" + codiceFiscale
-				+ ", luogoNascita=" + luogoNascita + "]";
+				+ ", dataNascita=" + dataNascita + ", luogoNascita=" + luogoNascita + ", genere=" + genere + "]";
 	}
 
 }
