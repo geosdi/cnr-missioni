@@ -27,6 +27,16 @@ import java.util.Map;
  */
 public class UpdateMissioneMailProd extends MissioniMailProd {
 
+	private PDFBuilder pdfBuilder;
+	private String userName;
+	private String userSurname;
+	private String userEmail;
+	private String responsabileEmail;
+	private File file;
+	private File fileVeicolo;
+	private String missioneID;
+	private String stato;
+
 	/**
 	 * @param message
 	 * @param velocityEngine
@@ -35,22 +45,60 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 	 * @throws Exception
 	 */
 	@Override
-	public List<IMissioniMessagePreparator> prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
-			VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-		
-		List<IMissioniMessagePreparator>  lista = new ArrayList<IMissioniMessagePreparator>();
+	public List<IMissioniMessagePreparator> prepareMessage(
+			IMissioniMailNotificationTask.IMissioneNotificationMessage message, VelocityEngine velocityEngine,
+			GPMailDetail gpMailDetail) throws Exception {
+
+		List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
+		this.userName = (String) message.getMessageParameters().get("userName");
+		this.userSurname = (String) message.getMessageParameters().get("userSurname");
+		this.userEmail = (String) message.getMessageParameters().get("userEmail");
+		this.missioneID = (String) message.getMessageParameters().get("missioneID");
+		this.stato = (String) message.getMessageParameters().get("stato");
+		this.responsabileEmail = (String) message.getMessageParameters().get("responsabileEmail");
 
 		
-		IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
-		missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
+		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 
-			String userName = (String) message.getMessageParameters().get("userName");
-			String userSurname = (String) message.getMessageParameters().get("userSurname");
-			String userEmail = (String) message.getMessageParameters().get("userEmail");
-			String missioneID = (String) message.getMessageParameters().get("missioneID");
-			String stato = (String) message.getMessageParameters().get("stato");
+		Path tempFilePath = Files.createTempFile("Missione - ".concat(userName), ".pdf");
+		file = tempFilePath.toFile();
+		pdfBuilder.withFile(file);
+		pdfBuilder.build();
 
-			PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
+		if (pdfBuilder.isMezzoProprio()) {
+			Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userName), ".pdf");
+			fileVeicolo = tempFilePathVeicolo.toFile();
+			pdfBuilder.withFileVeicolo(fileVeicolo);
+			pdfBuilder.buildVeicolo();
+		}
+
+		IMissioniMessagePreparator missioniMessagePreparatorResponsabileGruppo = super.createMissioniMessagePreparator();
+		missioniMessagePreparatorResponsabileGruppo.setMimeMessagePreparator(new MimeMessagePreparator() {
+
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
+				message.setTo(new String[] { responsabileEmail });
+
+				Map model = new HashMap();
+				model.put("userName", userName);
+				model.put("userSurname", userSurname);
+				model.put("missioneID", missioneID);
+				model.put("stato", stato);
+
+				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+						"template/updateMissioneMailNotificationResponsabileGruppo.html.vm", "UTF-8", model);
+
+				message.setText(messageText, Boolean.TRUE);
+				createAttachment(message, missioniMessagePreparatorResponsabileGruppo);
+				createAttachmentVeicoloProprio(message, missioniMessagePreparatorResponsabileGruppo);
+			}
+		});
+
+		lista.add(missioniMessagePreparatorResponsabileGruppo);
+
+		IMissioniMessagePreparator missioniMessagePreparatorUser = super.createMissioniMessagePreparator();
+		missioniMessagePreparatorUser.setMimeMessagePreparator(new MimeMessagePreparator() {
 
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
@@ -65,29 +113,29 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 						"template/updateMissioneMailNotification.html.vm", "UTF-8", model);
 				message.setText(messageText, Boolean.TRUE);
-
-				Path tempFilePath = Files.createTempFile("Missione - ".concat(userName), ".pdf");
-				File file = tempFilePath.toFile();
-
-				pdfBuilder.withFile(file);
-				pdfBuilder.build();
-				message.addAttachment(file.getName(), file);
-				missioniMessagePreparator.addAttachment(file);
-				
-				if (pdfBuilder.isMezzoProprio()) {
-
-					Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userName), ".pdf");
-					File fileVeicolo = tempFilePathVeicolo.toFile();
-					pdfBuilder.withFileVeicolo(fileVeicolo);
-					pdfBuilder.buildVeicolo();
-					message.addAttachment(fileVeicolo.getName(), fileVeicolo);
-					missioniMessagePreparator.addAttachment(fileVeicolo);
-				}
+				createAttachment(message, missioniMessagePreparatorResponsabileGruppo);
+				createAttachmentVeicoloProprio(message, missioniMessagePreparatorResponsabileGruppo);
 
 			}
 		});
-		lista.add(missioniMessagePreparator);
+
+		lista.add(missioniMessagePreparatorUser);
 		return lista;
+	}
+
+	private void createAttachment(MimeMessageHelper message, IMissioniMessagePreparator missioniMessagePreparator)
+			throws Exception {
+
+		message.addAttachment(this.file.getName(), this.file);
+		missioniMessagePreparator.addAttachment(this.file);
+	}
+
+	private void createAttachmentVeicoloProprio(MimeMessageHelper message,
+			IMissioniMessagePreparator missioniMessagePreparator) throws Exception {
+		if (pdfBuilder.isMezzoProprio()) {
+			message.addAttachment(this.fileVeicolo.getName(), this.fileVeicolo);
+			missioniMessagePreparator.addAttachment(this.fileVeicolo);
+		}
 	}
 
 	/**

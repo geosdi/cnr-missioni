@@ -52,8 +52,8 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 	 */
 	@Override
 	public UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname, String stato,
-			String userEmail, String missioneID, PDFBuilder pdfBuilder) {
-		return new UpdateMissioneMessage(userName, userSurname, stato, userEmail, missioneID, pdfBuilder) {
+			String userEmail,String responsabileGruppoEmail, String missioneID, PDFBuilder pdfBuilder) {
+		return new UpdateMissioneMessage(userName, userSurname, stato, userEmail,responsabileGruppoEmail, missioneID, pdfBuilder) {
 
 			/**
 			 * @return {@link MissioniMailImplementor.NotificationMessageType}

@@ -63,7 +63,7 @@ public class MissioneNotificationDispatcherDevTest {
     public void dispatchUpdateMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
                 .buildUpdateMissioneMessage("Giuseppe", "La Scaleia", "Inserita",
-                        "vito.salvia@gmail.com", UUID.randomUUID().toString(), MissionePDFBuilder.newPDFBuilder()));
+                        "vito.salvia@gmail.com","vito.salvia@gmail.com", UUID.randomUUID().toString(), MissionePDFBuilder.newPDFBuilder()));
     }
 
     @Test

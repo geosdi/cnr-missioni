@@ -42,8 +42,8 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 */
 	@Override
 	public UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname, String stato,
-			String userEmail, String missioneID, PDFBuilder pdfBuilder) {
-		return new UpdateMissioneMessage(userName, userSurname, stato, userEmail, missioneID, pdfBuilder);
+			String userEmail,String esponsabileGruppoEmail, String missioneID, PDFBuilder pdfBuilder) {
+		return new UpdateMissioneMessage(userName, userSurname, stato, userEmail,esponsabileGruppoEmail, missioneID, pdfBuilder);
 	}
 
 	/**
