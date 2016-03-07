@@ -5,7 +5,9 @@ import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ public class AddMissioneMailDev extends MissioniMailDev {
      * @throws Exception
      */
     @Override
-    public String[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public List<String> prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
         String userName = (String) message.getMessageParameters().get("userName");
         String userSurname = (String) message.getMessageParameters().get("userSurname");
@@ -30,9 +32,9 @@ public class AddMissioneMailDev extends MissioniMailDev {
         Map model = new HashMap();
         model.put("userName", userName);
         model.put("userSurname", userSurname);
-        String[] lista = new String[1];
-        lista[0] = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                "template/addMissioneMailNotificationUser.html.vm", "UTF-8", model);
+        List<String> lista = new ArrayList<String>();
+        lista.add( VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                "template/addMissioneMailNotificationUser.html.vm", "UTF-8", model));
         return lista;
     }
 

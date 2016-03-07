@@ -13,7 +13,9 @@ import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,10 +40,10 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public IMissioniMessagePreparator[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public List<IMissioniMessagePreparator> prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
     	
-        IMissioniMessagePreparator[] lista = new IMissioniMessagePreparator[2];
+        List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
          this.userName = (String) message.getMessageParameters().get("userName");
          this.userSurname = (String) message.getMessageParameters().get("userSurname");
          this.userEmail = (String) message.getMessageParameters().get("userEmail");
@@ -71,7 +73,7 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
 
             }
         });
-        lista[0] = missioniMessagePreparatorUser;
+        lista.add(missioniMessagePreparatorUser);
         
         IMissioniMessagePreparator missioniMessagePreparatorAdmin = super.createMissioniMessagePreparator();
         missioniMessagePreparatorAdmin.setMimeMessagePreparator(new MimeMessagePreparator() {
@@ -90,7 +92,7 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
 
             }
         });
-        lista[1] = missioniMessagePreparatorAdmin;
+        lista.add(missioniMessagePreparatorAdmin);
         
         return lista;
     }

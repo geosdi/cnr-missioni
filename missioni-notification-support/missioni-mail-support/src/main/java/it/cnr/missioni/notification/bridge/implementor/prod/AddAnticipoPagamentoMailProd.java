@@ -3,7 +3,9 @@ package it.cnr.missioni.notification.bridge.implementor.prod;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -41,7 +43,7 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 	 * @throws Exception
 	 */
 	@Override
-	public IMissioniMessagePreparator[] prepareMessage(
+	public List<IMissioniMessagePreparator> prepareMessage(
 			IMissioniMailNotificationTask.IMissioneNotificationMessage message, VelocityEngine velocityEngine,
 			GPMailDetail gpMailDetail) throws Exception {
 
@@ -58,7 +60,7 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 		pdfBuilder.withFile(file);
 		pdfBuilder.build();
 		
-		IMissioniMessagePreparator[] lista = new IMissioniMessagePreparator[2];
+		List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
 
 		IMissioniMessagePreparator missioniMessagePreparatorAdmin = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorAdmin.setMimeMessagePreparator(new MimeMessagePreparator() {
@@ -82,7 +84,7 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 				createAttachment(message, missioniMessagePreparatorAdmin);
 			}
 		});
-		lista[0] = missioniMessagePreparatorAdmin;
+		lista.add(missioniMessagePreparatorAdmin);
 		IMissioniMessagePreparator missioniMessagePreparatorUser = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorUser.setMimeMessagePreparator(new MimeMessagePreparator() {
 
@@ -102,7 +104,7 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 		});
 
 
-		lista[1] = missioniMessagePreparatorUser;
+		lista.add(missioniMessagePreparatorUser);
 		return lista;
 	}
 

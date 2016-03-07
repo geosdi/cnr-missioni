@@ -3,7 +3,9 @@ package it.cnr.missioni.notification.bridge.implementor.prod;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -41,7 +43,7 @@ public class AddMissioneMailProd extends MissioniMailProd {
 	 * @throws Exception
 	 */
 	@Override
-	public IMissioniMessagePreparator[] prepareMessage(
+	public List<IMissioniMessagePreparator> prepareMessage(
 			IMissioniMailNotificationTask.IMissioneNotificationMessage message, VelocityEngine velocityEngine,
 			GPMailDetail gpMailDetail) throws Exception {
 
@@ -63,7 +65,7 @@ public class AddMissioneMailProd extends MissioniMailProd {
 			pdfBuilder.withFileVeicolo(fileVeicolo);
 			pdfBuilder.buildVeicolo();
 		}
-		IMissioniMessagePreparator[] lista = new IMissioniMessagePreparator[2];
+		List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
 
 		IMissioniMessagePreparator missioniMessagePreparatorAdmin = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorAdmin.setMimeMessagePreparator(new MimeMessagePreparator() {
@@ -73,7 +75,7 @@ public class AddMissioneMailProd extends MissioniMailProd {
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
-				message.setTo(new String[] { cnrMissioniEmail, responsabileEmail });
+				message.setTo(new String[] { cnrMissioniEmail });
 
 
 				Map model = new HashMap();
@@ -87,7 +89,33 @@ public class AddMissioneMailProd extends MissioniMailProd {
 				createAttachmentVeicoloProprio(message, missioniMessagePreparatorAdmin);
 			}
 		});
-		lista[0] = missioniMessagePreparatorAdmin;
+		lista.add(missioniMessagePreparatorAdmin);
+		
+		IMissioniMessagePreparator missioniMessagePreparatorResponsabileGruppo = super.createMissioniMessagePreparator();
+		missioniMessagePreparatorResponsabileGruppo.setMimeMessagePreparator(new MimeMessagePreparator() {
+
+			
+			
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
+				message.setTo(new String[] { responsabileEmail });
+
+
+				Map model = new HashMap();
+				model.put("userName", userName);
+				model.put("userSurname", userSurname);
+				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+						"template/addMissioneMailNotificationResponsabileGruppo.html.vm", "UTF-8", model);
+
+				message.setText(messageText, Boolean.TRUE);
+				createAttachment(message, missioniMessagePreparatorResponsabileGruppo);
+				createAttachmentVeicoloProprio(message, missioniMessagePreparatorResponsabileGruppo);
+			}
+		});
+		lista.add(missioniMessagePreparatorResponsabileGruppo);
+		
+		
 		IMissioniMessagePreparator missioniMessagePreparatorUser = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorUser.setMimeMessagePreparator(new MimeMessagePreparator() {
 
@@ -107,7 +135,7 @@ public class AddMissioneMailProd extends MissioniMailProd {
 		});
 
 
-		lista[1] = missioniMessagePreparatorUser;
+		lista.add(missioniMessagePreparatorUser);
 		return lista;
 	}
 

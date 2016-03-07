@@ -1,6 +1,9 @@
 package it.cnr.missioni.notification.bridge.implementor.dev;
 
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
+
+import java.util.List;
+
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
 
@@ -18,7 +21,7 @@ public class RimborsoMissioneDoneMailDev extends MissioniMailDev {
      * @throws Exception
      */
     @Override
-    public String[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public List<String> prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
         return null;
     }

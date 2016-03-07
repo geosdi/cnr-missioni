@@ -14,6 +14,8 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+
+import java.util.List;
 import java.util.concurrent.Future;
 
 /**
@@ -22,7 +24,7 @@ import java.util.concurrent.Future;
  */
 @Production
 @Component(value = "missioniMailNotificationTask")
-public class MissioniMailNotificationTask implements IMissioniMailNotificationTask<IMissioniMessagePreparator[], IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
+public class MissioniMailNotificationTask implements IMissioniMailNotificationTask<List<IMissioniMessagePreparator>, IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
 
     @GeoPlatformLog
     private static Logger logger;
@@ -40,26 +42,26 @@ public class MissioniMailNotificationTask implements IMissioniMailNotificationTa
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@ {} start Notification "
                         + "Task {}\n", Thread.currentThread().getName(),
                 getAsyncTaskType());
-        IMissioniMessagePreparator[] missioniMessagePreparator = null;
+        List<IMissioniMessagePreparator> missioniMessagePreparator = null;
 
         try {
             missioniMessagePreparator = prepareMessage(theMissioneNotificationMessage);
 
-            for(int i = 0; i<missioniMessagePreparator.length;i++){
-                this.gpMailSpringSender.send(missioniMessagePreparator[i].getMimeMessagePreparator());
-            }
+            missioniMessagePreparator.forEach(m->{
+                this.gpMailSpringSender.send(m.getMimeMessagePreparator());
+
+            });
+            
         } catch (Exception ex) {
             logger.error("####################MAIL_ASYNC_TASK_EXCEPTION : {}\n", ex.getMessage());
             ex.printStackTrace();
             return new AsyncResult<>(Boolean.FALSE);
         } finally {
-            if (missioniMessagePreparator != null) {
+            if (!missioniMessagePreparator.isEmpty()) {
             	
-                for(int i = 0; i<missioniMessagePreparator.length;i++){
-                    missioniMessagePreparator[i].deleteAttachments();
-
-                }
-            	
+                missioniMessagePreparator.forEach(m->{
+                	m.deleteAttachments();
+                });
             }
         }
 
@@ -70,7 +72,7 @@ public class MissioniMailNotificationTask implements IMissioniMailNotificationTa
 
 
     @Override
-    public IMissioniMessagePreparator[] prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
+    public List<IMissioniMessagePreparator> prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
         return ((MissioniMailImplementor<IMissioniMessagePreparator>) missioniMailImplementor
                 .getImplementorByKey(theMissioneNotificationMessage.getNotificationMessageType()))
                 .prepareMessage(theMissioneNotificationMessage, gpSpringVelocityEngine, gpMailSpringDetail);

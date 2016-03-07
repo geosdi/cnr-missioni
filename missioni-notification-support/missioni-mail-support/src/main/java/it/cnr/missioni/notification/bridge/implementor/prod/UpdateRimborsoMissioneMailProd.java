@@ -9,7 +9,9 @@ import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -34,9 +36,9 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
      * @throws Exception
      */
     @Override
-    public IMissioniMessagePreparator[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    public List<IMissioniMessagePreparator> prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
-        IMissioniMessagePreparator[] lista = new IMissioniMessagePreparator[1];
+    	 List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
 
         IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
         missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
@@ -77,7 +79,7 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
 
             }
         });
-        lista[0] = missioniMessagePreparator;
+        lista.add(missioniMessagePreparator);
         return lista;
     }
 

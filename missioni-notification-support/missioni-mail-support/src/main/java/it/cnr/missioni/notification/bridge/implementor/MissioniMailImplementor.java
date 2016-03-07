@@ -1,5 +1,7 @@
 package it.cnr.missioni.notification.bridge.implementor;
 
+import java.util.List;
+
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
 
@@ -18,7 +20,7 @@ public interface MissioniMailImplementor<MESSAGE extends Object> extends Impleme
      * @return {@link MESSAGE}
      * @throws Exception
      */
-    MESSAGE[] prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
+    List<MESSAGE> prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception;
 
     default String mailImplementorInfo() {

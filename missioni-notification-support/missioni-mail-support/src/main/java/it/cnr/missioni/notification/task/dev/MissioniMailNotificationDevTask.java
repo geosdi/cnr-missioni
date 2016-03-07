@@ -1,9 +1,9 @@
 package it.cnr.missioni.notification.task.dev;
 
-import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
-import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
-import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
-import it.cnr.missioni.notification.task.IMissioniMailNotificationTask.IMissioneNotificationMessage;
+import java.util.List;
+import java.util.concurrent.Future;
+
+import javax.annotation.Resource;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.configurator.bootstrap.Develop;
@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import java.util.concurrent.Future;
+import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
+import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
  */
 @Develop
 @Component(value = "missioniMailNotificationDevTask")
-public class MissioniMailNotificationDevTask implements IMissioniMailNotificationTask<String[], IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
+public class MissioniMailNotificationDevTask implements IMissioniMailNotificationTask<List<String>, IMissioniMailNotificationTask.IMissioneNotificationMessage, Boolean> {
 
     @GeoPlatformLog
     private static Logger logger;
@@ -42,7 +42,7 @@ public class MissioniMailNotificationDevTask implements IMissioniMailNotificatio
     }
 
     @Override
-    public String[] prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
+    public List<String> prepareMessage(IMissioneNotificationMessage theMissioneNotificationMessage) throws Exception {
         return ((MissioniMailImplementor<String>) missioniMailImplementor
                 .getImplementorByKey(theMissioneNotificationMessage.getNotificationMessageType()))
                 .prepareMessage(theMissioneNotificationMessage, gpSpringVelocityEngine, gpMailSpringDetail);
