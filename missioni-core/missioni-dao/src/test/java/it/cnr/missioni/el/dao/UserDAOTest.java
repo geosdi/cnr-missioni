@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.Anagrafica;
+import it.cnr.missioni.model.user.Anagrafica.Genere;
 import it.cnr.missioni.model.user.Credenziali;
 import it.cnr.missioni.model.user.DatiCNR;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
@@ -331,6 +332,7 @@ public class UserDAOTest {
 		user.setId("01");
 		user.setResponsabileGruppo(true);
 		anagrafica = new Anagrafica();
+		anagrafica.setGenere(Genere.UOMO);
 		anagrafica.setCognome("Salvia");
 		anagrafica.setNome("Vito");
 		anagrafica.setDataNascita(new DateTime(1982, 7, 30, 0, 0,ISOChronology.getInstanceUTC()));
