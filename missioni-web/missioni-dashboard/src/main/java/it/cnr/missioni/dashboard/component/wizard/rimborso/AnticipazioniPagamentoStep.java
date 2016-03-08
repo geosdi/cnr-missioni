@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.component.wizard.missione;
+package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
 import org.vaadin.teemu.wizards.WizardStep;
 
