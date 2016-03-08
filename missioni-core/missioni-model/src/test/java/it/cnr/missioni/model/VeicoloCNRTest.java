@@ -1,4 +1,4 @@
-package it.cnr.missioni.model.user;
+package it.cnr.missioni.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
+import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * @author Salvia Vito
@@ -34,12 +35,13 @@ public class VeicoloCNRTest {
 		VeicoloCNR veicoloCNR = new VeicoloCNR();
 		
 		Set<ConstraintViolation<VeicoloCNR>> constraintViolations = validator.validate(veicoloCNR);
-		assertEquals(5, constraintViolations.size());
+		assertEquals(6, constraintViolations.size());
 	}
 
 	@Test
 	public void veicoloOkTest() {
 		VeicoloCNR veicoloCNR = new VeicoloCNR();
+		veicoloCNR.setId("01");
 		veicoloCNR.setTipo("Ford");
 		veicoloCNR.setTarga("AA111BBB");
 		veicoloCNR.setCartaCircolazione("carta");
