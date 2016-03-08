@@ -333,7 +333,7 @@ public class MissioneDAOTest {
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withIdUser("01");
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
-		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 1);
+		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 2);
 	}
 
 	// @Test
