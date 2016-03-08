@@ -44,6 +44,7 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 	private static final String VEICOLO_CNR = "Veicolo CNR";
 	private static final String VEICOLO_PROPRIO = "Veicolo Proprio";
 	private static final String NESSUNO = "Nessuno";
+	private static final String NOLEGGIO = "Noleggio";
 
 	public VeicoloMissioneForm(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
 		super(missione, isAdmin, enabled, modifica);
@@ -73,13 +74,13 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 		}
 
 		optionGroupMezzo = new OptionGroup("Veicolo");
-		optionGroupMezzo.addItems(VEICOLO_CNR, VEICOLO_PROPRIO, NESSUNO);
+		optionGroupMezzo.addItems(VEICOLO_CNR, VEICOLO_PROPRIO, NOLEGGIO,NESSUNO);
 		optionGroupMezzo.select(bean.getTipoVeicolo());
 		optionGroupMezzo.setReadOnly(!enabled);
 		
 		motivazioneMezzoProprio = (TextArea) getFieldGroup().buildAndBind("Motivazione mezzo proprio",
-				"motivazioniMezzoProprio", TextArea.class);
-		if (bean.getTipoVeicolo() == VEICOLO_PROPRIO)
+				"motivazioni", TextArea.class);
+		if (bean.getTipoVeicolo() == VEICOLO_PROPRIO || bean.getTipoVeicolo() == NOLEGGIO)
 			motivazioneMezzoProprio.setReadOnly(false);
 		else
 			motivazioneMezzoProprio.setReadOnly(true);
@@ -159,7 +160,8 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 
-				if (motivazioneMezzoProprio.getValue() == null && optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO))
+				if (motivazioneMezzoProprio.getValue() == null && (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO)
+						|| optionGroupMezzo.getValue().equals(NOLEGGIO)))
 					throw new InvalidValueException(Utility.getMessage("altre_disposizioni_error"));
 
 			}
@@ -181,17 +183,21 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR) || optionGroupMezzo.getValue().equals(NESSUNO)) {
+				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR) || optionGroupMezzo.getValue().equals(NOLEGGIO)) {
 					motivazioneMezzoProprio.setReadOnly(false);
 					motivazioneMezzoProprio.setValue(null);
 					motivazioneMezzoProprio.setReadOnly(true);
 					motivazioneMezzoProprio.setValidationVisible(false);
-					labelVeicoloProprio.setVisible(false);
+					if(optionGroupMezzo.getValue().equals(VEICOLO_CNR))
+						labelVeicoloProprio.setVisible(false);
 				}
-				if (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO)) {
+				if (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO) || optionGroupMezzo.getValue().equals(NOLEGGIO)) {
 					motivazioneMezzoProprio.setReadOnly(false);
-					labelVeicoloProprio.setVisible(true);
-					labelVeicoloProprio.setValue("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga());
+					if(optionGroupMezzo.getValue().equals(VEICOLO_CNR))
+					{
+						labelVeicoloProprio.setVisible(true);
+						labelVeicoloProprio.setValue("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga());
+					}
 				}
 			}
 		});

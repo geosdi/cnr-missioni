@@ -62,7 +62,6 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 		localitaField = new TextField("Localita");
 		listaLocalitaField = new ComboBox("Seleziona località");
 		listaLocalitaField.setValidationVisible(false);
-
 //		fieldGroup.bind(listaLocalitaField, "localita");
 		if(modifica){
 			listaLocalitaField.addItem(bean.getGeoPoint().getLat() + "/" + bean.getGeoPoint().getLon());

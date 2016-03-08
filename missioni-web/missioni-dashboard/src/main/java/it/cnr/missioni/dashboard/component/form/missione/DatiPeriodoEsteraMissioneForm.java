@@ -75,7 +75,6 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 
 		}
 
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 
 		if (!isMissioneEstera()) {
 			// trattamentoMissioneEsteraField.setReadOnly(true);

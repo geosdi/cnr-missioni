@@ -42,7 +42,7 @@ public class DatiPeriodoMissioneForm extends IForm.FormAbstract<DatiPeriodoMissi
 	public void buildTab() {
 
 		inizioMissioneField = new DateField("Data Inizio");
-		fineMissioneField = new DateField("Data Fine");
+		fineMissioneField = new DateField("Data Presunta Fine");
 		fineMissioneField.setResolution(Resolution.MINUTE);
 		fineMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
 		inizioMissioneField.setResolution(Resolution.MINUTE);
@@ -61,8 +61,8 @@ public class DatiPeriodoMissioneForm extends IForm.FormAbstract<DatiPeriodoMissi
 			fineMissioneField.setRangeStart(new DateTime().toDate());
 
 		}
-		inizioMissioneField.setEnabled(enabled);
-		fineMissioneField.setEnabled(enabled);
+		inizioMissioneField.setReadOnly(!enabled);
+		fineMissioneField.setReadOnly(!enabled);
 
 		addComponent(inizioMissioneField);
 		addComponent(fineMissioneField);
