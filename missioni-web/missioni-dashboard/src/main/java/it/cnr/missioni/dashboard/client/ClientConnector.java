@@ -126,6 +126,16 @@ public class ClientConnector {
 		missioniCoreClientConnector.updateMissione(missione);
 
 	}
+	
+	/**
+	 * 
+	 * @param missione
+	 * @throws Exception
+	 */
+	public static void updateMissioneForAnticipo(Missione missione) throws Exception {
+		missioniCoreClientConnector.updateMissioneForAnticipo(missione);
+
+	}
 
 	/**
 	 * 
@@ -242,6 +252,15 @@ public class ClientConnector {
 	 */
 	public static Response downloadVeicoloMissioneAsPdf(String missioneID) throws Exception {
 		return missioniCoreClientConnector.downloadVeicoloMissioneAsPdf(missioneID);
+	}
+	
+	/**
+	 * 
+	 * @param missioneID
+	 * @throws Exception
+	 */
+	public static Response downloadAnticipoPagamentoAsPdf(String missioneID) throws Exception {
+		return missioniCoreClientConnector.downloadAnticipoPagamentoAsPdf(missioneID);
 	}
 
 	/**
