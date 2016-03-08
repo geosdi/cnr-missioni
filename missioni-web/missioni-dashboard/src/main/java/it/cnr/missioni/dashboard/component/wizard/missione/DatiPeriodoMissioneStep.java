@@ -1,29 +1,13 @@
 package it.cnr.missioni.dashboard.component.wizard.missione;
 
-import java.util.Date;
-
-import org.joda.time.DateTime;
 import org.vaadin.teemu.wizards.WizardStep;
 
-import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
-import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
-import com.vaadin.event.FieldEvents.BlurEvent;
-import com.vaadin.event.FieldEvents.BlurListener;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.form.missione.DatiPeriodoMissioneForm;
-import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
