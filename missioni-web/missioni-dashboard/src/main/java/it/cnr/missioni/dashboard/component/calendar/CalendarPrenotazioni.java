@@ -145,7 +145,7 @@ public class CalendarPrenotazioni implements Serializable {
 				// solamente le la prenotazione appartiene all'utente loggato
 //				if (DashboardUI.getCurrentUser().getId()
 //						.equals(((PrenotazioneEvent) event.getCalendarEvent()).getIdUser()))
-					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), ((PrenotazioneEvent) event.getCalendarEvent()).getId() == null ? false : true);
+					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), false,((PrenotazioneEvent) event.getCalendarEvent()).getId() == null ? false : true,true);
 			}
 		});
 
@@ -373,7 +373,7 @@ public class CalendarPrenotazioni implements Serializable {
 		PrenotazioneEvent p = new PrenotazioneEvent();
 		p.setStart(start);
 		p.setEnd(end);
-		PrenotazioneWindow.open(getCalendarComponent(), p, false);
+		PrenotazioneWindow.open(getCalendarComponent(), p,false,true, false);
 	}
 
 	private void nextMonth() {
