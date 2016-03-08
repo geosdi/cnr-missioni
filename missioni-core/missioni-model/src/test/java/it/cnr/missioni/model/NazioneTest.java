@@ -1,4 +1,4 @@
-package it.cnr.missioni.model.user;
+package it.cnr.missioni.model;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package it.cnr.missioni.model.user;
+package it.cnr.missioni.model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,13 +11,9 @@ import javax.validation.ValidatorFactory;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.Days;
-import org.joda.time.Hours;
-import org.joda.time.Period;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
@@ -67,7 +63,7 @@ public class MissioneTest {
 	public void periodoMissioneErrataTest() {
 		Missione missione = new Missione();
 		Set<ConstraintViolation<DatiPeriodoMissione>> constraintViolations = validator.validate(missione.getDatiPeriodoMissione());
-		assertEquals(2, constraintViolations.size());
+		assertEquals(3, constraintViolations.size());
 	}
 
 	@Test
@@ -75,6 +71,7 @@ public class MissioneTest {
 		Missione missione = new Missione();
 		missione.getDatiPeriodoMissione().setInizioMissione(new DateTime());
 		missione.getDatiPeriodoMissione().setFineMissione(new DateTime());
+		missione.getDatiPeriodoMissione().setDataPresuntaGiorni(3);
 		Set<ConstraintViolation<DatiPeriodoMissione>> constraintViolations = validator.validate(missione.getDatiPeriodoMissione());
 		assertEquals(0, constraintViolations.size());
 	}
@@ -93,12 +90,6 @@ public class MissioneTest {
 		missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
 		missione.setMezzoProprio(true);
 		missione.setDistanza("100 km");
-		DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
-		dati.setAnticipazioniMonetarie(true);
-		dati.setMandatoCNR("AA11");
-		dati.setRimborsoDaTerzi(false);
-		dati.setSpeseMissioniAnticipate(102.00);
-		missione.setDatiAnticipoPagamenti(dati);
 		DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
 		datiPeriodoMissione.setInizioMissione(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
 		datiPeriodoMissione.setFineMissione(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
