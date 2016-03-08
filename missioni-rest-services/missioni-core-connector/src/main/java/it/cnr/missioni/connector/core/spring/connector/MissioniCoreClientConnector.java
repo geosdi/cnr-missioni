@@ -141,6 +141,14 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     
+    public boolean updateMissioneForAnticipo(Missione missione) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/updateMissioneForAnticipo/")
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(missione,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
     public boolean updateRimborso(Missione missione) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/updateRimborso/")
@@ -317,6 +325,16 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
     }
     
     
+    public Response downloadAnticipoPagamentoAsPdf(String missioneID) throws Exception {
+        return client.target(super.getRestServiceURL())
+                .path("v1/missioni/downloadAnticipoPagamentoAsPdf/")
+                .queryParam("missionID", missioneID)
+                .request("application/pdf")
+                
+                .get(Response.class);
+    }
+    
+    
     public Response downloadRimborsoMissioneAsPdf(String missioneID) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/downloadRimborsoMissioneAsPdf/")
@@ -325,6 +343,8 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 
                 .get(Response.class);
     }
+    
+
 
     public DistanceResponse.MissioneDistanceResponse getDistanceForMissione(String start,String end) throws Exception {
         return client.target(super.getRestServiceURL())
