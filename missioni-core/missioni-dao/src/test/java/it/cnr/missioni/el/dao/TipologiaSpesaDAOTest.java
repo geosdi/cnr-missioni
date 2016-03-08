@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
 /**
  * @author Salvia Vito
@@ -128,36 +129,56 @@ public class TipologiaSpesaDAOTest {
 		Assert.assertTrue("FIND  TIPOLOGIA ID", lista.get(0).getId().equals("03"));
 	}
 	
+	@Test
+	public void H_findTipologiaSpesaTipoTrattamentoTest() throws Exception {
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", lista.size() == 2);
+
+	}
+	
+	@Test
+	public void I_findTipologiaSpesaTipoTrattamentoIdTest() throws Exception {
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("01").withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", lista.size() == 1);
+
+	}
+	
 	private void creaTipologiaSpesa(){
-		TipologiaSpesa tipoligiaSpesa = new TipologiaSpesa();
-		tipoligiaSpesa.setId("01");
-		tipoligiaSpesa.setValue("Aereo");
-		tipoligiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
-		tipoligiaSpesa.setCheckMassimale(false);
-		listaTipoligiaSpesa.add(tipoligiaSpesa);
+		TipologiaSpesa tipoliogiaSpesa = new TipologiaSpesa();
+		tipoliogiaSpesa.setId("01");
+		tipoliogiaSpesa.setValue("Aereo");
+		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
+		tipoliogiaSpesa.setCheckMassimale(false);
+		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
-		 tipoligiaSpesa = new TipologiaSpesa();
-		tipoligiaSpesa.setId("02");
-		tipoligiaSpesa.setValue("Vitto");
-		tipoligiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
-		tipoligiaSpesa.setCheckMassimale(true);
-		tipoligiaSpesa.setOccorrenzeGiornaliere(2);
-		listaTipoligiaSpesa.add(tipoligiaSpesa);
+		 tipoliogiaSpesa = new TipologiaSpesa();
+		tipoliogiaSpesa.setId("02");
+		tipoliogiaSpesa.setValue("Vitto");
+		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
+		tipoliogiaSpesa.setCheckMassimale(true);
+		tipoliogiaSpesa.setOccorrenzeGiornaliere(2);
+		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
-		 tipoligiaSpesa = new TipologiaSpesa();
-		tipoligiaSpesa.setId("03");
-		tipoligiaSpesa.setValue("Albergo");
-		tipoligiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
-		tipoligiaSpesa.setCheckMassimale(true);
-		listaTipoligiaSpesa.add(tipoligiaSpesa);
+		 tipoliogiaSpesa = new TipologiaSpesa();
+		tipoliogiaSpesa.setId("03");
+		tipoliogiaSpesa.setValue("Albergo");
+		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
+		tipoliogiaSpesa.setCheckMassimale(true);
+		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 		
-		 tipoligiaSpesa = new TipologiaSpesa();
-		tipoligiaSpesa.setId("04");
-		tipoligiaSpesa.setValue("Treno");
-		tipoligiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
-		tipoligiaSpesa.setCheckMassimale(true);
-		listaTipoligiaSpesa.add(tipoligiaSpesa);
+		 tipoliogiaSpesa = new TipologiaSpesa();
+		tipoliogiaSpesa.setId("04");
+		tipoliogiaSpesa.setValue("Treno");
+		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
+		tipoliogiaSpesa.setCheckMassimale(true);
+		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 	}
 

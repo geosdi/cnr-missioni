@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
 /**
  * @author Salvia Vito
@@ -32,7 +33,7 @@ public class TipologiaSpesaTest {
 	public void fatturaErrataTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
-		assertEquals(2, constraintViolations.size());
+		assertEquals(3, constraintViolations.size());
 	}
 
 	@Test
@@ -40,6 +41,7 @@ public class TipologiaSpesaTest {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		tipologiaSpesa.setValue("VITTO");
 		tipologiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
+		tipologiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
 		assertEquals(0, constraintViolations.size());
 	}
