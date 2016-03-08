@@ -108,7 +108,7 @@ public final class DashboardMenu extends CustomComponent {
 
 				@Override
 				public void menuSelected(final MenuItem selectedItem) {
-					UserWindow.open(user, false);
+					UserWindow.open(user,false,true, false);
 				}
 			});
 
@@ -122,7 +122,7 @@ public final class DashboardMenu extends CustomComponent {
 
 			@Override
 			public void menuSelected(final MenuItem selectedItem) {
-				CredenzialiWindow.open((User) (VaadinSession.getCurrent().getAttribute(User.class.getName())), false);
+				CredenzialiWindow.open((User) (VaadinSession.getCurrent().getAttribute(User.class.getName())),false,true, false);
 			}
 		});
 
