@@ -1,23 +1,26 @@
 package it.cnr.missioni.model.missione;
 
-import it.cnr.missioni.model.rimborso.Rimborso;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 import org.elasticsearch.common.geo.GeoPoint;
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.*;
+import it.cnr.missioni.model.rimborso.Rimborso;
 
 /**
  * @author Salvia Vito
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "localita", "oggetto", "responsabileGruppo","shortResponsabileGruppo","shortUser","motivazioniMezzoProprio","stato","fondo","GAE", "missioneEstera", "idUser","idVeicolo", "shortDescriptionVeicolo","dataInserimento",
+@XmlType(propOrder = { "id", "localita", "oggetto", "responsabileGruppo","shortResponsabileGruppo","shortUser","motivazioni","stato","fondo","GAE", "missioneEstera", "idUser","idUserSeguito","shortUserSeguito","idVeicolo", "shortDescriptionVeicolo","dataInserimento",
 		"dateLastModified","mezzoProprio","distanza","geoPoint","idNazione","shortDescriptionNazione","datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
 public class Missione implements Document {
 
@@ -34,13 +37,15 @@ public class Missione implements Document {
 	private String responsabileGruppo;
 	private String shortResponsabileGruppo;
 	private String shortUser;
-	private String motivazioniMezzoProprio;
+	private String motivazioni;
 	@NotNull
     private StatoEnum stato;
     private String fondo;
     private String GAE;
     private boolean missioneEstera = false;
     private String idUser;
+    private String idUserSeguito;
+    private String shortUserSeguito;
     private String idVeicolo;
     private String shortDescriptionVeicolo;
     private DateTime dataInserimento;
@@ -174,16 +179,16 @@ public class Missione implements Document {
 	/**
 	 * @return the motivazioniMezzoProprio
 	 */
-	public String getMotivazioniMezzoProprio() {
-		return motivazioniMezzoProprio;
+	public String getMotivazioni() {
+		return motivazioni;
 	}
 
 
 	/**
 	 * @param motivazioniMezzoProprio 
 	 */
-	public void setMotivazioniMezzoProprio(String motivazioniMezzoProprio) {
-		this.motivazioniMezzoProprio = motivazioniMezzoProprio;
+	public void setMotivazioni(String motivazioni) {
+		this.motivazioni = motivazioni;
 	}
 
 
@@ -268,6 +273,38 @@ public class Missione implements Document {
 
 
 	/**
+	 * @return the idUserSeguito
+	 */
+	public String getIdUserSeguito() {
+		return idUserSeguito;
+	}
+
+
+	/**
+	 * @param idUserSeguito 
+	 */
+	public void setIdUserSeguito(String idUserSeguito) {
+		this.idUserSeguito = idUserSeguito;
+	}
+
+
+	/**
+	 * @return the shortUserSeguito
+	 */
+	public String getShortUserSeguito() {
+		return shortUserSeguito;
+	}
+
+
+	/**
+	 * @param shortUserSeguito 
+	 */
+	public void setShortUserSeguito(String shortUserSeguito) {
+		this.shortUserSeguito = shortUserSeguito;
+	}
+
+
+	/**
 	 * @return the idVeicolo
 	 */
 	public String getIdVeicolo() {
@@ -345,7 +382,6 @@ public class Missione implements Document {
 	public void setMezzoProprio(boolean mezzoProprio) {
 		this.mezzoProprio = mezzoProprio;
 	}
-
 
 	/**
 	 * @return the distanza
@@ -507,10 +543,11 @@ public class Missione implements Document {
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", responsabileGruppo="
 				+ responsabileGruppo + ", shortResponsabileGruppo=" + shortResponsabileGruppo + ", shortUser="
-				+ shortUser + ", motivazioniMezzoProprio=" + motivazioniMezzoProprio + ", stato=" + stato + ", fondo="
-				+ fondo + ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idVeicolo="
-				+ idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo + ", dataInserimento="
-				+ dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio=" + mezzoProprio
+				+ shortUser + ", motivazioni=" + motivazioni + ", stato=" + stato + ", fondo=" + fondo + ", GAE=" + GAE
+				+ ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idUserSeguito=" + idUserSeguito
+				+ ", shortUserSeguito=" + shortUserSeguito + ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo="
+				+ shortDescriptionVeicolo + ", dataInserimento=" + dataInserimento + ", dateLastModified="
+				+ dateLastModified + ", mezzoProprio=" + mezzoProprio 
 				+ ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
 				+ ", shortDescriptionNazione=" + shortDescriptionNazione + ", tipoVeicolo=" + tipoVeicolo
 				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
