@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.component.form.tipologiaSpesa;
 
+import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -12,6 +13,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.form.IForm;
+import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 
 /**
@@ -28,6 +30,7 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 	private TextField valueField;
 	private ComboBox tipoField;
 	private CheckBox checkMassimaleField;
+	private TextField occorrenzaGiornalieraField;
 
 
 
@@ -49,10 +52,13 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 		valueField = (TextField) getFieldGroup().buildAndBind("Tipologia Spesa", "value");
 		tipoField = (ComboBox)getFieldGroup().buildAndBind("Tipo","tipo",ComboBox.class);
 		checkMassimaleField = (CheckBox)getFieldGroup().buildAndBind("Massimale","checkMassimale",CheckBox.class);
+		occorrenzaGiornalieraField = (TextField) getFieldGroup().buildAndBind("Occorrenza Giornaliera", "occorrenzaGiornaliera");
 
 		addComponent(valueField);
 		addComponent(tipoField);
 		addComponent(checkMassimaleField);
+		addComponent(occorrenzaGiornalieraField);
+
 	}
 
 	public TipologiaSpesa validate() throws CommitException,InvalidValueException{
@@ -71,8 +77,17 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 	 */
 	@Override
 	public void addValidator() {
-		// TODO Auto-generated method stub
-		
+		occorrenzaGiornalieraField.addValidator(new Validator(){
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+				int v = Integer.parseInt(value.toString());
+				if(checkMassimaleField.getValue() && v <= 0)
+					throw new InvalidValueException(Utility.getMessage("occorrenza_giornaliera_error"));
+
+			}
+			
+		});		
 	}
 
 	/**
