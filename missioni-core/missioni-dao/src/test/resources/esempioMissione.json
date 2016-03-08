@@ -1,68 +1,96 @@
  {
-	"missione": {
-		"id" : "01",
-		"localita" : "Roma",
-		"oggetto" : "Conferenza",
-		"responsabileGruppo" : "01",
-		"shortResponsabileGruppo" : "Salvia Vito",
-		"motivazioniMezzoProprio" : "motivazione",
-		"idUserSeguito": "03",
-        "shortUserSeguito": "Bianchi Mario",
-		"stato" : "STAND_BY",
-		"fondo" : "fondo",
-		"GAE" : "GAE",
-		"missioneEstera" : false,
-		"dataInserimento" : "2015-12-14T10:11:59.568Z",
-		"dateLastModified" : "2015-12-14T10:11:59.568Z",
-		"mezzoProprio" : true,
-		"idVeicolo" : "AA111BB",
-		"shortDescriptionVeicolo" : "Ford Fiesta",
-		"idUser" : "01",
-		"distanza" : "355 Km",
-		"geoPoint": {
-        	"lat": 41.9027835,
-        	"lon": 12.4963655,
-        	"geohash": "sr2ykk5t6kvr"
-         },
-		"datiPeriodoMissione" : {
-			"inizioMissione" : "2015-12-12T10:11:59.568Z",
-			"fineMissione" : "2015-12-14T10:11:59.568Z"
-
-		},
-		"datiMissioneEstera" : {
-			"trattamentoMissioneEsteraEnum" : "RIMBORSO_DOCUMENTATO",
-			"attraversamentoFrontieraAndata" : "2015-12-13T10:11:59.568Z",
-			"attraversamentoFrontieraRitorno" : "2015-12-13T10:17:59.568Z"
-		},
-		"datiAnticipoPagamenti": {
-        	"mandatoCNR": null,
-            "speseMissioniAnticipate": 0,
-             "speseAlberghiere": false,
-             "speseViaggioDocumentato": false,
-             "speseViaggioTam": false,
-             "prospetto": false
+"missione": {
+                  "id": "M_01",
+                  "localita": "Roma",
+                  "oggetto": "Conferenza prova per lo sviluppo di applicazioni",
+                  "responsabileGruppo": "01",
+                  "shortResponsabileGruppo": "Salvia Vito",
+                  "shortUser": "Salvia Vito",
+                  "motivazioni": null,
+                  "stato": "PRESA_IN_CARICO",
+                  "fondo": "fondo",
+                  "GAE": "GAE",
+                  "missioneEstera": false,
+                  "idUser": "01",
+                  "idUserSeguito": null,
+                  "shortUserSeguito": null,
+                  "idVeicolo": "AA111BB",
+                  "shortDescriptionVeicolo": "Ford Fiesta",
+                  "dataInserimento": "2015-11-13T00:00:00.000Z",
+                  "dateLastModified": null,
+                  "mezzoProprio": true,
+                  "distanza": "353 Km",
+                  "geoPoint": {
+                     "lat": 41.9027835,
+                     "lon": 12.4963655,
+                     "geohash": "sr2ykk5t6kvr"
                   },
-		"rimborso" : {
-			"numeroOrdine" : 1,
-			"dataRimborso" : "2015-12-15T10:11:59.568Z",
-			"totale" : 73.5,
-			"anticipazionePagamento" : 0.0,
-			"avvisoPagamento" : "c.da Santa Loja",
-			"mappaFattura" : {
-			"entry" : [{
-				"key" : "0000000001",
-				"value" : {
-					"id" : "0000000001",
-					"numeroFattura" : 134,
-					"data" : "2015-12-12T10:11:59.568Z",
-					"importo" : 73.5,
-					"altro" : "",
-					"valuta" : "euro"
-					}
-				}
-			]
-			}
-			
- 		}
-	}
+                  "idNazione": null,
+                  "shortDescriptionNazione": null,
+                  "datiPeriodoMissione": {
+                     "inizioMissione": "2015-11-11T00:00:00.000Z",
+                     "fineMissione": "2015-11-15T00:00:00.000Z",
+                     "dataPresuntaGiorni": null
+                  },
+                  "datiMissioneEstera": {
+                     "trattamentoMissioneEsteraEnum": null,
+                     "attraversamentoFrontieraAndata": null,
+                     "attraversamentoFrontieraRitorno": null
+                  },
+                  "datiAnticipoPagamenti": {
+                     "mandatoCNR": null,
+                     "speseMissioniAnticipate": 0,
+                     "speseAlberghiere": false,
+                     "speseViaggioDocumentato": false,
+                     "speseViaggioTam": false,
+                     "prospetto": false
+                  },
+                  "rimborso": {
+                     "mandatoPagamento": null,
+                     "numeroOrdine": 1,
+                     "dataRimborso": "2015-12-12T13:14:00.000Z",
+                     "dateLastModified": null,
+                     "totale": 179.6,
+                     "totaleTAM": 0,
+                     "avvisoPagamento": "Via Verdi",
+                     "totKm": null,
+                     "rimborsoKm": 0,
+                     "anticipazionePagamento": 0,
+                     "totaleDovuto": null,
+                     "pagata": false,
+                     "rimborsoDaTerzi": false,
+                     "importoDaTerzi": 0,
+                     "mappaFattura": {
+                        "entry": [
+                           {
+                              "key": "2222222222222",
+                              "value": {
+                                 "id": "2222222222222",
+                                 "numeroFattura": 135,
+                                 "data": "2015-11-13T13:00:00.000Z",
+                                 "importo": 89.8,
+                                 "valuta": "Euro",
+                                 "altro": null,
+                                 "idTipologiaSpesa": "02",
+                                 "shortDescriptionTipologiaSpesa": "Albergo"
+                              }
+                           },
+                           {
+                              "key": "1111111111111",
+                              "value": {
+                                 "id": "1111111111111",
+                                 "numeroFattura": 134,
+                                 "data": "2015-11-12T13:00:00.000Z",
+                                 "importo": 89.8,
+                                 "valuta": "Euro",
+                                 "altro": null,
+                                 "idTipologiaSpesa": "01",
+                                 "shortDescriptionTipologiaSpesa": "Vitto"
+                              }
+                           }
+                        ]
+                     }
+                  },
+                  "tipoVeicolo": "Veicolo Proprio"
+               }
 }
