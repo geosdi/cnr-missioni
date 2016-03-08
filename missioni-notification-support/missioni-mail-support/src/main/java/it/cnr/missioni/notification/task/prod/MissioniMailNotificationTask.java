@@ -46,27 +46,19 @@ public class MissioniMailNotificationTask implements IMissioniMailNotificationTa
 
         try {
             missioniMessagePreparator = prepareMessage(theMissioneNotificationMessage);
-
-            missioniMessagePreparator.forEach(m->{
-                this.gpMailSpringSender.send(m.getMimeMessagePreparator());
-
-            });
-            
+            missioniMessagePreparator.stream().forEach(m -> this.gpMailSpringSender.send(m.getMimeMessagePreparator()));
         } catch (Exception ex) {
             logger.error("####################MAIL_ASYNC_TASK_EXCEPTION : {}\n", ex.getMessage());
             ex.printStackTrace();
             return new AsyncResult<>(Boolean.FALSE);
         } finally {
-            if (!missioniMessagePreparator.isEmpty()) {
-            	
-                missioniMessagePreparator.forEach(m->{
-                	m.deleteAttachments();
-                });
+            if ((missioniMessagePreparator != null) && (!missioniMessagePreparator.isEmpty())) {
+                missioniMessagePreparator.stream().forEach(m -> m.deleteAttachments());
             }
         }
 
         logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@ {} end Notification "
-                        + "Task {}\n", Thread.currentThread().getName(), getAsyncTaskType());
+                + "Task {}\n", Thread.currentThread().getName(), getAsyncTaskType());
         return new AsyncResult<>(Boolean.TRUE);
     }
 
