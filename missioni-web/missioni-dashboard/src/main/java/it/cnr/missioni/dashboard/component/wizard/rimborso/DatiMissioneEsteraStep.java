@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.component.wizard.missione;
+package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
 import org.vaadin.teemu.wizards.WizardStep;
 
@@ -18,7 +18,6 @@ import it.cnr.missioni.model.missione.Missione;
 public class DatiMissioneEsteraStep implements WizardStep {
 
 
-	private DatiMissioneEstera datiMissioneEstera;
 	private Missione missione;
 	private DatiPeriodoEsteraMissioneForm datiPeriodoEsteraMissioneForm;
 	
@@ -26,10 +25,9 @@ public class DatiMissioneEsteraStep implements WizardStep {
 		return "Step 6";
 	}
 
-	public DatiMissioneEsteraStep(DatiMissioneEstera datiMissioneEstera, Missione missione) {
-		this.datiMissioneEstera = datiMissioneEstera;
+	public DatiMissioneEsteraStep(Missione missione) {
 		this.missione = missione;
-		this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(datiMissioneEstera, false, true,false,missione);
+		this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), false, true,false,missione);
 
 
 	}
