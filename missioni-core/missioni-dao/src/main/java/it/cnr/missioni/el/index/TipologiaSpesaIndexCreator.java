@@ -48,6 +48,9 @@ public class TipologiaSpesaIndexCreator extends GPAbstractIndexCreator {
     	.startObject("occorrenzeGiornaliere")
     	.field("type", "integer")
     	.endObject()
+    	.startObject("tipoTrattamento")
+    	.field("type", "string")
+    	.endObject()
     	
     	.endObject()
     	.endObject()
