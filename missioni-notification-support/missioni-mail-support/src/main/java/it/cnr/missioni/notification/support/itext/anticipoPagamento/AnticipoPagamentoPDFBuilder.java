@@ -1,6 +1,9 @@
 package it.cnr.missioni.notification.support.itext.anticipoPagamento;
 
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -19,6 +22,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import it.cnr.missioni.model.user.Anagrafica.Genere;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
 
 /**
@@ -41,6 +45,7 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
 				getType());
 		super.checkArguments();
+		DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 
 		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
 		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
@@ -84,16 +89,20 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Font fontNormal6 = new Font(Font.FontFamily.TIMES_ROMAN, 6);
 
 		Paragraph paragraphHeader = new Paragraph(
-				"\nRichiesta di anticipo missione " + missione.getId() + " del " + missione.getDataInserimento() + "\n\n\n",
+				"\nRichiesta di anticipo missione " + missione.getId() + " del " + formatData.format(missione.getDataInserimento().toDate()) + "\n\n\n",
 				fontBold);
 		paragraphHeader.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragraphHeader);
 
-		Paragraph paragraphUtente = new Paragraph("Il/La sottoscritt_ Dr. " + this.user.getAnagrafica().getCognome()
+		String articol = user.getAnagrafica().getGenere() == Genere.UOMO ? "Il" : "La";
+		String suffix = user.getAnagrafica().getGenere() == Genere.UOMO ? "o" : "a";
+
+		
+		Paragraph paragraphUtente = new Paragraph(articol+" sottoscritt"+suffix+" Dr. " + this.user.getAnagrafica().getCognome()
 				+ " " + user.getAnagrafica().getNome() + ", C.F. " + user.getAnagrafica().getCodiceFiscale()
-				+ ", nat_ a " + user.getAnagrafica().getLuogoNascita() + "  il " + user.getAnagrafica().getDataNascita()
+				+ ", nat_ a " + user.getAnagrafica().getLuogoNascita() + "  il " + formatData.format(user.getAnagrafica().getDataNascita().toDate())
 				+ ", " + " e residente a " + user.getResidenza().getComune() + " in via "
-				+ user.getResidenza().getIndirizzo() + " in servizio c/o l'istituto in qualità di"
+				+ user.getResidenza().getIndirizzo() + " in servizio c/o l'istituto in qualità di "
 				+ user.getDatiCNR().getDescrizioneQualifica() + "\n\n");
 
 		Paragraph paragraphChiede = new Paragraph("CHIEDE");
@@ -107,9 +116,9 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Paragraph paragraphAttivita = new Paragraph("\nper la seguente attività: " + missione.getOggetto() +
 
 		"da svolgersi a " + missione.getLocalita() + ", Nazione " + missione.getShortDescriptionNazione()
-				+ " per il periodo " + missione.getDatiPeriodoMissione().getInizioMissione() +
+				+ " per il periodo " + formatData.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate()) +
 
-		" per la durata presunta di n." + days + " gg\n." +
+		" per la durata presunta di n." + days + " gg.\n" +
 
 		"La missione avrà inizio alle ore " + missione.getDatiPeriodoMissione().getInizioMissione().getHourOfDay()
 				+ " e terminerà presumibilmente alle ore"
@@ -117,7 +126,7 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		"T.a.m.)");
 
-		Paragraph paragraphAllegati = new Paragraph("\nSi allegano alla presente:\n");
+		Paragraph paragraphAllegati = new Paragraph("\nSi allegano alla presente:");
 		StringBuilder builder = new StringBuilder();
 		if(missione.getDatiAnticipoPagamenti().isSpeseAlberghiere())
 			builder.append("\nSpese alberghiere/alloggio preventivate (Trattamento di missione con rimborso documentato);");
@@ -128,22 +137,25 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		if(missione.getDatiAnticipoPagamenti().isProspetto())
 			builder.append("\nProspetto calcolo anticipo (Trattamento alternativo di missione);");
 		Paragraph paragraphElencoAllegati = new Paragraph("\n"+builder.toString());
+		
 
-
-		Paragraph paragraphData = new Paragraph("\n\nTito Scalo," + new DateTime() + "\n");
+		Paragraph paragraphData = new Paragraph("\n\nTito Scalo," + formatData.format(new DateTime().toDate()) + "\n");
 		paragraphData.setAlignment(Element.ALIGN_LEFT);
 
-		Paragraph paragraphInFede = new Paragraph("\n\nIn fede\n___________________\n");
+		Paragraph paragraphInFede = new Paragraph("\n\nIn fede\n\n___________________\n");
 		paragraphData.setAlignment(Element.ALIGN_RIGHT);
 
+		String importo = missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate() > 0 ? Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate()) : "____";
+		
 		Paragraph paragraphFooter = new Paragraph(
-				"\n\nVISTO SI AUTORIZZA LA LIQUIDAZIONE PARI AD € _______\nIl Direttore CNR/IMAA\n_____________________\n(Dr. Vincenzo LAPENNA)");
+				"\n\nVISTO SI AUTORIZZA LA LIQUIDAZIONE PARI AD € "+importo+"\n\nIl Direttore CNR/IMAA\n\n_____________________\n(Dr. Vincenzo LAPENNA)");
 
 		document.add(paragraphUtente);
 		document.add(paragraphChiede);
 		document.add(paragraphDettagli);
 		document.add(paragraphAttivita);
 		document.add(paragraphAllegati);
+		document.add(paragraphElencoAllegati);
 		document.add(paragraphInFede);
 		document.add(paragraphFooter);
 
