@@ -1,10 +1,9 @@
 package it.cnr.missioni.dashboard.view.admin;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-
+import it.cnr.missioni.dashboard.component.window.AnticipoPagamentiWindow;
 import it.cnr.missioni.dashboard.component.window.admin.MissioneWindowAdmin;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
+import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.StatoEnum;
@@ -27,49 +26,35 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder();
 	}
 
-	
-	protected void addButtonsToLayout(){
-		layout.addComponents(buttonDettagli, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
+	protected void addButtonsToLayout() {
+		layout.addComponents(buttonDettagli, buttonRimborso,buttonAnticipoPagamento, buttonPDF, buttonVeicoloMissionePDF);
 	}
-	
+
 	@Override
-	protected void buildButtonDettagli(){
-		buttonDettagli.addClickListener(new Button.ClickListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 4610960850985679736L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-
-				MissioneWindowAdmin.open(selectedMissione,!selectedMissione.isRimborsoSetted(),true);
-
-			}
-
-		});
+	protected void addActionButtonDettagli() {
+		MissioneWindowAdmin.open(selectedMissione, true, !selectedMissione.isRimborsoSetted(), true);
 	}
-	
-	protected void aggiornaTable(){
+
+	protected void aggiornaTable() {
 		this.elencoMissioniTable.aggiornaTableAdmin(missioniStore);
 	}
+
+	@Override
+	protected void addActionButtonRimborso() {
+		RimborsoWindowAdmin.open(selectedMissione, true, selectedMissione.getRimborso().isPagata() ? false : true,
+				true);
+	}
 	
-	protected void buildButtonRimborso(){
-		buttonRimborso.addClickListener(new Button.ClickListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -7097735360065445590L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				RimborsoWindowAdmin.open(selectedMissione,true,selectedMissione.getRimborso().isPagata() ? false : true,true);
-
-			}
-
-		});
+	protected void openWindowAnticipoPagamenti(){
+		AnticipoPagamentiWindow.open(selectedMissione, true, true, false);
+	}
+	
+	protected boolean enableButtonAnticipoPagamento(){
+		return selectedMissione != null && !selectedMissione.isRimborsoSetted();
+	}
+	
+	protected void downloadAnticipoPagamentoAsPdf(AdvancedFileDownloader anticipoPagamentoDownloaderForLink){
+		anticipoPagamentoDownloaderForLink.setFileDownloadResource(getResourceAnticipoPagamento());
 	}
 
 	protected void enableButtons() {
@@ -77,8 +62,8 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		this.buttonPDF.setEnabled(true);
 		this.buttonRimborso.setEnabled(selectedMissione.isRimborsoSetted());
 		buttonVeicoloMissionePDF.setEnabled(selectedMissione.isMezzoProprio());
-	}
-	
+		this.buttonAnticipoPagamento.setEnabled(true);
 
+	}
 
 }

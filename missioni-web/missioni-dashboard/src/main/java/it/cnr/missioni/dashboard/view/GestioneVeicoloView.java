@@ -16,6 +16,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -87,8 +88,8 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 	}
 
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(5, 1);
+	protected HorizontalLayout addActionButtons() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		
 		
@@ -102,7 +103,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloWindow.open(new Veicolo(), false);
+				VeicoloWindow.open(new Veicolo(),false,true, false);
 			}
 
 		});
@@ -118,7 +119,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloWindow.open(selectedVeicolo, true);
+				VeicoloWindow.open(selectedVeicolo,false,true, true);
 
 			}
 

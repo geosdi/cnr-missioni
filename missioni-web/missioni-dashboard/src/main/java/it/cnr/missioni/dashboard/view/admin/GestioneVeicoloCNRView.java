@@ -14,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -95,8 +96,8 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	}
 
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(5, 1);
+	protected HorizontalLayout addActionButtons() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		buttonNew = buildButton("Aggiungi Veicolo CNR", "Inserisce un nuovo veicolo CNR", FontAwesome.PLUS);
 		buttonNew.addClickListener(new Button.ClickListener() {
@@ -108,7 +109,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloCNRWindow.open(new VeicoloCNR(), false);
+				VeicoloCNRWindow.open(new VeicoloCNR(), true,true,false);
 			}
 
 		});
@@ -124,7 +125,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				VeicoloCNRWindow.open(selectedVeicoloCNR, true);
+				VeicoloCNRWindow.open(selectedVeicoloCNR, true,true,true);
 
 			}
 

@@ -44,6 +44,8 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	protected Button buttonPDF;
 	protected Button buttonMissione;
 	protected Button buttonVeicoloMissionePDF;
+	protected Button buttonAnticipoPagamento;
+
 	private VerticalLayout layoutPagination = new VerticalLayout();
 
 	public GestioneTemplateView() {
@@ -81,19 +83,17 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
 		fullTextsearchLayout.setSpacing(true);
 		fullTextsearchLayout.setStyleName("full-text-search");
-
-		HorizontalLayout newObjectLayout = new HorizontalLayout();
-
-		newObjectLayout.addComponent(addActionButtons());
-
-		newObjectLayout.setSpacing(true);
-		newObjectLayout.setStyleName("button-new-object");
+		fullTextsearchLayout.setWidthUndefined();
 
 		layoutTable = buildTable();
 		layoutTable.setStyleName("layout-table-object");
-		toolbar.addComponent(newObjectLayout);
-		toolbar.addComponent(fullTextsearchLayout);
-		toolbar.setComponentAlignment(fullTextsearchLayout, Alignment.BOTTOM_RIGHT);
+		toolbar.addComponents(addActionButtons());
+//		toolbar.setComponentAlignment(fullTextsearchLayout, Alignment.BOTTOM_RIGHT);
+
+		addComponent(fullTextsearchLayout);
+		setComponentAlignment(fullTextsearchLayout, Alignment.BOTTOM_RIGHT);
+
+		
 		addComponent(toolbar);
 		
 		addComponent(layoutPagination);
@@ -153,7 +153,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
 	protected abstract Button createButtonSearch();
 
-	protected abstract GridLayout addActionButtons();
+	protected abstract HorizontalLayout addActionButtons();
 
 	protected abstract void addListenerPagination();
 	
@@ -164,7 +164,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
 	protected Component buildFilter() {
 		multiMatchField = new TextField();
-		multiMatchField.setWidth("500px");
+		multiMatchField.setWidth("600px");
 		multiMatchField.setInputPrompt("Testo da ricercare");
 		multiMatchField.setIcon(FontAwesome.SEARCH);
 		multiMatchField.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);

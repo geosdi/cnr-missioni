@@ -10,6 +10,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
 
@@ -95,8 +96,8 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 
 
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(5, 1);
+	protected HorizontalLayout addActionButtons() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		
 		buttonNew = buildButton("Aggiungi Rimborso Km", "Inserisce un nuovo rimborso km",FontAwesome.PLUS);
@@ -109,7 +110,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				RimborsoKmWindow.open(new RimborsoKm(), false);
+				RimborsoKmWindow.open(new RimborsoKm(),true,true, false);
 			}
 
 		});
@@ -125,7 +126,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				RimborsoKmWindow.open(selectedRimborsoKm, true);
+				RimborsoKmWindow.open(selectedRimborsoKm, true,true,true);
 
 			}
 

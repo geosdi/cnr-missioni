@@ -14,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -99,8 +100,8 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(5, 1);
+	protected HorizontalLayout addActionButtons() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		
 		buttonNew = buildButton("Aggiungi Qualifica", "Inserisce una nuova qualifica", FontAwesome.PLUS);
@@ -113,7 +114,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				QualificaUserWindow.open(new QualificaUser(), false);
+				QualificaUserWindow.open(new QualificaUser(), true,true,true);
 			}
 
 		});
@@ -129,7 +130,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				QualificaUserWindow.open(selectedQualificaUser, true);
+				QualificaUserWindow.open(selectedQualificaUser,true,true, true);
 
 			}
 

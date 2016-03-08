@@ -130,8 +130,8 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 		return buttonCerca;
 	}
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
+	protected HorizontalLayout addActionButtons() {
+		HorizontalLayout layout = new HorizontalLayout();
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli dell'user",FontAwesome.EDIT);
 
 		buttonDettagli.addClickListener(new Button.ClickListener() {
@@ -143,7 +143,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				UserWindow.open(selectedUser, true);
+				UserWindow.open(selectedUser,true,true, true);
 
 			}
 

@@ -14,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -92,8 +93,8 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	}
 
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(5, 1);
+	protected HorizontalLayout addActionButtons() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 		
 		
@@ -107,7 +108,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				NazioneWindow.open(new Nazione(), false);
+				NazioneWindow.open(new Nazione(),true,true, false);
 			}
 
 		});
@@ -123,7 +124,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				NazioneWindow.open(selectedNazione, true);
+				NazioneWindow.open(selectedNazione,true,true, true);
 
 			}
 

@@ -269,8 +269,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		return buttonCerca;
 	}
 
-	protected GridLayout addActionButtons() {
-		GridLayout layout = new GridLayout(4, 1);
+	protected HorizontalLayout addActionButtons() {
+		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso", FontAwesome.EDIT);
@@ -287,7 +287,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				MissioneWindowAdmin.open(selectedMissione,false,false);
+				MissioneWindowAdmin.open(selectedMissione,false,false,false);
 
 			}
 
