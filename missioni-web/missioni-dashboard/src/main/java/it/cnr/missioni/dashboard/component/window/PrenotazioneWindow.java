@@ -4,13 +4,11 @@ import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
@@ -38,19 +36,16 @@ public class PrenotazioneWindow extends IWindow.AbstractWindow {
 	// FIELD PRENOTAZIONE
 	private PrenotazioneEvent prenotazione;
 	private PrenotazioneForm prenotazioneForm;
-	private boolean modifica;
 	private final Calendar calendarComponent;
 
-	private PrenotazioneWindow(Calendar calendarComponent, final PrenotazioneEvent prenotazione, boolean modifica) {
+	private PrenotazioneWindow(Calendar calendarComponent, final PrenotazioneEvent prenotazione,boolean isAdmin,boolean enabled, boolean modifica) {
 
-		super();
+		super(isAdmin,enabled,modifica);
 		build();
 		this.calendarComponent = calendarComponent;
-		this.modifica = modifica;
 		this.prenotazione = prenotazione;
 		setId(ID);
 		// solo se la prenotazione è dell'user loggato o è admin
-		boolean enabled = true;
 		if(modifica)
 			enabled = DashboardUI.getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN
 				|| prenotazione.getIdUser().equals(DashboardUI.getCurrentUser().getId());
@@ -118,9 +113,9 @@ public class PrenotazioneWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final Calendar calendarComponent, final PrenotazioneEvent prenotazione, boolean modifica) {
+	public static void open(final Calendar calendarComponent, final PrenotazioneEvent prenotazione,final boolean isAdmin,final boolean enabled, final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new PrenotazioneWindow(calendarComponent, prenotazione, modifica);
+		Window w = new PrenotazioneWindow(calendarComponent, prenotazione, isAdmin,enabled,modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

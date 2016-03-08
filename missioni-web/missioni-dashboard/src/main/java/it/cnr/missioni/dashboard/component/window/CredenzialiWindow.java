@@ -50,12 +50,12 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 	private PasswordField passwordRepeatField;
 	private User user;
 
-	private boolean registration;
+//	private boolean registration;
 
-	private CredenzialiWindow(final User user, boolean registration) {
-		super();
+	private CredenzialiWindow(final User user, boolean isAdmin,boolean enabled,boolean modifica) {
+		super(isAdmin,enabled,modifica);
 		this.user = user;
-		this.registration = registration;
+//		this.registration = registration;
 		this.setID(ID);
 		fieldGroup = new BeanFieldGroup<User>(User.class);
 		build();
@@ -117,7 +117,7 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 			
 		});
 		
-		if (!registration)
+		if (modifica)
 			usernameField.setReadOnly(true);
 		passwordField = (PasswordField) fieldGroup.buildAndBind("Password", "credenziali.password",
 				PasswordField.class);
@@ -194,7 +194,7 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 					BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
 					User user = beanItem.getBean();
 
-					if (registration)
+					if (!modifica)
 						DashboardEventBus.post(new RegistrationUserAction(user));
 					else
 						DashboardEventBus.post(new UpdateUserAction(user));
@@ -213,9 +213,9 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final User user, boolean registration) {
+	public static void open(final User user, final boolean isAdmin,final boolean enabled,final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new CredenzialiWindow(user, registration);
+		Window w = new CredenzialiWindow(user, isAdmin,enabled,modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

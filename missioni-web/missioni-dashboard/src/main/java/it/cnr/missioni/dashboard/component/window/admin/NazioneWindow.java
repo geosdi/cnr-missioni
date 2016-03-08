@@ -4,7 +4,6 @@ import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -31,16 +30,14 @@ public class NazioneWindow extends IWindow.AbstractWindow {
 
 	public static final String ID = "nazionewindow";
 
-	private boolean modifica;
 	private NazioneForm nazioneForm;
 
 	private  Nazione nazione;
 
-	private NazioneWindow(final Nazione nazione, boolean modifica) {
+	private NazioneWindow(final Nazione nazione,final boolean isAdmin,final boolean enabled, final boolean modifica) {
 
-		super();
+		super(isAdmin,enabled,modifica);
 		this.nazione = nazione;
-		this.modifica = modifica;
 		setId(ID);
 		build();
 
@@ -93,9 +90,9 @@ public class NazioneWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final Nazione nazione, boolean modifica) {
+	public static void open(final Nazione nazione,final boolean isAdmin,final boolean enabled,final  boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new NazioneWindow(nazione, modifica);
+		Window w = new NazioneWindow(nazione,isAdmin,enabled, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

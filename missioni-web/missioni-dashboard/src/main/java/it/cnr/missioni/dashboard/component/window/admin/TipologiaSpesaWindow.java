@@ -4,7 +4,6 @@ import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
@@ -31,16 +30,14 @@ public class TipologiaSpesaWindow extends IWindow.AbstractWindow {
 
 	public static final String ID = "tipologiaspesawindow";
 
-	private boolean modifica;
 
 	private final TipologiaSpesa tipologiaSpesa;
 	private TipologiaSpesaForm tipologiaSpesaForm;
 
-	private TipologiaSpesaWindow(final TipologiaSpesa tipologiaSpesa, boolean modifica) {
+	private TipologiaSpesaWindow(final TipologiaSpesa tipologiaSpesa,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 
-		super();
+		super(isAdmin,enabled,modifica);
 		this.tipologiaSpesa = tipologiaSpesa;
-		this.modifica = modifica;
 		setId(ID);
 		build();
 		detailsWrapper.addComponent(addTab());
@@ -94,9 +91,9 @@ public class TipologiaSpesaWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final TipologiaSpesa tipologiaSpesa, boolean modifica) {
+	public static void open(final TipologiaSpesa tipologiaSpesa,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new TipologiaSpesaWindow(tipologiaSpesa, modifica);
+		Window w = new TipologiaSpesaWindow(tipologiaSpesa,isAdmin,enabled, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

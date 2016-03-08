@@ -44,21 +44,14 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 
 	private Rimborso rimborso;
 	private Missione missione;
-	private boolean enabled;
-	private boolean modifica;
-	private boolean isAdmin;
 	
 	private DatiGeneraliRimborsoForm datiGeneraliForm;
 	private FatturaRimborsoForm fatturaForm;
 
 	private RimborsoWindowAdmin(final Missione missione,boolean modifica,boolean enabled,boolean isAdmin) {
-		super();
+		super(isAdmin,enabled,modifica);
 		this.missione = missione;
 		this.rimborso = missione.getRimborso();
-		this.enabled = enabled;
-		this.modifica = modifica;
-		this.isAdmin = isAdmin;
-		
 		addStyleName("profile-window");
 		setId(ID);
 		Responsive.makeResponsive(this);

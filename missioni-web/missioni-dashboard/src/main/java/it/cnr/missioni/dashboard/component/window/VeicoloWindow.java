@@ -31,15 +31,13 @@ public class VeicoloWindow  extends  IWindow.AbstractWindow  {
 	public static final String ID = "veicolowindow";
 
 
-	private boolean modifica;
 	private Veicolo veicolo;
 	private VeicoloForm veicoloForm;
 
 
-	private VeicoloWindow(final Veicolo veicolo, boolean modifica) {
-		super();
+	private VeicoloWindow(final Veicolo veicolo, final boolean isAdmin,final boolean enabled, final boolean modifica) {
+		super(isAdmin,enabled,modifica);
 		this.veicolo = veicolo;
-		this.modifica = modifica;
 		setId(ID);
 		build();
 		buildTab();
@@ -84,9 +82,9 @@ public class VeicoloWindow  extends  IWindow.AbstractWindow  {
 		return footer;
 	}
 
-	public static void open(final Veicolo veicolo, boolean modifica) {
+	public static void open(final Veicolo veicolo,final boolean isAdmin,final boolean enabled, boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new VeicoloWindow(veicolo, modifica);
+		Window w = new VeicoloWindow(veicolo,isAdmin,enabled, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

@@ -26,7 +26,6 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
-import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
@@ -55,15 +54,11 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 	private DatiPeriodoMissioneForm datiPeriodoMissioneForm;
 	private DatiPeriodoEsteraMissioneForm datiPeriodoEsteraMissioneForm;
 	private AnticipazionePagamentoMissioneForm anticipazionePagamentoMissioneForm;
-	private boolean modifica;
-	private boolean enabled;
 	
-	private MissioneWindowAdmin(final Missione missione,boolean enabled,boolean modifica) {
+	private MissioneWindowAdmin(final Missione missione,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 
-		super();
+		super(isAdmin,enabled,modifica);
 		this.missione = missione;
-		this.modifica = modifica;
-		this.enabled = enabled;
 		getUser();
 
 		setId(ID);
@@ -81,8 +76,8 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 		buildTabFondoGAE();
 		buildTabVeicoloMissione();
 		buildTabPeriodoMissione();
-		buildTabPeriodoEsteraMissione();
-		buildTabAnticipazionePagamentoMissione();
+//		buildTabPeriodoEsteraMissione();
+//		buildTabAnticipazionePagamentoMissione();
 	}
 
 	private void buildTabTipoMissione() {
@@ -117,19 +112,19 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 
 	}
 
-	private void buildTabPeriodoEsteraMissione() {
-		this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), true,
-				enabled,modifica, missione);
-		detailsWrapper.addComponent(buildTab("Estera", FontAwesome.CALENDAR, this.datiPeriodoEsteraMissioneForm));
+//	private void buildTabPeriodoEsteraMissione() {
+//		this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), true,
+//				enabled,modifica, missione);
+//		detailsWrapper.addComponent(buildTab("Estera", FontAwesome.CALENDAR, this.datiPeriodoEsteraMissioneForm));
+//
+//	}
 
-	}
-
-	private void buildTabAnticipazionePagamentoMissione() {
-		this.anticipazionePagamentoMissioneForm = new AnticipazionePagamentoMissioneForm(
-				missione.getDatiAnticipoPagamenti(), true,enabled,modifica);
-		detailsWrapper.addComponent(buildTab("Anticipo", FontAwesome.EURO, this.anticipazionePagamentoMissioneForm));
-
-	}
+//	private void buildTabAnticipazionePagamentoMissione() {
+//		this.anticipazionePagamentoMissioneForm = new AnticipazionePagamentoMissioneForm(
+//				missione.getDatiAnticipoPagamenti(), true,enabled,modifica);
+//		detailsWrapper.addComponent(buildTab("Anticipo", FontAwesome.EURO, this.anticipazionePagamentoMissioneForm));
+//
+//	}
 
 	private void getUser() {
 		try {
@@ -157,22 +152,22 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 
 				try {
 
-					DatiAnticipoPagamenti datiAnticipoPAgamento = anticipazionePagamentoMissioneForm.validate();
-					DatiMissioneEstera datiMissioneEstera = null;
+//					DatiAnticipoPagamenti datiAnticipoPAgamento = anticipazionePagamentoMissioneForm.validate();
+//					DatiMissioneEstera datiMissioneEstera = null;
 					tipoMissioneForm.validate();
 					localitaOggettoMissioneForm.validate();
 					DatiPeriodoMissione datiPeriodoMissione = datiPeriodoMissioneForm.validate();
 					fondoGAEMissioneForm.validate();
 
-					if(missione.isMissioneEstera()){
-						 datiPeriodoEsteraMissioneForm.setMissioneEstera(true);
-						 datiPeriodoEsteraMissioneForm.setMissione(missione);
-						 datiMissioneEstera = datiPeriodoEsteraMissioneForm.validate();
-
-					}
+//					if(missione.isMissioneEstera()){
+//						 datiPeriodoEsteraMissioneForm.setMissioneEstera(true);
+//						 datiPeriodoEsteraMissioneForm.setMissione(missione);
+//						 datiMissioneEstera = datiPeriodoEsteraMissioneForm.validate();
+//
+//					}
 					veicoloMissioneForm.validate();
-					missione.setDatiAnticipoPagamenti(datiAnticipoPAgamento);
-					missione.setDatiMissioneEstera(datiMissioneEstera);
+//					missione.setDatiAnticipoPagamenti(datiAnticipoPAgamento);
+//					missione.setDatiMissioneEstera(datiMissioneEstera);
 					missione.setDatiPeriodoMissione(datiPeriodoMissione);
 
 					DashboardEventBus.post(new MissioneAction(missione, modifica));
@@ -191,9 +186,9 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final Missione missione,final boolean enabled,final boolean modifica) {
+	public static void open(final Missione missione,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new MissioneWindowAdmin(missione,enabled,modifica);
+		Window w = new MissioneWindowAdmin(missione,isAdmin,enabled,modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

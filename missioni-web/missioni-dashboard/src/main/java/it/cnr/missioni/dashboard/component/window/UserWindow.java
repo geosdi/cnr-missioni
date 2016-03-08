@@ -49,8 +49,8 @@ public class UserWindow extends IWindow.AbstractWindow {
 	private PatenteUserForm patenteTablLayout;
 	private ResidenzaUserForm residenzaTabLayout;
 
-	private UserWindow(final User user, final boolean isAdmin) {
-		super();
+	private UserWindow(final User user,boolean isAdmin,boolean enabled, final boolean modifica) {
+		super(isAdmin,enabled,modifica);
 		this.user = user;
 		setId(ID);
 		build();
@@ -173,9 +173,9 @@ public class UserWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final User user, final boolean isAdmin) {
+	public static void open(final User user, final boolean isAdmin,final boolean enabled,final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new UserWindow(user, isAdmin);
+		Window w = new UserWindow(user, isAdmin,enabled,modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

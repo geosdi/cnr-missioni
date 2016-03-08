@@ -37,12 +37,10 @@ public class QualificaUserWindow extends IWindow.AbstractWindow {
 
 	private final QualificaUser qualificaUser;
 	private QualificaUserForm qualificaUserForm;
-	private boolean modifica;
 
-	private QualificaUserWindow(final QualificaUser qualificaUser, boolean modifica) {
-		super();
+	private QualificaUserWindow(final QualificaUser qualificaUser,final boolean isAdmin,final boolean enabled,final  boolean modifica) {
+		super(isAdmin,enabled,modifica);
 		this.qualificaUser = qualificaUser;
-		this.modifica = modifica;
 		setId(ID);
 		build();
 		detailsWrapper.addComponent(addTab());
@@ -93,9 +91,9 @@ public class QualificaUserWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final QualificaUser qualificaUser, boolean modifica) {
+	public static void open(final QualificaUser qualificaUser,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new QualificaUserWindow(qualificaUser, modifica);
+		Window w = new QualificaUserWindow(qualificaUser,isAdmin,enabled, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

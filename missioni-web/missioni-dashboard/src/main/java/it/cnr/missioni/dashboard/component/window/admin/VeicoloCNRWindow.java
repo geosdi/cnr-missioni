@@ -32,14 +32,12 @@ public class VeicoloCNRWindow extends IWindow.AbstractWindow {
 	public static final String ID = "veicoloCNRwindow";
 
 
-	private boolean modifica;
 	private VeicoloCNRForm veicoloCNRForm;
 	private final VeicoloCNR veicoloCNR;
 
-	private VeicoloCNRWindow(final VeicoloCNR veicoloCNR, boolean modifica) {
-		super();
+	private VeicoloCNRWindow(final VeicoloCNR veicoloCNR,final boolean isAdmin,final boolean enabled,final boolean modifica) {
+		super(isAdmin,enabled,modifica);
 		this.veicoloCNR = veicoloCNR;
-		this.modifica = modifica;
 		setId(ID);
 		build();
 		buildTab();
@@ -82,9 +80,9 @@ public class VeicoloCNRWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final VeicoloCNR veicoloCNR, boolean modifica) {
+	public static void open(final VeicoloCNR veicoloCNR,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new VeicoloCNRWindow(veicoloCNR, modifica);
+		Window w = new VeicoloCNRWindow(veicoloCNR,isAdmin,enabled, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

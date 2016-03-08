@@ -30,15 +30,13 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 	private static final long serialVersionUID = 5414281952989114531L;
 
 	public static final String ID = "massimalewindow";
-	private boolean modifica;
 	private MassimaleForm massimaleForm;
 	private final Massimale massimale;
 
-	private MassimaleWindow(final Massimale massimale, boolean modifica) {
+	private MassimaleWindow(final Massimale massimale,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 
-		super();
+		super(isAdmin,enabled,modifica);
 		this.massimale = massimale;
-		this.modifica = modifica;
 		setId(ID);
 		build();
 		detailsWrapper.addComponent(addTab());
@@ -88,9 +86,9 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final Massimale massimale, boolean modifica) {
+	public static void open(final Massimale massimale,final boolean isAdmin,final boolean enabled, boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new MassimaleWindow(massimale, modifica);
+		Window w = new MassimaleWindow(massimale,isAdmin,enabled, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}

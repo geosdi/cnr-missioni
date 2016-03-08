@@ -46,13 +46,10 @@ public class RimborsoKmWindow extends IWindow.AbstractWindow {
 
 
 	private final RimborsoKm rimborsoKm;
-	private boolean modifica;
 
-	private RimborsoKmWindow(final RimborsoKm rimborsoKm, boolean modifica) {
-		super();
+	private RimborsoKmWindow(final RimborsoKm rimborsoKm,boolean isAdmin,boolean enabled, boolean modifica) {
+		super(isAdmin,enabled,modifica);
 		this.rimborsoKm = rimborsoKm;
-		this.modifica = modifica;
-
 		setId(ID);
 		build();
 		detailsWrapper.addComponent(addTab());
@@ -103,9 +100,9 @@ public class RimborsoKmWindow extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final RimborsoKm rimborsoKm, boolean modifica) {
+	public static void open(final RimborsoKm rimborsoKm,final boolean isAdmin,final boolean enabled,final boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new RimborsoKmWindow(rimborsoKm, modifica);
+		Window w = new RimborsoKmWindow(rimborsoKm,isAdmin,enabled, modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}
