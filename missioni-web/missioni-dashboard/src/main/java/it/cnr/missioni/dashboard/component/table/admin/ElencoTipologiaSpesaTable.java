@@ -46,8 +46,8 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
 			setContainerDataSource(
 					new BeanItemContainer<TipologiaSpesa>(TipologiaSpesa.class, ((TipologiaSpesaStore)tipologiaSpesaStore).getTipologiaSpesa()));
 
-			setVisibleColumns("value","tipo","checkMassimale");
-			setColumnHeaders("Descrizione","Tipo","Massimale");
+			setVisibleColumns("value","tipo","checkMassimale","occorrenzeGiornaliere");
+			setColumnHeaders("Descrizione","Tipo","Massimale","Occorrenze Giornaliere");
 			Object[] properties = { "value" };
 			boolean[] ordering = { true };
 			sort(properties, ordering);
