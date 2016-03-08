@@ -61,7 +61,7 @@ public class UpdateAnticipoPagamentoMailProd extends MissioniMailProd {
 				model.put("missioneID", missioneID);
 
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-						"template/updateAnticipoPagamentoMailNotification.html.vm", "UTF-8", model);
+						"template/updateAnticipoPagamentoMailNotificationUser.html.vm", "UTF-8", model);
 				message.setText(messageText, Boolean.TRUE);
 
 				Path tempFilePath = Files.createTempFile("Anticipo Pagamento".concat("-").concat(missioneID).concat("-") .concat(userName), ".pdf");

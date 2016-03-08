@@ -3,6 +3,7 @@ package it.cnr.missioni.notification.message.factory.prod;
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
+import it.cnr.missioni.notification.message.UpdateAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateRimborsoMessage;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
@@ -103,9 +104,9 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 * @return
 	 */
 	@Override
-	public AddAnticipoPagamentoMessage buildUpdateAnticipoPagamentoMessage(String userName, String userSurname,
+	public UpdateAnticipoPagamentoMessage buildUpdateAnticipoPagamentoMessage(String userName, String userSurname,
 			String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
-		return new AddAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder);
+		return new UpdateAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder);
 
 	}
 
