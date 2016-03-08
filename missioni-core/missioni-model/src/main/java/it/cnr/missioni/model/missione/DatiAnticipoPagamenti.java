@@ -12,29 +12,17 @@ public class DatiAnticipoPagamenti implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6596717379934379754L;
-	private boolean anticipazioniMonetarie;
+	private static final long serialVersionUID = 3198450987570600338L;
 	private String mandatoCNR;
 	@Min(value = 0)
 	private double speseMissioniAnticipate;
-	private boolean rimborsoDaTerzi;
-	@Min(value = 0)
-	private double importoDaTerzi;
+	private TrattamentoMissioneEsteraEnum trattamentoMissioneEstera;
+	private boolean speseAlberghiere;
+	private boolean speseViaggioDocumentato;
+	private boolean speseViaggioTam;
+	private boolean prospetto;
 
-	/**
-	 * @return the anticipazioniMonetarie
-	 */
-	public boolean isAnticipazioniMonetarie() {
-		return anticipazioniMonetarie;
-	}
-
-	/**
-	 * @param anticipazioniMonetarie
-	 */
-	public void setAnticipazioniMonetarie(boolean anticipazioniMonetarie) {
-		this.anticipazioniMonetarie = anticipazioniMonetarie;
-	}
-
+	
 	/**
 	 * @return the mandatoCNR
 	 */
@@ -64,42 +52,71 @@ public class DatiAnticipoPagamenti implements Serializable{
 	}
 
 	/**
-	 * @return the rimborsoDaTerzi
+	 * @return the speseAlberghiere
 	 */
-	public boolean isRimborsoDaTerzi() {
-		return rimborsoDaTerzi;
+	public boolean isSpeseAlberghiere() {
+		return speseAlberghiere;
 	}
 
 	/**
-	 * @param rimborsoDaTerzi
+	 * @param speseAlberghiere 
 	 */
-	public void setRimborsoDaTerzi(boolean rimborsoDaTerzi) {
-		this.rimborsoDaTerzi = rimborsoDaTerzi;
+	public void setSpeseAlberghiere(boolean speseAlberghiere) {
+		this.speseAlberghiere = speseAlberghiere;
 	}
 
 	/**
-	 * @return the importoDaTerzi
+	 * @return the speseViaggioDocumentato
 	 */
-	public double getImportoDaTerzi() {
-		return importoDaTerzi;
+	public boolean isSpeseViaggioDocumentato() {
+		return speseViaggioDocumentato;
 	}
 
 	/**
-	 * @param importoDaTerzi
+	 * @param speseViaggioDocumentato 
 	 */
-	public void setImportoDaTerzi(double importoDaTerzi) {
-		this.importoDaTerzi = importoDaTerzi;
+	public void setSpeseViaggioDocumentato(boolean speseViaggioDocumentato) {
+		this.speseViaggioDocumentato = speseViaggioDocumentato;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the speseViaggioTam
+	 */
+	public boolean isSpeseViaggioTam() {
+		return speseViaggioTam;
+	}
+
+	/**
+	 * @param speseViaggioTam 
+	 */
+	public void setSpeseViaggioTam(boolean speseViaggioTam) {
+		this.speseViaggioTam = speseViaggioTam;
+	}
+
+	/**
+	 * @return the prospetto
+	 */
+	public boolean isProspetto() {
+		return prospetto;
+	}
+
+	/**
+	 * @param prospetto 
+	 */
+	public void setProspetto(boolean prospetto) {
+		this.prospetto = prospetto;
+	}
+
+	/**
+	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "DatiAnticipoPagamenti [anticipazioniMonetarie=" + anticipazioniMonetarie + ", mandatoCNR=" + mandatoCNR
-				+ ", speseMissioniAnticipate=" + speseMissioniAnticipate + ", rimborsoDaTerzi=" + rimborsoDaTerzi
-				+ ", importoDaTerzi=" + importoDaTerzi + "]";
+		return "DatiAnticipoPagamenti [mandatoCNR=" + mandatoCNR + ", speseMissioniAnticipate="
+				+ speseMissioniAnticipate + ", trattamentoMissioneEstera=" + trattamentoMissioneEstera
+				+ ", speseAlberghiere=" + speseAlberghiere + ", speseViaggioDocumentato=" + speseViaggioDocumentato
+				+ ", speseViaggioTam=" + speseViaggioTam + ", prospetto=" + prospetto + "]";
 	}
+
+
 }
