@@ -24,7 +24,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
@@ -327,6 +326,15 @@ public class MissioneDAOTest {
 		logger.debug("############################MAX_NUM_ORDINE_MISSIONE : {}\n", n);
 
 	}
+	
+	@Test
+	public void V_findRiByUser() throws Exception {
+
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser("01");
+		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 1);
+	}
 
 	// @Test
 	// public void tearDown() throws Exception {
@@ -353,12 +361,6 @@ public class MissioneDAOTest {
 		missione.setGeoPoint(new GeoPoint(41.9027835, 12.4963655));
 		missione.setDistanza("353 Km");
 		missione.setShortUser("Salvia Vito");
-		DatiAnticipoPagamenti dati = new DatiAnticipoPagamenti();
-		dati.setAnticipazioniMonetarie(true);
-		dati.setMandatoCNR("AA11");
-		dati.setRimborsoDaTerzi(false);
-		dati.setSpeseMissioniAnticipate(102.00);
-		missione.setDatiAnticipoPagamenti(dati);
 		DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
 		datiPeriodoMissione.setInizioMissione(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
 		datiPeriodoMissione.setFineMissione(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
