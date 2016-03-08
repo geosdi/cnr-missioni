@@ -3,6 +3,7 @@ package it.cnr.missioni.model.rimborso;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -45,6 +46,11 @@ public class Rimborso implements Serializable {
 	private Map<String, Fattura> mappaFattura = new HashMap<String, Fattura>();
 	
 
+	
+	public int getNumberOfFatturaInDay(DateTime from,DateTime to,String idTipologiaSpesa){
+		return (getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from)).filter(f -> f.getData().isBefore(to)).filter(f->f.getIdTipologiaSpesa().equals(idTipologiaSpesa)).collect(Collectors.toList())).size();
+	}
+	
 
 	/**
 	 * @return the mandatoPagamento
