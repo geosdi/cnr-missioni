@@ -20,6 +20,8 @@ public class DatiPeriodoMissione implements Serializable{
 	private DateTime inizioMissione;
 	@NotNull
 	private DateTime fineMissione;
+	@NotNull
+	private Integer dataPresuntaGiorni;
 
 
 	/**
@@ -51,11 +53,26 @@ public class DatiPeriodoMissione implements Serializable{
 	}
 
 	/**
+	 * @return the dataPresuntaGiorni
+	 */
+	public Integer getDataPresuntaGiorni() {
+		return dataPresuntaGiorni;
+	}
+
+	/**
+	 * @param dataPresuntaGiorni 
+	 */
+	public void setDataPresuntaGiorni(Integer dataPresuntaGiorni) {
+		this.dataPresuntaGiorni = dataPresuntaGiorni;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "DatiPeriodoMissione [inizioMissione=" + inizioMissione + ", fineMissione=" + fineMissione + "]";
+		return "DatiPeriodoMissione [inizioMissione=" + inizioMissione + ", fineMissione=" + fineMissione
+				+ ", dataPresuntaGiorni=" + dataPresuntaGiorni + "]";
 	}
 
 
