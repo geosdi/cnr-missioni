@@ -16,7 +16,6 @@ public class Veicolo  implements Serializable{
 	/**
 	 * 
 	 */
-	@NotBlank
 	private String id;
 	@NotBlank
 	private String tipo;
