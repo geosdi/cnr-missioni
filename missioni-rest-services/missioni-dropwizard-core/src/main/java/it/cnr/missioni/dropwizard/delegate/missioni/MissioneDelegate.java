@@ -38,11 +38,13 @@ import it.cnr.missioni.notification.dispatcher.MissioniMailDispatcher;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.spring.configuration.CNRMissioniEmail;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
+import it.cnr.missioni.notification.support.itext.anticipoPagamento.AnticipoPagamentoPDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderResponse;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
+import it.cnr.missioni.rest.api.response.missione.AnticipoPagamentoStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.VeicoloMissioneStreaming;
@@ -111,10 +113,16 @@ class MissioneDelegate implements IMissioneDelegate {
 			Veicolo veicolo = user.getVeicoloPrincipale();
 			pdfBuilder.withVeicolo(veicolo);
 		}
-
+		String mailResponsabile = "";
+		if (missione.getResponsabileGruppo() != null) {
+			User userResponsabileGruppo = this.userDAO.find(missione.getResponsabileGruppo());
+			if (userResponsabileGruppo == null)
+				throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+			mailResponsabile = userResponsabileGruppo.getDatiCNR().getMail();
+		}
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
-				user.getAnagrafica().getNome(),
-				user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
+				user.getDatiCNR().getMail(), mailResponsabile, (missione.isMissioneEstera()
 						? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
 				pdfBuilder));
 
@@ -159,10 +167,12 @@ class MissioneDelegate implements IMissioneDelegate {
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
 
-//		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
-//				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-//				missione.getRimborso().getNumeroOrdine().toString(), missione.getRimborso().isPagata() ? "Si": "No",missione.getRimborso().getMandatoPagamento()!= null ? missione.getRimborso().getMandatoPagamento() : "",
-//				missione.getRimborso().getTotaleDovuto(),RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
+				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
+				missione.getRimborso().getNumeroOrdine().toString(),
+				missione.getRimborso().isPagata() ? "Si" : "No", missione.getRimborso().getMandatoPagamento() != null
+						? missione.getRimborso().getMandatoPagamento() : "",
+				missione.getRimborso().getTotaleDovuto(), null));
 
 		return Boolean.TRUE;
 	}
@@ -171,11 +181,6 @@ class MissioneDelegate implements IMissioneDelegate {
 	public MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
 			Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
 			String multiMatch, String fieldExist, String fieldNotExist, int from, int size) throws Exception {
-		// if ((missioneID == null) || (missioneID.isEmpty())) {
-		// throw new IllegalParameterFault("The Parameter missioneID must not "
-		// + "be null or an Empty String");
-		// }
-
 		DateTime fromInserimento = dataFromMissione != null ? new DateTime(dataFromMissione) : null;
 		DateTime toInserimento = dataToMissione != null ? new DateTime(dataToMissione) : null;
 
@@ -207,7 +212,7 @@ class MissioneDelegate implements IMissioneDelegate {
 		}
 		if (missione.getId() == null)
 			missione.setId(this.missioneDAO.getMaxNumeroMissioneAnno());
-//			missione.setId(gen.generate().toString());
+		// missione.setId(gen.generate().toString());
 		this.missioneDAO.persist(missione);
 
 		User user = this.userDAO.find(missione.getIdUser());
@@ -220,11 +225,7 @@ class MissioneDelegate implements IMissioneDelegate {
 			Veicolo veicolo = user.getVeicoloPrincipale();
 			pdfBuilder.withVeicolo(veicolo);
 		}
-		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddMissioneMessage(
-				user.getAnagrafica().getNome(),
-				user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
-						? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
-				pdfBuilder));
+
 		return this.missioneDAO.persist(missione).getId();
 	}
 
@@ -258,9 +259,17 @@ class MissioneDelegate implements IMissioneDelegate {
 				pdfBuilder.withVeicolo(veicolo);
 			}
 
+			String mailResponsabile = "";
+			if (missione.getResponsabileGruppo() != null) {
+				User userResponsabileGruppo = this.userDAO.find(missione.getResponsabileGruppo());
+				if (userResponsabileGruppo == null)
+					throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+				mailResponsabile = userResponsabileGruppo.getDatiCNR().getMail();
+			}
+
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateMissioneMessage(
 					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), missione.getStato().getStato(),
-					user.getDatiCNR().getMail(), missione.getId(), pdfBuilder));
+					user.getDatiCNR().getMail(), mailResponsabile, missione.getId(), pdfBuilder));
 		}
 		return Boolean.TRUE;
 	}
@@ -437,5 +446,65 @@ class MissioneDelegate implements IMissioneDelegate {
 	@Override
 	public StatisticheMissioni getStatistiche() throws Exception {
 		return this.missioneDAO.getStatisticheMissioni();
+	}
+
+	/**
+	 * 
+	 * @param missione
+	 * @param modifica
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Boolean updateMissioneForAnticipo(Missione missione) throws Exception {
+		if ((missione == null)) {
+			throw new IllegalParameterFault("The Parameter missione must not be null ");
+		}
+
+		User user = this.userDAO.find(missione.getIdUser());
+		if (user == null)
+			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		PDFBuilder pdfBuilder = AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+
+		Missione m = this.missioneDAO.find(missione.getId());
+		this.missioneDAO.update(missione);
+
+		if (m.getDatiAnticipoPagamenti() == null) {
+			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory
+					.buildAddAnticipoPagamentoMessage(user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
+							user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+									? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
+							missione.getId(), pdfBuilder));
+		} else {
+			this.missioniMailDispatcher.dispatchMessage(
+					this.notificationMessageFactory.buildUpdateAnticipoPagamentoMessage(user.getAnagrafica().getNome(),
+							user.getAnagrafica().getCognome(),
+							user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+									? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
+							missione.getId(), pdfBuilder));
+		}
+
+		return Boolean.TRUE;
+	}
+
+	/**
+	 * @param missionID
+	 * @return {@link StreamingOutput}
+	 * @throws Exception
+	 */
+	@Override
+	public StreamingOutput downloadAnticipoPagamentoAsPdf(String missionID) throws Exception {
+		if ((missionID == null) || (missionID.isEmpty())) {
+			throw new IllegalParameterFault("The Parameter missioneID must not be null " + "or an Empty String.");
+		}
+		Missione missione = this.missioneDAO.find(missionID);
+		if (missione == null)
+			throw new ResourceNotFoundFault("La Missione con ID : " + missionID + " non esiste");
+
+		User user = this.userDAO.find(missione.getIdUser());
+		if (user == null)
+			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		return new AnticipoPagamentoStreaming(
+				AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
 	}
 }

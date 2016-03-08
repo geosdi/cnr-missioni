@@ -24,6 +24,8 @@ public final class MissioneServiceRSPathConfig extends ApplicationServiceRSPathC
     public static final String DOWNLOAD_RIMBORSO_MISSIONE_AS_PDF_PATH = MISSIONI_PATH + "/downloadRimborsoMissioneAsPdf";
     public static final String DOWNLOAD_VEICOLO_MISSIONE_AS_PDF_PATH = MISSIONI_PATH + "/downloadVeicoloMissioneAsPdf";
     public static final String GET_STATISTICHE = MISSIONI_PATH + "/getStatistiche";
+    public static final String UPDATE_MISSIONE_FOR_ANTICIPO_PATH = MISSIONI_PATH + "/updateMissioneForAnticipo";
+    public static final String DOWNLOAD_ANTICIPO_PAGAMENTO_AS_PDF_PATH = MISSIONI_PATH + "/downloadAnticipoPagamentoAsPdf";
 
     public static final String GET_GEOCODER_STORE_FOR_MISSIONE_LOCATION_PATH = MISSIONI_PATH + "/getGeocoderStoreForMissioneLocation";
     public static final String GET_DISTANCE_FOR_MISSIONE_PATH = MISSIONI_PATH + "/getDistanceForMissione";
