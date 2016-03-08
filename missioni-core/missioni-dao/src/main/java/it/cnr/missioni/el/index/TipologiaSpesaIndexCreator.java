@@ -45,6 +45,9 @@ public class TipologiaSpesaIndexCreator extends GPAbstractIndexCreator {
     	.startObject("checkMassimale")
     	.field("type", "boolean")
     	.endObject()
+    	.startObject("occorrenzeGiornaliere")
+    	.field("type", "int")
+    	.endObject()
     	
     	.endObject()
     	.endObject()

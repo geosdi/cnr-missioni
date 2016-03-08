@@ -13,7 +13,7 @@ import org.geosdi.geoplatform.experimental.el.api.model.Document;
  */
 @XmlRootElement(name = "tipologiaSpesa")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","tipo","checkMassimale" })
+@XmlType(propOrder = { "id", "value","tipo","checkMassimale","occorrenzeGiornaliere" })
 public class TipologiaSpesa implements Document {
 
 	/**
@@ -29,6 +29,7 @@ public class TipologiaSpesa implements Document {
 	@NotNull
 	private TipoSpesaEnum tipo;
 	private boolean checkMassimale;
+	private int occorrenzeGiornaliere;
 	
 	public enum TipoSpesaEnum{
 		ESTERA,ITALIA;
@@ -102,12 +103,26 @@ public class TipologiaSpesa implements Document {
 	}
 
 	/**
+	 * @return the occorrenzeGiornaliere
+	 */
+	public int getOccorrenzeGiornaliere() {
+		return occorrenzeGiornaliere;
+	}
+
+	/**
+	 * @param occorrenzeGiornaliere 
+	 */
+	public void setOccorrenzeGiornaliere(int occorrenzeGiornaliere) {
+		this.occorrenzeGiornaliere = occorrenzeGiornaliere;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + ", checkMassimale=" + checkMassimale
-				+ "]";
+				+ ", occorrenzeGiornaliere=" + occorrenzeGiornaliere + "]";
 	}
 
 

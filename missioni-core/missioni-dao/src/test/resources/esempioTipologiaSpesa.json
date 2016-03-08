@@ -3,6 +3,7 @@
 		"id" : "01",
 		"value" : "VITTO",
 		"tipo" : "ESTERA",
-		"checkMassimale" : true
+		"checkMassimale" : true,
+		"occorrenzeGiornaliere" : 2
 		}
 }

@@ -141,6 +141,7 @@ public class TipologiaSpesaDAOTest {
 		tipoligiaSpesa.setValue("Vitto");
 		tipoligiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
 		tipoligiaSpesa.setCheckMassimale(true);
+		tipoligiaSpesa.setOccorrenzeGiornaliere(2);
 		listaTipoligiaSpesa.add(tipoligiaSpesa);
 		
 		 tipoligiaSpesa = new TipologiaSpesa();

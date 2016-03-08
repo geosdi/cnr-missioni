@@ -49,7 +49,6 @@ public class MassimaleIndexCreator extends GPAbstractIndexCreator {
     	.startObject("value")
     	.field("type", "double")
     	.endObject()
-    	
     	.endObject()
     	.endObject()
     	.endObject()
