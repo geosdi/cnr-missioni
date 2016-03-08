@@ -38,8 +38,13 @@ public class Rimborso implements Serializable {
 	private Double anticipazionePagamento;
 	private Double totaleDovuto;
 	private boolean pagata;
+	private boolean rimborsoDaTerzi;
+	@Min(value = 0)
+	private double importoDaTerzi;
 	@XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
 	private Map<String, Fattura> mappaFattura = new HashMap<String, Fattura>();
+	
+
 
 	/**
 	 * @return the mandatoPagamento
@@ -214,6 +219,34 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
+	 * @return the rimborsoDaTerzi
+	 */
+	public boolean isRimborsoDaTerzi() {
+		return rimborsoDaTerzi;
+	}
+
+	/**
+	 * @param rimborsoDaTerzi 
+	 */
+	public void setRimborsoDaTerzi(boolean rimborsoDaTerzi) {
+		this.rimborsoDaTerzi = rimborsoDaTerzi;
+	}
+
+	/**
+	 * @return the importoDaTerzi
+	 */
+	public double getImportoDaTerzi() {
+		return importoDaTerzi;
+	}
+
+	/**
+	 * @param importoDaTerzi 
+	 */
+	public void setImportoDaTerzi(double importoDaTerzi) {
+		this.importoDaTerzi = importoDaTerzi;
+	}
+
+	/**
 	 * @return the mappaFattura
 	 */
 	public Map<String, Fattura> getMappaFattura() {
@@ -226,6 +259,7 @@ public class Rimborso implements Serializable {
 	public void setMappaFattura(Map<String, Fattura> mappaFattura) {
 		this.mappaFattura = mappaFattura;
 	}
+
 
 	/**
 	 * 
@@ -262,7 +296,8 @@ public class Rimborso implements Serializable {
 				+ dataRimborso + ", dateLastModified=" + dateLastModified + ", totale=" + totale + ", totaleTAM="
 				+ totaleTAM + ", avvisoPagamento=" + avvisoPagamento + ", totKm=" + totKm + ", rimborsoKm=" + rimborsoKm
 				+ ", anticipazionePagamento=" + anticipazionePagamento + ", totaleDovuto=" + totaleDovuto + ", pagata="
-				+ pagata + ", mappaFattura=" + mappaFattura + "]";
+				+ pagata + ", rimborsoDaTerzi=" + rimborsoDaTerzi + ", importoDaTerzi=" + importoDaTerzi
+				+ ", mappaFattura=" + mappaFattura + "]";
 	}
 
 }
