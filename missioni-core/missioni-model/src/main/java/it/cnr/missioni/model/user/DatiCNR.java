@@ -33,7 +33,24 @@ public class DatiCNR implements Serializable{
 	private String iban;
 	
 	public enum LivelloUserEnum {
-		I,II,III,IV,V,VI,VII,VIII;
+		
+
+		
+		I(1),II(2),III(3),IV(4),V(5),VI(6),VII(7),VIII(8);
+		
+		private final int stato;
+		
+		LivelloUserEnum(int stato){
+			this.stato = stato;
+		}
+
+		/**
+		 * @return the stato
+		 */
+		public int getStato() {
+			return stato;
+		}
+		
 	}
 
 
