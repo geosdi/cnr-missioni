@@ -278,5 +278,23 @@ public class UserRestServiceTest {
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 1);
 	}
+	
+	@Test
+	public void V_findByMultiMatch() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withMultiMatch("Salvia 1111111");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		Assert.assertTrue("FIND ALL USER", userStore.getUsers().size() == 1);
+	}
+
+	@Test
+	public void Z_findByMultiMatch2() throws Exception {
+
+		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+				.withMultiMatch("Paolo Salvia");
+		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
+		Assert.assertTrue("FIND ALL USER", userStore.getUsers().size() == 1);
+	}
 
 }

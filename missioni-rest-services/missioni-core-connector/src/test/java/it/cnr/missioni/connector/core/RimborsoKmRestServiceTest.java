@@ -105,7 +105,7 @@ public class RimborsoKmRestServiceTest {
 		rimborsoKm.setId("01");
 		rimborsoKm.setValue(new Double(0.36));
 		missioniCoreClientConnector.addRimborsoKm(rimborsoKm);
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
 		RimborsoKmStore rimborsoKmStore = missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoSearchBuilder);
 		Assert.assertTrue("ADD RIMBORSO KM", rimborsoKmStore.getTotale() == 1);
