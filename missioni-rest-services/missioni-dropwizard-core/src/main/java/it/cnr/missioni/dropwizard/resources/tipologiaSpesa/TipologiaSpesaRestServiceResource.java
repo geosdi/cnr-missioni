@@ -29,6 +29,7 @@ public class TipologiaSpesaRestServiceResource implements TipologiaSpesaRestServ
 	 * 
 	 * @param id
 	 * @param tipo
+	 * @param tipologiaTrattamento
 	 * @param from
 	 * @param size
 	 * @param all
@@ -36,8 +37,11 @@ public class TipologiaSpesaRestServiceResource implements TipologiaSpesaRestServ
 	 * @throws Exception
 	 */
 	@Override
-	public Response getTipologiaSpesaByQuery(String id, String tipo, int from, int size, boolean all) throws Exception {
-		return Response.ok(this.tipologiaSpesaDelegate.getTipologiaSpesaByQuery(id, tipo, from, size, all)).build();
+	public Response getTipologiaSpesaByQuery(String id, String tipo, String tipologiaTrattamento, int from, int size,
+			boolean all) throws Exception {
+		return Response
+				.ok(this.tipologiaSpesaDelegate.getTipologiaSpesaByQuery(id, tipo, tipologiaTrattamento, from, size, all))
+				.build();
 
 	}
 

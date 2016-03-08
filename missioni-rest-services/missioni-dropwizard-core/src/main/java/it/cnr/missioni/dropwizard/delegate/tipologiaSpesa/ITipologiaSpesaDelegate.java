@@ -14,13 +14,14 @@ public interface ITipologiaSpesaDelegate {
 	 * 
 	 * @param id
 	 * @param tipo
+	 * @param tipologiaTrattamento
 	 * @param from
 	 * @param size
 	 * @param all
 	 * @return
 	 * @throws Exception
 	 */
-	TipologiaSpesaStore getTipologiaSpesaByQuery(String id, String tipo, int from, int size, boolean all)
+	TipologiaSpesaStore getTipologiaSpesaByQuery(String id, String tipo, String tipologiaTrattamento,int from, int size, boolean all)
 			throws Exception;
 
 	/**

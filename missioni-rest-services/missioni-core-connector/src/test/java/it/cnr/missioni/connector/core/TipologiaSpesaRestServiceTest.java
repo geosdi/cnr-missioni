@@ -56,6 +56,7 @@ import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnect
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
@@ -154,5 +155,20 @@ public class TipologiaSpesaRestServiceTest {
 		Assert.assertTrue("FIND  TIPOLOGIA ID", tipologiaSpesaStore.getTipologiaSpesa().get(0).getId().equals("03"));
 	}
 
+	@Test
+	public void H_findTipologiaSpesaTipoTrattamentoTest() throws Exception {
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder);
+		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
+
+	}
+	
+	@Test
+	public void I_findTipologiaSpesaTipoTrattamentoIdTest() throws Exception {
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("01").withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
+		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder);
+		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", tipologiaSpesaStore.getTipologiaSpesa().size() == 1);
+
+	}
 	
 }

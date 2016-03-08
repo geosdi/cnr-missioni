@@ -468,6 +468,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .path("v1/tipologiaSpesa/getTipologiaSpesaByQuery/")
                 .queryParam("id", tipologiaSpesaSearchBuilder.getId())
                 .queryParam("tipo", tipologiaSpesaSearchBuilder.getTipo())
+                .queryParam("tipologiaTrattamento", tipologiaSpesaSearchBuilder.getTipoTrattamento())
                 .queryParam("from", tipologiaSpesaSearchBuilder.getFrom())
                 .queryParam("size", tipologiaSpesaSearchBuilder.getSize())
                 .queryParam("all", tipologiaSpesaSearchBuilder.isAll())
