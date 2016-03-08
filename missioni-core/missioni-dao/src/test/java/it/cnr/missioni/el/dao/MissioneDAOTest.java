@@ -335,6 +335,8 @@ public class MissioneDAOTest {
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 2);
 	}
+	
+	
 
 	// @Test
 	// public void tearDown() throws Exception {

@@ -28,7 +28,7 @@ public class SearchConstants {
 	public static final String MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE = "missione.rimborso.numeroOrdine";
 	public static final String MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO = "missione.rimborso.dataRimborso";
 	public final static String MISSIONE_FIELD_RIMBORSO = "missione.rimborso";
-	
+
 	
 	public static final String PRENOTAZIONE_FIELD_DATA_FROM = "prenotazione.dataFrom";
 

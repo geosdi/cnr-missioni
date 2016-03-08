@@ -58,6 +58,8 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 					fromDataInserimento, toDataInserimento));
 		return self();
 	}
+	
+
 
 	public MissioneSearchBuilder withIdUser(String idUser) {
 		this.idUser = idUser;
@@ -336,6 +338,8 @@ public class MissioneSearchBuilder implements ISearchBuilder {
 	public void setFieldNotExist(String fieldNotExist) {
 		this.fieldNotExist = fieldNotExist;
 	}
+
+
 
 	/**
 	 * @return the fieldMultiMatch
