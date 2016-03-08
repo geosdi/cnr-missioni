@@ -5,6 +5,7 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
@@ -44,6 +45,7 @@ public interface IForm<T extends Object> {
 			this.modifica = modifica;
 			this.bean = bean;
 			DashboardEventBus.register(this);
+			addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 
 		}
 
