@@ -8,12 +8,14 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
 
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+
 /**
  * @author Salvia Vito
  */
 @XmlRootElement(name = "tipologiaSpesa")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","tipo","checkMassimale","occorrenzeGiornaliere" })
+@XmlType(propOrder = { "id", "value","tipo","checkMassimale","occorrenzeGiornaliere","tipoTrattamento" })
 public class TipologiaSpesa implements Document {
 
 	/**
@@ -30,6 +32,8 @@ public class TipologiaSpesa implements Document {
 	private TipoSpesaEnum tipo;
 	private boolean checkMassimale;
 	private int occorrenzeGiornaliere;
+	@NotNull
+	private TrattamentoMissioneEsteraEnum tipoTrattamento;
 	
 	public enum TipoSpesaEnum{
 		ESTERA,ITALIA;
@@ -117,12 +121,26 @@ public class TipologiaSpesa implements Document {
 	}
 
 	/**
+	 * @return the tipoTrattamento
+	 */
+	public TrattamentoMissioneEsteraEnum getTipoTrattamento() {
+		return tipoTrattamento;
+	}
+
+	/**
+	 * @param tipoTrattamento 
+	 */
+	public void setTipoTrattamento(TrattamentoMissioneEsteraEnum tipoTrattamento) {
+		this.tipoTrattamento = tipoTrattamento;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + ", checkMassimale=" + checkMassimale
-				+ ", occorrenzeGiornaliere=" + occorrenzeGiornaliere + "]";
+				+ ", occorrenzeGiornaliere=" + occorrenzeGiornaliere + ", tipoTrattamento=" + tipoTrattamento + "]";
 	}
 
 
