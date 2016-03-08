@@ -84,7 +84,7 @@ public interface IMissioneDelegate {
 	 * @throws Exception
 	 */
 	Boolean updateRimborso(Missione missione) throws Exception;
-	
+
 	/**
 	 * @param missionID
 	 * @return {@link StreamingOutput}
@@ -129,4 +129,20 @@ public interface IMissioneDelegate {
 	 * @throws Exception
 	 */
 	StatisticheMissioni getStatistiche() throws Exception;
+
+	/**
+	 * 
+	 * @param missione
+	 * @param modifica
+	 * @return
+	 * @throws Exception
+	 */
+	Boolean updateMissioneForAnticipo(Missione missione) throws Exception;
+
+	/**
+	 * @param missionID
+	 * @return {@link StreamingOutput}
+	 * @throws Exception
+	 */
+	StreamingOutput downloadAnticipoPagamentoAsPdf(String missionID) throws Exception;
 }
