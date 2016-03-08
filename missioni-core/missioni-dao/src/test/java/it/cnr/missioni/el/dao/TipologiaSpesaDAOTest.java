@@ -139,7 +139,7 @@ public class TipologiaSpesaDAOTest {
 	
 	@Test
 	public void I_findTipologiaSpesaTipoTrattamentoIdTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("01").withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("01").withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", lista.size() == 1);
 
@@ -151,7 +151,7 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setValue("Aereo");
 		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
 		tipoliogiaSpesa.setCheckMassimale(false);
-		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 		 tipoliogiaSpesa = new TipologiaSpesa();
@@ -177,7 +177,7 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setValue("Treno");
 		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
 		tipoliogiaSpesa.setCheckMassimale(true);
-		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 	}
