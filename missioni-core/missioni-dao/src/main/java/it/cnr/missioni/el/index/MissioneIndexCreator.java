@@ -137,6 +137,9 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
     	.startObject("prospetto")
     	.field("type", "boolean")
     	.endObject()
+    	.startObject("inserted")
+    	.field("type", "boolean")
+    	.endObject()
     	.endObject()
     	.endObject()
     	
