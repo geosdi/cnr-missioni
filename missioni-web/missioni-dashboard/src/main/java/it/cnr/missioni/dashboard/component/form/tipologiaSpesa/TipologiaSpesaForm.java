@@ -52,12 +52,13 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 		valueField = (TextField) getFieldGroup().buildAndBind("Tipologia Spesa", "value");
 		tipoField = (ComboBox)getFieldGroup().buildAndBind("Tipo","tipo",ComboBox.class);
 		checkMassimaleField = (CheckBox)getFieldGroup().buildAndBind("Massimale","checkMassimale",CheckBox.class);
-		occorrenzaGiornalieraField = (TextField) getFieldGroup().buildAndBind("Occorrenza Giornaliera", "occorrenzaGiornaliera");
+		occorrenzaGiornalieraField = (TextField) getFieldGroup().buildAndBind("Occorrenze Giornaliera", "occorrenzeGiornaliere");
 
 		addComponent(valueField);
 		addComponent(tipoField);
 		addComponent(checkMassimaleField);
 		addComponent(occorrenzaGiornalieraField);
+		addValidator();
 
 	}
 
@@ -79,10 +80,15 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 	public void addValidator() {
 		occorrenzaGiornalieraField.addValidator(new Validator(){
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7400123963581352567L;
+
 			@Override
 			public void validate(Object value) throws InvalidValueException {
-				int v = Integer.parseInt(value.toString());
-				if(checkMassimaleField.getValue() && v <= 0)
+//				int v = Integer.parseInt(value.toString());
+				if(checkMassimaleField.getValue()  && value == null)
 					throw new InvalidValueException(Utility.getMessage("occorrenza_giornaliera_error"));
 
 			}
