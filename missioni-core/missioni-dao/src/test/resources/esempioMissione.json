@@ -6,6 +6,8 @@
 		"responsabileGruppo" : "01",
 		"shortResponsabileGruppo" : "Salvia Vito",
 		"motivazioniMezzoProprio" : "motivazione",
+		"idUserSeguito": "03",
+        "shortUserSeguito": "Bianchi Mario",
 		"stato" : "STAND_BY",
 		"fondo" : "fondo",
 		"GAE" : "GAE",
@@ -32,13 +34,14 @@
 			"attraversamentoFrontieraAndata" : "2015-12-13T10:11:59.568Z",
 			"attraversamentoFrontieraRitorno" : "2015-12-13T10:17:59.568Z"
 		},
-		"datiAnticipoPagamenti" : {
-			"anticipazioniMonetarie" : true,
-			"mandatoCNR" : "A01",
-			"speseMissioniAnticipate" : 150.00,
-			"rimborsoDaTerzi" : true,
-			"importoDaTerzi" : 100.00
-		},
+		"datiAnticipoPagamenti": {
+        	"mandatoCNR": null,
+            "speseMissioniAnticipate": 0,
+             "speseAlberghiere": false,
+             "speseViaggioDocumentato": false,
+             "speseViaggioTam": false,
+             "prospetto": false
+                  },
 		"rimborso" : {
 			"numeroOrdine" : 1,
 			"dataRimborso" : "2015-12-15T10:11:59.568Z",
