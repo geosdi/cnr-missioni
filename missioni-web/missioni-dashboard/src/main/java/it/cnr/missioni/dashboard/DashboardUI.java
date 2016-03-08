@@ -17,6 +17,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.AddUpdatePrenotazioneAction;
+import it.cnr.missioni.dashboard.action.AnticipoPagamentoAction;
 import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.action.MissioneAction;
@@ -174,6 +175,11 @@ public final class DashboardUI extends UI {
 	@Subscribe
 	public void nazioneRequested(final NazioneAction nazioneAction) {
 		nazioneAction.doAction();
+	}
+	
+	@Subscribe
+	public void anticipoPagamentoRequested(final AnticipoPagamentoAction anticipoPagamentoAction) {
+		anticipoPagamentoAction.doAction();
 	}
 
 	@Subscribe
