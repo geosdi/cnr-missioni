@@ -80,7 +80,7 @@ public class LoginView extends VerticalLayout implements Serializable {
 
 			@Override
 			public void buttonClick(ClickEvent clickEvent) {
-				CredenzialiWindow.open(new User(),true);
+				CredenzialiWindow.open(new User(),false,true,true);
 			}
 		});
 		button.setStyleName(Reindeer.BUTTON_LINK);
