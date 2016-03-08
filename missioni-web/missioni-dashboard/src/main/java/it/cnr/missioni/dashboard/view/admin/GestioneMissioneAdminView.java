@@ -27,7 +27,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 	}
 
 	protected void addButtonsToLayout() {
-		layout.addComponents(buttonDettagli, buttonRimborso,buttonAnticipoPagamento, buttonPDF, buttonVeicoloMissionePDF);
+		layout.addComponents(buttonDettagli,buttonAnticipoPagamento, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
 	}
 
 	@Override
