@@ -19,8 +19,10 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 	private boolean all;
 	private String id;
 	private String tipo;
+	private String tipoTrattamento;
 	private int size = 10;
 	private int from = 0;
+	
 	
 	private String fieldSort = SearchConstants.TIPOLOGIA_SPESA_FIELD_VALUE;
 	private SortOrder sortOrder = SortOrder.ASC;
@@ -53,6 +55,12 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 		return self();
 	}
 
+	public TipologiaSpesaSearchBuilder withTipoTrattamento(String tipoTrattamento) {
+		this.tipoTrattamento = tipoTrattamento;
+		if (tipoTrattamento != null && !tipoTrattamento.trim().equals(""))
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_TIPO_TRATTAMENTO, tipoTrattamento));
+		return self();
+	}
 
 	public TipologiaSpesaSearchBuilder withSize(int size) {
 		this.size = size;
@@ -122,6 +130,20 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	/**
+	 * @return the tipoTrattamento
+	 */
+	public String getTipoTrattamento() {
+		return tipoTrattamento;
+	}
+
+	/**
+	 * @param tipoTrattamento 
+	 */
+	public void setTipoTrattamento(String tipoTrattamento) {
+		this.tipoTrattamento = tipoTrattamento;
 	}
 
 	/**
