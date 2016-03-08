@@ -43,7 +43,8 @@
                      "speseAlberghiere": false,
                      "speseViaggioDocumentato": false,
                      "speseViaggioTam": false,
-                     "prospetto": false
+                     "prospetto": false,
+                     "inserted" : true
                   },
                   "rimborso": {
                      "mandatoPagamento": null,

@@ -21,7 +21,7 @@ public class DatiAnticipoPagamenti implements Serializable{
 	private boolean speseViaggioDocumentato;
 	private boolean speseViaggioTam;
 	private boolean prospetto;
-
+	private boolean inserted;
 	
 	/**
 	 * @return the mandatoCNR
@@ -108,6 +108,20 @@ public class DatiAnticipoPagamenti implements Serializable{
 	}
 
 	/**
+	 * @return the inserted
+	 */
+	public boolean isInserted() {
+		return inserted;
+	}
+
+	/**
+	 * @param inserted 
+	 */
+	public void setInserted(boolean inserted) {
+		this.inserted = inserted;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
@@ -115,7 +129,7 @@ public class DatiAnticipoPagamenti implements Serializable{
 		return "DatiAnticipoPagamenti [mandatoCNR=" + mandatoCNR + ", speseMissioniAnticipate="
 				+ speseMissioniAnticipate + ", trattamentoMissioneEstera=" + trattamentoMissioneEstera
 				+ ", speseAlberghiere=" + speseAlberghiere + ", speseViaggioDocumentato=" + speseViaggioDocumentato
-				+ ", speseViaggioTam=" + speseViaggioTam + ", prospetto=" + prospetto + "]";
+				+ ", speseViaggioTam=" + speseViaggioTam + ", prospetto=" + prospetto + ", inserted=" + inserted + "]";
 	}
 
 

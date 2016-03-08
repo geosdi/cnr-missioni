@@ -183,7 +183,7 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR) || optionGroupMezzo.getValue().equals(NOLEGGIO)) {
+				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR) || optionGroupMezzo.getValue().equals(NESSUNO)) {
 					motivazioneMezzoProprio.setReadOnly(false);
 					motivazioneMezzoProprio.setValue(null);
 					motivazioneMezzoProprio.setReadOnly(true);
@@ -193,7 +193,7 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 				}
 				if (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO) || optionGroupMezzo.getValue().equals(NOLEGGIO)) {
 					motivazioneMezzoProprio.setReadOnly(false);
-					if(optionGroupMezzo.getValue().equals(VEICOLO_CNR))
+					if(optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO))
 					{
 						labelVeicoloProprio.setVisible(true);
 						labelVeicoloProprio.setValue("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga());
