@@ -9,9 +9,9 @@ public enum TrattamentoMissioneEsteraEnum {
 		this.stato = stato;
 	}
 
-	public TrattamentoMissioneEsteraEnum getStatoEnum(String stato) {
+	public static TrattamentoMissioneEsteraEnum getStatoEnum(String stato) {
 		for (TrattamentoMissioneEsteraEnum statoEnum : TrattamentoMissioneEsteraEnum.values()) {
-			if (statoEnum.getStato().equals(stato))
+			if (statoEnum.name().equals(stato))
 				return statoEnum;
 		}
 		return null;
