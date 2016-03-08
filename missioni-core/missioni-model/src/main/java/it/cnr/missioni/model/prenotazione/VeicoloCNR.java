@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
 
 import it.cnr.missioni.model.user.Veicolo;
 
@@ -22,6 +23,7 @@ public class VeicoloCNR extends Veicolo implements Document{
 	 * 
 	 */
 	private static final long serialVersionUID = 1405399099831810547L;
+	@NotBlank
 	private String id;
 	@NotNull
 	private StatoVeicoloEnum stato;
