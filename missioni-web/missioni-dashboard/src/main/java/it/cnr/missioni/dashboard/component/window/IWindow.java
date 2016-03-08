@@ -34,6 +34,15 @@ public interface IWindow {
 		protected TabSheet detailsWrapper;
 		protected HorizontalLayout footer ;
 		protected Button ok;
+		protected final boolean modifica;
+		protected final boolean isAdmin;
+		protected final boolean enabled;
+		
+		public AbstractWindow(boolean isAdmin,boolean enabled,boolean modifica){
+			this.modifica = modifica;
+			this.enabled = enabled;
+			this.isAdmin = isAdmin;
+		}
 
 		public void build() {
 			addStyleName("profile-window");
