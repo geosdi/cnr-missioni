@@ -260,21 +260,21 @@ public class FatturaRimborsoForm extends VerticalLayout{
 				}
 			});
 
-			importoField.addBlurListener(new BlurListener() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 496541445715331048L;
-
-				@Override
-				public void blur(BlurEvent event) {
-
-					if (tipologiaSpesaField.getValue() != null)
-						checkMassimale(tipologiaSpesaField.getValue().toString());
-
-				}
-			});
+//			importoField.addBlurListener(new BlurListener() {
+//
+//				/**
+//				 * 
+//				 */
+//				private static final long serialVersionUID = 496541445715331048L;
+//
+//				@Override
+//				public void blur(BlurEvent event) {
+//
+//					if (tipologiaSpesaField.getValue() != null)
+//						checkMassimale(tipologiaSpesaField.getValue().toString());
+//
+//				}
+//			});
 
 			tipologiaSpesaField.addBlurListener(new BlurListener() {
 
@@ -409,7 +409,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 
 		}
 		
-		private void checkMassimale(String id) {
+		private void checkMassimale(String id,String livello) {
 
 			try {
 				TipologiaSpesaStore tipologiaStore = ClientConnector
@@ -431,7 +431,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 						}
 						MassimaleStore massimaleStore = ClientConnector
 								.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-										.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+										.withLivello(livello)
 										.withAreaGeografica(areaGeografica)
 										.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
 
