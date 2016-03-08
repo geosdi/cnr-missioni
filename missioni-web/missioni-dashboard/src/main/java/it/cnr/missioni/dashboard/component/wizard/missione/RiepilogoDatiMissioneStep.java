@@ -63,38 +63,45 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 
 		details.addComponent(buildLabel("Tipo Missione: ",tipoMissione));
 		details.addComponent(buildLabel("Località: " , missione.getLocalita()));
+		if(missione.isMissioneEstera()){
+			details.addComponent(buildLabel("Nazione: " , missione.getShortDescriptionNazione()));
+			details.addComponent(buildLabel("Trattamento Rimbroso : " , missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
+		}
 		details.addComponent(buildLabel("Oggetto: " , missione.getOggetto()));
 		details.addComponent(buildLabel("Fondo: " , missione.getFondo() != null ? missione.getFondo() : ""));
 		details.addComponent(buildLabel("GAE: " , missione.getGAE() != null ? missione.getGAE() : ""));
 		details.addComponent(buildLabel("Responsabile Gruppo: " , missione.getShortResponsabileGruppo()));
 		details.addComponent(buildLabel("Distanza: " , missione.getDistanza()));
 		details.addComponent(buildLabel("Veicolo: " , tipoVeicolo));
-		if (missione.isMezzoProprio()) {
+		if (missione.getTipoVeicolo().equals("Veicolo Proprio") || missione.getTipoVeicolo().equals("Noleggio")) {
 
 			Veicolo v = DashboardUI.getCurrentUser().getVeicoloPrincipale();
-			details.addComponent(buildLabel("Motivazione mezzo proprio: " , missione.getMotivazioniMezzoProprio()));
-			details.addComponent(buildLabel("Veicolo: " , v.getTipo() + " Targa: " + v.getTarga()));
+			details.addComponent(buildLabel("Motivazione: " , missione.getMotivazioni()));
+			if(missione.getTipoVeicolo().equals("Veicolo Proprio"))
+				details.addComponent(buildLabel("Veicolo: " , v.getTipo() + " Targa: " + v.getTarga()));
 
 		}
 		details.addComponent(
 				buildLabel("Inizio Missione: " , new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getInizioMissione().toDate())));
 		details.addComponent(
-				buildLabel("Fine Missione: " ,  new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getFineMissione().toDate())));
-		if (missione.isMissioneEstera()) {
-			details.addComponent(buildLabel("Trattamento Rimborso: ", missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
-			details.addComponent(buildLabel("Attraversamento Frontiera Andata: "
-					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate())));
-			details.addComponent(buildLabel("Attraversamento Frontiera Ritorno: "
-					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate())));
-		}
-		details.addComponent(buildLabel(
-				"Anticipazioni Monetarie: " , missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie() ? "Si" : "No"));
-
-		details.addComponent(buildLabel("Numero Mandato CNR: " , missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() : "" ));
-		details.addComponent(buildLabel("Altre Spese di Missione Anticipate: ", Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate())));
+				buildLabel("Presunta Fine Missione: " ,  new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getFineMissione().toDate())));
 		details.addComponent(
-				buildLabel("Rimborso da Terzi: " ,  Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
-		details.addComponent(buildLabel("Importo da Terzi: " , Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
+				buildLabel("A seguito di: " , missione.getShortUserSeguito() != null ? missione.getShortUserSeguito() : ""));
+//		if (missione.isMissioneEstera()) {
+//			details.addComponent(buildLabel("Trattamento Rimborso: ", missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
+//			details.addComponent(buildLabel("Attraversamento Frontiera Andata: "
+//					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate())));
+//			details.addComponent(buildLabel("Attraversamento Frontiera Ritorno: "
+//					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate())));
+//		}
+//		details.addComponent(buildLabel(
+//				"Anticipazioni Monetarie: " , missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie() ? "Si" : "No"));
+//
+//		details.addComponent(buildLabel("Numero Mandato CNR: " , missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() : "" ));
+//		details.addComponent(buildLabel("Altre Spese di Missione Anticipate: ", Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate())));
+//		details.addComponent(
+//				buildLabel("Rimborso da Terzi: " ,  Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
+//		details.addComponent(buildLabel("Importo da Terzi: " , Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
 
 		return root;
 	}
