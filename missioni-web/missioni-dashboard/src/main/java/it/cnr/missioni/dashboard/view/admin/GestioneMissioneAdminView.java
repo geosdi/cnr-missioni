@@ -27,7 +27,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 	}
 
 	protected void addButtonsToLayout() {
-		layout.addComponents(buttonDettagli,buttonAnticipoPagamento, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
+		layout.addComponents(buttonDettagli,buttonAnticipoPagamento,buttonAnticipoPagamentoPdf, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
 	}
 
 	@Override
@@ -49,8 +49,12 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		AnticipoPagamentiWindow.open(selectedMissione, true, true, false);
 	}
 	
-	protected boolean enableButtonAnticipoPagamento(){
-		return selectedMissione != null && !selectedMissione.isRimborsoSetted();
+	protected boolean enableButtonWindowAnticipoPagamento(){
+		return selectedMissione != null && selectedMissione.isMissioneEstera() && selectedMissione.getDatiAnticipoPagamenti().isInserted() && !selectedMissione.isRimborsoSetted();
+	}
+	
+	protected boolean enableButtonDownloadPdf(){
+		return selectedMissione != null && selectedMissione.isMissioneEstera()   && selectedMissione.isRimborsoSetted();
 	}
 	
 	protected void downloadAnticipoPagamentoAsPdf(AdvancedFileDownloader anticipoPagamentoDownloaderForLink){
@@ -62,7 +66,12 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		this.buttonPDF.setEnabled(true);
 		this.buttonRimborso.setEnabled(selectedMissione.isRimborsoSetted());
 		buttonVeicoloMissionePDF.setEnabled(selectedMissione.isMezzoProprio());
-		this.buttonAnticipoPagamento.setEnabled(true);
+		this.buttonAnticipoPagamento.setVisible(enableButtonWindowAnticipoPagamento());
+		this.buttonAnticipoPagamentoPdf.setVisible(enableButtonDownloadPdf());
+		this.buttonAnticipoPagamento.setEnabled(enableButtonWindowAnticipoPagamento());
+		this.buttonAnticipoPagamentoPdf.setEnabled(enableButtonDownloadPdf());
+		if(!buttonAnticipoPagamentoPdf.isVisible())
+			buttonAnticipoPagamento.setVisible(true);
 
 	}
 

@@ -17,6 +17,7 @@ import com.vaadin.shared.ui.AlignmentInfo.Bits;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -60,7 +61,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	protected HorizontalLayout layout;
 	protected MissioneSearchBuilder missioneSearchBuilder;
 	protected MissioniStore missioniStore;
-
 	public GestioneMissioneView() {
 		super();
 
@@ -130,7 +130,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			public void itemClick(ItemClickEvent itemClickEvent) {
 				selectedMissione = (Missione) itemClickEvent.getItemId();
 				enableButtons();
-				buildButtonAnticipoPagamento();
 			}
 		});
 
@@ -252,7 +251,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		});
 		
 		
-		this.buttonAnticipoPagamento = buildButton("Anticipo", "Anticipo Pagamento", FontAwesome.EURO);
 
 		downloaderForLink.extend(buttonPDF);
 
@@ -271,6 +269,33 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		veicoloDownloaderForLink.extend(buttonVeicoloMissionePDF);
 
 
+		this.buttonAnticipoPagamento = buildButton("Anticipo", "Anticipo Pagamento", FontAwesome.EURO);
+		this.buttonAnticipoPagamento.addClickListener(new ClickListener(){
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1757314072772842924L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				openWindowAnticipoPagamenti();					
+				
+			}
+			
+		});
+		
+		this.buttonAnticipoPagamentoPdf = buildButton("Anticipo", "Pdf Anticipo Pagamento", FontAwesome.EURO);
+
+		final AdvancedFileDownloader anticipoPagamentoDownloaderForLink = new AdvancedFileDownloader();
+		anticipoPagamentoDownloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
+			@Override
+			public void beforeDownload(DownloaderEvent downloadEvent) {
+				downloadAnticipoPagamentoAsPdf(anticipoPagamentoDownloaderForLink);
+			}
+
+		});
+		anticipoPagamentoDownloaderForLink.extend(buttonAnticipoPagamentoPdf);
 
 		addButtonsToLayout();
 		disableButtons();
@@ -280,7 +305,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void addButtonsToLayout() {
-		layout.addComponents(buttonNew, buttonDettagli, buttonAnticipoPagamento,buttonRimborso, buttonPDF,
+		layout.addComponents(buttonNew, buttonDettagli, buttonAnticipoPagamento,buttonAnticipoPagamentoPdf,buttonRimborso, buttonPDF,
 				buttonVeicoloMissionePDF);
 	}
 	
@@ -297,8 +322,12 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	}
 	
-	protected boolean enableButtonAnticipoPagamento(){
-		return selectedMissione != null && selectedMissione.getDatiAnticipoPagamenti() == null;
+	protected boolean enableButtonWindowAnticipoPagamento(){
+		return selectedMissione != null && !selectedMissione.getDatiAnticipoPagamenti().isInserted() && selectedMissione.isMissioneEstera();
+	}
+	
+	protected boolean enableButtonDownloadPdf(){
+		return selectedMissione != null && selectedMissione.isMissioneEstera() && selectedMissione.getDatiAnticipoPagamenti().isInserted();
 	}
 	
 	protected void addActionButtonRimborso(){
@@ -317,37 +346,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	}
 
-	protected void buildButtonAnticipoPagamento(){
-		//se non è stata inserito un anticipo di pagamento
-		if (enableButtonAnticipoPagamento()) {
-
-			this.buttonAnticipoPagamento.addClickListener(new Button.ClickListener() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = -8017361413661657070L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					openWindowAnticipoPagamenti();
-				}
-
-			});
-		} 
-		//altrimenti visualizza il PDF
-		else {
-			final AdvancedFileDownloader anticipoPagamentoDownloaderForLink = new AdvancedFileDownloader();
-			anticipoPagamentoDownloaderForLink.addAdvancedDownloaderListener(new AdvancedDownloaderListener() {
-				@Override
-				public void beforeDownload(DownloaderEvent downloadEvent) {
-					downloadAnticipoPagamentoAsPdf(anticipoPagamentoDownloaderForLink);
-				}
-
-			});
-			anticipoPagamentoDownloaderForLink.extend(buttonAnticipoPagamento);
-		}
-	}
 
 	protected StreamResource getResource() {
 		try {
@@ -439,8 +437,13 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		this.buttonPDF.setEnabled(true);
 		this.buttonRimborso.setEnabled(selectedMissione.getStato() != StatoEnum.RESPINTA);
 		this.buttonVeicoloMissionePDF.setEnabled(selectedMissione.isMezzoProprio());
-		this.buttonAnticipoPagamento.setEnabled(true);
-	}
+		this.buttonAnticipoPagamento.setVisible(enableButtonWindowAnticipoPagamento());
+		this.buttonAnticipoPagamentoPdf.setVisible(enableButtonDownloadPdf());
+		this.buttonAnticipoPagamento.setEnabled(enableButtonWindowAnticipoPagamento());
+		this.buttonAnticipoPagamentoPdf.setEnabled(enableButtonDownloadPdf());
+		if(!buttonAnticipoPagamentoPdf.isVisible())
+			buttonAnticipoPagamento.setVisible(true);
+		}
 
 	protected void disableButtons() {
 		this.buttonDettagli.setEnabled(false);
@@ -449,6 +452,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		this.buttonVeicoloMissionePDF.setEnabled(false);
 		this.buttonVeicoloMissionePDF.setEnabled(false);
 		this.buttonAnticipoPagamento.setEnabled(false);
+		this.buttonAnticipoPagamentoPdf.setVisible(false);
 
 	}
 
@@ -471,6 +475,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			elencoMissioniTable.aggiornaTable(this.missioniStore);
 			buildPagination(missioniStore.getTotale());
 			addListenerPagination();
+			disableButtons();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

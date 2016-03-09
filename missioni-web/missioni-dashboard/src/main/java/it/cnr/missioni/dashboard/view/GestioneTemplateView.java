@@ -45,6 +45,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 	protected Button buttonMissione;
 	protected Button buttonVeicoloMissionePDF;
 	protected Button buttonAnticipoPagamento;
+	protected Button buttonAnticipoPagamentoPdf;
 
 	private VerticalLayout layoutPagination = new VerticalLayout();
 
