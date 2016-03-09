@@ -26,6 +26,8 @@ public class Fattura implements Serializable{
 	private DateTime data;
 	@NotNull
 	private Double importo;
+	@NotNull
+	private Double importoSpettante;
 	@NotBlank
 	private String valuta;
 	private String altro;
@@ -93,6 +95,20 @@ public class Fattura implements Serializable{
 
 
 	/**
+	 * @return the importoSpettante
+	 */
+	public Double getImportoSpettante() {
+		return importoSpettante;
+	}
+
+	/**
+	 * @param importoSpettante 
+	 */
+	public void setImportoSpettante(Double importoSpettante) {
+		this.importoSpettante = importoSpettante;
+	}
+
+	/**
 	 * @return the valuta
 	 */
 	public String getValuta() {
@@ -154,8 +170,9 @@ public class Fattura implements Serializable{
 	@Override
 	public String toString() {
 		return "Fattura [id=" + id + ", numeroFattura=" + numeroFattura + ", data=" + data + ", importo=" + importo
-				+ ", valuta=" + valuta + ", altro=" + altro + ", idTipologiaSpesa=" + idTipologiaSpesa
-				+ ", shortDescriptionTipologiaSpesa=" + shortDescriptionTipologiaSpesa + "]";
+				+ ", importoSpettante=" + importoSpettante + ", valuta=" + valuta + ", altro=" + altro
+				+ ", idTipologiaSpesa=" + idTipologiaSpesa + ", shortDescriptionTipologiaSpesa="
+				+ shortDescriptionTipologiaSpesa + "]";
 	}
 
 
