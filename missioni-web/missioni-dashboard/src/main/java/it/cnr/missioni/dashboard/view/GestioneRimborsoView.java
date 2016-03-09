@@ -59,7 +59,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	private ElencoRimborsiTable elencoRimborsiTable;
 
 	protected Missione selectedMissione;
-	protected User user;
 
 	protected MissioneSearchBuilder missioneSearchBuilder;
 
@@ -70,11 +69,13 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void inizialize() {
-		user = DashboardUI.getCurrentUser();
-
 		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser(user.getId()).withFieldExist("missione.rimborso")
+				.withIdUser(getUser().getId()).withFieldExist("missione.rimborso")
 				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+	}
+	
+	protected User getUser(){
+		return DashboardUI.getCurrentUser();
 	}
 
 	/**
@@ -158,7 +159,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void openWizardRimborso(){
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(user).withIsAdmin(false).withEnabled(true).withModifica(false)
+		WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false)
 		.build();
 	}
 	

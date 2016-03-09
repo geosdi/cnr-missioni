@@ -10,6 +10,7 @@ import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -26,22 +27,27 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 	}
 
 	protected void inizialize() {
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso")
+		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withFieldExist("missione.rimborso")
 				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
-		try{
-			this.user = ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers().get(0);
+
+	}
+
+	protected User getUser() {
+		try {
+			return ClientConnector
+					.getUser(UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers()
+					.get(0);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
-
-	}
-	
-	protected void openWizardRimborso(){
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(user).withIsAdmin(true).withEnabled(true).withModifica(true)
-		.build();
+		return null;
 	}
 
-
+	protected void openWizardRimborso() {
+		WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser())
+				.withIsAdmin(true).withEnabled(true).withModifica(true).build();
+	}
 
 }

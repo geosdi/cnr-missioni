@@ -62,7 +62,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	protected HorizontalLayout layout;
 	protected MissioneSearchBuilder missioneSearchBuilder;
 	protected MissioniStore missioniStore;
-	protected User user;
 
 	
 	public GestioneMissioneView() {
@@ -79,9 +78,12 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withIdUser(DashboardUI.getCurrentUser().getId());
-		user = DashboardUI.getCurrentUser();
 	}
 
+	protected User getUser(){
+		return DashboardUI.getCurrentUser();
+	}
+	
 	/**
 	 * 
 	 * Aggiunge il listener alla paginazione
@@ -192,7 +194,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 	
 	protected void openWizardMissione(){
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).withUser(user).withIsAdmin(false).withEnabled(true).withModifica(false).build();
+		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
 	}
 
 	protected HorizontalLayout addActionButtons() {
@@ -350,7 +352,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		} else {
 			rimborso = new Rimborso();
 			selectedMissione.setRimborso(rimborso);
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.user)
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.getUser())
 					.build();
 		}
 

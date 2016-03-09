@@ -5,7 +5,6 @@ import com.vaadin.ui.Notification.Type;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.AnticipoPagamentiWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
-import it.cnr.missioni.dashboard.component.window.admin.MissioneWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -14,6 +13,7 @@ import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -31,27 +31,33 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 
 	protected void inizialize() {
 		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder();
+
+
+	}
+	
+	protected User getUser(){
 		try{
-			this.user = ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers().get(0);
+			return ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers().get(0);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
+			
 		}
-
-	}
+		return null;
+		}
 
 	protected void addButtonsToLayout() {
 		layout.addComponents(buttonDettagli,buttonAnticipoPagamento,buttonAnticipoPagamentoPdf, buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
 	}
 
 	protected void openWizardMissione(){
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).withUser(user).withIsAdmin(true).withEnabled(true).withModifica(true).build();
+		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).build();
 
 	}
 	
 	protected void addActionButtonDettagli(){
 		if(!selectedMissione.isRimborsoSetted())
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).withUser(user).withIsAdmin(true).withEnabled(true).withModifica(true).build();
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).build();
 		else
 			super.addActionButtonDettagli();	
 	}
