@@ -12,12 +12,14 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.Hours;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.cnr.missioni.model.adapter.FatturaMapAdapter;
 import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.missione.Missione;
 
 /**
  * @author Salvia Vito
@@ -67,21 +69,21 @@ public class Rimborso implements Serializable {
 
 	}
 
-	//Algoritmo per il calcolo dei massimale sulle fatture (vitto)
-	public void checkMassimale(Fattura fattura, Massimale massimale,Map<String,Fattura>mappa, boolean isEstera) {
+	// Algoritmo per il calcolo dei massimale sulle fatture (vitto)
+	public void checkMassimale(Fattura fattura, Massimale massimale, Map<String, Fattura> mappa, boolean isEstera) {
 		DateTime dateTo = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
 				fattura.getData().getDayOfMonth(), 0, 0);
 		DateTime datFrom = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
 				fattura.getData().getDayOfMonth(), 23, 59);
 		List<Fattura> listaF = getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(), fattura.getId());
 		Fattura f2 = null;
-		if(!listaF.isEmpty()){
+		if (!listaF.isEmpty()) {
 			f2 = listaF.get(0);
 
-		}		
+		}
 		List<Fattura> lista = getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(), null);
-		//calcolo del totale delle fatture per giorno
-		lista.forEach(ff->{
+		// calcolo del totale delle fatture per giorno
+		lista.forEach(ff -> {
 			mappa.put(ff.getId(), ff);
 			totaleFattureGiornaliera += ff.getImporto();
 		});
@@ -99,7 +101,7 @@ public class Rimborso implements Serializable {
 				}
 
 			}
-		}			// missione ESTERA
+		} // missione ESTERA
 		else {
 			if (lista.size() == 1) {
 				if (totaleFattureGiornaliera > massimale.getValue()) {
@@ -113,6 +115,122 @@ public class Rimborso implements Serializable {
 
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * Numero di vitti in base alle ore
+	 * 
+	 * @param dataInizioMisione
+	 * @param dataFineMissione
+	 * @param dataFattura
+	 * @param isEstera
+	 * @return
+	 */
+	public int getNumberFatturaPermissible(DateTime dataInizioMisione, DateTime dataFineMissione,
+			DateTime dataFrontieraAndata, DateTime dataFrontieraRitorno, DateTime dataFattura, boolean isEstera) {
+		int days = Days.daysBetween(dataInizioMisione, dataFineMissione).getDays();
+
+		DateTime dataLimiteInizio = null;
+		DateTime dataLimiteFine = null;
+		int hours = 0;
+
+		if (isEstera) {
+			dataLimiteInizio = dataFrontieraAndata;
+			dataLimiteFine = dataFrontieraRitorno;
+		}
+
+		if (!isEstera) {
+
+			if (days <= 0) {
+				dataLimiteInizio = dataFineMissione;
+				dataLimiteFine = dataFineMissione;
+			} else {
+				DateTime d = new DateTime(dataInizioMisione.getYear(), dataInizioMisione.getMonthOfYear(),
+						dataInizioMisione.getDayOfMonth(), 0, 00);
+				dataLimiteInizio = d.plusDays(1);
+				dataLimiteFine = new DateTime(dataFineMissione.getYear(), dataFineMissione.getMonthOfYear(),
+						dataFineMissione.getDayOfMonth(), 0, 0);
+
+			}
+			//
+			//
+			//
+			//
+			//
+			//
+			// if (days <= 0) {
+			// hours = Hours.hoursBetween(dataInizioMisione,
+			// dataFineMissione).getHours();
+			// } else {
+			// dataInizio = new DateTime(dataInizioMisione.getYear(),
+			// dataInizioMisione.getMonthOfYear(),
+			// dataInizioMisione.getDayOfMonth(), 23, 59);
+			// dataFine = new DateTime(dataFineMissione.getYear(),
+			// dataFineMissione.getMonthOfYear(),
+			// dataFineMissione.getDayOfMonth(), 0, 0);
+			// if (dataFattura.isAfter(dataInizioMisione) &&
+			// dataFattura.isBefore(dataInizio)) {
+			// hours = Hours.hoursBetween(dataInizioMisione,
+			// dataInizio).getHours();
+			// }
+			//
+			// if (dataFattura.isAfter(dataFine) &&
+			// dataFattura.isBefore(dataFineMissione)) {
+			//
+			// hours = Hours.hoursBetween(dataFine,
+			// dataFineMissione).getHours();
+			// }
+			// }
+			//
+			// if (hours >= 4 && hours <= 12)
+			// return 1;
+			// else if (hours > 12)
+			// return 2;
+		}
+
+		if (dataFattura.isAfter(dataInizioMisione) && dataFattura.isBefore(dataLimiteInizio))
+			hours = Hours.hoursBetween(dataInizioMisione, dataLimiteInizio).getHours();
+
+		if (dataFattura.isAfter(dataLimiteFine) && dataFattura.isBefore(dataFineMissione))
+			hours = Hours.hoursBetween(dataLimiteFine, dataFineMissione).getHours();
+
+//		if (isEstera)
+//			hours = Hours.hoursBetween(dataLimiteInizio, dataLimiteFine).getHours();
+
+		if (hours >= 4 && hours <= 12)
+			return 1;
+		else if (hours > 12)
+			return 2;
+
+		return 2;
+
+	}
+
+	/**
+	 * 
+	 * Calcolo del TAM per le missioni estere
+	 * 
+	 * @param massimale
+	 * @param dataAttraversamentoFrontieraAndata
+	 * @param dataAttraversamentoFrontieraRitorno
+	 */
+	public void calcolaTotaleTAM(Massimale massimale, DateTime dataAttraversamentoFrontieraAndata,
+			DateTime dataAttraversamentoFrontieraRitorno) {
+		double t = 0.0;
+
+		// Calcolo delle ore della missione all'estero
+		int hours = Hours.hoursBetween(dataAttraversamentoFrontieraAndata, dataAttraversamentoFrontieraRitorno)
+				.getHours();
+
+		// a partire da un giorno
+		if (hours >= 24) {
+			// ogni 12 ore
+			int num = hours / 12;
+			t = (massimale.getValue() * num) / 2.0;
+		}
+
+		this.totaleTAM = t;
 	}
 
 	/**
@@ -327,32 +445,6 @@ public class Rimborso implements Serializable {
 	 */
 	public void setMappaFattura(Map<String, Fattura> mappaFattura) {
 		this.mappaFattura = mappaFattura;
-	}
-
-	/**
-	 * 
-	 * Calcolo del TAM per le missioni estere
-	 * 
-	 * @param massimale
-	 * @param dataAttraversamentoFrontieraAndata
-	 * @param dataAttraversamentoFrontieraRitorno
-	 */
-	public void calcolaTotaleTAM(Massimale massimale, DateTime dataAttraversamentoFrontieraAndata,
-			DateTime dataAttraversamentoFrontieraRitorno) {
-		double t = 0.0;
-
-		// Calcolo delle ore della missione all'estero
-		int hours = Hours.hoursBetween(dataAttraversamentoFrontieraAndata, dataAttraversamentoFrontieraRitorno)
-				.getHours();
-
-		// a partire da un giorno
-		if (hours >= 24) {
-			// ogni 12 ore
-			int num = hours / 12;
-			t = (massimale.getValue() * num) / 2.0;
-		}
-
-		this.totaleTAM = t;
 	}
 
 	/**
