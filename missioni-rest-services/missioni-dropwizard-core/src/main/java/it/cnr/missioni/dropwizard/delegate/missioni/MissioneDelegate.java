@@ -469,7 +469,7 @@ class MissioneDelegate implements IMissioneDelegate {
 		Missione m = this.missioneDAO.find(missione.getId());
 		this.missioneDAO.update(missione);
 
-		if (m.getDatiAnticipoPagamenti() == null) {
+		if (!m.getDatiAnticipoPagamenti().isInserted()) {
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory
 					.buildAddAnticipoPagamentoMessage(user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
 							user.getDatiCNR().getMail(), (missione.isMissioneEstera()
