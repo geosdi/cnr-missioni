@@ -318,7 +318,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void addActionButtonDettagli(){
-		MissioneWindowAdmin.open(selectedMissione, false, false, false);
+		MissioneWindowAdmin.open(selectedMissione, false, false, true);
 
 	}
 	
