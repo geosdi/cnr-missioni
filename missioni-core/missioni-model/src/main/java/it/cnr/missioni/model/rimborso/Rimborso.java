@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.cnr.missioni.model.adapter.FatturaMapAdapter;
 import it.cnr.missioni.model.configuration.Massimale;
-import it.cnr.missioni.model.missione.Missione;
 
 /**
  * @author Salvia Vito
@@ -153,40 +151,6 @@ public class Rimborso implements Serializable {
 						dataFineMissione.getDayOfMonth(), 0, 0);
 
 			}
-			//
-			//
-			//
-			//
-			//
-			//
-			// if (days <= 0) {
-			// hours = Hours.hoursBetween(dataInizioMisione,
-			// dataFineMissione).getHours();
-			// } else {
-			// dataInizio = new DateTime(dataInizioMisione.getYear(),
-			// dataInizioMisione.getMonthOfYear(),
-			// dataInizioMisione.getDayOfMonth(), 23, 59);
-			// dataFine = new DateTime(dataFineMissione.getYear(),
-			// dataFineMissione.getMonthOfYear(),
-			// dataFineMissione.getDayOfMonth(), 0, 0);
-			// if (dataFattura.isAfter(dataInizioMisione) &&
-			// dataFattura.isBefore(dataInizio)) {
-			// hours = Hours.hoursBetween(dataInizioMisione,
-			// dataInizio).getHours();
-			// }
-			//
-			// if (dataFattura.isAfter(dataFine) &&
-			// dataFattura.isBefore(dataFineMissione)) {
-			//
-			// hours = Hours.hoursBetween(dataFine,
-			// dataFineMissione).getHours();
-			// }
-			// }
-			//
-			// if (hours >= 4 && hours <= 12)
-			// return 1;
-			// else if (hours > 12)
-			// return 2;
 		}
 
 		if (dataFattura.isAfter(dataInizioMisione) && dataFattura.isBefore(dataLimiteInizio))
@@ -194,9 +158,6 @@ public class Rimborso implements Serializable {
 
 		if (dataFattura.isAfter(dataLimiteFine) && dataFattura.isBefore(dataFineMissione))
 			hours = Hours.hoursBetween(dataLimiteFine, dataFineMissione).getHours();
-
-//		if (isEstera)
-//			hours = Hours.hoursBetween(dataLimiteInizio, dataLimiteFine).getHours();
 
 		if (hours >= 4 && hours <= 12)
 			return 1;
