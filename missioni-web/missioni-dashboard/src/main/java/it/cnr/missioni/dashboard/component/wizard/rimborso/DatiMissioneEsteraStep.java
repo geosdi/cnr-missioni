@@ -7,7 +7,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification.Type;
 
-import it.cnr.missioni.dashboard.component.form.missione.DatiPeriodoEsteraMissioneForm;
+import it.cnr.missioni.dashboard.component.form.rimborso.DatiPeriodoEsteraMissioneForm;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.Missione;
@@ -22,7 +22,7 @@ public class DatiMissioneEsteraStep implements WizardStep {
 	private DatiPeriodoEsteraMissioneForm datiPeriodoEsteraMissioneForm;
 	
 	public String getCaption() {
-		return "Step 6";
+		return "Step 2";
 	}
 
 	public DatiMissioneEsteraStep(Missione missione) {
@@ -34,9 +34,6 @@ public class DatiMissioneEsteraStep implements WizardStep {
 
 	public Component getContent() {
 		this.datiPeriodoEsteraMissioneForm.addDateRange();
-		this.datiPeriodoEsteraMissioneForm.getAttraversamentoFrontieraAndataField().setEnabled(missione.isMissioneEstera());
-		this.datiPeriodoEsteraMissioneForm.getAttraversamentoFrontieraRitornoField().setEnabled(missione.isMissioneEstera());
-		this.datiPeriodoEsteraMissioneForm.getFieldGroup().setEnabled(missione.isMissioneEstera());
 		return this.datiPeriodoEsteraMissioneForm;
 	}
 	
