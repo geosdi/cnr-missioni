@@ -25,9 +25,9 @@ public class DatiMissioneEsteraStep implements WizardStep {
 		return "Step 2";
 	}
 
-	public DatiMissioneEsteraStep(Missione missione) {
+	public DatiMissioneEsteraStep(Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		this.missione = missione;
-		this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), false, true,false,missione);
+		this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), isAdmin, enabled,modifica,missione);
 
 
 	}

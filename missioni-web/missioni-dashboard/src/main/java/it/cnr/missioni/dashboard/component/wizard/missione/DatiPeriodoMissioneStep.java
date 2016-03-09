@@ -25,10 +25,10 @@ public class DatiPeriodoMissioneStep implements WizardStep {
 		return "Step 5";
 	}
 
-	public DatiPeriodoMissioneStep(DatiPeriodoMissione datiPeriodoMissione, Missione missione) {
+	public DatiPeriodoMissioneStep(DatiPeriodoMissione datiPeriodoMissione, Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		this.datiPeriodoMissione = datiPeriodoMissione;
 		this.missione = missione;
-		datiPeriodoMissioneForm = new DatiPeriodoMissioneForm(datiPeriodoMissione, false, true,false);
+		datiPeriodoMissioneForm = new DatiPeriodoMissioneForm(datiPeriodoMissione, isAdmin, enabled,modifica);
 
 	}
 

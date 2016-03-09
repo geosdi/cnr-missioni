@@ -42,6 +42,7 @@ import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.rimborso.Rimborso;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
@@ -61,6 +62,9 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	protected HorizontalLayout layout;
 	protected MissioneSearchBuilder missioneSearchBuilder;
 	protected MissioniStore missioniStore;
+	protected User user;
+
+	
 	public GestioneMissioneView() {
 		super();
 
@@ -72,8 +76,10 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void inizialize() {
+
 		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withIdUser(DashboardUI.getCurrentUser().getId());
+		user = DashboardUI.getCurrentUser();
 	}
 
 	/**
@@ -184,6 +190,10 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		});
 		return buttonCerca;
 	}
+	
+	protected void openWizardMissione(){
+		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).withUser(user).withIsAdmin(false).withEnabled(true).withModifica(false).build();
+	}
 
 	protected HorizontalLayout addActionButtons() {
 		layout = new HorizontalLayout();
@@ -200,8 +210,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).build();
-			}
+				openWizardMissione();
+				}
 
 		});
 
@@ -318,7 +328,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void addActionButtonDettagli(){
-		MissioneWindowAdmin.open(selectedMissione, false, false, true);
+		MissioneWindowAdmin.open(selectedMissione, true, false, true);
 
 	}
 	
@@ -340,7 +350,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		} else {
 			rimborso = new Rimborso();
 			selectedMissione.setRimborso(rimborso);
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione)
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.user)
 					.build();
 		}
 

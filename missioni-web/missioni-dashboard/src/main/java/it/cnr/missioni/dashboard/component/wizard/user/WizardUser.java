@@ -93,4 +93,31 @@ public class WizardUser extends IWizard.AbstractWizard {
 		this.user = user;
 	}
 
+	/**
+	 * @param enabled
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @param isAdmin
+	 */
+	@Override
+	public void isAdmin(boolean isAdmin) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @param modifica
+	 */
+	@Override
+	public void setModifica(boolean modifica) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

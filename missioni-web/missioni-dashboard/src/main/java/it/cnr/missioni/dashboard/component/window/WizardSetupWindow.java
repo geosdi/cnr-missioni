@@ -49,6 +49,21 @@ public class WizardSetupWindow extends Window {
 		return this;
 	}
 
+	public WizardSetupWindow withModifica(boolean modifica) {
+		this.wizard.setModifica(modifica);
+		return this;
+	}
+	
+	public WizardSetupWindow withIsAdmin(boolean isAdmin) {
+		this.wizard.isAdmin(isAdmin);
+		return this;
+	}
+	
+	public WizardSetupWindow withEnabled(boolean enabled) {
+		this.wizard.setEnabled(enabled);
+		return this;
+	}
+	
 	public VerticalLayout getComponent() {
 		return mainLayout;
 	}

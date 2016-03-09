@@ -24,10 +24,10 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		return "Step 1";
 	}
 
-	public DatiGeneraliRimborsoStep(Missione missione, int days ) {
+	public DatiGeneraliRimborsoStep(Missione missione, int days, boolean isAdmin,boolean enabled,boolean modifica) {
 		this.missione = missione;
 		this.days = days;
-		datiGenerali = new DatiGeneraliRimborsoForm(missione, days, false,true,false);
+		datiGenerali = new DatiGeneraliRimborsoForm(missione, days, isAdmin,enabled,modifica);
 
 	}
 

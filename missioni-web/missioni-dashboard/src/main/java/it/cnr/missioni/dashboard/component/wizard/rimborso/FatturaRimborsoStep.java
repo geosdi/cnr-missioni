@@ -20,9 +20,9 @@ public class FatturaRimborsoStep implements WizardStep {
 		return "Step 3";
 	}
 
-	public FatturaRimborsoStep(Missione missione) {
+	public FatturaRimborsoStep(Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		this.missione = missione;
-		this.fatturaRimborsoForm = new FatturaRimborsoForm(missione,false,true,false);
+		this.fatturaRimborsoForm = new FatturaRimborsoForm(missione,isAdmin,enabled,modifica);
 	}
 
 	public Component getContent() {

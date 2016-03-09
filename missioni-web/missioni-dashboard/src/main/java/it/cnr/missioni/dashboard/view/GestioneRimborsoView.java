@@ -41,6 +41,7 @@ import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
 /**
@@ -56,15 +57,9 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	 * 
 	 */
 	private ElencoRimborsiTable elencoRimborsiTable;
-	// private TextField idMissioneField;
-	// private DateField dataFromInserimentoMissioneField;
-	// private DateField dataToInserimentoMissioneField;
-	// private TextField numeroOrdineRimborsoField;
-	// private TextField oggettoMissioneField;
-	//
-	// private VerticalLayout layoutTable;
-	// private VerticalLayout layoutForm;
+
 	protected Missione selectedMissione;
+	protected User user;
 
 	protected MissioneSearchBuilder missioneSearchBuilder;
 
@@ -75,8 +70,10 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void inizialize() {
+		user = DashboardUI.getCurrentUser();
+
 		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser(DashboardUI.getCurrentUser().getId()).withFieldExist("missione.rimborso")
+				.withIdUser(user.getId()).withFieldExist("missione.rimborso")
 				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
 	}
 
@@ -125,117 +122,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		return v;
 	}
 
-	/**
-	 * 
-	 * Costruisce la form di ricerca
-	 * 
-	 * @return HorizontalLayout
-	 */
-	// private HorizontalLayout buildForm() {
-	// HorizontalLayout v = new HorizontalLayout();
-	// v.setMargin(true);
-	// FormLayout form = new FormLayout();
-	// form.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-	// form.setSizeUndefined();
-	// v.setWidth("98%");
-	// final ComboBox statoSelect = new ComboBox();
-	// statoSelect.setCaption("Stato");
-	//
-	// Map<String, StatoEnum> mappaS = StatoEnum.getMappa();
-	//
-	// mappaS.values().forEach(s -> {
-	// statoSelect.addItem(s);
-	// statoSelect.setItemCaption(s, s.getStato());
-	// });
-	//
-	// idMissioneField = new TextField();
-	// idMissioneField.setCaption("Id Missione");
-	// dataFromInserimentoMissioneField = new DateField("Data dal");
-	// dataToInserimentoMissioneField = new DateField("Data al");
-	// dataToInserimentoMissioneField.setImmediate(true);
-	// dataFromInserimentoMissioneField.setValidationVisible(false);
-	// numeroOrdineRimborsoField = new TextField("Numero Rimborso");
-	// oggettoMissioneField = new TextField("Oggetto Missione");
-	//
-	// addValidator();
-	//
-	// form.addComponent(statoSelect);
-	// form.addComponent(idMissioneField);
-	// form.addComponent(oggettoMissioneField);
-	// form.addComponent(numeroOrdineRimborsoField);
-	// form.addComponent(dataFromInserimentoMissioneField);
-	// form.addComponent(dataToInserimentoMissioneField);
-	// final Button buttonCerca = new Button("Cerca");
-	// buttonCerca.setEnabled(true);
-	// buttonCerca.addStyleName(ValoTheme.BUTTON_PRIMARY);
-	//
-	// buttonCerca.addClickListener(new Button.ClickListener() {
-	// public void buttonClick(ClickEvent event) {
-	//
-	// DateTime from = null;
-	// DateTime to = null;
-	// String stato = null;
-	// // se il valore della form è null JODATIME ritorna comunque la
-	// // data odierna
-	// if (dataFromInserimentoMissioneField.getValue() != null)
-	// from = new DateTime(dataFromInserimentoMissioneField.getValue());
-	// if (dataToInserimentoMissioneField.getValue() != null)
-	// to = new DateTime(dataToInserimentoMissioneField.getValue());
-	// if (statoSelect.getValue() != null)
-	// stato = ((StatoEnum) statoSelect.getValue()).name();
-	//
-	// missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-	// .withOggetto(oggettoMissioneField.getValue())
-	// .withNumeroOrdineMissione(numeroOrdineRimborsoField.getValue())
-	// .withIdMissione(idMissioneField.getValue()).withStato(stato).withIdUser(user.getId())
-	// .withRangeDataInserimento(from, to);
-	//
-	// try {
-	// missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-	// elencoMissioniTable.aggiornaTable(missioniStore);
-	// } catch (Exception e) {
-	// Utility.getNotification(Utility.getMessage("error_message"),
-	// Utility.getMessage("request_error"),
-	// Type.ERROR_MESSAGE);
-	// }
-	// }
-	// });
-	//
-	// form.addComponent(buttonCerca);
-	// v.addComponent(form);
-	// v.setComponentAlignment(form, new
-	// Alignment(Bits.ALIGNMENT_HORIZONTAL_CENTER));
-	// v.setComponentAlignment(form, Alignment.MIDDLE_CENTER);
-	// return v;
-	// }
-	//
-	// private void addValidator() {
-	//
-	// dataToInserimentoMissioneField.addValidator(new Validator() {
-	//
-	// @Override
-	// public void validate(Object value) throws InvalidValueException {
-	// Date v = (Date) value;
-	// if (v != null && v.before(dataFromInserimentoMissioneField.getValue()))
-	// throw new InvalidValueException(Utility.getMessage("data_range_error"));
-	//
-	// }
-	//
-	// });
-	//
-	// dataToInserimentoMissioneField.addBlurListener(new BlurListener() {
-	//
-	// @Override
-	// public void blur(BlurEvent event) {
-	// try {
-	// dataFromInserimentoMissioneField.validate();
-	// } catch (Exception e) {
-	// dataFromInserimentoMissioneField.setValidationVisible(true);
-	// }
-	//
-	// }
-	// });
-	// }
 
 	@Override
 	public void enter(final ViewChangeEvent event) {
@@ -271,12 +157,32 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		return buttonCerca;
 	}
 
+	protected void openWizardRimborso(){
+		WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(user).withIsAdmin(false).withEnabled(true).withModifica(false)
+		.build();
+	}
+	
 	protected HorizontalLayout addActionButtons() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
 		buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso", FontAwesome.EDIT);
-		buildButtonDettagli();
+		buttonDettagli.addClickListener(new Button.ClickListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -8783796549904544814L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (selectedMissione.getRimborso().isPagata())
+					RimborsoWindowAdmin.open(selectedMissione, true, false, true);
+				else
+					openWizardRimborso();
+			}
+
+		});
 
 		buttonMissione = buildButton("Missone", "Visualizza i dati della Missione", FontAwesome.SUITCASE);
 
@@ -289,7 +195,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				MissioneWindowAdmin.open(selectedMissione, false, false, false);
+				MissioneWindowAdmin.open(selectedMissione, true, false, true);
 
 			}
 
@@ -324,25 +230,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 	}
 
-	protected void buildButtonDettagli() {
-		buttonDettagli.addClickListener(new Button.ClickListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -8783796549904544814L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (selectedMissione.getRimborso().isPagata())
-					RimborsoWindowAdmin.open(selectedMissione, true, false, false);
-				else
-					WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione)
-							.build();
-			}
-
-		});
-	}
 
 	private StreamResource getResource() {
 		try {

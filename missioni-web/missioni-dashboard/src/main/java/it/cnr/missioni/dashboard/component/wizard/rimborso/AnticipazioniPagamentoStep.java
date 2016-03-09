@@ -25,11 +25,11 @@ public class AnticipazioniPagamentoStep implements WizardStep {
 		return "Step 7";
 	}
 
-	public AnticipazioniPagamentoStep(Missione missione) {
+	public AnticipazioniPagamentoStep(Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		this.datiAnticipoPagamenti = missione.getDatiAnticipoPagamenti();
 		this.missione = missione;
-		this.anticipazionePagamentoMissioneForm = new AnticipazionePagamentoMissioneForm(datiAnticipoPagamenti, false,
-				true,false);
+		this.anticipazionePagamentoMissioneForm = new AnticipazionePagamentoMissioneForm(datiAnticipoPagamenti, isAdmin,
+				enabled,modifica);
 	}
 
 	public Component getContent() {

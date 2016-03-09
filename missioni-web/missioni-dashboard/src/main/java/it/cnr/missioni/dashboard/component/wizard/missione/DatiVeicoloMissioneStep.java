@@ -25,9 +25,9 @@ public class DatiVeicoloMissioneStep implements WizardStep {
 		return "step 4";
 	}
 
-	public DatiVeicoloMissioneStep(Missione missione) {
+	public DatiVeicoloMissioneStep(Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		this.missione = missione;
-		this.veicoloMissioneForm = new VeicoloMissioneForm(missione, false, true,false);
+		this.veicoloMissioneForm = new VeicoloMissioneForm(missione, isAdmin, enabled,modifica);
 
 	}
 

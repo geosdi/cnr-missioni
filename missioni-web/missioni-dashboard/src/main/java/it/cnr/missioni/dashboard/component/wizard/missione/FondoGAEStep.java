@@ -24,9 +24,9 @@ public class FondoGAEStep implements WizardStep {
 		return "Step 3";
 	}
 
-	public FondoGAEStep(Missione missione) {
+	public FondoGAEStep(Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		this.missione = missione;
-		this.fondoGAEMissioneForm = new FondoGAEMissioneForm(missione, false, true,false);
+		this.fondoGAEMissioneForm = new FondoGAEMissioneForm(missione, isAdmin, enabled,modifica);
 
 	}
 

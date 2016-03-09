@@ -19,6 +19,7 @@ import it.cnr.missioni.model.user.User;
 public class WizardRimborso extends IWizard.AbstractWizard {
 
 	private Missione missione;
+	private User user;
 	private DatiGeneraliRimborsoStep datiGeneraliStep;
 	private FatturaRimborsoStep fatturaRimborsoStep;
 	private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStep;
@@ -37,16 +38,16 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 		buildWizard();
 
 		Rimborso rimborso = missione.getRimborso();
-
+		missione.setIdUser(this.user.getId());
 		// calcolo del TAM
 		try {
 
 
 
-			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione,0);
-			this.datiMissioneEsteraStep = new DatiMissioneEsteraStep(missione);
+			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione,0,isAdmin,enabled,modifica);
+			this.datiMissioneEsteraStep = new DatiMissioneEsteraStep(missione,isAdmin,enabled,modifica);
 
-			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione);
+			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione,isAdmin,enabled,modifica);
 			this.riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione);
 
 			getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
@@ -117,8 +118,31 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	 */
 	@Override
 	public void setUser(User user) {
-		// TODO Auto-generated method stub
+		this.user = user;
+	}
 
+	/**
+	 * @param enabled
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	/**
+	 * @param isAdmin
+	 */
+	@Override
+	public void isAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	/**
+	 * @param modifica
+	 */
+	@Override
+	public void setModifica(boolean modifica) {
+		this.modifica = modifica;
 	}
 
 }

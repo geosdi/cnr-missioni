@@ -23,9 +23,9 @@ public class LocalitaOggettoStep implements WizardStep {
 		return "Step 2";
 	}
 
-	public LocalitaOggettoStep(Missione missione) {
+	public LocalitaOggettoStep(Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		this.missione = missione;
-		this.localitaOggettoMissioneForm = new LocalitaOggettoMissioneForm(missione, false, true,false);
+		this.localitaOggettoMissioneForm = new LocalitaOggettoMissioneForm(missione, isAdmin, enabled,modifica);
 
 	}
 

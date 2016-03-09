@@ -21,10 +21,19 @@ public interface IWizard {
 	
 	void setUser(User user);
 	
+	void setModifica(boolean modifica);
+	
+	void setEnabled(boolean enabled);
+	
+	void isAdmin(boolean enambled);
+	
 	
 	public abstract class AbstractWizard implements WizardProgressListener,  IWizard{
 
 		private Wizard wizard;
+		protected boolean enabled;
+		protected boolean modifica;
+		protected boolean isAdmin;
 
 		protected void endWizard() {
 			getWizard().setVisible(false);
@@ -61,6 +70,13 @@ public interface IWizard {
 		public abstract void setMissione(Missione missione);
 		
 		public abstract void setUser(User user);
+		
+		public abstract void setEnabled(boolean enabled);
+		
+		public abstract void isAdmin(boolean isAdmin);
+		
+		public abstract void setModifica(boolean modifica);
+
 
 	}
 

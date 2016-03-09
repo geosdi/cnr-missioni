@@ -24,9 +24,9 @@ public class TipoMissioneStep implements WizardStep {
 		return "Step 1";
 	}
 
-	public TipoMissioneStep(Missione missione ) {
+	public TipoMissioneStep(Missione missione,boolean isAdmin,boolean enabled,boolean modifica ) {
 		this.missione = missione;
-		this.tipoMissioneForm = new TipoMissioneForm(missione, false,true,false);
+		this.tipoMissioneForm = new TipoMissioneForm(missione, isAdmin,enabled,modifica);
 	}
 
 	public Component getContent() {
