@@ -67,6 +67,9 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		return buildPanel();
 	}
 
+	/*
+	 * Per ogni fattura verifica il massimale
+	 */
 	private void checkMassimale(Rimborso rimborso) {
 
 		Map<String, Fattura> mappa = new HashMap<String, Fattura>();
@@ -81,11 +84,20 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 					TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
 					if (tipologiaSpesa.isCheckMassimale()) {
 						String areaGeografica;
+
 						if (missione.isMissioneEstera()) {
-							Nazione nazione = ClientConnector.getNazione(
-									NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-									.getNazione().get(0);
-							areaGeografica = nazione.getAreaGeografica().name();
+
+							if (f.getData()
+									.isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
+									|| f.getData().isAfter(
+											missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()))
+								areaGeografica = AreaGeograficaEnum.ITALIA.name();
+							else {
+								Nazione nazione = ClientConnector.getNazione(
+										NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+										.getNazione().get(0);
+								areaGeografica = nazione.getAreaGeografica().name();
+							}
 						} else {
 							areaGeografica = AreaGeograficaEnum.ITALIA.name();
 						}
@@ -106,6 +118,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 						MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
 								.getMassimaleSearchBuilder().withLivello(livello).withAreaGeografica(areaGeografica)
 								.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
+
 						rimborso.checkMassimale(f, massimaleStore.getMassimale().get(0), mappa,
 								missione.isMissioneEstera());
 
@@ -180,6 +193,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 		}
 
+		checkMassimale(missione.getRimborso());
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
 		elencoFattureTable.setStyleName("margin-table_fatture");
 		elencoFattureTable
