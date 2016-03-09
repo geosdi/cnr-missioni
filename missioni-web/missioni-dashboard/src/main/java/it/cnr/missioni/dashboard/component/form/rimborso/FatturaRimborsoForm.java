@@ -1,12 +1,12 @@
 package it.cnr.missioni.dashboard.component.form.rimborso;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
 
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
@@ -34,19 +34,11 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
-import it.cnr.missioni.model.configuration.Massimale;
-import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.model.rimborso.Rimborso;
-import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
@@ -149,12 +141,9 @@ public class FatturaRimborsoForm extends VerticalLayout {
 				}
 
 				if (check) {
-
-					// checkMassimale(tipologiaSpesaField.getValue().toString());
-
 					BeanItem<Fattura> beanItem = (BeanItem<Fattura>) formFattura.getFieldGroup().getItemDataSource();
 					Fattura new_fattura = beanItem.getBean();
-
+					new_fattura.setImportoSpettante(new_fattura.getImporto());
 					// se la fattura è nuova creo un ID
 					if (new_fattura.getId() == null)
 						new_fattura.setId(UUID.randomUUID().toString());
@@ -173,11 +162,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					elencoFattureTable.aggiornaTable(
 							new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
 					elencoFattureTable.aggiornaTotale(formFattura.getMissione().getRimborso().getTotale());
-					
-					
-					
-					
-					
+
 				} else {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
 							Type.ERROR_MESSAGE);
@@ -193,9 +178,6 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		return layout;
 	}
 
-	
-
-	
 	class FormFattura extends IForm.FormAbstract<Fattura> {
 
 		/**
@@ -263,14 +245,15 @@ public class FatturaRimborsoForm extends VerticalLayout {
 				@Override
 				public void validate(Object value) throws InvalidValueException {
 					TipologiaSpesaStore t = null;
+					DateTime dateFattura = null;
 					int n = 0;
 					try {
 						t = ClientConnector
 								.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
 										.withId(formFattura.getTipologiaSpesaField().getValue().toString()));
-						if (t.getTipologiaSpesa().get(0).isCheckMassimale() && formFattura.getDataField() != null ) {
+						if (t.getTipologiaSpesa().get(0).isCheckMassimale() && formFattura.getDataField() != null) {
 
-							DateTime dateFattura = new DateTime(formFattura.getDataField().getValue());
+							dateFattura = new DateTime(formFattura.getDataField().getValue());
 							DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
 									dateFattura.getDayOfMonth(), 0, 0);
 							DateTime datFrom = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
@@ -286,7 +269,15 @@ public class FatturaRimborsoForm extends VerticalLayout {
 								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
 					}
 
-					if (t.getTipologiaSpesa().get(0).getOccorrenzeGiornaliere() <= n)
+					DateTime dataFrontieraAndata = missione.isMissioneEstera()
+							? missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata() : null;
+					DateTime dataFrontieraRitorno = missione.isMissioneEstera()
+							? missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno() : null;
+
+					if (missione.getRimborso().getNumberFatturaPermissible(
+							missione.getDatiPeriodoMissione().getInizioMissione(),
+							missione.getDatiPeriodoMissione().getFineMissione(),dataFrontieraAndata,dataFrontieraRitorno, dateFattura,
+							missione.isMissioneEstera()) <= n)
 						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
 
 				}
@@ -439,52 +430,6 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 			addValidator();
 			addListener();
-
-		}
-
-		private void checkMassimale(String id, String livello) {
-
-			try {
-				TipologiaSpesaStore tipologiaStore = ClientConnector
-						.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId(id));
-
-				TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
-				if (tipologiaSpesa.isCheckMassimale()) {
-
-					String areaGeografica;
-					if (missione.isMissioneEstera()) {
-						Nazione nazione = ClientConnector
-								.getNazione(
-										NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-								.getNazione().get(0);
-						areaGeografica = nazione.getAreaGeografica().name();
-					} else {
-						areaGeografica = AreaGeograficaEnum.ITALIA.name();
-					}
-					MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
-							.getMassimaleSearchBuilder().withLivello(livello).withAreaGeografica(areaGeografica)
-							.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
-
-					if (massimaleStore.getTotale() > 0) {
-						Massimale massimale = massimaleStore.getMassimale().get(0);
-
-						NumberFormat format = NumberFormat.getInstance(Locale.ITALY);
-						format.setGroupingUsed(false);
-						format.setMaximumFractionDigits(2);
-						format.setMinimumFractionDigits(2);
-
-						double number = format.parse(importoField.getValue()).doubleValue();
-
-						if (number > massimale.getValue())
-							importoField.setValue(format.format(massimale.getValue()));
-					}
-
-				}
-
-			} catch (Exception e) {
-				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-						Type.ERROR_MESSAGE);
-			}
 
 		}
 
