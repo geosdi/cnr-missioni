@@ -68,6 +68,9 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 			listaLocalitaField.setItemCaption(bean.getGeoPoint().getLat() + "/" + bean.getGeoPoint().getLon(),
 					bean.getLocalita());
 			listaLocalitaField.select(bean.getGeoPoint().getLat() + "/" + bean.getGeoPoint().getLon());
+			if(!isAdmin)
+				listaLocalitaField.setReadOnly(true);
+
 		}
 		
 		
