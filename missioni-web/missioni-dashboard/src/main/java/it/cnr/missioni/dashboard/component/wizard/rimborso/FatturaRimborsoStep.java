@@ -17,7 +17,7 @@ public class FatturaRimborsoStep implements WizardStep {
 	private FatturaRimborsoForm fatturaRimborsoForm;
 
 	public String getCaption() {
-		return "Step 2";
+		return "Step 3";
 	}
 
 	public FatturaRimborsoStep(Missione missione) {
