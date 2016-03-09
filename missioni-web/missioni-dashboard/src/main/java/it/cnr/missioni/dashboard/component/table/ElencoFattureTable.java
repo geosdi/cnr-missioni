@@ -91,6 +91,35 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * Aggiorna la tabella con la nuova lista derivante dalla query su ES
+	 * 
+	 * @param listaNeet
+	 * @param totNeets
+	 */
+	public <T> void aggiornaTableRiepilogo(T lista) {
+		this.removeAllItems();
+
+		if (lista != null) {
+
+			setContainerDataSource(
+					new BeanItemContainer<Fattura>(Fattura.class, ((List<Fattura>)lista)));
+
+			setVisibleColumns("numeroFattura", "data", "shortDescriptionTipologiaSpesa", "valuta", "altro", "importo","importoSpettante");
+			setColumnHeaders("Numero Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo €","Importo Spettante €");
+			setId("numeroFattura");
+			Object[] properties = { "data", "numeroFattura" };
+			boolean[] ordering = { false, false };
+			sort(properties, ordering);
+
+			setVisible(true);
+			setFooterVisible(true);
+
+		}
+
+	}
 
 	public void aggiornaTotale(double totale) {
 		DecimalFormat df = new DecimalFormat("#0.00");
