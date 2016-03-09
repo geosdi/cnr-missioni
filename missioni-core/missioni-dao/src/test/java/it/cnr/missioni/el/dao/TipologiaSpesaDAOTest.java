@@ -159,7 +159,6 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setValue("Vitto");
 		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
 		tipoliogiaSpesa.setCheckMassimale(true);
-		tipoliogiaSpesa.setOccorrenzeGiornaliere(2);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		

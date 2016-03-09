@@ -31,7 +31,6 @@ public class TipologiaSpesa implements Document {
 	@NotNull
 	private TipoSpesaEnum tipo;
 	private boolean checkMassimale;
-	private int occorrenzeGiornaliere;
 	@NotNull
 	private TrattamentoMissioneEsteraEnum tipoTrattamento;
 	
@@ -106,19 +105,7 @@ public class TipologiaSpesa implements Document {
 		this.checkMassimale = checkMassimale;
 	}
 
-	/**
-	 * @return the occorrenzeGiornaliere
-	 */
-	public int getOccorrenzeGiornaliere() {
-		return occorrenzeGiornaliere;
-	}
 
-	/**
-	 * @param occorrenzeGiornaliere 
-	 */
-	public void setOccorrenzeGiornaliere(int occorrenzeGiornaliere) {
-		this.occorrenzeGiornaliere = occorrenzeGiornaliere;
-	}
 
 	/**
 	 * @return the tipoTrattamento
@@ -140,7 +127,7 @@ public class TipologiaSpesa implements Document {
 	@Override
 	public String toString() {
 		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + ", checkMassimale=" + checkMassimale
-				+ ", occorrenzeGiornaliere=" + occorrenzeGiornaliere + ", tipoTrattamento=" + tipoTrattamento + "]";
+				 + ", tipoTrattamento=" + tipoTrattamento + "]";
 	}
 
 
