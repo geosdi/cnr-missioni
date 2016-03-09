@@ -2,8 +2,10 @@ package it.cnr.missioni.model.rimborso;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -11,6 +13,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.cnr.missioni.model.adapter.FatturaMapAdapter;
 import it.cnr.missioni.model.configuration.Massimale;
@@ -44,13 +48,72 @@ public class Rimborso implements Serializable {
 	private double importoDaTerzi;
 	@XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
 	private Map<String, Fattura> mappaFattura = new HashMap<String, Fattura>();
-	
 
-	
-	public int getNumberOfFatturaInDay(DateTime from,DateTime to,String idTipologiaSpesa){
-		return (getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from)).filter(f -> f.getData().isBefore(to)).filter(f->f.getIdTipologiaSpesa().equals(idTipologiaSpesa)).collect(Collectors.toList())).size();
+	@JsonIgnore
+	private double totaleFattureGiornaliera;
+
+	public List<Fattura> getNumberOfFatturaInDay(DateTime from, DateTime to, String idTipologiaSpesa,
+			String notIdFattura) {
+
+		return (List<Fattura>) getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from))
+				.filter(f -> f.getData().isBefore(to)).filter(f -> f.getIdTipologiaSpesa().equals(idTipologiaSpesa))
+				.filter(f -> !f.getId().equals(notIdFattura)).collect(Collectors.toList());
 	}
-	
+
+	public List<Fattura> getNumberOfFatturaInDay(DateTime from, DateTime to, String idTipologiaSpesa) {
+
+		return (List<Fattura>) getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from))
+				.filter(f -> f.getData().isBefore(to)).collect(Collectors.toList());
+
+	}
+
+	//Algoritmo per il calcolo dei massimale sulle fatture (vitto)
+	public void checkMassimale(Fattura fattura, Massimale massimale,Map<String,Fattura>mappa, boolean isEstera) {
+		DateTime dateTo = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
+				fattura.getData().getDayOfMonth(), 0, 0);
+		DateTime datFrom = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
+				fattura.getData().getDayOfMonth(), 23, 59);
+		List<Fattura> listaF = getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(), fattura.getId());
+		Fattura f2 = null;
+		if(!listaF.isEmpty()){
+			f2 = listaF.get(0);
+
+		}		
+		List<Fattura> lista = getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(), null);
+		//calcolo del totale delle fatture per giorno
+		lista.forEach(ff->{
+			mappa.put(ff.getId(), ff);
+			totaleFattureGiornaliera += ff.getImporto();
+		});
+
+		// missione ITALIA
+		if (!isEstera) {
+			if (lista.size() == 1) {
+				if (totaleFattureGiornaliera > massimale.getValue() / 2.0) {
+					fattura.setImportoSpettante(massimale.getValue() / 2.0);
+				}
+			} else {
+				if (totaleFattureGiornaliera > massimale.getValue()) {
+					fattura.setImportoSpettante(massimale.getValue());
+					f2.setImportoSpettante(0.0);
+				}
+
+			}
+		}			// missione ESTERA
+		else {
+			if (lista.size() == 1) {
+				if (totaleFattureGiornaliera > massimale.getValue()) {
+					fattura.setImportoSpettante(fattura.getImporto() - (massimale.getValue()));
+				}
+			} else {
+				if (totaleFattureGiornaliera > massimale.getValue()) {
+					fattura.setImportoSpettante(massimale.getValue());
+					f2.setImportoSpettante(0.0);
+				}
+
+			}
+		}
+	}
 
 	/**
 	 * @return the mandatoPagamento
@@ -60,7 +123,7 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
-	 * @param mandatoPagamento 
+	 * @param mandatoPagamento
 	 */
 	public void setMandatoPagamento(String mandatoPagamento) {
 		this.mandatoPagamento = mandatoPagamento;
@@ -162,7 +225,7 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
-	 * @param totKm 
+	 * @param totKm
 	 */
 	public void setTotKm(Double totKm) {
 		this.totKm = totKm;
@@ -176,7 +239,7 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
-	 * @param rimborsoKm 
+	 * @param rimborsoKm
 	 */
 	public void setRimborsoKm(Double rimborsoKm) {
 		this.rimborsoKm = rimborsoKm;
@@ -204,7 +267,7 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
-	 * @param totaleDovuto 
+	 * @param totaleDovuto
 	 */
 	public void setTotaleDovuto(Double totaleDovuto) {
 		this.totaleDovuto = totaleDovuto;
@@ -218,7 +281,7 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
-	 * @param pagata 
+	 * @param pagata
 	 */
 	public void setPagata(boolean pagata) {
 		this.pagata = pagata;
@@ -232,7 +295,7 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
-	 * @param rimborsoDaTerzi 
+	 * @param rimborsoDaTerzi
 	 */
 	public void setRimborsoDaTerzi(boolean rimborsoDaTerzi) {
 		this.rimborsoDaTerzi = rimborsoDaTerzi;
@@ -246,7 +309,7 @@ public class Rimborso implements Serializable {
 	}
 
 	/**
-	 * @param importoDaTerzi 
+	 * @param importoDaTerzi
 	 */
 	public void setImportoDaTerzi(double importoDaTerzi) {
 		this.importoDaTerzi = importoDaTerzi;
@@ -265,7 +328,6 @@ public class Rimborso implements Serializable {
 	public void setMappaFattura(Map<String, Fattura> mappaFattura) {
 		this.mappaFattura = mappaFattura;
 	}
-
 
 	/**
 	 * 

@@ -1,8 +1,8 @@
 package it.cnr.missioni.model;
 
-
 import static org.junit.Assert.assertEquals;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,68 +54,116 @@ public class RimborsoTest {
 		Set<ConstraintViolation<Rimborso>> constraintViolations = validator.validate(rimborso);
 		assertEquals(0, constraintViolations.size());
 	}
-	
+
 	@Test
-	public void massimaleEsteroTest(){
+	public void massimaleEsteroTest() {
 		Massimale m = new Massimale();
 		m.setAreaGeografica(AreaGeograficaEnum.A);
 		m.setLivello(LivelloUserEnum.I);
 		m.setValue(new Double(120));
-		
+
 		Rimborso r = new Rimborso();
-		r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,8,0));
-		Assert.assertTrue("TAM", r.getTotaleTAM() == 120);		
+		r.calcolaTotaleTAM(m, new DateTime(2016, 2, 1, 8, 0), new DateTime(2016, 2, 2, 8, 0));
+		Assert.assertTrue("TAM", r.getTotaleTAM() == 120);
 	}
-	
+
 	@Test
-	public void massimaleEsteroTest_2(){
+	public void massimaleEsteroTest_2() {
 		Massimale m = new Massimale();
 		m.setAreaGeografica(AreaGeograficaEnum.A);
 		m.setLivello(LivelloUserEnum.I);
 		m.setValue(new Double(120));
-		
+
 		Rimborso r = new Rimborso();
-		 r.calcolaTotaleTAM(m, new DateTime(2016,2,1,8,0), new DateTime(2016,2,2,20,1));
-		Assert.assertTrue("TAM", r.getTotaleTAM() == 180);	
-		
+		r.calcolaTotaleTAM(m, new DateTime(2016, 2, 1, 8, 0), new DateTime(2016, 2, 2, 20, 1));
+		Assert.assertTrue("TAM", r.getTotaleTAM() == 180);
+
+	}
+
+	@Test
+	public void findFatturaGiorno() {
+		Rimborso r = buildRimborso();
+		DateTime from = new DateTime(2015, 11, 13, 0, 0);
+		DateTime to = new DateTime(2015, 11, 13, 23, 59);
+		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "02", null).size() == 1);
+	}
+
+	@Test
+	public void findFatturaGiorno_2() {
+		Rimborso r = buildRimborso();
+		DateTime from = new DateTime(2015, 11, 12, 0, 0);
+		DateTime to = new DateTime(2015, 11, 12, 23, 59);
+		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "01", null).size() == 2);
+	}
+
+	@Test
+	public void checkMassimale() {
+		Rimborso r = buildRimborso();
+		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("03"))
+				.collect(Collectors.toList())).get(0);
+		r.getMappaFattura().values().stream().close();
+		Massimale massimale = new Massimale();
+		massimale.setValue(40.0);
+		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), false);
+		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 40);
 	}
 	
 	@Test
-	public void findFatturaGiorno(){
+	public void checkMassimale_2() {
 		Rimborso r = buildRimborso();
-		DateTime from = new DateTime(2015,11,13,0,0);
-		DateTime to = new DateTime(2015,11,13,23,59);
-		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "02") == 1);
+		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("02"))
+				.collect(Collectors.toList())).get(0);
+		r.getMappaFattura().values().stream().close();
+		Massimale massimale = new Massimale();
+		massimale.setValue(40.0);
+		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), false);
+		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 20);
 	}
 	
 	@Test
-	public void findFatturaGiorno_2(){
+	public void checkMassimaleEstera() {
 		Rimborso r = buildRimborso();
-		DateTime from = new DateTime(2015,11,12,0,0);
-		DateTime to = new DateTime(2015,11,12,23,59);
-		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "01") == 2);
+		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("03"))
+				.collect(Collectors.toList())).get(0);
+		r.getMappaFattura().values().stream().close();
+		Massimale massimale = new Massimale();
+		massimale.setValue(40.0);
+		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), true);
+		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 40);
 	}
 	
-	private Rimborso buildRimborso(){
+	@Test
+	public void checkMassimaleEstera_2() {
+		Rimborso r = buildRimborso();
+		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("03"))
+				.collect(Collectors.toList())).get(0);
+		r.getMappaFattura().values().stream().close();
+		Massimale massimale = new Massimale();
+		massimale.setValue(40.0);
+		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), true);
+		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 40);
+	}
+
+	private Rimborso buildRimborso() {
 		Rimborso rimborso = new Rimborso();
 		rimborso.setAnticipazionePagamento(new Double(300));
 		rimborso.setDataRimborso(new DateTime());
 		rimborso.setMandatoPagamento("01");
-		
-		 Fattura fattura = new Fattura();
+
+		Fattura fattura = new Fattura();
 		fattura.setNumeroFattura(new Long(138));
 		fattura.setData(new DateTime(2015, 11, 12, 13, 0, DateTimeZone.UTC));
-		fattura.setImporto(89.8);
+		fattura.setImporto(30.0);
 		fattura.setValuta("Euro");
 		fattura.setIdTipologiaSpesa("01");
 		fattura.setShortDescriptionTipologiaSpesa("Vitto");
 		fattura.setId("01");
 		rimborso.getMappaFattura().put("01", fattura);
-		
-		 fattura = new Fattura();
+
+		fattura = new Fattura();
 		fattura.setNumeroFattura(new Long(138));
 		fattura.setData(new DateTime(2015, 11, 12, 18, 0, DateTimeZone.UTC));
-		fattura.setImporto(89.8);
+		fattura.setImporto(25.0);
 		fattura.setValuta("Euro");
 		fattura.setIdTipologiaSpesa("01");
 		fattura.setShortDescriptionTipologiaSpesa("Vitto");
@@ -131,7 +179,7 @@ public class RimborsoTest {
 		fattura.setShortDescriptionTipologiaSpesa("Albergo");
 		fattura.setId("02");
 		rimborso.getMappaFattura().put("02", fattura);
-		
+
 		return rimborso;
 	}
 
