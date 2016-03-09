@@ -39,11 +39,11 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		this.elencoMissioniTable.aggiornaTableAdmin(missioniStore);
 	}
 
-	@Override
-	protected void addActionButtonRimborso() {
-		RimborsoWindowAdmin.open(selectedMissione, true, selectedMissione.getRimborso().isPagata() ? false : true,
-				true);
-	}
+//	@Override
+//	protected void addActionButtonRimborso() {
+//		RimborsoWindowAdmin.open(selectedMissione, true, selectedMissione.getRimborso().isPagata() ? false : true,
+//				true);
+//	}
 	
 	protected void openWindowAnticipoPagamenti(){
 		AnticipoPagamentiWindow.open(selectedMissione, true, true, false);

@@ -2,15 +2,12 @@ package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.wizards.WizardStep;
 
-import com.sun.jna.Native.ffi_callback;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -18,9 +15,9 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
@@ -28,15 +25,15 @@ import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
-import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
