@@ -1,11 +1,16 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.wizards.WizardStep;
 
+import com.sun.jna.Native.ffi_callback;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -27,11 +32,18 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.model.rimborso.Rimborso;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * @author Salvia Vito
@@ -43,7 +55,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 	private Missione missione;
 
 	public String getCaption() {
-		return "Step 4";
+		return "Step 3";
 	}
 
 	public RiepilogoDatiRimborsoStep(Missione missione) {
@@ -53,6 +65,60 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 	public Component getContent() {
 		return buildPanel();
+	}
+
+	private void checkMassimale(Rimborso rimborso) {
+
+		Map<String, Fattura> mappa = new HashMap<String, Fattura>();
+
+		rimborso.getMappaFattura().values().forEach(f -> {
+			String id = f.getId();
+			if (mappa.containsKey(id)) {
+
+				try {
+					TipologiaSpesaStore tipologiaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder
+							.getTipologiaSpesaSearchBuilder().withId(f.getIdTipologiaSpesa()));
+					TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
+					if (tipologiaSpesa.isCheckMassimale()) {
+						String areaGeografica;
+						if (missione.isMissioneEstera()) {
+							Nazione nazione = ClientConnector.getNazione(
+									NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+									.getNazione().get(0);
+							areaGeografica = nazione.getAreaGeografica().name();
+						} else {
+							areaGeografica = AreaGeograficaEnum.ITALIA.name();
+						}
+						User user = ClientConnector
+								.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser()))
+								.getUsers().get(0);
+						String livello = user.getDatiCNR().getLivello().name();
+
+						if (missione.getIdUserSeguito() != null) {
+							User userSeguito = ClientConnector.getUser(
+									UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUserSeguito()))
+									.getUsers().get(0);
+							if (userSeguito.getDatiCNR().getLivello().getStato() < user.getDatiCNR().getLivello()
+									.getStato())
+								livello = userSeguito.getDatiCNR().getLivello().name();
+						}
+
+						MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
+								.getMassimaleSearchBuilder().withLivello(livello).withAreaGeografica(areaGeografica)
+								.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
+						rimborso.checkMassimale(f, massimaleStore.getMassimale().get(0), mappa,
+								missione.isMissioneEstera());
+
+					}
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+
+			} else
+				mappa.put(f.getId(), f);
+		});
+
 	}
 
 	private Component buildPanel() {
@@ -101,10 +167,8 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 				days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
 						missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()).getDays();
 
-				details.addComponent(buildLabel("GG all'estero: ",
-						Integer.toString(days)));
-				details.addComponent(buildLabel("Tot. lordo TAM: ",
-						missione.getRimborso().getTotaleTAM().toString()));
+				details.addComponent(buildLabel("GG all'estero: ", Integer.toString(days)));
+				details.addComponent(buildLabel("Tot. lordo TAM: ", missione.getRimborso().getTotaleTAM().toString()));
 				details.addComponent(buildLabel("Attraversamento Frontiera Andata: ",
 						missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
 				details.addComponent(buildLabel("Attraversamento Frontiera Ritorno: ",
@@ -118,7 +182,8 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
 		elencoFattureTable.setStyleName("margin-table_fatture");
-		elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
+		elencoFattureTable
+				.aggiornaTableRiepilogo(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
 		root.addComponent(elencoFattureTable);
 
 		return root;

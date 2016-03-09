@@ -23,10 +23,10 @@ public class FatturaRimborsoStep implements WizardStep {
 	public FatturaRimborsoStep(Missione missione) {
 		this.missione = missione;
 		this.fatturaRimborsoForm = new FatturaRimborsoForm(missione,false,true,false);
-
 	}
 
 	public Component getContent() {
+		this.fatturaRimborsoForm .setRangeDate();
 		return fatturaRimborsoForm;
 	}
 

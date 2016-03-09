@@ -30,7 +30,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
@@ -46,13 +45,14 @@ import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * @author Salvia Vito
  */
-public class FatturaRimborsoForm extends VerticalLayout{
+public class FatturaRimborsoForm extends VerticalLayout {
 
 	/**
 	 * 
@@ -61,17 +61,18 @@ public class FatturaRimborsoForm extends VerticalLayout{
 
 	private ElencoFattureTable elencoFattureTable;
 
-
 	private List<TipologiaSpesa> listaTipologiaSpesaItalia = new ArrayList<TipologiaSpesa>();
 	private List<TipologiaSpesa> listaTipologiaSpesaEstera = new ArrayList<TipologiaSpesa>();
 	private FormFattura formFattura;
+	private Missione missione;
 	private Button reset;
 	private Button ok;
 
-	public FatturaRimborsoForm(Missione missione, boolean isAdmin,boolean enabled,boolean modifica) {
+	public FatturaRimborsoForm(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
 		this.formFattura = new FormFattura(missione, isAdmin, enabled, modifica);
+		this.missione = missione;
 		addComponent(formFattura);
-		if((isAdmin || !modifica) && !missione.getRimborso().isPagata()){
+		if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
 			HorizontalLayout l = buildFatturaButton();
 			addComponent(l);
 			setComponentAlignment(l, Alignment.MIDDLE_RIGHT);
@@ -80,7 +81,14 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		addComponent(elencoFattureTable);
 
 	}
-	
+
+	public void setRangeDate() {
+		// Ogni fattura deve essere compresa tra le date di inizio e fine
+		// missione
+		formFattura.getDataField().setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+		formFattura.getDataField().setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
+	}
+
 	private HorizontalLayout buildFatturaButton() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
@@ -128,6 +136,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 				try {
 
 					formFattura.getFieldGroup().commit();
+
 				} catch (InvalidValueException | CommitException e) {
 
 					check = false;
@@ -161,9 +170,14 @@ public class FatturaRimborsoForm extends VerticalLayout{
 					}
 					// aggiorno la tabella
 					formFattura.aggiornaFatturaTab(new Fattura());
-					elencoFattureTable
-							.aggiornaTable(new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
+					elencoFattureTable.aggiornaTable(
+							new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
 					elencoFattureTable.aggiornaTotale(formFattura.getMissione().getRimborso().getTotale());
+					
+					
+					
+					
+					
 				} else {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
 							Type.ERROR_MESSAGE);
@@ -172,17 +186,17 @@ public class FatturaRimborsoForm extends VerticalLayout{
 			}
 		});
 		ok.focus();
-		layout.addComponents(ok,reset);
-		layout.setComponentAlignment(ok,Alignment.BOTTOM_RIGHT);
-		layout.setComponentAlignment(reset,Alignment.BOTTOM_RIGHT);
+		layout.addComponents(ok, reset);
+		layout.setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
+		layout.setComponentAlignment(reset, Alignment.BOTTOM_RIGHT);
 
 		return layout;
 	}
 
+	
 
-
-
-	class FormFattura extends IForm.FormAbstract<Fattura>{
+	
+	class FormFattura extends IForm.FormAbstract<Fattura> {
 
 		/**
 		 * 
@@ -196,17 +210,16 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		private TextField valutaField;
 		private TextField altroField;
 
-
-		
-		public FormFattura(Missione missione, boolean isAdmin,boolean enabled,boolean modifica) {
-			super(new Fattura(),isAdmin,enabled,modifica);
+		public FormFattura(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
+			super(new Fattura(), isAdmin, enabled, modifica);
 			this.bean = new Fattura();
 			this.missione = missione;
 			setFieldGroup(new BeanFieldGroup<Fattura>(Fattura.class));
 			getFieldGroup().setEnabled(enabled);
 			buildFieldGroup();
-			buildTab();		}
-		
+			buildTab();
+		}
+
 		/**
 		 * @return
 		 * @throws CommitException
@@ -218,13 +231,75 @@ public class FatturaRimborsoForm extends VerticalLayout{
 			return null;
 		}
 
-
-
 		/**
 		 * 
 		 */
 		@Override
 		public void addValidator() {
+
+			dataField.addValidator(new Validator() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1892203509953963434L;
+
+				@Override
+				public void validate(Object value) throws InvalidValueException {
+
+					if (dataField.getValue() == null)
+						throw new InvalidValueException(Utility.getMessage("field_required"));
+
+				}
+			});
+
+			tipologiaSpesaField.addValidator(new Validator() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -5034812581780310007L;
+
+				@Override
+				public void validate(Object value) throws InvalidValueException {
+					TipologiaSpesaStore t = null;
+					int n = 0;
+					try {
+						t = ClientConnector
+								.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
+										.withId(formFattura.getTipologiaSpesaField().getValue().toString()));
+						if (t.getTipologiaSpesa().get(0).isCheckMassimale() && formFattura.getDataField() != null ) {
+
+							DateTime dateFattura = new DateTime(formFattura.getDataField().getValue());
+							DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
+									dateFattura.getDayOfMonth(), 0, 0);
+							DateTime datFrom = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
+									dateFattura.getDayOfMonth(), 23, 59);
+
+							n = missione.getRimborso().getNumberOfFatturaInDay(dateTo, datFrom,
+									formFattura.getTipologiaSpesaField().getValue().toString()).size();
+
+						}
+
+					} catch (Exception e) {
+						Utility.getNotification(Utility.getMessage("error_message"),
+								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
+					}
+
+					if (t.getTipologiaSpesa().get(0).getOccorrenzeGiornaliere() <= n)
+						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
+
+				}
+
+			});
+
+		}
+
+		/**
+		 * 
+		 */
+		@Override
+		public void addListener() {
 
 			dataField.addBlurListener(new BlurListener() {
 
@@ -244,38 +319,6 @@ public class FatturaRimborsoForm extends VerticalLayout{
 				}
 			});
 
-			dataField.addValidator(new Validator() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1892203509953963434L;
-
-				@Override
-				public void validate(Object value) throws InvalidValueException {
-
-					if (dataField.getValue() == null)
-						throw new InvalidValueException(Utility.getMessage("field_required"));
-
-				}
-			});
-
-//			importoField.addBlurListener(new BlurListener() {
-//
-//				/**
-//				 * 
-//				 */
-//				private static final long serialVersionUID = 496541445715331048L;
-//
-//				@Override
-//				public void blur(BlurEvent event) {
-//
-//					if (tipologiaSpesaField.getValue() != null)
-//						checkMassimale(tipologiaSpesaField.getValue().toString());
-//
-//				}
-//			});
-
 			tipologiaSpesaField.addBlurListener(new BlurListener() {
 
 				/**
@@ -293,57 +336,51 @@ public class FatturaRimborsoForm extends VerticalLayout{
 				}
 			});
 
-		}
+			if (missione.isMissioneEstera()) {
 
-		/**
-		 * 
-		 */
-		@Override
-		public void addListener() {
+				dataField.addBlurListener(new BlurListener() {
 
-			dataField.addBlurListener(new BlurListener() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 3158019137599500668L;
 
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 3158019137599500668L;
+					@Override
+					public void blur(BlurEvent event) {
 
-				@Override
-				public void blur(BlurEvent event) {
+						if (dataField.getValue() != null) {
 
-					if (dataField.getValue() != null) {
+							DateTime d = new DateTime((dataField.getValue().getTime()));
 
-						DateTime d = new DateTime((dataField.getValue().getTime()));
+							if (d.compareTo(missione.getDatiPeriodoMissione().getInizioMissione().toLocalDateTime()
+									.toDateTime()) >= 0
+									&& d.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()
+											.toLocalDateTime().toDateTime()) < 0)
+								buildTipologiaCombo(listaTipologiaSpesaItalia);
+							else if (d
+									.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()
+											.toLocalDateTime().toDateTime()) > 0
+									&& d.compareTo(missione.getDatiPeriodoMissione().getFineMissione().toLocalDateTime()
+											.toDateTime()) <= 0)
+								buildTipologiaCombo(listaTipologiaSpesaItalia);
+							else if (d
+									.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()
+											.toLocalDateTime().toDateTime()) >= 0
+									&& d.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()
+											.toLocalDateTime().toDateTime()) <= 0)
+								buildTipologiaCombo(listaTipologiaSpesaEstera);
+						}
 
-						if (d.compareTo(
-								missione.getDatiPeriodoMissione().getInizioMissione().toLocalDateTime().toDateTime()) >= 0
-								&& d.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()
-										.toLocalDateTime().toDateTime()) < 0)
-							buildTipologiaCombo(listaTipologiaSpesaItalia);
-						else if (d
-								.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()
-										.toLocalDateTime().toDateTime()) > 0
-								&& d.compareTo(missione.getDatiPeriodoMissione().getFineMissione().toLocalDateTime()
-										.toDateTime()) <= 0)
-							buildTipologiaCombo(listaTipologiaSpesaItalia);
-						else if (d
-								.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()
-										.toLocalDateTime().toDateTime()) >= 0
-								&& d.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()
-										.toLocalDateTime().toDateTime()) <= 0)
-							buildTipologiaCombo(listaTipologiaSpesaEstera);
 					}
 
-				}
-
-			});
+				});
+			}
 
 		}
-		
+
 		@Override
 		public void buildTab() {
-			
-			
+
 			bean = new Fattura();
 
 			numeroFatturaField = (TextField) getFieldGroup().buildAndBind("Numero Fattura", "numeroFattura");
@@ -352,21 +389,18 @@ public class FatturaRimborsoForm extends VerticalLayout{
 			tipologiaSpesaField.setImmediate(true);
 
 			getFieldGroup().bind(tipologiaSpesaField, "idTipologiaSpesa");
+			if (!missione.isMissioneEstera())
+				buildTipologiaCombo(listaTipologiaSpesaItalia);
 
 			importoField = (TextField) getFieldGroup().buildAndBind("Importo", "importo");
 			valutaField = (TextField) getFieldGroup().buildAndBind("Valuta", "valuta");
 			altroField = (TextField) getFieldGroup().buildAndBind("Altro", "altro");
 
 			dataField = new DateField("Data");
-			dataField.setRangeStart(new DateTime().toDate());
 			dataField.setDateOutOfRangeMessage("Data non possibile");
 			dataField.setResolution(Resolution.MINUTE);
 			dataField.setDateFormat("dd/MM/yyyy HH:mm");
 			dataField.setValidationVisible(false);
-			// Ogni fattura deve essere compresa tra le date di inizio e fine
-			// missione
-			dataField.setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
-			dataField.setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
 
 			getTipologiaSpesa(TipoSpesaEnum.ITALIA.name(), listaTipologiaSpesaItalia);
 
@@ -382,10 +416,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 				addListener();
 			}
 
-			addValidator();
-			
-
-			elencoFattureTable = new ElencoFattureTable(getFieldGroup(),dataField, missione);
+			elencoFattureTable = new ElencoFattureTable(getFieldGroup(), dataField, missione);
 			elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
 			elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
 
@@ -401,58 +432,54 @@ public class FatturaRimborsoForm extends VerticalLayout{
 				addComponent(altroField);
 				addComponent(valutaField);
 
-
 			}
 
 			addComponent(elencoFattureTable);
 			setComponentAlignment(elencoFattureTable, Alignment.MIDDLE_LEFT);
 
+			addValidator();
+			addListener();
+
 		}
-		
-		private void checkMassimale(String id,String livello) {
+
+		private void checkMassimale(String id, String livello) {
 
 			try {
 				TipologiaSpesaStore tipologiaStore = ClientConnector
 						.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId(id));
 
+				TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
+				if (tipologiaSpesa.isCheckMassimale()) {
 
-					TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
-					if (tipologiaSpesa.isCheckMassimale()) {
-
-						String areaGeografica;
-						if (missione.isMissioneEstera()) {
-							Nazione nazione = ClientConnector
-									.getNazione(
-											NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-									.getNazione().get(0);
-							areaGeografica = nazione.getAreaGeografica().name();
-						} else {
-							areaGeografica = AreaGeograficaEnum.ITALIA.name();
-						}
-						MassimaleStore massimaleStore = ClientConnector
-								.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-										.withLivello(livello)
-										.withAreaGeografica(areaGeografica)
-										.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
-
-						if (massimaleStore.getTotale() > 0) {
-							Massimale massimale = massimaleStore.getMassimale().get(0);
-							
-							
-							
-							NumberFormat format =  NumberFormat.getInstance(Locale.ITALY);
-							format.setGroupingUsed(false);
-							format.setMaximumFractionDigits(2);
-							format.setMinimumFractionDigits(2);
-							
-							
-							double number = format.parse(importoField.getValue()).doubleValue();
-
-							if (number > massimale.getValue())
-								importoField.setValue(format.format(massimale.getValue()));
-						}
-
+					String areaGeografica;
+					if (missione.isMissioneEstera()) {
+						Nazione nazione = ClientConnector
+								.getNazione(
+										NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+								.getNazione().get(0);
+						areaGeografica = nazione.getAreaGeografica().name();
+					} else {
+						areaGeografica = AreaGeograficaEnum.ITALIA.name();
 					}
+					MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
+							.getMassimaleSearchBuilder().withLivello(livello).withAreaGeografica(areaGeografica)
+							.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
+
+					if (massimaleStore.getTotale() > 0) {
+						Massimale massimale = massimaleStore.getMassimale().get(0);
+
+						NumberFormat format = NumberFormat.getInstance(Locale.ITALY);
+						format.setGroupingUsed(false);
+						format.setMaximumFractionDigits(2);
+						format.setMinimumFractionDigits(2);
+
+						double number = format.parse(importoField.getValue()).doubleValue();
+
+						if (number > massimale.getValue())
+							importoField.setValue(format.format(massimale.getValue()));
+					}
+
+				}
 
 			} catch (Exception e) {
 				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -460,8 +487,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 			}
 
 		}
-		
-		
+
 		/**
 		 * 
 		 * Carica le tipologia spesa in base ad ITALIA o ESTERA
@@ -498,7 +524,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 				tipologiaSpesaField.setItemCaption(s.getId(), s.getValue());
 			});
 		}
-		
+
 		public void aggiornaFatturaTab(Fattura fattura) {
 			formFattura.getDataField().setValue(null);
 			formFattura.getDataField().setValidationVisible(false);
@@ -513,7 +539,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		}
 
 		/**
-		 * @param missione 
+		 * @param missione
 		 */
 		public void setMissione(Missione missione) {
 			this.missione = missione;
@@ -527,7 +553,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		}
 
 		/**
-		 * @param numeroFatturaField 
+		 * @param numeroFatturaField
 		 */
 		public void setNumeroFatturaField(TextField numeroFatturaField) {
 			this.numeroFatturaField = numeroFatturaField;
@@ -541,7 +567,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		}
 
 		/**
-		 * @param tipologiaSpesaField 
+		 * @param tipologiaSpesaField
 		 */
 		public void setTipologiaSpesaField(ComboBox tipologiaSpesaField) {
 			this.tipologiaSpesaField = tipologiaSpesaField;
@@ -555,7 +581,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		}
 
 		/**
-		 * @param importoField 
+		 * @param importoField
 		 */
 		public void setImportoField(TextField importoField) {
 			this.importoField = importoField;
@@ -569,7 +595,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		}
 
 		/**
-		 * @param dataField 
+		 * @param dataField
 		 */
 		public void setDataField(DateField dataField) {
 			this.dataField = dataField;
@@ -583,7 +609,7 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		}
 
 		/**
-		 * @param valutaField 
+		 * @param valutaField
 		 */
 		public void setValutaField(TextField valutaField) {
 			this.valutaField = valutaField;
@@ -597,26 +623,22 @@ public class FatturaRimborsoForm extends VerticalLayout{
 		}
 
 		/**
-		 * @param altroField 
+		 * @param altroField
 		 */
 		public void setAltroField(TextField altroField) {
 			this.altroField = altroField;
 		}
-		
-		
+
 	}
-	
 
-
-//	/**
-//	 * @return
-//	 * @throws CommitException
-//	 */
-//	@Override
-//	public Fattura validate() throws CommitException,InvalidValueException {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	// /**
+	// * @return
+	// * @throws CommitException
+	// */
+	// @Override
+	// public Fattura validate() throws CommitException,InvalidValueException {
+	// // TODO Auto-generated method stub
+	// return null;
+	// }
 
 }
-
