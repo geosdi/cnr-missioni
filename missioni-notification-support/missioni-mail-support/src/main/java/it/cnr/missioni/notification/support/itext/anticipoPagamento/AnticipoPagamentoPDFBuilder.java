@@ -131,7 +131,7 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		if(missione.getDatiAnticipoPagamenti().isSpeseAlberghiere())
 			builder.append("\nSpese alberghiere/alloggio preventivate (Trattamento di missione con rimborso documentato);");
 		if(missione.getDatiAnticipoPagamenti().isSpeseViaggioDocumentato())
-			builder.append("\npese di viaggio (Trattamento di missione con rimborso documentato);");
+			builder.append("\nSpese di viaggio (Trattamento di missione con rimborso documentato);");
 		if(missione.getDatiAnticipoPagamenti().isSpeseViaggioTam())
 			builder.append("\nSpese di viaggio (Trattamento alternativo di missione);");
 		if(missione.getDatiAnticipoPagamenti().isProspetto())
