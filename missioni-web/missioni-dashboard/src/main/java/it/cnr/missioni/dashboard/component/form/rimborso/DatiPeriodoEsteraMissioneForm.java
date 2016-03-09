@@ -1,10 +1,9 @@
-package it.cnr.missioni.dashboard.component.form.missione;
+package it.cnr.missioni.dashboard.component.form.rimborso;
 
 import java.util.Date;
 
 import org.joda.time.DateTime;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -13,16 +12,12 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.form.IForm;
-import it.cnr.missioni.dashboard.event.DashboardEvent.AggiornaDatiMissioneEsteraEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
 /**
  * @author Salvia Vito
@@ -33,10 +28,8 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 	 * 
 	 */
 	private static final long serialVersionUID = 4295277244622616103L;
-	private ComboBox trattamentoMissioneEsteraField;
 	private DateField attraversamentoFrontieraAndataField;
 	private DateField attraversamentoFrontieraRitornoField;
-	private boolean missioneEstera;
 	private Missione missione;
 
 	public DatiPeriodoEsteraMissioneForm(DatiMissioneEstera datiMissioneEstera, boolean isAdmin, boolean enabled,
@@ -44,7 +37,6 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 		super(datiMissioneEstera, isAdmin, enabled, modifica);
 		this.modifica = modifica;
 		this.setMissione(missione);
-		this.setMissioneEstera(missione.isMissioneEstera());
 		setFieldGroup(new BeanFieldGroup<DatiMissioneEstera>(DatiMissioneEstera.class));
 
 		buildFieldGroup();
@@ -54,8 +46,6 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 
 	public void buildTab() {
 
-		trattamentoMissioneEsteraField = (ComboBox) getFieldGroup().buildAndBind("Trattamento Rimborso",
-				"trattamentoMissioneEsteraEnum", ComboBox.class);
 
 		attraversamentoFrontieraAndataField = new DateField("Attraversamento Frontiera andata");
 		attraversamentoFrontieraAndataField.setDateOutOfRangeMessage("Data non possibile");
@@ -69,24 +59,10 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 		attraversamentoFrontieraRitornoField.setDateFormat("dd/MM/yyyy HH:mm");
 		attraversamentoFrontieraRitornoField.setValidationVisible(false);
 
-		if (modifica && getMissione().isMissioneEstera()) {
+		if (modifica) {
 			attraversamentoFrontieraAndataField.setValue(bean.getAttraversamentoFrontieraAndata().toDate());
 			attraversamentoFrontieraRitornoField.setValue(bean.getAttraversamentoFrontieraRitorno().toDate());
-
 		}
-
-
-		if (!isMissioneEstera()) {
-			// trattamentoMissioneEsteraField.setReadOnly(true);
-			attraversamentoFrontieraAndataField.setReadOnly(true);
-			attraversamentoFrontieraRitornoField.setReadOnly(true);
-		} else {
-			// trattamentoMissioneEsteraField.setReadOnly(false);
-			attraversamentoFrontieraAndataField.setReadOnly(false);
-			attraversamentoFrontieraRitornoField.setReadOnly(false);
-		}
-
-		addComponent(trattamentoMissioneEsteraField);
 
 		addComponent(attraversamentoFrontieraAndataField);
 		addComponent(attraversamentoFrontieraRitornoField);
@@ -116,17 +92,13 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 
 		attraversamentoFrontieraAndataField.setValidationVisible(true);
 		attraversamentoFrontieraRitornoField.setValidationVisible(true);
-		trattamentoMissioneEsteraField.setValidationVisible(true);
 
 		attraversamentoFrontieraAndataField.validate();
 		attraversamentoFrontieraRitornoField.validate();
-		trattamentoMissioneEsteraField.validate();
 
-		if (isMissioneEstera()) {
+		if (missione.isMissioneEstera()) {
 			BeanItem<DatiMissioneEstera> beanItem = (BeanItem<DatiMissioneEstera>) getFieldGroup().getItemDataSource();
 			datiMissioneEstera = beanItem.getBean();
-			datiMissioneEstera.setTrattamentoMissioneEsteraEnum(TrattamentoMissioneEsteraEnum
-					.getTrattamentoMissioneEstera(trattamentoMissioneEsteraField.getValue().toString()));
 			datiMissioneEstera
 					.setAttraversamentoFrontieraAndata(new DateTime(attraversamentoFrontieraAndataField.getValue()));
 			datiMissioneEstera
@@ -142,23 +114,7 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 	 */
 	@Override
 	public void addValidator() {
-		trattamentoMissioneEsteraField.addValidator(new Validator() {
 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 45054264794648534L;
-
-			@Override
-			public void validate(Object value) throws InvalidValueException {
-				TrattamentoMissioneEsteraEnum v = (TrattamentoMissioneEsteraEnum) value;
-				if ((v == null) && missione.isMissioneEstera()) {
-					throw new InvalidValueException(Utility.getMessage("checkbox_missione_error"));
-				}
-
-			}
-
-		});
 
 		attraversamentoFrontieraAndataField.addValidator(new Validator() {
 
@@ -242,23 +198,7 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 			}
 		});
 
-		trattamentoMissioneEsteraField.addBlurListener(new BlurListener() {
 
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 7537242999340446064L;
-
-			@Override
-			public void blur(BlurEvent event) {
-				try {
-					trattamentoMissioneEsteraField.validate();
-				} catch (Exception e) {
-					trattamentoMissioneEsteraField.setValidationVisible(true);
-				}
-
-			}
-		});
 	}
 
 	/**
@@ -289,19 +229,19 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 		this.attraversamentoFrontieraRitornoField = attraversamentoFrontieraRitornoField;
 	}
 
-	/**
-	 * @return the missioneEstera
-	 */
-	public boolean isMissioneEstera() {
-		return missioneEstera;
-	}
-
-	/**
-	 * @param missioneEstera
-	 */
-	public void setMissioneEstera(boolean missioneEstera) {
-		this.missioneEstera = missioneEstera;
-	}
+//	/**
+//	 * @return the missioneEstera
+//	 */
+//	public boolean isMissioneEstera() {
+//		return missioneEstera;
+//	}
+//
+//	/**
+//	 * @param missioneEstera
+//	 */
+//	public void setMissioneEstera(boolean missioneEstera) {
+//		this.missioneEstera = missioneEstera;
+//	}
 
 	/**
 	 * @return the missione
@@ -317,16 +257,13 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 		this.missione = missione;
 	}
 	
-	@Subscribe
-	public void aggiornaDati(AggiornaDatiMissioneEsteraEvent event){
-		if(!event.isStatus()){
-			missione.setDatiMissioneEstera(null);
-			attraversamentoFrontieraRitornoField.setValidationVisible(false);
-			attraversamentoFrontieraAndataField.setValidationVisible(false);
-			trattamentoMissioneEsteraField.setValidationVisible(false);
-
-
-		}
-	}
+//	@Subscribe
+//	public void aggiornaDati(AggiornaDatiMissioneEsteraEvent event){
+//		if(!event.isStatus()){
+//			missione.setDatiMissioneEstera(null);
+//			attraversamentoFrontieraRitornoField.setValidationVisible(false);
+//			attraversamentoFrontieraAndataField.setValidationVisible(false);
+//		}
+//	}
 
 }
