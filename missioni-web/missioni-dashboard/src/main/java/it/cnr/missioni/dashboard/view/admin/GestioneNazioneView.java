@@ -210,6 +210,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 			elencoNazioneTable.aggiornaTable(this.nazioneStore);
 			buildPagination(nazioneStore.getTotale());
 			addListenerPagination();
+			disableButtons();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

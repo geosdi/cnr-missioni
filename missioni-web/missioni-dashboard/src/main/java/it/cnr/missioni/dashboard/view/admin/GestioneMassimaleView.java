@@ -211,6 +211,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 			elencoMassimaleTable.aggiornaTable(this.massimaleStore);
 			buildPagination(massimaleStore.getTotale());
 			addListenerPagination();
+			disableButtons();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

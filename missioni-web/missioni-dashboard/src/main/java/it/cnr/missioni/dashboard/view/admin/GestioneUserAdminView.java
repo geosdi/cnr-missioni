@@ -216,6 +216,8 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 			elencoUserTable.aggiornaTable(this.userStore);
 			buildPagination(userStore.getTotale());
 			addListenerPagination();		
+			disableButtons();
+
 			} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

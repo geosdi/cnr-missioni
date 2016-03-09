@@ -211,6 +211,8 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 			elencoVeicoliCNRTable.aggiornaTable(this.veicoloCNRStore);
 			buildPagination(veicoloCNRStore.getTotale());
 			addListenerPagination();	
+			disableButtons();
+
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

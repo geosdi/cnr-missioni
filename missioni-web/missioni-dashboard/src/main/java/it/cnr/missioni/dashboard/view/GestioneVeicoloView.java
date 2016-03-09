@@ -208,7 +208,7 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 		try {
 			this.elencoVeicoliTable
 					.aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
-			
+			disableButtons();
 //			buildPagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
 //			addListenerPagination();
 		} catch (Exception e) {
