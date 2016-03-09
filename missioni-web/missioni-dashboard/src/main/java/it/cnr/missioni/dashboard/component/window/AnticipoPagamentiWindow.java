@@ -1,5 +1,7 @@
 package it.cnr.missioni.dashboard.component.window;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
@@ -13,6 +15,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.AnticipoPagamentoAction;
+import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.component.form.anticipoPagamenti.DatiAnticipoPagamentoForm;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -46,7 +49,7 @@ public class AnticipoPagamentiWindow extends IWindow.AbstractWindow {
 
 	private void buildTab() {
 		this.datiAnticipoPagamentoForm = new DatiAnticipoPagamentoForm(anticipoPagamenti,missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum(), isAdmin, enabled, modifica);
-		detailsWrapper.addComponent(buildTab("Anagrafica", FontAwesome.USER, this.datiAnticipoPagamentoForm));
+		detailsWrapper.addComponent(buildTab("Anticipo di Pagamento", FontAwesome.EURO, this.datiAnticipoPagamentoForm));
 
 	}
 
@@ -64,10 +67,33 @@ public class AnticipoPagamentiWindow extends IWindow.AbstractWindow {
 
 				try {
 					DatiAnticipoPagamenti datiAnticipoPagamenti = datiAnticipoPagamentoForm.validate();
+					datiAnticipoPagamenti.setInserted(true);
 					missione.setDatiAnticipoPagamenti(datiAnticipoPagamenti);
-					DashboardEventBus.post(new AnticipoPagamentoAction(missione));
+					
+					if(!isAdmin){
+					
+					ConfirmDialog.show(UI.getCurrent(), "Conferma",
+							"L'anticipo di pagamento inserito non potrà essere più modificato. Verrà inviata una mail all'amministratore con i dati dell'anticipo di pagamento inserito.",
+							"Ok", "No", new ConfirmDialog.Listener() {
 
-					close();
+								/**
+								 * 
+								 */
+								private static final long serialVersionUID = -7447338746066450343L;
+
+								public void onClose(ConfirmDialog dialog) {
+									if (dialog.isConfirmed()) {
+										conclude();
+									} else {
+
+									}
+								}
+							});
+					
+					}else{
+						conclude();
+					}
+
 
 				} catch (InvalidValueException | CommitException e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
@@ -80,6 +106,11 @@ public class AnticipoPagamentiWindow extends IWindow.AbstractWindow {
 		footer.addComponent(ok);
 		footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
 		return footer;
+	}
+	
+	private void conclude(){
+		DashboardEventBus.post(new AnticipoPagamentoAction(missione));
+		DashboardEventBus.post(new CloseOpenWindowsEvent());
 	}
 
 	public static void open(final Missione missione,final boolean isAdmin,final boolean enabled,final boolean modifica) {
