@@ -9,7 +9,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
@@ -60,10 +59,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		try {
 			rimborsoKmStore = ClientConnector.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
 
-			if (rimborsoKmStore.getTotale() == 0)
-				buttonNew.setVisible(true);
-			else
-				buttonNew.setVisible(false);
+
 			this.elencoRimborsoKmTable.aggiornaTable(rimborsoKmStore);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -133,6 +129,12 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		});
 
 		layout.addComponents(buttonNew,buttonModifica);
+		
+		
+		if (rimborsoKmStore.getTotale() == 0)
+			buttonNew.setVisible(true);
+		else
+			buttonNew.setVisible(false);
 
 		disableButtons();
 
