@@ -49,41 +49,18 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 		// calcolo del TAM
 		try {
 
-//			int days = 0;
-//			if (missione.isMissioneEstera()) {
-//
-//				Nazione nazione = ClientConnector
-//						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-//						.getNazione().get(0);
-//				MassimaleStore massimaleStore = ClientConnector
-//						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-//								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
-//								.withAreaGeografica(nazione.getAreaGeografica().name())
-//								.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
-//
-//				if (massimaleStore.getTotale() > 0) {
-//					rimborso.calcolaTotaleTAM(massimaleStore.getMassimale().get(0),
-//							missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
-//							missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
-//
-//				}
-//				days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
-//						missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()).getDays();
-//
-//			}
+
 
 			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione,0);
-//			this.anticipazioniPagamentoStep = new AnticipazioniPagamentoStep(missione);
 			this.datiMissioneEsteraStep = new DatiMissioneEsteraStep(missione);
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione);
 			this.riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione);
 
 			getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
-
+			if(missione.isMissioneEstera())
+				getWizard().addStep(this.datiMissioneEsteraStep, "datiMissioneEstera");
 			getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
-//			getWizard().addStep(this.anticipazioniPagamentoStep, "anticipazioniPagamento");
-			getWizard().addStep(this.datiMissioneEsteraStep, "datiMissioneEstera");
 			getWizard().addStep(this.riepilogoDatiRimborsoStep, "riepilogoDatiRimborso");
 
 		} catch (Exception e) {
