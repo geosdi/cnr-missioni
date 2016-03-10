@@ -15,7 +15,7 @@ import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
  */
 @XmlRootElement(name = "tipologiaSpesa")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","tipo","checkMassimale","occorrenzeGiornaliere","tipoTrattamento" })
+@XmlType(propOrder = { "id", "value","tipo","occorrenzeGiornaliere","tipoTrattamento","voceSpesa" })
 public class TipologiaSpesa implements Document {
 
 	/**
@@ -30,9 +30,14 @@ public class TipologiaSpesa implements Document {
 	private String value;
 	@NotNull
 	private TipoSpesaEnum tipo;
-	private boolean checkMassimale;
 	@NotNull
 	private TrattamentoMissioneEsteraEnum tipoTrattamento;
+	@NotNull
+	private VoceSpesaEnum voceSpesa;
+
+	public enum VoceSpesaEnum{
+		PASTO,TRASPORTO,ALLOGGIO,RIMBORSOKM,ALTRO;
+	}
 	
 	public enum TipoSpesaEnum{
 		ESTERA,ITALIA;
@@ -91,19 +96,7 @@ public class TipologiaSpesa implements Document {
 		this.tipo = tipo;
 	}
 
-	/**
-	 * @return the checkMassimale
-	 */
-	public boolean isCheckMassimale() {
-		return checkMassimale;
-	}
 
-	/**
-	 * @param checkMassimale 
-	 */
-	public void setCheckMassimale(boolean checkMassimale) {
-		this.checkMassimale = checkMassimale;
-	}
 
 
 
@@ -122,13 +115,29 @@ public class TipologiaSpesa implements Document {
 	}
 
 	/**
+	 * @return the voceSpesa
+	 */
+	public VoceSpesaEnum getVoceSpesa() {
+		return voceSpesa;
+	}
+
+	/**
+	 * @param voceSpesa 
+	 */
+	public void setVoceSpesa(VoceSpesaEnum voceSpesa) {
+		this.voceSpesa = voceSpesa;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + ", checkMassimale=" + checkMassimale
-				 + ", tipoTrattamento=" + tipoTrattamento + "]";
+		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + ", tipoTrattamento="
+				+ tipoTrattamento + ", voceSpesa=" + voceSpesa + "]";
 	}
+
+
 
 
 
