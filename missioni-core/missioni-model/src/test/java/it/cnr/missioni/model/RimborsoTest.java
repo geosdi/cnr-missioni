@@ -2,10 +2,7 @@ package it.cnr.missioni.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -95,56 +92,7 @@ public class RimborsoTest {
 		DateTime to = new DateTime(2015, 11, 12, 23, 59);
 		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "01", null).size() == 2);
 	}
-
-	@Test
-	public void checkMassimale() {
-		Rimborso r = buildRimborso();
-		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("03"))
-				.collect(Collectors.toList())).get(0);
-		r.getMappaFattura().values().stream().close();
-		Massimale massimale = new Massimale();
-		massimale.setValue(40.0);
-		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), false);
-		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 40);
-	}
-	
-	@Test
-	public void checkMassimale_2() {
-		Rimborso r = buildRimborso();
-		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("02"))
-				.collect(Collectors.toList())).get(0);
-		r.getMappaFattura().values().stream().close();
-		Massimale massimale = new Massimale();
-		massimale.setValue(40.0);
-		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), false);
-		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 20);
-	}
-	
-	@Test
-	public void checkMassimaleEstera() {
-		Rimborso r = buildRimborso();
-		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("03"))
-				.collect(Collectors.toList())).get(0);
-		r.getMappaFattura().values().stream().close();
-		Massimale massimale = new Massimale();
-		massimale.setValue(40.0);
-		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), true);
-		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 40);
-	}
-	
-	@Test
-	public void checkMassimaleEstera_2() {
-		Rimborso r = buildRimborso();
-		Fattura fattura = ((List<Fattura>) r.getMappaFattura().values().stream().filter(f -> f.getId().equals("03"))
-				.collect(Collectors.toList())).get(0);
-		r.getMappaFattura().values().stream().close();
-		Massimale massimale = new Massimale();
-		massimale.setValue(40.0);
-		r.checkMassimale(fattura, massimale,new HashMap<String,Fattura>(), true);
-		Assert.assertTrue("CHECK MASSIMALE", fattura.getImportoSpettante() == 40);
-	}
-
-	
+		
 	@Test
 	public void checkNumberFattura() {
 		Rimborso r = new Rimborso();
