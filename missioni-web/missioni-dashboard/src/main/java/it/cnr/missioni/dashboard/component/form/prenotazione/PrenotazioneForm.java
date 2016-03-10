@@ -55,6 +55,7 @@ public class PrenotazioneForm extends IForm.FormAbstract<PrenotazioneEvent> {
 	private boolean isPresent = false;
 	private Calendar calendarComponent;
 	private CheckBox allDay;
+	private TextField localita;
 
 	public PrenotazioneForm(Calendar calendarComponent, PrenotazioneEvent prenotaioneEvent, boolean isAdmin,
 			boolean enabled, boolean modifica) {
@@ -70,6 +71,8 @@ public class PrenotazioneForm extends IForm.FormAbstract<PrenotazioneEvent> {
 	public void buildTab() {
 
 		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		localita = (TextField) getFieldGroup().buildAndBind("Localita", "localita");
+		addComponent(localita);
 		dataFrom = (DateField) getFieldGroup().buildAndBind("Inizio", "start");
 		addComponent(dataFrom);
 		dataTo = (DateField) getFieldGroup().buildAndBind("Fine", "end");

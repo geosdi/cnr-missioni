@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
 import it.cnr.missioni.model.user.Veicolo;
@@ -16,7 +17,7 @@ import it.cnr.missioni.model.user.Veicolo;
  */
 @XmlRootElement(name = "prenotazione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"id", "dataFrom","dataTo","veicoloCNR","idUser","descrizione","allDay"})
+@XmlType(propOrder = {"id", "dataFrom","dataTo","idUser","idVeicoloCNR","localita","descrizione","allDay"})
 public class Prenotazione implements Document {
 
 	/**
@@ -35,6 +36,8 @@ public class Prenotazione implements Document {
 	private String idUser;
 	@NotNull
 	private String idVeicoloCNR;
+	@NotBlank
+	private String localita;
 	private String descrizione;
 	private boolean allDay;
 	
@@ -126,6 +129,20 @@ public class Prenotazione implements Document {
 	}
 
 	/**
+	 * @return the localita
+	 */
+	public String getLocalita() {
+		return localita;
+	}
+
+	/**
+	 * @param localita 
+	 */
+	public void setLocalita(String localita) {
+		this.localita = localita;
+	}
+
+	/**
 	 * @return the descrizione
 	 */
 	public String getDescrizione() {
@@ -159,7 +176,8 @@ public class Prenotazione implements Document {
 	@Override
 	public String toString() {
 		return "Prenotazione [id=" + id + ", dataFrom=" + dataFrom + ", dataTo=" + dataTo + ", idUser=" + idUser
-				+ ", idVeicoloCNR=" + idVeicoloCNR + ", descrizione=" + descrizione + ", allDay=" + allDay + "]";
+				+ ", idVeicoloCNR=" + idVeicoloCNR + ", localita=" + localita + ", descrizione=" + descrizione
+				+ ", allDay=" + allDay + "]";
 	}
 
 

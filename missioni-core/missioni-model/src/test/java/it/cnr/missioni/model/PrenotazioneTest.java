@@ -33,7 +33,7 @@ public class PrenotazioneTest {
 		Prenotazione prenotazione = new Prenotazione();
 		
 		Set<ConstraintViolation<Prenotazione>> constraintViolations = validator.validate(prenotazione);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 		
 	}
 
@@ -43,7 +43,7 @@ public class PrenotazioneTest {
 		prenotazione.setDataFrom(new DateTime());
 		prenotazione.setDataTo(new DateTime());
 		prenotazione.setIdVeicoloCNR("1");
-		
+		prenotazione.setLocalita("Roma");
 		Set<ConstraintViolation<Prenotazione>> constraintViolations = validator.validate(prenotazione);
 		assertEquals(0, constraintViolations.size());
 		

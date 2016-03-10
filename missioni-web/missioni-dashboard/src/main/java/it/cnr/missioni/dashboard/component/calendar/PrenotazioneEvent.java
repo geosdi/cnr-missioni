@@ -27,6 +27,8 @@ public class PrenotazioneEvent extends BasicEvent implements CalendarEditableEve
 	private Date end;
 	@NotNull(message="Obbligatorio")
 	private Date start;
+	@NotNull(message="Obbligatorio")
+	private String localita;
 	private boolean allDay;
 	
 	/**
@@ -112,6 +114,20 @@ public class PrenotazioneEvent extends BasicEvent implements CalendarEditableEve
 	 */
 	public void setStart(Date start) {
 		this.start = start;
+	}
+
+	/**
+	 * @return the localita
+	 */
+	public String getLocalita() {
+		return localita;
+	}
+
+	/**
+	 * @param localita 
+	 */
+	public void setLocalita(String localita) {
+		this.localita = localita;
 	}
 
 	/**

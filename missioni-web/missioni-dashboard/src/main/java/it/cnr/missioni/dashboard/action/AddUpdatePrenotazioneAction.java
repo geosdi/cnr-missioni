@@ -36,7 +36,7 @@ public class AddUpdatePrenotazioneAction implements IAction {
 			prenotazione.setDataTo(new DateTime(prenotazioneEvent.getEnd().getTime()));
 			prenotazione.setIdVeicoloCNR(prenotazioneEvent.getVeicolo());
 			prenotazione.setAllDay(prenotazioneEvent.isAllDay());
-
+			prenotazione.setLocalita(prenotazioneEvent.getLocalita());
 			User user = DashboardUI.getCurrentUser();
 
 			prenotazione.setIdUser(user.getId());
