@@ -67,53 +67,6 @@ public class Rimborso implements Serializable {
 
 	}
 
-	// Algoritmo per il calcolo dei massimale sulle fatture (vitto)
-	public void checkMassimale(Fattura fattura, Massimale massimale, Map<String, Fattura> mappa, boolean isEstera) {
-		DateTime dateTo = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
-				fattura.getData().getDayOfMonth(), 0, 0);
-		DateTime datFrom = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
-				fattura.getData().getDayOfMonth(), 23, 59);
-		List<Fattura> listaF = getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(), fattura.getId());
-		Fattura f2 = null;
-		if (!listaF.isEmpty()) {
-			f2 = listaF.get(0);
-
-		}
-		List<Fattura> lista = getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(), null);
-		// calcolo del totale delle fatture per giorno
-		lista.forEach(ff -> {
-			mappa.put(ff.getId(), ff);
-			totaleFattureGiornaliera += ff.getImporto();
-		});
-
-		// missione ITALIA
-		if (!isEstera) {
-			if (lista.size() == 1) {
-				if (totaleFattureGiornaliera > massimale.getValue() / 2.0) {
-					fattura.setImportoSpettante(massimale.getValue() / 2.0);
-				}
-			} else {
-				if (totaleFattureGiornaliera > massimale.getValue()) {
-					fattura.setImportoSpettante(massimale.getValue());
-					f2.setImportoSpettante(0.0);
-				}
-
-			}
-		} // missione ESTERA
-		else {
-			if (lista.size() == 1) {
-				if (totaleFattureGiornaliera > massimale.getValue()) {
-					fattura.setImportoSpettante(fattura.getImporto() - (massimale.getValue()));
-				}
-			} else {
-				if (totaleFattureGiornaliera > massimale.getValue()) {
-					fattura.setImportoSpettante(massimale.getValue());
-					f2.setImportoSpettante(0.0);
-				}
-
-			}
-		}
-	}
 
 	/**
 	 * 
