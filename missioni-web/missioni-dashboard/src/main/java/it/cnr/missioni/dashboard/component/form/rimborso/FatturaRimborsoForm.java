@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Hours;
 
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
