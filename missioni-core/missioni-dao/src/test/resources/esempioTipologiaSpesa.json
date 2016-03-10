@@ -3,7 +3,7 @@
                   "id": "01",
                   "value": "Aereo",
                   "tipo": "ESTERA",
-                  "checkMassimale": false,
+                  "voceSpesa": "TRASPORTO",
                   "occorrenzeGiornaliere": 0,
                   "tipoTrattamento": "RIMBORSO_DOCUMENTATO"
                }
