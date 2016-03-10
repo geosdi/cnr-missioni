@@ -27,7 +27,7 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 
 	private TextField valueField;
 	private ComboBox tipoField;
-	private CheckBox checkMassimaleField;
+	private ComboBox voceSpesaField;
 
 
 
@@ -48,11 +48,11 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 
 		valueField = (TextField) getFieldGroup().buildAndBind("Tipologia Spesa", "value");
 		tipoField = (ComboBox)getFieldGroup().buildAndBind("Tipo","tipo",ComboBox.class);
-		checkMassimaleField = (CheckBox)getFieldGroup().buildAndBind("Massimale","checkMassimale",CheckBox.class);
+		voceSpesaField = (ComboBox)getFieldGroup().buildAndBind("Voce Spesa","voceSpesa",ComboBox.class);
 
 		addComponent(valueField);
 		addComponent(tipoField);
-		addComponent(checkMassimaleField);
+		addComponent(voceSpesaField);
 		addValidator();
 
 	}
