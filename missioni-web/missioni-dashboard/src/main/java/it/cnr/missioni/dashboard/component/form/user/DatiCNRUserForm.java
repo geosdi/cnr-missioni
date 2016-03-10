@@ -43,8 +43,8 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 
 	private User user;
 
-	public DatiCNRUserForm(User user,boolean isAdmin, boolean enabled, boolean modifica) {
-		super(user.getDatiCNR(),isAdmin,enabled,modifica);
+	public DatiCNRUserForm(User user, boolean isAdmin, boolean enabled, boolean modifica) {
+		super(user.getDatiCNR(), isAdmin, enabled, modifica);
 		this.bean = user.getDatiCNR();
 		this.user = user;
 		setFieldGroup(new BeanFieldGroup<DatiCNR>(DatiCNR.class));
@@ -82,8 +82,8 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withSearchType("exact")
-							.withMatricola(matricolaField.getValue());
+					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+							.withSearchType("exact").withMatricola(matricolaField.getValue());
 
 					if (modifica)
 						userSearchBuilder.withNotId(user.getId());
@@ -156,6 +156,23 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 
 		});
 
+		qualificaField.addValidator(new Validator() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4282669073317590147L;
+
+			@Override
+			public void validate(Object value) throws InvalidValueException {
+
+				if (qualificaField.getValue() == null)
+					throw new InvalidValueException(Utility.getMessage("field_required"));
+
+			}
+
+		});
+
 	}
 
 	public void buildTab() {
@@ -164,6 +181,8 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 
 			livelloField = (ComboBox) getFieldGroup().buildAndBind("Livello", "livello", ComboBox.class);
 			qualificaField = new ComboBox("Qualifica");
+			qualificaField.setImmediate(true);
+			qualificaField.setValidationVisible(false);
 			getFieldGroup().bind(qualificaField, "idQualifica");
 
 			QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
@@ -182,7 +201,8 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 
 			listaUserField = new ComboBox("Datore Lavoro");
 
-			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true).withResponsabileGruppo(true);
+			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true)
+					.withResponsabileGruppo(true);
 
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 
@@ -195,7 +215,6 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 			getFieldGroup().bind(listaUserField, "datoreLavoro");
 			listaUserField.setValidationVisible(false);
 
-			addValidator();
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
@@ -209,15 +228,18 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 		addComponent(codiceTerzoField);
 		addComponent(mailField);
 		addComponent(ibanField);
+		addValidator();
+		addListener();
 
 	}
 
-	public DatiCNR validate() throws CommitException,InvalidValueException{
+	public DatiCNR validate() throws CommitException, InvalidValueException {
 		for (Field<?> f : getFieldGroup().getFields()) {
 			((AbstractField<?>) f).setValidationVisible(true);
 		}
 		getFieldGroup().commit();
-
+		qualificaField.validate();
+		qualificaField.setValidationVisible(true);
 		BeanItem<DatiCNR> beanItem = (BeanItem<DatiCNR>) getFieldGroup().getItemDataSource();
 		DatiCNR datiCNR = beanItem.getBean();
 		datiCNR.setDescrizioneQualifica(getQualificaItemCaption());
@@ -239,8 +261,23 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 	 */
 	@Override
 	public void addListener() {
-		// TODO Auto-generated method stub
-		
+		qualificaField.addBlurListener(new BlurListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2604643711261342530L;
+
+			@Override
+			public void blur(BlurEvent event) {
+				try {
+					qualificaField.validate();
+				} catch (Exception e) {
+					qualificaField.setValidationVisible(true);
+				}
+
+			}
+		});
 	}
 
 }
