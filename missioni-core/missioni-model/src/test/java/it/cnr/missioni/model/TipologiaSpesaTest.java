@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
 /**
@@ -33,13 +34,14 @@ public class TipologiaSpesaTest {
 	public void fatturaErrataTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
-		assertEquals(3, constraintViolations.size());
+		assertEquals(4, constraintViolations.size());
 	}
 
 	@Test
 	public void fatturaOkTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		tipologiaSpesa.setValue("VITTO");
+		tipologiaSpesa.setVoceSpesa(VoceSpesaEnum.PASTO);
 		tipologiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
 		tipologiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
