@@ -190,6 +190,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		for (Field<?> f : getFieldGroup().getFields()) {
 			((AbstractField<?>) f).setValidationVisible(true);
 		}
+		dataFineMissioneField.setValidationVisible(true);
 		getFieldGroup().commit();
 		dataFineMissioneField.validate();
 		BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) getFieldGroup().getItemDataSource();
