@@ -64,72 +64,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		return buildPanel();
 	}
 
-	/*
-	 * Per ogni fattura verifica il massimale
-	 */
-	private void checkMassimale(Rimborso rimborso) {
 
-		Map<String, Fattura> mappa = new HashMap<String, Fattura>();
-
-		rimborso.getMappaFattura().values().forEach(f -> {
-			String id = f.getId();
-			if (mappa.containsKey(id)) {
-
-				try {
-					TipologiaSpesaStore tipologiaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder
-							.getTipologiaSpesaSearchBuilder().withId(f.getIdTipologiaSpesa()));
-					TipologiaSpesa tipologiaSpesa = tipologiaStore.getTipologiaSpesa().get(0);
-					if (tipologiaSpesa.isCheckMassimale()) {
-						String areaGeografica;
-
-						if (missione.isMissioneEstera()) {
-
-							if (f.getData()
-									.isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
-									|| f.getData().isAfter(
-											missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()))
-								areaGeografica = AreaGeograficaEnum.ITALIA.name();
-							else {
-								Nazione nazione = ClientConnector.getNazione(
-										NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-										.getNazione().get(0);
-								areaGeografica = nazione.getAreaGeografica().name();
-							}
-						} else {
-							areaGeografica = AreaGeograficaEnum.ITALIA.name();
-						}
-						User user = ClientConnector
-								.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser()))
-								.getUsers().get(0);
-						String livello = user.getDatiCNR().getLivello().name();
-
-						if (missione.getIdUserSeguito() != null) {
-							User userSeguito = ClientConnector.getUser(
-									UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUserSeguito()))
-									.getUsers().get(0);
-							if (userSeguito.getDatiCNR().getLivello().getStato() < user.getDatiCNR().getLivello()
-									.getStato())
-								livello = userSeguito.getDatiCNR().getLivello().name();
-						}
-
-						MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
-								.getMassimaleSearchBuilder().withLivello(livello).withAreaGeografica(areaGeografica)
-								.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
-
-						rimborso.checkMassimale(f, massimaleStore.getMassimale().get(0), mappa,
-								missione.isMissioneEstera());
-
-					}
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
-				}
-
-			} else
-				mappa.put(f.getId(), f);
-		});
-
-	}
 
 	private Component buildPanel() {
 		VerticalLayout root = new VerticalLayout();
@@ -190,7 +125,6 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 		}
 
-		checkMassimale(missione.getRimborso());
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
 		elencoFattureTable.setStyleName("margin-table_fatture");
 		elencoFattureTable
