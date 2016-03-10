@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
 /**
@@ -150,24 +151,25 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setId("01");
 		tipoliogiaSpesa.setValue("Aereo");
 		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
-		tipoliogiaSpesa.setCheckMassimale(false);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 		 tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("02");
 		tipoliogiaSpesa.setValue("Vitto");
 		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
-		tipoliogiaSpesa.setCheckMassimale(true);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.PASTO);
+
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 		 tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("03");
 		tipoliogiaSpesa.setValue("Albergo");
 		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
-		tipoliogiaSpesa.setCheckMassimale(true);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.ALLOGGIO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 		
@@ -175,8 +177,8 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setId("04");
 		tipoliogiaSpesa.setValue("Treno");
 		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
-		tipoliogiaSpesa.setCheckMassimale(true);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
 		
 	}
