@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.component.form.anticipoPagamenti;
+package it.cnr.missioni.dashboard.component.form.anticipopagamenti;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;

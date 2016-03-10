@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.component.form.rimborsoKm;
+package it.cnr.missioni.dashboard.component.form.rimborsokm;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;

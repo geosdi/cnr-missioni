@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.component.form.veicoloCNR;
+package it.cnr.missioni.dashboard.component.form.veicolocnr;
 
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;

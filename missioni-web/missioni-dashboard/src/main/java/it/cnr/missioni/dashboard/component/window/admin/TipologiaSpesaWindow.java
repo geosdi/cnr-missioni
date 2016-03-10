@@ -14,7 +14,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.admin.TipologiaSpesaAction;
-import it.cnr.missioni.dashboard.component.form.tipologiaSpesa.TipologiaSpesaForm;
+import it.cnr.missioni.dashboard.component.form.tipologiaspesa.TipologiaSpesaForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;

@@ -24,7 +24,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
 import it.cnr.missioni.dashboard.component.form.qualificaUser.QualificaUserForm;
-import it.cnr.missioni.dashboard.component.form.rimborsoKm.RimborsoKmForm;
+import it.cnr.missioni.dashboard.component.form.rimborsokm.RimborsoKmForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;

@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.component.form.tipologiaSpesa;
+package it.cnr.missioni.dashboard.component.form.tipologiaspesa;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
