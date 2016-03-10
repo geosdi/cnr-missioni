@@ -8,6 +8,7 @@ import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification.Type;
@@ -37,7 +38,7 @@ public class AnagraficaUserForm  extends IForm.FormAbstract<Anagrafica> {
 	private TextField codiceFiscaleField;
 	private TextField luogoNascitaField;
 	private DateField dataNascitaField;
-
+	private ComboBox genereField;
 	private User user;
 
 
@@ -94,6 +95,7 @@ public class AnagraficaUserForm  extends IForm.FormAbstract<Anagrafica> {
 		dataNascitaField = (DateField) getFieldGroup().buildAndBind("Data Nascita", "dataNascita");
 		dataNascitaField.setResolution(Resolution.DAY);
 		dataNascitaField.setDateFormat("dd/MM/yyyy");
+		genereField = (ComboBox) getFieldGroup().buildAndBind("Genere", "genere",ComboBox.class);
 
 		addValidator();
 		
@@ -103,6 +105,8 @@ public class AnagraficaUserForm  extends IForm.FormAbstract<Anagrafica> {
 		addComponent(codiceFiscaleField);
 		addComponent(luogoNascitaField);
 		addComponent(dataNascitaField);
+		addComponent(genereField);
+
 
 	}
 
