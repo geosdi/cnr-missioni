@@ -146,7 +146,7 @@ public class UserTest {
 		DatiCNR datiCNR = new DatiCNR();
 		datiCNR.setMail("vito.salvia");
 		Set<ConstraintViolation<DatiCNR>> constraintViolations = validator.validate(datiCNR);
-		assertEquals(5, constraintViolations.size());
+		assertEquals(6, constraintViolations.size());
 	}
 
 	@Test
@@ -157,6 +157,7 @@ public class UserTest {
 		datiCNR.setMatricola("9876");
 		datiCNR.setLivello(LivelloUserEnum.V);
 		datiCNR.setDescrizioneQualifica("Ricercatore");
+		datiCNR.setIdQualifica("01");
 		Set<ConstraintViolation<DatiCNR>> constraintViolations = validator.validate(datiCNR);
 		assertEquals(0, constraintViolations.size());
 	}

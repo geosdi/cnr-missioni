@@ -18,6 +18,7 @@ public class DatiCNR implements Serializable{
 	private static final long serialVersionUID = 1534365538828825181L;
 	@NotNull
 	private LivelloUserEnum livello;
+	@NotBlank
 	private String IdQualifica;
 	@NotBlank
 	private String descrizioneQualifica;
