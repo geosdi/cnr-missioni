@@ -114,7 +114,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				QualificaUserWindow.open(new QualificaUser(), true,true,true);
+				QualificaUserWindow.open(new QualificaUser(), true,true,false);
 			}
 
 		});
