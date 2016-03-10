@@ -1,6 +1,5 @@
 package it.cnr.missioni.el.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,11 +17,7 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
-import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 
 /**
