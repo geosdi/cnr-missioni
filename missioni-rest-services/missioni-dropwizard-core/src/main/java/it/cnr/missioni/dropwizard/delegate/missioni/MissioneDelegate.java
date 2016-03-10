@@ -38,7 +38,7 @@ import it.cnr.missioni.notification.dispatcher.MissioniMailDispatcher;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.spring.configuration.CNRMissioniEmail;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
-import it.cnr.missioni.notification.support.itext.anticipoPagamento.AnticipoPagamentoPDFBuilder;
+import it.cnr.missioni.notification.support.itext.anticipopagamento.AnticipoPagamentoPDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;

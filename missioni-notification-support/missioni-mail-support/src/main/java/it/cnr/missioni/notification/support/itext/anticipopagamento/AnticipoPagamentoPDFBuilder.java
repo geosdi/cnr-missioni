@@ -1,4 +1,4 @@
-package it.cnr.missioni.notification.support.itext.anticipoPagamento;
+package it.cnr.missioni.notification.support.itext.anticipopagamento;
 
 import java.io.FileOutputStream;
 import java.text.DateFormat;

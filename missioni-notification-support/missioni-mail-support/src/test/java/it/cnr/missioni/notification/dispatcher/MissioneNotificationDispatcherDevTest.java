@@ -1,7 +1,7 @@
 package it.cnr.missioni.notification.dispatcher;
 
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
-import it.cnr.missioni.notification.support.itext.anticipoPagamento.AnticipoPagamentoPDFBuilder;
+import it.cnr.missioni.notification.support.itext.anticipopagamento.AnticipoPagamentoPDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
