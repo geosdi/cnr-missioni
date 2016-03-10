@@ -5,7 +5,9 @@ import com.vaadin.ui.Notification.Type;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.AnticipoPagamentiWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
+import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
+import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
@@ -13,6 +15,7 @@ import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
+import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 
 /**
@@ -60,6 +63,22 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 			WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).build();
 		else
 			super.addActionButtonDettagli();	
+	}
+	
+	protected void addActionButtonRimborso(){
+		Rimborso rimborso = null;
+		// se è già associato il rimborso
+		if (selectedMissione.isRimborsoSetted()) {
+			rimborso = selectedMissione.getRimborso();
+			RimborsoWindowAdmin.open(selectedMissione, true, false, false);
+
+		} else {
+			rimborso = new Rimborso();
+			selectedMissione.setRimborso(rimborso);
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.getUser()).withEnabled(true).withIsAdmin(true).withModifica(true)
+					.build();
+		}
+
 	}
 	
 	protected void aggiornaTable() {

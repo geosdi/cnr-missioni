@@ -347,7 +347,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		// se è già associato il rimborso
 		if (selectedMissione.isRimborsoSetted()) {
 			rimborso = selectedMissione.getRimborso();
-			RimborsoWindowAdmin.open(selectedMissione, true, false, false);
+			RimborsoWindowAdmin.open(selectedMissione, false, false, false);
 
 		} else {
 			rimborso = new Rimborso();
