@@ -196,7 +196,11 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 					if(optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO))
 					{
 						labelVeicoloProprio.setVisible(true);
-						labelVeicoloProprio.setValue("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga());
+						if(v!=null)
+							labelVeicoloProprio.setValue("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga());
+						else
+							labelVeicoloProprio.setValue("Nessun veicolo associato");
+
 					}
 				}
 			}
