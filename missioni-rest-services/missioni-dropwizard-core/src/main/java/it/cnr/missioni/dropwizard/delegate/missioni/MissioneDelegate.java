@@ -246,11 +246,11 @@ class MissioneDelegate implements IMissioneDelegate {
 		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
 
 		if (missione.isRimborsoSetted()) {
-			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
-					user.getAnagrafica().getNome(),
-					user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
-							? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
-					missione.getId(), pdfBuilder));
+//			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
+//					user.getAnagrafica().getNome(),
+//					user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(), (missione.isMissioneEstera()
+//							? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
+//					missione.getId(), pdfBuilder));
 		} else {
 
 			if (missione.isMezzoProprio()) {
