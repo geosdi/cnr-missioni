@@ -61,7 +61,7 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
-                message.setTo(new String[]{userEmail, cnrMissioniEmail});
+                message.setTo(new String[]{userEmail});
                 Map model = new HashMap();
                 model.put("userName", userName);
                 model.put("userSurname", userSurname);
@@ -80,7 +80,7 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
-                message.setTo(new String[]{userEmail, cnrMissioniEmail});
+                message.setTo(new String[]{cnrMissioniEmail});
                 Map model = new HashMap();
                 model.put("userName", userName);
                 model.put("userSurname", userSurname);
