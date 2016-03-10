@@ -352,7 +352,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		} else {
 			rimborso = new Rimborso();
 			selectedMissione.setRimborso(rimborso);
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.getUser())
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.getUser()).withEnabled(true).withIsAdmin(false).withModifica(false)
 					.build();
 		}
 
