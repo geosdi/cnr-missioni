@@ -59,6 +59,21 @@ public class InitDAOTest {
 	private GPIndexCreator qualificaUserDocIndexCreator;
 	@Resource(name = "qualificaUserDAO")
 	private IQualificaUserDAO qualificaUserDAO;
+	
+	@Resource(name = "prenotazioneIndexCreator")
+	private GPIndexCreator prenotazioneDocIndexCreator;
+	@Resource(name = "prenotazioneDAO")
+	private IPrenotazioneDAO prenotazioneDAO;
+	
+	@Resource(name = "veicoloCNRIndexCreator")
+	private GPIndexCreator veicoloCNRDocIndexCreator;
+	@Resource(name = "veicoloCNRDAO")
+	private IVeicoloCNRDAO veicoloCNRDAO;
+	
+	@Resource(name = "missioneIndexCreator")
+	private GPIndexCreator missioneDocIndexCreator;
+	@Resource(name = "missioneDAO")
+	private IMissioneDAO missioneDAO;
 
 	@Resource(name = "userIndexCreator")
 	private GPIndexCreator userDocIndexCreator;
@@ -79,6 +94,11 @@ public class InitDAOTest {
 	private GPIndexCreator tipoligiaSpesaDocIndexCreator;
 	@Resource(name = "tipologiaSpesaDAO")
 	private ITipologiaSpesaDAO tipologiaSpesaDAO;
+	
+	@Resource(name = "massimaleIndexCreator")
+	private GPIndexCreator massimaleDocIndexCreator;
+	@Resource(name = "massimaleDAO")
+	private IMassimaleDAO massimaleDAO;
 
 	@Before
 	public void setUp() {
@@ -94,6 +114,15 @@ public class InitDAOTest {
 		Assert.assertNotNull(rimborsoKmDAO);
 		Assert.assertNotNull(tipoligiaSpesaDocIndexCreator);
 		Assert.assertNotNull(tipologiaSpesaDAO);
+		Assert.assertNotNull(veicoloCNRDocIndexCreator);
+		Assert.assertNotNull(veicoloCNRDAO);
+		Assert.assertNotNull(prenotazioneDocIndexCreator);
+		Assert.assertNotNull(prenotazioneDAO);
+		Assert.assertNotNull(missioneDocIndexCreator);
+		Assert.assertNotNull(missioneDAO);
+		Assert.assertNotNull(massimaleDocIndexCreator);
+		Assert.assertNotNull(massimaleDAO);
+		
 	}
 
 	@Test
@@ -124,7 +153,10 @@ public class InitDAOTest {
 		tipologiaSpesaDAO.persist(creaTipologiaSpesa());
 	}
 	
-	
+	@Test
+	public void insertMassimaleTest() throws Exception {
+		massimaleDAO.persist(creaMassimali());
+	}
 
 	private List<TipologiaSpesa> creaTipologiaSpesa() {
 		List<TipologiaSpesa> lista = new ArrayList<TipologiaSpesa>();
