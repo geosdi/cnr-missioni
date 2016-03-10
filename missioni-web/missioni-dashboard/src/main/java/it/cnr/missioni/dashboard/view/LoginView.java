@@ -80,7 +80,7 @@ public class LoginView extends VerticalLayout implements Serializable {
 
 			@Override
 			public void buttonClick(ClickEvent clickEvent) {
-				CredenzialiWindow.open(new User(),false,true,true);
+				CredenzialiWindow.open(new User(),false,true,false);
 			}
 		});
 		button.setStyleName(Reindeer.BUTTON_LINK);
@@ -153,7 +153,7 @@ public class LoginView extends VerticalLayout implements Serializable {
 		CssLayout labels = new CssLayout();
 		labels.addStyleName("labels");
 
-		Label welcome = new Label("Welcome");
+		Label welcome = new Label("Benvenuto");
 		welcome.setSizeUndefined();
 		welcome.addStyleName(ValoTheme.LABEL_H4);
 		welcome.addStyleName(ValoTheme.LABEL_COLORED);
