@@ -281,7 +281,7 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 			public void validate(Object value) throws InvalidValueException {
 
 				if (value == null )
-					throw new InvalidValueException(Utility.getMessage("nazione_error"));
+					throw new InvalidValueException(Utility.getMessage("field_required"));
 
 			}
 
