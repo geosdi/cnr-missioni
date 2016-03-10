@@ -245,15 +245,16 @@ public class FatturaRimborsoForm extends VerticalLayout {
 				@Override
 				public void validate(Object value) throws InvalidValueException {
 					TipologiaSpesaStore t = null;
-					DateTime dateFattura = null;
+					DateTime dateFattura = new DateTime(formFattura.getDataField().getValue());
 					int n = 0;
+					if(formFattura.getTipologiaSpesaField().getValue() != null){
 					try {
 						t = ClientConnector
 								.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
 										.withId(formFattura.getTipologiaSpesaField().getValue().toString()));
 						if (t.getTipologiaSpesa().get(0).isCheckMassimale() && formFattura.getDataField() != null) {
 
-							dateFattura = new DateTime(formFattura.getDataField().getValue());
+							
 							DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
 									dateFattura.getDayOfMonth(), 0, 0);
 							DateTime datFrom = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
@@ -279,6 +280,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 							missione.getDatiPeriodoMissione().getFineMissione(),dataFrontieraAndata,dataFrontieraRitorno, dateFattura,
 							missione.isMissioneEstera()) <= n)
 						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
+				}
 
 				}
 
