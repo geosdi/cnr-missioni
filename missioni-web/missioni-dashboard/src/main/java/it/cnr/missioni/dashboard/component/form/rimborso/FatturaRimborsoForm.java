@@ -37,6 +37,7 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
@@ -252,7 +253,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 						t = ClientConnector
 								.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
 										.withId(formFattura.getTipologiaSpesaField().getValue().toString()));
-						if (t.getTipologiaSpesa().get(0).isCheckMassimale() && formFattura.getDataField() != null) {
+						if (t.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO && formFattura.getDataField() != null) {
 
 							
 							DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
