@@ -70,6 +70,7 @@ public class TipoMissioneForm extends IForm.FormAbstract<Missione> {
 			bean.setIdNazione(null);
 			bean.setShortDescriptionNazione(null);
 			bean.setDatiMissioneEstera(new DatiMissioneEstera());
+			bean.getDatiMissioneEstera().setTrattamentoMissioneEsteraEnum(null);
 		}else{
 			trattamentoMissioneEsteraField.setValidationVisible(true);
 			trattamentoMissioneEsteraField.validate();
@@ -145,6 +146,11 @@ public class TipoMissioneForm extends IForm.FormAbstract<Missione> {
 	
 	private void visible(boolean visible){
 		trattamentoMissioneEsteraField.setEnabled(visible);
+		if(!visible){
+			bean.getDatiMissioneEstera().setTrattamentoMissioneEsteraEnum(null);
+			trattamentoMissioneEsteraField.select(null);
+		}
+
 	}
 	
 }
