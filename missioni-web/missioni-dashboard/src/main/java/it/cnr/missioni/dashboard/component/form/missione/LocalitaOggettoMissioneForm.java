@@ -223,15 +223,20 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 		listaLocalitaField.setValidationVisible(true);
 		listaLocalitaField.validate();
 		oggettoField.validate();
-		if (bean.isMissioneEstera()) 
-			listaNazioneField.validate();
+//		if (bean.isMissioneEstera()) 
+		listaNazioneField.validate();
 
 		bean.setOggetto(oggettoField.getValue());
 		bean.setLocalita(listaLocalitaField.getItemCaption(listaLocalitaField.getValue()));
 		bean.setDistanza(distanzaField.getValue());
+		
+		//Missione estera
 		if (bean.isMissioneEstera()) {
 			bean.setIdNazione(listaNazioneField.getValue().toString());
 			bean.setShortDescriptionNazione(listaNazioneField.getItemCaption(bean.getIdNazione()));
+		}else{
+			bean.setIdNazione(null);
+			bean.setShortDescriptionNazione(null);
 		}
 		if(isAdmin)
 			bean.setStato(StatoEnum.getStatoE(listaStatoField.getValue().toString()));
