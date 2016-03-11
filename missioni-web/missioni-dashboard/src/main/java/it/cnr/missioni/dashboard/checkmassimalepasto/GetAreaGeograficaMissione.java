@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.checkmassimale;
+package it.cnr.missioni.dashboard.checkmassimalepasto;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
@@ -6,15 +6,18 @@ import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 
 /**
+ * 
+ * Recupere l'area geografica della missione
+ * 
  * @author Salvia Vito
  */
-public class GetAreaGeografica extends IControlCheckMassimale.AbstractControlCheckMassimale {
+public class GetAreaGeograficaMissione extends IControlCheckMassimale.AbstractControlCheckMassimale {
 
-    protected GetAreaGeografica() {
+    protected GetAreaGeograficaMissione() {
     }
 
     public static IControlCheckMassimale newGetAreaGeografica() {
-        return new GetAreaGeografica();
+        return new GetAreaGeograficaMissione();
     }
 	
 	/**

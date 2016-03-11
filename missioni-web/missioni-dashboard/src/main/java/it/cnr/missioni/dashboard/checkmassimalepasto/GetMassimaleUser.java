@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.checkmassimale;
+package it.cnr.missioni.dashboard.checkmassimalepasto;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
@@ -6,15 +6,18 @@ import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
 /**
+ * 
+ * Recupere il massimale
+ * 
  * @author Salvia Vito
  */
-public class GetMassimale extends IControlCheckMassimale.AbstractControlCheckMassimale {
+public class GetMassimaleUser extends IControlCheckMassimale.AbstractControlCheckMassimale {
 
-    protected GetMassimale() {
+    protected GetMassimaleUser() {
     }
 
     public static IControlCheckMassimale newGetMassimale() {
-        return new GetMassimale();
+        return new GetMassimaleUser();
     }
 	
 	/**

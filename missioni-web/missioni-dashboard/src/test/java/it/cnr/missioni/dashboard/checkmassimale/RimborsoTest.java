@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Test;
 
+import it.cnr.missioni.dashboard.checkmassimalepasto.CheckMassimale;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;

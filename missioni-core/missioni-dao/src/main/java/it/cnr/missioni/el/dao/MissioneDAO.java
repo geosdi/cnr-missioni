@@ -82,6 +82,8 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 	
 	/**
 	 * 
+	 * Trova il numero di missioni inserite in un anno per calcolare l'id
+	 * 
 	 * @return
 	 * @throws Exception
 	 */

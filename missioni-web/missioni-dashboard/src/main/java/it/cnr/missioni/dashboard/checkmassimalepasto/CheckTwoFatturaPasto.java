@@ -1,15 +1,18 @@
-package it.cnr.missioni.dashboard.checkmassimale;
+package it.cnr.missioni.dashboard.checkmassimalepasto;
 
 /**
+ * 
+ * Se nello stesso giorno abbiamo 2 fatture di vitto
+ * 
  * @author Salvia Vito
  */
-public class CheckTwoFattura extends IControlCheckMassimale.AbstractControlCheckMassimale{
+public class CheckTwoFatturaPasto extends IControlCheckMassimale.AbstractControlCheckMassimale{
 
-    protected CheckTwoFattura() {
+    protected CheckTwoFatturaPasto() {
     }
 
     public static IControlCheckMassimale newCheckTwoFattura() {
-        return new CheckTwoFattura();
+        return new CheckTwoFatturaPasto();
     }
 	
 	/**

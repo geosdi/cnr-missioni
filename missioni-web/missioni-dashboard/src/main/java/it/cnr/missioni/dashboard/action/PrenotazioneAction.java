@@ -16,12 +16,12 @@ import it.cnr.missioni.model.user.User;
 /**
  * @author Salvia Vito
  */
-public class AddUpdatePrenotazioneAction implements IAction {
+public class PrenotazioneAction implements IAction {
 
 	private PrenotazioneEvent prenotazioneEvent;
 	private boolean modifica;
 
-	public AddUpdatePrenotazioneAction(PrenotazioneEvent prenotazioneEvent, boolean modifica) {
+	public PrenotazioneAction(PrenotazioneEvent prenotazioneEvent, boolean modifica) {
 		this.prenotazioneEvent = prenotazioneEvent;
 		this.modifica = modifica;
 	}

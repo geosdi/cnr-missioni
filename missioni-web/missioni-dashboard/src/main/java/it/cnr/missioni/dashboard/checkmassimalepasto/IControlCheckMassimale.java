@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.checkmassimale;
+package it.cnr.missioni.dashboard.checkmassimalepasto;
 
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.missione.Missione;

@@ -1,4 +1,4 @@
-package it.cnr.missioni.dashboard.checkmassimale;
+package it.cnr.missioni.dashboard.checkmassimalepasto;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,9 @@ import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 
 /**
+ * 
+ * Chain of Responsiblity per verificare il massimale di una fattura
+ * 
  * @author Salvia Vito
  */
 public class CheckMassimale {
@@ -58,13 +61,13 @@ public class CheckMassimale {
 	private  void buildChain() throws Exception{
 
 
-		IControlCheckMassimale m1 = new GetAreaGeografica().newGetAreaGeografica().withCheckMassimale(this);
-		IControlCheckMassimale m2 = new GetUser().newGetUser().withCheckMassimale(this);
-		IControlCheckMassimale m3 = new GetUserSeguito().newGetUserSeguito().withCheckMassimale(this);
-		IControlCheckMassimale m4 = new GetMassimale().newGetMassimale().withCheckMassimale(this);
+		IControlCheckMassimale m1 = new GetAreaGeograficaMissione().newGetAreaGeografica().withCheckMassimale(this);
+		IControlCheckMassimale m2 = new GetUserMissione().newGetUser().withCheckMassimale(this);
+		IControlCheckMassimale m3 = new GetUserSeguitoMissione().newGetUserSeguito().withCheckMassimale(this);
+		IControlCheckMassimale m4 = new GetMassimaleUser().newGetMassimale().withCheckMassimale(this);
 
-		IControlCheckMassimale m5 = new CheckOneFattura().newCheckOneFattura().withCheckMassimale(this);
-		IControlCheckMassimale m6 = new CheckTwoFattura().newCheckTwoFattura().withCheckMassimale(this);
+		IControlCheckMassimale m5 = new CheckOneFatturaPasto().newCheckOneFattura().withCheckMassimale(this);
+		IControlCheckMassimale m6 = new CheckTwoFatturaPasto().newCheckTwoFattura().withCheckMassimale(this);
 
 		m1.setNextControl(m2);
 		m2.setNextControl(m3);

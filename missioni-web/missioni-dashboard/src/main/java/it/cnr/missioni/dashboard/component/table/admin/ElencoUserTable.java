@@ -9,7 +9,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 
-import it.cnr.missioni.dashboard.action.UpdateUserByAdminAction;
+import it.cnr.missioni.dashboard.action.admin.UpdateUserAction;
 import it.cnr.missioni.dashboard.component.table.ITable;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.user.RuoloUserEnum;
@@ -128,7 +128,7 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 						
 						User user = ((User)itemId);
 						user.setResponsabileGruppo(cb.getValue());
-						DashboardEventBus.post(new UpdateUserByAdminAction(user));
+						DashboardEventBus.post(new UpdateUserAction(user));
 
 					}
 				});
@@ -161,7 +161,7 @@ public final class ElencoUserTable extends ITable.AbstractTable {
 						
 						User user = ((User)itemId);
 						user.getCredenziali().setRuoloUtente(cb.getValue() ? RuoloUserEnum.UTENTE_ADMIN : RuoloUserEnum.UTENTE_SEMPLICE);
-						DashboardEventBus.post(new UpdateUserByAdminAction(user));
+						DashboardEventBus.post(new UpdateUserAction(user));
 
 					}
 				});

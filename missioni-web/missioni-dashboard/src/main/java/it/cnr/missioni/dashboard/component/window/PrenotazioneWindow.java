@@ -14,7 +14,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.AddUpdatePrenotazioneAction;
+import it.cnr.missioni.dashboard.action.PrenotazioneAction;
 import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.component.form.prenotazione.PrenotazioneForm;
@@ -67,7 +67,7 @@ public class PrenotazioneWindow extends IWindow.AbstractWindow {
 
 					PrenotazioneEvent prenotazioneEvent = prenotazioneForm.validate();
 					if (prenotazioneEvent != null) {
-						DashboardEventBus.post(new AddUpdatePrenotazioneAction(prenotazioneEvent, modifica));
+						DashboardEventBus.post(new PrenotazioneAction(prenotazioneEvent, modifica));
 						close();
 					}
 				} catch (InvalidValueException | CommitException e) {

@@ -16,15 +16,14 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.AddUpdatePrenotazioneAction;
+import it.cnr.missioni.dashboard.action.PrenotazioneAction;
 import it.cnr.missioni.dashboard.action.AnticipoPagamentoAction;
 import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.action.MissioneAction;
-import it.cnr.missioni.dashboard.action.RegistrationUserAction;
+import it.cnr.missioni.dashboard.action.UserRegistrationAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
-import it.cnr.missioni.dashboard.action.UpdateUserByAdminAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.action.admin.MassimaleAction;
 import it.cnr.missioni.dashboard.action.admin.NazioneAction;
@@ -32,7 +31,6 @@ import it.cnr.missioni.dashboard.action.admin.QualificaUserAction;
 import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
 import it.cnr.missioni.dashboard.action.admin.TipologiaSpesaAction;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
-import it.cnr.missioni.dashboard.action.admin.UpdateUserResponsabileGruppoAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -113,12 +111,12 @@ public final class DashboardUI extends UI {
 	}
 
 	@Subscribe
-	public void userRegistrationRequested(final RegistrationUserAction registrationUserAction) {
+	public void userRegistrationRequested(final UserRegistrationAction registrationUserAction) {
 		registrationUserAction.doAction();
 	}
 
 	@Subscribe
-	public void userUpdateUserByAdminRequested(final UpdateUserByAdminAction updateUserByAdminAction) {
+	public void userUpdateUserByAdminRequested(final UpdateUserAction updateUserByAdminAction) {
 		updateUserByAdminAction.doAction();
 	}
 
@@ -127,10 +125,10 @@ public final class DashboardUI extends UI {
 		updateUserAction.doAction();
 	}
 
-	@Subscribe
-	public void userUpdateUserRequested(final UpdateUserResponsabileGruppoAction updateUserResponsabileGruppoAction) {
-		updateUserResponsabileGruppoAction.doAction();
-	}
+//	@Subscribe
+//	public void userUpdateUserRequested(final UpdateUserResponsabileGruppoAction updateUserResponsabileGruppoAction) {
+//		updateUserResponsabileGruppoAction.doAction();
+//	}
 
 	@Subscribe
 	public void veicoloRequested(final VeicoloAction veicoloAction) {
@@ -153,7 +151,7 @@ public final class DashboardUI extends UI {
 	}
 
 	@Subscribe
-	public void prenotazioneRequested(final AddUpdatePrenotazioneAction prenotazioneAction) {
+	public void prenotazioneRequested(final PrenotazioneAction prenotazioneAction) {
 		prenotazioneAction.doAction();
 	}
 

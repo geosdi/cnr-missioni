@@ -213,7 +213,6 @@ class MissioneDelegate implements IMissioneDelegate {
 		}
 		if (missione.getId() == null)
 			missione.setId(this.missioneDAO.getMaxNumeroMissioneAnno());
-		// missione.setId(gen.generate().toString());
 		this.missioneDAO.persist(missione);
 
 		User user = this.userDAO.find(missione.getIdUser());

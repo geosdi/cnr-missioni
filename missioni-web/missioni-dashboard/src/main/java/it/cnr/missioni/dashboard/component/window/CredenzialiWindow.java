@@ -24,7 +24,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.RegistrationUserAction;
+import it.cnr.missioni.dashboard.action.UserRegistrationAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -195,7 +195,7 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 					User user = beanItem.getBean();
 
 					if (!modifica)
-						DashboardEventBus.post(new RegistrationUserAction(user));
+						DashboardEventBus.post(new UserRegistrationAction(user));
 					else
 						DashboardEventBus.post(new UpdateUserAction(user));
 					close();

@@ -1,19 +1,22 @@
-package it.cnr.missioni.dashboard.checkmassimale;
+package it.cnr.missioni.dashboard.checkmassimalepasto;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 
 /**
+ * 
+ * Recupera l'user a seguito
+ * 
  * @author Salvia Vito
  */
-public class GetUserSeguito extends IControlCheckMassimale.AbstractControlCheckMassimale {
+public class GetUserSeguitoMissione extends IControlCheckMassimale.AbstractControlCheckMassimale {
 
-    protected GetUserSeguito() {
+    protected GetUserSeguitoMissione() {
     }
 
     public static IControlCheckMassimale newGetUserSeguito() {
-        return new GetUserSeguito();
+        return new GetUserSeguitoMissione();
     }
 	
 	/**

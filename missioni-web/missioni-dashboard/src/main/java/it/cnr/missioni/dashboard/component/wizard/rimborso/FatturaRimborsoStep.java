@@ -8,7 +8,7 @@ import org.vaadin.teemu.wizards.WizardStep;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification.Type;
 
-import it.cnr.missioni.dashboard.checkmassimale.CheckMassimale;
+import it.cnr.missioni.dashboard.checkmassimalepasto.CheckMassimale;
 import it.cnr.missioni.dashboard.component.form.rimborso.FatturaRimborsoForm;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;

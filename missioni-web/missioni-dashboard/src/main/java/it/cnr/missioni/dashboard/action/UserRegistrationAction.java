@@ -14,11 +14,11 @@ import it.cnr.missioni.rest.api.response.user.UserStore;
 /**
  * @author Salvia Vito
  */
-public class RegistrationUserAction implements IAction {
+public class UserRegistrationAction implements IAction {
 
 	private User user;
 
-	public RegistrationUserAction(User user) {
+	public UserRegistrationAction(User user) {
 		this.user = user;
 	}
 
