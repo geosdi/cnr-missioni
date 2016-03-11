@@ -46,7 +46,7 @@ public class WizardMissione extends IWizard.AbstractWizard {
 
 		// this.anticipazioniPagamentoStep = new
 		// AnticipazioniPagamentoStep(missione);
-		ripilogoDatiStep = new RiepilogoDatiMissioneStep(missione);
+		ripilogoDatiStep = new RiepilogoDatiMissioneStep(missione,modifica);
 
 		getWizard().addStep(tipoMissioneStep, "tipoMissione");
 		getWizard().addStep(localitaOggettoStep, "localitaOggetto");
