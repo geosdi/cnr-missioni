@@ -23,8 +23,10 @@ import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.UserRegistrationAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
+import it.cnr.missioni.dashboard.action.UpdateCredenzialiUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
+import it.cnr.missioni.dashboard.action.admin.AdminUpdateUserAction;
 import it.cnr.missioni.dashboard.action.admin.MassimaleAction;
 import it.cnr.missioni.dashboard.action.admin.NazioneAction;
 import it.cnr.missioni.dashboard.action.admin.QualificaUserAction;
@@ -114,10 +116,15 @@ public final class DashboardUI extends UI {
 	public void userRegistrationRequested(final UserRegistrationAction registrationUserAction) {
 		registrationUserAction.doAction();
 	}
+	
+	@Subscribe
+	public void userRegistrationRequested(final UpdateCredenzialiUserAction updateCredenzialiUserAction) {
+		updateCredenzialiUserAction.doAction();
+	}
 
 	@Subscribe
-	public void userUpdateUserByAdminRequested(final UpdateUserAction updateUserByAdminAction) {
-		updateUserByAdminAction.doAction();
+	public void updateUserByAdminRequested(final AdminUpdateUserAction updateUserAction) {
+		updateUserAction.doAction();
 	}
 
 	@Subscribe
