@@ -38,9 +38,10 @@ public class VeicoloAction implements IAction {
 			
 			//se settato come veicolo principale aggiorno tutti i veicoli presenti a NON principale
 			if(veicolo.isVeicoloPrincipale()){
-				for(Veicolo v : user.getMappaVeicolo().values())
+				user.getMappaVeicolo().values().forEach(v->{
 					if(!v.getTarga().equals(veicolo.getTarga()))
 						v.setVeicoloPrincipale(false);
+				});
 			}
 
 			
