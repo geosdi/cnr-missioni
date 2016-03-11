@@ -313,11 +313,13 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		paragraphUnderline.add(underline);
 		paragraphUnderline.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragraphUnderline);
+		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
+		DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 
 		Paragraph paragraphDichiarazione = new Paragraph("Il sottoscritto " + user.getAnagrafica().getCognome() + " "
 				+ user.getAnagrafica().getNome() + " qualifica: " + user.getDatiCNR().getDescrizioneQualifica()
 				+ ", in esecuzione dell' incarico ricevuto con ordine di missione n. " + missione.getId() + " del "
-				+ (missione.getDataInserimento().toString()), fontNormal);
+				+ (formatDataTime.format(missione.getDataInserimento().toDate())), fontNormal);
 		document.add(paragraphDichiarazione);
 
 		Chunk underline2 = new Chunk("CHIEDE");
@@ -344,8 +346,8 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Paragraph paragraphInformazione = new Paragraph(
 				"\n\n" + "Tipo:" + veicolo.getTipo() + "targa:" + veicolo.getTarga() + "\ncarta di circolazione:"
 						+ veicolo.getCartaCircolazione() + "\nPolizza assicurazione:" + veicolo.getPolizzaAssicurativa()
-						+ "\nPatente n.:" + user.getPatente().getNumeroPatente() + " con validit&agrave; "
-						+ user.getPatente().getValidaFinoAl().toString() + "\n\n",
+						+ "\nPatente n.:" + user.getPatente().getNumeroPatente() + " con validit"+new Character('\u00E0')
+						+ formatData.format(user.getPatente().getValidaFinoAl().toDate()) + "\n\n",
 				fontNormal);
 
 		document.add(paragraphInformazione);
