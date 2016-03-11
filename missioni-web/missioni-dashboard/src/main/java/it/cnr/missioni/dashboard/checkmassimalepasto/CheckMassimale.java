@@ -66,14 +66,17 @@ public class CheckMassimale {
 		IControlCheckMassimale m3 = new GetUserSeguitoMissione().newGetUserSeguito().withCheckMassimale(this);
 		IControlCheckMassimale m4 = new GetMassimaleUser().newGetMassimale().withCheckMassimale(this);
 
-		IControlCheckMassimale m5 = new CheckOneFatturaPasto().newCheckOneFattura().withCheckMassimale(this);
-		IControlCheckMassimale m6 = new CheckTwoFatturaPasto().newCheckTwoFattura().withCheckMassimale(this);
+		IControlCheckMassimale m5 = new CheckTipoFattura().newCheckTipoFattura().withCheckMassimale(this);
+
+		IControlCheckMassimale m6 = new CheckOneFatturaPasto().newCheckOneFattura().withCheckMassimale(this);
+		IControlCheckMassimale m7 = new CheckTwoFatturaPasto().newCheckTwoFattura().withCheckMassimale(this);
 
 		m1.setNextControl(m2);
 		m2.setNextControl(m3);
 		m3.setNextControl(m4);
 		m4.setNextControl(m5);
 		m5.setNextControl(m6);
+		m6.setNextControl(m7);
 
 		m1.check();
 	}
