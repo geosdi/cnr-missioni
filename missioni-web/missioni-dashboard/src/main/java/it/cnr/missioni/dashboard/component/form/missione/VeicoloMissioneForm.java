@@ -60,19 +60,18 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 		//se non è Admin prendo come user quello loggato al sistema
 		if (!isAdmin) {
 			user = DashboardUI.getCurrentUser();
-			v = user.getVeicoloPrincipale();
 		} else {
 			try {
 				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId(bean.getIdUser());
 				UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 				user = userStore.getUsers().get(0);
-				v = user.getVeicoloPrincipale();
+
 			} catch (Exception e) {
 				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 						Type.ERROR_MESSAGE);
 			}
 		}
-
+		v = user.getVeicoloPrincipale();
 		optionGroupMezzo = new OptionGroup("Veicolo");
 		optionGroupMezzo.addItems(VEICOLO_CNR, VEICOLO_PROPRIO, NOLEGGIO,NESSUNO);
 		optionGroupMezzo.select(bean.getTipoVeicolo());
