@@ -109,7 +109,7 @@ public class PrenotazioneForm extends IForm.FormAbstract<PrenotazioneEvent> {
 		PrenotazioneEvent prenotazione = beanItem.getBean();
 
 		List<CalendarEvent> lista = calendarComponent.getEvents(prenotazione.getStart(), prenotazione.getEnd());
-		prenotazione.setDescrizione(veicoliCNRField.getItemCaption(prenotazione.getVeicolo()));
+		prenotazione.setDescrizione(prenotazione.getLocalita());
 		lista.forEach(c -> {
 			if (((PrenotazioneEvent) c).getVeicolo().equals(veicoliCNRField.getValue()) && !((PrenotazioneEvent) c).getId().equals(bean.getId()) ) {
 				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("event_present"),
