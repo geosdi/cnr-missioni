@@ -169,10 +169,11 @@ class MissioneDelegate implements IMissioneDelegate {
 
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
-				missione.getRimborso().getNumeroOrdine().toString(),
+				missione.getRimborso().getNumeroOrdine() != null ?
+				missione.getRimborso().getNumeroOrdine().toString() : "",
 				missione.getRimborso().isPagata() ? "Si" : "No", missione.getRimborso().getMandatoPagamento() != null
-						? missione.getRimborso().getMandatoPagamento() : "",
-				missione.getRimborso().getTotaleDovuto(), null));
+						? missione.getRimborso().getMandatoPagamento() : "",missione.getRimborso().getTotaleDovuto() != null ?
+				missione.getRimborso().getTotaleDovuto() : 0.0, RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
 
 		return Boolean.TRUE;
 	}
