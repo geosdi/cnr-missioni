@@ -344,9 +344,9 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.add(paragraphUnderline3);
 
 		Paragraph paragraphInformazione = new Paragraph(
-				"\n\n" + "Tipo:" + veicolo.getTipo() + "targa:" + veicolo.getTarga() + "\ncarta di circolazione:"
+				"\n\n" + "Tipo:" + veicolo.getTipo() + "\ntarga:" + veicolo.getTarga() + "\nCarta di circolazione:"
 						+ veicolo.getCartaCircolazione() + "\nPolizza assicurazione:" + veicolo.getPolizzaAssicurativa()
-						+ "\nPatente n.:" + user.getPatente().getNumeroPatente() + " con validit"+new Character('\u00E0')
+						+ "\nPatente n.:" + user.getPatente().getNumeroPatente() + " con validit"+new Character('\u00E0')+" fino al "
 						+ formatData.format(user.getPatente().getValidaFinoAl().toDate()) + "\n\n",
 				fontNormal);
 
