@@ -7,8 +7,12 @@ import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import com.vaadin.ui.Notification.Type;
 
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.IWizard;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
@@ -45,14 +49,16 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 
 
 			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione,0,isAdmin,enabled,modifica);
-			this.datiMissioneEsteraStep = new DatiMissioneEsteraStep(missione,isAdmin,enabled,modifica);
+			
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione,isAdmin,enabled,modifica);
-			this.riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione);
+			this.riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione,modifica);
 
 			getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
-			if(missione.isMissioneEstera())
+			if(missione.isMissioneEstera()){
+				this.datiMissioneEsteraStep = new DatiMissioneEsteraStep(missione,isAdmin,enabled,modifica);
 				getWizard().addStep(this.datiMissioneEsteraStep, "datiMissioneEstera");
+			}
 			getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
 			getWizard().addStep(this.riepilogoDatiRimborsoStep, "riepilogoDatiRimborso");
 
@@ -101,7 +107,8 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	 */
 	@Override
 	public void wizardCancelled(WizardCancelledEvent event) {
-		missione.setRimborso(null);
+		DashboardEventBus.post(new  DashboardEvent.ResetMissioneEvent() );
+		
 		endWizard();
 	}
 
