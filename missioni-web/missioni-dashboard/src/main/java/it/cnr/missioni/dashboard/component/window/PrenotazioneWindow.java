@@ -14,7 +14,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.AddUpdatePrenotazioneAction;
 import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
@@ -22,7 +21,6 @@ import it.cnr.missioni.dashboard.component.form.prenotazione.PrenotazioneForm;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.model.user.RuoloUserEnum;
 
 public class PrenotazioneWindow extends IWindow.AbstractWindow {
 
@@ -45,12 +43,8 @@ public class PrenotazioneWindow extends IWindow.AbstractWindow {
 		this.calendarComponent = calendarComponent;
 		this.prenotazione = prenotazione;
 		setId(ID);
-		// solo se la prenotazione è dell'user loggato o è admin
-		if(modifica)
-			enabled = DashboardUI.getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN
-				|| prenotazione.getIdUser().equals(DashboardUI.getCurrentUser().getId());
-		
-		this.prenotazioneForm = new PrenotazioneForm(calendarComponent, prenotazione, false, enabled, modifica);
+	
+		this.prenotazioneForm = new PrenotazioneForm(calendarComponent, prenotazione, isAdmin, enabled, modifica);
 		detailsWrapper.addComponent(buildTab("Prenotazione", FontAwesome.CALENDAR_O, this.prenotazioneForm));
 
 		if (enabled)
@@ -108,7 +102,6 @@ public class PrenotazioneWindow extends IWindow.AbstractWindow {
 		footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
 		if (modifica){
 			footer.addComponent(delete);
-//			footer.setComponentAlignment(delete, Alignment.TOP_RIGHT);
 		}
 		return footer;
 	}
