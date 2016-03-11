@@ -12,11 +12,11 @@ import it.cnr.missioni.model.user.User;
 /**
  * @author Salvia Vito
  */
-public class UpdateUserAction implements IAction {
+public class AdminUpdateUserAction implements IAction {
 
 	private User user;
 
-	public UpdateUserAction(User user ) {
+	public AdminUpdateUserAction(User user ) {
 		this.user = user;
 	}
 
