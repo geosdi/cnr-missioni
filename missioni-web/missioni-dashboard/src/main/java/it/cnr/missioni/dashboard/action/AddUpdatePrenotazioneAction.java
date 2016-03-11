@@ -37,15 +37,17 @@ public class AddUpdatePrenotazioneAction implements IAction {
 			prenotazione.setIdVeicoloCNR(prenotazioneEvent.getVeicolo());
 			prenotazione.setAllDay(prenotazioneEvent.isAllDay());
 			prenotazione.setLocalita(prenotazioneEvent.getLocalita());
-			User user = DashboardUI.getCurrentUser();
-
-			prenotazione.setIdUser(user.getId());
-
-			prenotazione.setDescrizione(prenotazioneEvent.getDescrizione() + " - " + user.getAnagrafica().getCognome()
-					+ " " + user.getAnagrafica().getNome());
-
-			if (!modifica)
+			
+			//Nel caso sia una nuova prenotazione
+			if(!modifica){
+				User user = DashboardUI.getCurrentUser();
+				prenotazione.setIdUser(user.getId());
+				prenotazione.setDescrizione(prenotazioneEvent.getDescrizione() + " - " + user.getAnagrafica().getCognome()
+						+ " " + user.getAnagrafica().getNome());
 				ClientConnector.addPrenotazione(prenotazione);
+
+			}
+			//Modifica
 			else{
 				prenotazione.setId(prenotazioneEvent.getId());
 				ClientConnector.updatePrenotazione(prenotazione);
