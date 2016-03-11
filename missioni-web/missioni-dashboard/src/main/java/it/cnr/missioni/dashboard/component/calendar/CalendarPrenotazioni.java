@@ -22,7 +22,6 @@ import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClickHandler;
 import com.vaadin.addon.calendar.ui.handler.BasicDateClickHandler;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -42,7 +41,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.CalendarUpdateEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
-import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 
 public class CalendarPrenotazioni implements Serializable {
@@ -142,10 +141,12 @@ public class CalendarPrenotazioni implements Serializable {
 
 			public void eventClick(EventClick event) {
 
-				// solamente le la prenotazione appartiene all'utente loggato
-//				if (DashboardUI.getCurrentUser().getId()
-//						.equals(((PrenotazioneEvent) event.getCalendarEvent()).getIdUser()))
-					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), false,((PrenotazioneEvent) event.getCalendarEvent()).getId() == null ? false : true,true);
+				//La prenotazione è modificabile solamente dall'user proprietario o dall'admin
+				boolean enabled = DashboardUI.getCurrentUser().getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN
+						|| ((PrenotazioneEvent) event.getCalendarEvent()).getIdUser().equals(DashboardUI.getCurrentUser().getId());
+				
+
+					PrenotazioneWindow.open(getCalendarComponent(), (PrenotazioneEvent) event.getCalendarEvent(), false,enabled,true);
 			}
 		});
 
