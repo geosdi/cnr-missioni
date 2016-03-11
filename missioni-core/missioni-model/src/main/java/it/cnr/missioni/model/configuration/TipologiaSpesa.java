@@ -36,7 +36,7 @@ public class TipologiaSpesa implements Document {
 	private VoceSpesaEnum voceSpesa;
 
 	public enum VoceSpesaEnum{
-		PASTO,TRASPORTO,ALLOGGIO,RIMBORSOKM,ALTRO;
+		PASTO,TRASPORTO,ALLOGGIO,RIMBORSO_KM,ALTRO;
 	}
 	
 	public enum TipoSpesaEnum{
