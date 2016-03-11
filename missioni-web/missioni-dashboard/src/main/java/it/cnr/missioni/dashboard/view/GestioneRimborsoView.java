@@ -178,7 +178,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (selectedMissione.getRimborso().isPagata())
+				if (selectedMissione.isRimborsoSetted())
 					RimborsoWindowAdmin.open(selectedMissione, true, false, true);
 				else
 					openWizardRimborso();
