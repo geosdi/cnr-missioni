@@ -30,13 +30,14 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 	private HorizontalLayout mainLayout;;
 
 	private Missione missione;
-
+	private boolean modifica;
 	public String getCaption() {
 		return "Step 8";
 	}
 
-	public RiepilogoDatiMissioneStep(Missione missione) {
+	public RiepilogoDatiMissioneStep(Missione missione,boolean modifica) {
 		this.missione = missione;
+		this.modifica = modifica;
 
 	}
 
@@ -119,7 +120,7 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 
 					public void onClose(ConfirmDialog dialog) {
 						if (dialog.isConfirmed()) {
-							DashboardEventBus.post(new MissioneAction(missione, false));
+							DashboardEventBus.post(new MissioneAction(missione, modifica));
 							DashboardEventBus.post(new CloseOpenWindowsEvent());
 						} else {
 

@@ -22,6 +22,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
+import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -50,14 +51,15 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 	private HorizontalLayout mainLayout;;
 
 	private Missione missione;
+	private boolean modifica;
 
 	public String getCaption() {
 		return "Step 3";
 	}
 
-	public RiepilogoDatiRimborsoStep(Missione missione) {
+	public RiepilogoDatiRimborsoStep(Missione missione,boolean modifica) {
 		this.missione = missione;
-
+		this.modifica = modifica;
 	}
 
 	public Component getContent() {
@@ -147,7 +149,11 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 					public void onClose(ConfirmDialog dialog) {
 						if (dialog.isConfirmed()) {
+							if(!modifica)
 							DashboardEventBus.post(new RimborsoAction(missione));
+							else
+								DashboardEventBus.post(new UpdateRimborsoAction(missione));
+
 							DashboardEventBus.post(new CloseOpenWindowsEvent());
 						} else {
 
