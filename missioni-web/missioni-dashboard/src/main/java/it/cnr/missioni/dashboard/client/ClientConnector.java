@@ -7,6 +7,7 @@ import org.glassfish.jersey.client.ClientConfig;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorProvider;
+import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
@@ -51,7 +52,7 @@ public class ClientConnector {
 
 			@Override
 			public String getRestServiceURL() {
-				return "http://localhost:8282";
+				return Utility.getRestServiccesURL("rest_services_url");
 			}
 
 			@Override

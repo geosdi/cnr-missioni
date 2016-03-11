@@ -1,9 +1,13 @@
 package it.cnr.missioni.dashboard.utility;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import com.vaadin.server.Page;
@@ -25,6 +29,38 @@ public class Utility {
 
 	public static String getStringDecimalFormat(double d) {
 		return formatter.format(d);
+	}
+	
+	/**
+	 * 
+	 * Recupera il server su cui sono stati deployati i rest services
+	 * 
+	 * @param property
+	 * @return
+	 */
+	public static String getRestServiccesURL(String property){
+		Properties prop = new Properties();
+		InputStream input = null;
+
+		try {
+	        InputStream in = Utility.class.getResourceAsStream("/config.properties");
+
+			prop.load(in);
+
+			return prop.getProperty(property);
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
