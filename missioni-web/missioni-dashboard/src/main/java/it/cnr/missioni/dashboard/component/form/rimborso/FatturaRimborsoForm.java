@@ -37,6 +37,7 @@ import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
@@ -73,9 +74,9 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 	}
 
+	// Ogni fattura deve essere compresa tra le date di inizio e fine
+	// missione
 	public void setRangeDate() {
-		// Ogni fattura deve essere compresa tra le date di inizio e fine
-		// missione
 		formFattura.getDataField().setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
 		formFattura.getDataField().setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
 	}
@@ -381,8 +382,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			tipologiaSpesaField.setImmediate(true);
 
 			getFieldGroup().bind(tipologiaSpesaField, "idTipologiaSpesa");
-			if (!missione.isMissioneEstera())
-				buildTipologiaCombo(listaTipologiaSpesaItalia);
+
 
 			importoField = (TextField) getFieldGroup().buildAndBind("Importo", "importo");
 			valutaField = (TextField) getFieldGroup().buildAndBind("Valuta", "valuta");
@@ -394,7 +394,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			dataField.setDateFormat("dd/MM/yyyy HH:mm");
 			dataField.setValidationVisible(false);
 
-			getTipologiaSpesa(TipoSpesaEnum.ITALIA.name(), listaTipologiaSpesaItalia);
+			getTipologiaSpesa(TipoSpesaEnum.ITALIA.name(), listaTipologiaSpesaItalia,null);
 
 			// carica la combo con tutte le voce di spesa italiane
 			if (!missione.isMissioneEstera()) {
@@ -404,7 +404,10 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			// preleva la lista di spesa ESTERA e aggiunge il listener sul DATE
 			// FIELD
 			if (missione.isMissioneEstera()) {
-				getTipologiaSpesa(TipoSpesaEnum.ESTERA.name(), listaTipologiaSpesaEstera);
+				String tipoTrattamento = null;
+				if(missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO)
+					tipoTrattamento = TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name();
+				getTipologiaSpesa(TipoSpesaEnum.ESTERA.name(), listaTipologiaSpesaEstera,tipoTrattamento);
 				addListener();
 			}
 
@@ -441,12 +444,16 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		 * @param tipo
 		 * @param lista
 		 */
-		private void getTipologiaSpesa(String tipo, List<TipologiaSpesa> lista) {
+		private void getTipologiaSpesa(String tipo, List<TipologiaSpesa> lista,String tipoTrattamento) {
 			try {
-				TipologiaSpesaStore tipologiaStore = ClientConnector
-						.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(tipo));
-
-				if (tipologiaStore != null) {
+				
+				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(tipo);
+				if(tipoTrattamento != null)
+					t.withTipoTrattamento(tipoTrattamento);
+				
+				TipologiaSpesaStore tipologiaStore = ClientConnector.getTipologiaSpesa(t);
+				
+				if (tipologiaStore.getTotale() > 0) {
 					lista.addAll(tipologiaStore.getTipologiaSpesa());
 				}
 			} catch (Exception e) {
@@ -576,15 +583,5 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		}
 
 	}
-
-	// /**
-	// * @return
-	// * @throws CommitException
-	// */
-	// @Override
-	// public Fattura validate() throws CommitException,InvalidValueException {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
 
 }
