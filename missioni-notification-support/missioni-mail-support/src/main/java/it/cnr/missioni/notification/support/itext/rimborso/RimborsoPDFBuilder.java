@@ -1,8 +1,13 @@
 package it.cnr.missioni.notification.support.itext.rimborso;
 
 import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,22 +47,22 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
                 getType());
         super.checkArguments();
-
+		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-        String dataInserimentoRimborso = missione.getRimborso().getDataRimborso().toString();
         String dataInserimentoMissione = missione.getDataInserimento().toString();
-        String dataInizio = missione.getDatiPeriodoMissione().getInizioMissione().toString();
-        String dataFine = missione.getDatiPeriodoMissione().getFineMissione().toString();
+        String dataInizio = formatDataTime.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+        String dataFine = formatDataTime.format(missione.getDatiPeriodoMissione().getFineMissione().toDate());
         String dataAttraversamentoFrontieraAndata = "";
         String dataAttraversamentoFrontieraRitorno = "";
         if (missione.isMissioneEstera()){
-            dataAttraversamentoFrontieraAndata = missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString();
-            dataAttraversamentoFrontieraRitorno = missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toString();
+            dataAttraversamentoFrontieraAndata =formatDataTime.format( missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate());
+            dataAttraversamentoFrontieraRitorno = formatDataTime.format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate());
 
         }
 
+        Map<String, Fattura> treeMap = new TreeMap<String, Fattura>(missione.getRimborso().getMappaFattura());
 
-        List<Fattura> listaScontrini = new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values());
+        List<Fattura> listaScontrini = new ArrayList<Fattura>(treeMap.values());
         
         PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
         document.addSubject("Richiesta Rimborso");
@@ -174,7 +179,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         tableScontrino.addCell(new PdfPCell(new Paragraph("Valuta", fontBold)));
 
         for (Fattura fattura : listaScontrini) {
-            tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getData().toString(), fontNormal)));
+            tableScontrino.addCell(new PdfPCell(new Paragraph(formatDataTime.format(fattura.getData().toDate()), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getShortDescriptionTipologiaSpesa(), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getNumeroFattura().toString(), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getImporto() + "", fontNormal)));
@@ -183,7 +188,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         int size = listaScontrini.size();
         PdfPCell cellVuota = new PdfPCell();
         cellVuota.setFixedHeight(10f);
-        for (int i = 0; i < 12 - size; i++) {
+        for (int i = 0; i < 10 - size; i++) {
             tableScontrino.addCell(cellVuota);
             tableScontrino.addCell(cellVuota);
             tableScontrino.addCell(cellVuota);
@@ -214,7 +219,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         document.add(tablePagamento);
 
         Paragraph paragraphTotale = new Paragraph(
-                "\nAnticipazione da detrarre:" + missione.getRimborso().getAnticipazionePagamento() + "\n\n", fontBold);
+                "\nAnticipazione da detrarre:" + (missione.getRimborso().getAnticipazionePagamento() != null ? missione.getRimborso().getAnticipazionePagamento() : "") + "\n\n", fontBold);
         paragraphTotale.setAlignment(Paragraph.ALIGN_RIGHT);
         document.add(new Paragraph(paragraphTotale));
 
