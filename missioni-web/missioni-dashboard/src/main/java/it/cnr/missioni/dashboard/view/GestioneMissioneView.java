@@ -64,7 +64,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	protected MissioneSearchBuilder missioneSearchBuilder;
 	protected MissioniStore missioniStore;
 
-	
 	public GestioneMissioneView() {
 		super();
 
@@ -81,10 +80,10 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 				.withIdUser(DashboardUI.getCurrentUser().getId());
 	}
 
-	protected User getUser(){
+	protected User getUser() {
 		return DashboardUI.getCurrentUser();
 	}
-	
+
 	/**
 	 * 
 	 * Aggiunge il listener alla paginazione
@@ -136,9 +135,18 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			private static final long serialVersionUID = 8667294597657389614L;
 
 			@Override
-			public void itemClick(ItemClickEvent itemClickEvent) {	
-				selectedMissione = (Missione) itemClickEvent.getItemId();
-				enableButtons();
+			public void itemClick(ItemClickEvent itemClickEvent) {
+
+				try {
+					selectedMissione = ClientConnector
+							.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
+									.withIdMissione(((Missione) itemClickEvent.getItemId()).getId()))
+							.getMissioni().get(0);
+					enableButtons();
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
 			}
 		});
 
@@ -193,14 +201,15 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		});
 		return buttonCerca;
 	}
-	
-	protected void openWizardMissione(){
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione()).withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
+
+	protected void openWizardMissione() {
+		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione())
+				.withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
 	}
 
 	protected HorizontalLayout addActionButtons() {
 		layout = new HorizontalLayout();
-//		layout.setWidth("100%");
+		// layout.setWidth("100%");
 		layout.setSpacing(true);
 
 		buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione", FontAwesome.PLUS);
@@ -214,7 +223,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				openWizardMissione();
-				}
+			}
 
 		});
 
@@ -262,8 +271,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			}
 
 		});
-		
-		
 
 		downloaderForLink.extend(buttonPDF);
 
@@ -281,9 +288,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		});
 		veicoloDownloaderForLink.extend(buttonVeicoloMissionePDF);
 
-
 		this.buttonAnticipoPagamento = buildButton("Anticipo", "Anticipo Pagamento", FontAwesome.EURO);
-		this.buttonAnticipoPagamento.addClickListener(new ClickListener(){
+		this.buttonAnticipoPagamento.addClickListener(new ClickListener() {
 
 			/**
 			 * 
@@ -292,12 +298,12 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				openWindowAnticipoPagamenti();					
-				
+				openWindowAnticipoPagamenti();
+
 			}
-			
+
 		});
-		
+
 		this.buttonAnticipoPagamentoPdf = buildButton("Anticipo", "Pdf Anticipo Pagamento", FontAwesome.EURO);
 
 		final AdvancedFileDownloader anticipoPagamentoDownloaderForLink = new AdvancedFileDownloader();
@@ -318,47 +324,45 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void addButtonsToLayout() {
-		layout.addComponents(buttonNew, buttonDettagli, buttonAnticipoPagamento,buttonAnticipoPagamentoPdf,buttonRimborso, buttonPDF,
-				buttonVeicoloMissionePDF);
+		layout.addComponents(buttonNew, buttonDettagli, buttonAnticipoPagamento, buttonAnticipoPagamentoPdf,
+				buttonRimborso, buttonPDF, buttonVeicoloMissionePDF);
 	}
-	
-	protected void openWindowAnticipoPagamenti(){
+
+	protected void openWindowAnticipoPagamenti() {
 		AnticipoPagamentiWindow.open(selectedMissione, false, true, false);
 	}
-	
-	protected void downloadAnticipoPagamentoAsPdf(AdvancedFileDownloader anticipoPagamentoDownloaderForLink){
+
+	protected void downloadAnticipoPagamentoAsPdf(AdvancedFileDownloader anticipoPagamentoDownloaderForLink) {
 		anticipoPagamentoDownloaderForLink.setFileDownloadResource(getResourceAnticipoPagamento());
 	}
 
-	protected void addActionButtonDettagli(){
+	protected void addActionButtonDettagli() {
 		MissioneWindowAdmin.open(selectedMissione, true, false, true);
 
 	}
-	
-	protected boolean enableButtonWindowAnticipoPagamento(){
-		return selectedMissione != null && !selectedMissione.getDatiAnticipoPagamenti().isInserted() && selectedMissione.isMissioneEstera();
+
+	protected boolean enableButtonWindowAnticipoPagamento() {
+		return selectedMissione != null && !selectedMissione.getDatiAnticipoPagamenti().isInserted()
+				&& selectedMissione.isMissioneEstera();
 	}
-	
-	protected boolean enableButtonDownloadPdf(){
-		return selectedMissione != null && selectedMissione.isMissioneEstera() && selectedMissione.getDatiAnticipoPagamenti().isInserted();
+
+	protected boolean enableButtonDownloadPdf() {
+		return selectedMissione != null && selectedMissione.isMissioneEstera()
+				&& selectedMissione.getDatiAnticipoPagamenti().isInserted();
 	}
-	
-	protected void addActionButtonRimborso(){
-		Rimborso rimborso = null;
+
+	protected void addActionButtonRimborso() {
 		// se è già associato il rimborso
 		if (selectedMissione.isRimborsoSetted()) {
-			rimborso = selectedMissione.getRimborso();
 			RimborsoWindowAdmin.open(selectedMissione, false, false, false);
 
 		} else {
-			rimborso = new Rimborso();
-			selectedMissione.setRimborso(rimborso);
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.getUser()).withEnabled(true).withIsAdmin(false).withModifica(false)
-					.build();
+			selectedMissione.setRimborso(new Rimborso());
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione)
+					.withUser(this.getUser()).withEnabled(true).withIsAdmin(false).withModifica(false).build();
 		}
 
 	}
-
 
 	protected StreamResource getResource() {
 		try {
@@ -454,9 +458,9 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		this.buttonAnticipoPagamentoPdf.setVisible(enableButtonDownloadPdf());
 		this.buttonAnticipoPagamento.setEnabled(enableButtonWindowAnticipoPagamento());
 		this.buttonAnticipoPagamentoPdf.setEnabled(enableButtonDownloadPdf());
-		if(!buttonAnticipoPagamentoPdf.isVisible())
+		if (!buttonAnticipoPagamentoPdf.isVisible())
 			buttonAnticipoPagamento.setVisible(true);
-		}
+	}
 
 	protected void disableButtons() {
 		this.buttonDettagli.setEnabled(false);
@@ -495,14 +499,17 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		}
 
 	}
-	
+
 	/**
 	 * Reset missione se il wizard viene cancellato
 	 */
 	@Subscribe
-	public void resetSelectedMissione(final ResetMissioneEvent event){
+	public void resetSelectedMissione(final ResetMissioneEvent event) {
 		try {
-			this.selectedMissione = ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId())).getMissioni().get(0);
+			this.selectedMissione = ClientConnector
+					.getMissione(
+							MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId()))
+					.getMissioni().get(0);
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
