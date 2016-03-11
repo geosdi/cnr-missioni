@@ -6,10 +6,8 @@ import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /**
  * @author Salvia Vito
