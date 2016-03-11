@@ -48,6 +48,7 @@ public class DatiAnticipoPagamentoForm extends IForm.FormAbstract<DatiAnticipoPa
 		speseViaggioTamField = (CheckBox) getFieldGroup().buildAndBind("Spese di viaggio(Trattamento alternativo di missione);", "speseViaggioTam",CheckBox.class);
 		prospettoField = (CheckBox) getFieldGroup().buildAndBind("Prospetto calcolo anticipo(Trattamento alternativo di missione);", "prospetto",CheckBox.class);
 
+		//Crea checkbox in base al tipo di trattamento
 		if(trattamentoMissioneEstera == TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO){
 			addComponent(speseAlberghiereField);
 			addComponent(speseViaggioDocumentatoField);
@@ -56,15 +57,21 @@ public class DatiAnticipoPagamentoForm extends IForm.FormAbstract<DatiAnticipoPa
 			addComponent(prospettoField);
 		}
 		
-		if(isAdmin){
-			speseMissioniAnticipateField = (TextField) getFieldGroup().buildAndBind("Anticipo", "speseMissioniAnticipate");
-			mandatoCNRField = (TextField) getFieldGroup().buildAndBind("Mandato CNR", "mandatoCNR");
-			addComponent(speseMissioniAnticipateField);
-			addComponent(mandatoCNRField);
+		if(isAdmin)
+			setIsAdmin();
 
-			
-		}
 		
+	}
+	
+	/*
+	 * Nel caso in cui si accede come Admin
+	 * 
+	 */
+	private void setIsAdmin(){
+		speseMissioniAnticipateField = (TextField) getFieldGroup().buildAndBind("Anticipo", "speseMissioniAnticipate");
+		mandatoCNRField = (TextField) getFieldGroup().buildAndBind("Mandato CNR", "mandatoCNR");
+		addComponent(speseMissioniAnticipateField);
+		addComponent(mandatoCNRField);
 	}
 
 	public DatiAnticipoPagamenti validate() throws CommitException,InvalidValueException {
