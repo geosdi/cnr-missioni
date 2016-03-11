@@ -10,7 +10,6 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
@@ -50,7 +49,6 @@ public class MassimaleForm extends IForm.FormAbstract<Massimale> {
 
 	public void buildTab() {
 
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		valueField = (TextField) getFieldGroup().buildAndBind("Importo", "value");
 		addComponent(valueField);
 		areagGeograficaField = (ComboBox) getFieldGroup().buildAndBind("Area Geografica", "areaGeografica", ComboBox.class);

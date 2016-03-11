@@ -13,28 +13,17 @@ import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component.Event;
-import com.vaadin.ui.Component.Listener;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.AddUpdatePrenotazioneAction;
-import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.component.form.IForm;
-import it.cnr.missioni.dashboard.component.window.PrenotazioneWindow;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
@@ -70,13 +59,25 @@ public class PrenotazioneForm extends IForm.FormAbstract<PrenotazioneEvent> {
 
 	public void buildTab() {
 
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		localita = (TextField) getFieldGroup().buildAndBind("Localita", "localita");
 		addComponent(localita);
 		dataFrom = (DateField) getFieldGroup().buildAndBind("Inizio", "start");
 		addComponent(dataFrom);
 		dataTo = (DateField) getFieldGroup().buildAndBind("Fine", "end");
 		addComponent(dataTo);
+		buildFields();
+		addComponent(veicoliCNRField);
+
+		allDay = new CheckBox("Tutto il giorno");
+		allDay.setImmediate(true);
+		addComponent(allDay);
+
+		getFieldGroup().bind(allDay, "allDay");
+		setAllDayResolution(allDay.getValue());
+		addListener();
+	}
+	
+	private void buildFields(){
 		List<VeicoloCNR> lista = new ArrayList<VeicoloCNR>();
 		veicoliCNRField = new ComboBox("Veicolo");
 		try {
@@ -96,15 +97,6 @@ public class PrenotazioneForm extends IForm.FormAbstract<PrenotazioneEvent> {
 		veicoliCNRField.setValidationVisible(false);
 
 		getFieldGroup().bind(veicoliCNRField, "veicolo");
-		addComponent(veicoliCNRField);
-
-		allDay = new CheckBox("Tutto il giorno");
-		allDay.setImmediate(true);
-		addComponent(allDay);
-
-		getFieldGroup().bind(allDay, "allDay");
-		setAllDayResolution(allDay.getValue());
-		addListener();
 	}
 
 	public PrenotazioneEvent validate() throws CommitException, InvalidValueException {

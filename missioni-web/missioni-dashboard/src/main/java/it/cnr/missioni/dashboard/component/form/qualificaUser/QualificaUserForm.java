@@ -34,8 +34,6 @@ public class QualificaUserForm extends IForm.FormAbstract<QualificaUser> {
 	}
 
 	public void buildTab() {
-
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		valueField = (TextField) getFieldGroup().buildAndBind("Qualifica", "value");
 		addComponent(valueField);
 	}

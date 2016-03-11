@@ -9,7 +9,6 @@ import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -50,7 +49,6 @@ public class AnticipazionePagamentoMissioneForm extends IForm.FormAbstract<DatiA
 				CheckBox.class);
 		importoDaTerziField = (TextField) getFieldGroup().buildAndBind("Importo da Terzi", "importoDaTerzi");
 
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		addComponent(anticipazioniMonetarieField);
 		addComponent(numeroMandatoField);
 		addComponent(speseMissioniAnticipateField);

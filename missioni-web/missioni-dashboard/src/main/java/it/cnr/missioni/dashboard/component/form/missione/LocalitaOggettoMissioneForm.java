@@ -16,7 +16,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
@@ -62,7 +61,6 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 		localitaField = new TextField("Localita");
 		listaLocalitaField = new ComboBox("Seleziona località");
 		listaLocalitaField.setValidationVisible(false);
-//		fieldGroup.bind(listaLocalitaField, "localita");
 		if(modifica){
 			listaLocalitaField.addItem(bean.getGeoPoint().getLat() + "/" + bean.getGeoPoint().getLon());
 			listaLocalitaField.setItemCaption(bean.getGeoPoint().getLat() + "/" + bean.getGeoPoint().getLon(),
@@ -77,25 +75,7 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 		oggettoField = (TextField) getFieldGroup().buildAndBind("Oggetto", "oggetto");
 		distanzaField = (TextField) getFieldGroup().buildAndBind("Distanza", "distanza");
 		distanzaField.setEnabled(false);
-
-		listaNazioneField = new ComboBox("Nazione");
-		listaNazioneField.setImmediate(true);
-		listaNazioneField.setValidationVisible(false);
-		getFieldGroup().bind(listaNazioneField, "idNazione");
-		try {
-			NazioneStore nazioneStore = ClientConnector
-					.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withAll(true));
-			nazioneStore.getNazione().forEach(c -> {
-				listaNazioneField.addItem(c.getId());
-				listaNazioneField.setItemCaption(c.getId(), c.getValue());
-			});
-		} catch (Exception e) {
-			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-					Type.ERROR_MESSAGE);
-		}
-
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-
+		buildFields();
 		HorizontalLayout layoutLocalita = new HorizontalLayout();
 		layoutLocalita.addComponent(localitaField);
 		if(isAdmin)
@@ -111,6 +91,24 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
 
 	}
 
+	private void buildFields(){
+		listaNazioneField = new ComboBox("Nazione");
+		listaNazioneField.setImmediate(true);
+		listaNazioneField.setValidationVisible(false);
+		getFieldGroup().bind(listaNazioneField, "idNazione");
+		try {
+			NazioneStore nazioneStore = ClientConnector
+					.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withAll(true));
+			nazioneStore.getNazione().forEach(c -> {
+				listaNazioneField.addItem(c.getId());
+				listaNazioneField.setItemCaption(c.getId(), c.getValue());
+			});
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+	}
+	
 	public void setVisibleField(boolean visible){
 		listaNazioneField.setVisible(visible);
 	}

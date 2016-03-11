@@ -74,9 +74,6 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 	}
 
 	public void buildTab() {
-
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-
 		rimborsoDaTerziField = (CheckBox) getFieldGroup().buildAndBind("Rimborso da Terzi", "rimborsoDaTerzi",
 				CheckBox.class);
 		importoDaTerziField = (TextField) getFieldGroup().buildAndBind("Importo da Terzi", "importoDaTerzi");
@@ -87,7 +84,8 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		dataFineMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
 		dataFineMissioneField.setValidationVisible(false);
 		dataFineMissioneField.setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
-		
+		if(modifica)
+			dataFineMissioneField.setValue(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
 		totKmField = (TextField) getFieldGroup().buildAndBind("Km da rimborsare", "totKm");
 
 		if (isAdmin || modifica) {
@@ -135,15 +133,19 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		try {
 			RimborsoKmStore rimborsoKmStore = ClientConnector
 					.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+			double rimborso = 0.0;
+
 			if (rimborsoKmStore.getTotale() > 0) {
 
-				NumberFormat f = NumberFormat.getInstance();
-				double number = f.parse(totKmField.getValue()).doubleValue();
-
-				setTotRimborsoKm(number * rimborsoKmStore.getRimborsoKm().get(0).getValue());
-
+				
+				if(totKmField.getValue() != null){
+					NumberFormat f = NumberFormat.getInstance();
+					double number = f.parse(totKmField.getValue()).doubleValue();
+					rimborso = number * rimborsoKmStore.getRimborsoKm().get(0).getValue();
+				}
 			}
-			labelTotRimborsoKm.setValue("Tot. Rimborso km: " + getTotRimborsoKm());
+			setTotRimborsoKm(rimborso);
+			labelTotRimborsoKm.setValue("Tot. Rimborso km: " + rimborso);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);

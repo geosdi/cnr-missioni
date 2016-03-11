@@ -12,7 +12,6 @@ import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -36,7 +35,6 @@ public class DatiPeriodoMissioneForm extends IForm.FormAbstract<DatiPeriodoMissi
 		setFieldGroup(new BeanFieldGroup<DatiPeriodoMissione>(DatiPeriodoMissione.class));
 		buildFieldGroup();
 		buildTab();
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 	}
 
 	public void buildTab() {

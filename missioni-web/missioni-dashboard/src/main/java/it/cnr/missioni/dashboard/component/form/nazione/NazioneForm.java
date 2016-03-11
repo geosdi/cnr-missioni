@@ -37,7 +37,6 @@ public class NazioneForm extends IForm.FormAbstract<Nazione> {
 
 
 	public void  buildTab() {
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		valueField = (TextField) getFieldGroup().buildAndBind("Nazione", "value");
 		addComponent(valueField);
 		areagGeograficaField = (ComboBox) getFieldGroup().buildAndBind("Area Geografica", "areaGeografica", ComboBox.class);

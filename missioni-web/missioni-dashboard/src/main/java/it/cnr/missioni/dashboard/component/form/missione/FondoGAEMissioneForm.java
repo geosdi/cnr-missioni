@@ -45,6 +45,21 @@ public class FondoGAEMissioneForm extends IForm.FormAbstract<Missione> {
 
 	public void buildTab() {
 
+		buildFields();
+		fondoField = (TextField) getFieldGroup().buildAndBind("Fondo", "fondo");
+		GAEField = (TextField) getFieldGroup().buildAndBind("GAE", "GAE");
+		getFieldGroup().bind(listaResponsabiliGruppoField, "responsabileGruppo");
+		getFieldGroup().bind(listaSeguito, "idUserSeguito");
+		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+		addComponent(fondoField);
+		addComponent(GAEField);
+		addComponent(listaResponsabiliGruppoField);
+		addComponent(listaSeguito);
+		addListener();
+
+	}
+	
+	private void buildFields(){
 		listaResponsabiliGruppoField = new ComboBox("Responsabile Gruppo");
 
 		try {
@@ -81,17 +96,6 @@ public class FondoGAEMissioneForm extends IForm.FormAbstract<Missione> {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 		}
-
-		fondoField = (TextField) getFieldGroup().buildAndBind("Fondo", "fondo");
-		GAEField = (TextField) getFieldGroup().buildAndBind("GAE", "GAE");
-		getFieldGroup().bind(listaResponsabiliGruppoField, "responsabileGruppo");
-		getFieldGroup().bind(listaSeguito, "idUserSeguito");
-		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-		addComponent(fondoField);
-		addComponent(GAEField);
-		addComponent(listaResponsabiliGruppoField);
-		addComponent(listaSeguito);
-		addListener();
 
 	}
 

@@ -447,7 +447,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		private void getTipologiaSpesa(String tipo, List<TipologiaSpesa> lista,String tipoTrattamento) {
 			try {
 				
-				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(tipo);
+				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(tipo).withAll(true);
 				if(tipoTrattamento != null)
 					t.withTipoTrattamento(tipoTrattamento);
 				
