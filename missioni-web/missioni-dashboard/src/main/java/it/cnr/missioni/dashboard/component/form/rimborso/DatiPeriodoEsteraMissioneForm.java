@@ -126,8 +126,15 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 
-				if (attraversamentoFrontieraAndataField.getValue() == null && missione.isMissioneEstera())
+				if (attraversamentoFrontieraAndataField.getValue() == null)
 					throw new InvalidValueException(Utility.getMessage("field_required"));
+				else {
+					DateTime d = new DateTime(attraversamentoFrontieraAndataField.getValue());
+					if(d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione()) ||  d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()) ){
+						throw new InvalidValueException(Utility.getMessage("date_range_start"));
+					}
+				}
+					
 
 			}
 		});
@@ -143,13 +150,17 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 
-				if (attraversamentoFrontieraRitornoField.getValue() == null && missione.isMissioneEstera())
+				if (attraversamentoFrontieraRitornoField.getValue() == null )
 					throw new InvalidValueException(Utility.getMessage("field_required"));
 				else {
 					DateTime data = new DateTime((Date) value);
 					if (missione.isMissioneEstera() && attraversamentoFrontieraAndataField.getValue() != null
 							&& data.isBefore(attraversamentoFrontieraAndataField.getValue().getTime()))
 						throw new InvalidValueException(Utility.getMessage("data_error"));
+					else if(data.isBefore(missione.getDatiPeriodoMissione().getInizioMissione()) ||  data.isAfter(missione.getDatiPeriodoMissione().getFineMissione()) ){
+							throw new InvalidValueException(Utility.getMessage("date_range_start"));
+						}
+
 				}
 
 			}
