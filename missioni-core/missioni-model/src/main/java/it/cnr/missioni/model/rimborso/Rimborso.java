@@ -85,7 +85,7 @@ public class Rimborso implements Serializable {
 		DateTime dataLimiteInizio = null;
 		DateTime dataLimiteFine = null;
 		int hours = 0;
-
+		
 		if (isEstera) {
 			dataLimiteInizio = dataFrontieraAndata;
 			dataLimiteFine = dataFrontieraRitorno;
