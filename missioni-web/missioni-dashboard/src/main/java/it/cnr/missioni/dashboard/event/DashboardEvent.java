@@ -91,6 +91,10 @@ public abstract class DashboardEvent {
 	public static class TableMissioniUpdateUpdatedEvent {
 
 	}
+	
+	public static class ResetMissioneEvent {
+
+	}
 
 	/**
 	 * Aggiorna la tabella rimborso dopo un inserimento o update
