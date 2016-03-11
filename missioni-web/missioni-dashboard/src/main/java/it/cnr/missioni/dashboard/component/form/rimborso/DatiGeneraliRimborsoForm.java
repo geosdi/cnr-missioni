@@ -1,9 +1,7 @@
 package it.cnr.missioni.dashboard.component.form.rimborso;
 
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Date;
-import java.util.Locale;
 
 import org.joda.time.DateTime;
 
@@ -44,7 +42,6 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 	 * 
 	 */
 	private static final long serialVersionUID = 4676249391052429281L;
-	private CheckBox rimborsoDaTerziField;
 	private TextField importoDaTerziField;
 	private TextField totKmField;
 	private TextField mandatoPagamentoField;
@@ -74,8 +71,6 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 	}
 
 	public void buildTab() {
-		rimborsoDaTerziField = (CheckBox) getFieldGroup().buildAndBind("Rimborso da Terzi", "rimborsoDaTerzi",
-				CheckBox.class);
 		importoDaTerziField = (TextField) getFieldGroup().buildAndBind("Importo da Terzi", "importoDaTerzi");
 		avvisoPagamentoField = (TextField) getFieldGroup().buildAndBind("Avviso di Pagamento", "avvisoPagamento");
 		dataFineMissioneField = new DateField("Data fine missione");
@@ -99,7 +94,6 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 			addComponent(totaleDovutoField);
 
 		}
-		addComponent(rimborsoDaTerziField);
 		addComponent(importoDaTerziField);
 		addComponent(avvisoPagamentoField);
 		addComponent(dataFineMissioneField);
@@ -107,9 +101,8 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		if (mezzoProprio) {
 			addComponent(totKmField);
 			addComponent(labelTotRimborsoKm);
-			if (modifica) {
-				setTotaleRimborsoKM();
-			}
+			setTotaleRimborsoKM();
+			
 		}
 		if(missione.getDatiAnticipoPagamenti().isInserted()){
 			anticipoPagamentoLabel = new Label();
@@ -299,71 +292,6 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		}
 		
 		
-		rimborsoDaTerziField.addValidator(new Validator() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -8647870626324583181L;
-
-			@Override
-			public void validate(Object value) throws InvalidValueException {
-				
-				double number = 0;
-				NumberFormat format =  NumberFormat.getInstance(Locale.ITALY);
-				format.setGroupingUsed(false);
-				format.setMaximumFractionDigits(2);
-				format.setMinimumFractionDigits(2);
-				
-				
-				try {
-					 number = format.parse(importoDaTerziField.getValue()).doubleValue();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				
-				if (!rimborsoDaTerziField.getValue() && number > 0 )
-					throw new InvalidValueException(Utility.getMessage("rimborso_terzi_error"));
-
-			}
-
-		});
-
-		importoDaTerziField.addValidator(new Validator() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -8647870626324583181L;
-
-			@Override
-			public void validate(Object value) throws InvalidValueException {
-				
-				double number = 0;
-				NumberFormat format =  NumberFormat.getInstance(Locale.ITALY);
-				format.setGroupingUsed(false);
-				format.setMaximumFractionDigits(2);
-				format.setMinimumFractionDigits(2);
-				
-				
-				try {
-					 number = format.parse(importoDaTerziField.getValue()).doubleValue();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				if (rimborsoDaTerziField.getValue() && (importoDaTerziField.getValue() == null || number <= 0 ))
-					throw new InvalidValueException(Utility.getMessage("importo_terzi_error"));
-				
-				else if (!rimborsoDaTerziField.getValue() && number > 0 )
-					throw new InvalidValueException(Utility.getMessage("importo_terzi_error"));
-
-			}
-
-		});
 
 	}
 
