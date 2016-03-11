@@ -64,7 +64,8 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		this.formFattura = new FormFattura(missione, isAdmin, enabled, modifica);
 		this.missione = missione;
 		addComponent(formFattura);
-		if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
+//		if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
+		if (enabled) {
 			HorizontalLayout l = buildFatturaButton();
 			addComponent(l);
 			setComponentAlignment(l, Alignment.MIDDLE_RIGHT);
@@ -231,6 +232,14 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 					if (dataField.getValue() == null)
 						throw new InvalidValueException(Utility.getMessage("field_required"));
+					else{
+						DateTime d = new DateTime(dataField.getValue());
+						//Verifica che la fattura sia inserita nel range tra inizio e fine missione
+						if(d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione()) ||
+								d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
+							throw new InvalidValueException(Utility.getMessage("date_range_start"));
+					}
+						
 
 				}
 			});
@@ -278,7 +287,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					if (missione.getRimborso().getNumberFatturaPermissible(
 							missione.getDatiPeriodoMissione().getInizioMissione(),
 							missione.getDatiPeriodoMissione().getFineMissione(),dataFrontieraAndata,dataFrontieraRitorno, dateFattura,
-							missione.isMissioneEstera()) <= n)
+							missione.isMissioneEstera()) <= n && !missione.getRimborso().getMappaFattura().containsKey( ((BeanItem<Fattura>) formFattura.getFieldGroup().getItemDataSource()).getBean().getId() ))
 						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
 				}
 
@@ -304,6 +313,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 				@Override
 				public void blur(BlurEvent event) {
 					try {
+						tipologiaSpesaField.setValidationVisible(false);
 						dataField.validate();
 					} catch (Exception e) {
 						dataField.setValidationVisible(true);
