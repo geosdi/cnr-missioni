@@ -115,7 +115,7 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		Paragraph paragraphAttivita = new Paragraph("\nper la seguente attività: " + missione.getOggetto() +
 
-		"da svolgersi a " + missione.getLocalita() + ", Nazione " + missione.getShortDescriptionNazione()
+		" da svolgersi a " + missione.getLocalita() + ", nazione " + missione.getShortDescriptionNazione()
 				+ " per il periodo " + formatData.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate()) +
 
 		" per la durata presunta di n." + days + " gg.\n" +
