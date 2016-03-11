@@ -25,6 +25,8 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.UserRegistrationAction;
+import it.cnr.missioni.dashboard.DashboardUI;
+import it.cnr.missioni.dashboard.action.UpdateCredenzialiUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -85,11 +87,9 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
 
-//		BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
-//		User user = beanItem.getBean();
-
 		usernameField = (TextField) fieldGroup.buildAndBind("Username", "credenziali.username");
 		
+		if(!modifica)
 		usernameField.addValidator(new Validator(){
 
 			/**
@@ -102,7 +102,7 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 				UserStore userStore = null;
 				try{
 				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername(usernameField.getValue());
-				
+							
 				 userStore = ClientConnector.getUser(userSearchBuilder);
 			
 				} catch (Exception e) {
@@ -193,11 +193,11 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 
 					BeanItem<User> beanItem = (BeanItem<User>) fieldGroup.getItemDataSource();
 					User user = beanItem.getBean();
-
+					
 					if (!modifica)
 						DashboardEventBus.post(new UserRegistrationAction(user));
 					else
-						DashboardEventBus.post(new UpdateUserAction(user));
+						DashboardEventBus.post(new UpdateCredenzialiUserAction(user));
 					close();
 
 				} catch (InvalidValueException | CommitException e) {
