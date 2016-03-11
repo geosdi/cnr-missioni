@@ -28,10 +28,11 @@ public class RimborsoAction implements IAction {
 			if (missione.getRimborso().getDataRimborso() == null)
 				missione.getRimborso().setDataRimborso(new DateTime());
 			missione.getRimborso().setDateLastModified(new DateTime());
-			
+
 			ClientConnector.updateMissione(missione);
-			Thread.sleep(1000);	
+			Thread.sleep(1000);
 			DashboardEventBus.post(new DashboardEvent.TableRimborsiUpdatedEvent());
+
 			ClientConnector.sendRimborsoMail(missione.getId());
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 
