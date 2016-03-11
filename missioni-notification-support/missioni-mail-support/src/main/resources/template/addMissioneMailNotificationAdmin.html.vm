@@ -2,7 +2,7 @@
 <body>
     <h3>CNR : Sistema Missioni</h3>
     <div>
-        <p>L'user ${userName} ${userSurname} ha inserito una nuova missione.
+        <p>L'utente ${userName} ${userSurname} ha inserito una nuova missione.
          In allegato
            il pdf che riepiloga i dati inseriti.
         </p>

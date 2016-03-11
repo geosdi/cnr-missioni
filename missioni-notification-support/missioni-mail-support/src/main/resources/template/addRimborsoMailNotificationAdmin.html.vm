@@ -2,7 +2,7 @@
 <body>
     <h3>CNR : Sistema Missioni</h3>
     <div>
-        <p>L'user ${userName} ${userSurname} ha inserito il rimborso relativo 
+        <p>L'utente ${userName} ${userSurname} ha inserito il rimborso relativo 
         alla missione ${missioneID}. In allegato
            il pdf che riepiloga i dati inseriti.
         </p>

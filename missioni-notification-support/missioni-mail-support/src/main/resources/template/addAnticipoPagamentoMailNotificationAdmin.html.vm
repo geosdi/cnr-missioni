@@ -2,7 +2,7 @@
 <body>
     <h3>CNR : Sistema Missioni</h3>
     <div>
-        <p>L'user ${userName} ${userSurname} ha inserito un nuovo anticipo pagamento 
+        <p>L'utente ${userName} ${userSurname} ha inserito un nuovo anticipo pagamento 
         	per la missione con ID : ${missioneID}.
          In allegato
            il pdf che riepiloga i dati inseriti.
