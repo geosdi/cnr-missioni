@@ -598,6 +598,7 @@ public class CalendarPrenotazioni implements Serializable {
 						prenotazioneEvent.setEnd(p.getDataTo().toDate());
 						prenotazioneEvent.setVeicolo(p.getIdVeicoloCNR());
 						prenotazioneEvent.setCaption(p.getDescrizione());
+						prenotazioneEvent.setLocalita(p.getLocalita());
 						events.add(prenotazioneEvent);
 					});
 				}
