@@ -108,11 +108,14 @@ public class FondoGAEMissioneForm extends IForm.FormAbstract<Missione> {
 		GAEField.validate();
 		listaResponsabiliGruppoField.validate();
 		listaSeguito.validate();
+		
 		bean.setGAE(GAEField.getValue());
 		bean.setFondo(fondoField.getValue());
 		bean.setResponsabileGruppo(listaResponsabiliGruppoField.getValue().toString());
 		bean.setShortResponsabileGruppo(
 				listaResponsabiliGruppoField.getItemCaption(listaResponsabiliGruppoField.getValue()));
+		
+		//Selezionato user a seguito
 		if(listaSeguito.getValue() != null){
 			bean.setIdUserSeguito(listaSeguito.getValue().toString());
 			bean.setShortUserSeguito(listaSeguito.getItemCaption(listaSeguito.getValue()));
