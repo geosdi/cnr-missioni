@@ -50,10 +50,9 @@ public class DatiPeriodoMissioneForm extends IForm.FormAbstract<DatiPeriodoMissi
 		fineMissioneField.setDateOutOfRangeMessage("Data non possibile");
 		fineMissioneField.setValidationVisible(false);
 
-		if (modifica) {
-			inizioMissioneField.setValue(bean.getInizioMissione().toDate());
-			fineMissioneField.setValue(bean.getFineMissione().toDate());
-		}
+		if (modifica) 
+			setModifica();
+		
 		if(!isAdmin){
 			inizioMissioneField.setRangeStart(new DateTime().toDate());
 			fineMissioneField.setRangeStart(new DateTime().toDate());
@@ -68,6 +67,12 @@ public class DatiPeriodoMissioneForm extends IForm.FormAbstract<DatiPeriodoMissi
 		addValidator();
 	}
 
+	
+	private void setModifica(){
+		inizioMissioneField.setValue(bean.getInizioMissione().toDate());
+		fineMissioneField.setValue(bean.getFineMissione().toDate());
+	}
+	
 	public DatiPeriodoMissione validate() throws CommitException, InvalidValueException {
 
 		DatiPeriodoMissione periodoMissione = null;
