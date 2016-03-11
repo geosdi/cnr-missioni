@@ -7,7 +7,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.model.configuration.QualificaUser;
