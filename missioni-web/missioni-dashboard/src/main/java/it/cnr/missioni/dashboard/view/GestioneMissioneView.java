@@ -33,6 +33,7 @@ import it.cnr.missioni.dashboard.component.window.admin.MissioneWindowAdmin;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetMissioneEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
@@ -135,7 +136,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 			private static final long serialVersionUID = 8667294597657389614L;
 
 			@Override
-			public void itemClick(ItemClickEvent itemClickEvent) {
+			public void itemClick(ItemClickEvent itemClickEvent) {	
 				selectedMissione = (Missione) itemClickEvent.getItemId();
 				enableButtons();
 			}
@@ -493,6 +494,20 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 					Type.ERROR_MESSAGE);
 		}
 
+	}
+	
+	/**
+	 * Reset missione se il wizard viene cancellato
+	 */
+	@Subscribe
+	public void resetSelectedMissione(final ResetMissioneEvent event){
+		try {
+			this.selectedMissione = ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId())).getMissioni().get(0);
+
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
 	}
 
 }

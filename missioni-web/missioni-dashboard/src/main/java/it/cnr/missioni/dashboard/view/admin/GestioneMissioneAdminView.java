@@ -68,7 +68,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 	protected void addActionButtonRimborso(){
 		Rimborso rimborso = null;
 		// se è già associato il rimborso
-		if (selectedMissione.isRimborsoSetted()) {
+		if (selectedMissione.getRimborso().isPagata()) {
 			rimborso = selectedMissione.getRimborso();
 			RimborsoWindowAdmin.open(selectedMissione, true, false, false);
 
