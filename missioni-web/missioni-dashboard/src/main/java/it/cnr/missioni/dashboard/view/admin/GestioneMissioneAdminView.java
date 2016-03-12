@@ -15,7 +15,6 @@ import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
-import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 
 /**
@@ -66,15 +65,11 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 	}
 	
 	protected void addActionButtonRimborso(){
-		Rimborso rimborso = null;
 		// se è già associato il rimborso
 		if (selectedMissione.getRimborso().isPagata()) {
-			rimborso = selectedMissione.getRimborso();
 			RimborsoWindowAdmin.open(selectedMissione, true, false, false);
 
 		} else {
-			rimborso = new Rimborso();
-			selectedMissione.setRimborso(rimborso);
 			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(this.getUser()).withEnabled(true).withIsAdmin(true).withModifica(true)
 					.build();
 		}
