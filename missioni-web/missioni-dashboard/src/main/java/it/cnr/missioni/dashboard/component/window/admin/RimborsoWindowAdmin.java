@@ -19,6 +19,7 @@ import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.rimborso.DatiGeneraliRimborsoForm;
+import it.cnr.missioni.dashboard.component.form.rimborso.DatiPeriodoEsteraMissioneForm;
 import it.cnr.missioni.dashboard.component.form.rimborso.FatturaRimborsoForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -47,8 +48,10 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 	
 	private DatiGeneraliRimborsoForm datiGeneraliForm;
 	private FatturaRimborsoForm fatturaForm;
+	private DatiPeriodoEsteraMissioneForm datiPeriodoEsteraMissioneForm;
 
-	private RimborsoWindowAdmin(final Missione missione,boolean modifica,boolean enabled,boolean isAdmin) {
+
+	private RimborsoWindowAdmin(final Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		super(isAdmin,enabled,modifica);
 		this.missione = missione;
 		this.rimborso = missione.getRimborso();
@@ -64,53 +67,33 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 
 	private void buildTabs() {
 		buildRimborsoTab();
+		if(missione.isMissioneEstera())
+			buildDatiEsteriTab();
 		buildFatturaTab();
+
 	}
 
 
-	private void buildRimborsoTab() {
-		
-		int days = 0;
-		
-		if (missione.isMissioneEstera()) {
-
-			try {
-				Nazione nazione = ClientConnector
-						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-						.getNazione().get(0);
-				MassimaleStore massimaleStore;
-				massimaleStore = ClientConnector
-						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
-								.withAreaGeografica(nazione.getAreaGeografica().name()).withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
-				if (massimaleStore != null) {
-					rimborso.calcolaTotaleTAM(massimaleStore.getMassimale().get(0),
-							missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
-							missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
-				}
-			} catch (Exception e) {
-				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-						Type.ERROR_MESSAGE);
-			}
-		}
-		
-		if(missione.isMissioneEstera())
-			days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(), missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
-			.getDays();
-		
-		this.datiGeneraliForm = new  DatiGeneraliRimborsoForm(missione, days,isAdmin, enabled,modifica);
-		detailsWrapper.addComponent(buildTab("Generale", FontAwesome.USER, this.datiGeneraliForm ));
+	private void buildRimborsoTab() {		
+		this.datiGeneraliForm = new  DatiGeneraliRimborsoForm(missione,isAdmin, enabled,modifica);
+		detailsWrapper.addComponent(buildTab("Generale", FontAwesome.GEAR, this.datiGeneraliForm ));
 
 	}
 
 
 
 	private void buildFatturaTab() {
-
 		this.fatturaForm =  new FatturaRimborsoForm(missione,isAdmin,enabled,modifica);
 		detailsWrapper.addComponent(buildTab("Fattura", FontAwesome.EURO, this.fatturaForm ));
 
 	}
+	
+	private void buildDatiEsteriTab() {
+		this.datiPeriodoEsteraMissioneForm =  new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(),isAdmin,enabled,modifica,missione);
+		detailsWrapper.addComponent(buildTab("Dati Missione Estera", FontAwesome.CALENDAR, this.datiPeriodoEsteraMissioneForm ));
+
+	}
+
 
 	protected Component buildFooter() {
 
@@ -141,9 +124,9 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
 		return footer;
 	}
 
-	public static void open(final Missione missione,boolean modifica,boolean enabled,boolean isAdmin) {
+	public static void open(final Missione missione,boolean isAdmin,boolean enabled,boolean modifica) {
 		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new RimborsoWindowAdmin(missione,modifica,enabled,isAdmin);
+		Window w = new RimborsoWindowAdmin(missione,isAdmin,enabled,modifica);
 		UI.getCurrent().addWindow(w);
 		w.focus();
 	}
