@@ -49,7 +49,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		return "Step 3";
 	}
 
-	public RiepilogoDatiRimborsoStep(Missione missione,boolean modifica,boolean isAdmin) {
+	public RiepilogoDatiRimborsoStep(Missione missione, boolean modifica, boolean isAdmin) {
 		this.missione = missione;
 		this.modifica = modifica;
 		this.isAdmin = isAdmin;
@@ -58,8 +58,6 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 	public Component getContent() {
 		return buildPanel();
 	}
-
-
 
 	private Component buildPanel() {
 		VerticalLayout root = new VerticalLayout();
@@ -72,57 +70,33 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		details.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
 		root.addComponent(details);
 		// root.setExpandRatio(details, 1);
-		if(isAdmin){
-			details.addComponent(buildLabel("Pagata: ", missione.getRimborso().isPagata() ? "Si":"No"));
-			details.addComponent(buildLabel("Mandato di pagamento: ", missione.getRimborso().getMandatoPagamento()));
+		if (isAdmin) {
+			details.addComponent(Utility.buildLabel("Pagata: ", missione.getRimborso().isPagata() ? "Si" : "No"));
+			details.addComponent(Utility.buildLabel("Mandato di pagamento: ", missione.getRimborso().getMandatoPagamento()));
 		}
 		details.addComponent(
-				buildLabel("Importo da Terzi: ", Double.toString(missione.getRimborso().getImportoDaTerzi())+" €"));
-		details.addComponent(buildLabel("Avviso Pagamento: ", (missione.getRimborso().getAvvisoPagamento() != null
+				Utility.buildLabel("Importo da Terzi: ", Double.toString(missione.getRimborso().getImportoDaTerzi()) + " €"));
+		details.addComponent(Utility.buildLabel("Avviso Pagamento: ", (missione.getRimborso().getAvvisoPagamento() != null
 				? missione.getRimborso().getAvvisoPagamento() : "")));
 		details.addComponent(
-				buildLabel("Anticipazione Pagamento: ", missione.getRimborso().getAnticipazionePagamento() != null
-						? Double.toString(missione.getRimborso().getAnticipazionePagamento())+" €" : "0.0 €"));
+				Utility.buildLabel("Anticipazione Pagamento: ", missione.getRimborso().getAnticipazionePagamento() != null
+						? Double.toString(missione.getRimborso().getAnticipazionePagamento()) + " €" : "0.0 €"));
 		if (missione.isMezzoProprio())
-			details.addComponent(buildLabel("Rimborso KM: ", Double.toString(missione.getRimborso().getRimborsoKm())+" €"));
-		if(missione.isMissioneEstera())
-			details.addComponent(buildLabel("Tot. lordo TAM: ", Double.toString(missione.getRimborso().getTotaleTAM())+" €"));
-		details.addComponent(buildLabel("Totale Fatture: ", Double.toString(missione.getRimborso().getTotale())+" €"));
-
+			details.addComponent(
+					Utility.buildLabel("Rimborso KM: ", Double.toString(missione.getRimborso().getRimborsoKm()) + " €"));
+		if (missione.isMissioneEstera())
+			details.addComponent(
+					Utility.buildLabel("Tot. lordo TAM: ", Double.toString(missione.getRimborso().getTotaleTAM()) + " €"));
+		details.addComponent(
+				Utility.buildLabel("Totale Fatture: ", Double.toString(missione.getRimborso().getTotale()) + " €"));
 
 		if (missione.isMissioneEstera()) {
-
-			int days = 0;
-			try {
-				Nazione nazione = ClientConnector
-						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-						.getNazione().get(0);
-				MassimaleStore massimaleStore = ClientConnector
-						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
-								.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
-								.withAreaGeografica(nazione.getAreaGeografica().name())
-								.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
-
-				if (massimaleStore.getTotale() > 0) {
-					missione.getRimborso().calcolaTotaleTAM(massimaleStore.getMassimale().get(0),
-							missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
-							missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
-
-				}
-				days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
-						missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()).getDays();
-
-				details.addComponent(buildLabel("GG all'estero: ", Integer.toString(days)));
-				details.addComponent(buildLabel("Tot. lordo TAM: ", missione.getRimborso().getTotaleTAM().toString()));
-				details.addComponent(buildLabel("Attraversamento Frontiera Andata: ",
-						missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
-				details.addComponent(buildLabel("Attraversamento Frontiera Ritorno: ",
-						missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
-			} catch (Exception e) {
-				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-						Type.ERROR_MESSAGE);
-			}
-
+			details.addComponent(Utility.buildLabel("GG all'estero: ", Integer.toString(Utility.getDaysEstero(missione))));
+			details.addComponent(Utility.buildLabel("Tot. lordo TAM: ", missione.getRimborso().getTotaleTAM().toString()));
+			details.addComponent(Utility.buildLabel("Attraversamento Frontiera Andata: ",
+					missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
+			details.addComponent(Utility.buildLabel("Attraversamento Frontiera Ritorno: ",
+					missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
 		}
 
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
@@ -136,37 +110,35 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 	public boolean onAdvance() {
 
-		String conferma = "" ;
-		
-		if(isAdmin)
+		String conferma = "";
+
+		if (isAdmin)
 			conferma = "Verrà inviata una mail all'utente con i dati dell rimborso inserita.";
 		else
 			conferma = "Il rimborso inserito non potrà essere più modificato. Verrà inviata una mail all'amministratore con i dati del rimborso inserita.";
 
-		ConfirmDialog.show(UI.getCurrent(), "Conferma",
-				conferma,
-				"Ok", "No", new ConfirmDialog.Listener() {
+		ConfirmDialog.show(UI.getCurrent(), "Conferma", conferma, "Ok", "No", new ConfirmDialog.Listener() {
 
-					/**
-					 * 
-					 */
-					private static final long serialVersionUID = -4768987961330740317L;
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -4768987961330740317L;
 
-					public void onClose(ConfirmDialog dialog) {
-						if (dialog.isConfirmed()) {
-								confirmed();
-						} else {
+			public void onClose(ConfirmDialog dialog) {
+				if (dialog.isConfirmed()) {
+					confirmed();
+				} else {
 
-						}
-					}
-				});
+				}
+			}
+		});
 		return true;
 
 	}
-	
-	private void confirmed(){
-		if(!modifica)
-		DashboardEventBus.post(new RimborsoAction(missione));
+
+	private void confirmed() {
+		if (!modifica)
+			DashboardEventBus.post(new RimborsoAction(missione));
 		else
 			DashboardEventBus.post(new UpdateRimborsoAction(missione));
 
@@ -181,12 +153,6 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		return mainLayout;
 	}
 
-	private Label buildLabel(String caption, String value) {
-		Label labelValue = new Label("<b>" + caption + "</b>" + value, ContentMode.HTML);
-		labelValue.setStyleName(ValoTheme.LABEL_LIGHT);
 
-		labelValue.setWidth("50%");
-		return labelValue;
-	}
 
 }

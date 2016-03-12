@@ -16,7 +16,6 @@ import it.cnr.missioni.model.missione.Missione;
  */
 public class DatiGeneraliRimborsoStep implements WizardStep {
 
-	private final int days;
 	private DatiGeneraliRimborsoForm datiGenerali;
 	private Missione missione;
 
@@ -24,10 +23,9 @@ public class DatiGeneraliRimborsoStep implements WizardStep {
 		return "Step 1";
 	}
 
-	public DatiGeneraliRimborsoStep(Missione missione, int days, boolean isAdmin,boolean enabled,boolean modifica) {
+	public DatiGeneraliRimborsoStep(Missione missione, boolean isAdmin,boolean enabled,boolean modifica) {
 		this.missione = missione;
-		this.days = days;
-		datiGenerali = new DatiGeneraliRimborsoForm(missione, days, isAdmin,enabled,modifica);
+		datiGenerali = new DatiGeneraliRimborsoForm(missione, isAdmin,enabled,modifica);
 
 	}
 

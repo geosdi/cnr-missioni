@@ -18,6 +18,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
+import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.Veicolo;
@@ -64,32 +65,32 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 
 		
 
-		details.addComponent(buildLabel("Tipo Missione: ",tipoMissione));
-		details.addComponent(buildLabel("Località: " , missione.getLocalita()));
+		details.addComponent(Utility.buildLabel("Tipo Missione: ",tipoMissione));
+		details.addComponent(Utility.buildLabel("Località: " , missione.getLocalita()));
 		if(missione.isMissioneEstera()){
-			details.addComponent(buildLabel("Nazione: " , missione.getShortDescriptionNazione()));
-			details.addComponent(buildLabel("Trattamento Rimbroso : " , missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
+			details.addComponent(Utility.buildLabel("Nazione: " , missione.getShortDescriptionNazione()));
+			details.addComponent(Utility.buildLabel("Trattamento Rimbroso : " , missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
 		}
-		details.addComponent(buildLabel("Oggetto: " , missione.getOggetto()));
-		details.addComponent(buildLabel("Fondo: " , missione.getFondo() != null ? missione.getFondo() : ""));
-		details.addComponent(buildLabel("GAE: " , missione.getGAE() != null ? missione.getGAE() : ""));
-		details.addComponent(buildLabel("Responsabile Gruppo: " , missione.getShortResponsabileGruppo()));
-		details.addComponent(buildLabel("Distanza: " , missione.getDistanza()));
-		details.addComponent(buildLabel("Veicolo: " , tipoVeicolo));
+		details.addComponent(Utility.buildLabel("Oggetto: " , missione.getOggetto()));
+		details.addComponent(Utility.buildLabel("Fondo: " , missione.getFondo() != null ? missione.getFondo() : ""));
+		details.addComponent(Utility.buildLabel("GAE: " , missione.getGAE() != null ? missione.getGAE() : ""));
+		details.addComponent(Utility.buildLabel("Responsabile Gruppo: " , missione.getShortResponsabileGruppo()));
+		details.addComponent(Utility.buildLabel("Distanza: " , missione.getDistanza()));
+		details.addComponent(Utility.buildLabel("Veicolo: " , tipoVeicolo));
 		if (missione.getTipoVeicolo().equals("Veicolo Proprio") || missione.getTipoVeicolo().equals("Noleggio")) {
 
 			Veicolo v = DashboardUI.getCurrentUser().getVeicoloPrincipale();
-			details.addComponent(buildLabel("Motivazione: " , missione.getMotivazioni()));
+			details.addComponent(Utility.buildLabel("Motivazione: " , missione.getMotivazioni()));
 			if(missione.getTipoVeicolo().equals("Veicolo Proprio"))
-				details.addComponent(buildLabel("Veicolo: " , v.getTipo() + " Targa: " + v.getTarga()));
+				details.addComponent(Utility.buildLabel("Veicolo: " , v.getTipo() + " Targa: " + v.getTarga()));
 
 		}
 		details.addComponent(
-				buildLabel("Inizio Missione: " , new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getInizioMissione().toDate())));
+				Utility.buildLabel("Inizio Missione: " , new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getInizioMissione().toDate())));
 		details.addComponent(
-				buildLabel("Presunta Fine Missione: " ,  new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getFineMissione().toDate())));
+				Utility.buildLabel("Presunta Fine Missione: " ,  new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getFineMissione().toDate())));
 		details.addComponent(
-				buildLabel("A seguito di: " , missione.getShortUserSeguito() != null ? missione.getShortUserSeguito() : ""));
+				Utility.buildLabel("A seguito di: " , missione.getShortUserSeguito() != null ? missione.getShortUserSeguito() : ""));
 
 		return root;
 	}
@@ -133,13 +134,6 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 	public HorizontalLayout getMainLayout() {
 		return mainLayout;
 	}
-	
-	private Label buildLabel(String caption,String value){		
-		Label labelValue = new Label("<b>"+caption+"</b>"+value,ContentMode.HTML);
-		labelValue.setStyleName(ValoTheme.LABEL_LIGHT);
-		
-		labelValue.setWidth("50%");
-		return labelValue;
-	}
+
 
 }

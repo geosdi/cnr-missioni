@@ -15,7 +15,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.shared.ui.datefield.Resolution;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
@@ -23,7 +22,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
@@ -54,18 +52,15 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 
 	// TO DO inserire il rimborso da Terzi
 	private Missione missione;
-	private final int days;
 	private final boolean mezzoProprio;
 	private double totRimborsoKm = 0.0;
 
-	public DatiGeneraliRimborsoForm(Missione missione, int days, boolean isAdmin, boolean enabled, boolean modifica) {
+	public DatiGeneraliRimborsoForm(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
 		super(missione.getRimborso(), isAdmin, enabled, modifica);
 		this.bean = missione.getRimborso();
 		this.missione = missione;
-		this.days = days;
 		this.mezzoProprio = missione.isMezzoProprio();
 		setFieldGroup(new BeanFieldGroup<Rimborso>(Rimborso.class));
-		getFieldGroup().setEnabled(enabled);
 		buildFieldGroup();
 		buildTab();
 	}
@@ -79,8 +74,8 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		dataFineMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
 		dataFineMissioneField.setValidationVisible(false);
 		dataFineMissioneField.setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
-		if (modifica)
-			dataFineMissioneField.setValue(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+		dataFineMissioneField.setValue(missione.getDatiPeriodoMissione().getFineMissione().toDate());
+		dataFineMissioneField.setReadOnly(!enabled);
 		totKmField = (TextField) getFieldGroup().buildAndBind("Km da rimborsare", "totKm");
 
 		if (isAdmin || modifica) {
@@ -111,14 +106,10 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 			addComponent(anticipoPagamentoLabel);
 		}
 
-		if (modifica && missione.isMissioneEstera()) {
-			Label l = new Label("<b>GG all'estero:</b> " + this.days + "\t<b>Tot. lordo TAM:</b> "
-					+ (bean.getTotaleTAM() != null ? bean.getTotaleTAM() : 0), ContentMode.HTML);
-			l.addStyleName(ValoTheme.LABEL_H3);
-			l.addStyleName(ValoTheme.LABEL_LIGHT);
+		
 
-			addComponent(l);
-		}
+		
+
 		addListener();
 		addValidator();
 	}
@@ -147,6 +138,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 
 	public void addListener() {
 
+		if(isAdmin)
 		pagataField.addValueChangeListener(new ValueChangeListener() {
 
 			/**
