@@ -15,7 +15,7 @@ import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
  */
 @XmlRootElement(name = "tipologiaSpesa")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","tipo","occorrenzeGiornaliere","tipoTrattamento","voceSpesa" })
+@XmlType(propOrder = { "id", "value","occorrenzeGiornaliere","tipoTrattamento","voceSpesa","estera","italia" })
 public class TipologiaSpesa implements Document {
 
 	/**
@@ -28,20 +28,23 @@ public class TipologiaSpesa implements Document {
 	private String id;
 	@NotNull
 	private String value;
-	@NotNull
-	private TipoSpesaEnum tipo;
+//	@NotNull
+//	private TipoSpesaEnum tipo;
 	@NotNull
 	private TrattamentoMissioneEsteraEnum tipoTrattamento;
 	@NotNull
 	private VoceSpesaEnum voceSpesa;
+	
+	private boolean estera;
+	private boolean italia;
 
 	public enum VoceSpesaEnum{
 		PASTO,TRASPORTO,ALLOGGIO,RIMBORSO_KM,ALTRO;
 	}
 	
-	public enum TipoSpesaEnum{
-		ESTERA,ITALIA;
-	}
+//	public enum TipoSpesaEnum{
+//		ESTERA,ITALIA;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -82,19 +85,19 @@ public class TipologiaSpesa implements Document {
 		this.value = value;
 	}
 
-	/**
-	 * @return the tipo
-	 */
-	public TipoSpesaEnum getTipo() {
-		return tipo;
-	}
-
-	/**
-	 * @param tipo 
-	 */
-	public void setTipo(TipoSpesaEnum tipo) {
-		this.tipo = tipo;
-	}
+//	/**
+//	 * @return the tipo
+//	 */
+//	public TipoSpesaEnum getTipo() {
+//		return tipo;
+//	}
+//
+//	/**
+//	 * @param tipo 
+//	 */
+//	public void setTipo(TipoSpesaEnum tipo) {
+//		this.tipo = tipo;
+//	}
 
 
 
@@ -129,13 +132,43 @@ public class TipologiaSpesa implements Document {
 	}
 
 	/**
+	 * @return the estera
+	 */
+	public boolean isEstera() {
+		return estera;
+	}
+
+	/**
+	 * @param estera 
+	 */
+	public void setEstera(boolean estera) {
+		this.estera = estera;
+	}
+
+	/**
+	 * @return the italia
+	 */
+	public boolean isItalia() {
+		return italia;
+	}
+
+	/**
+	 * @param italia 
+	 */
+	public void setItalia(boolean italia) {
+		this.italia = italia;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
-		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipo=" + tipo + ", tipoTrattamento="
-				+ tipoTrattamento + ", voceSpesa=" + voceSpesa + "]";
+		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipoTrattamento=" + tipoTrattamento + ", voceSpesa="
+				+ voceSpesa + ", estera=" + estera + ", italia=" + italia + "]";
 	}
+
+
 
 
 

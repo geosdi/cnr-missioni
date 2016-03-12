@@ -49,7 +49,9 @@ public class SearchConstants {
 	
 	public static final String TIPOLOGIA_SPESA_FIELD_VALUE = "tipologiaSpesa.value";
 	public static final String TIPOLOGIA_SPESA_FIELD_ID = "tipologiaSpesa.id";
-	public static final String TIPOLOGIA_SPESA_FIELD_TIPO = "tipologiaSpesa.tipo";
+	public static final String TIPOLOGIA_SPESA_FIELD_ESTERA = "tipologiaSpesa.estera";
+	public static final String TIPOLOGIA_SPESA_FIELD_ITALIA = "tipologiaSpesa.italia";
+
 	public static final String TIPOLOGIA_SPESA_FIELD_TIPO_TRATTAMENTO = "tipologiaSpesa.tipoTrattamento";
 
 	public static final String NAZIONE_FIELD_VALUE = "nazione.value";

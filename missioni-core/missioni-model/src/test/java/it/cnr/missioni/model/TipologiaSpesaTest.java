@@ -13,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
@@ -34,15 +33,14 @@ public class TipologiaSpesaTest {
 	public void fatturaErrataTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
-		assertEquals(4, constraintViolations.size());
+		assertEquals(3, constraintViolations.size());
 	}
 
 	@Test
 	public void fatturaOkTest() {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		tipologiaSpesa.setValue("VITTO");
-		tipologiaSpesa.setVoceSpesa(VoceSpesaEnum.PASTO);
-		tipologiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
+		tipologiaSpesa.setVoceSpesa(VoceSpesaEnum.PASTO);	
 		tipologiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		Set<ConstraintViolation<TipologiaSpesa>> constraintViolations = validator.validate(tipologiaSpesa);
 		assertEquals(0, constraintViolations.size());

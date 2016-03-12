@@ -34,7 +34,6 @@ import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
@@ -427,10 +426,10 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			dataField.setDateFormat("dd/MM/yyyy HH:mm");
 			dataField.setValidationVisible(false);
 
-			getTipologiaSpesa(TipoSpesaEnum.ITALIA.name(), listaTipologiaSpesaItalia, null);
 
 			// carica la combo con tutte le voce di spesa italiane
 			if (!missione.isMissioneEstera()) {
+				getTipologiaSpesa(listaTipologiaSpesaItalia, null);
 				buildTipologiaCombo(listaTipologiaSpesaItalia);
 
 			}
@@ -441,7 +440,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 				if (missione.getDatiMissioneEstera()
 						.getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO)
 					tipoTrattamento = TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name();
-				getTipologiaSpesa(TipoSpesaEnum.ESTERA.name(), listaTipologiaSpesaEstera, tipoTrattamento);
+				getTipologiaSpesa(listaTipologiaSpesaEstera, tipoTrattamento);
 				addListener();
 			}
 
@@ -478,14 +477,14 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		 * @param tipo
 		 * @param lista
 		 */
-		private void getTipologiaSpesa(String tipo, List<TipologiaSpesa> lista, String tipoTrattamento) {
+		private void getTipologiaSpesa(List<TipologiaSpesa> lista, String tipoTrattamento) {
 			try {
 
 				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
-						.withTipo(tipo).withAll(true);
-				if (tipoTrattamento != null)
+						.withEstera(true).withItalia(true).withAll(true);
+				if (tipoTrattamento != null){
 					t.withTipoTrattamento(tipoTrattamento);
-
+				}
 				TipologiaSpesaStore tipologiaStore = ClientConnector.getTipologiaSpesa(t);
 
 				if (tipologiaStore.getTotale() > 0) {

@@ -27,7 +27,8 @@ public interface TipologiaSpesaRestService {
 	/**
 	 * 
 	 * @param id
-	 * @param tipo
+	 * @param estera
+	 * @param italia
 	 * @param tipologiaTrattamento
 	 * @param from
 	 * @param size
@@ -37,7 +38,8 @@ public interface TipologiaSpesaRestService {
 	 */
 	@GET
 	@Path(value = TipologiaSpesaServiceRSPathConfig.GET_TIPOLIGIA_SPESA_BY_QUERY)
-	Response getTipologiaSpesaByQuery(@QueryParam(value = "id") String id, @QueryParam(value = "tipo") String tipo,
+	Response getTipologiaSpesaByQuery(@QueryParam(value = "id") String id, @QueryParam(value = "estera") boolean estera,
+			@QueryParam(value = "italia") boolean italia,
 			@QueryParam(value = "tipologiaTrattamento") String tipologiaTrattamento,
 			@QueryParam(value = "from") int from, @QueryParam(value = "size") int size,
 			@QueryParam(value = "all") boolean all) throws Exception;

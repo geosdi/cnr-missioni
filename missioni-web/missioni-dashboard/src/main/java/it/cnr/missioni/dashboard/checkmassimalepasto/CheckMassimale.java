@@ -94,6 +94,107 @@ public class CheckMassimale {
 		m1.check();
 	}
 
+	public class Step1 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			if (fattura.getData().isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
+					|| fattura.getData().isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
+					|| !missione.isMissioneEstera())
+				setAreaGeografica(AreaGeograficaEnum.ITALIA.name());
+			else {
+				Nazione nazione = ClientConnector
+						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+						.getNazione().get(0);
+				setAreaGeografica(nazione.getAreaGeografica().name());
+			}
+			this.nextValidator.check();
+
+		}
+	}
+	
+	public class Step2 extends IValidator.AbstractValidator {
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			User user = ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser()))
+					.getUsers().get(0);
+			setLivello(user.getDatiCNR().getLivello().name());
+			setUser(user);
+			this.nextValidator.check();
+
+		}
+
+	}
+	
+	public class Step3 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			if (missione.getIdUserSeguito() != null) {
+				User userSeguito = ClientConnector
+						.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUserSeguito()))
+						.getUsers().get(0);
+				if (userSeguito.getDatiCNR().getLivello().getStato() < getUser().getDatiCNR().getLivello().getStato())
+					setLivello(userSeguito.getDatiCNR().getLivello().name());
+			}
+			this.nextValidator.check();
+
+		}
+
+	}
+	
+	public class Step4 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
+					.getMassimaleSearchBuilder().withLivello(getLivello()).withAreaGeografica(getAreaGeografica())
+					.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
+			if (massimaleStore.getTotale() > 0) {
+				setMassimale(massimaleStore.getMassimale().get(0));
+				this.nextValidator.check();
+			}
+
+		}
+
+	}
+	
+	// Verifica che la fattura sia di tipo pasto
+	class Step5 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			TipologiaSpesaStore tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder
+					.getTipologiaSpesaSearchBuilder().withId(getFattura().getIdTipologiaSpesa()));
+			if (tipologiaSpesaStore.getTotale() > 0
+					&& tipologiaSpesaStore.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO) {
+				this.nextValidator.check();
+			}
+
+		}
+
+	}
+	
 	// Step nel caso ci sia una sola fattura di tipo Pasto in un giorno
 	class Step6 extends IValidator.AbstractValidator {
 
@@ -123,25 +224,7 @@ public class CheckMassimale {
 
 	}
 
-	// Verifica che la fattura sia di tipo pasto
-	class Step5 extends IValidator.AbstractValidator {
 
-		/**
-		 * @throws Exception
-		 * 
-		 */
-		@Override
-		public void check() throws Exception {
-			TipologiaSpesaStore tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder
-					.getTipologiaSpesaSearchBuilder().withId(getFattura().getIdTipologiaSpesa()));
-			if (tipologiaSpesaStore.getTotale() > 0
-					&& tipologiaSpesaStore.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO) {
-				this.nextValidator.check();
-			}
-
-		}
-
-	}
 
 	// Step nel caso ci siano due fatture di tipo Pasto in un giorno
 	public class Step7 extends IValidator.AbstractValidator {
@@ -165,86 +248,6 @@ public class CheckMassimale {
 
 	}
 
-	public class Step1 extends IValidator.AbstractValidator {
-
-		/**
-		 * @throws Exception
-		 * 
-		 */
-		@Override
-		public void check() throws Exception {
-			if (fattura.getData().isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
-					|| fattura.getData().isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
-					|| !missione.isMissioneEstera())
-				setAreaGeografica(AreaGeograficaEnum.ITALIA.name());
-			else {
-				Nazione nazione = ClientConnector
-						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
-						.getNazione().get(0);
-				setAreaGeografica(nazione.getAreaGeografica().name());
-			}
-			this.nextValidator.check();
-
-		}
-	}
-
-	public class Step4 extends IValidator.AbstractValidator {
-
-		/**
-		 * @throws Exception
-		 * 
-		 */
-		@Override
-		public void check() throws Exception {
-			MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
-					.getMassimaleSearchBuilder().withLivello(getLivello()).withAreaGeografica(getAreaGeografica())
-					.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
-			if (massimaleStore.getTotale() > 0) {
-				setMassimale(massimaleStore.getMassimale().get(0));
-				this.nextValidator.check();
-			}
-
-		}
-
-	}
-
-	public class Step2 extends IValidator.AbstractValidator {
-		/**
-		 * @throws Exception
-		 * 
-		 */
-		@Override
-		public void check() throws Exception {
-			User user = ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser()))
-					.getUsers().get(0);
-			setLivello(user.getDatiCNR().getLivello().name());
-			setUser(user);
-			this.nextValidator.check();
-
-		}
-
-	}
-
-	public class Step3 extends IValidator.AbstractValidator {
-
-		/**
-		 * @throws Exception
-		 * 
-		 */
-		@Override
-		public void check() throws Exception {
-			if (missione.getIdUserSeguito() != null) {
-				User userSeguito = ClientConnector
-						.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUserSeguito()))
-						.getUsers().get(0);
-				if (userSeguito.getDatiCNR().getLivello().getStato() < getUser().getDatiCNR().getLivello().getStato())
-					setLivello(userSeguito.getDatiCNR().getLivello().name());
-			}
-			this.nextValidator.check();
-
-		}
-
-	}
 
 	/**
 	 * @return the fattura

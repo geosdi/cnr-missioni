@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 
@@ -110,14 +109,14 @@ public class TipologiaSpesaDAOTest {
 	
 	@Test
 	public void F_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(TipoSpesaEnum.ESTERA.name());
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true);
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", lista.size() == 2);
 	}
 	
 	@Test
 	public void G_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(TipoSpesaEnum.ITALIA.name());
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withItalia(true);
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", lista.size() == 2);
 	}
@@ -150,7 +149,8 @@ public class TipologiaSpesaDAOTest {
 		TipologiaSpesa tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("01");
 		tipoliogiaSpesa.setValue("Aereo");
-		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
+		tipoliogiaSpesa.setItalia(false);
+		tipoliogiaSpesa.setEstera(true);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
@@ -158,7 +158,9 @@ public class TipologiaSpesaDAOTest {
 		 tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("02");
 		tipoliogiaSpesa.setValue("Vitto");
-		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
+		tipoliogiaSpesa.setItalia(true);
+		tipoliogiaSpesa.setEstera(false);
+		tipoliogiaSpesa.setItalia(true);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.PASTO);
 
@@ -167,7 +169,8 @@ public class TipologiaSpesaDAOTest {
 		 tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("03");
 		tipoliogiaSpesa.setValue("Albergo");
-		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ESTERA);
+		tipoliogiaSpesa.setItalia(false);
+		tipoliogiaSpesa.setEstera(true);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.ALLOGGIO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
@@ -176,7 +179,8 @@ public class TipologiaSpesaDAOTest {
 		 tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("04");
 		tipoliogiaSpesa.setValue("Treno");
-		tipoliogiaSpesa.setTipo(TipoSpesaEnum.ITALIA);
+		tipoliogiaSpesa.setItalia(true);
+		tipoliogiaSpesa.setEstera(false);
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);

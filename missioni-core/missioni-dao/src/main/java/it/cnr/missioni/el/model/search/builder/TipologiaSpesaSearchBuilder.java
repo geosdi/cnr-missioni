@@ -18,11 +18,11 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 	private BooleanModelSearch booleanModelSearch;
 	private boolean all;
 	private String id;
-	private String tipo;
 	private String tipoTrattamento;
 	private int size = 10;
 	private int from = 0;
-	
+	private boolean italia = false;
+	private boolean estera = false;
 	
 	private String fieldSort = SearchConstants.TIPOLOGIA_SPESA_FIELD_VALUE;
 	private SortOrder sortOrder = SortOrder.ASC;
@@ -48,10 +48,17 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 		return self();
 	}
 
-	public TipologiaSpesaSearchBuilder withTipo(String tipo) {
-		this.tipo = tipo;
-		if (tipo != null && !tipo.trim().equals(""))
-			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_TIPO, tipo));
+	public TipologiaSpesaSearchBuilder withEstera(boolean estera) {
+		this.estera = estera;
+		if(estera)
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ESTERA, estera));
+		return self();
+	}
+	
+	public TipologiaSpesaSearchBuilder withItalia(boolean italia) {
+		this.italia = italia;
+		if(italia)
+			booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ITALIA, italia));
 		return self();
 	}
 
@@ -119,20 +126,6 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 	}
 
 	/**
-	 * @return the tipo
-	 */
-	public String getTipo() {
-		return tipo;
-	}
-
-	/**
-	 * @param tipo 
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	/**
 	 * @return the tipoTrattamento
 	 */
 	public String getTipoTrattamento() {
@@ -172,6 +165,34 @@ public class TipologiaSpesaSearchBuilder implements ISearchBuilder {
 	 */
 	public void setFrom(int from) {
 		this.from = from;
+	}
+
+	/**
+	 * @return the italia
+	 */
+	public boolean isItalia() {
+		return italia;
+	}
+
+	/**
+	 * @param italia 
+	 */
+	public void setItalia(boolean italia) {
+		this.italia = italia;
+	}
+
+	/**
+	 * @return the estera
+	 */
+	public boolean isEstera() {
+		return estera;
+	}
+
+	/**
+	 * @param estera 
+	 */
+	public void setEstera(boolean estera) {
+		this.estera = estera;
 	}
 
 	/**

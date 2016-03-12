@@ -28,7 +28,6 @@ import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
@@ -164,70 +163,72 @@ public class InitDAOTest {
 
 		TipologiaSpesa t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
+		t.setEstera(true);
+		t.setItalia(false);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Aereo");
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		t.setEstera(true);
+		t.setItalia(false);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Altro");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		t.setEstera(true);
+		t.setItalia(false);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Altro Albergo");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		t.setEstera(true);
+		t.setItalia(false);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Altro mezzo di trasporto");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		t.setEstera(true);
+		t.setItalia(false);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Altro pasto");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		t.setEstera(true);
+		t.setItalia(false);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Nave");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		t.setEstera(true);
+		t.setItalia(false);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Spese visto");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
+		t.setEstera(true);
+		t.setItalia(false);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Taxi");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ESTERA);
+		t.setEstera(true);
+		t.setItalia(false);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Treno");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -236,7 +237,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Aereo");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -244,71 +246,72 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Albergo");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Altre spese viaggio");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Altri costi congressuali");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Altro");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Altro albergo");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Altro mezzo trasporto");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Altro pasto");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Autobus\\corriera");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);		
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Cuccetta");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -316,15 +319,16 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
-		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+		t.setEstera(true);
+		t.setItalia(true);		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Indennità kilometrica");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);		
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Iscrizione congresso");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -332,7 +336,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Nave");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -340,7 +345,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Noleggio auto");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -348,7 +354,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Parcheggio");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -356,7 +363,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Pasto");
 		t.setVoceSpesa(VoceSpesaEnum.PASTO);
@@ -364,7 +372,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Pesaggio autostrada");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -372,7 +381,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Spese bagagli");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -380,7 +390,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Spese visto");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
@@ -388,7 +399,8 @@ public class InitDAOTest {
 		
 		t = new TipologiaSpesa();
 		t.setId(UUID.randomUUID().toString());
-		t.setTipo(TipoSpesaEnum.ITALIA);
+		t.setEstera(true);
+		t.setItalia(true);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Taxi");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);

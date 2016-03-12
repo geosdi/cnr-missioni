@@ -38,7 +38,9 @@ class TipologiaSpesaDelegate implements ITipologiaSpesaDelegate {
 	/**
 	 * 
 	 * @param id
-	 * @param tipo
+	 * @param estera
+	 * @param italia
+	 * @param tipologiaTrattamento
 	 * @param from
 	 * @param size
 	 * @param all
@@ -46,11 +48,12 @@ class TipologiaSpesaDelegate implements ITipologiaSpesaDelegate {
 	 * @throws Exception
 	 */
 	@Override
-	public TipologiaSpesaStore getTipologiaSpesaByQuery(String id, String tipo,String tipologiaTrattamento, int from, int size, boolean all)
-			throws Exception {
+	public TipologiaSpesaStore getTipologiaSpesaByQuery(String id, boolean estera, boolean italia,
+			String tipologiaTrattamento, int from, int size, boolean all) throws Exception {
 
 		TipologiaSpesaSearchBuilder tipologiaSpesaUserSearchBuilder = TipologiaSpesaSearchBuilder
-				.getTipologiaSpesaSearchBuilder().withFrom(from).withSize(size).withTipoTrattamento(tipologiaTrattamento).withAll(all).withId(id).withTipo(tipo);
+				.getTipologiaSpesaSearchBuilder().withFrom(from).withSize(size)
+				.withTipoTrattamento(tipologiaTrattamento).withAll(all).withId(id).withEstera(estera).withItalia(italia);
 
 		PageResult<TipologiaSpesa> pageResult = this.tipologiaSpesaDAO
 				.findTipologiaSpesaByQuery(tipologiaSpesaUserSearchBuilder);

@@ -55,7 +55,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.model.configuration.TipologiaSpesa.TipoSpesaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
@@ -135,14 +134,14 @@ public class TipologiaSpesaRestServiceTest {
 	
 	@Test
 	public void F_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(TipoSpesaEnum.ESTERA.name());
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true);
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
 	}
 	
 	@Test
 	public void G_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(TipoSpesaEnum.ITALIA.name());
+		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withItalia(true);
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
 	}

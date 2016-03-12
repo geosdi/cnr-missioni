@@ -2,7 +2,7 @@
                "tipologiaSpesa": {
                   "id": "01",
                   "value": "Aereo",
-                  "tipo": "ESTERA",
+                  "italia": true,
                   "voceSpesa": "TRASPORTO",
                   "occorrenzeGiornaliere": 0,
                   "tipoTrattamento": "RIMBORSO_DOCUMENTATO"
