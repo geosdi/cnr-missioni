@@ -27,7 +27,6 @@ public class Rimborso implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8658916823848446391L;
-	@NotNull
 	private String mandatoPagamento;
 	private Long numeroOrdine;
 	private DateTime dataRimborso;
