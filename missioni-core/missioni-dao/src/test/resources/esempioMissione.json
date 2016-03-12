@@ -59,7 +59,6 @@
                      "anticipazionePagamento": 0,
                      "totaleDovuto": null,
                      "pagata": false,
-                     "rimborsoDaTerzi": false,
                      "importoDaTerzi": 0,
                      "mappaFattura": {
                         "entry": [
