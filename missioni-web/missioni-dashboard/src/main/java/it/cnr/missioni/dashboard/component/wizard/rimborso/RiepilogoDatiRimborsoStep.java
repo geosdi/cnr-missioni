@@ -1,8 +1,6 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.joda.time.Days;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -30,18 +28,11 @@ import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
-import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.model.rimborso.Rimborso;
-import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
-import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * @author Salvia Vito
@@ -52,14 +43,16 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 	private Missione missione;
 	private boolean modifica;
+	private boolean isAdmin;
 
 	public String getCaption() {
 		return "Step 3";
 	}
 
-	public RiepilogoDatiRimborsoStep(Missione missione,boolean modifica) {
+	public RiepilogoDatiRimborsoStep(Missione missione,boolean modifica,boolean isAdmin) {
 		this.missione = missione;
 		this.modifica = modifica;
+		this.isAdmin = isAdmin;
 	}
 
 	public Component getContent() {
@@ -79,18 +72,23 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 		details.addStyleName(ValoTheme.LAYOUT_HORIZONTAL_WRAPPING);
 		root.addComponent(details);
 		// root.setExpandRatio(details, 1);
-
+		if(isAdmin){
+			details.addComponent(buildLabel("Pagata: ", missione.getRimborso().isPagata() ? "Si":"No"));
+			details.addComponent(buildLabel("Mandato di pagamento: ", missione.getRimborso().getMandatoPagamento()));
+		}
 		details.addComponent(
-				buildLabel("Importo da Terzi: ", Double.toString(missione.getRimborso().getImportoDaTerzi())));
+				buildLabel("Importo da Terzi: ", Double.toString(missione.getRimborso().getImportoDaTerzi())+" €"));
 		details.addComponent(buildLabel("Avviso Pagamento: ", (missione.getRimborso().getAvvisoPagamento() != null
 				? missione.getRimborso().getAvvisoPagamento() : "")));
 		details.addComponent(
 				buildLabel("Anticipazione Pagamento: ", missione.getRimborso().getAnticipazionePagamento() != null
-						? Double.toString(missione.getRimborso().getAnticipazionePagamento()) : "0.0"));
+						? Double.toString(missione.getRimborso().getAnticipazionePagamento())+" €" : "0.0 €"));
 		if (missione.isMezzoProprio())
-			details.addComponent(buildLabel("Rimborso KM: ", Double.toString(missione.getRimborso().getRimborsoKm())));
-		details.addComponent(buildLabel("Tot. lordo TAM: ", Double.toString(missione.getRimborso().getTotaleTAM())));
-		details.addComponent(buildLabel("Totale Fatture: ", Double.toString(missione.getRimborso().getTotale())));
+			details.addComponent(buildLabel("Rimborso KM: ", Double.toString(missione.getRimborso().getRimborsoKm())+" €"));
+		if(missione.isMissioneEstera())
+			details.addComponent(buildLabel("Tot. lordo TAM: ", Double.toString(missione.getRimborso().getTotaleTAM())+" €"));
+		details.addComponent(buildLabel("Totale Fatture: ", Double.toString(missione.getRimborso().getTotale())+" €"));
+
 
 		if (missione.isMissioneEstera()) {
 
@@ -138,8 +136,15 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 	public boolean onAdvance() {
 
+		String conferma = "" ;
+		
+		if(isAdmin)
+			conferma = "Verrà inviata una mail all'utente con i dati dell rimborso inserita.";
+		else
+			conferma = "Il rimborso inserito non potrà essere più modificato. Verrà inviata una mail all'amministratore con i dati del rimborso inserita.";
+
 		ConfirmDialog.show(UI.getCurrent(), "Conferma",
-				"Il rimborso inserito non potrà essere più modificata. Verrà inviata una mail all'amministratore con i dati della missione inserita.",
+				conferma,
 				"Ok", "No", new ConfirmDialog.Listener() {
 
 					/**
@@ -149,20 +154,23 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 					public void onClose(ConfirmDialog dialog) {
 						if (dialog.isConfirmed()) {
-							if(!modifica)
-							DashboardEventBus.post(new RimborsoAction(missione));
-							else
-								DashboardEventBus.post(new UpdateRimborsoAction(missione));
-
-							DashboardEventBus.post(new CloseOpenWindowsEvent());
+								confirmed();
 						} else {
 
 						}
 					}
 				});
-
 		return true;
 
+	}
+	
+	private void confirmed(){
+		if(!modifica)
+		DashboardEventBus.post(new RimborsoAction(missione));
+		else
+			DashboardEventBus.post(new UpdateRimborsoAction(missione));
+
+		DashboardEventBus.post(new CloseOpenWindowsEvent());
 	}
 
 	public boolean onBack() {

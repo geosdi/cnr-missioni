@@ -31,14 +31,16 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 
 	private Missione missione;
 	private boolean modifica;
+	private boolean isAdmin;
+	
 	public String getCaption() {
 		return "Step 8";
 	}
 
-	public RiepilogoDatiMissioneStep(Missione missione,boolean modifica) {
+	public RiepilogoDatiMissioneStep(Missione missione,boolean modifica,boolean isAdmin) {
 		this.missione = missione;
 		this.modifica = modifica;
-
+		this.isAdmin = isAdmin;
 	}
 
 	public Component getContent() {
@@ -88,29 +90,21 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
 				buildLabel("Presunta Fine Missione: " ,  new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiPeriodoMissione().getFineMissione().toDate())));
 		details.addComponent(
 				buildLabel("A seguito di: " , missione.getShortUserSeguito() != null ? missione.getShortUserSeguito() : ""));
-//		if (missione.isMissioneEstera()) {
-//			details.addComponent(buildLabel("Trattamento Rimborso: ", missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato()));
-//			details.addComponent(buildLabel("Attraversamento Frontiera Andata: "
-//					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate())));
-//			details.addComponent(buildLabel("Attraversamento Frontiera Ritorno: "
-//					, new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate())));
-//		}
-//		details.addComponent(buildLabel(
-//				"Anticipazioni Monetarie: " , missione.getDatiAnticipoPagamenti().isAnticipazioniMonetarie() ? "Si" : "No"));
-//
-//		details.addComponent(buildLabel("Numero Mandato CNR: " , missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() : "" ));
-//		details.addComponent(buildLabel("Altre Spese di Missione Anticipate: ", Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate())));
-//		details.addComponent(
-//				buildLabel("Rimborso da Terzi: " ,  Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
-//		details.addComponent(buildLabel("Importo da Terzi: " , Double.toString(missione.getDatiAnticipoPagamenti().getImportoDaTerzi())));
 
 		return root;
 	}
 
 	public boolean onAdvance() {
 
+		String conferma = "";
+		
+		if(!isAdmin)
+			conferma = "La missione inserita non potrà essere più modificata. Verrà inviata una mail all'amministratore con i dati della missione inserita.";
+		else
+			conferma = "Verrà inviata una mail all'utente con i dati della missione inserita.";
+			
 		ConfirmDialog.show(UI.getCurrent(), "Conferma",
-				"La missione inserita non potrà essere più modificata. Verrà inviata una mail all'amministratore con i dati della missione inserita.",
+				conferma,
 				"Ok", "No", new ConfirmDialog.Listener() {
 
 					/**

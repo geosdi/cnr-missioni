@@ -7,12 +7,10 @@ import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import com.vaadin.ui.Notification.Type;
 
-import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.IWizard;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
@@ -52,7 +50,7 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 			
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione,isAdmin,enabled,modifica);
-			this.riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione,modifica);
+			this.riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione,modifica,isAdmin);
 
 			getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
 			if(missione.isMissioneEstera()){
