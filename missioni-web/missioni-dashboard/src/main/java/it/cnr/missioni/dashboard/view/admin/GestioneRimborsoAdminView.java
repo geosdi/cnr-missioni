@@ -4,12 +4,14 @@ import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
+import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.user.User;
 
 /**
@@ -45,9 +47,12 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 		return null;
 	}
 
-	protected void openWizardRimborso() {
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser())
-				.withIsAdmin(true).withEnabled(true).withModifica(true).build();
+	protected void openRimborsoDettgali(){
+		if (selectedMissione.getStato() == StatoEnum.PAGATA)
+			RimborsoWindowAdmin.open(selectedMissione, true, false, true);
+		else
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true)
+			.build();
 	}
 
 }

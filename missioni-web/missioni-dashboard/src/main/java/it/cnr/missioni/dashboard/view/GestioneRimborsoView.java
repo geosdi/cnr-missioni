@@ -18,7 +18,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
@@ -41,7 +40,6 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 
@@ -159,10 +157,15 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		return buttonCerca;
 	}
 
-	protected void openWizardRimborso(){
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false)
-		.build();
+	
+	protected void openRimborsoDettgali(){
+		if (selectedMissione.isRimborsoSetted())
+			RimborsoWindowAdmin.open(selectedMissione, false, false, true);
+		else
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false)
+			.build();
 	}
+	
 	
 	protected HorizontalLayout addActionButtons() {
 		HorizontalLayout layout = new HorizontalLayout();
@@ -178,10 +181,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				if (selectedMissione.isRimborsoSetted())
-					RimborsoWindowAdmin.open(selectedMissione, true, false, true);
-				else
-					openWizardRimborso();
+				openRimborsoDettgali();
 			}
 
 		});
