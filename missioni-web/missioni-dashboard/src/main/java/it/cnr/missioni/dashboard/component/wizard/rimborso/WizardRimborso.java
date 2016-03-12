@@ -46,7 +46,7 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 
 
 
-			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione,0,isAdmin,enabled,modifica);
+			this.datiGeneraliStep = new DatiGeneraliRimborsoStep(missione,isAdmin,enabled,modifica);
 			
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione,isAdmin,enabled,modifica);
