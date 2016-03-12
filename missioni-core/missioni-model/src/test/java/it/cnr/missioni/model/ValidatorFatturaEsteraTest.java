@@ -82,16 +82,30 @@ public class ValidatorFatturaEsteraTest {
 		Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxOccorrenze() == 0);
 	}
 	
-//	public void validator_4Test() {
-//
-//		DateTime dataInizio = new DateTime(2016,1,1,13,0);
-//		DateTime dataFine = new DateTime(2016,1,3,20,0);
-//		DateTime dataFattura = new DateTime(2016,1,1,17,30);
-//		DateTime dataFrontieraAndata = new DateTime(2016,1,1,19,0);
-//		DateTime dataFrontieraRitorno = new DateTime(2016,1,3,19,0);
-//		ValidatorFatturaPastoEstera v = new ValidatorFatturaPastoEstera(dataFattura,dataInizio,dataFine,dataFrontieraAndata,dataFrontieraRitorno);
-//		v.initialize();
-//		Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxOccorrenze() == 1);
-//	}
+	@Test
+	public void validator_6Test() throws Exception{
+
+		DateTime dataInizio = new DateTime(2016,1,1,13,0);
+		DateTime dataFine = new DateTime(2016,1,20,20,0);
+		DateTime dataFattura = new DateTime(2016,1,20,19,30);
+		DateTime dataFrontieraAndata = new DateTime(2016,1,1,19,0);
+		DateTime dataFrontieraRitorno = new DateTime(2016,1,4,19,0);
+		ValidatorFatturaPastoEstera v = new ValidatorFatturaPastoEstera(dataFattura,dataInizio,dataFine,dataFrontieraAndata,dataFrontieraRitorno);
+		v.initialize();
+		Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxOccorrenze() == 2);
+	}
+	
+	@Test
+	public void validator_7Test() throws Exception{
+
+		DateTime dataInizio = new DateTime(2016,1,31,13,0);
+		DateTime dataFine = new DateTime(2016,2,4,20,0);
+		DateTime dataFattura = new DateTime(2016,1,31,19,30);
+		DateTime dataFrontieraAndata = new DateTime(2016,2,1,19,0);
+		DateTime dataFrontieraRitorno = new DateTime(2016,2,4,19,0);
+		ValidatorFatturaPastoEstera v = new ValidatorFatturaPastoEstera(dataFattura,dataInizio,dataFine,dataFrontieraAndata,dataFrontieraRitorno);
+		v.initialize();
+		Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxOccorrenze() == 1);
+	}
 
 }
