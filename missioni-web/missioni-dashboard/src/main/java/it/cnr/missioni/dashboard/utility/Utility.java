@@ -1,6 +1,5 @@
 package it.cnr.missioni.dashboard.utility;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -10,10 +9,24 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import org.joda.time.Days;
+
 import com.vaadin.server.Page;
 import com.vaadin.shared.Position;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.themes.ValoTheme;
+
+import it.cnr.missioni.dashboard.DashboardUI;
+import it.cnr.missioni.dashboard.client.ClientConnector;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
 /**
  * @author Salvia Vito
@@ -61,6 +74,56 @@ public class Utility {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 
+	 * Calcola il numero di giorni trascorsi all'estero e calcola il TAM
+	 * 
+	 * @param missione
+	 * @return
+	 */
+	public static int getDaysEstero(Missione missione){
+		int days = 0;
+		try {
+			Nazione nazione = ClientConnector
+					.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+					.getNazione().get(0);
+			MassimaleStore massimaleStore = ClientConnector
+					.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+							.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
+							.withAreaGeografica(nazione.getAreaGeografica().name())
+							.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
+
+			if (massimaleStore.getTotale() > 0) {
+				missione.getRimborso().calcolaTotaleTAM(massimaleStore.getMassimale().get(0),
+						missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
+						missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
+			}
+			days = Days.daysBetween(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
+					missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()).getDays();
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
+		return days;
+
+	}
+	
+	/**
+	 * 
+	 * Costruisce la label
+	 * 
+	 * @param caption
+	 * @param value
+	 * @return
+	 */
+	public static Label buildLabel(String caption, String value) {
+		Label labelValue = new Label("<b>" + caption + "</b>" + value, ContentMode.HTML);
+		labelValue.setStyleName(ValoTheme.LABEL_LIGHT);
+
+		labelValue.setWidth("50%");
+		return labelValue;
 	}
 
 	/**
