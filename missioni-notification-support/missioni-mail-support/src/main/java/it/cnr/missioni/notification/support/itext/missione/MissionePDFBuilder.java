@@ -26,9 +26,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 	private static final Logger logger = LoggerFactory.getLogger(MissionePDFBuilder.class);
 
-	// private Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
-	// private Font fontNormal = new Font(Font.FontFamily.TIMES_ROMAN, 9);
-	// private Font fontNormal6 = new Font(Font.FontFamily.TIMES_ROMAN, 6);
+
 	private Font fontBold6 = FontFactory.getFont("Times-Roman", 6, Font.BOLD);
 	private Font fontNormal6 = FontFactory.getFont("Times-Roman", 6);
 	private Font fontNormal = FontFactory.getFont("Times-Roman", 9);
@@ -53,10 +51,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
 
-//		String dataInserimento = missione.getDataInserimento().toString();
-//		String dataNascita = user.getAnagrafica().getDataNascita().toString();
-//		String dataInizio = missione.getDatiPeriodoMissione().getInizioMissione().toString();
-//		String dataFine = missione.getDatiPeriodoMissione().getFineMissione().toString();
+
 
 		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
 		document.addSubject("Richiesta Missione");
