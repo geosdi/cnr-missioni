@@ -93,54 +93,6 @@ public class RimborsoTest {
 		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "01", null).size() == 2);
 	}
 		
-	@Test
-	public void checkNumberFattura() {
-		Rimborso r = new Rimborso();
-		int n = r.getNumberFatturaPermissible(new DateTime(2015,1,1,8,0), new DateTime(2015,1,1,13,0),null,null, new DateTime(2015,1,1,11,0), false);
-		Assert.assertTrue("NUMBER OF FATTURA", n == 1);
-	}
-	
-	@Test
-	public void checkNumberFattura_2() {
-		Rimborso r = new Rimborso();
-		int n = r.getNumberFatturaPermissible(new DateTime(2015,1,1,8,0), new DateTime(2015,1,4,13,0),null,null, new DateTime(2015,1,1,11,0), false);
-		Assert.assertTrue("NUMBER OF FATTURA", n == 2);
-	}
-	
-	@Test
-	public void checkNumberFattura_3() {
-		Rimborso r = new Rimborso();
-		int n = r.getNumberFatturaPermissible(new DateTime(2015,1,1,8,0), new DateTime(2015,1,4,11,0),null,null, new DateTime(2015,1,4,10,0), false);
-		Assert.assertTrue("NUMBER OF FATTURA", n == 1);
-	}
-	
-	@Test
-	public void checkNumberFattura_4() {
-		Rimborso r = new Rimborso();
-		int n = r.getNumberFatturaPermissible(new DateTime(2015,1,1,8,0), new DateTime(2015,1,4,11,0),null,null, new DateTime(2015,1,2,10,0), false);
-		Assert.assertTrue("NUMBER OF FATTURA", n == 2);
-	}
-	
-	@Test
-	public void checkNumberFattura_5() {
-		Rimborso r = new Rimborso();
-		int n = r.getNumberFatturaPermissible(new DateTime(2015,1,1,8,0), new DateTime(2015,1,4,20,0),new DateTime(2015,1,1,11,0),new DateTime(2015,1,4,15,0), new DateTime(2015,1,2,10,0), true);
-		Assert.assertTrue("NUMBER OF FATTURA", n == 2);
-	}
-	
-	@Test
-	public void checkNumberFattura_6() {
-		Rimborso r = new Rimborso();
-		int n = r.getNumberFatturaPermissible(new DateTime(2015,1,1,8,0), new DateTime(2015,1,4,20,0),new DateTime(2015,1,1,11,0),new DateTime(2015,1,4,15,0), new DateTime(2015,1,1,10,0), true);
-		Assert.assertTrue("NUMBER OF FATTURA", n == 2);
-	}
-	
-	@Test
-	public void checkNumberFattura_7() {
-		Rimborso r = new Rimborso();
-		int n = r.getNumberFatturaPermissible(new DateTime(2015,1,1,8,0), new DateTime(2015,1,4,20,0),new DateTime(2015,1,1,11,0),new DateTime(2015,1,4,15,0), new DateTime(2015,1,4,10,0), true);
-		Assert.assertTrue("NUMBER OF FATTURA", n == 2);
-	}
 	
 	private Rimborso buildRimborso() {
 		Rimborso rimborso = new Rimborso();
