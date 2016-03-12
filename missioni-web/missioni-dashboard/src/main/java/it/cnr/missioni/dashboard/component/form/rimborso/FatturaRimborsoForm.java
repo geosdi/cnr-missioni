@@ -39,6 +39,9 @@ import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.model.validator.IValidatorManager;
+import it.cnr.missioni.model.validator.ValidatorFatturaPastoEstera;
+import it.cnr.missioni.model.validator.ValidatorFatturaPastoItalia;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
@@ -64,7 +67,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		this.formFattura = new FormFattura(missione, isAdmin, enabled, modifica);
 		this.missione = missione;
 		addComponent(formFattura);
-//		if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
+		// if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
 		if (enabled) {
 			HorizontalLayout l = buildFatturaButton();
 			addComponent(l);
@@ -232,14 +235,14 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 					if (dataField.getValue() == null)
 						throw new InvalidValueException(Utility.getMessage("field_required"));
-					else{
+					else {
 						DateTime d = new DateTime(dataField.getValue());
-						//Verifica che la fattura sia inserita nel range tra inizio e fine missione
-						if(d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione()) ||
-								d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
+						// Verifica che la fattura sia inserita nel range tra
+						// inizio e fine missione
+						if (d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())
+								|| d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
 							throw new InvalidValueException(Utility.getMessage("date_range_start"));
 					}
-						
 
 				}
 			});
@@ -253,48 +256,69 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 				@Override
 				public void validate(Object value) throws InvalidValueException {
-					TipologiaSpesaStore t = null;
-					DateTime dateFattura = new DateTime(formFattura.getDataField().getValue());
-					int n = 0;
-					if(formFattura.getTipologiaSpesaField().getValue() != null){
 					try {
-						t = ClientConnector
-								.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
-										.withId(formFattura.getTipologiaSpesaField().getValue().toString()));
-						if (t.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO && formFattura.getDataField() != null) {
-
-							
-							DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
-									dateFattura.getDayOfMonth(), 0, 0);
-							DateTime datFrom = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
-									dateFattura.getDayOfMonth(), 23, 59);
-
-							n = missione.getRimborso().getNumberOfFatturaInDay(dateTo, datFrom,
-									formFattura.getTipologiaSpesaField().getValue().toString()).size();
-
-						}
-
+						checkOccorrenzeFattura();
 					} catch (Exception e) {
-						Utility.getNotification(Utility.getMessage("error_message"),
-								Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
-					}
-
-					DateTime dataFrontieraAndata = missione.isMissioneEstera()
-							? missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata() : null;
-					DateTime dataFrontieraRitorno = missione.isMissioneEstera()
-							? missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno() : null;
-
-					if (missione.getRimborso().getNumberFatturaPermissible(
-							missione.getDatiPeriodoMissione().getInizioMissione(),
-							missione.getDatiPeriodoMissione().getFineMissione(),dataFrontieraAndata,dataFrontieraRitorno, dateFattura,
-							missione.isMissioneEstera()) <= n && !missione.getRimborso().getMappaFattura().containsKey( ((BeanItem<Fattura>) formFattura.getFieldGroup().getItemDataSource()).getBean().getId() ))
 						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
-				}
 
+					}
 				}
 
 			});
 
+		}
+
+		private void checkOccorrenzeFattura() throws Exception {
+			TipologiaSpesaStore t = null;
+			DateTime dateFattura;
+			int n = 0;
+			if (formFattura.getTipologiaSpesaField().getValue() != null
+					&& formFattura.getDataField().getValue() != null) {
+				dateFattura = new DateTime(formFattura.getDataField().getValue());
+
+				try {
+					t = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
+							.withId(formFattura.getTipologiaSpesaField().getValue().toString()));
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				if (t.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO) {
+
+					DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
+							dateFattura.getDayOfMonth(), 0, 0);
+					DateTime datFrom = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
+							dateFattura.getDayOfMonth(), 23, 59);
+
+					// numero di fatture inserite per quel giorno
+					n = missione.getRimborso().getNumberOfFatturaInDay(dateTo, datFrom,
+							formFattura.getTipologiaSpesaField().getValue().toString()).size();
+
+					int maxOccorrenze = 0;
+					IValidatorManager v;
+
+					if (missione.isMissioneEstera()) {
+						v = new ValidatorFatturaPastoEstera(new DateTime(formFattura.getDataField().getValue()),
+								missione.getDatiPeriodoMissione().getInizioMissione(),
+								missione.getDatiPeriodoMissione().getFineMissione(),
+								missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
+								missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
+
+					} else {
+						v = new ValidatorFatturaPastoItalia(new DateTime(formFattura.getDataField().getValue()),
+								missione.getDatiPeriodoMissione().getInizioMissione(),
+								missione.getDatiPeriodoMissione().getFineMissione());
+					}
+					v.initialize();
+					maxOccorrenze = v.getMaxOccorrenze();
+
+					if (maxOccorrenze <= n && !missione.getRimborso().getMappaFattura().containsKey(
+							((BeanItem<Fattura>) formFattura.getFieldGroup().getItemDataSource()).getBean().getId()))
+						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
+
+				}
+
+			}
 		}
 
 		/**
@@ -393,7 +417,6 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 			getFieldGroup().bind(tipologiaSpesaField, "idTipologiaSpesa");
 
-
 			importoField = (TextField) getFieldGroup().buildAndBind("Importo", "importo");
 			valutaField = (TextField) getFieldGroup().buildAndBind("Valuta", "valuta");
 			altroField = (TextField) getFieldGroup().buildAndBind("Altro", "altro");
@@ -404,7 +427,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			dataField.setDateFormat("dd/MM/yyyy HH:mm");
 			dataField.setValidationVisible(false);
 
-			getTipologiaSpesa(TipoSpesaEnum.ITALIA.name(), listaTipologiaSpesaItalia,null);
+			getTipologiaSpesa(TipoSpesaEnum.ITALIA.name(), listaTipologiaSpesaItalia, null);
 
 			// carica la combo con tutte le voce di spesa italiane
 			if (!missione.isMissioneEstera()) {
@@ -415,9 +438,10 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			// FIELD
 			if (missione.isMissioneEstera()) {
 				String tipoTrattamento = null;
-				if(missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO)
+				if (missione.getDatiMissioneEstera()
+						.getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO)
 					tipoTrattamento = TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name();
-				getTipologiaSpesa(TipoSpesaEnum.ESTERA.name(), listaTipologiaSpesaEstera,tipoTrattamento);
+				getTipologiaSpesa(TipoSpesaEnum.ESTERA.name(), listaTipologiaSpesaEstera, tipoTrattamento);
 				addListener();
 			}
 
@@ -454,15 +478,16 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		 * @param tipo
 		 * @param lista
 		 */
-		private void getTipologiaSpesa(String tipo, List<TipologiaSpesa> lista,String tipoTrattamento) {
+		private void getTipologiaSpesa(String tipo, List<TipologiaSpesa> lista, String tipoTrattamento) {
 			try {
-				
-				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipo(tipo).withAll(true);
-				if(tipoTrattamento != null)
+
+				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
+						.withTipo(tipo).withAll(true);
+				if (tipoTrattamento != null)
 					t.withTipoTrattamento(tipoTrattamento);
-				
+
 				TipologiaSpesaStore tipologiaStore = ClientConnector.getTipologiaSpesa(t);
-				
+
 				if (tipologiaStore.getTotale() > 0) {
 					lista.addAll(tipologiaStore.getTipologiaSpesa());
 				}
