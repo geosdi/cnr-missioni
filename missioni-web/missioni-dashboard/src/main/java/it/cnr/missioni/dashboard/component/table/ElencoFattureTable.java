@@ -132,7 +132,7 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 		if (v instanceof DateTime) {
 			DateTime dateValue = (DateTime) v;
 
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			return format.format(dateValue.toDate());
 
 		}
