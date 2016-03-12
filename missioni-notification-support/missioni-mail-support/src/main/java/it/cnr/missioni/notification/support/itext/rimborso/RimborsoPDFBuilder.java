@@ -182,7 +182,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
             tableScontrino.addCell(new PdfPCell(new Paragraph(formatDataTime.format(fattura.getData().toDate()), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getShortDescriptionTipologiaSpesa(), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getNumeroFattura().toString(), fontNormal)));
-            tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getImporto() + "", fontNormal)));
+            tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getImporto() + " € ", fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getValuta() + "", fontNormal)));
         }
         int size = listaScontrini.size();
@@ -216,12 +216,27 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         cellModalita2.setMinimumHeight(20f);
         tablePagamento.addCell(cellModalita2);
 
-        document.add(tablePagamento);
+        PdfPCell cellImportoTerzi = new PdfPCell(
+                new Paragraph("Importo da Terzi", fontBold));
+        cellImportoTerzi.setBorder(Rectangle.NO_BORDER);
+        tablePagamento.addCell(cellImportoTerzi);
+        PdfPCell importoDaTerzi2 = new PdfPCell(new
+                Paragraph((missione.getRimborso().getImportoDaTerzi()+" €" ), fontNormal));
+        importoDaTerzi2.setMinimumHeight(20f);
+        tablePagamento.addCell(importoDaTerzi2);
+        
+        String mandato = missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() :"";
+        
+        PdfPCell cellAnticipazioni = new PdfPCell(
+                new Paragraph("Anticiapzioni da detrarre", fontBold));
+        cellAnticipazioni.setBorder(Rectangle.NO_BORDER);
+        tablePagamento.addCell(cellAnticipazioni);
+        PdfPCell cellAnticipazioni2 = new PdfPCell(new
+                Paragraph((missione.getRimborso().getAnticipazionePagamento() != null ? missione.getRimborso().getAnticipazionePagamento()+" € con mandato "+mandato: "") , fontNormal));
+        cellAnticipazioni2.setMinimumHeight(20f);
+        tablePagamento.addCell(cellAnticipazioni2);
 
-        Paragraph paragraphTotale = new Paragraph(
-                "\nAnticipazione da detrarre:" + (missione.getRimborso().getAnticipazionePagamento() != null ? missione.getRimborso().getAnticipazionePagamento() : "") + "\n\n", fontBold);
-        paragraphTotale.setAlignment(Paragraph.ALIGN_RIGHT);
-        document.add(new Paragraph(paragraphTotale));
+        document.add(tablePagamento);
 
         document.add(new Paragraph("Il Richiedente"));
 
