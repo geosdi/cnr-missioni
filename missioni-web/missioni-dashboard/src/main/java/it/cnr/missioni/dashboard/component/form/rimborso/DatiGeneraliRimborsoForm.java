@@ -79,7 +79,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		dataFineMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
 		dataFineMissioneField.setValidationVisible(false);
 		dataFineMissioneField.setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
-		if(modifica)
+		if (modifica)
 			dataFineMissioneField.setValue(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
 		totKmField = (TextField) getFieldGroup().buildAndBind("Km da rimborsare", "totKm");
 
@@ -102,11 +102,12 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 			addComponent(totKmField);
 			addComponent(labelTotRimborsoKm);
 			setTotaleRimborsoKM();
-			
+
 		}
-		if(missione.getDatiAnticipoPagamenti().isInserted()){
+		if (missione.getDatiAnticipoPagamenti().isInserted()) {
 			anticipoPagamentoLabel = new Label();
-			anticipoPagamentoLabel.setValue("Anticipo di Pagamento: "+missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate());
+			anticipoPagamentoLabel.setValue(
+					"Anticipo di Pagamento: " + missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate());
 			addComponent(anticipoPagamentoLabel);
 		}
 
@@ -130,8 +131,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 
 			if (rimborsoKmStore.getTotale() > 0) {
 
-				
-				if(totKmField.getValue() != null){
+				if (totKmField.getValue() != null) {
 					NumberFormat f = NumberFormat.getInstance();
 					double number = f.parse(totKmField.getValue()).doubleValue();
 					rimborso = number * rimborsoKmStore.getRimborsoKm().get(0).getValue();
@@ -146,7 +146,27 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 	}
 
 	public void addListener() {
-		
+
+		pagataField.addValueChangeListener(new ValueChangeListener() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3533033215989257332L;
+
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if (!pagataField.getValue()) {
+					mandatoPagamentoField.setValue(null);
+					totaleDovutoField.setValue(null);
+					mandatoPagamentoField.setValidationVisible(false);
+					totaleDovutoField.setValidationVisible(false);
+
+				}
+			}
+
+		});
+
 		dataFineMissioneField.addBlurListener(new BlurListener() {
 
 			/**
@@ -214,11 +234,9 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 	 */
 	@Override
 	public void addValidator() {
-		
-		
+
 		// la data di ritorno posteriore alla data di andata
 		dataFineMissioneField.addValidator(new Validator() {
-
 
 			/**
 			 * 
@@ -238,7 +256,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 
 			}
 		});
-		
+
 		if (isAdmin) {
 			mandatoPagamentoField.addValidator(new Validator() {
 
@@ -290,8 +308,6 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 			});
 
 		}
-		
-		
 
 	}
 
