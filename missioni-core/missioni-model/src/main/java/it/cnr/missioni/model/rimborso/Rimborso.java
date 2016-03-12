@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.joda.time.Hours;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,7 +42,6 @@ public class Rimborso implements Serializable {
 	private Double anticipazionePagamento;
 	private Double totaleDovuto;
 	private boolean pagata;
-	private boolean rimborsoDaTerzi;
 	@Min(value = 0)
 	private double importoDaTerzi;
 	@XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
@@ -64,60 +62,6 @@ public class Rimborso implements Serializable {
 
 		return (List<Fattura>) getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from))
 				.filter(f -> f.getData().isBefore(to)).collect(Collectors.toList());
-
-	}
-
-
-	/**
-	 * 
-	 * Numero di vitti in base alle ore
-	 * 
-	 * @param dataInizioMisione
-	 * @param dataFineMissione
-	 * @param dataFattura
-	 * @param isEstera
-	 * @return
-	 */
-	public int getNumberFatturaPermissible(DateTime dataInizioMisione, DateTime dataFineMissione,
-			DateTime dataFrontieraAndata, DateTime dataFrontieraRitorno, DateTime dataFattura, boolean isEstera) {
-		int days = Days.daysBetween(dataInizioMisione, dataFineMissione).getDays();
-
-		DateTime dataLimiteInizio = null;
-		DateTime dataLimiteFine = null;
-		int hours = 0;
-		
-		if (isEstera) {
-			dataLimiteInizio = dataFrontieraAndata;
-			dataLimiteFine = dataFrontieraRitorno;
-		}
-
-		if (!isEstera) {
-
-			if (days <= 0) {
-				dataLimiteInizio = dataFineMissione;
-				dataLimiteFine = dataFineMissione;
-			} else {
-				DateTime d = new DateTime(dataInizioMisione.getYear(), dataInizioMisione.getMonthOfYear(),
-						dataInizioMisione.getDayOfMonth(), 0, 00);
-				dataLimiteInizio = d.plusDays(1);
-				dataLimiteFine = new DateTime(dataFineMissione.getYear(), dataFineMissione.getMonthOfYear(),
-						dataFineMissione.getDayOfMonth(), 0, 0);
-
-			}
-		}
-
-		if (dataFattura.isAfter(dataInizioMisione) && dataFattura.isBefore(dataLimiteInizio))
-			hours = Hours.hoursBetween(dataInizioMisione, dataLimiteInizio).getHours();
-
-		if (dataFattura.isAfter(dataLimiteFine) && dataFattura.isBefore(dataFineMissione))
-			hours = Hours.hoursBetween(dataLimiteFine, dataFineMissione).getHours();
-
-		if (hours >= 4 && hours <= 12)
-			return 1;
-		else if (hours > 12)
-			return 2;
-
-		return 2;
 
 	}
 
@@ -319,19 +263,7 @@ public class Rimborso implements Serializable {
 		this.pagata = pagata;
 	}
 
-	/**
-	 * @return the rimborsoDaTerzi
-	 */
-	public boolean isRimborsoDaTerzi() {
-		return rimborsoDaTerzi;
-	}
 
-	/**
-	 * @param rimborsoDaTerzi
-	 */
-	public void setRimborsoDaTerzi(boolean rimborsoDaTerzi) {
-		this.rimborsoDaTerzi = rimborsoDaTerzi;
-	}
 
 	/**
 	 * @return the importoDaTerzi
@@ -370,7 +302,7 @@ public class Rimborso implements Serializable {
 				+ dataRimborso + ", dateLastModified=" + dateLastModified + ", totale=" + totale + ", totaleTAM="
 				+ totaleTAM + ", avvisoPagamento=" + avvisoPagamento + ", totKm=" + totKm + ", rimborsoKm=" + rimborsoKm
 				+ ", anticipazionePagamento=" + anticipazionePagamento + ", totaleDovuto=" + totaleDovuto + ", pagata="
-				+ pagata + ", rimborsoDaTerzi=" + rimborsoDaTerzi + ", importoDaTerzi=" + importoDaTerzi
+				+ pagata + ", importoDaTerzi=" + importoDaTerzi
 				+ ", mappaFattura=" + mappaFattura + "]";
 	}
 
