@@ -5,11 +5,23 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 
+import it.cnr.missioni.dashboard.client.ClientConnector;
+import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.validator.IValidator;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
  * 
@@ -29,22 +41,24 @@ public class CheckMassimale {
 	private String livello;
 	private String areaGeografica;
 	private User user;
-	
-	public CheckMassimale(){}
-	
-	public CheckMassimale(Missione missione,Fattura fattura,Rimborso rimborso,Map<String, Fattura> mappa){
+
+	public CheckMassimale() {
+	}
+
+	public CheckMassimale(Missione missione, Fattura fattura, Rimborso rimborso, Map<String, Fattura> mappa) {
 		this.missione = missione;
 		this.fattura = fattura;
 		this.mappa = mappa;
 		this.rimborso = rimborso;
 	}
-	
-	public void initialize() throws Exception{
+
+	public void initialize() throws Exception {
 		DateTime dateTo = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
 				fattura.getData().getDayOfMonth(), 0, 0);
 		DateTime datFrom = new DateTime(fattura.getData().getYear(), fattura.getData().getMonthOfYear(),
 				fattura.getData().getDayOfMonth(), 23, 59);
-		List<Fattura> listaF = rimborso.getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(), fattura.getId());
+		List<Fattura> listaF = rimborso.getNumberOfFatturaInDay(dateTo, datFrom, fattura.getIdTipologiaSpesa(),
+				fattura.getId());
 		if (!listaF.isEmpty()) {
 			otherFattura = listaF.get(0);
 
@@ -57,28 +71,179 @@ public class CheckMassimale {
 		});
 		buildChain();
 	}
-	
-	private  void buildChain() throws Exception{
 
+	private void buildChain() throws Exception {
 
-		IControlCheckMassimale m1 = new GetAreaGeograficaMissione().newGetAreaGeografica().withCheckMassimale(this);
-		IControlCheckMassimale m2 = new GetUserMissione().newGetUser().withCheckMassimale(this);
-		IControlCheckMassimale m3 = new GetUserSeguitoMissione().newGetUserSeguito().withCheckMassimale(this);
-		IControlCheckMassimale m4 = new GetMassimaleUser().newGetMassimale().withCheckMassimale(this);
+		IValidator m1 = new Step1();
+		IValidator m2 = new Step2();
+		IValidator m3 = new Step3();
+		IValidator m4 = new Step4();
 
-		IControlCheckMassimale m5 = new CheckTipoFattura().newCheckTipoFattura().withCheckMassimale(this);
+		IValidator m5 = new Step5();
 
-		IControlCheckMassimale m6 = new CheckOneFatturaPasto().newCheckOneFattura().withCheckMassimale(this);
-		IControlCheckMassimale m7 = new CheckTwoFatturaPasto().newCheckTwoFattura().withCheckMassimale(this);
+		IValidator m6 = new Step6();
+		IValidator m7 = new Step7();
 
-		m1.setNextControl(m2);
-		m2.setNextControl(m3);
-		m3.setNextControl(m4);
-		m4.setNextControl(m5);
-		m5.setNextControl(m6);
-		m6.setNextControl(m7);
+		m1.setNextValidator(m2);
+		m2.setNextValidator(m3);
+		m3.setNextValidator(m4);
+		m4.setNextValidator(m5);
+		m5.setNextValidator(m6);
+		m6.setNextValidator(m7);
 
 		m1.check();
+	}
+
+	// Step nel caso ci sia una sola fattura di tipo Pasto in un giorno
+	class Step6 extends IValidator.AbstractValidator {
+
+		/**
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+
+			if (!missione.isMissioneEstera() && otherFattura == null)
+				checkItalia();
+			else if (missione.isMissioneEstera() && otherFattura == null)
+				checkEstera();
+			else
+				this.nextValidator.check();
+		}
+
+		private void checkEstera() {
+			if (totaleFattureGiornaliera > massimale.getValue())
+				fattura.setImportoSpettante(fattura.getImporto() - (massimale.getValue()));
+		}
+
+		private void checkItalia() {
+			if (totaleFattureGiornaliera > massimale.getValue() / 2.0)
+				fattura.setImportoSpettante(massimale.getValue() / 2.0);
+		}
+
+	}
+
+	// Verifica che la fattura sia di tipo pasto
+	class Step5 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			TipologiaSpesaStore tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder
+					.getTipologiaSpesaSearchBuilder().withId(getFattura().getIdTipologiaSpesa()));
+			if (tipologiaSpesaStore.getTotale() > 0
+					&& tipologiaSpesaStore.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO) {
+				this.nextValidator.check();
+			}
+
+		}
+
+	}
+
+	// Step nel caso ci siano due fatture di tipo Pasto in un giorno
+	public class Step7 extends IValidator.AbstractValidator {
+
+		/**
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			if (totaleFattureGiornaliera > massimale.getValue()) {
+
+				if (fattura.getImporto() >= otherFattura.getImporto()) {
+					fattura.setImportoSpettante(massimale.getValue());
+					otherFattura.setImportoSpettante(0.0);
+				} else {
+					otherFattura.setImportoSpettante(massimale.getValue());
+					fattura.setImportoSpettante(0.0);
+				}
+			}
+		}
+
+	}
+
+	public class Step1 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			if (fattura.getData().isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
+					|| fattura.getData().isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
+					|| !missione.isMissioneEstera())
+				setAreaGeografica(AreaGeograficaEnum.ITALIA.name());
+			else {
+				Nazione nazione = ClientConnector
+						.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+						.getNazione().get(0);
+				setAreaGeografica(nazione.getAreaGeografica().name());
+			}
+			this.nextValidator.check();
+
+		}
+	}
+
+	public class Step4 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
+					.getMassimaleSearchBuilder().withLivello(getLivello()).withAreaGeografica(getAreaGeografica())
+					.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
+			if (massimaleStore.getTotale() > 0) {
+				setMassimale(massimaleStore.getMassimale().get(0));
+				this.nextValidator.check();
+			}
+
+		}
+
+	}
+
+	public class Step2 extends IValidator.AbstractValidator {
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			User user = ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser()))
+					.getUsers().get(0);
+			setLivello(user.getDatiCNR().getLivello().name());
+			setUser(user);
+			this.nextValidator.check();
+
+		}
+
+	}
+
+	public class Step3 extends IValidator.AbstractValidator {
+
+		/**
+		 * @throws Exception
+		 * 
+		 */
+		@Override
+		public void check() throws Exception {
+			if (missione.getIdUserSeguito() != null) {
+				User userSeguito = ClientConnector
+						.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUserSeguito()))
+						.getUsers().get(0);
+				if (userSeguito.getDatiCNR().getLivello().getStato() < getUser().getDatiCNR().getLivello().getStato())
+					setLivello(userSeguito.getDatiCNR().getLivello().name());
+			}
+			this.nextValidator.check();
+
+		}
+
 	}
 
 	/**
@@ -89,7 +254,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param fattura 
+	 * @param fattura
 	 */
 	public void setFattura(Fattura fattura) {
 		this.fattura = fattura;
@@ -103,7 +268,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param massimale 
+	 * @param massimale
 	 */
 	public void setMassimale(Massimale massimale) {
 		this.massimale = massimale;
@@ -117,7 +282,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param rimborso 
+	 * @param rimborso
 	 */
 	public void setRimborso(Rimborso rimborso) {
 		this.rimborso = rimborso;
@@ -131,7 +296,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param mappa 
+	 * @param mappa
 	 */
 	public void setMappa(Map<String, Fattura> mappa) {
 		this.mappa = mappa;
@@ -145,7 +310,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param otherFattura 
+	 * @param otherFattura
 	 */
 	public void setOtherFattura(Fattura otherFattura) {
 		this.otherFattura = otherFattura;
@@ -159,7 +324,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param missione 
+	 * @param missione
 	 */
 	public void setMissione(Missione missione) {
 		this.missione = missione;
@@ -173,7 +338,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param livello 
+	 * @param livello
 	 */
 	public void setLivello(String livello) {
 		this.livello = livello;
@@ -187,7 +352,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param areaGeografica 
+	 * @param areaGeografica
 	 */
 	public void setAreaGeografica(String areaGeografica) {
 		this.areaGeografica = areaGeografica;
@@ -201,7 +366,7 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param totaleFattureGiornaliera 
+	 * @param totaleFattureGiornaliera
 	 */
 	public void setTotaleFattureGiornaliera(double totaleFattureGiornaliera) {
 		this.totaleFattureGiornaliera = totaleFattureGiornaliera;
@@ -215,10 +380,9 @@ public class CheckMassimale {
 	}
 
 	/**
-	 * @param user 
+	 * @param user
 	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
 }
-
