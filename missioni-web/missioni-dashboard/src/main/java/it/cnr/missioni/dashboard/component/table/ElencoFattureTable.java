@@ -15,6 +15,8 @@ import com.vaadin.event.Action.Handler;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Notification.Type;
 
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
@@ -160,6 +162,9 @@ public final class ElencoFattureTable  extends ITable.AbstractTable  {
 			if (action == seleziona) {
 				beanFieldGroup.setItemDataSource((Fattura) target);
 				dateField.setValue(((Fattura) target).getData().toDate());
+				if(missione.isMissioneEstera())
+					DashboardEventBus.post(new DashboardEvent.ComboBoxListaFatturaUpdatedEvent(((Fattura) target)));
+
 			}
 			if (action == elimina) {
 				missione.getRimborso().getMappaFattura().remove(((Fattura) target).getId());
