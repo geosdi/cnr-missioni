@@ -3,7 +3,7 @@
     <h3>CNR : Sistema Missioni</h3>
     <div>
         <p>L'utente ${userName} ${userSurname} ha inserito una nuova missione, nella quale lei
-        risulta essere respnsabile gruppo.
+        risulta essere responsabile gruppo.
          In allegato
            il pdf che riepiloga i dati inseriti.
         </p>
