@@ -13,7 +13,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
@@ -114,6 +113,8 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				selectedQualificaUser = null;
+				elencoQualificaUserTable.select(null);
 				QualificaUserWindow.open(new QualificaUser(), true,true,false);
 			}
 

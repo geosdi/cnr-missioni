@@ -222,6 +222,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				selectedMissione = null;
+				elencoMissioniTable.select(null);
 				openWizardMissione();
 			}
 

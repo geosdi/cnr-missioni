@@ -13,7 +13,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
@@ -109,6 +108,8 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				selectedVeicoloCNR = null;
+				elencoVeicoliCNRTable.select(null);
 				VeicoloCNRWindow.open(new VeicoloCNR(), true,true,false);
 			}
 

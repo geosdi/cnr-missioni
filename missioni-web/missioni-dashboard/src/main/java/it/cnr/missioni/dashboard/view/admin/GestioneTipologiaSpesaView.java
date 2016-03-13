@@ -13,7 +13,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
@@ -111,6 +110,8 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				selectedTipologiaSpesa = null;
+				elencoTipologiaSpesaTable.select(null);
 				TipologiaSpesaWindow.open(new TipologiaSpesa(),true,true, false);
 			}
 

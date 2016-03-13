@@ -103,6 +103,8 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				selectedVeicolo = null;
+				elencoVeicoliTable.select(null);
 				VeicoloWindow.open(new Veicolo(),false,true, false);
 			}
 
