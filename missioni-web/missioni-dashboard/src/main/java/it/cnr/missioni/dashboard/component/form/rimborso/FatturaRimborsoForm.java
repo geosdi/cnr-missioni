@@ -7,6 +7,8 @@ import java.util.UUID;
 import org.joda.time.DateTime;
 
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -33,7 +35,6 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ComboBoxListaFatturaUpdatedEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
@@ -284,30 +285,6 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		@Override
 		public void addValidator() {
 
-			dataField.addValidator(new Validator() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1892203509953963434L;
-
-				@Override
-				public void validate(Object value) throws InvalidValueException {
-
-					if (dataField.getValue() == null)
-						throw new InvalidValueException(Utility.getMessage("field_required"));
-					else {
-						DateTime d = new DateTime(dataField.getValue());
-						// Verifica che la fattura sia inserita nel range tra
-						// inizio e fine missione
-						if (d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())
-								|| d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
-							throw new InvalidValueException(Utility.getMessage("date_range_start"));
-					}
-
-				}
-			});
-
 			tipologiaSpesaField.addValidator(new Validator() {
 
 				/**
@@ -426,7 +403,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 			if (missione.isMissioneEstera()) {
 
-				dataField.addBlurListener(new BlurListener() {
+				dataField.addValueChangeListener(new ValueChangeListener() {
 
 					/**
 					 * 
@@ -434,15 +411,13 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					private static final long serialVersionUID = 3158019137599500668L;
 
 					@Override
-					public void blur(BlurEvent event) {
-
+					public void valueChange(ValueChangeEvent event) {
 						if (dataField.getValue() != null) {
 
 							DateTime d = new DateTime((dataField.getValue().getTime()));
 
 							caricaListaFattura(d);
-						}
-
+						}						
 					}
 
 				});
