@@ -106,7 +106,6 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	@Override
 	public void wizardCancelled(WizardCancelledEvent event) {
 		DashboardEventBus.post(new  DashboardEvent.ResetMissioneEvent() );
-		
 		endWizard();
 	}
 

@@ -16,12 +16,10 @@ public class WizardMissione extends IWizard.AbstractWizard {
 
 	private Missione missione;
 	private User user;
-	// private DatiMissioneEsteraStep missioneEsteraStep;
 	private DatiPeriodoMissioneStep datiPeriodoMissioneStep;
 	private FondoGAEStep fondoGAEStep;
 	private LocalitaOggettoStep localitaOggettoStep;
 	private TipoMissioneStep tipoMissioneStep;
-	// private AnticipazioniPagamentoStep anticipazioniPagamentoStep;
 	private RiepilogoDatiMissioneStep ripilogoDatiStep;
 	private DatiVeicoloMissioneStep datiVeicoloMissioneStep;
 
@@ -41,11 +39,6 @@ public class WizardMissione extends IWizard.AbstractWizard {
 		this.localitaOggettoStep = new LocalitaOggettoStep(missione,isAdmin,enabled,modifica);
 		this.fondoGAEStep = new FondoGAEStep(missione,isAdmin,enabled,modifica);
 		this.datiPeriodoMissioneStep = new DatiPeriodoMissioneStep(missione.getDatiPeriodoMissione(), missione,isAdmin,enabled,modifica);
-		// this.missioneEsteraStep = new
-		// DatiMissioneEsteraStep(missione.getDatiMissioneEstera(), missione);
-
-		// this.anticipazioniPagamentoStep = new
-		// AnticipazioniPagamentoStep(missione);
 		ripilogoDatiStep = new RiepilogoDatiMissioneStep(missione,modifica,isAdmin);
 
 		getWizard().addStep(tipoMissioneStep, "tipoMissione");
@@ -53,9 +46,6 @@ public class WizardMissione extends IWizard.AbstractWizard {
 		getWizard().addStep(fondoGAEStep, "fondoGAE");
 		getWizard().addStep(datiVeicoloMissioneStep, "datiGenerali");
 		getWizard().addStep(datiPeriodoMissioneStep, "inizioFine");
-		// getWizard().addStep(missioneEsteraStep, "missioneEstera");
-		// getWizard().addStep(anticipazioniPagamentoStep,
-		// "anticipazioniPagamento");
 		getWizard().addStep(ripilogoDatiStep, "riepilogoDati");
 
 	}
