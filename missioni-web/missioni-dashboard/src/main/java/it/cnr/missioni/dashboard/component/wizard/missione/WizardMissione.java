@@ -6,6 +6,8 @@ import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import it.cnr.missioni.dashboard.component.window.IWizard;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 
@@ -81,6 +83,8 @@ public class WizardMissione extends IWizard.AbstractWizard {
 	 */
 	@Override
 	public void wizardCancelled(WizardCancelledEvent event) {
+		if(isAdmin)
+			DashboardEventBus.post(new  DashboardEvent.ResetMissioneAdminEvent() );
 		endWizard();
 	}
 
