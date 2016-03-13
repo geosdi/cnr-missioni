@@ -170,4 +170,11 @@ public class TipologiaSpesaRestServiceTest {
 
 	}
 	
+//	@Test
+//	public void L_findTipologiaSpesaTipoTest() throws Exception {
+//		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true).withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
+//		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder);
+//		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", tipologiaSpesaStore.getTipologiaSpesa().size() == 1);
+//	}
+	
 }
