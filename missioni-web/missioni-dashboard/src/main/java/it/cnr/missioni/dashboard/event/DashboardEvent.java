@@ -1,7 +1,10 @@
 package it.cnr.missioni.dashboard.event;
 
+import org.joda.time.DateTime;
+
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.menu.DashboardViewType;
+import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
 /*
@@ -90,6 +93,38 @@ public abstract class DashboardEvent {
 	 */
 	public static class TableMissioniUpdateUpdatedEvent {
 
+	}
+	
+	public static class ComboBoxListaFatturaUpdatedEvent {
+
+		private Fattura fattura;
+
+		/**
+		 * @return the fattura
+		 */
+		public Fattura getFattura() {
+			return fattura;
+		}
+
+		/**
+		 * @param fattura 
+		 */
+		public void setFattura(Fattura fattura) {
+			this.fattura = fattura;
+		}
+
+		/**
+		 * @param data
+		 */
+		public ComboBoxListaFatturaUpdatedEvent(Fattura fattura) {
+			this.fattura = fattura;
+		}
+
+
+		
+		
+		
+		
 	}
 	
 	public static class ResetMissioneEvent {
