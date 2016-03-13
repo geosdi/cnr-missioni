@@ -95,7 +95,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.add(paragraphOrdine);
 
 		Paragraph paragraphOrdine2 = new Paragraph(
-				"Ordine di missione N." + missione.getId() + " " + " del " + formatData.format(missione.getDataInserimento().toDate()) + "\n\n\n", fontBold);
+				"Ordine di missione N." + missione.getId() + " " + " del " + formatDataTime.format(missione.getDataInserimento().toDate()) + "\n\n\n", fontBold);
 		paragraphOrdine2.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragraphOrdine2);
 
