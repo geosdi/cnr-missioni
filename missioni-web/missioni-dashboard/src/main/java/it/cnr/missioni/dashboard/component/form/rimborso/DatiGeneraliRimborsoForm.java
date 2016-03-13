@@ -107,9 +107,6 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 		}
 
 		
-
-		
-
 		addListener();
 		addValidator();
 	}

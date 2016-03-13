@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.joda.time.DateTime;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -31,6 +32,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ComboBoxListaFatturaUpdatedEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
@@ -165,6 +168,10 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					elencoFattureTable.aggiornaTable(
 							new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
 					elencoFattureTable.aggiornaTotale(formFattura.getMissione().getRimborso().getTotale());
+					
+					//Se estera ricancello la combobox
+					if(missione.isMissioneEstera())
+						formFattura.getTipologiaSpesaField().removeAllItems();
 
 				} else {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
@@ -203,6 +210,61 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			getFieldGroup().setEnabled(enabled);
 			buildFieldGroup();
 			buildTab();
+		}
+
+		@Override
+		public void buildTab() {
+
+			bean = new Fattura();
+
+			numeroFatturaField = (TextField) getFieldGroup().buildAndBind("Numero Fattura", "numeroFattura");
+			tipologiaSpesaField = new ComboBox("Tipologia Spesa");
+			tipologiaSpesaField.setValidationVisible(false);
+			tipologiaSpesaField.setImmediate(true);
+
+			getFieldGroup().bind(tipologiaSpesaField, "idTipologiaSpesa");
+
+			importoField = (TextField) getFieldGroup().buildAndBind("Importo", "importo");
+			valutaField = (TextField) getFieldGroup().buildAndBind("Valuta", "valuta");
+			altroField = (TextField) getFieldGroup().buildAndBind("Altro", "altro");
+
+			dataField = new DateField("Data");
+			dataField.setDateOutOfRangeMessage("Data non possibile");
+			dataField.setResolution(Resolution.MINUTE);
+			dataField.setDateFormat("dd/MM/yyyy HH:mm");
+			dataField.setValidationVisible(false);
+			dataField.setImmediate(true);
+
+			getTipologiaSpesa(listaTipologiaSpesaItalia, false, false);
+			if (missione.isMissioneEstera())
+				getTipologiaSpesa(listaTipologiaSpesaEstera,
+						missione.getDatiMissioneEstera()
+								.getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO,
+						true);
+			else
+				buildTipologiaCombo(listaTipologiaSpesaItalia);
+
+			elencoFattureTable = new ElencoFattureTable(getFieldGroup(), dataField, missione);
+			elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
+			elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
+
+			if (enabled) {
+				addComponent(dataField);
+				addComponent(numeroFatturaField);
+				addComponent(tipologiaSpesaField);
+				addComponent(importoField);
+
+				addComponent(altroField);
+				addComponent(valutaField);
+
+			}
+
+			addComponent(elencoFattureTable);
+			setComponentAlignment(elencoFattureTable, Alignment.MIDDLE_LEFT);
+
+			addValidator();
+			addListener();
+
 		}
 
 		/**
@@ -378,23 +440,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 							DateTime d = new DateTime((dataField.getValue().getTime()));
 
-							if (d.compareTo(missione.getDatiPeriodoMissione().getInizioMissione().toLocalDateTime()
-									.toDateTime()) >= 0
-									&& d.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()
-											.toLocalDateTime().toDateTime()) < 0)
-								buildTipologiaCombo(listaTipologiaSpesaItalia);
-							else if (d
-									.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()
-											.toLocalDateTime().toDateTime()) > 0
-									&& d.compareTo(missione.getDatiPeriodoMissione().getFineMissione().toLocalDateTime()
-											.toDateTime()) <= 0)
-								buildTipologiaCombo(listaTipologiaSpesaItalia);
-							else if (d
-									.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()
-											.toLocalDateTime().toDateTime()) >= 0
-									&& d.compareTo(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno()
-											.toLocalDateTime().toDateTime()) <= 0)
-								buildTipologiaCombo(listaTipologiaSpesaEstera);
+							caricaListaFattura(d);
 						}
 
 					}
@@ -403,73 +449,26 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			}
 
 		}
+		
+		//Carica la combobox in base alal data selezionata per la missione estera
+		public void caricaListaFattura(DateTime d){
+			if (d.isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()) && d
+					.isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())) {
+				buildTipologiaCombo(listaTipologiaSpesaEstera);
 
-		@Override
-		public void buildTab() {
-
-			bean = new Fattura();
-
-			numeroFatturaField = (TextField) getFieldGroup().buildAndBind("Numero Fattura", "numeroFattura");
-			tipologiaSpesaField = new ComboBox("Tipologia Spesa");
-			tipologiaSpesaField.setValidationVisible(false);
-			tipologiaSpesaField.setImmediate(true);
-
-			getFieldGroup().bind(tipologiaSpesaField, "idTipologiaSpesa");
-
-			importoField = (TextField) getFieldGroup().buildAndBind("Importo", "importo");
-			valutaField = (TextField) getFieldGroup().buildAndBind("Valuta", "valuta");
-			altroField = (TextField) getFieldGroup().buildAndBind("Altro", "altro");
-
-			dataField = new DateField("Data");
-			dataField.setDateOutOfRangeMessage("Data non possibile");
-			dataField.setResolution(Resolution.MINUTE);
-			dataField.setDateFormat("dd/MM/yyyy HH:mm");
-			dataField.setValidationVisible(false);
-
-
-			// carica la combo con tutte le voce di spesa italiane
-			if (!missione.isMissioneEstera()) {
-				getTipologiaSpesa(listaTipologiaSpesaItalia, null);
+			} else {
 				buildTipologiaCombo(listaTipologiaSpesaItalia);
 
 			}
-			// preleva la lista di spesa ESTERA e aggiunge il listener sul DATE
-			// FIELD
-			if (missione.isMissioneEstera()) {
-				String tipoTrattamento = null;
-				if (missione.getDatiMissioneEstera()
-						.getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO)
-					tipoTrattamento = TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name();
-				getTipologiaSpesa(listaTipologiaSpesaEstera, tipoTrattamento);
-				addListener();
-			}
-
-			elencoFattureTable = new ElencoFattureTable(getFieldGroup(), dataField, missione);
-			elencoFattureTable.aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
-			elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
-
-			if (enabled) {
-
-				addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-
-				addComponent(dataField);
-				addComponent(numeroFatturaField);
-				addComponent(tipologiaSpesaField);
-				addComponent(importoField);
-
-				addComponent(altroField);
-				addComponent(valutaField);
-
-			}
-
-			addComponent(elencoFattureTable);
-			setComponentAlignment(elencoFattureTable, Alignment.MIDDLE_LEFT);
-
-			addValidator();
-			addListener();
-
 		}
 
+		//Quando viene selezionato una fattura carico la lista corretta in base alla data della fattura, in caso di missione estera
+		@Subscribe
+		public void aggiornaListaFattura(final ComboBoxListaFatturaUpdatedEvent event) {
+			caricaListaFattura(event.getFattura().getData());
+			tipologiaSpesaField.select(event.getFattura().getIdTipologiaSpesa());
+		}
+		
 		/**
 		 * 
 		 * Carica le tipologia spesa in base ad ITALIA o ESTERA
@@ -477,13 +476,13 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		 * @param tipo
 		 * @param lista
 		 */
-		private void getTipologiaSpesa(List<TipologiaSpesa> lista, String tipoTrattamento) {
+		private void getTipologiaSpesa(List<TipologiaSpesa> lista, boolean tam, boolean estera) {
 			try {
 
 				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
-						.withEstera(true).withItalia(true).withAll(true);
-				if (tipoTrattamento != null){
-					t.withTipoTrattamento(tipoTrattamento);
+						.withEstera(estera).withItalia(!estera).withAll(true);
+				if (tam) {
+					t.withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
 				}
 				TipologiaSpesaStore tipologiaStore = ClientConnector.getTipologiaSpesa(t);
 
