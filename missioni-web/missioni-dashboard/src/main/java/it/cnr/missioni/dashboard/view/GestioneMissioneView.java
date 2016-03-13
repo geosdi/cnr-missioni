@@ -503,7 +503,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	}
 
 	/**
-	 * Reset missione se il wizard viene cancellato
+	 * Reset missione se il wizard rimborso viene cancellato
 	 */
 	@Subscribe
 	public void resetSelectedMissione(final ResetMissioneEvent event) {
