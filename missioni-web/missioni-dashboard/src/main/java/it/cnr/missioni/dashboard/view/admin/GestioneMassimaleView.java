@@ -75,8 +75,19 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedMassimale = (Massimale) itemClickEvent.getItemId();
-				enableButtons();
+				
+				
+				try {
+					selectedMassimale = ClientConnector
+							.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+									.withId(((Massimale) itemClickEvent.getItemId()).getId()))
+							.getMassimale().get(0);
+					enableButtons();
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+				
 			}
 		});
 

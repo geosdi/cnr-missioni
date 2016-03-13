@@ -74,8 +74,19 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedNazione = (Nazione) itemClickEvent.getItemId();
-				enableButtons();
+				
+				
+				try {
+					selectedNazione = ClientConnector
+							.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder()
+									.withId(((Nazione) itemClickEvent.getItemId()).getId()))
+							.getNazione().get(0);
+					enableButtons();
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+
 			}
 		});
 

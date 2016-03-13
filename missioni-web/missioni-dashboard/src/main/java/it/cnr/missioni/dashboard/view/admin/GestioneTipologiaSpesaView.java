@@ -77,8 +77,19 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedTipologiaSpesa = (TipologiaSpesa) itemClickEvent.getItemId();
-				enableButtons();
+				
+				
+				try {
+					selectedTipologiaSpesa = ClientConnector
+							.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
+									.withId(((TipologiaSpesa) itemClickEvent.getItemId()).getId()))
+							.getTipologiaSpesa().get(0);
+					enableButtons();
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+
 			}
 		});
 

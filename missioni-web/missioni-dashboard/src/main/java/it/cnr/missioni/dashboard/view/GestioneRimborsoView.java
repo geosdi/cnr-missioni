@@ -94,8 +94,19 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 			@Override
 			public void itemClick(ItemClickEvent itemClickEvent) {
-				selectedMissione = (Missione) itemClickEvent.getItemId();
-				enableButtons();
+				
+				
+				try {
+					selectedMissione = ClientConnector
+							.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
+									.withIdMissione(((Missione) itemClickEvent.getItemId()).getId()))
+							.getMissioni().get(0);
+					enableButtons();
+				} catch (Exception e) {
+					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+							Type.ERROR_MESSAGE);
+				}
+
 			}
 		});
 
