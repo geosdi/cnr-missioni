@@ -190,7 +190,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 				try {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-					elencoMissioniTable.aggiornaTable(missioniStore);
+					aggiornaTable();
 
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -201,6 +201,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		});
 		return buttonCerca;
 	}
+	
 
 	protected void openWizardMissione() {
 		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione())

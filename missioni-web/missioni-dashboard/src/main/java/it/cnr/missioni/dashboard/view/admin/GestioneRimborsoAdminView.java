@@ -54,5 +54,9 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true)
 			.build();
 	}
+	
+	protected void aggiornaTable() {
+		this.elencoRimborsiTable.aggiornaTableAdmin(missioniStore);
+	}
 
 }

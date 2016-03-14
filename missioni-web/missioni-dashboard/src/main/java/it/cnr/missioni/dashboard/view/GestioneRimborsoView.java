@@ -55,13 +55,13 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	/**
 	 * 
 	 */
-	private ElencoRimborsiTable elencoRimborsiTable;
+	protected ElencoRimborsiTable elencoRimborsiTable;
 
 	protected Missione selectedMissione;
 
 	protected MissioneSearchBuilder missioneSearchBuilder;
 
-	private MissioniStore missioniStore;
+	protected MissioniStore missioniStore;
 
 	public GestioneRimborsoView() {
 		super();
@@ -113,7 +113,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		try {
 			missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
 
-			this.elencoRimborsiTable.aggiornaTable(missioniStore);
+			aggiornaTable();
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -140,10 +140,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	}
 
 	protected Button createButtonSearch() {
-		buttonCerca = new Button();
-		buttonCerca.setIcon(FontAwesome.SEARCH);
-		buttonCerca.setStyleName(ValoTheme.BUTTON_PRIMARY);
-		buttonCerca.setDescription("Ricerca full text");
+		buttonCerca = buildButton("", "Ricerca full text", FontAwesome.SEARCH);
 		buttonCerca.addClickListener(new Button.ClickListener() {
 			/**
 			 * 
@@ -156,7 +153,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 				try {
 					missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
 					missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-					elencoRimborsiTable.aggiornaTable(missioniStore);
+					aggiornaTable();
 
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -168,6 +165,9 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		return buttonCerca;
 	}
 
+	protected void aggiornaTable() {
+		this.elencoRimborsiTable.aggiornaTable(missioniStore);
+	}
 	
 	protected void openRimborsoDettgali(){
 		if (selectedMissione.isRimborsoSetted())
