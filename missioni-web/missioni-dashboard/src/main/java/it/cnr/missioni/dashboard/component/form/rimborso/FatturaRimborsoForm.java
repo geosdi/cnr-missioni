@@ -284,6 +284,27 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		 */
 		@Override
 		public void addValidator() {
+			
+			dataField.addValidator(new Validator() {
+
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = -2216627168202742197L;
+
+				@Override
+				public void validate(Object value) throws InvalidValueException {
+					if (dataField.getValue() != null) {
+						DateTime d = new DateTime(dataField.getValue());
+						if (d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())
+								|| d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
+							throw new InvalidValueException(Utility.getMessage("date_range_start"));
+
+					}
+
+				}
+
+			});
 
 			tipologiaSpesaField.addValidator(new Validator() {
 

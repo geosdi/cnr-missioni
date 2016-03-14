@@ -2,37 +2,26 @@ package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
 import java.util.ArrayList;
 
-import org.joda.time.Days;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.wizards.WizardStep;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
-import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
 /**
  * @author Salvia Vito
@@ -44,15 +33,17 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 	private Missione missione;
 	private boolean modifica;
 	private boolean isAdmin;
+	private boolean firstStep;
 
 	public String getCaption() {
 		return "Step 3";
 	}
 
-	public RiepilogoDatiRimborsoStep(Missione missione, boolean modifica, boolean isAdmin) {
+	public RiepilogoDatiRimborsoStep(Missione missione, boolean modifica, boolean isAdmin,boolean firstStep) {
 		this.missione = missione;
 		this.modifica = modifica;
 		this.isAdmin = isAdmin;
+		this.firstStep = firstStep;
 	}
 
 	public Component getContent() {
@@ -110,13 +101,12 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 	public boolean onAdvance() {
 
-		String conferma = "";
 
-		if (isAdmin)
-			conferma = "Verrà inviata una mail all'utente con i dati dell rimborso inserita.";
-		else
-			conferma = "Il rimborso inserito non potrà essere più modificato. Verrà inviata una mail all'amministratore con i dati del rimborso inserita.";
+		if(!firstStep){
+			
+			String conferma = isAdmin ? "Verrà inviata una mail all'utente con i dati dell rimborso inserita." : "Il rimborso inserito non potrà essere più modificato. Verrà inviata una mail all'amministratore con i dati del rimborso inserita.";
 
+			
 		ConfirmDialog.show(UI.getCurrent(), "Conferma", conferma, "Ok", "No", new ConfirmDialog.Listener() {
 
 			/**
@@ -132,6 +122,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 				}
 			}
 		});
+		}
 		return true;
 
 	}

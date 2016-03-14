@@ -24,7 +24,9 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	private User user;
 	private DatiGeneraliRimborsoStep datiGeneraliStep;
 	private FatturaRimborsoStep fatturaRimborsoStep;
-	private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStep;
+	private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStepFirst;
+	private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStepLast;
+
 //	private AnticipazioniPagamentoStep anticipazioniPagamentoStep;
 	private DatiMissioneEsteraStep datiMissioneEsteraStep;
 
@@ -50,7 +52,13 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 			
 
 			this.fatturaRimborsoStep = new FatturaRimborsoStep(missione,isAdmin,enabled,modifica);
-			this.riepilogoDatiRimborsoStep = new RiepilogoDatiRimborsoStep(missione,modifica,isAdmin);
+			this.riepilogoDatiRimborsoStepFirst = new RiepilogoDatiRimborsoStep(missione,modifica,isAdmin,true);
+			this.riepilogoDatiRimborsoStepLast = new RiepilogoDatiRimborsoStep(missione,modifica,isAdmin,false);
+
+
+			//se admin il wizard parte con il riepilogo dei dati
+			if(isAdmin)
+				getWizard().addStep(this.riepilogoDatiRimborsoStepFirst, "riepilogoDatiRimborsoPre");
 
 			getWizard().addStep(this.datiGeneraliStep, "datiGenerali");
 			if(missione.isMissioneEstera()){
@@ -58,7 +66,7 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 				getWizard().addStep(this.datiMissioneEsteraStep, "datiMissioneEstera");
 			}
 			getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
-			getWizard().addStep(this.riepilogoDatiRimborsoStep, "riepilogoDatiRimborso");
+			getWizard().addStep(this.riepilogoDatiRimborsoStepLast, "riepilogoDatiRimborso");
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -73,15 +81,15 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	@Override
 	public void activeStepChanged(WizardStepActivationEvent event) {
 
-		if (getWizard().getParent() != null) {
-
-			if (event.getActivatedStep() instanceof FatturaRimborsoStep
-					|| event.getActivatedStep() instanceof RiepilogoDatiRimborsoStep)
-				getWizard().getParent().setHeight("70%");
-
-			else
-				getWizard().getParent().setHeight("45%");
-		}
+//		if (getWizard().getParent() != null) {
+//
+//			if (event.getActivatedStep() instanceof FatturaRimborsoStep
+//					|| event.getActivatedStep() instanceof RiepilogoDatiRimborsoStep)
+//				getWizard().getParent().setHeight("70%");
+//
+//			else
+//				getWizard().getParent().setHeight("45%");
+//		}
 	}
 
 	/**

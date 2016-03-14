@@ -74,6 +74,7 @@ public class WizardSetupWindow extends Window {
 		setContent(wizard.getWizard());
 		UI.getCurrent().addWindow(this);
 
+
 	}
 
 	private void init() {
@@ -92,8 +93,8 @@ public class WizardSetupWindow extends Window {
 //		setCloseShortcut(KeyCode.ESCAPE, null);
 		setResizable(false);
 		setClosable(false);
-		setHeight("45%");
-		setWidth("40%");
+		setHeight("60%");
+		setWidth("45%");
 
 
 	}

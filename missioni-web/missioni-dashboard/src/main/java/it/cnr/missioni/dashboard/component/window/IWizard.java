@@ -51,6 +51,7 @@ public interface IWizard {
 			getWizard().getFinishButton().setCaption("Concludi");
 			getWizard().setWidth("100%");
 			getWizard().setHeight("95%");
+
 		}
 
 		/**
