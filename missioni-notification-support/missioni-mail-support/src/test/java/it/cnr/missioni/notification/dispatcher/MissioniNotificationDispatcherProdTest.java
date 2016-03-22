@@ -23,6 +23,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
@@ -91,7 +92,7 @@ public class MissioniNotificationDispatcherProdTest {
                         "vito.salvia@gmail.com", MissionePDFBuilder
                                 .newPDFBuilder()
                                 .withUser(buildUserTest())
-                                .withMissione(buildMissioneTest())));
+                                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest())));
         Thread.sleep(6000);
     }
 
@@ -103,7 +104,7 @@ public class MissioniNotificationDispatcherProdTest {
                         MissionePDFBuilder
                                 .newPDFBuilder()
                                 .withUser(buildUserTest())
-                                .withMissione(buildMissioneTest())));
+                                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest())));
         Thread.sleep(4000);
     }
     
@@ -125,7 +126,7 @@ public class MissioniNotificationDispatcherProdTest {
                 .newPDFBuilder();
     	pdfBuilder.setMezzoProprio(true);
     	pdfBuilder.withUser(buildUserTest())
-                .withMissione(buildMissioneTest()).withVeicolo(buildVeicoloTest());
+                .withMissione(buildMissioneTest()).withVeicolo(buildVeicoloTest()).withDirettore(buildDirettoreTest());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
                         "vito.salvia@gmail.com", pdfBuilder));
@@ -138,7 +139,7 @@ public class MissioniNotificationDispatcherProdTest {
     	PDFBuilder pdfBuilder = RimborsoPDFBuilder
                 .newPDFBuilder();
     	    	pdfBuilder.withUser(buildUserTest())
-                .withMissione(buildMissioneTest());
+                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest());
 
     	
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
@@ -154,7 +155,7 @@ public class MissioniNotificationDispatcherProdTest {
                 .newPDFBuilder();
     	    	pdfBuilder.withUser(buildUserTest())
     	    	.withFile(new File("./target/AnticipoPagamento.pdf"))
-                .withMissione(buildMissioneTest());
+                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildAddAnticipoPagamentoMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
                 		UUID.randomUUID().toString(),pdfBuilder));
@@ -172,7 +173,11 @@ public class MissioniNotificationDispatcherProdTest {
     	return v;
     }
     
-
+    Direttore buildDirettoreTest(){
+    	Direttore d = new Direttore();
+    	d.setValue("Dott. Vincenzo Lapenna");
+    	return d;
+    }
     
     User buildUserTest() {
         User user = new User();
