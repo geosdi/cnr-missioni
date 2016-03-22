@@ -1,6 +1,5 @@
 package it.cnr.missioni.dropwizard.delegate.prenotazione;
 
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 
