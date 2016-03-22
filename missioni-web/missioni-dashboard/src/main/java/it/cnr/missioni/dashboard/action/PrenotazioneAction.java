@@ -10,8 +10,13 @@ import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
 
 /**
  * @author Salvia Vito
@@ -37,12 +42,14 @@ public class PrenotazioneAction implements IAction {
 			prenotazione.setIdVeicoloCNR(prenotazioneEvent.getVeicolo());
 			prenotazione.setAllDay(prenotazioneEvent.isAllDay());
 			prenotazione.setLocalita(prenotazioneEvent.getLocalita());
+			prenotazione.setDescriptionVeicoloCNR(prenotazioneEvent.getVeicoloDescription());
+//			VeicoloCNR veicolo = ClientConnector.getVeicoloCNR(VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().)
 			
 			//Nel caso sia una nuova prenotazione
 			if(!modifica){
 				User user = DashboardUI.getCurrentUser();
 				prenotazione.setIdUser(user.getId());
-				prenotazione.setDescrizione(prenotazioneEvent.getDescrizione() + " - " + user.getAnagrafica().getCognome()
+				prenotazione.setDescrizione(user.getAnagrafica().getCognome()
 						+ " " + user.getAnagrafica().getNome());
 				ClientConnector.addPrenotazione(prenotazione);
 
@@ -50,6 +57,8 @@ public class PrenotazioneAction implements IAction {
 			//Modifica
 			else{
 				prenotazione.setId(prenotazioneEvent.getId());
+				prenotazione.setIdUser(prenotazioneEvent.getIdUser());
+				prenotazione.setDescrizione(prenotazioneEvent.getDescrizione());
 				ClientConnector.updatePrenotazione(prenotazione);
 			}
 			Thread.sleep(1000);
