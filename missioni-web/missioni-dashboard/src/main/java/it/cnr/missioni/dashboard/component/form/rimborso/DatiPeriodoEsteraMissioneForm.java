@@ -46,13 +46,13 @@ public class DatiPeriodoEsteraMissioneForm extends IForm.FormAbstract<DatiMissio
 
 	public void buildTab() {
 
-		attraversamentoFrontieraAndataField = new DateField("Attraversamento Frontiera andata");
+		attraversamentoFrontieraAndataField = new DateField("Attraversamento Frontiera Andata");
 		attraversamentoFrontieraAndataField.setDateOutOfRangeMessage("Data non possibile");
 		attraversamentoFrontieraAndataField.setResolution(Resolution.MINUTE);
 		attraversamentoFrontieraAndataField.setDateFormat("dd/MM/yyyy HH:mm");
 		attraversamentoFrontieraAndataField.setValidationVisible(false);
 
-		attraversamentoFrontieraRitornoField = new DateField("Attraversamento Frontiera andata");
+		attraversamentoFrontieraRitornoField = new DateField("Attraversamento Frontiera Ritorno");
 		attraversamentoFrontieraRitornoField.setDateOutOfRangeMessage("Data non possibile");
 		attraversamentoFrontieraRitornoField.setResolution(Resolution.MINUTE);
 		attraversamentoFrontieraRitornoField.setDateFormat("dd/MM/yyyy HH:mm");
