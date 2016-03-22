@@ -60,7 +60,7 @@ public class FondoGAEMissioneForm extends IForm.FormAbstract<Missione> {
 	}
 	
 	private void buildFields(){
-		listaResponsabiliGruppoField = new ComboBox("Responsabile Gruppo");
+		listaResponsabiliGruppoField = new ComboBox("Responsabile Fondo");
 
 		try {
 			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true)
