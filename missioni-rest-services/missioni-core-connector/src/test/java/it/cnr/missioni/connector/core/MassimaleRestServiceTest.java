@@ -143,14 +143,14 @@ public class MassimaleRestServiceTest {
 
 	
 
-//	@Test
-//	public void F_findByIdTest() throws Exception {
-//		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withId("02");
-//		MassimaleStore massimaleStore = missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
-//		logger.debug("############################FIND_MASSIMALE_BY_ID: {}\n", massimaleStore.getTotale());
-//		Assert.assertTrue("FIND MASSIMALE BY ID", massimaleStore.getTotale() == 1);
-//		Assert.assertTrue("FIND  MASSIMALE BY ID", massimaleStore.getMassimale().get(0).getId().equals("02"));
-//	}
+	@Test
+	public void F_findByIdTest() throws Exception {
+		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withId("02");
+		MassimaleStore massimaleStore = missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
+		logger.debug("############################FIND_MASSIMALE_BY_ID: {}\n", massimaleStore.getTotale());
+		Assert.assertTrue("FIND MASSIMALE BY ID", massimaleStore.getTotale() == 1);
+		Assert.assertTrue("FIND  MASSIMALE BY ID", massimaleStore.getMassimale().get(0).getId().equals("02"));
+	}
 //
 //	@Test
 //	public void F_findByIdTest_2() throws Exception {
