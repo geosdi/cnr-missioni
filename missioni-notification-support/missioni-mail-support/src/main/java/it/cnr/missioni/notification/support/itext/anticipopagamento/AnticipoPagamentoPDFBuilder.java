@@ -148,7 +148,7 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		String importo = missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate() > 0 ? Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate()) : "____";
 		
 		Paragraph paragraphFooter = new Paragraph(
-				"\n\nVISTO SI AUTORIZZA LA LIQUIDAZIONE PARI AD € "+importo+"\n\nIl Direttore CNR/IMAA\n\n_____________________\n(Dr. Vincenzo LAPENNA)");
+				"\n\nVISTO SI AUTORIZZA LA LIQUIDAZIONE PARI AD € "+importo+"\n\nIl Direttore CNR/IMAA\n\n_____________________\n("+direttore.getValue()+")");
 
 		document.add(paragraphUtente);
 		document.add(paragraphChiede);

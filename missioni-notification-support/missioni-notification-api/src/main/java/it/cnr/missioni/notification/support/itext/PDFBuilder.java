@@ -1,6 +1,8 @@
 package it.cnr.missioni.notification.support.itext;
 
 import com.google.common.base.Preconditions;
+
+import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -53,6 +55,12 @@ public interface PDFBuilder {
      * @return {@link IPDFBuilderType}
      */
     IPDFBuilderType getType();
+    
+    /**
+     * @param direttore
+     * @return {@link PDFBuilder}
+     */
+    PDFBuilder withDirettore(Direttore direttore);
 
     /**
      * @throws Exception
@@ -122,6 +130,7 @@ public interface PDFBuilder {
     abstract class AbstractPDFBuilder implements PDFBuilder {
 
         protected User user;
+        protected Direttore direttore;
         protected Missione missione;
         protected Veicolo veicolo;
         protected File file;
@@ -139,6 +148,16 @@ public interface PDFBuilder {
         @Override
         public PDFBuilder withUser(User user) {
             this.user = user;
+            return self();
+        }
+        
+        /**
+         * @param direttore
+         * @return {@link PDFBuilder}
+         */
+        @Override
+        public PDFBuilder withDirettore(Direttore direttore) {
+            this.direttore = direttore;
             return self();
         }
 

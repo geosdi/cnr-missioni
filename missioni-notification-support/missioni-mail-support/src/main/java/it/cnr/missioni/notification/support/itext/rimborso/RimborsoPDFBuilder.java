@@ -240,7 +240,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         document.add(new Paragraph("Il Richiedente"));
 
-        Paragraph paragraphDirettore = new Paragraph("Il Direttore\t\n(Dott. Vincenzo Lapenna)\n");
+        Paragraph paragraphDirettore = new Paragraph("Il Direttore\t\n("+direttore.getValue()+")\n");
         paragraphDirettore.setAlignment(Paragraph.ALIGN_RIGHT);
         document.add(paragraphDirettore);
 
