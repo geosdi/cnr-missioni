@@ -41,17 +41,19 @@ class MassimaleDelegate implements IMassimaleDelegate {
 	 * @param size
 	 * @param livello
 	 * @param areaGeografica
+	 * @param id
 	 * @param notId
 	 * @param tipo
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public MassimaleStore getMassimaleByQuery(int from, int size, String livello, String areaGeografica, String notId,
+	public MassimaleStore getMassimaleByQuery(int from, int size, String livello, String areaGeografica,String id, String notId,
 			String tipo) throws Exception {
 
 		MassimaleSearchBuilder massimaleUserSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withFrom(from).withSize(size).withLivello(livello).withAreaGeografica(areaGeografica).withNotId(notId)
+				.withId(id)
 				.withTipo(tipo);
 
 		PageResult<Massimale> pageResult = this.massimaleDAO.findMassimaleByQuery(massimaleUserSearchBuilder);

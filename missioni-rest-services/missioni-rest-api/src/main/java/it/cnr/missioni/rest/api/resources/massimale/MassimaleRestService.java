@@ -39,7 +39,7 @@ public interface MassimaleRestService {
 	@Path(value = MassimaleServiceRSPathConfig.GET_MASSIMALE_BY_QUERY)
 	Response getMassimaleByQuery(@QueryParam(value = "from") int from, @QueryParam(value = "size") int size,
 			@QueryParam(value = "livello") String livello, @QueryParam(value = "areaGeografica") String areaGeografica,
-			@QueryParam(value = "notId") String notId,@QueryParam(value = "tipo") String tipo) throws Exception;
+			@QueryParam(value = "id") String idd,@QueryParam(value = "notId") String notId,@QueryParam(value = "tipo") String tipo) throws Exception;
 
 	/**
 	 * 

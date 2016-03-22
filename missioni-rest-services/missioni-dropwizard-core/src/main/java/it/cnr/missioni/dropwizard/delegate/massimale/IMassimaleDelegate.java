@@ -16,12 +16,13 @@ public interface IMassimaleDelegate {
 	 * @param size
 	 * @param livello
 	 * @param areaGeografica
+	 * @param id
 	 * @param notId
 	 * @param tipo
 	 * @return
 	 * @throws Exception
 	 */
-	MassimaleStore getMassimaleByQuery(int from, int size, String livello, String areaGeografica, String notId,
+	MassimaleStore getMassimaleByQuery(int from, int size, String livello, String areaGeografica,String id, String notId,
 			String tipo) throws Exception;
 
 	/**
