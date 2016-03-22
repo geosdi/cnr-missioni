@@ -91,7 +91,7 @@ public class PrenotazioneForm extends IForm.FormAbstract<PrenotazioneEvent> {
 
 		lista.forEach(v -> {
 			veicoliCNRField.addItem(v.getId());
-			veicoliCNRField.setItemCaption(v.getId(), v.getTipo() + " " + v.getTarga());
+			veicoliCNRField.setItemCaption(v.getId(), v.getTipo());
 		});
 
 		veicoliCNRField.setValidationVisible(false);
@@ -107,9 +107,9 @@ public class PrenotazioneForm extends IForm.FormAbstract<PrenotazioneEvent> {
 
 		BeanItem<PrenotazioneEvent> beanItem = (BeanItem<PrenotazioneEvent>) getFieldGroup().getItemDataSource();
 		PrenotazioneEvent prenotazione = beanItem.getBean();
+        prenotazione.setVeicoloDescription(veicoliCNRField.getItemCaption(prenotazione.getVeicolo()));
 
 		List<CalendarEvent> lista = calendarComponent.getEvents(prenotazione.getStart(), prenotazione.getEnd());
-		prenotazione.setDescrizione(prenotazione.getLocalita());
 		lista.forEach(c -> {
 			if (((PrenotazioneEvent) c).getVeicolo().equals(veicoliCNRField.getValue()) && !((PrenotazioneEvent) c).getId().equals(bean.getId()) ) {
 				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("event_present"),
