@@ -1,12 +1,9 @@
 package it.cnr.missioni.notification.support.itext.missione;
 
-import com.google.common.base.Preconditions;
-import com.itextpdf.text.*;
-import com.itextpdf.text.TabStop.Alignment;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import it.cnr.missioni.notification.support.itext.PDFBuilder;
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -14,10 +11,21 @@ import org.joda.time.Hours;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import com.google.common.base.Preconditions;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -197,7 +205,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		cellAltreDisposizioni.setBorder(Rectangle.NO_BORDER);
 		tableLocalita.addCell(cellAltreDisposizioni);
 
-		tableLocalita.addCell(new PdfPCell(new Paragraph((missione.getAltreDisposizioni() != null ? " - " + missione.getAltreDisposizioni() : ""),
+		tableLocalita.addCell(new PdfPCell(new Paragraph((missione.getAltreDisposizioni() != null ? missione.getAltreDisposizioni() : ""),
 				fontNormal)));
 
 		if (missione.isMissioneEstera()) {
