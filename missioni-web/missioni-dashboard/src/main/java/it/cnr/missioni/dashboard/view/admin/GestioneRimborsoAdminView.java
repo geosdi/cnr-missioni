@@ -1,11 +1,14 @@
 package it.cnr.missioni.dashboard.view.admin;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneRimborsoAdminEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
@@ -51,12 +54,27 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 		if (selectedMissione.getStato() == StatoEnum.PAGATA)
 			RimborsoWindowAdmin.open(selectedMissione, true, false, true);
 		else
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true)
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).withEvent(new ResetSelectedMissioneRimborsoAdminEvent())
 			.build();
 	}
 	
 	protected void aggiornaTable() {
 		this.elencoRimborsiTable.aggiornaTableAdmin(missioniStore);
+	}
+	
+	
+	@Subscribe
+	public void resetSelectedMissione(final ResetSelectedMissioneRimborsoAdminEvent event) {
+		try {
+			this.selectedMissione = ClientConnector
+					.getMissione(
+							MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId()))
+					.getMissioni().get(0);
+
+		} catch (Exception e) {
+			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+					Type.ERROR_MESSAGE);
+		}
 	}
 
 }

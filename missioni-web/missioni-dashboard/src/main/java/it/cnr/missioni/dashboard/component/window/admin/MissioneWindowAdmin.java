@@ -71,8 +71,6 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 		buildTabFondoGAE();
 		buildTabVeicoloMissione();
 		buildTabPeriodoMissione();
-//		buildTabPeriodoEsteraMissione();
-//		buildTabAnticipazionePagamentoMissione();
 	}
 
 	private void buildTabTipoMissione() {

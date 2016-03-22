@@ -3,17 +3,11 @@ package it.cnr.missioni.dashboard.component.window.admin;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
-
 import it.cnr.missioni.dashboard.action.admin.MassimaleAction;
 import it.cnr.missioni.dashboard.component.form.massimale.MassimaleForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
@@ -39,21 +33,15 @@ public class MassimaleWindow extends IWindow.AbstractWindow {
 		this.massimale = massimale;
 		setId(ID);
 		build();
-		detailsWrapper.addComponent(addTab());
+		detailsWrapper.addComponent(buildTab());
 		content.addComponent(buildFooter());
 	}
-	
-	private HorizontalLayout addTab(){
+
+	protected HorizontalLayout buildTab(){
 		this.massimaleForm = new MassimaleForm(this.massimale,true,true,modifica);
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Nazione");
-		root.setIcon(FontAwesome.GLOBE);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-		root.addComponent(this.massimaleForm);
-		return root;
-	}
+        HorizontalLayout tab = super.buildTab("Massimale",FontAwesome.EURO,this.massimaleForm);
+        return tab;
+    }
 
 	protected Component buildFooter() {
 

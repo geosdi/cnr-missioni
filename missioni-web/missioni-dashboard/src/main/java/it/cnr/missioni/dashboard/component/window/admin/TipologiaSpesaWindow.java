@@ -3,16 +3,11 @@ package it.cnr.missioni.dashboard.component.window.admin;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Alignment;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
-
 import it.cnr.missioni.dashboard.action.admin.TipologiaSpesaAction;
 import it.cnr.missioni.dashboard.component.form.tipologiaspesa.TipologiaSpesaForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
@@ -40,23 +35,16 @@ public class TipologiaSpesaWindow extends IWindow.AbstractWindow {
 		this.tipologiaSpesa = tipologiaSpesa;
 		setId(ID);
 		build();
-		detailsWrapper.addComponent(addTab());
+		detailsWrapper.addComponent(buildTab());
 
 		content.addComponent(buildFooter());
 
 	}
 
-
-	private HorizontalLayout addTab(){
-		this.tipologiaSpesaForm = new TipologiaSpesaForm(tipologiaSpesa,true,true,modifica);
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Nazione");
-		root.setIcon(FontAwesome.GLOBE);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-		root.addComponent(this.tipologiaSpesaForm);
-		return root;
+	protected HorizontalLayout buildTab(){
+        this.tipologiaSpesaForm = new TipologiaSpesaForm(tipologiaSpesa,true,true,modifica);
+		HorizontalLayout tab = super.buildTab("RimbTipologia Spesorso",FontAwesome.EURO,this.tipologiaSpesaForm);
+		return tab;
 	}
 
 	protected Component buildFooter() {

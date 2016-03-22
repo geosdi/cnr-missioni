@@ -3,17 +3,11 @@ package it.cnr.missioni.dashboard.component.window.admin;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
-
 import it.cnr.missioni.dashboard.action.admin.QualificaUserAction;
 import it.cnr.missioni.dashboard.component.form.qualificaUser.QualificaUserForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
@@ -43,22 +37,16 @@ public class QualificaUserWindow extends IWindow.AbstractWindow {
 		this.qualificaUser = qualificaUser;
 		setId(ID);
 		build();
-		detailsWrapper.addComponent(addTab());
+		detailsWrapper.addComponent(buildTab());
 		content.addComponent(buildFooter());
 
 	}
 
-	private HorizontalLayout addTab() {
-		this.qualificaUserForm = new QualificaUserForm(qualificaUser,true,true,modifica);
-		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Qaulifica");
-		root.setIcon(FontAwesome.GRADUATION_CAP);
-		root.setWidth(100.0f, Unit.PERCENTAGE);
-		root.setSpacing(true);
-		root.setMargin(true);
-		root.addComponent(this.qualificaUserForm);
-		return root;
-	}
+    protected HorizontalLayout buildTab(){
+        this.qualificaUserForm = new QualificaUserForm(qualificaUser,true,true,modifica);
+        HorizontalLayout tab = super.buildTab("Qualifica",FontAwesome.GRADUATION_CAP,this.qualificaUserForm);
+        return tab;
+    }
 
 	protected Component buildFooter() {
 

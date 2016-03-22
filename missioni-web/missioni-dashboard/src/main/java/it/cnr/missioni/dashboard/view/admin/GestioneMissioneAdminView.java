@@ -9,7 +9,8 @@ import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
-import it.cnr.missioni.dashboard.event.DashboardEvent.ResetMissioneAdminEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneAdminEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
@@ -76,7 +77,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 			RimborsoWindowAdmin.open(selectedMissione, true, false, false);
 		else
 			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione)
-					.withUser(this.getUser()).withEnabled(true).withIsAdmin(true).withModifica(true).build();
+					.withUser(this.getUser()).withEnabled(true).withIsAdmin(true).withModifica(true).withEvent(new ResetSelectedMissioneAdminEvent()).build();
 
 	}
 
@@ -119,7 +120,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 	 * Reset missione se il wizard missione viene cancellato dall'admin
 	 */
 	@Subscribe
-	public void resetSelectedMissione(final ResetMissioneAdminEvent event) {
+	public void resetSelectedMissione(final ResetSelectedMissioneAdminEvent event) {
 		try {
 			this.selectedMissione = ClientConnector
 					.getMissione(

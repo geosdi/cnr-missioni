@@ -37,8 +37,9 @@ public interface IWindow {
 		protected final boolean modifica;
 		protected final boolean isAdmin;
 		protected final boolean enabled;
-		
-		public AbstractWindow(boolean isAdmin,boolean enabled,boolean modifica){
+
+
+        public AbstractWindow(boolean isAdmin,boolean enabled,boolean modifica){
 			this.modifica = modifica;
 			this.enabled = enabled;
 			this.isAdmin = isAdmin;
@@ -72,21 +73,22 @@ public interface IWindow {
 			
 			ok = new Button("OK");
 			ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-			
+
 		}
 		
 		protected HorizontalLayout buildTab(String caption,FontAwesome icon,Layout content){
-			HorizontalLayout root = new HorizontalLayout();
-			root.setCaption(caption);
-			root.setIcon(icon);
-			root.setWidth(100.0f, Unit.PERCENTAGE);
-			root.setSpacing(true);
-			root.setMargin(true);
-			root.addComponent(content);
-			return root;
+            HorizontalLayout tab = new HorizontalLayout();
+            tab.setCaption(caption);
+            tab.setIcon(icon);
+            tab.setWidth(100.0f, Unit.PERCENTAGE);
+            tab.setSpacing(true);
+            tab.setMargin(true);
+            tab.addComponent(content);
+			return tab;
 		}
 
 		protected abstract Component buildFooter();
+
 		
 		/**
 		 * @return the iD
