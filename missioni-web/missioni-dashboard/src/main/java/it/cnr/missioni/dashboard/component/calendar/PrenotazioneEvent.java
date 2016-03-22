@@ -29,6 +29,7 @@ public class PrenotazioneEvent extends BasicEvent implements CalendarEditableEve
 	private Date start;
 	@NotNull(message="Obbligatorio")
 	private String localita;
+	private String veicoloDescription;
 	private boolean allDay;
 	
 	/**
@@ -128,6 +129,20 @@ public class PrenotazioneEvent extends BasicEvent implements CalendarEditableEve
 	 */
 	public void setLocalita(String localita) {
 		this.localita = localita;
+	}
+
+	/**
+	 * @return the veicoloDescription
+	 */
+	public String getVeicoloDescription() {
+		return veicoloDescription;
+	}
+
+	/**
+	 * @param veicoloDescription 
+	 */
+	public void setVeicoloDescription(String veicoloDescription) {
+		this.veicoloDescription = veicoloDescription;
 	}
 
 	/**
