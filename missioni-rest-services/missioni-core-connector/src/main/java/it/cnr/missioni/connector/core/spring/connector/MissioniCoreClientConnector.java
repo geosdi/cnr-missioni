@@ -35,28 +35,11 @@
  */
 package it.cnr.missioni.connector.core.spring.connector;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import it.cnr.missioni.dropwizard.connector.api.connector.AbstractClientConnector;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
-import it.cnr.missioni.model.configuration.Massimale;
-import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.model.configuration.QualificaUser;
-import it.cnr.missioni.model.configuration.RimborsoKm;
-import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.el.model.search.builder.*;
+import it.cnr.missioni.model.configuration.*;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
@@ -73,6 +56,11 @@ import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -107,15 +95,6 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(MissioniStore.class);
     }
-
-//    public MissioniStore getLastUserMissions(String userId) throws Exception {
-//        return client.target(super.getRestServiceURL())
-//                .path("v1/missioni/getLastUserMissions/")
-//                .queryParam("userID", userId)
-//                .request(MediaType.APPLICATION_JSON)
-//                .get(MissioniStore.class);
-//    }
-
 
     public String addMissione(Missione missione) throws Exception {
         return client.target(super.getRestServiceURL())
