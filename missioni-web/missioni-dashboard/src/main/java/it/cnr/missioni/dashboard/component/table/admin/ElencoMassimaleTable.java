@@ -39,8 +39,8 @@ public final class ElencoMassimaleTable extends ITable.AbstractTable {
 			setContainerDataSource(
 					new BeanItemContainer<Massimale>(Massimale.class, ((MassimaleStore)massimaleStore).getMassimale()));
 
-			setVisibleColumns("value","descrizione","livello","areaGeografica","tipo");
-			setColumnHeaders("Importo","Descrizione","Livello","Area Geografica","tipo");
+			setVisibleColumns("value","valueMezzaGiornata","descrizione","livello","areaGeografica","tipo");
+			setColumnHeaders("Importo","Importo Mezza Giornata","Descrizione","Livello","Area Geografica","tipo");
 			Object[] properties = { "value" };
 			boolean[] ordering = { true };
 			sort(properties, ordering);

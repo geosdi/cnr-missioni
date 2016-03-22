@@ -37,6 +37,8 @@ public class MassimaleForm extends IForm.FormAbstract<Massimale> {
 	private ComboBox livelloField;
 	private ComboBox tipoField;
 	private TextField descrizioneField;
+	private TextField valueMezzaGiornataField;
+
 
 	public MassimaleForm(Massimale massimale,boolean isAdmin,boolean enabled,boolean modifica) {
 		super(massimale,isAdmin,enabled,modifica);
@@ -51,6 +53,8 @@ public class MassimaleForm extends IForm.FormAbstract<Massimale> {
 
 		valueField = (TextField) getFieldGroup().buildAndBind("Importo", "value");
 		addComponent(valueField);
+		valueMezzaGiornataField = (TextField) getFieldGroup().buildAndBind("Importo Mezza Giornata", "valueMezzaGiornata");
+		addComponent(valueMezzaGiornataField);
 		areagGeograficaField = (ComboBox) getFieldGroup().buildAndBind("Area Geografica", "areaGeografica", ComboBox.class);
 		addComponent(areagGeograficaField);
 		livelloField = (ComboBox) getFieldGroup().buildAndBind("Livello", "livello", ComboBox.class);

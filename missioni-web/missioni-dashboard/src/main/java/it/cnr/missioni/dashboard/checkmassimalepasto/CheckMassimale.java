@@ -218,8 +218,8 @@ public class CheckMassimale {
 		}
 
 		private void checkItalia() {
-			if (totaleFattureGiornaliera > massimale.getValue() / 2.0)
-				fattura.setImportoSpettante(massimale.getValue() / 2.0);
+			if (totaleFattureGiornaliera > massimale.getValueMezzaGiornata())
+				fattura.setImportoSpettante(massimale.getValueMezzaGiornata());
 		}
 
 	}

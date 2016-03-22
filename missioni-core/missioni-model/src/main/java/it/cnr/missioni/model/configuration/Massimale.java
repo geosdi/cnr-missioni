@@ -18,7 +18,7 @@ import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
  */
 @XmlRootElement(name = "massimale")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","areaGeografica","livello","descrizione","tipo"})
+@XmlType(propOrder = { "id", "value","areaGeografica","livello","descrizione","tipo","valueMezzaGiornata"})
 public class Massimale implements Document {
 
 	/**
@@ -39,7 +39,7 @@ public class Massimale implements Document {
 	private String descrizione;
 	@NotNull
 	private TrattamentoMissioneEsteraEnum tipo;
-
+	private Double valueMezzaGiornata;
 
 
 
@@ -140,12 +140,27 @@ public class Massimale implements Document {
 	}
 
 	/**
+	 * @return the valueMezzaGiornata
+	 */
+	public Double getValueMezzaGiornata() {
+		return valueMezzaGiornata;
+	}
+
+	/**
+	 * @param valueMezzaGiornata 
+	 */
+	public void setValueMezzaGiornata(Double valueMezzaGiornata) {
+		this.valueMezzaGiornata = valueMezzaGiornata;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Massimale [id=" + id + ", value=" + value + ", areaGeografica=" + areaGeografica + ", livello="
-				+ livello + ", descrizione=" + descrizione + ", tipo=" + tipo + "]";
+				+ livello + ", descrizione=" + descrizione + ", tipo=" + tipo + ", valueMezzaGiornata="
+				+ valueMezzaGiornata + "]";
 	}
 
 
