@@ -51,7 +51,7 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
          this.missioneID = (String) message.getMessageParameters().get("missioneID");
          this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
          
-         Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userName), ".pdf");
+         Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userSurname).concat("-"), ".pdf");
          this.file = tempFilePath.toFile();
          pdfBuilder.withFile(file);
          pdfBuilder.build();

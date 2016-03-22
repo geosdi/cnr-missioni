@@ -55,7 +55,7 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("anticipoPagamentoPDFBuilder");
 		
 		
-		Path tempFilePath = Files.createTempFile("Anticipo Pagamento".concat("-").concat(missioneID).concat("-") .concat(userName), ".pdf");
+		Path tempFilePath = Files.createTempFile("Anticipo Pagamento".concat("-").concat(missioneID).concat("-") .concat(userSurname), ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
 		pdfBuilder.build();

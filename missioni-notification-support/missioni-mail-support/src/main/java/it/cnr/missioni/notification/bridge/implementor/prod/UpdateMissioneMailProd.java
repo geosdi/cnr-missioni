@@ -60,7 +60,7 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 		
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 
-		Path tempFilePath = Files.createTempFile("Missione - ".concat(userName), ".pdf");
+		Path tempFilePath = Files.createTempFile("Missione - ".concat(userSurname).concat("-"), ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
 		pdfBuilder.build();

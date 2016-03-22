@@ -54,13 +54,13 @@ public class AddMissioneMailProd extends MissioniMailProd {
 		this.responsabileEmail = (String) message.getMessageParameters().get("responsabileEmail");
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 		
-		Path tempFilePath = Files.createTempFile("Missione - ".concat(userName), ".pdf");
+		Path tempFilePath = Files.createTempFile("Missione - ".concat(userSurname).concat("-"), ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
 		pdfBuilder.build();
 		
 		if (pdfBuilder.isMezzoProprio()) {
-			Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userName), ".pdf");
+			Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userSurname).concat("-"), ".pdf");
 			fileVeicolo = tempFilePathVeicolo.toFile();
 			pdfBuilder.withFileVeicolo(fileVeicolo);
 			pdfBuilder.buildVeicolo();

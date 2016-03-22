@@ -126,10 +126,8 @@ public class MissioniNotificationDispatcherProdTest {
     	pdfBuilder.setMezzoProprio(true);
     	pdfBuilder.withUser(buildUserTest())
                 .withMissione(buildMissioneTest()).withVeicolo(buildVeicoloTest());
-
-    	
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com","",
+                .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
                         "vito.salvia@gmail.com", pdfBuilder));
         Thread.sleep(6000);
     }

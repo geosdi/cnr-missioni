@@ -31,6 +31,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 	private Font fontNormal6 = FontFactory.getFont("Times-Roman", 6);
 	private Font fontNormal = FontFactory.getFont("Times-Roman", 9);
 	private Font fontBold = FontFactory.getFont("Times-Roman", 9, Font.BOLD);
+	
 
 	protected MissionePDFBuilder() {
 	}
@@ -301,7 +302,34 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.addSubject("Modulo Mezzo Proprio");
 		document.open();
 
-		Chunk underline = new Chunk("RICHIESTA AUTORIZZAZIONE ALL' USO DEL MEZO PROPRIO");
+		
+		PdfPTable tableImage = new PdfPTable(3);
+		PdfPCell cellImage1 = new PdfPCell();
+		PdfPCell cellImage2 = new PdfPCell();
+		PdfPCell cellImage3 = new PdfPCell();
+		cellImage1.setBorder(Rectangle.NO_BORDER);
+		cellImage2.setBorder(Rectangle.NO_BORDER);
+		cellImage3.setBorder(Rectangle.NO_BORDER);
+		Image logoMinistero = Image
+				.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoMinistero.jpg");
+		logoMinistero.scalePercent(30, 30);
+		logoMinistero.setAlignment(Image.ALIGN_CENTER);
+		Image logoCnr = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoCnr.jpg");
+		logoCnr.setAlignment(Image.ALIGN_CENTER);
+		logoCnr.scalePercent(30, 30);
+		Image logoImaa = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoImaa.jpg");
+		logoImaa.setAlignment(Image.ALIGN_CENTER);
+		logoImaa.scalePercent(15, 15);
+		cellImage1.addElement(logoCnr);
+		cellImage2.addElement(logoMinistero);
+		cellImage3.addElement(logoImaa);
+		tableImage.addCell(cellImage1);
+		tableImage.addCell(cellImage2);
+		tableImage.addCell(cellImage3);
+		document.add(tableImage);
+		
+		
+		Chunk underline = new Chunk("RICHIESTA AUTORIZZAZIONE ALL' USO DEL MEZO PROPRIO\n\n");
 
 		underline.setUnderline(0.2f, -2f);
 		Paragraph paragraphUnderline = new Paragraph("\n\n", fontBold);
@@ -317,7 +345,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 				+ (formatDataTime.format(missione.getDataInserimento().toDate())), fontNormal);
 		document.add(paragraphDichiarazione);
 
-		Chunk underline2 = new Chunk("CHIEDE");
+		Chunk underline2 = new Chunk("CHIEDE\n");
 
 		underline2.setUnderline(0.2f, -2f);
 		Paragraph paragraphUnderline2 = new Paragraph("\n\n", fontBold);
@@ -333,9 +361,9 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Chunk underline3 = new Chunk("Estremi Auto");
 
 		underline3.setUnderline(0.2f, -2f);
-		Paragraph paragraphUnderline3 = new Paragraph("\n\n", fontBold);
+		Paragraph paragraphUnderline3 = new Paragraph("\n", fontBold);
 		paragraphUnderline3.add(underline3);
-		paragraphUnderline3.setAlignment(Element.ALIGN_CENTER);
+		paragraphUnderline3.setAlignment(Element.ALIGN_LEFT);
 		document.add(paragraphUnderline3);
 
 		Paragraph paragraphInformazione = new Paragraph(
@@ -353,7 +381,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 						+ "febbraio 2011, si allega alla presente la copia dei tariffari forniti dagli esercenti dei trasporti pubblici per le tratte sopra indicate.",
 				fontBold6));
 
-		document.add(new Paragraph("Il Richiedente\n\n"));
+		document.add(new Paragraph("\n\nIl Richiedente\n\n"));
 
 		document.add(new Paragraph(
 				"\n\nNel rispetto delle disposizioni normative in matteria (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. - Dip.tp della\n"
@@ -362,7 +390,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 						+ missione.getMotivazioni(),
 				fontBold6));
 
-		Paragraph paragraphDirettore = new Paragraph("Visto si Autorizza\t\nIl Dirigente");
+		Paragraph paragraphDirettore = new Paragraph("Visto si Autorizza\t\nIl Direttore");
 		paragraphDirettore.setAlignment(Paragraph.ALIGN_RIGHT);
 		document.add(paragraphDirettore);
 
