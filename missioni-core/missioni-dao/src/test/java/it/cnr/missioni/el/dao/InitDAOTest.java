@@ -1420,7 +1420,7 @@ public class InitDAOTest {
 		m = new Massimale();
 		m.setAreaGeografica(AreaGeograficaEnum.ITALIA);
 		m.setId(UUID.randomUUID().toString());
-		m.setLivello(LivelloUserEnum.VII);
+		m.setLivello(LivelloUserEnum.VIII);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(44.26);
 		m.setValueMezzaGiornata(22.26);
