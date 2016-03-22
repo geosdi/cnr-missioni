@@ -40,7 +40,6 @@ public abstract class DashboardEvent {
 	public static class NotificationsCountUpdatedEvent {
 	}
 
-
 	public static final class PostViewChangeEvent {
 		private final DashboardViewType view;
 
@@ -81,7 +80,7 @@ public abstract class DashboardEvent {
 	 *
 	 */
 	public static class TableVeicoliUpdatedEvent {
-		
+
 	}
 
 	/**
@@ -94,7 +93,7 @@ public abstract class DashboardEvent {
 	public static class TableMissioniUpdateUpdatedEvent {
 
 	}
-	
+
 	public static class ComboBoxListaFatturaUpdatedEvent {
 
 		private Fattura fattura;
@@ -107,7 +106,7 @@ public abstract class DashboardEvent {
 		}
 
 		/**
-		 * @param fattura 
+		 * @param fattura
 		 */
 		public void setFattura(Fattura fattura) {
 			this.fattura = fattura;
@@ -120,18 +119,24 @@ public abstract class DashboardEvent {
 			this.fattura = fattura;
 		}
 
-
-		
-		
-		
-		
 	}
-	
-	public static class ResetMissioneEvent {
+
+	public interface IEventResetSelectedMissione {
+	}
+
+	public static class ResetSelectedMissioneEvent implements IEventResetSelectedMissione {
 
 	}
-	
-	public static class ResetMissioneAdminEvent {
+
+	public static class ResetSelectedMissioneRimborsoEvent implements IEventResetSelectedMissione {
+
+	}
+
+	public static class ResetSelectedMissioneAdminEvent implements IEventResetSelectedMissione {
+
+	}
+
+	public static class ResetSelectedMissioneRimborsoAdminEvent implements IEventResetSelectedMissione {
 
 	}
 
@@ -143,7 +148,6 @@ public abstract class DashboardEvent {
 
 	public static class TableRimborsiUpdatedEvent {
 
-
 	}
 
 	/**
@@ -154,7 +158,6 @@ public abstract class DashboardEvent {
 	 *
 	 */
 	public static class TableUserUpdatedEvent {
-
 
 	}
 
@@ -247,15 +250,14 @@ public abstract class DashboardEvent {
 		}
 
 		/**
-		 * @param rimborsoKmStore 
+		 * @param rimborsoKmStore
 		 */
 		public void setRimborsoKmStore(RimborsoKmStore rimborsoKmStore) {
 			this.rimborsoKmStore = rimborsoKmStore;
 		}
 
-
 	}
-	
+
 	/**
 	 * 
 	 * Disabilita il button
@@ -264,9 +266,9 @@ public abstract class DashboardEvent {
 	 *
 	 */
 	public static class DisableButtonNewEvent {
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * Aggiorna la tabella tipologia spesa dopo un inserimento o un update
@@ -277,7 +279,7 @@ public abstract class DashboardEvent {
 	public static class TableTipologiaSpesaUpdatedEvent {
 
 	}
-	
+
 	/**
 	 * 
 	 * Aggiorna la tabella massimale dopo un inserimento o un update
@@ -288,7 +290,7 @@ public abstract class DashboardEvent {
 	public static class TableMassimaleUpdatedEvent {
 
 	}
-	
+
 	/**
 	 * 
 	 * Aggiorna la tabella massimale dopo un inserimento o un update
@@ -315,12 +317,12 @@ public abstract class DashboardEvent {
 		}
 
 		/**
-		 * @param status 
+		 * @param status
 		 */
 		public void setStatus(boolean status) {
 			this.status = status;
 		}
-		
+
 	}
-	
+
 }
