@@ -8,6 +8,8 @@ import javax.ws.rs.core.StreamingOutput;
 
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
+import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.IPageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.geosdi.geoplatform.support.google.spring.services.distance.GPDistanceMatrixService;
@@ -26,10 +28,12 @@ import com.google.maps.model.DistanceMatrixRow;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.TravelMode;
 
+import it.cnr.missioni.el.dao.IDirettoreDAO;
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -67,6 +71,8 @@ class MissioneDelegate implements IMissioneDelegate {
 	//
 	@Resource(name = "missioneDAO")
 	private IMissioneDAO missioneDAO;
+	@Resource(name = "direttoreDAO")
+	private IDirettoreDAO direttoreDAO;
 	@Resource(name = "userDAO")
 	private IUserDAO userDAO;
 	@Resource(name = "missioniMailDispatcher")
@@ -106,8 +112,12 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
 
-		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
 		if (missione.isMezzoProprio()) {
 			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
 			Veicolo veicolo = user.getVeicoloPrincipale();
@@ -146,12 +156,15 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
 
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 						: this.cnrMissioniItaliaEmail.getEmail()),
-				missione.getId(), RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+				missione.getId(), RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0))));
 
 		return Boolean.TRUE;
 	}
@@ -166,14 +179,18 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateRimborsoMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 				missione.getRimborso().getNumeroOrdine() != null ?
 				missione.getRimborso().getNumeroOrdine().toString() : "",
 				missione.getRimborso().isPagata() ? "Si" : "No", missione.getRimborso().getMandatoPagamento() != null
 						? missione.getRimborso().getMandatoPagamento() : "",missione.getRimborso().getTotaleDovuto() != null ?
-				missione.getRimborso().getTotaleDovuto() : 0.0, RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione)));
+				missione.getRimborso().getTotaleDovuto() : 0.0, RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0))));
 
 		return Boolean.TRUE;
 	}
@@ -218,8 +235,12 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
 
-		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
 		if (missione.isMezzoProprio()) {
 			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
 			Veicolo veicolo = user.getVeicoloPrincipale();
@@ -238,12 +259,16 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
 
 		if (missione.isRimborsoSetted() && missione.getRimborso().getNumeroOrdine() == null)
 			missione.getRimborso().setNumeroOrdine(this.missioneDAO.getMaxNumeroOrdineRimborso());
 		this.missioneDAO.update(missione);
 
-		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
 
 		if (missione.isRimborsoSetted()) {
 //			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
@@ -300,7 +325,12 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-		return new MissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		
+		return new MissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0)));
 	}
 
 	/**
@@ -320,9 +350,14 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		
 		Veicolo veicolo = user.getMappaVeicolo().get(missione.getIdVeicolo());
 		return new VeicoloMissioneStreaming(
-				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withVeicolo(veicolo));
+				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withVeicolo(veicolo).withDirettore(lista.getResults().get(0)));
 	}
 
 	/**
@@ -342,7 +377,12 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-		return new MissioneStreaming(RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		
+		return new MissioneStreaming(RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0)));
 	}
 
 	/**
@@ -464,7 +504,12 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
-		PDFBuilder pdfBuilder = AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione);
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		
+		PDFBuilder pdfBuilder = AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
 
 		Missione m = this.missioneDAO.find(missione.getId());
 		this.missioneDAO.update(missione);
@@ -504,7 +549,12 @@ class MissioneDelegate implements IMissioneDelegate {
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
 			throw new ResourceNotFoundFault("L'Utente con ID : " + missione.getIdUser() + " non esiste");
+		
+		IPageResult<Direttore> lista = this.direttoreDAO.find(new Page(0,1));
+		if(lista.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		
 		return new AnticipoPagamentoStreaming(
-				AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione));
+				AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0)));
 	}
 }
