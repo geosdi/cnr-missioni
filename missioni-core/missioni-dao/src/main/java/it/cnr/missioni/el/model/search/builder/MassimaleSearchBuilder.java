@@ -26,7 +26,7 @@ public class MassimaleSearchBuilder implements ISearchBuilder {
 	private int size = 10;
 	private int from = 0;
 
-	private String fieldSort = SearchConstants.MASSIMALE_FIELD_DESCRIZIONE;
+	private String fieldSort = SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA;
 	private SortOrder sortOrder = SortOrder.ASC;
 
 	private MassimaleSearchBuilder() {
