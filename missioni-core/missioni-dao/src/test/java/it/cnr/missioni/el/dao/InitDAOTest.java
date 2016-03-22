@@ -1358,6 +1358,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.I);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(61.10);
+		m.setValueMezzaGiornata(30.55);
 		lista.add(m);
 		
 		
@@ -1367,6 +1368,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.II);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(61.10);
+		m.setValueMezzaGiornata(30.55);
 		lista.add(m);
 		
 		m = new Massimale();
@@ -1375,6 +1377,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.III);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(61.0);
+		m.setValueMezzaGiornata(30.55);
 		lista.add(m);
 		
 		m = new Massimale();
@@ -1383,6 +1386,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.IV);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(44.26);
+		m.setValueMezzaGiornata(22.26);
 		lista.add(m);
 		
 		
@@ -1392,6 +1396,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.V);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(44.26);
+		m.setValueMezzaGiornata(22.26);
 		lista.add(m);
 		
 		m = new Massimale();
@@ -1400,6 +1405,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.VI);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(44.26);
+		m.setValueMezzaGiornata(22.26);
 		lista.add(m);
 		
 		m = new Massimale();
@@ -1408,6 +1414,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.VII);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(44.26);
+		m.setValueMezzaGiornata(22.26);
 		lista.add(m);
 		
 		m = new Massimale();
@@ -1416,6 +1423,7 @@ public class InitDAOTest {
 		m.setLivello(LivelloUserEnum.VII);
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		m.setValue(44.26);
+		m.setValueMezzaGiornata(22.26);
 		lista.add(m);
 		
 		return lista;
