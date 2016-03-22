@@ -58,6 +58,9 @@ public class PrenotazioneIndexCreator extends GPAbstractIndexCreator {
        	.startObject("localita")
     	.field("type", "string")
     	.endObject()
+       	.startObject("descriptionVeicoloCNR")
+    	.field("type", "string")
+    	.endObject()
 
     	.endObject()
     	.endObject()
