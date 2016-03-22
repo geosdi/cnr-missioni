@@ -87,7 +87,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 			details.addComponent(Utility.buildLabel("Attraversamento Frontiera Andata: ",
 					missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
 			details.addComponent(Utility.buildLabel("Attraversamento Frontiera Ritorno: ",
-					missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
+					missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toString()));
 		}
 
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);
