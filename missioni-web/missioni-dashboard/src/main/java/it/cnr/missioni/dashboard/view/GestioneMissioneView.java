@@ -1,12 +1,5 @@
 package it.cnr.missioni.dashboard.view;
 
-import java.io.InputStream;
-import java.util.Collection;
-
-import javax.ws.rs.core.Response;
-
-import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
-
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -14,16 +7,10 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.shared.ui.AlignmentInfo.Bits;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
-import com.vaadin.ui.VerticalLayout;
-
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.table.ElencoMissioniTable;
@@ -33,7 +20,9 @@ import it.cnr.missioni.dashboard.component.window.admin.MissioneWindowAdmin;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
-import it.cnr.missioni.dashboard.event.DashboardEvent.ResetMissioneEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneAdminEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneRimborsoEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
@@ -45,6 +34,11 @@ import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
+import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
+
+import javax.ws.rs.core.Response;
+import java.io.InputStream;
+import java.util.Collection;
 
 /**
  * @author Salvia Vito
@@ -205,7 +199,9 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	protected void openWizardMissione() {
 		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione())
-				.withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
+				.withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false)
+				.withEvent(new ResetSelectedMissioneEvent())
+				.build();
 	}
 
 	protected HorizontalLayout addActionButtons() {
@@ -507,7 +503,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	 * Reset missione se il wizard rimborso viene cancellato
 	 */
 	@Subscribe
-	public void resetSelectedMissione(final ResetMissioneEvent event) {
+	public void resetSelectedMissione(final ResetSelectedMissioneEvent event) {
 		try {
 			this.selectedMissione = ClientConnector
 					.getMissione(
