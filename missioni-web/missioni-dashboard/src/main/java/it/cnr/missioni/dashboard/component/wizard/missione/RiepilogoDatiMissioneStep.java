@@ -7,19 +7,17 @@ import org.vaadin.teemu.wizards.WizardStep;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
-import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.Veicolo;
 

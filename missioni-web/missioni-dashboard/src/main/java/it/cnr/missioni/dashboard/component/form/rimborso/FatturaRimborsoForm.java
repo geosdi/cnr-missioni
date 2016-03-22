@@ -84,7 +84,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 	// Ogni fattura deve essere compresa tra le date di inizio e fine
 	// missione
 	public void setRangeDate() {
-		formFattura.getDataField().setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+//		formFattura.getDataField().setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
 		formFattura.getDataField().setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
 	}
 
@@ -231,8 +231,8 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 			dataField = new DateField("Data");
 			dataField.setDateOutOfRangeMessage("Data non possibile");
-			dataField.setResolution(Resolution.MINUTE);
-			dataField.setDateFormat("dd/MM/yyyy HH:mm");
+			dataField.setResolution(Resolution.HOUR);
+			dataField.setDateFormat("dd/MM/yyyy");
 			dataField.setValidationVisible(false);
 			dataField.setImmediate(true);
 
@@ -296,8 +296,10 @@ public class FatturaRimborsoForm extends VerticalLayout {
 				public void validate(Object value) throws InvalidValueException {
 					if (dataField.getValue() != null) {
 						DateTime d = new DateTime(dataField.getValue());
-						if (d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())
-								|| d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
+						if (
+//								d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())
+//								|| 
+								d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
 							throw new InvalidValueException(Utility.getMessage("date_range_start"));
 
 					}

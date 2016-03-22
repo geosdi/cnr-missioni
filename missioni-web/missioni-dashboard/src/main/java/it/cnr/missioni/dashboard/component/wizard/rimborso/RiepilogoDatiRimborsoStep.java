@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.component.wizard.rimborso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.vaadin.dialogs.ConfirmDialog;
@@ -80,14 +81,16 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 					Utility.buildLabel("Tot. lordo TAM: ", Double.toString(missione.getRimborso().getTotaleTAM()) + " €"));
 		details.addComponent(
 				Utility.buildLabel("Totale Fatture: ", Double.toString(missione.getRimborso().getTotale()) + " €"));
+		details.addComponent(
+				Utility.buildLabel("Totale Fatture Spettante: ", Double.toString(missione.getRimborso().getTotaleSpettante()) + " €"));
 
 		if (missione.isMissioneEstera()) {
 			details.addComponent(Utility.buildLabel("GG all'estero: ", Integer.toString(Utility.getDaysEstero(missione))));
 			details.addComponent(Utility.buildLabel("Tot. lordo TAM: ", missione.getRimborso().getTotaleTAM().toString()));
 			details.addComponent(Utility.buildLabel("Attraversamento Frontiera Andata: ",
-					missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toString()));
+					new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate())));
 			details.addComponent(Utility.buildLabel("Attraversamento Frontiera Ritorno: ",
-					missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toString()));
+					new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate())));
 		}
 
 		ElencoFattureTable elencoFattureTable = new ElencoFattureTable(missione);

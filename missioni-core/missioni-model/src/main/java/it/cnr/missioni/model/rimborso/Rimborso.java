@@ -156,6 +156,14 @@ public class Rimborso implements Serializable {
 
 		return t;
 	}
+	
+	public Double getTotaleSpettante() {
+		double t = 0.0;
+		for (Fattura f : this.mappaFattura.values())
+			t += f.getImportoSpettante();
+
+		return t;
+	}
 
 	/**
 	 * @param totale
