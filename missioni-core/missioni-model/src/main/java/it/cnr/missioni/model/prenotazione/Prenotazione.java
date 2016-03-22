@@ -10,14 +10,12 @@ import org.geosdi.geoplatform.experimental.el.api.model.Document;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
-import it.cnr.missioni.model.user.Veicolo;
-
 /**
  * @author Salvia Vito
  */
 @XmlRootElement(name = "prenotazione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"id", "dataFrom","dataTo","idUser","idVeicoloCNR","localita","descrizione","allDay"})
+@XmlType(propOrder = {"id", "dataFrom","dataTo","idUser","idVeicoloCNR","localita","descrizione","allDay","descriptionVeicoloCNR"})
 public class Prenotazione implements Document {
 
 	/**
@@ -40,6 +38,8 @@ public class Prenotazione implements Document {
 	private String localita;
 	private String descrizione;
 	private boolean allDay;
+	@NotNull
+	private String descriptionVeicoloCNR;
 	
 
 
@@ -171,14 +171,30 @@ public class Prenotazione implements Document {
 	}
 
 	/**
+	 * @return the descriptionVeicoloCNR
+	 */
+	public String getDescriptionVeicoloCNR() {
+		return descriptionVeicoloCNR;
+	}
+
+	/**
+	 * @param descriptionVeicoloCNR 
+	 */
+	public void setDescriptionVeicoloCNR(String descriptionVeicoloCNR) {
+		this.descriptionVeicoloCNR = descriptionVeicoloCNR;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "Prenotazione [id=" + id + ", dataFrom=" + dataFrom + ", dataTo=" + dataTo + ", idUser=" + idUser
 				+ ", idVeicoloCNR=" + idVeicoloCNR + ", localita=" + localita + ", descrizione=" + descrizione
-				+ ", allDay=" + allDay + "]";
+				+ ", allDay=" + allDay + ", descriptionVeicoloCNR=" + descriptionVeicoloCNR + "]";
 	}
+
+
 
 
 	
