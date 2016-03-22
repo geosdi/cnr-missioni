@@ -5,6 +5,7 @@ import org.vaadin.teemu.wizards.event.WizardProgressListener;
 
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.IEventResetSelectedMissione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 
@@ -26,6 +27,8 @@ public interface IWizard {
 	void setEnabled(boolean enabled);
 	
 	void isAdmin(boolean enambled);
+	
+	void setEvent(IEventResetSelectedMissione event);
 	
 	
 	public abstract class AbstractWizard implements WizardProgressListener,  IWizard{
@@ -76,6 +79,8 @@ public interface IWizard {
 		
 		public abstract void isAdmin(boolean isAdmin);
 		
+		public abstract void setEvent(IEventResetSelectedMissione event);
+
 		public abstract void setModifica(boolean modifica);
 
 
