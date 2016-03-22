@@ -35,7 +35,8 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 	 */
 	private static final long serialVersionUID = -6978603374633816039L;
 	boolean veicoloPrincipaleSetted = false;
-	private TextArea motivazioneMezzoProprio;
+	private TextArea motivazioneField;
+	private TextArea altreDisposizioniField;
 	private OptionGroup optionGroupMezzo;
 	private Label labelVeicoloProprio;
 	private Veicolo v = null;
@@ -77,12 +78,15 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 		optionGroupMezzo.select(bean.getTipoVeicolo());
 		optionGroupMezzo.setReadOnly(!enabled);
 		
-		motivazioneMezzoProprio = (TextArea) getFieldGroup().buildAndBind("Motivazione mezzo proprio",
+		motivazioneField = (TextArea) getFieldGroup().buildAndBind("Motivazione",
 				"motivazioni", TextArea.class);
 		if (bean.getTipoVeicolo() == VEICOLO_PROPRIO || bean.getTipoVeicolo() == NOLEGGIO)
-			motivazioneMezzoProprio.setReadOnly(false);
+			motivazioneField.setReadOnly(false);
 		else
-			motivazioneMezzoProprio.setReadOnly(true);
+			motivazioneField.setReadOnly(true);
+		
+		altreDisposizioniField = (TextArea) getFieldGroup().buildAndBind("Altre Disposizioni",
+				"altreDisposizioni", TextArea.class);
 
 		labelVeicoloProprio = new Label();
 
@@ -97,7 +101,8 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 		
 		addComponent(optionGroupMezzo);
 		addComponent(labelVeicoloProprio);
-		addComponent(motivazioneMezzoProprio);
+		addComponent(motivazioneField);
+		addComponent(altreDisposizioniField);
 		addListener();
 		addValidator();
 
@@ -149,7 +154,7 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 		});
 
 		// Se veicolo è proprio motivazione è obbligatoria
-		motivazioneMezzoProprio.addValidator(new Validator() {
+		motivazioneField.addValidator(new Validator() {
 
 			/**
 			 * 
@@ -159,7 +164,7 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 
-				if (motivazioneMezzoProprio.getValue() == null && (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO)
+				if (motivazioneField.getValue() == null && (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO)
 						|| optionGroupMezzo.getValue().equals(NOLEGGIO)))
 					throw new InvalidValueException(Utility.getMessage("altre_disposizioni_error"));
 
@@ -183,15 +188,15 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR) || optionGroupMezzo.getValue().equals(NESSUNO)) {
-					motivazioneMezzoProprio.setReadOnly(false);
-					motivazioneMezzoProprio.setValue(null);
-					motivazioneMezzoProprio.setReadOnly(true);
-					motivazioneMezzoProprio.setValidationVisible(false);
+					motivazioneField.setReadOnly(false);
+					motivazioneField.setValue(null);
+					motivazioneField.setReadOnly(true);
+					motivazioneField.setValidationVisible(false);
 					if(optionGroupMezzo.getValue().equals(VEICOLO_CNR))
 						labelVeicoloProprio.setVisible(false);
 				}
 				if (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO) || optionGroupMezzo.getValue().equals(NOLEGGIO)) {
-					motivazioneMezzoProprio.setReadOnly(false);
+					motivazioneField.setReadOnly(false);
 					if(optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO))
 					{
 						labelVeicoloProprio.setVisible(true);

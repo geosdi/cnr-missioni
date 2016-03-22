@@ -20,7 +20,7 @@ import it.cnr.missioni.model.rimborso.Rimborso;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "localita", "oggetto", "responsabileGruppo","shortResponsabileGruppo","shortUser","motivazioni","stato","fondo","GAE", "missioneEstera", "idUser","idUserSeguito","shortUserSeguito","idVeicolo", "shortDescriptionVeicolo","dataInserimento",
+@XmlType(propOrder = { "id", "localita", "oggetto", "responsabileGruppo","shortResponsabileGruppo","shortUser","motivazioni","altreDisposizioni","stato","fondo","GAE", "missioneEstera", "idUser","idUserSeguito","shortUserSeguito","idVeicolo", "shortDescriptionVeicolo","dataInserimento",
 		"dateLastModified","mezzoProprio","distanza","geoPoint","idNazione","shortDescriptionNazione","datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti" ,"rimborso"})
 public class Missione implements Document {
 
@@ -38,6 +38,7 @@ public class Missione implements Document {
 	private String shortResponsabileGruppo;
 	private String shortUser;
 	private String motivazioni;
+	private String altreDisposizioni;
 	@NotNull
     private StatoEnum stato;
     private String fondo;
@@ -189,6 +190,22 @@ public class Missione implements Document {
 	 */
 	public void setMotivazioni(String motivazioni) {
 		this.motivazioni = motivazioni;
+	}
+
+
+	/**
+	 * @return the altreDisposizioni
+	 */
+	public String getAltreDisposizioni() {
+		return altreDisposizioni;
+	}
+
+
+	/**
+	 * @param altreDisposizioni 
+	 */
+	public void setAltreDisposizioni(String altreDisposizioni) {
+		this.altreDisposizioni = altreDisposizioni;
 	}
 
 
@@ -543,12 +560,12 @@ public class Missione implements Document {
 	public String toString() {
 		return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", responsabileGruppo="
 				+ responsabileGruppo + ", shortResponsabileGruppo=" + shortResponsabileGruppo + ", shortUser="
-				+ shortUser + ", motivazioni=" + motivazioni + ", stato=" + stato + ", fondo=" + fondo + ", GAE=" + GAE
-				+ ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idUserSeguito=" + idUserSeguito
-				+ ", shortUserSeguito=" + shortUserSeguito + ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo="
-				+ shortDescriptionVeicolo + ", dataInserimento=" + dataInserimento + ", dateLastModified="
-				+ dateLastModified + ", mezzoProprio=" + mezzoProprio 
-				+ ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
+				+ shortUser + ", motivazioni=" + motivazioni + ", altreDisposizioni=" + altreDisposizioni + ", stato="
+				+ stato + ", fondo=" + fondo + ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", idUser="
+				+ idUser + ", idUserSeguito=" + idUserSeguito + ", shortUserSeguito=" + shortUserSeguito
+				+ ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo
+				+ ", dataInserimento=" + dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio="
+				+ mezzoProprio + ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
 				+ ", shortDescriptionNazione=" + shortDescriptionNazione + ", tipoVeicolo=" + tipoVeicolo
 				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
 				+ ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
