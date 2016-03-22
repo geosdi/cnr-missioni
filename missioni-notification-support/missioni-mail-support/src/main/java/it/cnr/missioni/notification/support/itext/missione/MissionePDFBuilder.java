@@ -2,6 +2,7 @@ package it.cnr.missioni.notification.support.itext.missione;
 
 import com.google.common.base.Preconditions;
 import com.itextpdf.text.*;
+import com.itextpdf.text.TabStop.Alignment;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -95,12 +96,15 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		paragraphOrdine.add(new Chunk("\nORDINE DI MISSIONE\n", fontBold));
 		document.add(paragraphOrdine);
 
+		//Ordine di missione
 		Paragraph paragraphOrdine2 = new Paragraph(
 				"Ordine di missione N." + missione.getId() + " " + " del " + formatDataTime.format(missione.getDataInserimento().toDate()) + "\n\n\n", fontBold);
 		paragraphOrdine2.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragraphOrdine2);
 
 		PdfPTable tableUtente = new PdfPTable(2);
+		
+		//Prima riga - Cognome nome Qualifica e livello
 		PdfPTable nestedTableUtente = new PdfPTable(2);
 		PdfPCell cellQualifica = new PdfPCell(new Paragraph(user.getDatiCNR().getDescrizioneQualifica(), fontNormal));
 		cellQualifica.setBorder(Rectangle.NO_BORDER);
@@ -108,26 +112,25 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		PdfPCell cellLivello = new PdfPCell(new Paragraph(user.getDatiCNR().getLivello().toString(), fontNormal));
 		cellLivello.setBorder(Rectangle.LEFT);
 		nestedTableUtente.addCell(cellLivello);
+
+		//Seconda riga 
 		tableUtente.addCell(
 				new Paragraph(user.getAnagrafica().getCognome() + " " + user.getAnagrafica().getNome(), fontNormal));
 		tableUtente.addCell(nestedTableUtente);
-
 		PdfPCell cellCognomeNomeLabel = new PdfPCell(new Paragraph("cognome e nome", fontNormal6));
 		PdfPCell cellQualificaLabel = new PdfPCell(new Paragraph("qualifica", fontNormal6));
-		PdfPCell cellCodiceLabel = new PdfPCell(new Paragraph("livello", fontNormal6));
+		PdfPCell cellLivelloLabel = new PdfPCell(new Paragraph("livello", fontNormal6));
 		cellCognomeNomeLabel.setBorder(Rectangle.NO_BORDER);
 		cellQualificaLabel.setBorder(Rectangle.NO_BORDER);
-		cellCodiceLabel.setBorder(Rectangle.NO_BORDER);
+		cellLivelloLabel.setBorder(Rectangle.NO_BORDER);
 
 		PdfPCell c = new PdfPCell();
 		c.setBorder(Rectangle.NO_BORDER);
+		nestedTableUtente = new PdfPTable(2);
+		c.addElement(nestedTableUtente);
 
-		PdfPTable nestedTable2 = new PdfPTable(2);
-
-		c.addElement(nestedTable2);
-
-		nestedTable2.addCell(cellQualificaLabel);
-		nestedTable2.addCell(cellCodiceLabel);
+		nestedTableUtente.addCell(cellQualificaLabel);
+		nestedTableUtente.addCell(cellLivelloLabel);
 		tableUtente.addCell(cellCognomeNomeLabel);
 		tableUtente.addCell(c);
 
@@ -148,11 +151,11 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		tableUtente.addCell(new Paragraph(user.getDatiCNR().getMatricola() + "", fontNormal));
 
 		//
-		PdfPCell cellPosizioneIndividuale = new PdfPCell(new Paragraph("Codice Terzo", fontNormal6));
-		cellPosizioneIndividuale.setBorder(Rectangle.NO_BORDER);
+		PdfPCell cellCodiceTerzo = new PdfPCell(new Paragraph("Codice Terzo", fontNormal6));
+		cellCodiceTerzo.setBorder(Rectangle.NO_BORDER);
 		PdfPCell cellMatricola = new PdfPCell(new Paragraph("Matricola del CNR", fontNormal6));
 		cellMatricola.setBorder(Rectangle.NO_BORDER);
-		tableUtente.addCell(cellPosizioneIndividuale);
+		tableUtente.addCell(cellCodiceTerzo);
 		tableUtente.addCell(cellMatricola);
 		document.add(tableUtente);
 
@@ -160,37 +163,42 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 				+ " espletamento da parte della S.V. della seguente missione\n\n", fontBold));
 
 		Chunk chunkOggetto = new Chunk("Oggetto:", fontBold);
-		Chunk chunkOggetto2 = new Chunk(missione.getOggetto(), fontNormal);
 		Paragraph paragraphOggetto = new Paragraph();
 		paragraphOggetto.add(chunkOggetto);
-		paragraphOggetto.add(chunkOggetto2);
+		paragraphOggetto.add(new Chunk(missione.getOggetto(), fontNormal));
 		document.add(paragraphOggetto);
 
 		document.add(new Paragraph("\n"));
 
-		//
 		PdfPTable tableLocalita = new PdfPTable(2);
+		//Localita
 		PdfPCell cellLocalita = new PdfPCell(new Paragraph("Localit" + new Character('\u00E0'), fontBold));
 		cellLocalita.setBorder(Rectangle.NO_BORDER);
 		tableLocalita.addCell(cellLocalita);
-		PdfPCell cellLocalita2 = new PdfPCell(new Paragraph(missione.getLocalita(), fontNormal));
-		tableLocalita.addCell(cellLocalita2);
+		tableLocalita.addCell( new PdfPCell(new Paragraph(missione.getLocalita(), fontNormal)));
+		
 		PdfPCell cellDistanza = new PdfPCell(new Paragraph("Distanza dalla sede di servizio km:", fontBold));
 		cellDistanza.setBorder(Rectangle.NO_BORDER);
 		tableLocalita.addCell(cellDistanza);
-		PdfPCell cellDistanza2 = new PdfPCell(new Paragraph("" + missione.getDistanza(), fontNormal));
-		tableLocalita.addCell(cellDistanza2);
+		tableLocalita.addCell(new PdfPCell(new Paragraph("" + missione.getDistanza(), fontNormal)));
 
-		PdfPCell cellDisposizioni = new PdfPCell(new Paragraph("Altre disposizioni:", fontBold));
-		cellDisposizioni.setBorder(Rectangle.NO_BORDER);
-		tableLocalita.addCell(cellDisposizioni);
+		//Tipo veicolo
+		PdfPCell cellMezzoUtilizzato = new PdfPCell(new Paragraph("Mezzo Utilizzato:", fontBold));
+		cellMezzoUtilizzato.setBorder(Rectangle.NO_BORDER);
+		tableLocalita.addCell(cellMezzoUtilizzato);
 
 		String tipoVeicolo = missione.getTipoVeicolo();
-
-		PdfPCell cellDisposizioni2 = new PdfPCell(new Paragraph(
+		tableLocalita.addCell(new PdfPCell(new Paragraph(
 				tipoVeicolo + (missione.getMotivazioni() != null ? " - " + missione.getMotivazioni() : ""),
-				fontNormal));
-		tableLocalita.addCell(cellDisposizioni2);
+				fontNormal)));
+		
+		//Altre disposizioni
+		PdfPCell cellAltreDisposizioni = new PdfPCell(new Paragraph("Altre Disposizioni:", fontBold));
+		cellAltreDisposizioni.setBorder(Rectangle.NO_BORDER);
+		tableLocalita.addCell(cellAltreDisposizioni);
+
+		tableLocalita.addCell(new PdfPCell(new Paragraph((missione.getAltreDisposizioni() != null ? " - " + missione.getAltreDisposizioni() : ""),
+				fontNormal)));
 
 		if (missione.isMissioneEstera()) {
 			PdfPCell cellMissioneEstera = new PdfPCell(new Paragraph("Tipologia Rimborso", fontBold));
@@ -206,10 +214,6 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Paragraph paragraphObbligo = new Paragraph();
 		document.add(paragraphObbligo);
 
-		Chunk chunkDurata = (new Chunk("Durata Presunta:", fontBold));
-		Chunk chunkDataInizio = (new Chunk(" Data Inizio:", fontBold));
-		Chunk chunkDataFine = (new Chunk(" Data Presunta Fine:", fontBold));
-
 		String caption;
 
 		Days days = Days.daysBetween(missione.getDatiPeriodoMissione().getInizioMissione(),
@@ -220,18 +224,15 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		caption.concat(Hours.hoursBetween(missione.getDatiPeriodoMissione().getInizioMissione(),
 				missione.getDatiPeriodoMissione().getFineMissione()) + " HH");
 
-		Chunk chunkDurata2 = new Chunk(caption, fontNormal);
-		Chunk chunkData1 = (new Chunk(formatDataTime.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate()), fontNormal));
-		Chunk chunkData2 = (new Chunk(formatDataTime.format(missione.getDatiPeriodoMissione().getFineMissione().toDate()), fontNormal));
 		Paragraph paragraphData = new Paragraph();
-		paragraphData.add(chunkDurata);
-		paragraphData.add(chunkDurata2);
+		paragraphData.add((new Chunk("Durata Presunta:", fontBold)));
+		paragraphData.add(new Chunk(caption, fontNormal));
 		paragraphData.add("\t");
-		paragraphData.add(chunkDataInizio);
-		paragraphData.add(chunkData1);
+		paragraphData.add(new Chunk(" Data Inizio:", fontBold));
+		paragraphData.add(new Chunk(formatDataTime.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate()), fontNormal));
 		paragraphData.add("\t");
-		paragraphData.add(chunkDataFine);
-		paragraphData.add(chunkData2);
+		paragraphData.add(new Chunk(" Data Presunta Fine:", fontBold));
+		paragraphData.add(new Chunk(formatDataTime.format(missione.getDatiPeriodoMissione().getFineMissione().toDate()), fontNormal));
 		paragraphData.add("\t");
 		document.add(paragraphData);
 
@@ -272,8 +273,9 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 				+ " allegata distinta bancaria di cambio, il rimborso è disposto al cambio vigente alla data d'inizio missione.");
 
 		underline.setUnderline(0.2f, -2f);
-		Paragraph paragraphFooter = new Paragraph("\n\n", new Font());
+		Paragraph paragraphFooter = new Paragraph("\n\n", fontNormal);
 		paragraphFooter.add(underline);
+		paragraphFooter.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 		document.add(paragraphFooter);
 		document.close();
 	}
@@ -345,26 +347,26 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 				+ (formatDataTime.format(missione.getDataInserimento().toDate())), fontNormal);
 		document.add(paragraphDichiarazione);
 
-		Chunk underline2 = new Chunk("CHIEDE\n");
+		underline = new Chunk("CHIEDE\n");
 
-		underline2.setUnderline(0.2f, -2f);
-		Paragraph paragraphUnderline2 = new Paragraph("\n\n", fontBold);
-		paragraphUnderline2.add(underline2);
-		paragraphUnderline2.setAlignment(Element.ALIGN_CENTER);
-		document.add(paragraphUnderline2);
+		underline.setUnderline(0.2f, -2f);
+		paragraphUnderline = new Paragraph("\n\n", fontBold);
+		paragraphUnderline.add(underline);
+		paragraphUnderline.setAlignment(Element.ALIGN_CENTER);
+		document.add(paragraphUnderline);
 
 		document.add(new Paragraph(
 				"di essere autorizzato ad utilizzare il mezzo proprio per effettuare i percorsi da Tito Scalo a "
 						+ missione.getLocalita(),
 				fontNormal));
 
-		Chunk underline3 = new Chunk("Estremi Auto");
+		underline = new Chunk("Estremi Auto");
 
-		underline3.setUnderline(0.2f, -2f);
-		Paragraph paragraphUnderline3 = new Paragraph("\n", fontBold);
-		paragraphUnderline3.add(underline3);
-		paragraphUnderline3.setAlignment(Element.ALIGN_LEFT);
-		document.add(paragraphUnderline3);
+		underline.setUnderline(0.2f, -2f);
+		paragraphUnderline = new Paragraph("\n", fontBold);
+		paragraphUnderline.add(underline);
+		paragraphUnderline.setAlignment(Element.ALIGN_LEFT);
+		document.add(paragraphUnderline);
 
 		Paragraph paragraphInformazione = new Paragraph(
 				"\n" + "Tipo:" + veicolo.getTipo() + "\ntarga:" + veicolo.getTarga() + "\nCarta di circolazione:"
@@ -375,20 +377,22 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		document.add(paragraphInformazione);
 
-		document.add(new Paragraph(
-				"Ai sensi di quanto disposto dall'articolo 6 c. 12 del D.L. 78/2010, dalla circolare n.36 del 22/10/2010 del Ministero dell'Economia e delle\n"
-						+ "Finanze - Dipartimento della Ragioneria Generale dello Stato e della delibera della Corte dei COnti a Sezioni Riunite n.8/CONTR/11 del 7\n"
-						+ "febbraio 2011, si allega alla presente la copia dei tariffari forniti dagli esercenti dei trasporti pubblici per le tratte sopra indicate.",
-				fontBold6));
+		
+		Paragraph paragraphNotifica = new Paragraph("Ai sensi di quanto disposto dall'articolo 6 c. 12 del D.L. 78/2010, dalla circolare n.36 del 22/10/2010 del Ministero dell'Economia e delle"
+				+ "Finanze - Dipartimento della Ragioneria Generale dello Stato e della delibera della Corte dei COnti a Sezioni Riunite n.8/CONTR/11 del 7"
+				+ "febbraio 2011, si allega alla presente la copia dei tariffari forniti dagli esercenti dei trasporti pubblici per le tratte sopra indicate.",
+		fontBold);
+		paragraphNotifica.setAlignment(Element.ALIGN_JUSTIFIED);
+		document.add(paragraphNotifica);
 
 		document.add(new Paragraph("\n\nIl Richiedente\n\n"));
 
-		document.add(new Paragraph(
-				"\n\nNel rispetto delle disposizioni normative in matteria (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. - Dip.tp della\n"
-						+ "ragioneria Generale dello Stato e delibera della Corte dei Conti a Sezioni riunite n. 8/CONTR/11 del 7  febbraio 2011) e trattandosi\n"
-						+ " di una circostanza eccezionale e non ricorrente,si autorizza l'uso del mezzo proprio per le seguenti motivazioni:\n"
-						+ missione.getMotivazioni(),
-				fontBold6));
+		paragraphNotifica = new Paragraph("\n\nNel rispetto delle disposizioni normative in matteria (Art. 6 c. 12 del D.L. 78/2010, Circ. 36 del 22/10/2010 del M.E.F. - Dip.tp della"
+				+ "ragioneria Generale dello Stato e delibera della Corte dei Conti a Sezioni riunite n. 8/CONTR/11 del 7  febbraio 2011) e trattandosi"
+				+ " di una circostanza eccezionale e non ricorrente,si autorizza l'uso del mezzo proprio per le seguenti motivazioni:\n"
+				+ missione.getMotivazioni(),fontBold);
+		paragraphNotifica.setAlignment(Element.ALIGN_JUSTIFIED);
+		document.add(paragraphNotifica);
 
 		Paragraph paragraphDataFooter = new Paragraph("\n\nData " + formatData.format((new DateTime()).toDate()));
 		paragraphDataFooter.setAlignment(Paragraph.ALIGN_LEFT);

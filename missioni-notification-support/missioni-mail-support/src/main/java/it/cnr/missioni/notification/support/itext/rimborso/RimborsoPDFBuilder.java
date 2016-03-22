@@ -124,10 +124,9 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         document.add(tableDatiUtente);
 
         Chunk chunkOggetto = new Chunk("Oggetto:", fontBold);
-        Chunk chunkOggetto2 = new Chunk(missione.getOggetto(), fontNormal);
         Paragraph paragraphOggetto = new Paragraph();
         paragraphOggetto.add(chunkOggetto);
-        paragraphOggetto.add(chunkOggetto2);
+        paragraphOggetto.add(new Chunk(missione.getOggetto(), fontNormal));
         document.add(paragraphOggetto);
 
         Chunk chunkAllegare = new Chunk(

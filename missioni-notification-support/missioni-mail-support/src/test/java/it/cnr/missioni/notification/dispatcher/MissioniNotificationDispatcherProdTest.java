@@ -246,6 +246,7 @@ public class MissioniNotificationDispatcherProdTest {
         missione.setMezzoProprio(true);
         missione.setDistanza("100.00 Km");
         missione.setMotivazioni("prova");
+        missione.setAltreDisposizioni("Altre disposizioni");
         DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
         datiPeriodoMissione.setInizioMissione(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
         datiPeriodoMissione.setFineMissione(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
