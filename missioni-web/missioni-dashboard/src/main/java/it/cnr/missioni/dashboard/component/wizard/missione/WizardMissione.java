@@ -6,7 +6,7 @@ import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import it.cnr.missioni.dashboard.component.window.IWizard;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.IEventResetSelectedMissione;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
@@ -24,6 +24,7 @@ public class WizardMissione extends IWizard.AbstractWizard {
 	private TipoMissioneStep tipoMissioneStep;
 	private RiepilogoDatiMissioneStep ripilogoDatiStep;
 	private DatiVeicoloMissioneStep datiVeicoloMissioneStep;
+	private IEventResetSelectedMissione resetEvent;
 
 	public WizardMissione() {
 	}
@@ -82,9 +83,9 @@ public class WizardMissione extends IWizard.AbstractWizard {
 	 * @param event
 	 */
 	@Override
-	public void wizardCancelled(WizardCancelledEvent event) {
-		if(isAdmin)
-			DashboardEventBus.post(new  DashboardEvent.ResetMissioneAdminEvent() );
+	public void wizardCancelled(WizardCancelledEvent event) {		
+		if(modifica)
+			DashboardEventBus.post(resetEvent);
 		endWizard();
 	}
 
@@ -126,6 +127,14 @@ public class WizardMissione extends IWizard.AbstractWizard {
 	@Override
 	public void isAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+	/**
+	 * @param event
+	 */
+	@Override
+	public void setEvent(IEventResetSelectedMissione resetEvent) {
+		this.resetEvent = resetEvent;
 	}
 
 

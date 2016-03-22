@@ -8,6 +8,7 @@ import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 import com.vaadin.server.Page;
 
 import it.cnr.missioni.dashboard.component.window.IWizard;
+import it.cnr.missioni.dashboard.event.DashboardEvent.IEventResetSelectedMissione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 
@@ -116,6 +117,15 @@ public class WizardUser extends IWizard.AbstractWizard {
 	 */
 	@Override
 	public void setModifica(boolean modifica) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @param event
+	 */
+	@Override
+	public void setEvent(IEventResetSelectedMissione event) {
 		// TODO Auto-generated method stub
 		
 	}

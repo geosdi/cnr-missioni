@@ -8,6 +8,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.IEventResetSelectedMissione;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
@@ -41,6 +42,11 @@ public class WizardSetupWindow extends Window {
 
 	public WizardSetupWindow withMissione(Missione missione) {
 		wizard.setMissione(missione);
+		return this;
+	}
+	
+	public WizardSetupWindow withEvent(IEventResetSelectedMissione event) {
+		wizard.setEvent(event);
 		return this;
 	}
 

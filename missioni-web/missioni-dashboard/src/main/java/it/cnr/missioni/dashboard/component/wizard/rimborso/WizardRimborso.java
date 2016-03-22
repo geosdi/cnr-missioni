@@ -8,7 +8,7 @@ import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.component.window.IWizard;
-import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.IEventResetSelectedMissione;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
@@ -26,6 +26,7 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	private FatturaRimborsoStep fatturaRimborsoStep;
 	private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStepFirst;
 	private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStepLast;
+	private IEventResetSelectedMissione resetEvent;
 
 //	private AnticipazioniPagamentoStep anticipazioniPagamentoStep;
 	private DatiMissioneEsteraStep datiMissioneEsteraStep;
@@ -80,16 +81,6 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	 */
 	@Override
 	public void activeStepChanged(WizardStepActivationEvent event) {
-
-//		if (getWizard().getParent() != null) {
-//
-//			if (event.getActivatedStep() instanceof FatturaRimborsoStep
-//					|| event.getActivatedStep() instanceof RiepilogoDatiRimborsoStep)
-//				getWizard().getParent().setHeight("70%");
-//
-//			else
-//				getWizard().getParent().setHeight("45%");
-//		}
 	}
 
 	/**
@@ -113,7 +104,8 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	 */
 	@Override
 	public void wizardCancelled(WizardCancelledEvent event) {
-		DashboardEventBus.post(new  DashboardEvent.ResetMissioneEvent() );
+		if(modifica)
+			DashboardEventBus.post(resetEvent);
 		endWizard();
 	}
 
@@ -155,6 +147,14 @@ public class WizardRimborso extends IWizard.AbstractWizard {
 	@Override
 	public void setModifica(boolean modifica) {
 		this.modifica = modifica;
+	}
+
+	/**
+	 * @param event
+	 */
+	@Override
+	public void setEvent(IEventResetSelectedMissione resetEvent) {
+		this.resetEvent = resetEvent;		
 	}
 
 }
