@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
@@ -99,6 +100,11 @@ public class InitDAOTest {
 	private GPIndexCreator massimaleDocIndexCreator;
 	@Resource(name = "massimaleDAO")
 	private IMassimaleDAO massimaleDAO;
+	
+	@Resource(name = "direttoreIndexCreator")
+	private GPIndexCreator direttoreDocIndexCreator;
+	@Resource(name = "direttoreDAO")
+	private IDirettoreDAO direttoreDAO;
 
 	@Before
 	public void setUp() {
@@ -122,6 +128,8 @@ public class InitDAOTest {
 		Assert.assertNotNull(missioneDAO);
 		Assert.assertNotNull(massimaleDocIndexCreator);
 		Assert.assertNotNull(massimaleDAO);
+		Assert.assertNotNull(direttoreDocIndexCreator);
+		Assert.assertNotNull(direttoreDAO);
 		
 	}
 
@@ -141,6 +149,14 @@ public class InitDAOTest {
 		r.setId(UUID.randomUUID().toString());
 		r.setValue(0.36);
 		rimborsoKmDAO.persist(r);
+	}
+	
+	@Test
+	public void insertDirettoreTest() throws Exception {
+		Direttore d = new Direttore();
+		d.setId(UUID.randomUUID().toString());
+		d.setValue("Dott. Vincenzo Lapenna");
+		direttoreDAO.persist(d);
 	}
 
 	@Test
