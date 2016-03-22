@@ -74,6 +74,8 @@
 						<artifactId>jetty-maven-plugin</artifactId>
 						<version>9.2.3.v20140905</version>
 						<executions>
+							<!-- start and stop jetty (running our app) when running integration
+								tests -->
 							<execution>
 								<id>start-jetty</id>
 								<phase>pre-integration-test</phase>
