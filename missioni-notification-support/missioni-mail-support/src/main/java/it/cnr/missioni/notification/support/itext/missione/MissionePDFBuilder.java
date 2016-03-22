@@ -367,7 +367,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.add(paragraphUnderline3);
 
 		Paragraph paragraphInformazione = new Paragraph(
-				"\n\n" + "Tipo:" + veicolo.getTipo() + "\ntarga:" + veicolo.getTarga() + "\nCarta di circolazione:"
+				"\n" + "Tipo:" + veicolo.getTipo() + "\ntarga:" + veicolo.getTarga() + "\nCarta di circolazione:"
 						+ veicolo.getCartaCircolazione() + "\nPolizza assicurazione:" + veicolo.getPolizzaAssicurativa()
 						+ "\nPatente n.:" + user.getPatente().getNumeroPatente() + " con validit"+new Character('\u00E0')+" fino al "
 						+ formatData.format(user.getPatente().getValidaFinoAl().toDate()) + "\n\n",
@@ -390,6 +390,10 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 						+ missione.getMotivazioni(),
 				fontBold6));
 
+		Paragraph paragraphDataFooter = new Paragraph("\n\nData " + formatData.format((new DateTime()).toDate()));
+		paragraphDataFooter.setAlignment(Paragraph.ALIGN_LEFT);
+		document.add(paragraphDataFooter);
+		
 		Paragraph paragraphDirettore = new Paragraph("Visto si Autorizza\t\nIl Direttore\n"+direttore.getValue());
 		paragraphDirettore.setAlignment(Paragraph.ALIGN_RIGHT);
 		document.add(paragraphDirettore);
