@@ -88,8 +88,8 @@ public class ValidatorFatturaPastoItalia implements IValidatorManager{
 		@Override
 		public void check() throws Exception{
 			if (dataInizioMissione.getYear() == dataFattura.getYear()
-					&& dataInizioMissione.getDayOfYear() == dataFattura.getDayOfYear()) {
-				int hours = Hours.hoursBetween(dataInizioMissione, dataFattura).getHours();
+					&& dataInizioMissione.getDayOfYear() == dataFattura.getDayOfYear()) {				
+				int hours = Hours.hoursBetween(dataInizioMissione, new DateTime(dataInizioMissione.getYear(),dataInizioMissione.getMonthOfYear(),dataInizioMissione.getDayOfMonth(),23,59)).getHours();
 				if (hours > 4 && hours <= 12)
 					setMaxOccorrenze(1);
 				else if (hours > 12)
