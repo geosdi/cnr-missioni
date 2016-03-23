@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -86,6 +87,10 @@ public class FatturaRimborsoForm extends VerticalLayout {
 	public void setRangeDate() {
 //		formFattura.getDataField().setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
 		formFattura.getDataField().setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
+	}
+	
+	public void discardChange(){
+		formFattura.getFieldGroup().discard();
 	}
 
 	private HorizontalLayout buildFatturaButton() {
@@ -318,10 +323,9 @@ public class FatturaRimborsoForm extends VerticalLayout {
 				@Override
 				public void validate(Object value) throws InvalidValueException {
 					try {
-						checkOccorrenzeFattura();
+						checkFattura();
 					} catch (Exception e) {
-						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
-
+						throw new InvalidValueException(e.getMessage());
 					}
 				}
 
@@ -329,13 +333,14 @@ public class FatturaRimborsoForm extends VerticalLayout {
 
 		}
 
-		private void checkOccorrenzeFattura() throws Exception {
+		private void checkFattura() throws Exception {
 			TipologiaSpesaStore t = null;
 			DateTime dateFattura;
 			int n = 0;
 			if (formFattura.getTipologiaSpesaField().getValue() != null
 					&& formFattura.getDataField().getValue() != null) {
-				dateFattura = new DateTime(formFattura.getDataField().getValue());
+				dateFattura = new DateTime(formFattura.getDataField().getValue(),DateTimeZone.UTC).withHourOfDay(missione.getDatiPeriodoMissione().getInizioMissione().getHourOfDay())
+						.withMinuteOfHour(missione.getDatiPeriodoMissione().getInizioMissione().getMinuteOfHour()).plusMinutes(1);
 
 				try {
 					t = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
@@ -344,6 +349,13 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
+				
+				TipologiaSpesa tipologiaSpesa = t.getTipologiaSpesa().get(0);
+				
+				if(!tipologiaSpesa.isNoCheckData() && dateFattura.isBefore(missione.getDatiPeriodoMissione().getInizioMissione()))
+					throw new InvalidValueException(Utility.getMessage("error_date_fattura"));
+
+				
 				if (t.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO) {
 
 					DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
