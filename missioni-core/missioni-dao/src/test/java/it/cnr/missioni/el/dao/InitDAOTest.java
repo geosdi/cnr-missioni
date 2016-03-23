@@ -183,6 +183,7 @@ public class InitDAOTest {
 		t.setItalia(false);
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		t.setValue("Aereo");
+		t.setNoCheckData(true);
 		lista.add(t);
 
 		t = new TipologiaSpesa();
@@ -258,6 +259,7 @@ public class InitDAOTest {
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Aereo");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
+		t.setNoCheckData(true);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
@@ -348,6 +350,7 @@ public class InitDAOTest {
 		t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		t.setValue("Iscrizione congresso");
 		t.setVoceSpesa(VoceSpesaEnum.ALTRO);
+		t.setNoCheckData(true);
 		lista.add(t);
 		
 		t = new TipologiaSpesa();
