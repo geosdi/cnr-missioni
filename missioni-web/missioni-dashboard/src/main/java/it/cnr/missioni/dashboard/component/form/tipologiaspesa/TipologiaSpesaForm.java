@@ -54,7 +54,7 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 		esteraField = (CheckBox) getFieldGroup().buildAndBind("Estera", "estera", CheckBox.class);
 		italiaField = (CheckBox) getFieldGroup().buildAndBind("Italia", "italia", CheckBox.class);
 		voceSpesaField = (ComboBox) getFieldGroup().buildAndBind("Voce Spesa", "voceSpesa", ComboBox.class);
-		checkDataField = (CheckBox) getFieldGroup().buildAndBind("Data Antecedente", "checkData", CheckBox.class);
+		checkDataField = (CheckBox) getFieldGroup().buildAndBind("Data Antecedente", "noCheckData", CheckBox.class);
 
 		addComponent(valueField);
 		addComponent(voceSpesaField);
