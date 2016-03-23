@@ -14,9 +14,8 @@ import org.junit.Test;
 
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
-import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
-import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 
 /**
  * @author Salvia Vito
@@ -35,7 +34,7 @@ public class MassimaleTest {
 	public void fatturaErrataTest() {
 		Massimale massimale = new Massimale();
 		Set<ConstraintViolation<Massimale>> constraintViolations = validator.validate(massimale);
-		assertEquals(6, constraintViolations.size());
+		assertEquals(5, constraintViolations.size());
 	}
 
 	@Test
