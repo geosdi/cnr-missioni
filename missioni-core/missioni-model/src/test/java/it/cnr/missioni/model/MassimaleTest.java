@@ -35,13 +35,15 @@ public class MassimaleTest {
 	public void fatturaErrataTest() {
 		Massimale massimale = new Massimale();
 		Set<ConstraintViolation<Massimale>> constraintViolations = validator.validate(massimale);
-		assertEquals(5, constraintViolations.size());
+		assertEquals(6, constraintViolations.size());
 	}
 
 	@Test
 	public void fatturaOkTest() {
 		Massimale massimale = new Massimale();
 		massimale.setValue(new Double(60));
+		massimale.setValueMezzaGiornata(new Double(60));
+
 		massimale.setAreaGeografica(AreaGeograficaEnum.A);
 		massimale.setLivello(LivelloUserEnum.I);
 		massimale.setDescrizione("Massimale 1");
