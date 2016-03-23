@@ -34,7 +34,7 @@ public class TipologiaSpesa implements Document {
 	private VoceSpesaEnum voceSpesa;
 	private boolean estera;
 	private boolean italia;
-	private boolean checkData;
+	private boolean noCheckData;
 
 	public enum VoceSpesaEnum{
 		PASTO,TRASPORTO,ALLOGGIO,RIMBORSO_KM,ALTRO;
@@ -140,15 +140,15 @@ public class TipologiaSpesa implements Document {
 	/**
 	 * @return the checkData
 	 */
-	public boolean isCheckData() {
-		return checkData;
+	public boolean isNoCheckData() {
+		return noCheckData;
 	}
 
 	/**
 	 * @param checkData 
 	 */
-	public void setCheckData(boolean checkData) {
-		this.checkData = checkData;
+	public void setNoCheckData(boolean noCheckData) {
+		this.noCheckData = noCheckData;
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class TipologiaSpesa implements Document {
 	@Override
 	public String toString() {
 		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipoTrattamento=" + tipoTrattamento + ", voceSpesa="
-				+ voceSpesa + ", estera=" + estera + ", italia=" + italia + ", checkData=" + checkData + "]";
+				+ voceSpesa + ", estera=" + estera + ", italia=" + italia + ", checkData=" + noCheckData + "]";
 	}
 
 
