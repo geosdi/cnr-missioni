@@ -83,7 +83,8 @@ public class WizardMissione extends IWizard.AbstractWizard {
 	 * @param event
 	 */
 	@Override
-	public void wizardCancelled(WizardCancelledEvent event) {		
+	public void wizardCancelled(WizardCancelledEvent event) {
+		//se modifica devo cancellare le modifiche apportate alla missione selezionata
 		if(modifica)
 			DashboardEventBus.post(resetEvent);
 		endWizard();
