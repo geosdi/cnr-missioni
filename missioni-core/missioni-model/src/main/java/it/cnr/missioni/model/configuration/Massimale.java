@@ -39,6 +39,7 @@ public class Massimale implements Document {
 	private String descrizione;
 	@NotNull
 	private TrattamentoMissioneEsteraEnum tipo;
+//	@NotNull
 	private Double valueMezzaGiornata;
 
 
