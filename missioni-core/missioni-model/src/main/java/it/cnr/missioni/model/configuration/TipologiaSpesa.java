@@ -15,7 +15,7 @@ import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
  */
 @XmlRootElement(name = "tipologiaSpesa")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","occorrenzeGiornaliere","tipoTrattamento","voceSpesa","estera","italia" })
+@XmlType(propOrder = { "id", "value","occorrenzeGiornaliere","tipoTrattamento","voceSpesa","estera","italia","checkData" })
 public class TipologiaSpesa implements Document {
 
 	/**
@@ -28,23 +28,19 @@ public class TipologiaSpesa implements Document {
 	private String id;
 	@NotNull
 	private String value;
-//	@NotNull
-//	private TipoSpesaEnum tipo;
 	@NotNull
 	private TrattamentoMissioneEsteraEnum tipoTrattamento;
 	@NotNull
 	private VoceSpesaEnum voceSpesa;
-	
 	private boolean estera;
 	private boolean italia;
+	private boolean checkData;
 
 	public enum VoceSpesaEnum{
 		PASTO,TRASPORTO,ALLOGGIO,RIMBORSO_KM,ALTRO;
 	}
 	
-//	public enum TipoSpesaEnum{
-//		ESTERA,ITALIA;
-//	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -84,24 +80,6 @@ public class TipologiaSpesa implements Document {
 	public void setValue(String value) {
 		this.value = value;
 	}
-
-//	/**
-//	 * @return the tipo
-//	 */
-//	public TipoSpesaEnum getTipo() {
-//		return tipo;
-//	}
-//
-//	/**
-//	 * @param tipo 
-//	 */
-//	public void setTipo(TipoSpesaEnum tipo) {
-//		this.tipo = tipo;
-//	}
-
-
-
-
 
 	/**
 	 * @return the tipoTrattamento
@@ -160,12 +138,26 @@ public class TipologiaSpesa implements Document {
 	}
 
 	/**
+	 * @return the checkData
+	 */
+	public boolean isCheckData() {
+		return checkData;
+	}
+
+	/**
+	 * @param checkData 
+	 */
+	public void setCheckData(boolean checkData) {
+		this.checkData = checkData;
+	}
+
+	/**
 	 * @return
 	 */
 	@Override
 	public String toString() {
 		return "TipologiaSpesa [id=" + id + ", value=" + value + ", tipoTrattamento=" + tipoTrattamento + ", voceSpesa="
-				+ voceSpesa + ", estera=" + estera + ", italia=" + italia + "]";
+				+ voceSpesa + ", estera=" + estera + ", italia=" + italia + ", checkData=" + checkData + "]";
 	}
 
 

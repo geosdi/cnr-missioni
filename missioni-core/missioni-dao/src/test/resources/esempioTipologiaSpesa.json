@@ -3,6 +3,8 @@
                   "id": "01",
                   "value": "Aereo",
                   "italia": true,
+                  "estera":true,
+                  "checkData" : false,
                   "voceSpesa": "TRASPORTO",
                   "occorrenzeGiornaliere": 0,
                   "tipoTrattamento": "RIMBORSO_DOCUMENTATO"

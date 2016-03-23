@@ -34,6 +34,8 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 	private ComboBox voceSpesaField;
 	private CheckBox esteraField;
 	private CheckBox italiaField;
+	private CheckBox checkDataField;
+
 
 	public TipologiaSpesaForm(TipologiaSpesa tipologiaSpesa, boolean isAdmin, boolean enabled, boolean modifica) {
 		super(tipologiaSpesa, isAdmin, enabled, modifica);
@@ -52,11 +54,13 @@ public class TipologiaSpesaForm extends IForm.FormAbstract<TipologiaSpesa> {
 		esteraField = (CheckBox) getFieldGroup().buildAndBind("Estera", "estera", CheckBox.class);
 		italiaField = (CheckBox) getFieldGroup().buildAndBind("Italia", "italia", CheckBox.class);
 		voceSpesaField = (ComboBox) getFieldGroup().buildAndBind("Voce Spesa", "voceSpesa", ComboBox.class);
+		checkDataField = (CheckBox) getFieldGroup().buildAndBind("Data Antecedente", "checkData", CheckBox.class);
 
 		addComponent(valueField);
 		addComponent(voceSpesaField);
 		addComponent(esteraField);
 		addComponent(italiaField);
+		addComponent(checkDataField);
 
 		addValidator();
 		addListener();
