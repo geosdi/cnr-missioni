@@ -10,7 +10,6 @@ import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.missione.WizardMissione;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneAdminEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
@@ -57,15 +56,10 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 				buttonPDF, buttonVeicoloMissionePDF);
 	}
 
-	protected void openWizardMissione() {
-		WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(new Missione())
-				.withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).build();
-
-	}
 
 	protected void addActionButtonDettagli() {
 		if (!selectedMissione.isRimborsoSetted())
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(selectedMissione)
+			WizardSetupWindow.getWizardSetup().withTipo(new WizardMissione()).withMissione(selectedMissione).withEvent(new ResetSelectedMissioneAdminEvent())
 					.withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).build();
 		else
 			super.addActionButtonDettagli();
