@@ -68,6 +68,7 @@ public class MassimaleForm extends IForm.FormAbstract<Massimale> {
 	}
 
 	public void addValidator() {
+		
 
 		tipoField.addValidator(new Validator() {
 
