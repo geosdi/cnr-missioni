@@ -356,7 +356,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					throw new InvalidValueException(Utility.getMessage("error_date_fattura"));
 
 				
-				if (t.getTipologiaSpesa().get(0).getVoceSpesa() == VoceSpesaEnum.PASTO) {
+				if (tipologiaSpesa.getVoceSpesa() == VoceSpesaEnum.PASTO) {
 
 					DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
 							dateFattura.getDayOfMonth(), 0, 0);
