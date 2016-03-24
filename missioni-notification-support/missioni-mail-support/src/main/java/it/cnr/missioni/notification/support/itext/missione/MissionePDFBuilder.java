@@ -277,7 +277,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Chunk underline = new Chunk("Avvertenza:Ai fini dell" + new Character('\u2032')
 				+ " ammissione a pagamento della missione "
 				+ "il presente modulo e quello di richiesta rimborso devono essere compilati integralmente depennando eventuali dizioni che non interessano. "
-				+ "\nLe spese non documentate non possono venire rimborsate. Per spese effettuate in vlauta, ove non sia\n"
+				+ "\nLe spese non documentate non possono venire rimborsate. Per spese effettuate in valuta, ove non sia"
 				+ " allegata distinta bancaria di cambio, il rimborso è disposto al cambio vigente alla data d'inizio missione.");
 
 		underline.setUnderline(0.2f, -2f);
