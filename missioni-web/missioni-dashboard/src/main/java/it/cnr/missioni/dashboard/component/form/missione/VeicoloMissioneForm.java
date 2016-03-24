@@ -80,13 +80,9 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 		
 		motivazioneField = (TextArea) getFieldGroup().buildAndBind("Motivazione",
 				"motivazioni", TextArea.class);
-		if (bean.getTipoVeicolo() == VEICOLO_PROPRIO || bean.getTipoVeicolo() == NOLEGGIO)
-			motivazioneField.setReadOnly(false);
-		else
-			motivazioneField.setReadOnly(true);
-		
-		altreDisposizioniField = (TextArea) getFieldGroup().buildAndBind("Altre Disposizioni",
-				"altreDisposizioni", TextArea.class);
+		motivazioneField.setReadOnly((bean.getTipoVeicolo() == VEICOLO_PROPRIO || bean.getTipoVeicolo() == NOLEGGIO) ? false : true);
+
+		altreDisposizioniField = (TextArea) getFieldGroup().buildAndBind("Altre Disposizioni","altreDisposizioni", TextArea.class);
 
 		labelVeicoloProprio = new Label();
 
@@ -187,28 +183,34 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				if (optionGroupMezzo.getValue().equals(VEICOLO_CNR) || optionGroupMezzo.getValue().equals(NESSUNO)) {
-					motivazioneField.setReadOnly(false);
-					motivazioneField.setValue(null);
-					motivazioneField.setReadOnly(true);
-					motivazioneField.setValidationVisible(false);
-					if(optionGroupMezzo.getValue().equals(VEICOLO_CNR))
-						labelVeicoloProprio.setVisible(false);
-				}
-				if (optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO) || optionGroupMezzo.getValue().equals(NOLEGGIO)) {
-					motivazioneField.setReadOnly(false);
-					if(optionGroupMezzo.getValue().equals(VEICOLO_PROPRIO))
-					{
-						labelVeicoloProprio.setVisible(true);
-						if(v!=null)
-							labelVeicoloProprio.setValue("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga());
-						else
-							labelVeicoloProprio.setValue("Nessun veicolo associato");
-
-					}
-				}
+				chooseTipoVeicolo(optionGroupMezzo.getValue().toString());
 			}
 		});
+	}
+	
+	
+	private void chooseTipoVeicolo(String tipo){
+		switch (tipo) {
+		case VEICOLO_CNR :
+		case NESSUNO :
+			motivazioneField.setReadOnly(false);
+			motivazioneField.setValue(null);
+			motivazioneField.setReadOnly(true);
+			motivazioneField.setValidationVisible(false);
+			labelVeicoloProprio.setVisible(false);
+			break;
+		case VEICOLO_PROPRIO :
+			motivazioneField.setReadOnly(false);
+			labelVeicoloProprio.setVisible(true);
+			labelVeicoloProprio.setValue(v != null ? "Veicolo: " + v.getTipo() + " Targa: " + v.getTarga() :"Nessun veicolo associato" );
+			break;
+		case NOLEGGIO :
+			motivazioneField.setReadOnly(false);
+			labelVeicoloProprio.setVisible(false);
+			break;
+		default:
+			break;
+		}
 	}
 
 }
