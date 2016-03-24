@@ -39,7 +39,7 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 	private TextField codiceTerzoField;
 	private TextField mailField;
 	private TextField ibanField;
-	private ComboBox listaUserField;
+//	private ComboBox listaUserField;
 
 	private User user;
 
@@ -55,23 +55,23 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 
 	public void addValidator() {
 
-		listaUserField.addBlurListener(new BlurListener() {
-
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1734096536441537831L;
-
-			@Override
-			public void blur(BlurEvent event) {
-				try {
-					listaUserField.validate();
-				} catch (Exception e) {
-					listaUserField.setValidationVisible(true);
-				}
-			}
-
-		});
+//		listaUserField.addBlurListener(new BlurListener() {
+//
+//			/**
+//			 * 
+//			 */
+//			private static final long serialVersionUID = 1734096536441537831L;
+//
+//			@Override
+//			public void blur(BlurEvent event) {
+//				try {
+//					listaUserField.validate();
+//				} catch (Exception e) {
+//					listaUserField.setValidationVisible(true);
+//				}
+//			}
+//
+//		});
 
 		matricolaField.addValidator(new Validator() {
 			/**
@@ -199,21 +199,21 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 			mailField = (TextField) getFieldGroup().buildAndBind("Mail", "mail");
 			ibanField = (TextField) getFieldGroup().buildAndBind("Iban", "iban");
 
-			listaUserField = new ComboBox("Datore Lavoro");
+//			listaUserField = new ComboBox("Datore Lavoro");
 
-			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true)
-					.withResponsabileGruppo(true);
-
-			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-
-			userStore.getUsers().forEach(u -> {
-				listaUserField.addItem(u.getId());
-				listaUserField.setItemCaption(u.getId(),
-						u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
-			});
-
-			getFieldGroup().bind(listaUserField, "datoreLavoro");
-			listaUserField.setValidationVisible(false);
+//			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true)
+//					.withResponsabileGruppo(true);
+//
+//			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
+//
+//			userStore.getUsers().forEach(u -> {
+//				listaUserField.addItem(u.getId());
+//				listaUserField.setItemCaption(u.getId(),
+//						u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
+//			});
+//
+//			getFieldGroup().bind(listaUserField, "datoreLavoro");
+//			listaUserField.setValidationVisible(false);
 
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -223,7 +223,7 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 		addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		addComponent(livelloField);
 		addComponent(qualificaField);
-		addComponent(listaUserField);
+//		addComponent(listaUserField);
 		addComponent(matricolaField);
 		addComponent(codiceTerzoField);
 		addComponent(mailField);
@@ -243,7 +243,7 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 		BeanItem<DatiCNR> beanItem = (BeanItem<DatiCNR>) getFieldGroup().getItemDataSource();
 		DatiCNR datiCNR = beanItem.getBean();
 		datiCNR.setDescrizioneQualifica(getQualificaItemCaption());
-		datiCNR.setShortDescriptionDatoreLavoro(getShortDescriptionDatoreLavoro());
+//		datiCNR.setShortDescriptionDatoreLavoro(getShortDescriptionDatoreLavoro());
 		return datiCNR;
 
 	}
@@ -252,9 +252,9 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 		return qualificaField.getItemCaption(qualificaField.getValue());
 	}
 
-	private String getShortDescriptionDatoreLavoro() {
-		return listaUserField.getItemCaption(listaUserField.getValue());
-	}
+//	private String getShortDescriptionDatoreLavoro() {
+//		return listaUserField.getItemCaption(listaUserField.getValue());
+//	}
 
 	/**
 	 * 
