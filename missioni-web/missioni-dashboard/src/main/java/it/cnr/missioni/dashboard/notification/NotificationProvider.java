@@ -86,8 +86,8 @@ public class NotificationProvider implements INotificationProvider {
 				.withStato(StatoEnum.INSERITA.name());
 		try {
 			MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
-			if(missioniStore != null)
-				lista = missioniStore.getMissioni().stream().filter(m -> m.getDataInserimento().isBefore(new DateTime().minusDays(30))).collect(Collectors.toList());
+			if(missioniStore.getTotale() > 0)
+				lista = missioniStore.getMissioni().stream().filter(m -> m.getDatiPeriodoMissione().getFineMissione().isBefore(new DateTime().minusDays(15))).collect(Collectors.toList());
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
