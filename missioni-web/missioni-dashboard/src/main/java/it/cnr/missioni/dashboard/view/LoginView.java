@@ -10,6 +10,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.Position;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -86,7 +87,6 @@ public class LoginView extends VerticalLayout implements Serializable {
 		button.setStyleName(Reindeer.BUTTON_LINK);
 
 		loginPanel.addComponent(button);
-
 		return loginPanel;
 	}
 
@@ -159,7 +159,9 @@ public class LoginView extends VerticalLayout implements Serializable {
 		welcome.addStyleName(ValoTheme.LABEL_COLORED);
 		labels.addComponent(welcome);
 
-		Label title = new Label("CNR-Missioni Dashboard");
+		
+		
+		Label title = new Label("Powered by <a href='http://www.geosdi.org/' target='_blank'>geoSDI</a>", ContentMode.HTML);
 		title.setSizeUndefined();
 		title.addStyleName(ValoTheme.LABEL_H3);
 		title.addStyleName(ValoTheme.LABEL_LIGHT);
