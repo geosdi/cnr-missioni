@@ -16,15 +16,15 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 
-import it.cnr.missioni.dashboard.action.PrenotazioneAction;
 import it.cnr.missioni.dashboard.action.AnticipoPagamentoAction;
 import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.action.MissioneAction;
-import it.cnr.missioni.dashboard.action.UserRegistrationAction;
+import it.cnr.missioni.dashboard.action.PrenotazioneAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateCredenzialiUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
+import it.cnr.missioni.dashboard.action.UserRegistrationAction;
 import it.cnr.missioni.dashboard.action.VeicoloAction;
 import it.cnr.missioni.dashboard.action.admin.AdminUpdateUserAction;
 import it.cnr.missioni.dashboard.action.admin.MassimaleAction;
@@ -48,7 +48,9 @@ import it.cnr.missioni.model.user.User;
 @Theme("dashboard")
 @Widgetset("it.cnr.missioni.dashboard.DashboardWidgetSet")
 @Title("Missioni Dashboard")
-public final class DashboardUI extends UI {
+//@Push
+public final class DashboardUI
+extends UI {
 
 	/**
 	 * 
@@ -65,6 +67,7 @@ public final class DashboardUI extends UI {
 
 	@Override
 	protected void init(final VaadinRequest request) {
+//    	Broadcaster.register((x) -> System.out.println(x.toLowerCase()));
 		setLocale(Locale.ITALY);
 		VaadinSession.getCurrent().setConverterFactory(new BeanFieldGrouFactory.ConverterFactory());
 		DashboardEventBus.register(this);
@@ -94,7 +97,8 @@ public final class DashboardUI extends UI {
 			// Authenticated user
 			setContent(new MainView());
 			removeStyleName("loginview");
-			getNavigator().navigateTo(getNavigator().getState());
+//			getNavigator().navigateTo(getNavigator().getState());
+			getNavigator().navigateTo("");
 			notificationProvider.check();
 
 		} else {
@@ -208,6 +212,7 @@ public final class DashboardUI extends UI {
 		// page gets reloaded on the login screen. Do notice the this doesn't
 		// invalidate the current HttpSession.
 		VaadinSession.getCurrent().close();
+		VaadinSession.getCurrent().getSession().invalidate();
 		Page.getCurrent().reload();
 	}
 
@@ -233,5 +238,23 @@ public final class DashboardUI extends UI {
 	public static User getCurrentUser() {
 		return (User) VaadinSession.getCurrent().getAttribute(User.class.getName());
 	}
+	
+    @Override
+    public void detach() {
+//        Broadcaster.unregister((x) -> System.out.println(x.toLowerCase()));
+        super.detach();
+    }
+    
+//    public void receiveBroadcast(final String message) {
+//        // Must lock the session to execute logic safely
+//        access(new Runnable() {
+//            @Override
+//            public void run() {
+//    			DashboardEventBus.post(new DashboardEvent.CalendarUpdateEvent(null));
+//                // Show it somehow
+//            	System.out.println(message);
+//            }
+//        });
+//    }
 
 }
