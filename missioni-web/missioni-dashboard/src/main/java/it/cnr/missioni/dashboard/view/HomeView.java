@@ -75,7 +75,6 @@ public class HomeView extends Panel implements View {
 		root.addComponent(content);
 		root.setExpandRatio(content, 1);
 
-		DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
 
 	}
 
