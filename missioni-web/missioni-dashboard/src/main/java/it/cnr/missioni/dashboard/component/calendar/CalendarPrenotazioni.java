@@ -21,6 +21,7 @@ import com.vaadin.addon.calendar.ui.CalendarComponentEvents.RangeSelectHandler;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClick;
 import com.vaadin.addon.calendar.ui.CalendarComponentEvents.WeekClickHandler;
 import com.vaadin.addon.calendar.ui.handler.BasicDateClickHandler;
+import com.vaadin.annotations.Push;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Alignment;
@@ -44,6 +45,7 @@ import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
 import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 
+@Push
 public class CalendarPrenotazioni implements Serializable {
 
 	private static final long serialVersionUID = -5436777475398410597L;
@@ -598,6 +600,7 @@ public class CalendarPrenotazioni implements Serializable {
 						prenotazioneEvent.setStart(p.getDataFrom().toDate());
 						prenotazioneEvent.setEnd(p.getDataTo().toDate());
 						prenotazioneEvent.setVeicolo(p.getIdVeicoloCNR());
+						prenotazioneEvent.setVeicoloDescription(p.getDescriptionVeicoloCNR());
 						prenotazioneEvent.setCaption(p.getLocalita()+" - "+p.getDescrizione()+" - "+p.getDescriptionVeicoloCNR());
 						prenotazioneEvent.setLocalita(p.getLocalita());
 						prenotazioneEvent.setDescrizione(p.getDescrizione());
