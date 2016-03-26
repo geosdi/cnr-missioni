@@ -1,5 +1,7 @@
 package it.cnr.missioni.model.prenotazione;
 
+import java.text.SimpleDateFormat;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -194,11 +196,15 @@ public class Prenotazione implements Document {
 				+ ", allDay=" + allDay + ", descriptionVeicoloCNR=" + descriptionVeicoloCNR + "]";
 	}
 
+	public String buildStringMessage(){
+		StringBuilder s = new StringBuilder();
+		s.append("\nUser:"+getDescrizione());
+		s.append("\nVeicolo: "+getDescriptionVeicoloCNR());
+		s.append("\nDal: "+new SimpleDateFormat("dd/MM/yyyy HH:mm").format(getDataFrom().toDate()));
+		s.append("\nAl: "+new SimpleDateFormat("dd/MM/yyyy HH:mm").format(getDataTo().toDate()));
+		s.append("\nLocalità: "+getLocalita());
+		return s.toString();
+	}
 
-
-
-	
-	
-	
 
 }
