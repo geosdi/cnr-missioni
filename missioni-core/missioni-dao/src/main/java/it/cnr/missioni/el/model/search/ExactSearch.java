@@ -7,7 +7,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 /**
  * @author Salvia Vito
  */
-public class ExactSearch extends AbstractBooleanSearch<Object> implements IBooleanSearch {
+public class ExactSearch extends IBooleanSearch.AbstractBooleanSearch<Object> {
 
 	
 	private Operator operator = Operator.AND;

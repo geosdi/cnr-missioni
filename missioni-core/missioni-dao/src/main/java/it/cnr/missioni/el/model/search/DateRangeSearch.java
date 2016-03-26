@@ -1,5 +1,6 @@
 package it.cnr.missioni.el.model.search;
 
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
@@ -9,7 +10,7 @@ import org.joda.time.DateTimeZone;
 /**
  * @author Salvia Vito
  */
-public class DateRangeSearch extends AbstractBooleanSearch implements IBooleanSearch {
+public class DateRangeSearch extends IBooleanSearch.AbstractBooleanSearch<Object> {
 	
 	private DateTime from;
 	private DateTime to;

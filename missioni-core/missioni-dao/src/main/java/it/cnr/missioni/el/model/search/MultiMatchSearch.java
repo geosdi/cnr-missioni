@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 /**
  * @author Salvia Vito
  */
-public class MultiMatchSearch extends AbstractBooleanSearch<Object> implements IBooleanSearch {
+public class MultiMatchSearch extends IBooleanSearch.AbstractBooleanSearch<Object> {
 
 	
 	

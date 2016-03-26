@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 /**
  * @author Salvia Vito
  */
-public class ExistFieldSearch extends AbstractBooleanSearch<Object> implements IBooleanSearch {
+public class ExistFieldSearch extends IBooleanSearch.AbstractBooleanSearch<Object>{
 
 	
 	public ExistFieldSearch( ){

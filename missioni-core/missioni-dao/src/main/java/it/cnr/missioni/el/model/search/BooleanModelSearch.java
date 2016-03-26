@@ -24,7 +24,7 @@ public  class BooleanModelSearch implements Serializable{
 		listaSearch.forEach(booleanSearch -> {
 			try {
 				
-				booleanSearch.addBooleanQuery(queryBuilder);
+				addBooleanQuery(booleanSearch);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -32,6 +32,21 @@ public  class BooleanModelSearch implements Serializable{
 		});
 
 		return queryBuilder;
+	}
+	
+	public  void addBooleanQuery(IBooleanSearch booleanSearch ) throws Exception {
+		switch (booleanSearch.getType().name()) {
+		case "SHOULD":
+			queryBuilder.should(booleanSearch.getBooleanQuery());
+			break;
+		case "MUST":
+			queryBuilder.must(booleanSearch.getBooleanQuery());
+			break;
+		case "MUST_NOT":
+			queryBuilder.mustNot(booleanSearch.getBooleanQuery());
+			break;
+		}
+
 	}
 
 

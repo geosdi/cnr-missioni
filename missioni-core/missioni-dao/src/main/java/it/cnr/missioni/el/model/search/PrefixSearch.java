@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 /**
  * @author Salvia Vito
  */
-public class PrefixSearch extends AbstractBooleanSearch<String> implements IBooleanSearch {
+public class PrefixSearch extends IBooleanSearch.AbstractBooleanSearch<String> {
 	
 	public PrefixSearch( ){
 		super();
