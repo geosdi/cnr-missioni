@@ -1,5 +1,8 @@
 package it.cnr.missioni.dashboard.menu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.vaadin.navigator.View;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Resource;
@@ -30,8 +33,8 @@ public enum DashboardViewType {
     GESTIONE_RIMBORSO("gestione rimborso",GestioneRimborsoView.class, FontAwesome.EURO, true),
     GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio",GestioneVeicoloView.class, FontAwesome.CAR, true),
     CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, true),
-    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USERS, true)
-    ,
+    
+    GESTIONE_USER_ADMIN("gestione user",GestioneUserAdminView.class, FontAwesome.USERS, true),
     GESTIONE_MISSIONE_ADMIN("gestione missione admin",GestioneMissioneAdminView.class, FontAwesome.SUITCASE, true),
     GESTIONE_RIMBORSO_ADMIN("gestione rimborso admin",GestioneRimborsoAdminView.class, FontAwesome.EURO, true),
     GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR",GestioneVeicoloCNRView.class, FontAwesome.CAR, true),
@@ -73,7 +76,32 @@ public enum DashboardViewType {
         return icon;
     }
     
+    public static List<DashboardViewType> getMenuUser(){
+    	List<DashboardViewType> menuList = new ArrayList<DashboardViewType>();
+    	menuList.add(HOME);
+    	menuList.add(COMPLETA_REGISTRAZIONE);
+    	menuList.add(GESTIONE_MISSIONE);
+    	menuList.add(GESTIONE_RIMBORSO);
+    	menuList.add(GESTIONE_VEICOLO_PROPRIO);
+    	menuList.add(CALENDARIO);
+    	return menuList;
+    }
     
+    public static List<DashboardViewType> getMenuAdmin(){
+    	List<DashboardViewType> menuList = new ArrayList<DashboardViewType>();
+    	menuList.add(HOME_ADMIN);
+    	menuList.add(GESTIONE_USER_ADMIN);
+    	menuList.add(GESTIONE_MISSIONE_ADMIN);
+    	menuList.add(GESTIONE_RIMBORSO_ADMIN);
+    	menuList.add(GESTIONE_VEICOLO_CNR_ADMIN);
+    	menuList.add(GESTIONE_QUALIFICA_USER_ADMIN);
+    	menuList.add(GESTIONE_NAZIONE_ADMIN);
+    	menuList.add(GESTIONE_RIMBORSO_KM_ADMIN);
+    	menuList.add(GESTIONE_TIPOLOGIA_SPESA_ADMIN);
+    	menuList.add(GESTIONE_QUALIFICA_USER_ADMIN);
+    	menuList.add(GESTIONE_MASSIMALE_ADMIN);
+    	return menuList;
+    }
 
     public static DashboardViewType getByViewName(final String viewName) {
     	DashboardViewType result = null;
