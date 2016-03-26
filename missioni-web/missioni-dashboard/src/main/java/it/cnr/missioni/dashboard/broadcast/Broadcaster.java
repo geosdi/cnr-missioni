@@ -1,10 +1,8 @@
-package it.cnr.missioni.dashboard.component.calendar;
+package it.cnr.missioni.dashboard.broadcast;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Salvia Vito
@@ -15,26 +13,23 @@ public class Broadcaster implements Serializable {
 	 */
 	private static final long serialVersionUID = 4894282195273039938L;
 
-	static ExecutorService executorService =
-        Executors.newSingleThreadExecutor();
+    private static final List<BroadcastListener> listeners = new CopyOnWriteArrayList<BroadcastListener>();
 
-    private static LinkedList<Consumer<String>> listeners =
-        new LinkedList<Consumer<String>>();
-    
-    public static synchronized void register(
-            Consumer<String> listener) {
+    public static void register(BroadcastListener listener) {
         listeners.add(listener);
     }
-    
-    public static synchronized void unregister(
-            Consumer<String> listener) {
+
+    public static void unregister(BroadcastListener listener) {
         listeners.remove(listener);
     }
-    
-    public static synchronized void broadcast(
-            final String message) {
-        for (final Consumer<String> listener: listeners)
-            executorService.execute(() ->
-                    listener.accept(message));
+
+    public static void broadcast(final String message) {
+        for (BroadcastListener listener : listeners) {
+            listener.receiveBroadcast(message);
+        }
+    }
+
+    public interface BroadcastListener {
+        public void receiveBroadcast(String message);
     }
 }

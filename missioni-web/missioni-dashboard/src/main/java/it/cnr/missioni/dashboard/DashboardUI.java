@@ -3,6 +3,7 @@ package it.cnr.missioni.dashboard;
 import java.util.Locale;
 
 import com.google.common.eventbus.Subscribe;
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Widgetset;
@@ -12,6 +13,8 @@ import com.vaadin.server.Page.BrowserWindowResizeListener;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
@@ -34,6 +37,9 @@ import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
 import it.cnr.missioni.dashboard.action.admin.TipologiaSpesaAction;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
+import it.cnr.missioni.dashboard.broadcast.Broadcaster;
+import it.cnr.missioni.dashboard.broadcast.Broadcaster.BroadcastListener;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.UserLoggedOutEvent;
@@ -48,9 +54,9 @@ import it.cnr.missioni.model.user.User;
 @Theme("dashboard")
 @Widgetset("it.cnr.missioni.dashboard.DashboardWidgetSet")
 @Title("Missioni Dashboard")
-//@Push
+@Push
 public final class DashboardUI
-extends UI {
+extends UI implements BroadcastListener{
 
 	/**
 	 * 
@@ -67,7 +73,7 @@ extends UI {
 
 	@Override
 	protected void init(final VaadinRequest request) {
-//    	Broadcaster.register((x) -> System.out.println(x.toLowerCase()));
+    	Broadcaster.register(this);
 		setLocale(Locale.ITALY);
 		VaadinSession.getCurrent().setConverterFactory(new BeanFieldGrouFactory.ConverterFactory());
 		DashboardEventBus.register(this);
@@ -93,13 +99,11 @@ extends UI {
 	 */
 	private void updateContent() {
 		if (getCurrentUser() != null) {
-
 			// Authenticated user
 			setContent(new MainView());
 			removeStyleName("loginview");
 //			getNavigator().navigateTo(getNavigator().getState());
 			getNavigator().navigateTo("");
-			notificationProvider.check();
 
 		} else {
 			setContent(new LoginView());
@@ -111,7 +115,10 @@ extends UI {
 	public void userLoginRequested(final LoginAction loginAction) throws InterruptedException {
 
 		if (loginAction.doAction()) {
+			notificationProvider.check();
 			updateContent();
+			DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
+
 		}
 
 	}
@@ -241,20 +248,25 @@ extends UI {
 	
     @Override
     public void detach() {
-//        Broadcaster.unregister((x) -> System.out.println(x.toLowerCase()));
+        Broadcaster.unregister(this);
         super.detach();
     }
     
-//    public void receiveBroadcast(final String message) {
-//        // Must lock the session to execute logic safely
-//        access(new Runnable() {
-//            @Override
-//            public void run() {
-//    			DashboardEventBus.post(new DashboardEvent.CalendarUpdateEvent(null));
-//                // Show it somehow
-//            	System.out.println(message);
-//            }
-//        });
-//    }
+    @Override
+        public void receiveBroadcast(final String message) {
+	        // Must lock the session to execute logic safely
+	        access(new Runnable() {
+	            @Override
+	            public void run() {
+	    			DashboardEventBus.post(new DashboardEvent.CalendarUpdateEvent(null));
+	    	        DashboardUI.getDataProvider().addPrenotazione(message);
+	    			DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
+	                // Show it somehow
+	            	Notification n = new Notification(message,
+	                        Type.TRAY_NOTIFICATION);
+	                n.show(getPage());	
+	            }
+	        });
+	    }
 
 }
