@@ -157,6 +157,7 @@ public class Rimborso implements Serializable {
 		return t;
 	}
 	
+	@JsonIgnore
 	public Double getTotaleSpettante() {
 		double t = 0.0;
 		for (Fattura f : this.mappaFattura.values())
