@@ -36,13 +36,16 @@ public class NotificationProvider implements INotificationProvider {
 	 * Initialize the data for this application.
 	 */
 	public NotificationProvider() {
-//		chechRegistrationComplete();
 	}
 	
 	public void check(){
 		chechRegistrationComplete();
 	}
 
+	public void addPrenotazione(String prenotazione){
+		notifications.add(buildNotification(prenotazione,"Prenotazione"));
+	}
+	
 	private void chechRegistrationComplete() {
 		DashboardNotification n = null;
 		List<Missione> lista = getMissioneWithoutRimborso();

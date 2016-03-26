@@ -17,6 +17,12 @@ public interface INotificationProvider {
      * @return The number of unread notifications for the current user.
      */
     int getUnreadNotificationsCount();
+    
+    /**
+     * 
+     * @param prenotazione
+     */
+    void addPrenotazione(String prenotazione);
 
     /**
      * @return Notifications for the current user.
