@@ -392,6 +392,8 @@ public class MissioneDAOTest {
 		rimborso.setAnticipazionePagamento(0.0);
 		rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));
 		rimborso.setTotale(179.6);
+		rimborso.setTotaleDovuto(179.6);
+
 
 		rimborso.getMappaFattura().put("1111111111111", fattura);
 		rimborso.getMappaFattura().put("2222222222222", fattura_2);
