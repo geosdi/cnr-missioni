@@ -82,7 +82,7 @@ public class RimborsoTest {
 		Rimborso r = buildRimborso();
 		DateTime from = new DateTime(2015, 11, 13, 0, 0);
 		DateTime to = new DateTime(2015, 11, 13, 23, 59);
-		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "02", null).size() == 1);
+		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDayWithNotID(from, to, "02", null).size() == 1);
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class RimborsoTest {
 		Rimborso r = buildRimborso();
 		DateTime from = new DateTime(2015, 11, 12, 0, 0);
 		DateTime to = new DateTime(2015, 11, 12, 23, 59);
-		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDay(from, to, "01", null).size() == 2);
+		Assert.assertTrue("FIND FATTURA", r.getNumberOfFatturaInDayWithNotID(from, to, "01", null).size() == 2);
 	}
 		
 	
