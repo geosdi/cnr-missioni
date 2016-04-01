@@ -319,10 +319,10 @@ public class UserDAOTest {
 //	}
 	
 	//
-	//// @Test
-	//// public void tearDown() throws Exception {
-	//// this.utenteDocIndexCreator.deleteIndex();
-	//// }
+	 @Test
+	 public void tearDown() throws Exception {
+	 this.userDocIndexCreator.deleteIndex();
+	 }
 
 	private void creaUsers() {
 		User user = null;
