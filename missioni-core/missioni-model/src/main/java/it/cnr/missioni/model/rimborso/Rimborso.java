@@ -49,7 +49,7 @@ public class Rimborso implements Serializable {
 	@JsonIgnore
 	private double totaleFattureGiornaliera;
 
-	public List<Fattura> getNumberOfFatturaInDay(DateTime from, DateTime to, String idTipologiaSpesa,
+	public List<Fattura> getNumberOfFatturaInDayWithNotID(DateTime from, DateTime to, String idTipologiaSpesa,
 			String notIdFattura) {
 
 		return (List<Fattura>) getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from))
@@ -60,7 +60,7 @@ public class Rimborso implements Serializable {
 	public List<Fattura> getNumberOfFatturaInDay(DateTime from, DateTime to, String idTipologiaSpesa) {
 
 		return (List<Fattura>) getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from))
-				.filter(f -> f.getData().isBefore(to)).collect(Collectors.toList());
+				.filter(f -> f.getData().isBefore(to)).filter(f -> f.getIdTipologiaSpesa().equals(idTipologiaSpesa)).collect(Collectors.toList());
 
 	}
 
