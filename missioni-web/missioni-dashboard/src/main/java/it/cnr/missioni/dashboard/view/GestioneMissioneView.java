@@ -23,7 +23,7 @@ import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneAdminEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneRimborsoEvent;
-import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateUpdatedEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
@@ -484,7 +484,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	 * 
 	 */
 	@Subscribe
-	public void aggiornaTableMissione(final TableMissioniUpdateUpdatedEvent event) {
+	public void aggiornaTableMissione(final TableMissioniUpdateEvent event) {
 
 		try {
 			this.missioniStore = ClientConnector.getMissione(this.missioneSearchBuilder);
