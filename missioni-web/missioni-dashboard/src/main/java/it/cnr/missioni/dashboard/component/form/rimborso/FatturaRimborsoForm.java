@@ -43,9 +43,9 @@ import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.model.validator.IValidatorManager;
-import it.cnr.missioni.model.validator.ValidatorFatturaPastoEstera;
-import it.cnr.missioni.model.validator.ValidatorFatturaPastoItalia;
+import it.cnr.missioni.model.validator.IValidatorGenericFattura;
+import it.cnr.missioni.model.validator.IValidatorPastoFattura;
+import it.cnr.missioni.model.validator.IValidatorPastoFattura.ValidatorPastoFattura;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
 /**
@@ -85,11 +85,11 @@ public class FatturaRimborsoForm extends VerticalLayout {
 	// Ogni fattura deve essere compresa tra le date di inizio e fine
 	// missione
 	public void setRangeDate() {
-//		formFattura.getDataField().setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+		// formFattura.getDataField().setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
 		formFattura.getDataField().setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
 	}
-	
-	public void discardChange(){
+
+	public void discardChange() {
 		formFattura.getFieldGroup().discard();
 	}
 
@@ -174,9 +174,9 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					elencoFattureTable.aggiornaTable(
 							new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
 					elencoFattureTable.aggiornaTotale(formFattura.getMissione().getRimborso().getTotale());
-					
-					//Se estera ricancello la combobox
-					if(missione.isMissioneEstera())
+
+					// Se estera ricancello la combobox
+					if (missione.isMissioneEstera())
 						formFattura.getTipologiaSpesaField().removeAllItems();
 
 				} else {
@@ -289,7 +289,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		 */
 		@Override
 		public void addValidator() {
-			
+
 			dataField.addValidator(new Validator() {
 
 				/**
@@ -302,9 +302,9 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					if (dataField.getValue() != null) {
 						DateTime d = new DateTime(dataField.getValue());
 						if (
-//								d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())
-//								|| 
-								d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
+						// d.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())
+						// ||
+						d.isAfter(missione.getDatiPeriodoMissione().getFineMissione()))
 							throw new InvalidValueException(Utility.getMessage("date_range_start"));
 
 					}
@@ -336,7 +336,6 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		private void checkFattura() throws Exception {
 			TipologiaSpesaStore t = null;
 			DateTime dateFattura;
-			int n = 0;
 			if (formFattura.getTipologiaSpesaField().getValue() != null
 					&& formFattura.getDataField().getValue() != null) {
 				dateFattura = new DateTime(formFattura.getDataField().getValue(),DateTimeZone.UTC).withHourOfDay(missione.getDatiPeriodoMissione().getInizioMissione().getHourOfDay())
@@ -349,49 +348,49 @@ public class FatturaRimborsoForm extends VerticalLayout {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 							Type.ERROR_MESSAGE);
 				}
-				
 				TipologiaSpesa tipologiaSpesa = t.getTipologiaSpesa().get(0);
-				
-				if(!tipologiaSpesa.isNoCheckData() && dateFattura.isBefore(missione.getDatiPeriodoMissione().getInizioMissione()))
-					throw new InvalidValueException(Utility.getMessage("error_date_fattura"));
-
-				
-				if (tipologiaSpesa.getVoceSpesa() == VoceSpesaEnum.PASTO) {
-
-					DateTime dateTo = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
-							dateFattura.getDayOfMonth(), 0, 0);
-					DateTime datFrom = new DateTime(dateFattura.getYear(), dateFattura.getMonthOfYear(),
-							dateFattura.getDayOfMonth(), 23, 59);
-
-					// numero di fatture inserite per quel giorno
-					n = missione.getRimborso().getNumberOfFatturaInDay(dateTo, datFrom,
-							formFattura.getTipologiaSpesaField().getValue().toString()).size();
-
-					int maxOccorrenze = 0;
-					IValidatorManager v;
-
-					if (missione.isMissioneEstera()) {
-						v = new ValidatorFatturaPastoEstera(new DateTime(formFattura.getDataField().getValue()),
-								missione.getDatiPeriodoMissione().getInizioMissione(),
-								missione.getDatiPeriodoMissione().getFineMissione(),
-								missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata(),
-								missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno());
-
-					} else {
-						v = new ValidatorFatturaPastoItalia(new DateTime(formFattura.getDataField().getValue()),
-								missione.getDatiPeriodoMissione().getInizioMissione(),
-								missione.getDatiPeriodoMissione().getFineMissione());
-					}
-					v.initialize();
-					maxOccorrenze = v.getMaxOccorrenze();
-
-					if (maxOccorrenze <= n && !missione.getRimborso().getMappaFattura().containsKey(
-							((BeanItem<Fattura>) formFattura.getFieldGroup().getItemDataSource()).getBean().getId()))
-						throw new InvalidValueException(Utility.getMessage("error_occorrenze"));
-
-				}
-
+				checkTipologiaSpesa(tipologiaSpesa.getVoceSpesa(), tipologiaSpesa, dateFattura);
 			}
+		}
+		
+		/**
+		 * 
+		 * Controllo per la tipologia di spesa se i dati sono stati inseriti correttamente
+		 * @param voceSpesa
+		 * @param tipologiaSpesa
+		 * @param dateFattura
+		 * @throws Exception
+		 */
+		private void checkTipologiaSpesa(VoceSpesaEnum voceSpesa,TipologiaSpesa tipologiaSpesa,DateTime dateFattura) throws Exception{
+			boolean check = true;
+			String message = null;
+						
+			switch (voceSpesa) {
+			case PASTO:
+				IValidatorPastoFattura validatorPasto = ValidatorPastoFattura.getValidatorPastoFattura()
+						.withTipologiaSpesa(tipologiaSpesa)
+						.withFattura(((BeanItem<Fattura>) formFattura.getFieldGroup().getItemDataSource()).getBean())
+						.withMissione(missione)
+						.withDataFattura(dateFattura);
+				check = validatorPasto.build();
+				message = validatorPasto.getMessage();
+				break;
+			case TRASPORTO:
+			case ALLOGGIO:
+			case RIMBORSO_KM:
+			case ALTRO:
+				IValidatorGenericFattura genericValidator =  IValidatorGenericFattura.GenericValidatorFattura.getGenericValidatorFattura()
+				.withMissione(missione).withTipologiaSpesa(tipologiaSpesa)
+				.withDataFattura(dateFattura)
+				.withFattura(((BeanItem<Fattura>) formFattura.getFieldGroup().getItemDataSource()).getBean());
+				check = genericValidator.build();
+				message = genericValidator.getMessage();
+				break;
+			default:
+				break;
+			}
+			if (!check)
+				throw new InvalidValueException(Utility.getMessage(message));
 		}
 
 		/**
@@ -452,18 +451,19 @@ public class FatturaRimborsoForm extends VerticalLayout {
 							DateTime d = new DateTime((dataField.getValue().getTime()));
 
 							caricaListaFattura(d);
-						}						
+						}
 					}
 
 				});
 			}
 
 		}
-		
-		//Carica la combobox in base alal data selezionata per la missione estera
-		public void caricaListaFattura(DateTime d){
-			if (d.isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata()) && d
-					.isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())) {
+
+		// Carica la combobox in base alal data selezionata per la missione
+		// estera
+		public void caricaListaFattura(DateTime d) {
+			if (d.isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
+					&& d.isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())) {
 				buildTipologiaCombo(listaTipologiaSpesaEstera);
 
 			} else {
@@ -472,13 +472,14 @@ public class FatturaRimborsoForm extends VerticalLayout {
 			}
 		}
 
-		//Quando viene selezionato una fattura carico la lista corretta in base alla data della fattura, in caso di missione estera
+		// Quando viene selezionato una fattura carico la lista corretta in base
+		// alla data della fattura, in caso di missione estera
 		@Subscribe
 		public void aggiornaListaFattura(final ComboBoxListaFatturaUpdatedEvent event) {
 			caricaListaFattura(event.getFattura().getData());
 			tipologiaSpesaField.select(event.getFattura().getIdTipologiaSpesa());
 		}
-		
+
 		/**
 		 * 
 		 * Carica le tipologia spesa in base ad ITALIA o ESTERA
