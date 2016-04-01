@@ -2,6 +2,7 @@ package it.cnr.missioni.notification.support.itext.anticipopagamento;
 
 import java.io.FileOutputStream;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -145,7 +146,7 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		Paragraph paragraphInFede = new Paragraph("\n\nIn fede\n\n___________________\n");
 		paragraphData.setAlignment(Element.ALIGN_RIGHT);
 
-		String importo = missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate() > 0 ? Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate()) : "____";
+		String importo = missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate() > 0 ? new DecimalFormat("#0.00").format(Double.toString(missione.getDatiAnticipoPagamenti().getSpeseMissioniAnticipate())) : "____";
 		
 		Paragraph paragraphFooter = new Paragraph(
 				"\n\nVISTO SI AUTORIZZA LA LIQUIDAZIONE PARI AD € "+importo+"\n\nIl Direttore CNR/IMAA\n\n_____________________\n("+direttore.getValue()+")");

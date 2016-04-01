@@ -167,7 +167,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		tableUtente.addCell(cellMatricola);
 		document.add(tableUtente);
 
-		document.add(new Paragraph("\nSi dispone l" + new Character('\u2032')
+		document.add(new Paragraph("\nSi dispone l'" + new Character('\u2032')
 				+ " espletamento da parte della S.V. della seguente missione\n\n", fontBold));
 
 		Chunk chunkOggetto = new Chunk("Oggetto:", fontBold);
