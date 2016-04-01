@@ -2,6 +2,7 @@ package it.cnr.missioni.notification.support.itext.rimborso;
 
 import java.io.FileOutputStream;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -181,7 +182,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
             tableScontrino.addCell(new PdfPCell(new Paragraph(formatDataTime.format(fattura.getData().toDate()), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getShortDescriptionTipologiaSpesa(), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getNumeroFattura().toString(), fontNormal)));
-            tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getImporto() + " € ", fontNormal)));
+            tableScontrino.addCell(new PdfPCell(new Paragraph(new DecimalFormat("#0.00").format(fattura.getImporto()) + " € ", fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getValuta() + "", fontNormal)));
         }
         int size = listaScontrini.size();
@@ -220,14 +221,14 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         cellImportoTerzi.setBorder(Rectangle.NO_BORDER);
         tablePagamento.addCell(cellImportoTerzi);
         PdfPCell importoDaTerzi2 = new PdfPCell(new
-                Paragraph((missione.getRimborso().getImportoDaTerzi()+" €" ), fontNormal));
+                Paragraph((new DecimalFormat("#0.00").format(missione.getRimborso().getImportoDaTerzi())+" €" ), fontNormal));
         importoDaTerzi2.setMinimumHeight(20f);
         tablePagamento.addCell(importoDaTerzi2);
         
         String mandato = missione.getDatiAnticipoPagamenti().getMandatoCNR() != null ? missione.getDatiAnticipoPagamenti().getMandatoCNR() :"";
         
         PdfPCell cellAnticipazioni = new PdfPCell(
-                new Paragraph("Anticiapzioni da detrarre", fontBold));
+                new Paragraph("Anticipazioni da detrarre", fontBold));
         cellAnticipazioni.setBorder(Rectangle.NO_BORDER);
         tablePagamento.addCell(cellAnticipazioni);
         PdfPCell cellAnticipazioni2 = new PdfPCell(new
@@ -239,12 +240,12 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         document.add(new Paragraph("Il Richiedente"));
 
-        Paragraph paragraphDirettore = new Paragraph("Il Direttore\t\n("+direttore.getValue()+")\n");
+        Paragraph paragraphDirettore = new Paragraph("Il Direttore\t\n("+direttore.getValue()+")\n\n");
         paragraphDirettore.setAlignment(Paragraph.ALIGN_RIGHT);
         document.add(paragraphDirettore);
 
         Chunk underline = new Chunk(
-                "\n\nN.B Allegare lettera di convocazione e " + "documenti originali di viaggio come da distinta");
+                "N.B Allegare lettera di convocazione e " + "documenti originali di viaggio come da distinta");
 
         underline.setUnderline(0.2f, -2f);
 
@@ -252,6 +253,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         Paragraph paragraphFooter = new Paragraph("\n\n", new Font());
         paragraphFooter.add(underline);
         document.add(paragraphFooter);
+        document.add(new Paragraph("\n\nN.B. La validità del presente modulo è strettamente legata alla compilazione in tutte le sue parti",fontNormal6));
         document.close();
     }
 
