@@ -25,7 +25,7 @@ public class AnticipoPagamentoAction implements IAction {
 
 			ClientConnector.updateMissioneForAnticipo(missione);
 			Thread.sleep(1000);	
-			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent());
+			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateEvent());
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 
 			return true;

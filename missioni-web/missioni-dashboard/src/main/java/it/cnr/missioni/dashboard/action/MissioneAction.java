@@ -43,15 +43,14 @@ public class MissioneAction implements IAction {
 				missione.setStato(StatoEnum.INSERITA);
 				missione.setShortUser(DashboardUI.getCurrentUser().getAnagrafica().getCognome()+ " "+DashboardUI.getCurrentUser().getAnagrafica().getNome());
 				String id = ClientConnector.addMissione(missione);
-				Thread.sleep(1000);
 				ClientConnector.sendMissioneMail(id);
 			} else {
 				ClientConnector.updateMissione(missione);
 			}
 
-
+			Thread.sleep(1000);
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
-			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateUpdatedEvent());
+			DashboardEventBus.post(new DashboardEvent.TableMissioniUpdateEvent());
 			
 			return true;
 
