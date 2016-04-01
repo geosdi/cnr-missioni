@@ -186,12 +186,12 @@ public class VeicoloCNRDAOTest {
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 1);
 
 	}
-	//
-	//// @Test
-	//// public void tearDown() throws Exception {
-	//// this.utenteDocIndexCreator.deleteIndex();
-	//// }
 
+	 @Test
+	 public void tearDown() throws Exception {
+	 this.veicoloCNRDocIndexCreator.deleteIndex();
+	 }
+	 
 	private void creaVeicoliCNR() {
 
 		VeicoloCNR veicoloCNR = new VeicoloCNR();

@@ -51,18 +51,19 @@ public class TipologiaSpesaDAOTest {
 		Assert.assertNotNull(tipologiaSpesaDAO);
 	}
 
-	
 	@Test
 	public void A_createTipologiaSpesaTest() throws Exception {
 		creaTipologiaSpesa();
 		tipologiaSpesaDAO.persist(listaTipoligiaSpesa);
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n", tipologiaSpesaDAO.count().intValue());
+		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n",
+				tipologiaSpesaDAO.count().intValue());
 	}
 
 	@Test
 	public void B_findTipologiaSpesaTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipologiaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		TipologiaSpesaSearchBuilder tipologiaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder();
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipologiaSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n", lista.size());
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 4);
@@ -71,16 +72,18 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void C_addTipologiaSpesaAdd() throws Exception {
-		
+
 		TipologiaSpesa tipoligiaSpesa = new TipologiaSpesa();
 		tipoligiaSpesa.setId("05");
 		tipoligiaSpesa.setValue("Taxi");
-		
+
 		tipologiaSpesaDAO.persist(tipoligiaSpesa);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA: {}\n", tipologiaSpesaDAO.count().intValue());
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder();
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA", lista.size() == 5);
 	}
 
@@ -91,61 +94,84 @@ public class TipologiaSpesaDAOTest {
 		tipoligiaSpesa.setValue("Taxi");
 		tipologiaSpesaDAO.update(tipoligiaSpesa);
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n", tipologiaSpesaDAO.count().intValue());
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n",
+				tipologiaSpesaDAO.count().intValue());
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder();
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA", lista.size() == 5);
 	}
-	
+
 	@Test
 	public void E_deleteTipologiaSpesaTest() throws Exception {
 		tipologiaSpesaDAO.delete("05");
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n", tipologiaSpesaDAO.count().intValue());
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n",
+				tipologiaSpesaDAO.count().intValue());
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder();
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA", lista.size() == 4);
 	}
-	
+
 	@Test
 	public void F_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true);
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder().withEstera(true);
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", lista.size() == 2);
 	}
-	
+
 	@Test
 	public void G_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withItalia(true);
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder().withItalia(true);
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", lista.size() == 2);
 	}
-	
+
 	@Test
 	public void G_findTipologiaSpesaIdTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("03");
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder().withId("03");
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA ID", lista.size() == 1);
 		Assert.assertTrue("FIND  TIPOLOGIA ID", lista.get(0).getId().equals("03"));
 	}
-	
+
 	@Test
 	public void H_findTipologiaSpesaTipoTrattamentoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder()
+				.withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", lista.size() == 2);
 
 	}
-	
+
 	@Test
 	public void I_findTipologiaSpesaTipoTrattamentoIdTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("01").withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
-		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder).getResults();
+		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+				.getTipologiaSpesaSearchBuilder().withId("01")
+				.withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
+		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
+				.getResults();
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", lista.size() == 1);
 
 	}
-	
-	private void creaTipologiaSpesa(){
+
+	@Test
+	public void tearDown() throws Exception {
+		this.tipoligiaSpesaDocIndexCreator.deleteIndex();
+	}
+
+	private void creaTipologiaSpesa() {
 		TipologiaSpesa tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("01");
 		tipoliogiaSpesa.setValue("Aereo");
@@ -154,8 +180,8 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-		
-		 tipoliogiaSpesa = new TipologiaSpesa();
+
+		tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("02");
 		tipoliogiaSpesa.setValue("Vitto");
 		tipoliogiaSpesa.setItalia(true);
@@ -165,8 +191,8 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.PASTO);
 
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-		
-		 tipoliogiaSpesa = new TipologiaSpesa();
+
+		tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("03");
 		tipoliogiaSpesa.setValue("Albergo");
 		tipoliogiaSpesa.setItalia(false);
@@ -174,9 +200,8 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.ALLOGGIO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-		
-		
-		 tipoliogiaSpesa = new TipologiaSpesa();
+
+		tipoliogiaSpesa = new TipologiaSpesa();
 		tipoliogiaSpesa.setId("04");
 		tipoliogiaSpesa.setValue("Treno");
 		tipoliogiaSpesa.setItalia(true);
@@ -184,9 +209,7 @@ public class TipologiaSpesaDAOTest {
 		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
 		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-		
+
 	}
-
-
 
 }

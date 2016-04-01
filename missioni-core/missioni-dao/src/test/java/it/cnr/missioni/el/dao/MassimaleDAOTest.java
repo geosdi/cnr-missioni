@@ -66,7 +66,7 @@ public class MassimaleDAOTest {
 		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
-		Assert.assertTrue("FIND  NAZIONE", page.getTotal() == 11);
+		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 11);
 
 	}
 
@@ -85,7 +85,7 @@ public class MassimaleDAOTest {
 		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
-		Assert.assertTrue("FIND  NAZIONE", page.getTotal() == 12);
+		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 12);
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class MassimaleDAOTest {
 		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
-		Assert.assertTrue("FIND  NAZIONE", page.getTotal() == 12);
+		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 12);
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class MassimaleDAOTest {
 		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
-		Assert.assertTrue("FIND  NAZIONE", page.getTotal() == 11);
+		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 11);
 	}
 
 	@Test
@@ -176,11 +176,10 @@ public class MassimaleDAOTest {
 		Assert.assertTrue("FIND MASSIMALE BY NOT ID", lista.isEmpty());
 	}
 
-	//
-	//// @Test
-	//// public void tearDown() throws Exception {
-	//// this.utenteDocIndexCreator.deleteIndex();
-	//// }
+	@Test
+	public void tearDown() throws Exception {
+		this.massimaleDocIndexCreator.deleteIndex();
+	}
 
 	private void creaMassimale() {
 
@@ -281,8 +280,6 @@ public class MassimaleDAOTest {
 		m.setValue(new Double(61.10));
 		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
 		listaMassimale.add(m);
-		
-		
 
 	}
 

@@ -57,8 +57,7 @@ public class PrenotazioneDAOTest {
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", prenotazioneDAO.count().intValue());
 	}
-	
-	
+
 	@Test
 	public void B_addPrenotazioneTest() throws Exception {
 		Prenotazione p = new Prenotazione();
@@ -68,14 +67,15 @@ public class PrenotazioneDAOTest {
 		p.setDataTo(now.plusDays(1));
 		prenotazioneDAO.persist(p);
 		Thread.sleep(1000);
-		
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
+
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime());
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 3);
 		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", prenotazioneDAO.count().intValue());
-		
+
 	}
-	
+
 	@Test
 	public void C_updatePrenotazioneTest() throws Exception {
 		Prenotazione p = new Prenotazione();
@@ -85,18 +85,20 @@ public class PrenotazioneDAOTest {
 		p.setDataTo(now.plusDays(2));
 		prenotazioneDAO.update(p);
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime());
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 3);
 		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", prenotazioneDAO.count().intValue());
 
 	}
-	
+
 	@Test
 	public void D_deletePrenotazioneTest() throws Exception {
 		prenotazioneDAO.delete("03");
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime(2016, 1, 31, 0, 0));
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 2);
 		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", prenotazioneDAO.count().intValue());
@@ -105,37 +107,36 @@ public class PrenotazioneDAOTest {
 
 	@Test
 	public void E_findPrenotazioneTest() throws Exception {
-		
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime(2016,1,31,0,0));
+
+		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime(2016, 1, 31, 0, 0));
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 2);
-		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n",lista.size());
-		
+		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", lista.size());
+
 	}
 
-	
-	//
-	//// @Test
-	//// public void tearDown() throws Exception {
-	//// this.utenteDocIndexCreator.deleteIndex();
-	//// }
+	@Test
+	public void tearDown() throws Exception {
+		this.prenotazioneDocIndexCreator.deleteIndex();
+	}
 
 	private void creaPrenotazioni() {
-		
+
 		Prenotazione p = new Prenotazione();
 		p.setId("01");
-		p.setDataFrom(new DateTime(2016,1,21,0,0));
-		p.setDataTo(new DateTime(2016,1,22,23,59));
+		p.setDataFrom(new DateTime(2016, 1, 21, 0, 0));
+		p.setDataTo(new DateTime(2016, 1, 22, 23, 59));
 		p.setIdUser("01");
 		p.setIdVeicoloCNR("01");
 		p.setDescrizione("Citroen 56654 - Salvia Vito");
 		listaPrenotazioni.add(p);
 		p.setAllDay(true);
-		
-		 p = new Prenotazione();
-		 p.setId("02");
-		p.setDataFrom(new DateTime(2016,1,23,8,0));
-		p.setDataTo(new DateTime(2016,1,24,18,0));
+
+		p = new Prenotazione();
+		p.setId("02");
+		p.setDataFrom(new DateTime(2016, 1, 23, 8, 0));
+		p.setDataTo(new DateTime(2016, 1, 24, 18, 0));
 		p.setIdUser("02");
 		p.setIdVeicoloCNR("01");
 		p.setDescrizione("Citroen 56654 - Rossi Paolo");

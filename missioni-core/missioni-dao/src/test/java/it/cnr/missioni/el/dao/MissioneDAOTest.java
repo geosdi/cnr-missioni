@@ -326,22 +326,19 @@ public class MissioneDAOTest {
 		logger.debug("############################MAX_NUM_ORDINE_MISSIONE : {}\n", n);
 
 	}
-	
+
 	@Test
 	public void V_findRiByUser() throws Exception {
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser("01");
+		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01");
 		List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", lista.size() == 2);
 	}
-	
-	
 
-	// @Test
-	// public void tearDown() throws Exception {
-	// this.missioneDocIndexCreator.deleteIndex();
-	// }
+	@Test
+	public void Z_tearDown() throws Exception {
+		this.missioneDocIndexCreator.deleteIndex();
+	}
 
 	private void creaMissioni() {
 		Missione missione = new Missione();
@@ -393,7 +390,6 @@ public class MissioneDAOTest {
 		rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));
 		rimborso.setTotale(179.6);
 		rimborso.setTotaleDovuto(179.6);
-
 
 		rimborso.getMappaFattura().put("1111111111111", fattura);
 		rimborso.getMappaFattura().put("2222222222222", fattura_2);

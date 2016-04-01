@@ -123,11 +123,10 @@ public class NazioneDAOTest {
 		Assert.assertTrue("FIND NAZIONE BY ID", lista.isEmpty());
 	}
 
-	//
-	//// @Test
-	//// public void tearDown() throws Exception {
-	//// this.utenteDocIndexCreator.deleteIndex();
-	//// }
+	 @Test
+	 public void tearDown() throws Exception {
+	 this.nazioneDocIndexCreator.deleteIndex();
+	 }
 
 	private void creaNazione() {
 
