@@ -171,7 +171,8 @@ public final class DashboardMenu extends CustomComponent {
 	}
 
 	private void buildMenuUserType() {
-		for (final DashboardViewType view : DashboardViewType.getMenuUser()) {
+		
+		DashboardViewType.getMenuUser().stream().forEach(view->{
 			Component menuItemComponent = new ValoMenuItemButton(view);
 			if (view == DashboardViewType.HOME) {
 				notificationsBadge = new Label();
@@ -180,23 +181,21 @@ public final class DashboardMenu extends CustomComponent {
 				menuItemsLayout.addComponent(menuItemComponent);
 			}
 			// se l'user ha completato la registrazione
-			if (user.isRegistrazioneCompletata())
+			if (user.isRegistrazioneCompletata() && view != DashboardViewType.COMPLETA_REGISTRAZIONE)
 				menuItemsLayout.addComponent(menuItemComponent);
 
 			// se l'user non ha completato la registrazione
 			if (!user.isRegistrazioneCompletata() && view == DashboardViewType.COMPLETA_REGISTRAZIONE) {
 				menuItemsLayout.addComponent(menuItemComponent);
 			}
-
-		}
+		});
 	}
 
 	private void buildMenuAdminType() {
-		menuItemsLayout.addComponent(new ValoMenuItemButton(DashboardViewType.HOME));
-		for (final DashboardViewType view : DashboardViewType.getMenuAdmin()) {
+		DashboardViewType.getMenuAdmin().stream().forEach(view->{
 			Component menuItemComponent = new ValoMenuItemButton(view);
 			menuItemsLayout.addComponent(menuItemComponent);
-		}
+		});
 	}
 
 	private Component buildMenuItems() {
