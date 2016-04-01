@@ -27,6 +27,12 @@ import java.util.Map;
  */
 public class UpdateAnticipoPagamentoMailProd extends MissioniMailProd {
 
+	private String userName;
+	private String userSurname;
+	private String userEmail;
+	private String missioneID;
+
+	
 	/**
 	 * @param message
 	 * @param velocityEngine
@@ -39,15 +45,15 @@ public class UpdateAnticipoPagamentoMailProd extends MissioniMailProd {
 			VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
 		
 		List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
-
+		this.userName = (String) message.getMessageParameters().get("userName");
+		this.userSurname = (String) message.getMessageParameters().get("userSurname");
+		this.userEmail = (String) message.getMessageParameters().get("userEmail");
+		this.missioneID = (String) message.getMessageParameters().get("missioneID");
 		
 		IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
 		missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-			String userName = (String) message.getMessageParameters().get("userName");
-			String userSurname = (String) message.getMessageParameters().get("userSurname");
-			String userEmail = (String) message.getMessageParameters().get("userEmail");
-			String missioneID = (String) message.getMessageParameters().get("missioneID");
+
 
 			PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("anticipoPagamentoPDFBuilder");
 
@@ -85,6 +91,14 @@ public class UpdateAnticipoPagamentoMailProd extends MissioniMailProd {
 	@Override
 	public Implementor.ImplementorKey getKey() {
 		return MissioniMailImplementor.NotificationMessageType.MODIFICA_ANTICIPO_PAGAMENTO_MAIL_PROD;
+	}
+	
+	/**
+	 * @return
+	 */
+	@Override
+	protected String getSubjectMessage() {
+		return "Update Anticipo Pagamento-".concat(userSurname).concat("-Ordine di Missione:").concat(missioneID);
 	}
 
 	/**

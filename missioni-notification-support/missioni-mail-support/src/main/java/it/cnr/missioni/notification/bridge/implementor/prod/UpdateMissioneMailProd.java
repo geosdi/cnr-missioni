@@ -139,6 +139,14 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 	}
 
 	/**
+	 * @return
+	 */
+	@Override
+	protected String getSubjectMessage() {
+		return "Update Ordine di Missione:".concat(missioneID).concat("-").concat(userSurname);
+	}
+	
+	/**
 	 * @return {@link Implementor.ImplementorKey}
 	 */
 	@Override

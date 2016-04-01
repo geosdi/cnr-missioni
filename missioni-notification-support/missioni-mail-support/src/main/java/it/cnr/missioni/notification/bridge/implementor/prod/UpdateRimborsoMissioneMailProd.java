@@ -26,6 +26,16 @@ import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
  */
 public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
 
+	
+	private String userName;
+	private String userSurname;
+	private String userEmail;
+	private String rimborsoID;
+	private String pagata;
+	private String mandatoPagamento;
+	private Double totaleDovuto;
+
+	
     /**
      * @param message
      * @param velocityEngine
@@ -38,16 +48,19 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
     	 List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
 
+    	 
+         this.userName = (String) message.getMessageParameters().get("userName");
+         this.userSurname = (String) message.getMessageParameters().get("userSurname");
+         this.userEmail = (String) message.getMessageParameters().get("userEmail");
+         this.rimborsoID = (String) message.getMessageParameters().get("rimborsoID");
+         this.pagata = (String) message.getMessageParameters().get("pagata");
+         this.mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
+         this.totaleDovuto = (Double) message.getMessageParameters().get("totaleDovuto");
+    	 
         IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
         missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-            String userName = (String) message.getMessageParameters().get("userName");
-            String userSurname = (String) message.getMessageParameters().get("userSurname");
-            String userEmail = (String) message.getMessageParameters().get("userEmail");
-            String rimborsoID = (String) message.getMessageParameters().get("rimborsoID");
-            String pagata = (String) message.getMessageParameters().get("pagata");
-            String mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
-            Double totaleDovuto = (Double) message.getMessageParameters().get("totaleDovuto");
+
             
             PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
             @Override
@@ -80,6 +93,14 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
         lista.add(missioniMessagePreparator);
         return lista;
     }
+    
+	/**
+	 * @return
+	 */
+	@Override
+	protected String getSubjectMessage() {
+		return "Update Rimborso-".concat(rimborsoID).concat("-").concat(userSurname);
+	}
 
     /**
      * @return {@link ImplementorKey}

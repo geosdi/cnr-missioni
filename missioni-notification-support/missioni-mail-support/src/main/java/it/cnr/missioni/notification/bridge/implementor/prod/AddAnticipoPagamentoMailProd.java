@@ -124,6 +124,14 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 	}
 
 	/**
+	 * @return
+	 */
+	@Override
+	protected String getSubjectMessage() {
+		return "Anticipo Pagamento-".concat(userSurname).concat("-Ordine di Missione:").concat(missioneID);
+	}
+	
+	/**
 	 * <p>
 	 * Specify if {@link ImplementorKey} is valid or not
 	 * </p>

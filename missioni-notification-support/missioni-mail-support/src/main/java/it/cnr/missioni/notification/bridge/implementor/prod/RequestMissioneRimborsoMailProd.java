@@ -111,6 +111,14 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
         return NotificationMessageType.RICHIESTA_RIMBORSO_MISSIONE_MAIL_PROD;
     }
 
+	/**
+	 * @return
+	 */
+	@Override
+	protected String getSubjectMessage() {
+		return "Rimborso-".concat(userSurname).concat("-Ordine di Missione:").concat(missioneID);
+	}
+    
     /**
      * <p>
      * Specify if {@link ImplementorKey} is valid or not

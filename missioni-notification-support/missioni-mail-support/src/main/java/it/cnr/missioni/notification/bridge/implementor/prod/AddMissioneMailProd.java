@@ -153,6 +153,15 @@ public class AddMissioneMailProd extends MissioniMailProd {
 			missioniMessagePreparator.addAttachment(this.fileVeicolo);
 		}
 	}
+	
+	/**
+	 * @return
+	 */
+	@Override
+	protected String getSubjectMessage() {
+		return "Ordine di Missione-".concat(userSurname);
+	}
+	
 
 	/**
 	 * @return {@link ImplementorKey}
