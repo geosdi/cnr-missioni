@@ -90,7 +90,7 @@ public abstract class DashboardEvent {
 	 * @author Salvia Vito
 	 *
 	 */
-	public static class TableMissioniUpdateUpdatedEvent {
+	public static class TableMissioniUpdateEvent {
 
 	}
 
