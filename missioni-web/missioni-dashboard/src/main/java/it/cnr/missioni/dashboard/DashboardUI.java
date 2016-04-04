@@ -3,7 +3,6 @@ package it.cnr.missioni.dashboard;
 import java.util.Locale;
 
 import com.google.common.eventbus.Subscribe;
-import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.Widgetset;
@@ -13,8 +12,6 @@ import com.vaadin.server.Page.BrowserWindowResizeListener;
 import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
@@ -37,8 +34,6 @@ import it.cnr.missioni.dashboard.action.admin.RimborsoKmAction;
 import it.cnr.missioni.dashboard.action.admin.TipologiaSpesaAction;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.action.admin.VeicoloCNRAction;
-import it.cnr.missioni.dashboard.broadcast.Broadcaster;
-import it.cnr.missioni.dashboard.broadcast.Broadcaster.BroadcastListener;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.BrowserResizeEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
@@ -54,9 +49,11 @@ import it.cnr.missioni.model.user.User;
 @Theme("dashboard")
 @Widgetset("it.cnr.missioni.dashboard.DashboardWidgetSet")
 @Title("Missioni Dashboard")
-@Push
+//@Push
 public final class DashboardUI
-extends UI implements BroadcastListener{
+extends UI 
+//implements BroadcastListener
+{
 
 	/**
 	 * 
@@ -73,7 +70,7 @@ extends UI implements BroadcastListener{
 
 	@Override
 	protected void init(final VaadinRequest request) {
-    	Broadcaster.register(this);
+//    	Broadcaster.register(this);
 		setLocale(Locale.ITALY);
 		VaadinSession.getCurrent().setConverterFactory(new BeanFieldGrouFactory.ConverterFactory());
 		DashboardEventBus.register(this);
@@ -248,25 +245,25 @@ extends UI implements BroadcastListener{
 	
     @Override
     public void detach() {
-        Broadcaster.unregister(this);
+//        Broadcaster.unregister(this);
         super.detach();
     }
     
-    @Override
-        public void receiveBroadcast(final String message) {
-	        // Must lock the session to execute logic safely
-	        access(new Runnable() {
-	            @Override
-	            public void run() {
-	    			DashboardEventBus.post(new DashboardEvent.CalendarUpdateEvent(null));
-	    	        DashboardUI.getDataProvider().addPrenotazione(message);
-	    			DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
-	                // Show it somehow
-	            	Notification n = new Notification(message,
-	                        Type.TRAY_NOTIFICATION);
-	                n.show(getPage());	
-	            }
-	        });
-	    }
+//    @Override
+//        public void receiveBroadcast(final String message) {
+//	        // Must lock the session to execute logic safely
+//	        access(new Runnable() {
+//	            @Override
+//	            public void run() {
+//	    			DashboardEventBus.post(new DashboardEvent.CalendarUpdateEvent(null));
+//	    	        DashboardUI.getDataProvider().addPrenotazione(message);
+//	    			DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
+//	                // Show it somehow
+//	            	Notification n = new Notification(message,
+//	                        Type.TRAY_NOTIFICATION);
+//	                n.show(getPage());	
+//	            }
+//	        });
+//	    }
 
 }

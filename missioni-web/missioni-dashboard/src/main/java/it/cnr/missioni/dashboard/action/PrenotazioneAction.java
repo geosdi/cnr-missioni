@@ -7,6 +7,8 @@ import it.cnr.missioni.dashboard.binder.IPrenotazioneBinder;
 import it.cnr.missioni.dashboard.broadcast.Broadcaster;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 
@@ -44,7 +46,8 @@ public class PrenotazioneAction implements IAction {
 			prenotazioneEvent.setCaption(prenotazione.getDescrizione());
 			Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);
 			String p = prenotazione.buildStringMessage();
-	        Broadcaster.broadcast(message.concat(p));
+			DashboardEventBus.post(new DashboardEvent.CalendarUpdateEvent(null));
+//	        Broadcaster.broadcast(message.concat(p));
 
 			return true;
 
