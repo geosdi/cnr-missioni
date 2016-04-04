@@ -1,109 +1,118 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.joda.time.DateTime;
 
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.DateRangeSearch;
 
 /**
  * @author Salvia Vito
  */
-public class PrenotazioneSearchBuilder implements ISearchBuilder {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3425236912503251640L;
-	/**
-	 * 
-	 */
-
-	private BooleanModelSearch booleanModelSearch;
-	private DateTime dataFrom = null;
-	private DateTime dataTo = null;
+public interface IPrenotazioneSearchBuilder extends ISearchBuilder<IPrenotazioneSearchBuilder>{
 	
-
-	private PrenotazioneSearchBuilder() {
-		booleanModelSearch = new BooleanModelSearch();
-	}
-
-	public static PrenotazioneSearchBuilder getPrenotazioneSearchBuilder() {
-		return new PrenotazioneSearchBuilder();
-	}
-
-	public PrenotazioneSearchBuilder withRangeData(DateTime dataFrom, DateTime dataTo) {
-
-		this.dataFrom = dataFrom;
-		this.dataTo = dataTo;
-			booleanModelSearch.getListaSearch().add(new DateRangeSearch(SearchConstants.PRENOTAZIONE_FIELD_DATA_FROM,
-					dataFrom, dataTo));
-		return self();
-	}
-
-	public BoolQueryBuilder buildQuery() {
-		return booleanModelSearch.buildQuery();
-	}
+    /**
+     * @return {@link IPrenotazioneSearchBuilder}
+     */
+	IPrenotazioneSearchBuilder withRangeData(DateTime dataFrom, DateTime dataTo);
 	
-	/**
-	 * @return the booleanModelSearch
-	 */
-	public BooleanModelSearch getBooleanModelSearch() {
-		return booleanModelSearch;
-	}
-
-	/**
-	 * @param booleanModelSearch 
-	 */
-	public void setBooleanModelSearch(BooleanModelSearch booleanModelSearch) {
-		this.booleanModelSearch = booleanModelSearch;
-	}
-
 	/**
 	 * @return the dataFrom
 	 */
-	public DateTime getDataFrom() {
-		return dataFrom;
-	}
+	DateTime getDataFrom();
 
 	/**
 	 * @param dataFrom 
 	 */
-	public void setDataFrom(DateTime dataFrom) {
-		this.dataFrom = dataFrom;
-	}
+	void setDataFrom(DateTime dataFrom);
 
 	/**
 	 * @return the dataTo
 	 */
-	public DateTime getDataTo() {
-		return dataTo;
-	}
+	DateTime getDataTo();
 
 	/**
 	 * @param dataTo 
 	 */
-	public void setDataTo(DateTime dataTo) {
-		this.dataTo = dataTo;
-	}
-
+	void setDataTo(DateTime dataTo);
 	
-	/**
-	 * 
-	 * @return
-	 */
-	private PrenotazioneSearchBuilder self() {
-		return this;
-	}
+	public class PrenotazioneSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IPrenotazioneSearchBuilder>
+	implements IPrenotazioneSearchBuilder{
 
-	/**
-	 * @param from
-	 * @return
-	 */
-	@Override
-	public ISearchBuilder withFrom(int from) {
-		// TODO Auto-generated method stub
-		return null;
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3425236912503251640L;
+		/**
+		 * 
+		 */
+		private DateTime dataFrom = null;
+		private DateTime dataTo = null;
+		
+
+		private PrenotazioneSearchBuilder() {
+		}
+
+		public static IPrenotazioneSearchBuilder getPrenotazioneSearchBuilder() {
+			return new PrenotazioneSearchBuilder();
+		}
+
+	     /**
+         * @return {@link IPrenotazioneSearchBuilder}
+         */
+		public IPrenotazioneSearchBuilder withRangeData(DateTime dataFrom, DateTime dataTo) {
+			this.dataFrom = dataFrom;
+			this.dataTo = dataTo;
+				booleanModelSearch.getListaSearch().add(new DateRangeSearch(SearchConstants.PRENOTAZIONE_FIELD_DATA_FROM,
+						dataFrom, dataTo));
+			return self();
+		}
+
+		/**
+		 * @return the dataFrom
+		 */
+		public DateTime getDataFrom() {
+			return dataFrom;
+		}
+
+		/**
+		 * @param dataFrom 
+		 */
+		public void setDataFrom(DateTime dataFrom) {
+			this.dataFrom = dataFrom;
+		}
+
+		/**
+		 * @return the dataTo
+		 */
+		public DateTime getDataTo() {
+			return dataTo;
+		}
+
+		/**
+		 * @param dataTo 
+		 */
+		public void setDataTo(DateTime dataTo) {
+			this.dataTo = dataTo;
+		}
+
+		/**
+		 * 
+		 * @return
+		 */
+		protected IPrenotazioneSearchBuilder self() {
+			return this;
+		}
+
+		/**
+		 * @param id
+		 * @return
+		 */
+		@Override
+		public IPrenotazioneSearchBuilder withId(String id) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
 	}
 
 }

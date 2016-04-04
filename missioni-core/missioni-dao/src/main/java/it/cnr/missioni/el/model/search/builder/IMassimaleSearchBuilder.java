@@ -1,9 +1,5 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.search.sort.SortOrder;
-
-import it.cnr.missioni.el.model.search.BooleanModelSearch;
 import it.cnr.missioni.el.model.search.EnumBooleanType;
 import it.cnr.missioni.el.model.search.ExactSearch;
 
@@ -13,6 +9,76 @@ import it.cnr.missioni.el.model.search.ExactSearch;
 
 public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearchBuilder> {
 
+    /**
+     * @param id
+     * @return {@link IMassimaleSearchBuilder}
+     */
+    IMassimaleSearchBuilder withId(String id);
+
+    /**
+     * @param notId
+     * @return {@link IMassimaleSearchBuilder}
+     */
+    IMassimaleSearchBuilder withNotId(String notId);
+
+    /**
+     * @param livello
+     * @return {@link IMassimaleSearchBuilder}
+     */
+    IMassimaleSearchBuilder withLivello(String livello);
+
+    /**
+     * @param areaGeografica
+     * @return {@link IMassimaleSearchBuilder}
+     */
+    IMassimaleSearchBuilder withAreaGeografica(String areaGeografica);
+
+    /**
+     * @param tipo
+     * @return {@link IMassimaleSearchBuilder}
+     */
+    IMassimaleSearchBuilder withTipo(String tipo);
+    
+    /**
+     * @return {@link String}
+     */
+    String getNotId();
+
+    /**
+     * @param notId
+     */
+    void setNotId(String notId);
+
+    /**
+     * @return {@link String}
+     */
+    String getLivello();
+
+    /**
+     * @param livello
+     */
+    void setLivello(String livello);
+
+    /**
+     * @return {@link String}
+     */
+    String getAreaGeografica();
+
+    /**
+     * @param areaGeografica
+     */
+    void setAreaGeografica(String areaGeografica);
+
+    /**
+     * @return {@link String}
+     */
+    String getTipo();
+
+    /**
+     * @param tipo
+     */
+    void setTipo(String tipo);
+
     class MassimaleSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IMassimaleSearchBuilder>
             implements IMassimaleSearchBuilder {
 
@@ -20,26 +86,23 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
          *
          */
         private static final long serialVersionUID = 3676936353865160224L;
-        private BooleanModelSearch booleanModelSearch;
-        private String value = null;
-        private String id;
         private String notId;
         private String livello;
         private String areaGeografica;
         private String tipo;
-        private int size = 10;
-        private int from = 0;
-        private String fieldSort = SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA;
-        private SortOrder sortOrder = SortOrder.ASC;
-
 
         private MassimaleSearchBuilder() {
+        	this.fieldSort = SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA;
         }
 
         public static IMassimaleSearchBuilder getMassimaleSearchBuilder() {
             return new IMassimaleSearchBuilder.MassimaleSearchBuilder();
         }
 
+        /**
+         * @param id
+         * @return {@link IMassimaleSearchBuilder}
+         */
         public IMassimaleSearchBuilder withId(String id) {
             this.setId(id);
             if (id != null && !id.trim().equals(""))
@@ -47,6 +110,10 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
             return self();
         }
 
+        /**
+         * @param notId
+         * @return {@link IMassimaleSearchBuilder}
+         */
         public IMassimaleSearchBuilder withNotId(String notId) {
             this.notId = notId;
             if (notId != null && !notId.trim().equals(""))
@@ -54,6 +121,10 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
             return self();
         }
 
+        /**
+         * @param livello
+         * @return {@link IMassimaleSearchBuilder}
+         */
         public IMassimaleSearchBuilder withLivello(String livello) {
             this.setLivello(livello);
             if (livello != null && !livello.trim().equals(""))
@@ -61,6 +132,10 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
             return self();
         }
 
+        /**
+         * @param areaGeografica
+         * @return {@link IMassimaleSearchBuilder}
+         */
         public IMassimaleSearchBuilder withAreaGeografica(String areaGeografica) {
             this.setAreaGeografica(areaGeografica);
             if (areaGeografica != null && !areaGeografica.trim().equals(""))
@@ -69,6 +144,10 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
             return self();
         }
 
+        /**
+         * @param tipo
+         * @return {@link IMassimaleSearchBuilder}
+         */
         public IMassimaleSearchBuilder withTipo(String tipo) {
             this.tipo = tipo;
             if (tipo != null && !tipo.trim().equals(""))
@@ -78,31 +157,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         }
 
         /**
-         * @return the value
-         */
-        public String getValue() {
-            return value;
-        }
-
-        /**
-         * @param value
-         */
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public IMassimaleSearchBuilder withSize(int size) {
-            this.size = size;
-            return self();
-        }
-
-        public IMassimaleSearchBuilder withFrom(int from) {
-            this.from = from;
-            return self();
-        }
-
-        /**
-         * @return the notId
+         * @return {@link String}
          */
         public String getNotId() {
             return notId;
@@ -116,7 +171,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         }
 
         /**
-         * @return the livello
+         * @return {@link String}
          */
         public String getLivello() {
             return livello;
@@ -130,7 +185,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         }
 
         /**
-         * @return the areaGeografica
+         * @return {@link String}
          */
         public String getAreaGeografica() {
             return areaGeografica;
@@ -144,7 +199,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         }
 
         /**
-         * @return the tipo
+         * @return {@link String}
          */
         public String getTipo() {
             return tipo;
@@ -155,23 +210,6 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
          */
         public void setTipo(String tipo) {
             this.tipo = tipo;
-        }
-
-
-        /**
-         * @return {@link String}
-         */
-        @Override
-        public String getFieldSort() {
-            return null;
-        }
-
-        /**
-         * @param fieldSort
-         */
-        @Override
-        public void setFieldSort(String fieldSort) {
-
         }
 
         /**
