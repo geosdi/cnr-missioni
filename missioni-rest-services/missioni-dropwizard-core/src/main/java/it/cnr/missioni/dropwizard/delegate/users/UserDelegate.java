@@ -13,7 +13,7 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.itextpdf.text.log.SysoCounter;
 
 import it.cnr.missioni.el.dao.IUserDAO;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
@@ -64,7 +64,7 @@ class UserDelegate implements IUserDelegate {
 			String iban, String mail, String notId, String id, Boolean responsabileGruppo, String multiMatch,String searchType,
 			boolean all, int from, int size) throws Exception {
 
-		UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withNome(nome)
+		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale)
 				.withSearchType(searchType)
 				.withMatricola(matricola).withUsername(username)
