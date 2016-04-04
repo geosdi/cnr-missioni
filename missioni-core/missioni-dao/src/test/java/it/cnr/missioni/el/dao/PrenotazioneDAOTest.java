@@ -19,7 +19,8 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
+import it.cnr.missioni.el.utility.PrenotazioneFunction;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 
 /**
@@ -52,7 +53,7 @@ public class PrenotazioneDAOTest {
 
 	@Test
 	public void A_createPrenotazioneTest() throws Exception {
-		creaPrenotazioni();
+		listaPrenotazioni = PrenotazioneFunction.creaMassivePrenotazioni();
 		prenotazioneDAO.persist(listaPrenotazioni);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_OF_PRENOTAZONI: {}\n", prenotazioneDAO.count().intValue());
@@ -68,7 +69,7 @@ public class PrenotazioneDAOTest {
 		prenotazioneDAO.persist(p);
 		Thread.sleep(1000);
 
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
 				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime());
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 3);
@@ -85,7 +86,7 @@ public class PrenotazioneDAOTest {
 		p.setDataTo(now.plusDays(2));
 		prenotazioneDAO.update(p);
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
 				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime());
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 3);
@@ -97,7 +98,7 @@ public class PrenotazioneDAOTest {
 	public void D_deletePrenotazioneTest() throws Exception {
 		prenotazioneDAO.delete("03");
 		Thread.sleep(1000);
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
 				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime(2016, 1, 31, 0, 0));
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 2);
@@ -108,7 +109,7 @@ public class PrenotazioneDAOTest {
 	@Test
 	public void E_findPrenotazioneTest() throws Exception {
 
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
 				.withRangeData(new DateTime(2016, 1, 1, 0, 0), new DateTime(2016, 1, 31, 0, 0));
 		List<Prenotazione> lista = prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder).getResults();
 		Assert.assertTrue("Totale prenotazioni", lista.size() == 2);
@@ -116,33 +117,9 @@ public class PrenotazioneDAOTest {
 
 	}
 
-	@Test
-	public void tearDown() throws Exception {
-		this.prenotazioneDocIndexCreator.deleteIndex();
-	}
-
-	private void creaPrenotazioni() {
-
-		Prenotazione p = new Prenotazione();
-		p.setId("01");
-		p.setDataFrom(new DateTime(2016, 1, 21, 0, 0));
-		p.setDataTo(new DateTime(2016, 1, 22, 23, 59));
-		p.setIdUser("01");
-		p.setIdVeicoloCNR("01");
-		p.setDescrizione("Citroen 56654 - Salvia Vito");
-		listaPrenotazioni.add(p);
-		p.setAllDay(true);
-
-		p = new Prenotazione();
-		p.setId("02");
-		p.setDataFrom(new DateTime(2016, 1, 23, 8, 0));
-		p.setDataTo(new DateTime(2016, 1, 24, 18, 0));
-		p.setIdUser("02");
-		p.setIdVeicoloCNR("01");
-		p.setDescrizione("Citroen 56654 - Rossi Paolo");
-		listaPrenotazioni.add(p);
-		p.setAllDay(false);
-
-	}
+//	@Test
+//	public void tearDown() throws Exception {
+//		this.prenotazioneDocIndexCreator.deleteIndex();
+//	}
 
 }

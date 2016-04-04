@@ -53,7 +53,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
@@ -85,13 +85,6 @@ public class TipologiaSpesaRestServiceTest {
 
 	}
 
-	// @After
-	// public void tearDown() {
-	// logger.debug("\n\t@@@ {}.tearDown @@@", this.getClass().getSimpleName());
-	// // Delete Organization
-	// this.deleteOrganization(organizationTest.getId());
-	// }
-
 	@AfterClass
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
@@ -104,7 +97,7 @@ public class TipologiaSpesaRestServiceTest {
 		tipologiaSpesa.setValue("VITTO");
 		missioniCoreClientConnector.addTipologiaSpesa(tipologiaSpesa);
 		Thread.sleep(1000);
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("ADD TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 5);
 	}
@@ -116,39 +109,37 @@ public class TipologiaSpesaRestServiceTest {
 		tipologiaSpesa.setValue("PRANZO");
 		missioniCoreClientConnector.updateTipologiaSpesa(tipologiaSpesa);
 		Thread.sleep(1000);
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("UPDATE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 5);
-
 	}
 	
 	@Test
 	public void C_deleteTipologiaSpesaTest() throws Exception {
 		missioniCoreClientConnector.deleteTipologiaSpesa("05");
 		Thread.sleep(1000);
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("DELETE TIPOLOGIA SPESA", tipologiaSpesaStore.getTotale() == 4);
-
 	}
 	
 	@Test
 	public void F_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true);
+		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true);
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
 	}
 	
 	@Test
 	public void G_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withItalia(true);
+		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withItalia(true);
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
 	}
 	
 	@Test
 	public void G_findTipologiaSpesaIdTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("03");
+		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("03");
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA ID", tipologiaSpesaStore.getTipologiaSpesa().size() == 1);
 		Assert.assertTrue("FIND  TIPOLOGIA ID", tipologiaSpesaStore.getTipologiaSpesa().get(0).getId().equals("03"));
@@ -156,25 +147,16 @@ public class TipologiaSpesaRestServiceTest {
 
 	@Test
 	public void H_findTipologiaSpesaTipoTrattamentoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
-
 	}
 	
 	@Test
 	public void I_findTipologiaSpesaTipoTrattamentoIdTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("01").withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withId("01").withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", tipologiaSpesaStore.getTipologiaSpesa().size() == 1);
 
 	}
-	
-//	@Test
-//	public void L_findTipologiaSpesaTipoTest() throws Exception {
-//		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true).withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
-//		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder);
-//		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO TRATTAMENTO", tipologiaSpesaStore.getTipologiaSpesa().size() == 1);
-//	}
-	
 }

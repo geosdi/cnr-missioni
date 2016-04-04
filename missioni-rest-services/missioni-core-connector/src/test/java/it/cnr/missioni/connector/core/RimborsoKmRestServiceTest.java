@@ -51,7 +51,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
@@ -82,13 +82,6 @@ public class RimborsoKmRestServiceTest {
 
 	}
 
-	// @After
-	// public void tearDown() {
-	// logger.debug("\n\t@@@ {}.tearDown @@@", this.getClass().getSimpleName());
-	// // Delete Organization
-	// this.deleteOrganization(organizationTest.getId());
-	// }
-
 	@AfterClass
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
@@ -104,9 +97,10 @@ public class RimborsoKmRestServiceTest {
 		RimborsoKm rimborsoKm = new RimborsoKm();
 		rimborsoKm.setId("01");
 		rimborsoKm.setValue(new Double(0.36));
+		Thread.sleep(2000);
 		missioniCoreClientConnector.addRimborsoKm(rimborsoKm);
 		Thread.sleep(2000);
-		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
+		IRimborsoKmSearchBuilder rimborsoSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
 		RimborsoKmStore rimborsoKmStore = missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoSearchBuilder);
 		Assert.assertTrue("ADD RIMBORSO KM", rimborsoKmStore.getTotale() == 1);
 	}
@@ -118,14 +112,8 @@ public class RimborsoKmRestServiceTest {
 		rimborsoKm.setValue(new Double(0.46));
 		missioniCoreClientConnector.updateRimborsoKm(rimborsoKm);
 		Thread.sleep(1000);
-		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
+		IRimborsoKmSearchBuilder rimborsoSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
 		RimborsoKmStore rimborsoKmStore = missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoSearchBuilder);
 		Assert.assertTrue("UPDATE RIMBORSO KM", rimborsoKmStore.getTotale() == 1);
-
 	}
-	
-
-	
-
-	
 }

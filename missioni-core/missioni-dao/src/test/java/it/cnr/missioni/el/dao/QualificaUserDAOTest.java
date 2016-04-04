@@ -18,7 +18,8 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
+import it.cnr.missioni.el.utility.QualificaFunction;
 import it.cnr.missioni.model.configuration.QualificaUser;
 
 /**
@@ -51,15 +52,17 @@ public class QualificaUserDAOTest {
 
 	@Test
 	public void A_createQualificaUserTest() throws Exception {
-		creaQualificaUser();
+		listaQualificaUser = QualificaFunction.creaMassiveQualifica();
 		qualificaUserDAO.persist(listaQualificaUser);
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_QUALIFICA_USER_CNR: {}\n", qualificaUserDAO.count().intValue());
+		logger.debug("############################NUMBER_ALL_QUALIFICA_USER_CNR: {}\n",
+				qualificaUserDAO.count().intValue());
 	}
 
 	@Test
 	public void B_findQualificaTest() throws Exception {
-		QualificaUserSearchBuilder qualificaSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
+				.getQualificaUserSearchBuilder();
 		List<QualificaUser> lista = qualificaUserDAO.findQualificaUserByQuery(qualificaSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", lista.size());
 		Assert.assertTrue("FIND  QUALIFICA USER", lista.size() == 2);
@@ -68,15 +71,17 @@ public class QualificaUserDAOTest {
 
 	@Test
 	public void C_addQualificaUsertest() throws Exception {
-		
+
 		QualificaUser qualificaUser = new QualificaUser();
 		qualificaUser.setId("03");
 		qualificaUser.setValue("Tecnologo");
-		
+
 		qualificaUserDAO.persist(qualificaUser);
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", qualificaUserDAO.count().intValue());
-		QualificaUserSearchBuilder qualificaSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n",
+				qualificaUserDAO.count().intValue());
+		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
+				.getQualificaUserSearchBuilder();
 		List<QualificaUser> lista = qualificaUserDAO.findQualificaUserByQuery(qualificaSearchBuilder).getResults();
 		Assert.assertTrue("FIND  QUALIFICA USER", lista.size() == 3);
 	}
@@ -89,9 +94,11 @@ public class QualificaUserDAOTest {
 		Thread.sleep(1000);
 		qualificaUserDAO.update(qualificaUser);
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", qualificaUserDAO.count().intValue());
+		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n",
+				qualificaUserDAO.count().intValue());
 
-		QualificaUserSearchBuilder qualificaSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
+				.getQualificaUserSearchBuilder();
 		List<QualificaUser> lista = qualificaUserDAO.findQualificaUserByQuery(qualificaSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", lista.size());
 		Assert.assertTrue("FIND  QUALIFICA USER", lista.size() == 3);
@@ -101,31 +108,19 @@ public class QualificaUserDAOTest {
 	public void E_deleteQualificaUserTest() throws Exception {
 		qualificaUserDAO.delete("03");
 		Thread.sleep(1000);
-		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", qualificaUserDAO.count().intValue());
+		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n",
+				qualificaUserDAO.count().intValue());
 
-		QualificaUserSearchBuilder qualificaSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
+				.getQualificaUserSearchBuilder();
 		List<QualificaUser> lista = qualificaUserDAO.findQualificaUserByQuery(qualificaSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", lista.size());
 		Assert.assertTrue("FIND  QUALIFICA USER", lista.size() == 2);
 	}
 
-	 @Test
-	 public void tearDown() throws Exception {
-	 this.qualificaUserDocIndexCreator.deleteIndex();
-	 }
-
-	private void creaQualificaUser() {
-
-		QualificaUser qualificaUser = new QualificaUser();
-		qualificaUser.setId("01");
-		qualificaUser.setValue("Assegnista");
-		listaQualificaUser.add(qualificaUser);
-
-		qualificaUser = new QualificaUser();
-		qualificaUser.setId("02");
-		qualificaUser.setValue("Ricercatore");
-		listaQualificaUser.add(qualificaUser);
-
-	}
+//	@Test
+//	public void tearDown() throws Exception {
+//		this.qualificaUserDocIndexCreator.deleteIndex();
+//	}
 
 }

@@ -19,7 +19,8 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
+import it.cnr.missioni.el.utility.MassimaleFunction;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
@@ -55,7 +56,7 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void A_createMassimaleTest() throws Exception {
-		creaMassimale();
+		listaMassimale = MassimaleFunction.creaMassiveMassimale();
 		massimaleDAO.persist(listaMassimale);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_MASSIMALE_CNR: {}\n", massimaleDAO.count().intValue());
@@ -63,7 +64,7 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void B_findMassimaleTest() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
 		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 11);
@@ -82,7 +83,7 @@ public class MassimaleDAOTest {
 
 		massimaleDAO.persist(m);
 		Thread.sleep(1000);
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
 		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 12);
@@ -99,7 +100,7 @@ public class MassimaleDAOTest {
 
 		massimaleDAO.update(m);
 		Thread.sleep(1000);
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
 		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 12);
@@ -109,7 +110,7 @@ public class MassimaleDAOTest {
 	public void E_deleteMassimaleTest() throws Exception {
 		massimaleDAO.delete("12");
 		Thread.sleep(1000);
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
 		PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
 		Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 11);
@@ -117,7 +118,7 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void F_findByIdTest() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withId("02");
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder().withId("02");
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
 		logger.debug("############################FIND_MASSIMALE_BY_ID: {}\n", lista.size());
 		Assert.assertTrue("FIND MASSIMALE BY ID", lista.size() == 1);
@@ -126,14 +127,14 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void F_findByIdTest_2() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder().withId("13");
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder().withId("13");
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
 		Assert.assertTrue("FIND MASSIMALE BY ID", lista.isEmpty());
 	}
 
 	@Test
 	public void G_findByLivelloAreaGeograficaTest() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withLivello(LivelloUserEnum.I.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
@@ -142,7 +143,7 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void H_findByLivelloAreaGeograficaTest_2() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
@@ -151,7 +152,7 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void I_findByLivelloAreaGeograficaTest_3() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.C.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
@@ -160,7 +161,7 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void L_findByIdNotTest() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withNotId("10").withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
@@ -169,118 +170,16 @@ public class MassimaleDAOTest {
 
 	@Test
 	public void L_findByIdNotTest_2() throws Exception {
-		MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withNotId("01").withLivello(LivelloUserEnum.I.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
 		List<Massimale> lista = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder).getResults();
 		Assert.assertTrue("FIND MASSIMALE BY NOT ID", lista.isEmpty());
 	}
 
-	@Test
-	public void tearDown() throws Exception {
-		this.massimaleDocIndexCreator.deleteIndex();
-	}
-
-	private void creaMassimale() {
-
-		Massimale m = new Massimale();
-		m.setId("01");
-		m.setAreaGeografica(AreaGeograficaEnum.A);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(120));
-		m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("02");
-		m.setAreaGeografica(AreaGeograficaEnum.B);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(120));
-		m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("03");
-		m.setAreaGeografica(AreaGeograficaEnum.C);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(120));
-		m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("04");
-		m.setAreaGeografica(AreaGeograficaEnum.D);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(120));
-		m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("05");
-		m.setAreaGeografica(AreaGeograficaEnum.E);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(120));
-		m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("06");
-		m.setAreaGeografica(AreaGeograficaEnum.F);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(120));
-		m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("07");
-		m.setAreaGeografica(AreaGeograficaEnum.G);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(120));
-		m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("08");
-		m.setAreaGeografica(AreaGeograficaEnum.ITALIA);
-		m.setDescrizione("Assegnista");
-		m.setLivello(LivelloUserEnum.IV);
-		m.setValue(new Double(44.26));
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("09");
-		m.setAreaGeografica(AreaGeograficaEnum.ITALIA);
-		m.setDescrizione("Ricercatore");
-		m.setLivello(LivelloUserEnum.I);
-		m.setValue(new Double(61.10));
-		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("10");
-		m.setAreaGeografica(AreaGeograficaEnum.A);
-		m.setDescrizione("Assegnista");
-		m.setLivello(LivelloUserEnum.IV);
-		m.setValue(new Double(61.10));
-		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
-		listaMassimale.add(m);
-
-		m = new Massimale();
-		m.setId("11");
-		m.setAreaGeografica(AreaGeograficaEnum.B);
-		m.setDescrizione("Assegnista");
-		m.setLivello(LivelloUserEnum.IV);
-		m.setValue(new Double(61.10));
-		m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
-		listaMassimale.add(m);
-
-	}
+//	@Test
+//	public void tearDown() throws Exception {
+//		this.massimaleDocIndexCreator.deleteIndex();
+//	}
 
 }

@@ -18,7 +18,8 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.utility.VeicoloCNRFunction;
 import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 
@@ -52,7 +53,7 @@ public class VeicoloCNRDAOTest {
 
 	@Test
 	public void A_createVeicoloCNRTest() throws Exception {
-		creaVeicoliCNR();
+		listaVeicoliCNR = VeicoloCNRFunction.creaMassiveVeicoloCNR();
 		veicoloCNRDAO.persist(listaVeicoliCNR);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_VEICOLI_CNR: {}\n", veicoloCNRDAO.count().intValue());
@@ -60,7 +61,8 @@ public class VeicoloCNRDAOTest {
 
 	@Test
 	public void B_findVeicoloCNRTest() throws Exception {
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder();
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_VEICOLO_CNR_DISPONIBILE: {}\n", lista.size());
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 2);
@@ -79,7 +81,8 @@ public class VeicoloCNRDAOTest {
 		veicoloCNRDAO.persist(v);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_VEICOLO_CNR: {}\n", veicoloCNRDAO.count().intValue());
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder();
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
 		Assert.assertTrue("FIND  VEICOLO CNR", lista.size() == 3);
 	}
@@ -98,7 +101,8 @@ public class VeicoloCNRDAOTest {
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_VEICOLO_CNR: {}\n", veicoloCNRDAO.count().intValue());
 
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder();
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
 		logger.debug("############################NUMBER_OF_VEICOLO_CNR: {}\n", lista.size());
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 3);
@@ -110,7 +114,8 @@ public class VeicoloCNRDAOTest {
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_OF_VEICOLO_CNR: {}\n", veicoloCNRDAO.count().intValue());
 
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder();
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
 		logger.debug("############################NUMBER_OF_VEICOLO_CNR: {}\n", lista.size());
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 2);
@@ -119,7 +124,8 @@ public class VeicoloCNRDAOTest {
 	@Test
 	public void F_testFindVeicoloCNR() throws Exception {
 
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder();
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
 		logger.debug("############################NUMBER_OF_VEICOLO_CNR: {}\n", lista.size());
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 2);
@@ -128,90 +134,68 @@ public class VeicoloCNRDAOTest {
 
 	@Test
 	public void G_findVeicoloDisponibileCNRTest() throws Exception {
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-				.withStato(StatoVeicoloEnum.DISPONIBILE.name());
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withStato(StatoVeicoloEnum.DISPONIBILE.name());
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_DISPONIBILE_VEICOLO_CNR_DISPONIBILE: {}\n", lista.size());
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 1);
 
 	}
-	
+
 	@Test
 	public void H_findVeicoloTargaWithNotID() throws Exception {
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-				.withTarga("6575").withNotId("02");
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withTarga("6575").withNotId("02");
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
-		Thread.sleep(1000);	
+		Thread.sleep(1000);
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 0);
 
 	}
 
 	@Test
 	public void I_findVeicoloCartaCircolazioneWithNotID() throws Exception {
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-				.withCartaCircolazione("carta 456").withNotId("02");
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withCartaCircolazione("carta 456").withNotId("02");
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
-		Thread.sleep(1000);		
+		Thread.sleep(1000);
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 0);
 
 	}
-	
+
 	@Test
 	public void L_findVeicoloPolizzaAssicurativaWithNotID() throws Exception {
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-				.withPolizzaAssicurativa("polizza 2").withNotId("02");
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withPolizzaAssicurativa("polizza 2").withNotId("02");
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
-		Thread.sleep(1000);		
+		Thread.sleep(1000);
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 0);
 
 	}
-	
+
 	@Test
 	public void M_findVeicoloPolizza() throws Exception {
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-				.withPolizzaAssicurativa("polizza 2");
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withPolizzaAssicurativa("polizza 2");
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
-		Thread.sleep(1000);		
+		Thread.sleep(1000);
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 1);
 
 	}
-	
+
 	@Test
 	public void M_findVeicoloPolizza_2() throws Exception {
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
-				.withPolizzaAssicurativa("Polizza 2");
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withPolizzaAssicurativa("Polizza 2");
 		List<VeicoloCNR> lista = veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder).getResults();
-		Thread.sleep(1000);		
+		Thread.sleep(1000);
 		Assert.assertTrue("FINR  VEICOLO CNR", lista.size() == 1);
 
 	}
 
-	 @Test
-	 public void tearDown() throws Exception {
-	 this.veicoloCNRDocIndexCreator.deleteIndex();
-	 }
-	 
-	private void creaVeicoliCNR() {
-
-		VeicoloCNR veicoloCNR = new VeicoloCNR();
-		veicoloCNR.setId("01");
-		veicoloCNR.setCartaCircolazione("Carta 123");
-		veicoloCNR.setPolizzaAssicurativa("polizza 1");
-		veicoloCNR.setTipo("Citroen");
-		veicoloCNR.setTarga("56654");
-		veicoloCNR.setStato(StatoVeicoloEnum.DISPONIBILE);
-		listaVeicoliCNR.add(veicoloCNR);
-
-		veicoloCNR = new VeicoloCNR();
-		veicoloCNR.setId("02");
-		veicoloCNR.setCartaCircolazione("Carta 456");
-		veicoloCNR.setPolizzaAssicurativa("polizza 2");
-		veicoloCNR.setTipo("Peugeout");
-		veicoloCNR.setTarga("6575");
-		veicoloCNR.setStato(StatoVeicoloEnum.NON_DISPONIBILE);
-		listaVeicoliCNR.add(veicoloCNR);
-
-	}
+//	@Test
+//	public void tearDown() throws Exception {
+//		this.veicoloCNRDocIndexCreator.deleteIndex();
+//	}
 
 }

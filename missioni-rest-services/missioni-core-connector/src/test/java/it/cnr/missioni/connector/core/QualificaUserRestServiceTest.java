@@ -51,7 +51,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 
@@ -82,13 +82,6 @@ public class QualificaUserRestServiceTest {
 
 	}
 
-	// @After
-	// public void tearDown() {
-	// logger.debug("\n\t@@@ {}.tearDown @@@", this.getClass().getSimpleName());
-	// // Delete Organization
-	// this.deleteOrganization(organizationTest.getId());
-	// }
-
 	@AfterClass
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
@@ -101,7 +94,7 @@ public class QualificaUserRestServiceTest {
 		qualificaUser.setValue("Tecnologo");
 		missioniCoreClientConnector.addQualificaUser(qualificaUser);
 		Thread.sleep(1000);
-		QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaUserSearchBuilder);
 		Assert.assertTrue("ADD VEICOLO CNR", qualificaUserStore.getTotale() == 3);
 	}
@@ -113,21 +106,17 @@ public class QualificaUserRestServiceTest {
 		qualificaUser.setValue("CTER");
 		missioniCoreClientConnector.updateQualificaUser(qualificaUser);
 		Thread.sleep(1000);
-		QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaUserSearchBuilder);
 		Assert.assertTrue("UPDATE QUALIFICA USER", qualificaUserStore.getTotale() == 3);
-
 	}
 	
 	@Test
 	public void C_deleteVeicoloCNRTest() throws Exception {
 		missioniCoreClientConnector.deleteQualificaUser("03");
 		Thread.sleep(1000);
-		QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaUserSearchBuilder);
 		Assert.assertTrue("DELETE QUALIFICA USER", qualificaUserStore.getTotale() == 2);
-
 	}
-
-	
 }

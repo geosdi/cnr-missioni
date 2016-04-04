@@ -18,7 +18,8 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.utility.TipologiaSpesaFunction;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
@@ -53,7 +54,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void A_createTipologiaSpesaTest() throws Exception {
-		creaTipologiaSpesa();
+		listaTipoligiaSpesa = TipologiaSpesaFunction.creaMassiveTipologiaSpesa();
 		tipologiaSpesaDAO.persist(listaTipoligiaSpesa);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n",
@@ -62,7 +63,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void B_findTipologiaSpesaTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipologiaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipologiaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder();
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipologiaSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n", lista.size());
@@ -80,7 +81,7 @@ public class TipologiaSpesaDAOTest {
 		tipologiaSpesaDAO.persist(tipoligiaSpesa);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA: {}\n", tipologiaSpesaDAO.count().intValue());
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder();
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
 				.getResults();
@@ -96,7 +97,7 @@ public class TipologiaSpesaDAOTest {
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n",
 				tipologiaSpesaDAO.count().intValue());
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder();
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
 				.getResults();
@@ -109,7 +110,7 @@ public class TipologiaSpesaDAOTest {
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_TIPOLOGIA_SPESA: {}\n",
 				tipologiaSpesaDAO.count().intValue());
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder();
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
 				.getResults();
@@ -118,7 +119,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void F_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withEstera(true);
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
 				.getResults();
@@ -127,7 +128,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void G_findTipologiaSpesaTipoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withItalia(true);
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
 				.getResults();
@@ -136,7 +137,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void G_findTipologiaSpesaIdTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withId("03");
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
 				.getResults();
@@ -146,7 +147,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void H_findTipologiaSpesaTipoTrattamentoTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder()
 				.withTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
@@ -157,7 +158,7 @@ public class TipologiaSpesaDAOTest {
 
 	@Test
 	public void I_findTipologiaSpesaTipoTrattamentoIdTest() throws Exception {
-		TipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipoligiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withId("01")
 				.withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
 		List<TipologiaSpesa> lista = tipologiaSpesaDAO.findTipologiaSpesaByQuery(tipoligiaSpesaSearchBuilder)
@@ -166,50 +167,9 @@ public class TipologiaSpesaDAOTest {
 
 	}
 
-	@Test
-	public void tearDown() throws Exception {
-		this.tipoligiaSpesaDocIndexCreator.deleteIndex();
-	}
-
-	private void creaTipologiaSpesa() {
-		TipologiaSpesa tipoliogiaSpesa = new TipologiaSpesa();
-		tipoliogiaSpesa.setId("01");
-		tipoliogiaSpesa.setValue("Aereo");
-		tipoliogiaSpesa.setItalia(false);
-		tipoliogiaSpesa.setEstera(true);
-		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
-		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-
-		tipoliogiaSpesa = new TipologiaSpesa();
-		tipoliogiaSpesa.setId("02");
-		tipoliogiaSpesa.setValue("Vitto");
-		tipoliogiaSpesa.setItalia(true);
-		tipoliogiaSpesa.setEstera(false);
-		tipoliogiaSpesa.setItalia(true);
-		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
-		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.PASTO);
-
-		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-
-		tipoliogiaSpesa = new TipologiaSpesa();
-		tipoliogiaSpesa.setId("03");
-		tipoliogiaSpesa.setValue("Albergo");
-		tipoliogiaSpesa.setItalia(false);
-		tipoliogiaSpesa.setEstera(true);
-		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
-		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.ALLOGGIO);
-		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-
-		tipoliogiaSpesa = new TipologiaSpesa();
-		tipoliogiaSpesa.setId("04");
-		tipoliogiaSpesa.setValue("Treno");
-		tipoliogiaSpesa.setItalia(true);
-		tipoliogiaSpesa.setEstera(false);
-		tipoliogiaSpesa.setTipoTrattamento(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
-		tipoliogiaSpesa.setVoceSpesa(VoceSpesaEnum.TRASPORTO);
-		listaTipoligiaSpesa.add(tipoliogiaSpesa);
-
-	}
+//	@Test
+//	public void tearDown() throws Exception {
+//		this.tipoligiaSpesaDocIndexCreator.deleteIndex();
+//	}
 
 }

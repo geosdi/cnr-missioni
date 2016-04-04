@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 
 /**
@@ -39,7 +39,6 @@ public class RimborsoKmDAOTest {
 	@Resource(name = "rimborsoKmDAO")
 	private IRimborsoKmDAO rimborsoKmDAO;
 
-
 	@Before
 	public void setUp() {
 		Assert.assertNotNull(rimborsoKmDocIndexConfigurator);
@@ -54,15 +53,16 @@ public class RimborsoKmDAOTest {
 
 	@Test
 	public void B_addRimborsoKmtest() throws Exception {
-		
+
 		RimborsoKm rimborsoKm = new RimborsoKm();
 		rimborsoKm.setId("01");
 		rimborsoKm.setValue(0.36);
-		
+
 		rimborsoKmDAO.persist(rimborsoKm);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_RIMBORSO_KM: {}\n", rimborsoKmDAO.count().intValue());
-		RimborsoKmSearchBuilder rimborsoKmSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
+		IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
+				.getRimborsoKmSearchBuilder();
 		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
 		Assert.assertTrue("FIND RIMBORSO KM", lista.size() == 1);
 	}
@@ -77,24 +77,24 @@ public class RimborsoKmDAOTest {
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_RIMBORSO_KM: {}\n", rimborsoKmDAO.count().intValue());
 
-		RimborsoKmSearchBuilder rimborsoKmSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
+		IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
+				.getRimborsoKmSearchBuilder();
 		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
 		Assert.assertTrue("FIND RIMBORSO KM", lista.size() == 1);
 	}
-	
+
 	@Test
 	public void D_addRimborsoKmtest() throws Exception {
-		
 		RimborsoKm rimborsoKm = new RimborsoKm();
 		rimborsoKm.setId("02");
 		rimborsoKm.setValue(0.36);
 		rimborsoKmDAO.persist(rimborsoKm);
 	}
 
-	
 	@Test
 	public void E_findByIdTest() throws Exception {
-		RimborsoKmSearchBuilder rimborsoKmSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder().withId("01");
+		IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
+				.getRimborsoKmSearchBuilder().withId("01");
 		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
 		Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.size() == 1);
 		Assert.assertTrue("FIND  RIMBORSO KM BY ID", lista.get(0).getId().equals("01"));
@@ -102,14 +102,15 @@ public class RimborsoKmDAOTest {
 
 	@Test
 	public void F_findByIdTest_2() throws Exception {
-		RimborsoKmSearchBuilder rimborsoKmSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder().withId("02");
+		IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
+				.getRimborsoKmSearchBuilder().withId("02");
 		List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
 		Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.isEmpty());
 	}
 
-	 @Test
-	 public void tearDown() throws Exception {
-	 this.rimborsoKmDocIndexCreator.deleteIndex();
-	 }
+//	@Test
+//	public void tearDown() throws Exception {
+//		this.rimborsoKmDocIndexCreator.deleteIndex();
+//	}
 
 }

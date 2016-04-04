@@ -51,7 +51,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
@@ -83,13 +83,6 @@ public class NazioneRestServiceTest {
 
 	}
 
-	// @After
-	// public void tearDown() {
-	// logger.debug("\n\t@@@ {}.tearDown @@@", this.getClass().getSimpleName());
-	// // Delete Organization
-	// this.deleteOrganization(organizationTest.getId());
-	// }
-
 	@AfterClass
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
@@ -103,7 +96,7 @@ public class NazioneRestServiceTest {
 		nazione.setAreaGeografica(AreaGeograficaEnum.E);
 		missioniCoreClientConnector.addNazione(nazione);
 		Thread.sleep(1000);
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder();
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("ADD NAZIONE", nazioneStore.getTotale() == 3);
 	}
@@ -116,7 +109,7 @@ public class NazioneRestServiceTest {
 		nazione.setAreaGeografica(AreaGeograficaEnum.E);
 		missioniCoreClientConnector.updateNazione(nazione);
 		Thread.sleep(1000);
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder();
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("UPDATE NAZIONE", nazioneStore.getTotale() == 3);
 
@@ -126,7 +119,7 @@ public class NazioneRestServiceTest {
 	public void C_deleteNazioneTest() throws Exception {
 		missioniCoreClientConnector.deleteNazione("03");
 		Thread.sleep(1000);
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder();
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("DELETE NAZIONE", nazioneStore.getTotale() == 2);
 
@@ -134,7 +127,7 @@ public class NazioneRestServiceTest {
 	
 	@Test
 	public void D_findByIdTest() throws Exception {
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("02");
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withId("02");
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("FIND NAZIONE BY ID", nazioneStore.getNazione().size() == 1);
 		Assert.assertTrue("FIND  NAZIONE", nazioneStore.getNazione().get(0).getId().equals("02"));
@@ -142,10 +135,8 @@ public class NazioneRestServiceTest {
 	
 	@Test
 	public void E_findByIdTest_2() throws Exception {
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("03");
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withId("03");
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("FIND NAZIONE BY ID", nazioneStore.getTotale() == 0);
 	}
-
-	
 }

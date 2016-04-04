@@ -18,7 +18,8 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
+import it.cnr.missioni.el.utility.NazioneFunction;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 
@@ -52,7 +53,7 @@ public class NazioneDAOTest {
 
 	@Test
 	public void A_createNazioneTest() throws Exception {
-		creaNazione();
+		listaNazione = NazioneFunction.creaMassiveNazioni();
 		nazioneDAO.persist(listaNazione);
 		Thread.sleep(1000);
 		logger.debug("############################NUMBER_ALL_NAZIONE: {}\n", nazioneDAO.count().intValue());
@@ -60,7 +61,8 @@ public class NazioneDAOTest {
 
 	@Test
 	public void B_findNazioneTest() throws Exception {
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder
+				.getNazioneSearchBuilder();
 		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_NAZIONE: {}\n", lista.size());
 		Assert.assertTrue("FIND  NAZIONE", lista.size() == 2);
@@ -77,7 +79,8 @@ public class NazioneDAOTest {
 
 		nazioneDAO.persist(nazione);
 		Thread.sleep(1000);
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder
+				.getNazioneSearchBuilder();
 		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_NAZIONE: {}\n", lista.size());
 		Assert.assertTrue("FIND  NAZIONE", lista.size() == 3);
@@ -92,7 +95,8 @@ public class NazioneDAOTest {
 		Thread.sleep(1000);
 		nazioneDAO.update(nazione);
 		Thread.sleep(1000);
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder
+				.getNazioneSearchBuilder();
 		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_NAZIONE: {}\n", lista.size());
 		Assert.assertTrue("FIND  NAZIONE", lista.size() == 3);
@@ -102,46 +106,32 @@ public class NazioneDAOTest {
 	public void E_deleteNazioneTest() throws Exception {
 		nazioneDAO.delete("03");
 		Thread.sleep(1000);
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder
+				.getNazioneSearchBuilder();
 		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
 		logger.debug("############################NUMBER_ALL_NAZIONE: {}\n", lista.size());
 		Assert.assertTrue("FIND  NAZIONE", lista.size() == 2);
 	}
-	
+
 	@Test
 	public void F_findByIdTest() throws Exception {
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("02");
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder
+				.getNazioneSearchBuilder().withId("02");
 		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND NAZIONE BY ID", lista.size() == 1);
 		Assert.assertTrue("FIND  NAZIONE", lista.get(0).getId().equals("02"));
 	}
-	
+
 	@Test
 	public void F_findByIdTest_2() throws Exception {
-		NazioneSearchBuilder nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withId("03");
+		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder
+				.getNazioneSearchBuilder().withId("03");
 		List<Nazione> lista = nazioneDAO.findNazioneByQuery(nazioneSearchBuilder).getResults();
 		Assert.assertTrue("FIND NAZIONE BY ID", lista.isEmpty());
 	}
 
-	 @Test
-	 public void tearDown() throws Exception {
-	 this.nazioneDocIndexCreator.deleteIndex();
-	 }
-
-	private void creaNazione() {
-
-		Nazione nazione = new Nazione();
-		nazione.setId("01");
-		nazione.setValue("Germania");
-		nazione.setAreaGeografica(AreaGeograficaEnum.F);
-		listaNazione.add(nazione);
-
-		nazione = new Nazione();
-		nazione.setId("02");
-		nazione.setValue("Stati Uniti");
-		nazione.setAreaGeografica(AreaGeograficaEnum.E);
-		listaNazione.add(nazione);
-
-	}
-
+//	@Test
+//	public void tearDown() throws Exception {
+//		this.nazioneDocIndexCreator.deleteIndex();
+//	}
 }

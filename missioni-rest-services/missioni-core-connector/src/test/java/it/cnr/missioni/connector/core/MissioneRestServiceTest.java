@@ -38,7 +38,7 @@ package it.cnr.missioni.connector.core;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.ws.rs.core.Response;
@@ -61,7 +61,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
@@ -95,54 +96,43 @@ public class MissioneRestServiceTest {
 
 	}
 
-	// @After
-	// public void tearDown() {
-	// logger.debug("\n\t@@@ {}.tearDown @@@", this.getClass().getSimpleName());
-	// // Delete Organization
-	// this.deleteOrganization(organizationTest.getId());
-	// }
-
 	@AfterClass
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
 	@Test
-	public void A_testFindMissione() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdMissione("M_01");
+	public void A_testFindMissione() throws Exception {	
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withId("M_01");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertNotNull(missioniStore);
 	}
 
 	@Test
 	public void B_testFindMissioneByUser() throws Exception {
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdMissione("03");
-
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withId("03");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue(missioniStore.getTotale() == 0);
 	}
 
 	@Test
 	public void C_testInsertMissione() throws Exception {
-
 		Missione missione = new Missione();
 		missione.setId("M_04");
 		missione.setIdUser("01");
 		missione.setLocalita("Roma");
 		missioniCoreClientConnector.addMissione(missione);
 		Thread.sleep(1000);
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("04");
-
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withIdUser("04");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		logger.debug("############################INSERT MISSIONE\n");
 	}
 
 	@Test
 	public void D_testUpdateMissione() throws Exception {
-
 		Missione missione_update = new Missione();
 		missione_update.setId("M_04");
 		missione_update.setLocalita("Napoli");
@@ -152,10 +142,10 @@ public class MissioneRestServiceTest {
 
 		missioniCoreClientConnector.updateMissione(missione_update);
 		Thread.sleep(1000);
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdMissione("M_04");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withId("M_04");
 
-		missioneSearchBuilder.setIdMissione("M_04");
+		missioneSearchBuilder.setId("M_04");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		logger.debug("############################NUMERO ORDINE MISSIONE\n"
 				+ missioniStore.getMissioni().get(0).getRimborso().getNumeroOrdine());
@@ -171,8 +161,8 @@ public class MissioneRestServiceTest {
 
 	@Test
 	public void F_testFindMissioneByRimborso() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder()
 				.withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC), null);
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", missioniStore.getMissioni().size() == 1);
@@ -180,18 +170,16 @@ public class MissioneRestServiceTest {
 
 	@Test
 	public void G_testFindMissioneByNumeroRimborso() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withNumeroOrdineMissione(new Long(1));
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withNumeroOrdineMissione(new Long(1));
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", missioniStore.getMissioni().size() == 1);
 	}
 
 	@Test
 	public void H_testFindMissioneByData() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
 						new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", missioniStore.getMissioni().size() == 1);
@@ -199,81 +187,71 @@ public class MissioneRestServiceTest {
 
 	@Test
 	public void T_findByMultiMatch() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withMultiMatch("Milano, Riunione prova");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withMultiMatch("Milano, Riunione prova");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 3);
 	}
 
 	@Test
 	public void U_findByMultiMatch_2() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withMultiMatch("roma conferenza");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withMultiMatch("roma conferenza");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
 
 	@Test
 	public void V_findByMultiMatch_3() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withMultiMatch("roma sviluppo");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withMultiMatch("roma sviluppo");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 1);
 	}
 
 	@Test
 	public void V_findByMultiMatch_4() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withMultiMatch("sviluppo di applicazioni");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withMultiMatch("sviluppo di applicazioni");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 1);
 	}
 
 	@Test
 	public void N_findByOggetto() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withOggetto("conferenza");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withOggetto("conferenza");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
 
 	@Test
 	public void O_findByOggetto2() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withOggetto("riunione prova");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withOggetto("riunione prova");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
 
 	@Test
 	public void V_findNumeroRimboroUser() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01")
-				.withFieldExist("missione.rimborso");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withIdUser("01").withFieldExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 1);
 	}
 
 	@Test
 	public void V_findNumeroRimboroUser2() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("02")
-				.withFieldExist("missione.rimborso");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withIdUser("02").withFieldExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue(missioniStore.getTotale() == 0);
 	}
 
 	@Test
 	public void Z_createMissionePDFFile() throws Exception {
-
 		Response r = missioniCoreClientConnector.downloadMissioneAsPdf("M_01");
-
 		InputStream is = r.readEntity(InputStream.class);
 		File downloadfile = new File("./target/missione.pdf");
 		byte[] byteArray = IOUtils.toByteArray(is);
@@ -286,52 +264,59 @@ public class MissioneRestServiceTest {
 
 	@Test
 	public void Z_getDistanceForMissione() throws Exception {
-
-		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector.getDistanceForMissione("Tito Scalo", "Madrid");
-
+		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector
+				.getDistanceForMissione("Tito Scalo 85050 Potenza", "Madrid");
 		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distanceResponce.getDistance());
-
 	}
-	
-	
+
 	@Test
 	public void Z_getDistanceForMissione_2() throws Exception {
-
-		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector.getDistanceForMissione("Tito Scalo", "New York");
-
+		DistanceResponse.MissioneDistanceResponse distanceResponce = missioniCoreClientConnector
+				.getDistanceForMissione("Tito Scalo 85050 Potenza", "New York");
 		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distanceResponce.getDistance());
-
 	}
 
 	@Test
 	public void getGeocoderStoreForMissioneLocation() throws Exception {
-
 		GeocoderStore geocoderStore = missioniCoreClientConnector.getGeocoderStoreForMissioneLocation("Roma");
 		logger.info("#####################GEOCODER FOR MISSIONE : {}\n", geocoderStore);
 	}
 
 	@Test
 	public void Z_findMissioneNoRimborso() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withFieldNotExist("missione.rimborso");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withFieldNotExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertTrue("FIND ALL MISSIONI",missioniStore.getMissioni().size() == 2);
+		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
-	
+
 	@Test
 	public void getStatistiche() throws Exception {
-
 		StatisticheMissioni statisticheMissioni = missioniCoreClientConnector.getStatistiche();
+	}
+
+	@Test
+	public void V_findRimborsoExsist() throws Exception {
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withFieldExist("missione.rimborso");
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", missioniStore.getTotale() == 1);
+	}
+
+	@Test
+	public void V_findMissioneById() throws Exception {
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withId("M_01");
+		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
+		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", missioniStore.getTotale() == 1);
 	}
 	
 	@Test
-	public void V_findRimborsoExsist() throws Exception {
-
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withFieldExist("missione.rimborso");
+	public void V_findMissioneById_2() throws Exception {
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
+				.getMissioneSearchBuilder().withId("MM_01");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", missioniStore.getTotale() == 1);
+		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", missioniStore.getTotale() == 0);
 	}
 	
 }
