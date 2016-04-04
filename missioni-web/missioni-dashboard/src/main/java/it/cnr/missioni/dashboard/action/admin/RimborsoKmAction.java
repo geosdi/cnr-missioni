@@ -7,7 +7,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
@@ -40,7 +40,7 @@ public class RimborsoKmAction implements IAction {
 					Type.HUMANIZED_MESSAGE);
 				
 			//ricarica i rimborsi km
-			RimborsoKmStore rimborsoKmStore = ClientConnector.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+			RimborsoKmStore rimborsoKmStore = ClientConnector.getRimborsoKm(IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
 			DashboardEventBus.post(new  DashboardEvent.TableRimborsoKmUpdatedEvent(rimborsoKmStore));
 			DashboardEventBus.post(new  DashboardEvent.DisableButtonNewEvent());
 

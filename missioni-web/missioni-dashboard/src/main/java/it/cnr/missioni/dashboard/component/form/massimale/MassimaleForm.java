@@ -14,7 +14,7 @@ import com.vaadin.ui.TextField;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
@@ -82,7 +82,7 @@ public class MassimaleForm extends IForm.FormAbstract<Massimale> {
 
 				if (value != null && areagGeograficaField.getValue() != null && livelloField.getValue() != null) {
 
-					MassimaleSearchBuilder massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+					IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 							.withAreaGeografica(areagGeograficaField.getValue().toString())
 							.withLivello(((LivelloUserEnum) livelloField.getValue()).name())
 							.withTipo(((TrattamentoMissioneEsteraEnum) value).name());

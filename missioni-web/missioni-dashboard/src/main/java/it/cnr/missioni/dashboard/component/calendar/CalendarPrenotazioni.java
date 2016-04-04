@@ -41,7 +41,7 @@ import it.cnr.missioni.dashboard.component.window.PrenotazioneWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CalendarUpdateEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
 import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 
@@ -586,7 +586,7 @@ public class CalendarPrenotazioni implements Serializable {
 		public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
 			events = new ArrayList<CalendarEvent>();
 			try {
-				PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder
+				IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder
 						.getPrenotazioneSearchBuilder()
 						.withRangeData(new DateTime(startDate.getTime()), new DateTime(endDate.getTime()));
 				PrenotazioniStore prenotazioniStore = ClientConnector.getPrenotazione(prenotazioneSearchBuilder);

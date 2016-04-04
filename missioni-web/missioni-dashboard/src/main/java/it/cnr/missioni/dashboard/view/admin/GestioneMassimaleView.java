@@ -24,7 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.MassimaleWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableMassimaleUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
@@ -41,14 +41,14 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 	private ElencoMassimaleTable elencoMassimaleTable;
 	private Massimale selectedMassimale;
 	private MassimaleStore massimaleStore;
-	private MassimaleSearchBuilder massimaleSearchBuilder;
+	private IMassimaleSearchBuilder massimaleSearchBuilder;
 
 	public GestioneMassimaleView() {
 		super();
 	}
 
 	protected void inizialize() {
-		this.massimaleSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder();
+		this.massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class GestioneMassimaleView extends GestioneTemplateView<Massimale> {
 				
 				try {
 					selectedMassimale = ClientConnector
-							.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+							.getMassimale(IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 									.withId(((Massimale) itemClickEvent.getItemId()).getId()))
 							.getMassimale().get(0);
 					enableButtons();

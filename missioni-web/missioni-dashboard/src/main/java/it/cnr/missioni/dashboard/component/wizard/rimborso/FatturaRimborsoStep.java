@@ -11,10 +11,10 @@ import com.vaadin.ui.Notification.Type;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.rimborso.FatturaRimborsoForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
@@ -51,17 +51,17 @@ public class FatturaRimborsoStep implements WizardStep {
 		Map<String, Fattura> mappa = new HashMap<String, Fattura>();
 		try {
 			User userASeguito = null;
-			User user = ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser())).getUsers().get(0);
+			User user = ClientConnector.getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser())).getUsers().get(0);
 			String livello = user.getDatiCNR().getLivello().name();
 			//se è a seguito
 			if(missione.getIdUserSeguito() != null){
-				userASeguito = ClientConnector.getUser(UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser())).getUsers().get(0);
+				userASeguito = ClientConnector.getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser())).getUsers().get(0);
 				livello = user.getDatiCNR().getLivello().getStato() >= userASeguito.getDatiCNR().getLivello().getStato() ? user.getDatiCNR().getLivello().name() : userASeguito.getDatiCNR().getLivello().name();
 			}
 			Massimale massimaleItalia  = getMassimale(AreaGeograficaEnum.ITALIA.name(), livello);
 			Massimale massimaleEstero = null;
 			if(missione.isMissioneEstera()){
-				Nazione n = ClientConnector.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione())).getNazione().get(0);
+				Nazione n = ClientConnector.getNazione(INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione())).getNazione().get(0);
 				massimaleEstero = getMassimale(n.getAreaGeografica().name(), livello);
 			}
 			ICheckMassimale checkMassimale = CheckMassimale.getCheckMassimale().withMissione(missione).withMassimale(massimaleItalia).withMassimaleEstero(massimaleEstero).initialize();
@@ -93,7 +93,7 @@ public class FatturaRimborsoStep implements WizardStep {
 	 */
 	private TipologiaSpesa getTipologia(Fattura fattura) throws Exception{
 		TipologiaSpesa tipologiaSpesa= null;
-		TipologiaSpesaStore tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder
+		TipologiaSpesaStore tipologiaSpesaStore = ClientConnector.getTipologiaSpesa(ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withId(fattura.getIdTipologiaSpesa()));
 		if (tipologiaSpesaStore.getTotale() > 0)
 			tipologiaSpesa = tipologiaSpesaStore.getTipologiaSpesa().get(0);
@@ -110,7 +110,7 @@ public class FatturaRimborsoStep implements WizardStep {
 	 */
 	private Massimale getMassimale(String areaGeografica,String livello) throws Exception{
 		Massimale massimale = null;
-		MassimaleStore massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder
+		MassimaleStore massimaleStore = ClientConnector.getMassimale(IMassimaleSearchBuilder.MassimaleSearchBuilder
 				.getMassimaleSearchBuilder().withLivello(livello).withAreaGeografica(areaGeografica)
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
 		if (massimaleStore.getTotale() > 0) 

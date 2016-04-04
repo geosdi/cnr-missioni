@@ -33,7 +33,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
@@ -101,7 +101,7 @@ public class CredenzialiWindow extends IWindow.AbstractWindow {
 			public void validate(Object value) throws InvalidValueException {
 				UserStore userStore = null;
 				try{
-				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withUsername(usernameField.getValue());
+				IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withUsername(usernameField.getValue());
 							
 				 userStore = ClientConnector.getUser(userSearchBuilder);
 			

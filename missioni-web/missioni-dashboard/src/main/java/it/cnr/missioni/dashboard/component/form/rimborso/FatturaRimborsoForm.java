@@ -37,7 +37,7 @@ import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ComboBoxListaFatturaUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
@@ -342,7 +342,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 						.withMinuteOfHour(missione.getDatiPeriodoMissione().getInizioMissione().getMinuteOfHour()).plusMinutes(1);
 
 				try {
-					t = ClientConnector.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
+					t = ClientConnector.getTipologiaSpesa(ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
 							.withId(formFattura.getTipologiaSpesaField().getValue().toString()));
 				} catch (Exception e) {
 					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -490,7 +490,7 @@ public class FatturaRimborsoForm extends VerticalLayout {
 		private void getTipologiaSpesa(List<TipologiaSpesa> lista, boolean tam, boolean estera) {
 			try {
 
-				TipologiaSpesaSearchBuilder t = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
+				ITipologiaSpesaSearchBuilder t = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
 						.withEstera(estera).withItalia(!estera).withAll(true);
 				if (tam) {
 					t.withTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());

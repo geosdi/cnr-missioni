@@ -17,8 +17,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.DatiCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
@@ -82,7 +82,7 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 							.withSearchType("exact").withMatricola(matricolaField.getValue());
 
 					if (modifica)
@@ -111,7 +111,7 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 							.withMail(mailField.getValue());
 					if (modifica)
 						userSearchBuilder.withNotId(user.getId());
@@ -138,7 +138,7 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 							.withIban(ibanField.getValue());
 					if (modifica)
 						userSearchBuilder.withNotId(user.getId());
@@ -185,7 +185,7 @@ public class DatiCNRUserForm extends IForm.FormAbstract<DatiCNR> {
 			qualificaField.setValidationVisible(false);
 			getFieldGroup().bind(qualificaField, "idQualifica");
 
-			QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
+			IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
 					.getQualificaUserSearchBuilder().withAll(true);
 			QualificaUserStore qualificaStore = ClientConnector.getQualificaUser(qualificaUserSearchBuilder);
 

@@ -21,7 +21,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.TableRimborsoKmUpdatedEven
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
@@ -57,7 +57,7 @@ public class GestioneRimborsoKmView extends GestioneTemplateView<RimborsoKm>  {
 		this.elencoRimborsoKmTable = new ElencoRimborsoKmTable();
 
 		try {
-			rimborsoKmStore = ClientConnector.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+			rimborsoKmStore = ClientConnector.getRimborsoKm(IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
 
 
 			this.elencoRimborsoKmTable.aggiornaTable(rimborsoKmStore);

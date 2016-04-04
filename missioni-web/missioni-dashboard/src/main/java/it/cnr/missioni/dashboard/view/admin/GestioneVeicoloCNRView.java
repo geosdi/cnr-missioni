@@ -24,7 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.VeicoloCNRWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableVeicoliCNRUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -43,14 +43,14 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 	private ElencoVeicoliCNRTable elencoVeicoliCNRTable;
 	private VeicoloCNR selectedVeicoloCNR;
 	private VeicoloCNRStore veicoloCNRStore;
-	private VeicoloCNRSearchBuilder veicoloCNRSearchBuilder;
+	private IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder;
 
 	public GestioneVeicoloCNRView() {
 		super();
 	}
 
 	protected void inizialize() {
-		veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
+		veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder();
 	}
 	
 	/**

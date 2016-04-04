@@ -20,7 +20,7 @@ import com.vaadin.ui.TextField;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
@@ -98,7 +98,7 @@ public class LocalitaOggettoMissioneForm extends IForm.FormAbstract<Missione> {
         getFieldGroup().bind(listaNazioneField, "idNazione");
         try {
             NazioneStore nazioneStore = ClientConnector
-                    .getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withAll(true));
+                    .getNazione(INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withAll(true));
             nazioneStore.getNazione().forEach(c -> {
                 listaNazioneField.addItem(c.getId());
                 listaNazioneField.setItemCaption(c.getId(), c.getValue());

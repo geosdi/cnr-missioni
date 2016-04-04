@@ -24,7 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.NazioneWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableNazioneUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 
@@ -40,14 +40,14 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 	private ElencoNazioneTable elencoNazioneTable;
 	private Nazione selectedNazione;
 	private NazioneStore nazioneStore;
-	private NazioneSearchBuilder nazioneSearchBuilder;
+	private INazioneSearchBuilder nazioneSearchBuilder;
 
 	public GestioneNazioneView() {
 		super();
 	}
 
 	protected void inizialize() {
-		this.nazioneSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder();
+		this.nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder();
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class GestioneNazioneView extends GestioneTemplateView<Nazione> {
 				
 				try {
 					selectedNazione = ClientConnector
-							.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder()
+							.getNazione(INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder()
 									.withId(((Nazione) itemClickEvent.getItemId()).getId()))
 							.getNazione().get(0);
 					enableButtons();

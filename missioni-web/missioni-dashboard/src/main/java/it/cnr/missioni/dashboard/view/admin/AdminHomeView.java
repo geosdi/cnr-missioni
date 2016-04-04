@@ -9,12 +9,12 @@ import it.cnr.missioni.dashboard.component.table.admin.ElencoStatisticheMissioni
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.HomeView;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
 
 public final class AdminHomeView extends HomeView {
 
-	protected MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder();
+	protected IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder();
 	
 	/**
 	 * 
@@ -29,9 +29,9 @@ public final class AdminHomeView extends HomeView {
 	@Override
 	public void enter(final ViewChangeEvent event) {
 		try {
-			elencoMissioniTable.aggiornaTableAdmin(ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()));
+			elencoMissioniTable.aggiornaTableAdmin(ClientConnector.getMissione(IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()));
 
-			elencoRimborsiTable.aggiornaTableAdmin(ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
+			elencoRimborsiTable.aggiornaTableAdmin(ClientConnector.getMissione(IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
 					.withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO)));
 
 		} catch (Exception e) {

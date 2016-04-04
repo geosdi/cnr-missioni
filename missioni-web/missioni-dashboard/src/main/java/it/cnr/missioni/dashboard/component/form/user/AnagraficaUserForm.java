@@ -19,7 +19,7 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.Anagrafica;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -63,7 +63,7 @@ public class AnagraficaUserForm  extends IForm.FormAbstract<Anagrafica> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 							.withCodiceFiscale(codiceFiscaleField.getValue());
 					UserStore userStore = null;
 

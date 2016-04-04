@@ -16,7 +16,7 @@ import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -81,7 +81,7 @@ public class VeicoloForm extends IForm.FormAbstract<Veicolo> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 							.withTarga(targaField.getValue());
 					if (modifica)
 						userSearchBuilder.withNotId(user.getId());
@@ -109,7 +109,7 @@ public class VeicoloForm extends IForm.FormAbstract<Veicolo> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 							.withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
 					if (modifica)
 						userSearchBuilder.withNotId(user.getId());
@@ -137,7 +137,7 @@ public class VeicoloForm extends IForm.FormAbstract<Veicolo> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder()
+					IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 							.withCartaCircolazione(cartaCircolazioneField.getValue());
 					if (modifica)
 						userSearchBuilder.withNotId(user.getId());

@@ -36,7 +36,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.NotificationsCountUpdatedE
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.notification.DashboardNotification;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 
 public class HomeView extends Panel implements View {
 
@@ -209,9 +209,9 @@ public class HomeView extends Panel implements View {
 	public void enter(final ViewChangeEvent event) {
 		try {
 			elencoMissioniTable.aggiornaTable(ClientConnector.getMissione(
-					MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())));
+					IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())));
 
-			elencoRimborsiTable.aggiornaTable(ClientConnector.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
+			elencoRimborsiTable.aggiornaTable(ClientConnector.getMissione(IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
 					.withFieldExist("missione.rimborso").withIdUser(DashboardUI.getCurrentUser().getId())));
 
 		} catch (Exception e) {

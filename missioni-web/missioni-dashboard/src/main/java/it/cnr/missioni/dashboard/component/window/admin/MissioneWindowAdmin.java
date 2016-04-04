@@ -23,7 +23,7 @@ import it.cnr.missioni.dashboard.component.window.IWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
@@ -107,7 +107,7 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow {
 
 	private void getUser() {
 		try {
-			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser());
+			IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser());
 
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 			this.user = userStore.getUsers().get(0);

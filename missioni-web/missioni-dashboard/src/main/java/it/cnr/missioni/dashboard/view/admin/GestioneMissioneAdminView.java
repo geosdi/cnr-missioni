@@ -13,8 +13,8 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneAdmin
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneMissioneView;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.user.User;
@@ -34,14 +34,14 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 	}
 
 	protected void inizialize() {
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder();
+		this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder();
 
 	}
 
 	protected User getUser() {
 		try {
 			return ClientConnector
-					.getUser(UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers()
+					.getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers()
 					.get(0);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -118,7 +118,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
 		try {
 			this.selectedMissione = ClientConnector
 					.getMissione(
-							MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId()))
+							IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withId(selectedMissione.getId()))
 					.getMissioni().get(0);
 
 		} catch (Exception e) {

@@ -26,7 +26,7 @@ import com.vaadin.ui.TextField;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
@@ -114,7 +114,7 @@ public class DatiGeneraliRimborsoForm extends IForm.FormAbstract<Rimborso> {
 	private void setTotaleRimborsoKM() {
 		try {
 			RimborsoKmStore rimborsoKmStore = ClientConnector
-					.getRimborsoKm(RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
+					.getRimborsoKm(IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder());
 			double rimborso = 0.0;
 
 			if (rimborsoKmStore.getTotale() > 0) {

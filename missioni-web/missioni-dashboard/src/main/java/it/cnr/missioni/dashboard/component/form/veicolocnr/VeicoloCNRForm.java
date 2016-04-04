@@ -15,7 +15,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -76,7 +76,7 @@ public class VeicoloCNRForm extends IForm.FormAbstract<VeicoloCNR> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
+					IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
 							.getVeicoloCNRSearchBuilder().withTarga(targaField.getValue());
 					if (modifica)
 						veicoloCNRSearchBuilder.withNotId(bean.getId());
@@ -104,7 +104,7 @@ public class VeicoloCNRForm extends IForm.FormAbstract<VeicoloCNR> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
+					IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
 							.getVeicoloCNRSearchBuilder().withPolizzaAssicurativa(polizzaAssicurativaField.getValue());
 					if (modifica)
 						veicoloCNRSearchBuilder.withNotId(bean.getId());
@@ -132,7 +132,7 @@ public class VeicoloCNRForm extends IForm.FormAbstract<VeicoloCNR> {
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				if (value != null) {
-					VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder
+					IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
 							.getVeicoloCNRSearchBuilder().withCartaCircolazione(cartaCircolazioneField.getValue());
 					if (modifica)
 						veicoloCNRSearchBuilder.withNotId(bean.getId());

@@ -24,7 +24,7 @@ import it.cnr.missioni.dashboard.component.window.UserWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableUserUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
@@ -41,7 +41,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	private ElencoUserTable elencoUserTable;
 	private User selectedUser;
 
-	private UserSearchBuilder userSearchBuilder;
+	private IUserSearchBuilder userSearchBuilder;
 	private UserStore userStore;
 
 	public GestioneUserAdminView() {
@@ -49,7 +49,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
 	}
 	
 	protected void inizialize() {
-		this.userSearchBuilder = UserSearchBuilder.getUserSearchBuilder();
+		this.userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder();
 	}
 
 	/**

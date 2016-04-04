@@ -24,7 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.TipologiaSpesaWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableTipologiaSpesaUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
@@ -43,14 +43,14 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 	private ElencoTipologiaSpesaTable elencoTipologiaSpesaTable;
 	private TipologiaSpesa selectedTipologiaSpesa;
 	private TipologiaSpesaStore tipologiaSpesaStore;
-	private TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder;
+	private ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder;
 
 	public GestioneTipologiaSpesaView() {
 		super();
 	}
 	
 	protected void inizialize() {
-		this.tipologiaSpesaSearchBuilder = TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
+		this.tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class GestioneTipologiaSpesaView extends GestioneTemplateView<TipologiaSp
 				
 				try {
 					selectedTipologiaSpesa = ClientConnector
-							.getTipologiaSpesa(TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
+							.getTipologiaSpesa(ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder()
 									.withId(((TipologiaSpesa) itemClickEvent.getItemId()).getId()))
 							.getTipologiaSpesa().get(0);
 					enableButtons();

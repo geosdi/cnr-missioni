@@ -21,8 +21,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
@@ -87,10 +87,10 @@ public class Utility {
 		int days = 0;
 		try {
 			Nazione nazione = ClientConnector
-					.getNazione(NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
+					.getNazione(INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withId(missione.getIdNazione()))
 					.getNazione().get(0);
 			MassimaleStore massimaleStore = ClientConnector
-					.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+					.getMassimale(IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 							.withLivello(DashboardUI.getCurrentUser().getDatiCNR().getLivello().name())
 							.withAreaGeografica(nazione.getAreaGeografica().name())
 							.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));

@@ -19,7 +19,7 @@ import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -63,7 +63,7 @@ public class VeicoloMissioneForm extends IForm.FormAbstract<Missione> {
 			user = DashboardUI.getCurrentUser();
 		} else {
 			try {
-				UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withId(bean.getIdUser());
+				IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(bean.getIdUser());
 				UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 				user = userStore.getUsers().get(0);
 

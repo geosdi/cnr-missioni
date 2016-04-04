@@ -27,8 +27,8 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.TableMissioniUpdateEvent;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.rimborso.Rimborso;
@@ -55,7 +55,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 	protected ElencoMissioniTable elencoMissioniTable;
 	protected Missione selectedMissione;
 	protected HorizontalLayout layout;
-	protected MissioneSearchBuilder missioneSearchBuilder;
+	protected IMissioneSearchBuilder missioneSearchBuilder;
 	protected MissioniStore missioniStore;
 
 	public GestioneMissioneView() {
@@ -70,7 +70,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 	protected void inizialize() {
 
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+		this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withIdUser(DashboardUI.getCurrentUser().getId());
 	}
 
@@ -133,8 +133,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
 				try {
 					selectedMissione = ClientConnector
-							.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
-									.withIdMissione(((Missione) itemClickEvent.getItemId()).getId()))
+							.getMissione(IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
+									.withId(((Missione) itemClickEvent.getItemId()).getId()))
 							.getMissioni().get(0);
 					enableButtons();
 				} catch (Exception e) {
@@ -507,7 +507,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 		try {
 			this.selectedMissione = ClientConnector
 					.getMissione(
-							MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId()))
+							IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withId(selectedMissione.getId()))
 					.getMissioni().get(0);
 
 		} catch (Exception e) {

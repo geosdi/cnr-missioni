@@ -24,7 +24,7 @@ import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.AdvancedDownloaderListener;
 import it.cnr.missioni.dashboard.utility.AdvancedFileDownloader.DownloaderEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
@@ -51,7 +51,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
 	protected Missione selectedMissione;
 
-	protected MissioneSearchBuilder missioneSearchBuilder;
+	protected IMissioneSearchBuilder missioneSearchBuilder;
 
 	protected MissioniStore missioniStore;
 
@@ -60,9 +60,9 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 	}
 
 	protected void inizialize() {
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+		this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withIdUser(getUser().getId()).withFieldExist("missione.rimborso")
-				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+				.withFieldSort(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
 	}
 	
 	protected User getUser(){
@@ -90,8 +90,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 				
 				try {
 					selectedMissione = ClientConnector
-							.getMissione(MissioneSearchBuilder.getMissioneSearchBuilder()
-									.withIdMissione(((Missione) itemClickEvent.getItemId()).getId()))
+							.getMissione(IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
+									.withId(((Missione) itemClickEvent.getItemId()).getId()))
 							.getMissioni().get(0);
 					enableButtons();
 				} catch (Exception e) {
@@ -339,7 +339,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 		try {
 			this.selectedMissione = ClientConnector
 					.getMissione(
-							MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId()))
+							IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withId(selectedMissione.getId()))
 					.getMissioni().get(0);
 
 		} catch (Exception e) {

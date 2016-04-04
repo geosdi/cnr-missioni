@@ -10,15 +10,15 @@ import it.cnr.missioni.connector.core.spring.connector.provider.CoreConnectorPro
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dropwizard.connector.api.settings.ConnectorClientSettings;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
@@ -93,7 +93,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static UserStore getUser(UserSearchBuilder userSearchBuilder) throws Exception {
+	public static UserStore getUser(IUserSearchBuilder userSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 	}
 
@@ -103,7 +103,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static MissioniStore getMissione(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
+	public static MissioniStore getMissione(IMissioneSearchBuilder missioneSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 	}
 
@@ -153,7 +153,7 @@ public class ClientConnector {
 	 * @param veicoloCNRSearchBuilder
 	 * @throws Exception
 	 */
-	public static VeicoloCNRStore getVeicoloCNR(VeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
+	public static VeicoloCNRStore getVeicoloCNR(IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 
 	}
@@ -194,7 +194,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static PrenotazioniStore getPrenotazione(PrenotazioneSearchBuilder prenotazioneSearchBuilder)
+	public static PrenotazioniStore getPrenotazione(IPrenotazioneSearchBuilder prenotazioneSearchBuilder)
 			throws Exception {
 		return missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
 
@@ -300,7 +300,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static NazioneStore getNazione(NazioneSearchBuilder nazioneSearchBuilder) throws Exception {
+	public static NazioneStore getNazione(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 
 	}
@@ -311,7 +311,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static QualificaUserStore getQualificaUser(QualificaUserSearchBuilder qualificaUserSearchBuilder)
+	public static QualificaUserStore getQualificaUser(IQualificaUserSearchBuilder qualificaUserSearchBuilder)
 			throws Exception {
 		return missioniCoreClientConnector.getQualificaUserByQuery(qualificaUserSearchBuilder);
 
@@ -323,7 +323,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static RimborsoKmStore getRimborsoKm(RimborsoKmSearchBuilder rimborsoKmSearchBuilder) throws Exception {
+	public static RimborsoKmStore getRimborsoKm(IRimborsoKmSearchBuilder rimborsoKmSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getRimborsoKmByQuery(rimborsoKmSearchBuilder);
 
 	}
@@ -334,7 +334,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static TipologiaSpesaStore getTipologiaSpesa(TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder)
+	public static TipologiaSpesaStore getTipologiaSpesa(ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder)
 			throws Exception {
 		return missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 
@@ -346,7 +346,7 @@ public class ClientConnector {
 	 * @return
 	 * @throws Exception
 	 */
-	public static MassimaleStore getMassimale(MassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
+	public static MassimaleStore getMassimale(IMassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
 
 	}

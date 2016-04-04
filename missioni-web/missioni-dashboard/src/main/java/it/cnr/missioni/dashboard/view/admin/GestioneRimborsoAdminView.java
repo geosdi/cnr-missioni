@@ -7,13 +7,12 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
 import it.cnr.missioni.dashboard.component.wizard.rimborso.WizardRimborso;
-import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneRimborsoAdminEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneRimborsoView;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.SearchConstants;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.user.User;
 
@@ -32,16 +31,16 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 	}
 
 	protected void inizialize() {
-		this.missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+		this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withFieldExist("missione.rimborso")
-				.withSortField(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+				.withFieldSort(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
 
 	}
 
 	protected User getUser() {
 		try {
 			return ClientConnector
-					.getUser(UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers()
+					.getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers()
 					.get(0);
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
@@ -68,7 +67,7 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 		try {
 			this.selectedMissione = ClientConnector
 					.getMissione(
-							MissioneSearchBuilder.getMissioneSearchBuilder().withIdMissione(selectedMissione.getId()))
+							IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withId(selectedMissione.getId()))
 					.getMissioni().get(0);
 
 		} catch (Exception e) {

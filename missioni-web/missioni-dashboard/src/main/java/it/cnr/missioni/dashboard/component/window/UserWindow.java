@@ -25,7 +25,7 @@ import it.cnr.missioni.dashboard.component.form.user.ResidenzaUserForm;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.Anagrafica;
@@ -112,13 +112,13 @@ public class UserWindow extends IWindow.AbstractWindow {
 				double massimaleRimborsoDocumentato = 0.0;
 
 				MassimaleStore massimaleStore = ClientConnector
-						.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+						.getMassimale(IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 								.withLivello(user.getDatiCNR().getLivello().name()).withAreaGeografica(a.name())
 								.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name()));
 				if (massimaleStore.getTotale() > 0)
 					massimaleTAM = massimaleStore.getMassimale().get(0).getValue();
 
-				massimaleStore = ClientConnector.getMassimale(MassimaleSearchBuilder.getMassimaleSearchBuilder()
+				massimaleStore = ClientConnector.getMassimale(IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 						.withLivello(user.getDatiCNR().getLivello().name()).withAreaGeografica(a.name())
 						.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name()));
 				if (massimaleStore.getTotale() > 0)

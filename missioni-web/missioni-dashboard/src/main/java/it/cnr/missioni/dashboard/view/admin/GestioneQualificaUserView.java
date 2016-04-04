@@ -24,8 +24,7 @@ import it.cnr.missioni.dashboard.component.window.admin.QualificaUserWindow;
 import it.cnr.missioni.dashboard.event.DashboardEvent.TableQualificaUserUpdatedEvent;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.dashboard.view.GestioneTemplateView;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
@@ -48,14 +47,14 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 	private ElencoQualificaUserTable elencoQualificaUserTable;
 	private QualificaUser selectedQualificaUser;
 	private QualificaUserStore qualificaUserStore;
-	private QualificaUserSearchBuilder qualificaUserSearchBuilder;
+	private IQualificaUserSearchBuilder qualificaUserSearchBuilder;
 
 	public GestioneQualificaUserView() {
 		super();
 	}
 	
 	protected void inizialize() {
-		this.qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		this.qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class GestioneQualificaUserView extends GestioneTemplateView<QualificaUse
 		VerticalLayout v = new VerticalLayout();
 
 		this.elencoQualificaUserTable = new ElencoQualificaUserTable();
-		this.qualificaUserSearchBuilder = QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
+		this.qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 		try {
 			qualificaUserStore = ClientConnector.getQualificaUser(qualificaUserSearchBuilder);
 			this.elencoQualificaUserTable.aggiornaTable(qualificaUserStore);

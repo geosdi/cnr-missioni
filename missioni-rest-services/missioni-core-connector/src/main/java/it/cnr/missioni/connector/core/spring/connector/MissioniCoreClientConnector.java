@@ -75,10 +75,10 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
         super(theClientSettings, theClient);
     }
 
-    public MissioniStore getMissioneByQuery(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
+    public MissioniStore getMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/getMissioneByQuery/")
-                .queryParam("idMissione", missioneSearchBuilder.getIdMissione())
+                .queryParam("idMissione", missioneSearchBuilder.getId())
                 .queryParam("idUser", missioneSearchBuilder.getIdUser())
                 .queryParam("stato", missioneSearchBuilder.getStato())
                 .queryParam("numeroOrdineRimborso", missioneSearchBuilder.getNumeroOrdineRimborso())
@@ -137,7 +137,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
     }
 
 
-    public UserStore getUserByQuery(UserSearchBuilder userSearchBuilder) throws Exception {
+    public UserStore getUserByQuery(IUserSearchBuilder userSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL()
         )
                 .path("v1/users/getUserByQuery/")
@@ -189,7 +189,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     
-    public PrenotazioniStore getPrenotazioneByQuery(PrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception {
+    public PrenotazioniStore getPrenotazioneByQuery(IPrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/prenotazioni/getPrenotazioniByQuery/")
                 .queryParam("dataFrom", prenotazioneSearchBuilder.getDataFrom().toDateTime().getMillis())
@@ -225,7 +225,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     
-    public VeicoloCNRStore getVeicoloCNRByQuery(VeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
+    public VeicoloCNRStore getVeicoloCNRByQuery(IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/veicoloCNR/getVeicoloCNRByQuery/")
                 .queryParam("stato", veicoloCNRSearchBuilder.getStato())
@@ -342,7 +342,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .get(GeocoderStore.class);
     }
     
-    public QualificaUserStore getQualificaUserByQuery(QualificaUserSearchBuilder qualificaUserSearchBuilder) throws Exception {
+    public QualificaUserStore getQualificaUserByQuery(IQualificaUserSearchBuilder qualificaUserSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/qualificaUser/getQualificaUserByQuery/")
                 .queryParam("from", qualificaUserSearchBuilder.getFrom())
@@ -376,7 +376,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     
-    public NazioneStore getNazioneByQuery(NazioneSearchBuilder nazioneSearchBuilder) throws Exception {
+    public NazioneStore getNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/nazione/getNazioneByQuery/")
                 .queryParam("id", nazioneSearchBuilder.getId())
@@ -411,7 +411,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
 
-    public RimborsoKmStore getRimborsoKmByQuery(RimborsoKmSearchBuilder rimborsoKmSearchBuilder) throws Exception {
+    public RimborsoKmStore getRimborsoKmByQuery(IRimborsoKmSearchBuilder rimborsoKmSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/rimborsoKm/getRimborsoKmByQuery/")
                 .request(MediaType.APPLICATION_JSON)
@@ -442,7 +442,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     
-    public TipologiaSpesaStore getTipologiaSpesaByQuery(TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder) throws Exception {
+    public TipologiaSpesaStore getTipologiaSpesaByQuery(ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/tipologiaSpesa/getTipologiaSpesaByQuery/")
                 .queryParam("id", tipologiaSpesaSearchBuilder.getId())
@@ -480,7 +480,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
     
-    public MassimaleStore getMassimaleByQuery(MassimaleSearchBuilder massimaleSpesaSearchBuilder) throws Exception {
+    public MassimaleStore getMassimaleByQuery(IMassimaleSearchBuilder massimaleSpesaSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/massimale/getMassimaleByQuery/")
                 .queryParam("from", massimaleSpesaSearchBuilder.getFrom())

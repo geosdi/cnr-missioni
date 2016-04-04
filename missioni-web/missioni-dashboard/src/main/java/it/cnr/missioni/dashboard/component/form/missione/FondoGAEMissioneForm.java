@@ -15,7 +15,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
@@ -63,7 +63,7 @@ public class FondoGAEMissioneForm extends IForm.FormAbstract<Missione> {
 		listaResponsabiliGruppoField = new ComboBox("Responsabile Fondo");
 
 		try {
-			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true)
+			IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withAll(true)
 					.withResponsabileGruppo(true);
 
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
@@ -82,7 +82,7 @@ public class FondoGAEMissioneForm extends IForm.FormAbstract<Missione> {
 		listaResponsabiliGruppoField.setValidationVisible(false);
 		listaSeguito = new ComboBox("A seguito");
 		try {
-			UserSearchBuilder userSearchBuilder = UserSearchBuilder.getUserSearchBuilder().withAll(true);
+			IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withAll(true);
 
 			UserStore userStore = ClientConnector.getUser(userSearchBuilder);
 

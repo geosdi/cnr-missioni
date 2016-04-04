@@ -17,7 +17,7 @@ import ch.qos.logback.core.db.dialect.DBUtil;
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.utility.Utility;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.user.User;
@@ -84,7 +84,7 @@ public class NotificationProvider implements INotificationProvider {
 	 */
 	private List<Missione>  getMissioneWithoutRimborso(){
 		List<Missione> lista = new ArrayList<Missione>();
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())
 				.withFieldNotExist("missione.rimborso")
 				.withStato(StatoEnum.INSERITA.name());
 		try {
