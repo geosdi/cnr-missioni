@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.base.Preconditions;
 
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 
 /**
@@ -54,7 +54,7 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<RimborsoKm> findRimborsoKmByQuery(RimborsoKmSearchBuilder rimborsoKmSearchBuilder)
+	public PageResult<RimborsoKm> findRimborsoKmByQuery(IRimborsoKmSearchBuilder rimborsoKmSearchBuilder)
 			throws Exception {
 		List<RimborsoKm> listaRimborsoKm = new ArrayList<RimborsoKm>();
 		logger.debug("###############Try to find RimboroKm by Query: {}\n\n");

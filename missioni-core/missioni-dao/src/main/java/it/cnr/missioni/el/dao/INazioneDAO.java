@@ -3,7 +3,7 @@ package it.cnr.missioni.el.dao;
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 
 /**
@@ -11,7 +11,7 @@ import it.cnr.missioni.model.configuration.Nazione;
  */
 public interface INazioneDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<Nazione> {
 
-	PageResult<Nazione> findNazioneByQuery(NazioneSearchBuilder nazioneSearchBuilder) throws Exception;
+	PageResult<Nazione> findNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception;
 
 
 }

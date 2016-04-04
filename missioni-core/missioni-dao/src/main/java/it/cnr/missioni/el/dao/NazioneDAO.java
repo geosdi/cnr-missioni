@@ -14,7 +14,7 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 
 /**
@@ -52,7 +52,7 @@ public class NazioneDAO extends AbstractElasticSearchDAO<Nazione> implements INa
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<Nazione> findNazioneByQuery(NazioneSearchBuilder nazioneSearchBuilder) throws Exception {
+	public PageResult<Nazione> findNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
 		List<Nazione> listaNazione = new ArrayList<Nazione>();
 		logger.debug("###############Try to find Nazione by Query: {}\n\n");
 

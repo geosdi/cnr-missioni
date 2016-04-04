@@ -19,7 +19,7 @@ import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 
@@ -37,7 +37,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<Missione> findMissioneByQuery(MissioneSearchBuilder missioneSearchBuilder) throws Exception {
+	public PageResult<Missione> findMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception {
 		List<Missione> listaMissioni = new ArrayList<Missione>();
 
 		logger.debug("###############Try to find Missione by Query: {}\n\n");
@@ -73,7 +73,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 	public long getMaxNumeroOrdineRimborso() throws Exception {
 		long value = 0;
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso");
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso");
 		List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
 
 		return lista.size()+1;
@@ -94,7 +94,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 		DateTime from = now.withDayOfMonth(1).withMonthOfYear(1);
 		DateTime to = now.withYear(now.getYear()).withDayOfMonth(31).withMonthOfYear(12);
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withRangeDataInserimento(from,to);
 		List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
 

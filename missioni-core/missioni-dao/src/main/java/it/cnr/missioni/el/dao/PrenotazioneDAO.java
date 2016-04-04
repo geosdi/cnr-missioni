@@ -14,7 +14,7 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 
 /**
@@ -52,7 +52,7 @@ public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> impl
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<Prenotazione> findPrenotazioneByQuery(PrenotazioneSearchBuilder prenotazioneSearchBuilder)
+	public PageResult<Prenotazione> findPrenotazioneByQuery(IPrenotazioneSearchBuilder prenotazioneSearchBuilder)
 			throws Exception {
 		List<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>();
 		logger.debug("###############Try to find Prenotazioni by Query: {}\n\n");

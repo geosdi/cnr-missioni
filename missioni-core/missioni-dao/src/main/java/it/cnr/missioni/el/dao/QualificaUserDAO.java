@@ -14,8 +14,7 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.QualificaUser;
 
 /**
@@ -53,7 +52,7 @@ public class QualificaUserDAO extends AbstractElasticSearchDAO<QualificaUser> im
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<QualificaUser> findQualificaUserByQuery(QualificaUserSearchBuilder qualificaUserSearchBuilder)
+	public PageResult<QualificaUser> findQualificaUserByQuery(IQualificaUserSearchBuilder qualificaUserSearchBuilder)
 			throws Exception {
 		List<QualificaUser> listaQualificaUser = new ArrayList<QualificaUser>();
 		logger.debug("###############Try to find Qualifica User by Query: {}\n\n");

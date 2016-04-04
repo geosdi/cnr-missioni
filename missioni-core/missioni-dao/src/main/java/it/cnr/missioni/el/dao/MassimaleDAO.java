@@ -14,7 +14,7 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 
 /**
@@ -52,7 +52,7 @@ public class MassimaleDAO extends AbstractElasticSearchDAO<Massimale> implements
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<Massimale> findMassimaleByQuery(MassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
+	public PageResult<Massimale> findMassimaleByQuery(IMassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
 		List<Massimale> listaMassimale = new ArrayList<Massimale>();
 		logger.debug("###############Try to find Massimale by Query: {}\n\n");
 

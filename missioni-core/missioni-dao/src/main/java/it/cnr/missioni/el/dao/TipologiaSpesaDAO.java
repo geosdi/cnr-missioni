@@ -14,7 +14,7 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 
 /**
@@ -52,7 +52,7 @@ public class TipologiaSpesaDAO extends AbstractElasticSearchDAO<TipologiaSpesa> 
  * @throws Exception
  */
 	@Override
-	public PageResult<TipologiaSpesa> findTipologiaSpesaByQuery(TipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder)
+	public PageResult<TipologiaSpesa> findTipologiaSpesaByQuery(ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder)
 			throws Exception {
 		List<TipologiaSpesa> listaTipologiaSpesa = new ArrayList<TipologiaSpesa>();
 		logger.debug("###############Try to find Tipologia Spesa by Query: {}\n\n");

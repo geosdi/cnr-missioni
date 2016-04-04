@@ -14,9 +14,8 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -53,7 +52,7 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<VeicoloCNR> findVeicoloCNRByQuery(VeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
+	public PageResult<VeicoloCNR> findVeicoloCNRByQuery(IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
 		List<VeicoloCNR> listaVeicoliCNR = new ArrayList<VeicoloCNR>();
 		logger.debug("###############Try to find VeicoloCNR by Query: {}\n\n");
 

@@ -14,7 +14,7 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.UserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 
 /**
@@ -31,7 +31,7 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
 	 * @throws Exception
 	 */
 	@Override
-	public PageResult<User> findUserByQuery(UserSearchBuilder userSearchBuilder) throws Exception {
+	public PageResult<User> findUserByQuery(IUserSearchBuilder userSearchBuilder) throws Exception {
 
 		List<User> listaUsers = new ArrayList<User>();
 		logger.debug("###############Try to find Users by Query: {}\n\n");
