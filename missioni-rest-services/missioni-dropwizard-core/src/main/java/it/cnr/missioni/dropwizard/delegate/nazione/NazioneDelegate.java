@@ -12,7 +12,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.INazioneDAO;
-import it.cnr.missioni.el.model.search.builder.NazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 
@@ -45,7 +45,7 @@ class NazioneDelegate implements INazioneDelegate {
 	@Override
 	public NazioneStore getNazioneByQuery(String id, int from, int size, boolean all) throws Exception {
 
-		NazioneSearchBuilder nazioneUserSearchBuilder = NazioneSearchBuilder.getNazioneSearchBuilder().withFrom(from)
+		INazioneSearchBuilder nazioneUserSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withFrom(from)
 				.withSize(size).withAll(all).withId(id);
 
 		PageResult<Nazione> pageResult = this.nazioneDAO.findNazioneByQuery(nazioneUserSearchBuilder);

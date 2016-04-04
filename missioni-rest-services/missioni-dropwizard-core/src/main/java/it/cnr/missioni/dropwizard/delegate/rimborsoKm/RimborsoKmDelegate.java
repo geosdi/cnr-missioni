@@ -12,7 +12,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.IRimborsoKmDAO;
-import it.cnr.missioni.el.model.search.builder.RimborsoKmSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 
@@ -43,7 +43,7 @@ class RimborsoKmDelegate implements IRimborsoKmDelegate {
 	@Override
 	public RimborsoKmStore getRimborsoKmByQuery() throws Exception {
 
-		RimborsoKmSearchBuilder rimborsoSearchBuilder = RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
+		IRimborsoKmSearchBuilder rimborsoSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
 
 		PageResult<RimborsoKm> pageResult = this.rimborsoKmDAO.findRimborsoKmByQuery(rimborsoSearchBuilder);
 		RimborsoKmStore rimborsoKmStore = new RimborsoKmStore();

@@ -13,7 +13,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.IPrenotazioneDAO;
-import it.cnr.missioni.el.model.search.builder.PrenotazioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 
@@ -89,7 +89,7 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 	@Override
 	public PrenotazioniStore getPrenotazioneByQuery(Long dataFrom, Long dataTo) throws Exception {
 
-		PrenotazioneSearchBuilder prenotazioneSearchBuilder = PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
+		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
 				.withRangeData(new DateTime(dataFrom), new DateTime(dataTo));
 		PageResult<Prenotazione> pageResult = this.prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder);
 

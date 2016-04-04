@@ -32,7 +32,7 @@ import it.cnr.missioni.el.dao.IDirettoreDAO;
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
-import it.cnr.missioni.el.model.search.builder.MissioneSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
@@ -205,8 +205,8 @@ class MissioneDelegate implements IMissioneDelegate {
 		DateTime fromRimborso = dataFromRimborso != null ? new DateTime(dataFromRimborso) : null;
 		DateTime toRimborso = dataToRimborso != null ? new DateTime(dataToRimborso) : null;
 
-		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withIdUser(idUser).withIdMissione(idMissione).withStato(stato)
+		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
+				.withIdUser(idUser).withId(idMissione).withStato(stato)
 				.withNumeroOrdineMissione(numeroOrdineRimborso).withRangeDataInserimento(fromInserimento, toInserimento)
 				.withRangeDataRimborso(fromRimborso, toRimborso).withOggetto(oggetto).withMultiMatch(multiMatch)
 				.withFieldExist(fieldExist).withFieldNotExist(fieldNotExist).withFrom(from).withSize(size);

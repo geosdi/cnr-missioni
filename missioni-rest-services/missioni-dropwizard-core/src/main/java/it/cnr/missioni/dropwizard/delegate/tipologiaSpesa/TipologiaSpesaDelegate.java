@@ -12,7 +12,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.ITipologiaSpesaDAO;
-import it.cnr.missioni.el.model.search.builder.TipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
@@ -51,7 +51,7 @@ class TipologiaSpesaDelegate implements ITipologiaSpesaDelegate {
 	public TipologiaSpesaStore getTipologiaSpesaByQuery(String id, boolean estera, boolean italia,
 			String tipologiaTrattamento, int from, int size, boolean all) throws Exception {
 
-		TipologiaSpesaSearchBuilder tipologiaSpesaUserSearchBuilder = TipologiaSpesaSearchBuilder
+		ITipologiaSpesaSearchBuilder tipologiaSpesaUserSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withFrom(from).withSize(size)
 				.withTipoTrattamento(tipologiaTrattamento).withAll(all).withId(id).withEstera(estera).withItalia(italia);
 

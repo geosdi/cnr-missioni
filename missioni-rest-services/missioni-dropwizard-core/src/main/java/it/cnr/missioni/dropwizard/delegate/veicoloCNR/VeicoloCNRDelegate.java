@@ -12,7 +12,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.IVeicoloCNRDAO;
-import it.cnr.missioni.el.model.search.builder.VeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -51,7 +51,7 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 	public VeicoloCNRStore getVeicoloCNRByQuery(String stato, String targa, String cartaCircolazione,
 			String polizzaAssicurtiva, String notId, int from, int size, boolean all) throws Exception {
 
-		VeicoloCNRSearchBuilder veicoloCNRSearchBuilder = VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
 				.withStato(stato).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurtiva)
 				.withTarga(targa).withNotId(notId).withFrom(from).withSize(size).withAll(all);
 

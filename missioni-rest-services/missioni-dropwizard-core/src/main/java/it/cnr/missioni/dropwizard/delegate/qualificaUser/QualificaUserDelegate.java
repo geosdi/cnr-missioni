@@ -12,7 +12,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.IQualificaUserDAO;
-import it.cnr.missioni.el.model.search.builder.QualificaUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 
@@ -45,7 +45,7 @@ class QualificaUserDelegate implements IQualificaUserDelegate {
 	@Override
 	public QualificaUserStore getQualificaUserByQuery(int from, int size, boolean all) throws Exception {
 
-		QualificaUserSearchBuilder qualificaUserSearchBuilder = QualificaUserSearchBuilder
+		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
 				.getQualificaUserSearchBuilder().withFrom(from).withSize(size).withAll(all);
 
 		PageResult<QualificaUser> pageResult = this.qualificaUserDAO

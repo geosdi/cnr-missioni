@@ -12,7 +12,7 @@ import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
 
 import it.cnr.missioni.el.dao.IMassimaleDAO;
-import it.cnr.missioni.el.model.search.builder.MassimaleSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
@@ -51,7 +51,7 @@ class MassimaleDelegate implements IMassimaleDelegate {
 	public MassimaleStore getMassimaleByQuery(int from, int size, String livello, String areaGeografica,String id, String notId,
 			String tipo) throws Exception {
 
-		MassimaleSearchBuilder massimaleUserSearchBuilder = MassimaleSearchBuilder.getMassimaleSearchBuilder()
+		IMassimaleSearchBuilder massimaleUserSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withFrom(from).withSize(size).withLivello(livello).withAreaGeografica(areaGeografica).withNotId(notId)
 				.withId(id)
 				.withTipo(tipo);
