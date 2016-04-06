@@ -36,11 +36,8 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
     @Override
     public PageResult<Missione> findMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception {
         List<Missione> listaMissioni = new ArrayList<Missione>();
-
         logger.debug("###############Try to find Missione by Query: {}\n\n");
-
         Page p = new Page(missioneSearchBuilder.getFrom(), missioneSearchBuilder.getSize());
-
         SearchResponse searchResponse = p
                 .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
                         .setQuery(missioneSearchBuilder.buildQuery()))
@@ -81,8 +78,8 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
     public String getMaxNumeroMissioneAnno() throws Exception {
         long value = 0;
         DateTime now = new DateTime();
-        DateTime from = now.withDayOfMonth(1).withMonthOfYear(1).withHourOfDay(0).withMinuteOfHour(0);
-        DateTime to = now.withYear(now.getYear()).withMonthOfYear(12).withDayOfMonth(31).withHourOfDay(23).withMinuteOfHour(59);
+		DateTime from = new DateTime(now.getYear(),1,1,0,0);
+		DateTime to = new DateTime(now.getYear(),12,31,23,59);
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
                 .withRangeDataInserimento(from, to);
         List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
