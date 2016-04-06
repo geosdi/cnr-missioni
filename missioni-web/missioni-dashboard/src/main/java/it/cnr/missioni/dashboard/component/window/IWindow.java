@@ -4,79 +4,102 @@ import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Responsive;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 
 /**
  * @author Salvia Vito
  */
-public interface IWindow {
+public interface IWindow<B, T> {
 
-	void build();
-	
-	
-	
+    T build();
 
-	public abstract class AbstractWindow extends Window implements IWindow {
+    T withModifica(boolean modifica);
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -8803859104808302749L;
-		private String ID;
-		protected VerticalLayout content;
-		protected TabSheet detailsWrapper;
-		protected HorizontalLayout footer ;
-		protected Button ok;
-		protected final boolean modifica;
-		protected final boolean isAdmin;
-		protected final boolean enabled;
+    T withEnabled(boolean enabled);
+
+    T withIsAdmin(boolean isAdmin);
+
+    T withBean(B bean);
 
 
-        public AbstractWindow(boolean isAdmin,boolean enabled,boolean modifica){
-			this.modifica = modifica;
-			this.enabled = enabled;
-			this.isAdmin = isAdmin;
-		}
+    public abstract class AbstractWindow<B, T> extends Window implements IWindow<B, T> {
 
-		public void build() {
-			addStyleName("profile-window");
-			setId(getID());
-			Responsive.makeResponsive(this);
-			setModal(true);
-			setCloseShortcut(KeyCode.ESCAPE, null);
-			setResizable(false);
-			setClosable(true);
-			setHeight(90.0f, Unit.PERCENTAGE);
+        /**
+         *
+         */
+        private static final long serialVersionUID = -8803859104808302749L;
+        protected VerticalLayout content;
+        protected TabSheet detailsWrapper;
+        protected HorizontalLayout footer;
+        protected Button ok;
+        protected boolean modifica;
+        protected boolean isAdmin;
+        protected boolean enabled;
+        protected B bean;
+        private String ID;
 
-			content = new VerticalLayout();
-			content.setSizeFull();
-			content.setMargin(new MarginInfo(true, false, false, false));
-			setContent(content);
-			detailsWrapper = new TabSheet();
-			detailsWrapper.setSizeFull();
-			detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-			detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
-			detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
-			content.addComponent(detailsWrapper);
-			content.setExpandRatio(detailsWrapper, 1f);
-			
-			this.footer = new HorizontalLayout();
-			this.footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
-			this.footer.setWidth(100.0f, Unit.PERCENTAGE);
-			
-			ok = new Button("OK");
-			ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        protected AbstractWindow() {
+        }
 
-		}
-		
-		protected HorizontalLayout buildTab(String caption,FontAwesome icon,Layout content){
+        public AbstractWindow(boolean isAdmin, boolean enabled, boolean modifica) {
+            this.modifica = modifica;
+            this.enabled = enabled;
+            this.isAdmin = isAdmin;
+        }
+
+        public T withModifica(boolean modifica) {
+            this.modifica = modifica;
+            return self();
+        }
+
+        public T withEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return self();
+        }
+
+        public T withIsAdmin(boolean isAdmin) {
+            this.isAdmin = isAdmin;
+            return self();
+        }
+
+        public T withBean(B bean) {
+            this.bean = bean;
+            return self();
+        }
+
+        protected void buildWindow() {
+            DashboardEventBus.post(new CloseOpenWindowsEvent());
+
+            addStyleName("profile-window");
+            setId(getID());
+            Responsive.makeResponsive(this);
+            setModal(true);
+            setCloseShortcut(KeyCode.ESCAPE, null);
+            setResizable(false);
+            setClosable(true);
+            setHeight(90.0f, Unit.PERCENTAGE);
+            content = new VerticalLayout();
+            content.setSizeFull();
+            content.setMargin(new MarginInfo(true, false, false, false));
+            setContent(content);
+            detailsWrapper = new TabSheet();
+            detailsWrapper.setSizeFull();
+            detailsWrapper.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+            detailsWrapper.addStyleName(ValoTheme.TABSHEET_ICONS_ON_TOP);
+            detailsWrapper.addStyleName(ValoTheme.TABSHEET_CENTERED_TABS);
+            content.addComponent(detailsWrapper);
+            content.setExpandRatio(detailsWrapper, 1f);
+            this.footer = new HorizontalLayout();
+            this.footer.addStyleName(ValoTheme.WINDOW_BOTTOM_TOOLBAR);
+            this.footer.setWidth(100.0f, Unit.PERCENTAGE);
+            ok = new Button("OK");
+            ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        }
+
+        protected HorizontalLayout buildTab(String caption, FontAwesome icon, Layout content) {
             HorizontalLayout tab = new HorizontalLayout();
             tab.setCaption(caption);
             tab.setIcon(icon);
@@ -84,26 +107,27 @@ public interface IWindow {
             tab.setSpacing(true);
             tab.setMargin(true);
             tab.addComponent(content);
-			return tab;
-		}
+            return tab;
+        }
 
-		protected abstract Component buildFooter();
+        protected abstract Component buildFooter();
 
-		
-		/**
-		 * @return the iD
-		 */
-		public String getID() {
-			return ID;
-		}
+        /**
+         * @return the iD
+         */
+        public String getID() {
+            return ID;
+        }
 
-		/**
-		 * @param iD
-		 */
-		public void setID(String iD) {
-			ID = iD;
-		}
+        /**
+         * @param iD
+         */
+        public void setID(String iD) {
+            ID = iD;
+        }
 
-	}
+        public abstract T self();
+
+    }
 
 }

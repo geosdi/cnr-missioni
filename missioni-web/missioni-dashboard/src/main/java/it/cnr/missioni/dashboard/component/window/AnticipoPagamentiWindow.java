@@ -1,7 +1,5 @@
 package it.cnr.missioni.dashboard.component.window;
 
-import org.vaadin.dialogs.ConfirmDialog;
-
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.server.FontAwesome;
@@ -11,111 +9,112 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
-
 import it.cnr.missioni.dashboard.action.AnticipoPagamentoAction;
-import it.cnr.missioni.dashboard.component.form.anticipopagamenti.DatiAnticipoPagamentoForm;
+import it.cnr.missioni.dashboard.component.form.anticipopagamenti.IDatiAnticipoPagamentoForm;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiAnticipoPagamenti;
 import it.cnr.missioni.model.missione.Missione;
+import org.vaadin.dialogs.ConfirmDialog;
 
-public class AnticipoPagamentiWindow extends IWindow.AbstractWindow {
+public class AnticipoPagamentiWindow extends IWindow.AbstractWindow<Missione, AnticipoPagamentiWindow> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5199469615215392155L;
-	public static final String ID = "anticipoPagamentiwindow";
+    public static final String ID = "anticipoPagamentiwindow";
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5199469615215392155L;
+    private DatiAnticipoPagamenti anticipoPagamenti;
+    private IDatiAnticipoPagamentoForm datiAnticipoPagamentoForm;
 
-	private DatiAnticipoPagamenti anticipoPagamenti;
-	private DatiAnticipoPagamentoForm datiAnticipoPagamentoForm;
-	private Missione missione;
+    protected AnticipoPagamentiWindow() {
+    }
 
-	private AnticipoPagamentiWindow(final Missione missione,boolean isAdmin,boolean enabled, boolean modifica) {
-		super(isAdmin,enabled,modifica);
-		this.anticipoPagamenti = missione.getDatiAnticipoPagamenti();
-		this.missione = missione;
-		setId(ID);
-		build();
-		buildTab();
-		content.addComponent(buildFooter());
-		this.setWidth("40%");
-	}
+    public static AnticipoPagamentiWindow getAnticipoPagamentiWindow() {
+        return new AnticipoPagamentiWindow();
+    }
 
-	private void buildTab() {
-		this.datiAnticipoPagamentoForm = new DatiAnticipoPagamentoForm(anticipoPagamenti,missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum(), isAdmin, enabled, modifica);
-		detailsWrapper.addComponent(buildTab("Anticipo di Pagamento", FontAwesome.EURO, this.datiAnticipoPagamentoForm));
+    public AnticipoPagamentiWindow build() {
+        this.anticipoPagamenti = bean.getDatiAnticipoPagamenti();
+        setId(ID);
+        buildWindow();
+        buildTab();
+        content.addComponent(buildFooter());
+        this.setWidth("40%");
+        UI.getCurrent().addWindow(this);
+        this.focus();
+        return self();
+    }
 
-	}
+    private void buildTab() {
+        // this.datiAnticipoPagamentoForm = new
+        // DatiAnticipoPagamentoForm(anticipoPagamenti,missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum(),
+        // isAdmin, enabled, modifica);
+        this.datiAnticipoPagamentoForm = IDatiAnticipoPagamentoForm.DatiAnticipoPagamentoForm
+                .getDatiAnticipoPagamentoForm()
+                .withTrattamentoMissioneEstera(bean.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum())
+                .withBean(anticipoPagamenti).withEnabled(enabled).withIsAdmin(isAdmin).withModifica(modifica);
+        detailsWrapper
+                .addComponent(buildTab("Anticipo di Pagamento", FontAwesome.EURO, this.datiAnticipoPagamentoForm));
 
-	protected Component buildFooter() {
+    }
 
-		ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
-		ok.addClickListener(new ClickListener() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = -4078143920654711489L;
+    protected Component buildFooter() {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
+        ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
+        ok.addClickListener(new ClickListener() {
+            /**
+             *
+             */
+            private static final long serialVersionUID = -4078143920654711489L;
 
-				try {
-					DatiAnticipoPagamenti datiAnticipoPagamenti = datiAnticipoPagamentoForm.validate();
-					datiAnticipoPagamenti.setInserted(true);
-					missione.setDatiAnticipoPagamenti(datiAnticipoPagamenti);
-					
-					if(!isAdmin){
-					
-					ConfirmDialog.show(UI.getCurrent(), "Conferma",
-							"L'anticipo di pagamento inserito non potrà essere più modificato. Verrà inviata una mail all'amministratore con i dati dell'anticipo di pagamento inserito.",
-							"Ok", "No", new ConfirmDialog.Listener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                try {
+                    DatiAnticipoPagamenti datiAnticipoPagamenti = datiAnticipoPagamentoForm.validate();
+                    datiAnticipoPagamenti.setInserted(true);
+                    bean.setDatiAnticipoPagamenti(datiAnticipoPagamenti);
+                    if (!isAdmin) {
+                        ConfirmDialog.show(UI.getCurrent(), "Conferma",
+                                "L'anticipo di pagamento inserito non potrà essere più modificato. Verrà inviata una mail all'amministratore con i dati dell'anticipo di pagamento inserito.",
+                                "Ok", "No", new ConfirmDialog.Listener() {
 
-								/**
-								 * 
-								 */
-								private static final long serialVersionUID = -7447338746066450343L;
+                                    /**
+                                     *
+                                     */
+                                    private static final long serialVersionUID = -7447338746066450343L;
 
-								public void onClose(ConfirmDialog dialog) {
-									if (dialog.isConfirmed()) {
-										conclude();
-									} else {
+                                    public void onClose(ConfirmDialog dialog) {
+                                        if (dialog.isConfirmed()) {
+                                            conclude();
+                                        } else {
+                                        }
+                                    }
+                                });
+                    } else {
+                        conclude();
+                    }
+                } catch (InvalidValueException | CommitException e) {
+                    Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
+                            Type.ERROR_MESSAGE);
+                }
+            }
+        });
+        ok.focus();
+        footer.addComponent(ok);
+        footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
+        return footer;
+    }
 
-									}
-								}
-							});
-					
-					}else{
-						conclude();
-					}
+    private void conclude() {
+        DashboardEventBus.post(new AnticipoPagamentoAction(bean));
+        DashboardEventBus.post(new CloseOpenWindowsEvent());
+    }
 
-
-				} catch (InvalidValueException | CommitException e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
-							Type.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		ok.focus();
-		footer.addComponent(ok);
-		footer.setComponentAlignment(ok, Alignment.TOP_RIGHT);
-		return footer;
-	}
-	
-	private void conclude(){
-		DashboardEventBus.post(new AnticipoPagamentoAction(missione));
-		DashboardEventBus.post(new CloseOpenWindowsEvent());
-	}
-
-	public static void open(final Missione missione,final boolean isAdmin,final boolean enabled,final boolean modifica) {
-		DashboardEventBus.post(new CloseOpenWindowsEvent());
-		Window w = new AnticipoPagamentiWindow(missione, isAdmin,enabled,modifica);
-		UI.getCurrent().addWindow(w);
-		w.focus();
-	}
+    public AnticipoPagamentiWindow self() {
+        return this;
+    }
 
 }
