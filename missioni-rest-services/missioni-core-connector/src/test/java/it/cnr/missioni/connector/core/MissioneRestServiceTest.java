@@ -38,7 +38,6 @@ package it.cnr.missioni.connector.core;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ws.rs.core.Response;
@@ -62,7 +61,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
-import it.cnr.missioni.el.utility.MissioneFunction;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
@@ -151,12 +149,10 @@ public class MissioneRestServiceTest {
 		missione_update.setIdUser("01");
 		Rimborso r = new Rimborso();
 		missione_update.setRimborso(r);
-
 		missioniCoreClientConnector.updateMissione(missione_update);
 		Thread.sleep(1000);
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
 				.getMissioneSearchBuilder().withId("M_04");
-
 		missioneSearchBuilder.withId("M_04");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		logger.debug("############################NUMERO ORDINE MISSIONE\n"
