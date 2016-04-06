@@ -1,200 +1,190 @@
 package it.cnr.missioni.model.user;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * @author Salvia Vito
  */
-public class DatiCNR implements Serializable{
+public class DatiCNR implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1534365538828825181L;
-	@NotNull
-	private LivelloUserEnum livello;
-	@NotBlank
-	private String IdQualifica;
-	@NotBlank
-	private String descrizioneQualifica;
-	private String datoreLavoro;
-	private String shortDescriptionDatoreLavoro;
-	@NotBlank
-	private String matricola;
-	private String codiceTerzo;
-	@NotBlank
-	@Email
-	private String mail;
-	@NotBlank
-	private String iban;
-	
-	public enum LivelloUserEnum {
-		
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1534365538828825181L;
+    @NotNull
+    private LivelloUserEnum livello;
+    @NotBlank
+    private String IdQualifica;
+    @NotBlank
+    private String descrizioneQualifica;
+    private String datoreLavoro;
+    private String shortDescriptionDatoreLavoro;
+    @NotBlank
+    private String matricola;
+    private String codiceTerzo;
+    @NotBlank
+    @Email
+    private String mail;
+    @NotBlank
+    private String iban;
 
-		
-		I(1),II(2),III(3),IV(4),V(5),VI(6),VII(7),VIII(8);
-		
-		private final int stato;
-		
-		LivelloUserEnum(int stato){
-			this.stato = stato;
-		}
+    /**
+     * @return the livello
+     */
+    public LivelloUserEnum getLivello() {
+        return livello;
+    }
 
-		/**
-		 * @return the stato
-		 */
-		public int getStato() {
-			return stato;
-		}
-		
-	}
+    /**
+     * @param livello
+     */
+    public void setLivello(LivelloUserEnum livello) {
+        this.livello = livello;
+    }
 
+    /**
+     * @return the idQualifica
+     */
+    public String getIdQualifica() {
+        return IdQualifica;
+    }
 
+    /**
+     * @param idQualifica
+     */
+    public void setIdQualifica(String idQualifica) {
+        IdQualifica = idQualifica;
+    }
 
+    /**
+     * @return the descrizioneQualifica
+     */
+    public String getDescrizioneQualifica() {
+        return descrizioneQualifica;
+    }
 
+    /**
+     * @param descrizioneQualifica
+     */
+    public void setDescrizioneQualifica(String descrizioneQualifica) {
+        this.descrizioneQualifica = descrizioneQualifica;
+    }
 
-	/**
-	 * @return the livello
-	 */
-	public LivelloUserEnum getLivello() {
-		return livello;
-	}
+    /**
+     * @return the datoreLavoro
+     */
+    public String getDatoreLavoro() {
+        return datoreLavoro;
+    }
 
-	/**
-	 * @param livello 
-	 */
-	public void setLivello(LivelloUserEnum livello) {
-		this.livello = livello;
-	}
+    /**
+     * @param datoreLavoro
+     */
+    public void setDatoreLavoro(String datoreLavoro) {
+        this.datoreLavoro = datoreLavoro;
+    }
 
-	/**
-	 * @return the idQualifica
-	 */
-	public String getIdQualifica() {
-		return IdQualifica;
-	}
+    /**
+     * @return the shortDescriptionDatoreLavoro
+     */
+    public String getShortDescriptionDatoreLavoro() {
+        return shortDescriptionDatoreLavoro;
+    }
 
-	/**
-	 * @param idQualifica 
-	 */
-	public void setIdQualifica(String idQualifica) {
-		IdQualifica = idQualifica;
-	}
+    /**
+     * @param shortDescriptionDatoreLavoro
+     */
+    public void setShortDescriptionDatoreLavoro(String shortDescriptionDatoreLavoro) {
+        this.shortDescriptionDatoreLavoro = shortDescriptionDatoreLavoro;
+    }
 
-	/**
-	 * @return the descrizioneQualifica
-	 */
-	public String getDescrizioneQualifica() {
-		return descrizioneQualifica;
-	}
+    /**
+     * @return the matricola
+     */
+    public String getMatricola() {
+        return matricola;
+    }
 
-	/**
-	 * @param descrizioneQualifica 
-	 */
-	public void setDescrizioneQualifica(String descrizioneQualifica) {
-		this.descrizioneQualifica = descrizioneQualifica;
-	}
+    /**
+     * @param matricola
+     */
+    public void setMatricola(String matricola) {
+        this.matricola = matricola;
+    }
 
-	/**
-	 * @return the datoreLavoro
-	 */
-	public String getDatoreLavoro() {
-		return datoreLavoro;
-	}
+    /**
+     * @return the codiceTerzo
+     */
+    public String getCodiceTerzo() {
+        return codiceTerzo;
+    }
 
-	/**
-	 * @param datoreLavoro
-	 */
-	public void setDatoreLavoro(String datoreLavoro) {
-		this.datoreLavoro = datoreLavoro;
-	}
+    /**
+     * @param codiceTerzo
+     */
+    public void setCodiceTerzo(String codiceTerzo) {
+        this.codiceTerzo = codiceTerzo;
+    }
 
-	/**
-	 * @return the shortDescriptionDatoreLavoro
-	 */
-	public String getShortDescriptionDatoreLavoro() {
-		return shortDescriptionDatoreLavoro;
-	}
+    /**
+     * @return the mail
+     */
+    public String getMail() {
+        return mail;
+    }
 
-	/**
-	 * @param shortDescriptionDatoreLavoro 
-	 */
-	public void setShortDescriptionDatoreLavoro(String shortDescriptionDatoreLavoro) {
-		this.shortDescriptionDatoreLavoro = shortDescriptionDatoreLavoro;
-	}
+    /**
+     * @param mail
+     */
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
-	/**
-	 * @return the matricola
-	 */
-	public String getMatricola() {
-		return matricola;
-	}
+    /**
+     * @return the iban
+     */
+    public String getIban() {
+        return iban;
+    }
 
-	/**
-	 * @param matricola
-	 */
-	public void setMatricola(String matricola) {
-		this.matricola = matricola;
-	}
+    /**
+     * @param iban
+     */
+    public void setIban(String iban) {
+        this.iban = iban;
+    }
 
-	/**
-	 * @return the codiceTerzo
-	 */
-	public String getCodiceTerzo() {
-		return codiceTerzo;
-	}
+    /**
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "DatiCNR [livello=" + livello + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
+                + descrizioneQualifica + ", datoreLavoro=" + datoreLavoro + ", shortDescriptionDatoreLavoro="
+                + shortDescriptionDatoreLavoro + ", matricola=" + matricola + ", codiceTerzo=" + codiceTerzo + ", mail="
+                + mail + ", iban=" + iban + "]";
+    }
 
-	/**
-	 * @param codiceTerzo
-	 */
-	public void setCodiceTerzo(String codiceTerzo) {
-		this.codiceTerzo = codiceTerzo;
-	}
+    public enum LivelloUserEnum {
 
-	/**
-	 * @return the mail
-	 */
-	public String getMail() {
-		return mail;
-	}
+        I(1), II(2), III(3), IV(4), V(5), VI(6), VII(7), VIII(8);
 
-	/**
-	 * @param mail
-	 */
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+        private final int stato;
 
-	/**
-	 * @return the iban
-	 */
-	public String getIban() {
-		return iban;
-	}
+        LivelloUserEnum(int stato) {
+            this.stato = stato;
+        }
 
-	/**
-	 * @param iban
-	 */
-	public void setIban(String iban) {
-		this.iban = iban;
-	}
+        /**
+         * @return the stato
+         */
+        public int getStato() {
+            return stato;
+        }
 
-	/**
-	 * @return
-	 */
-	@Override
-	public String toString() {
-		return "DatiCNR [livello=" + livello + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
-				+ descrizioneQualifica + ", datoreLavoro=" + datoreLavoro + ", shortDescriptionDatoreLavoro="
-				+ shortDescriptionDatoreLavoro + ", matricola=" + matricola + ", codiceTerzo=" + codiceTerzo + ", mail="
-				+ mail + ", iban=" + iban + "]";
-	}
-
-
-
+    }
 }

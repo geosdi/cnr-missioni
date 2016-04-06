@@ -1,136 +1,134 @@
 package it.cnr.missioni.model.missione;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.Min;
+import java.io.Serializable;
 
 /**
  * @author Salvia Vito
  */
-public class DatiAnticipoPagamenti implements Serializable{
+public class DatiAnticipoPagamenti implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3198450987570600338L;
-	private String mandatoCNR;
-	@Min(value = 0)
-	private double speseMissioniAnticipate;
-	private TrattamentoMissioneEsteraEnum trattamentoMissioneEstera;
-	private boolean speseAlberghiere;
-	private boolean speseViaggioDocumentato;
-	private boolean speseViaggioTam;
-	private boolean prospetto;
-	private boolean inserted;
-	
-	/**
-	 * @return the mandatoCNR
-	 */
-	public String getMandatoCNR() {
-		return mandatoCNR;
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3198450987570600338L;
+    private String mandatoCNR;
+    @Min(value = 0)
+    private double speseMissioniAnticipate;
+    private TrattamentoMissioneEsteraEnum trattamentoMissioneEstera;
+    private boolean speseAlberghiere;
+    private boolean speseViaggioDocumentato;
+    private boolean speseViaggioTam;
+    private boolean prospetto;
+    private boolean inserted;
 
-	/**
-	 * @param mandatoCNR
-	 */
-	public void setMandatoCNR(String mandatoCNR) {
-		this.mandatoCNR = mandatoCNR;
-	}
+    /**
+     * @return the mandatoCNR
+     */
+    public String getMandatoCNR() {
+        return mandatoCNR;
+    }
 
-	/**
-	 * @return the speseMissioniAnticipate
-	 */
-	public double getSpeseMissioniAnticipate() {
-		return speseMissioniAnticipate;
-	}
+    /**
+     * @param mandatoCNR
+     */
+    public void setMandatoCNR(String mandatoCNR) {
+        this.mandatoCNR = mandatoCNR;
+    }
 
-	/**
-	 * @param speseMissioniAnticipate
-	 */
-	public void setSpeseMissioniAnticipate(double speseMissioniAnticipate) {
-		this.speseMissioniAnticipate = speseMissioniAnticipate;
-	}
+    /**
+     * @return the speseMissioniAnticipate
+     */
+    public double getSpeseMissioniAnticipate() {
+        return speseMissioniAnticipate;
+    }
 
-	/**
-	 * @return the speseAlberghiere
-	 */
-	public boolean isSpeseAlberghiere() {
-		return speseAlberghiere;
-	}
+    /**
+     * @param speseMissioniAnticipate
+     */
+    public void setSpeseMissioniAnticipate(double speseMissioniAnticipate) {
+        this.speseMissioniAnticipate = speseMissioniAnticipate;
+    }
 
-	/**
-	 * @param speseAlberghiere 
-	 */
-	public void setSpeseAlberghiere(boolean speseAlberghiere) {
-		this.speseAlberghiere = speseAlberghiere;
-	}
+    /**
+     * @return the speseAlberghiere
+     */
+    public boolean isSpeseAlberghiere() {
+        return speseAlberghiere;
+    }
 
-	/**
-	 * @return the speseViaggioDocumentato
-	 */
-	public boolean isSpeseViaggioDocumentato() {
-		return speseViaggioDocumentato;
-	}
+    /**
+     * @param speseAlberghiere
+     */
+    public void setSpeseAlberghiere(boolean speseAlberghiere) {
+        this.speseAlberghiere = speseAlberghiere;
+    }
 
-	/**
-	 * @param speseViaggioDocumentato 
-	 */
-	public void setSpeseViaggioDocumentato(boolean speseViaggioDocumentato) {
-		this.speseViaggioDocumentato = speseViaggioDocumentato;
-	}
+    /**
+     * @return the speseViaggioDocumentato
+     */
+    public boolean isSpeseViaggioDocumentato() {
+        return speseViaggioDocumentato;
+    }
 
-	/**
-	 * @return the speseViaggioTam
-	 */
-	public boolean isSpeseViaggioTam() {
-		return speseViaggioTam;
-	}
+    /**
+     * @param speseViaggioDocumentato
+     */
+    public void setSpeseViaggioDocumentato(boolean speseViaggioDocumentato) {
+        this.speseViaggioDocumentato = speseViaggioDocumentato;
+    }
 
-	/**
-	 * @param speseViaggioTam 
-	 */
-	public void setSpeseViaggioTam(boolean speseViaggioTam) {
-		this.speseViaggioTam = speseViaggioTam;
-	}
+    /**
+     * @return the speseViaggioTam
+     */
+    public boolean isSpeseViaggioTam() {
+        return speseViaggioTam;
+    }
 
-	/**
-	 * @return the prospetto
-	 */
-	public boolean isProspetto() {
-		return prospetto;
-	}
+    /**
+     * @param speseViaggioTam
+     */
+    public void setSpeseViaggioTam(boolean speseViaggioTam) {
+        this.speseViaggioTam = speseViaggioTam;
+    }
 
-	/**
-	 * @param prospetto 
-	 */
-	public void setProspetto(boolean prospetto) {
-		this.prospetto = prospetto;
-	}
+    /**
+     * @return the prospetto
+     */
+    public boolean isProspetto() {
+        return prospetto;
+    }
 
-	/**
-	 * @return the inserted
-	 */
-	public boolean isInserted() {
-		return inserted;
-	}
+    /**
+     * @param prospetto
+     */
+    public void setProspetto(boolean prospetto) {
+        this.prospetto = prospetto;
+    }
 
-	/**
-	 * @param inserted 
-	 */
-	public void setInserted(boolean inserted) {
-		this.inserted = inserted;
-	}
+    /**
+     * @return the inserted
+     */
+    public boolean isInserted() {
+        return inserted;
+    }
 
-	/**
-	 * @return
-	 */
-	@Override
-	public String toString() {
-		return "DatiAnticipoPagamenti [mandatoCNR=" + mandatoCNR + ", speseMissioniAnticipate="
-				+ speseMissioniAnticipate + ", trattamentoMissioneEstera=" + trattamentoMissioneEstera
-				+ ", speseAlberghiere=" + speseAlberghiere + ", speseViaggioDocumentato=" + speseViaggioDocumentato
-				+ ", speseViaggioTam=" + speseViaggioTam + ", prospetto=" + prospetto + ", inserted=" + inserted + "]";
-	}
+    /**
+     * @param inserted
+     */
+    public void setInserted(boolean inserted) {
+        this.inserted = inserted;
+    }
 
+    /**
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "DatiAnticipoPagamenti [mandatoCNR=" + mandatoCNR + ", speseMissioniAnticipate="
+                + speseMissioniAnticipate + ", trattamentoMissioneEstera=" + trattamentoMissioneEstera
+                + ", speseAlberghiere=" + speseAlberghiere + ", speseViaggioDocumentato=" + speseViaggioDocumentato
+                + ", speseViaggioTam=" + speseViaggioTam + ", prospetto=" + prospetto + ", inserted=" + inserted + "]";
+    }
 
 }
