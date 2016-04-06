@@ -1,20 +1,18 @@
 package it.cnr.missioni.dropwizard.delegate.nazione;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.INazioneDAO;
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-
-import it.cnr.missioni.el.dao.INazioneDAO;
-import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
-import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
+import javax.annotation.Resource;
 
 /**
  * 
@@ -53,7 +51,6 @@ class NazioneDelegate implements INazioneDelegate {
 		nazioneStore.setNazione(pageResult.getResults());
 		nazioneStore.setTotale(pageResult.getTotal());
 		return nazioneStore;
-
 	}
 
 	/**
@@ -70,7 +67,6 @@ class NazioneDelegate implements INazioneDelegate {
 		if (nazione.getId() == null)
 			nazione.setId(gen.generate().toString());
 		return this.nazioneDAO.persist(nazione).getId();
-
 	}
 
 	/**

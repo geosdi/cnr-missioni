@@ -1,20 +1,18 @@
 package it.cnr.missioni.dropwizard.delegate.qualificaUser;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.IQualificaUserDAO;
+import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
+import it.cnr.missioni.model.configuration.QualificaUser;
+import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-
-import it.cnr.missioni.el.dao.IQualificaUserDAO;
-import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
-import it.cnr.missioni.model.configuration.QualificaUser;
-import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
+import javax.annotation.Resource;
 
 /**
  * 
@@ -36,21 +34,19 @@ class QualificaUserDelegate implements IQualificaUserDelegate {
 	private IQualificaUserDAO qualificaUserDAO;
 
 	/**
-	 * 
+	 * @param id
 	 * @param from
 	 * @param size
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public QualificaUserStore getQualificaUserByQuery(int from, int size, boolean all) throws Exception {
+	public QualificaUserStore getQualificaUserByQuery(String id,int from, int size, boolean all) throws Exception {
 
 		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
-				.getQualificaUserSearchBuilder().withFrom(from).withSize(size).withAll(all);
-
+				.getQualificaUserSearchBuilder().withId(id).withFrom(from).withSize(size).withAll(all);
 		PageResult<QualificaUser> pageResult = this.qualificaUserDAO
 				.findQualificaUserByQuery(qualificaUserSearchBuilder);
-
 		QualificaUserStore qualificaUserStore = new QualificaUserStore();
 		qualificaUserStore.setQualificaUser(pageResult.getResults());
 		qualificaUserStore.setTotale(pageResult.getTotal());
@@ -72,7 +68,6 @@ class QualificaUserDelegate implements IQualificaUserDelegate {
 		if (qualificaUser.getId() == null)
 			qualificaUser.setId(gen.generate().toString());
 		return this.qualificaUserDAO.persist(qualificaUser).getId();
-
 	}
 
 	/**

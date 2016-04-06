@@ -1,21 +1,19 @@
 package it.cnr.missioni.dropwizard.delegate.prenotazione;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.IPrenotazioneDAO;
+import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
+import it.cnr.missioni.model.prenotazione.Prenotazione;
+import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-
-import it.cnr.missioni.el.dao.IPrenotazioneDAO;
-import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
-import it.cnr.missioni.model.prenotazione.Prenotazione;
-import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
+import javax.annotation.Resource;
 
 /**
  * 
@@ -49,7 +47,6 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 		if (prenotazione.getId() == null)
 			prenotazione.setId(gen.generate().toString());
 		return this.prenotazioneDAO.persist(prenotazione).getId();
-
 	}
 
 	/**
@@ -67,7 +64,7 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 	}
 
 	/**
-	 * @param prenotazione
+	 * @param prenotazioneID
 	 * @return
 	 * @throws Exception
 	 */
@@ -88,11 +85,9 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 	 */
 	@Override
 	public PrenotazioniStore getPrenotazioneByQuery(Long dataFrom, Long dataTo) throws Exception {
-
 		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
 				.withRangeData(new DateTime(dataFrom), new DateTime(dataTo));
 		PageResult<Prenotazione> pageResult = this.prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder);
-
 		PrenotazioniStore prenotazioniStore = new PrenotazioniStore();
 		prenotazioniStore.setPrenotazioni(pageResult.getResults());
 		prenotazioniStore.setTotale(pageResult.getTotal());

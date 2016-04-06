@@ -1,20 +1,18 @@
 package it.cnr.missioni.dropwizard.delegate.rimborsoKm;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.IRimborsoKmDAO;
+import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
+import it.cnr.missioni.model.configuration.RimborsoKm;
+import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-
-import it.cnr.missioni.el.dao.IRimborsoKmDAO;
-import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
-import it.cnr.missioni.model.configuration.RimborsoKm;
-import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
+import javax.annotation.Resource;
 
 /**
  * 
@@ -42,9 +40,7 @@ class RimborsoKmDelegate implements IRimborsoKmDelegate {
 	 */
 	@Override
 	public RimborsoKmStore getRimborsoKmByQuery() throws Exception {
-
 		IRimborsoKmSearchBuilder rimborsoSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
-
 		PageResult<RimborsoKm> pageResult = this.rimborsoKmDAO.findRimborsoKmByQuery(rimborsoSearchBuilder);
 		RimborsoKmStore rimborsoKmStore = new RimborsoKmStore();
 		rimborsoKmStore.setRimborsoKm(pageResult.getResults());

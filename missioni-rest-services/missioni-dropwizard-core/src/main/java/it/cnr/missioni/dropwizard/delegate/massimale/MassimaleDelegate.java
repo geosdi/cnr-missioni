@@ -1,20 +1,18 @@
 package it.cnr.missioni.dropwizard.delegate.massimale;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.IMassimaleDAO;
+import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
+import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-
-import it.cnr.missioni.el.dao.IMassimaleDAO;
-import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
-import it.cnr.missioni.model.configuration.Massimale;
-import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
+import javax.annotation.Resource;
 
 /**
  * 
@@ -50,7 +48,6 @@ class MassimaleDelegate implements IMassimaleDelegate {
 	@Override
 	public MassimaleStore getMassimaleByQuery(int from, int size, String livello, String areaGeografica,String id, String notId,
 			String tipo) throws Exception {
-
 		IMassimaleSearchBuilder massimaleUserSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withFrom(from).withSize(size).withLivello(livello).withAreaGeografica(areaGeografica).withNotId(notId)
 				.withId(id)
@@ -61,7 +58,6 @@ class MassimaleDelegate implements IMassimaleDelegate {
 		massimaleStore.setMassimale(pageResult.getResults());
 		massimaleStore.setTotale(pageResult.getTotal());
 		return massimaleStore;
-
 	}
 
 	/**
@@ -78,7 +74,6 @@ class MassimaleDelegate implements IMassimaleDelegate {
 		if (massimale.getId() == null)
 			massimale.setId(gen.generate().toString());
 		return this.massimaleDAO.persist(massimale).getId();
-
 	}
 
 	/**

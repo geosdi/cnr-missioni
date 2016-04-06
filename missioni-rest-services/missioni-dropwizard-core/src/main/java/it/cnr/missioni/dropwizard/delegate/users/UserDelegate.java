@@ -1,21 +1,18 @@
 package it.cnr.missioni.dropwizard.delegate.users;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.IUserDAO;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.response.user.UserStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import com.itextpdf.text.log.SysoCounter;
-
-import it.cnr.missioni.el.dao.IUserDAO;
-import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
-import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.rest.api.response.user.UserStore;
+import javax.annotation.Resource;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -63,7 +60,6 @@ class UserDelegate implements IUserDelegate {
 			String username, String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa,
 			String iban, String mail, String notId, String id, Boolean responsabileGruppo, String multiMatch,String searchType,
 			boolean all, int from, int size) throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withNome(nome)
 				.withCognome(cognome).withCodiceFiscale(codiceFiscale)
 				.withSearchType(searchType)
@@ -71,16 +67,12 @@ class UserDelegate implements IUserDelegate {
 				.withTarga(targa).withNumeroPatente(numeroPatente).withCartaCircolazione(cartaCircolazione)
 				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withNotId(notId).withId(id)
 				.withMultiMatch(multiMatch).withResponsabileGruppo(responsabileGruppo).withAll(all).withFrom(from)
-
 				.withSize(size);
-
-		
 		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
 		UserStore userStore = new UserStore();
 		userStore.setUsers(pageResult.getResults());
 		userStore.setTotale(pageResult.getTotal());
 		return userStore;
-
 	}
 
 	/**
@@ -89,7 +81,6 @@ class UserDelegate implements IUserDelegate {
 	 */
 	@Override
 	public UserStore getLastUserMissions() throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -107,7 +98,6 @@ class UserDelegate implements IUserDelegate {
 		if (user.getId() == null)
 			user.setId(gen.generate().toString());
 		return this.userDAO.persist(user).getId();
-
 	}
 
 	/**
@@ -149,7 +139,6 @@ class UserDelegate implements IUserDelegate {
 	 */
 	@Override
 	public Boolean authorize(String userName, String password) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

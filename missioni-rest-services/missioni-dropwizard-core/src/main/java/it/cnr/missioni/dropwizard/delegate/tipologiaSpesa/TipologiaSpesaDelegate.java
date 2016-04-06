@@ -1,20 +1,18 @@
 package it.cnr.missioni.dropwizard.delegate.tipologiaSpesa;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.ITipologiaSpesaDAO;
+import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-
-import it.cnr.missioni.el.dao.ITipologiaSpesaDAO;
-import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
-import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
+import javax.annotation.Resource;
 
 /**
  * 
@@ -50,11 +48,9 @@ class TipologiaSpesaDelegate implements ITipologiaSpesaDelegate {
 	@Override
 	public TipologiaSpesaStore getTipologiaSpesaByQuery(String id, boolean estera, boolean italia,
 			String tipologiaTrattamento, int from, int size, boolean all) throws Exception {
-
 		ITipologiaSpesaSearchBuilder tipologiaSpesaUserSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withFrom(from).withSize(size)
 				.withTipoTrattamento(tipologiaTrattamento).withAll(all).withId(id).withEstera(estera).withItalia(italia);
-
 		PageResult<TipologiaSpesa> pageResult = this.tipologiaSpesaDAO
 				.findTipologiaSpesaByQuery(tipologiaSpesaUserSearchBuilder);
 		TipologiaSpesaStore tipologiaSpesaStore = new TipologiaSpesaStore();
