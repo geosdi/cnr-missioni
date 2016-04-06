@@ -82,10 +82,10 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("idUser", missioneSearchBuilder.getIdUser())
                 .queryParam("stato", missioneSearchBuilder.getStato())
                 .queryParam("numeroOrdineRimborso", missioneSearchBuilder.getNumeroOrdineRimborso())
-                .queryParam("dataFromMissione", missioneSearchBuilder.getFromDataInserimento()!= null ?  missioneSearchBuilder.getFromDataInserimento().toDateTime().getMillis():null)
-                .queryParam("dataToMissione", missioneSearchBuilder.getToDataInserimento()!= null ? missioneSearchBuilder.getToDataInserimento().toDateTime().getMillis():null)
-                .queryParam("dataFromRimborso",missioneSearchBuilder.getFromDataRimbroso()!= null ? missioneSearchBuilder.getFromDataRimbroso().toDateTime().getMillis():null)
-                .queryParam("dataToRimborso",missioneSearchBuilder.getToDataRimbroso()!= null ? missioneSearchBuilder.getToDataRimbroso().toDateTime().getMillis():null)
+                .queryParam("dataFromMissione", missioneSearchBuilder.getFromDataInserimento() != null ? missioneSearchBuilder.getFromDataInserimento().toDateTime().getMillis() : null)
+                .queryParam("dataToMissione", missioneSearchBuilder.getToDataInserimento() != null ? missioneSearchBuilder.getToDataInserimento().toDateTime().getMillis() : null)
+                .queryParam("dataFromRimborso", missioneSearchBuilder.getFromDataRimbroso() != null ? missioneSearchBuilder.getFromDataRimbroso().toDateTime().getMillis() : null)
+                .queryParam("dataToRimborso", missioneSearchBuilder.getToDataRimbroso() != null ? missioneSearchBuilder.getToDataRimbroso().toDateTime().getMillis() : null)
                 .queryParam("oggetto", missioneSearchBuilder.getOggetto())
                 .queryParam("multiMatch", missioneSearchBuilder.getMultiMatchValue())
                 .queryParam("fieldExist", missioneSearchBuilder.getFieldExist())
@@ -119,7 +119,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(missione,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
+
     public boolean updateMissioneForAnticipo(Missione missione) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/updateMissioneForAnticipo/")
@@ -127,7 +127,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(missione,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
+
     public boolean updateRimborso(Missione missione) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/updateRimborso/")
@@ -188,7 +188,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(user,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
+
     public PrenotazioniStore getPrenotazioneByQuery(IPrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/prenotazioni/getPrenotazioniByQuery/")
@@ -197,8 +197,6 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(PrenotazioniStore.class);
     }
-
-
 
 
     public String addPrenotazione(Prenotazione prenotazione) throws Exception {
@@ -224,7 +222,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(prenotazione,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
+
     public VeicoloCNRStore getVeicoloCNRByQuery(IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/veicoloCNR/getVeicoloCNRByQuery/")
@@ -233,13 +231,14 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .queryParam("cartaCircolazione", veicoloCNRSearchBuilder.getCartaCircolazione())
                 .queryParam("polizzaAssicurativa", veicoloCNRSearchBuilder.getPolizzaAssicurativa())
                 .queryParam("notId", veicoloCNRSearchBuilder.getNotId())
+                .queryParam("id", veicoloCNRSearchBuilder.getId())
                 .queryParam("from", veicoloCNRSearchBuilder.getFrom())
                 .queryParam("size", veicoloCNRSearchBuilder.getSize())
                 .queryParam("all", veicoloCNRSearchBuilder.isAll())
                 .request(MediaType.APPLICATION_JSON)
                 .get(VeicoloCNRStore.class);
     }
-    
+
     public String addVeicoloCNR(VeicoloCNR veicoloCNR) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/veicoloCNR/addVeicoloCNR/")
@@ -264,19 +263,19 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
 
-    public boolean sendMissioneMail(String  missioneID) throws Exception {
-    	NotificationMissionRequest request = new NotificationMissionRequest();
-    		request.setMissionID(missioneID);
+    public boolean sendMissioneMail(String missioneID) throws Exception {
+        NotificationMissionRequest request = new NotificationMissionRequest();
+        request.setMissionID(missioneID);
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/notifyMissionAdministration/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(request,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
-    public boolean sendRimborsoMail(String  missioneID) throws Exception {
-    	NotificationMissionRequest request = new NotificationMissionRequest();
-    		request.setMissionID(missioneID);
+
+    public boolean sendRimborsoMail(String missioneID) throws Exception {
+        NotificationMissionRequest request = new NotificationMissionRequest();
+        request.setMissionID(missioneID);
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/notifyRimborsoMissionAdministration/")
                 .request(MediaType.APPLICATION_JSON)
@@ -284,48 +283,47 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
 
-    
+
     public Response downloadMissioneAsPdf(String missioneID) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/downloadMissioneAsPdf/")
                 .queryParam("missionID", missioneID)
                 .request("application/pdf")
-                
+
                 .get(Response.class);
     }
-    
+
     public Response downloadVeicoloMissioneAsPdf(String missioneID) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/downloadVeicoloMissioneAsPdf/")
                 .queryParam("missionID", missioneID)
                 .request("application/pdf")
-                
+
                 .get(Response.class);
     }
-    
-    
+
+
     public Response downloadAnticipoPagamentoAsPdf(String missioneID) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/downloadAnticipoPagamentoAsPdf/")
                 .queryParam("missionID", missioneID)
                 .request("application/pdf")
-                
+
                 .get(Response.class);
     }
-    
-    
+
+
     public Response downloadRimborsoMissioneAsPdf(String missioneID) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/downloadRimborsoMissioneAsPdf/")
                 .queryParam("missionID", missioneID)
                 .request("application/pdf")
-                
+
                 .get(Response.class);
     }
-    
 
 
-    public DistanceResponse.MissioneDistanceResponse getDistanceForMissione(String start,String end) throws Exception {
+    public DistanceResponse.MissioneDistanceResponse getDistanceForMissione(String start, String end) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/getDistanceForMissione/")
                 .queryParam("start", start)
@@ -333,7 +331,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(DistanceResponse.MissioneDistanceResponse.class);
     }
-    
+
     public GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/getGeocoderStoreForMissioneLocation/")
@@ -341,17 +339,18 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(GeocoderStore.class);
     }
-    
+
     public QualificaUserStore getQualificaUserByQuery(IQualificaUserSearchBuilder qualificaUserSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/qualificaUser/getQualificaUserByQuery/")
+                .queryParam("id", qualificaUserSearchBuilder.getId())
                 .queryParam("from", qualificaUserSearchBuilder.getFrom())
                 .queryParam("size", qualificaUserSearchBuilder.getSize())
                 .queryParam("all", qualificaUserSearchBuilder.isAll())
                 .request(MediaType.APPLICATION_JSON)
                 .get(QualificaUserStore.class);
     }
-    
+
     public String addQualificaUser(QualificaUser qualificaUser) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/qualificaUser/addQualificaUser/")
@@ -375,7 +374,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(qualificaUser,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
+
     public NazioneStore getNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/nazione/getNazioneByQuery/")
@@ -386,7 +385,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(NazioneStore.class);
     }
-    
+
     public String addNazione(Nazione nazione) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/nazione/addNazione/")
@@ -417,7 +416,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(RimborsoKmStore.class);
     }
-    
+
     public String addRimborsoKm(RimborsoKm rimborsoKm) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/rimborsoKm/addRimborsoKm/")
@@ -441,7 +440,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(rimborsoKm,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
+
     public TipologiaSpesaStore getTipologiaSpesaByQuery(ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/tipologiaSpesa/getTipologiaSpesaByQuery/")
@@ -455,7 +454,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(TipologiaSpesaStore.class);
     }
-    
+
     public String addTipologiaSpesa(TipologiaSpesa tipologiaSpesa) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/tipologiaSpesa/addTipologiaSpesa/")
@@ -479,7 +478,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(tipologiaSpesa,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
+
     public MassimaleStore getMassimaleByQuery(IMassimaleSearchBuilder massimaleSpesaSearchBuilder) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/massimale/getMassimaleByQuery/")
@@ -494,7 +493,7 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .request(MediaType.APPLICATION_JSON)
                 .get(MassimaleStore.class);
     }
-    
+
     public String addMassimale(Massimale massimale) throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/massimale/addMassimale/")
@@ -518,14 +517,14 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
                 .put(Entity.entity(massimale,
                         MediaType.APPLICATION_JSON), Boolean.class);
     }
-    
-    public StatisticheMissioni getStatistiche()  throws Exception {
+
+    public StatisticheMissioni getStatistiche() throws Exception {
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/getStatistiche/")
                 .request(MediaType.APPLICATION_JSON)
                 .get(StatisticheMissioni.class);
     }
-    
+
     @Override
     public String getConnectorName() {
         return "CNR MISSIONI Core Client Connector";
