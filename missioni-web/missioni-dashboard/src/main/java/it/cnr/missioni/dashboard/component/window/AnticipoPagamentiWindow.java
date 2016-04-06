@@ -55,7 +55,7 @@ public class AnticipoPagamentiWindow extends IWindow.AbstractWindow<Missione, An
         this.datiAnticipoPagamentoForm = IDatiAnticipoPagamentoForm.DatiAnticipoPagamentoForm
                 .getDatiAnticipoPagamentoForm()
                 .withTrattamentoMissioneEstera(bean.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum())
-                .withBean(anticipoPagamenti).withEnabled(enabled).withIsAdmin(isAdmin).withModifica(modifica);
+                .withBean(anticipoPagamenti).withEnabled(enabled).withIsAdmin(isAdmin).withModifica(modifica).build();
         detailsWrapper
                 .addComponent(buildTab("Anticipo di Pagamento", FontAwesome.EURO, this.datiAnticipoPagamentoForm));
 
