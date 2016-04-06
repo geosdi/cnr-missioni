@@ -2,7 +2,6 @@ package it.cnr.missioni.dashboard.view.admin;
 
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.Notification.Type;
-
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;
 import it.cnr.missioni.dashboard.component.window.admin.RimborsoWindowAdmin;
@@ -21,59 +20,58 @@ import it.cnr.missioni.model.user.User;
  */
 public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8249728987254454501L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8249728987254454501L;
 
-	public GestioneRimborsoAdminView() {
-		super();
-	}
+    public GestioneRimborsoAdminView() {
+        super();
+    }
 
-	protected void inizialize() {
-		this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-				.withFieldExist("missione.rimborso")
-				.withFieldSort(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+    protected void inizialize() {
+        this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
+                .withFieldExist("missione.rimborso")
+                .withFieldSort(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+    }
 
-	}
+    protected User getUser() {
+        try {
+            return ClientConnector
+                    .getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers()
+                    .get(0);
+        } catch (Exception e) {
+            Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+                    Type.ERROR_MESSAGE);
+        }
+        return null;
+    }
 
-	protected User getUser() {
-		try {
-			return ClientConnector
-					.getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(selectedMissione.getIdUser())).getUsers()
-					.get(0);
-		} catch (Exception e) {
-			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-					Type.ERROR_MESSAGE);
-		}
-		return null;
-	}
+    protected void openRimborsoDettgali() {
+        if (selectedMissione.getStato() == StatoEnum.PAGATA)
+//			RimborsoWindowAdmin.open(selectedMissione, true, false, true);
+            RimborsoWindowAdmin.getRimborsoWindowAdmin().withBean(selectedMissione).withIsAdmin(true).withEnabled(false).withModifica(true).build();
 
-	protected void openRimborsoDettgali(){
-		if (selectedMissione.getStato() == StatoEnum.PAGATA)
-			RimborsoWindowAdmin.open(selectedMissione, true, false, true);
-		else
-			WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).withEvent(new ResetSelectedMissioneRimborsoAdminEvent())
-			.build();
-	}
-	
-	protected void aggiornaTable() {
-		this.elencoRimborsiTable.aggiornaTableAdmin(missioniStore);
-	}
-	
-	
-	@Subscribe
-	public void resetSelectedMissione(final ResetSelectedMissioneRimborsoAdminEvent event) {
-		try {
-			this.selectedMissione = ClientConnector
-					.getMissione(
-							IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withId(selectedMissione.getId()))
-					.getMissioni().get(0);
+        else
+            WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).withEvent(new ResetSelectedMissioneRimborsoAdminEvent())
+                    .build();
+    }
 
-		} catch (Exception e) {
-			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-					Type.ERROR_MESSAGE);
-		}
-	}
+    protected void aggiornaTable() {
+        this.elencoRimborsiTable.aggiornaTableAdmin(missioniStore);
+    }
 
+    @Subscribe
+    public void resetSelectedMissione(final ResetSelectedMissioneRimborsoAdminEvent event) {
+        try {
+            this.selectedMissione = ClientConnector
+                    .getMissione(
+                            IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withId(selectedMissione.getId()))
+                    .getMissioni().get(0);
+
+        } catch (Exception e) {
+            Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+                    Type.ERROR_MESSAGE);
+        }
+    }
 }
