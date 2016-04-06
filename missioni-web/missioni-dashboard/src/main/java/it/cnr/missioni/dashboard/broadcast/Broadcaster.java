@@ -9,9 +9,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Broadcaster implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4894282195273039938L;
+     *
+     */
+    private static final long serialVersionUID = 4894282195273039938L;
 
     private static final List<BroadcastListener> listeners = new CopyOnWriteArrayList<BroadcastListener>();
 

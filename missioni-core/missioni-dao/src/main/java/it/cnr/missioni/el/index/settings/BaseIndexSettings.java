@@ -1,8 +1,7 @@
 package it.cnr.missioni.el.index.settings;
 
-import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
-
 import net.jcip.annotations.Immutable;
+import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 
 /**
  * @author Salvia Vito
