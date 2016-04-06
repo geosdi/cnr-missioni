@@ -1,20 +1,18 @@
 package it.cnr.missioni.dropwizard.delegate.veicoloCNR;
 
-import javax.annotation.Resource;
-
+import com.fasterxml.uuid.EthernetAddress;
+import com.fasterxml.uuid.Generators;
+import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import it.cnr.missioni.el.dao.IVeicoloCNRDAO;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
+import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
-
-import it.cnr.missioni.el.dao.IVeicoloCNRDAO;
-import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
+import javax.annotation.Resource;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -35,7 +33,7 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 	private IVeicoloCNRDAO veicoloCNRDAO;
 
 	/**
-	 * 
+	 * @param id
 	 * @param stato
 	 * @param targa
 	 * @param cartaCircolazione
@@ -48,13 +46,11 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 	 * @throws Exception
 	 */
 	@Override
-	public VeicoloCNRStore getVeicoloCNRByQuery(String stato, String targa, String cartaCircolazione,
+	public VeicoloCNRStore getVeicoloCNRByQuery(String id,String stato, String targa, String cartaCircolazione,
 			String polizzaAssicurtiva, String notId, int from, int size, boolean all) throws Exception {
-
-		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder()
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().withId(id)
 				.withStato(stato).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurtiva)
 				.withTarga(targa).withNotId(notId).withFrom(from).withSize(size).withAll(all);
-
 		PageResult<VeicoloCNR> pageResult = this.veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		VeicoloCNRStore veicoloCNRStore = new VeicoloCNRStore();
 		veicoloCNRStore.setTotale(pageResult.getTotal());
