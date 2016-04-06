@@ -55,7 +55,6 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
          this.file = tempFilePath.toFile();
          pdfBuilder.withFile(file);
          pdfBuilder.build();
-         
         IMissioniMessagePreparator missioniMessagePreparatorUser = super.createMissioniMessagePreparator();
         missioniMessagePreparatorUser.setMimeMessagePreparator(new MimeMessagePreparator() {
             @Override
@@ -70,7 +69,6 @@ public class RequestMissioneRimborsoMailProd extends MissioniMailProd {
                         "template/addRimborsoMailNotificationUser.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
                 createAttachment(message, missioniMessagePreparatorUser);
-
             }
         });
         lista.add(missioniMessagePreparatorUser);
