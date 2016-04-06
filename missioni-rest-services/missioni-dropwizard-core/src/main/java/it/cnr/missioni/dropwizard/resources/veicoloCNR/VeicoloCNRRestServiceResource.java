@@ -1,18 +1,14 @@
 package it.cnr.missioni.dropwizard.resources.veicoloCNR;
 
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
-
+import it.cnr.missioni.dropwizard.delegate.veicoloCNR.IVeicoloCNRDelegate;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
+import it.cnr.missioni.rest.api.resources.veicoloCNR.VeicoloCNRRestService;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.dropwizard.delegate.users.IUserDelegate;
-import it.cnr.missioni.dropwizard.delegate.veicoloCNR.IVeicoloCNRDelegate;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.rest.api.resources.user.UsersRestService;
-import it.cnr.missioni.rest.api.resources.veicoloCNR.VeicoloCNRRestService;
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -29,7 +25,7 @@ public class VeicoloCNRRestServiceResource implements VeicoloCNRRestService {
 	private IVeicoloCNRDelegate veicoloCNRDelegate;
 
 	/**
-	 * 
+	 * @param id
 	 * @param stato
 	 * @param targa
 	 * @param cartaCircolazione
@@ -42,9 +38,9 @@ public class VeicoloCNRRestServiceResource implements VeicoloCNRRestService {
 	 * @throws Exception
 	 */
 	@Override
-	public Response getVeicoloCNRByQuery(String stato, String targa, String cartaCircolazione,
+	public Response getVeicoloCNRByQuery(String id,String stato, String targa, String cartaCircolazione,
 			String polizzaAssicurativa, String notId, int from, int size, boolean all) throws Exception {
-		return Response.ok(this.veicoloCNRDelegate.getVeicoloCNRByQuery(stato, targa, cartaCircolazione,
+		return Response.ok(this.veicoloCNRDelegate.getVeicoloCNRByQuery(id,stato, targa, cartaCircolazione,
 				polizzaAssicurativa, notId, from, size, all)).build();
 	}
 

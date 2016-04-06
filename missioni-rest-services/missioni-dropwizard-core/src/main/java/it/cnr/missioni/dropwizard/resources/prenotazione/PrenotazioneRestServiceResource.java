@@ -1,15 +1,14 @@
 package it.cnr.missioni.dropwizard.resources.prenotazione;
 
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
-
+import it.cnr.missioni.dropwizard.delegate.prenotazione.IPrenotazioneDelegate;
+import it.cnr.missioni.model.prenotazione.Prenotazione;
+import it.cnr.missioni.rest.api.resources.prenotazione.PrenotazioneRestService;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.dropwizard.delegate.prenotazione.IPrenotazioneDelegate;
-import it.cnr.missioni.model.prenotazione.Prenotazione;
-import it.cnr.missioni.rest.api.resources.prenotazione.PrenotazioneRestService;
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -30,8 +29,6 @@ public class PrenotazioneRestServiceResource implements PrenotazioneRestService 
 	/**
 	 * @param dataFrom
 	 * @param dataTo
-	 * @param from
-	 * @param size
 	 * @return
 	 * @throws Exception
 	 */
@@ -41,7 +38,7 @@ public class PrenotazioneRestServiceResource implements PrenotazioneRestService 
 	}
 
 	/**
-	 * @param Prenotazione
+	 * @param prenotazione
 	 * @return
 	 * @throws Exception
 	 */
@@ -51,7 +48,7 @@ public class PrenotazioneRestServiceResource implements PrenotazioneRestService 
 	}
 
 	/**
-	 * @param Prenotazione
+	 * @param prenotazione
 	 * @return
 	 * @throws Exception
 	 */
@@ -68,7 +65,6 @@ public class PrenotazioneRestServiceResource implements PrenotazioneRestService 
 	@Override
 	public Response deletePrenotazione(String prenotazioneID) throws Exception {
 		return Response.ok(this.prenotazioneDelegate.deletePrenotazione(prenotazioneID)).build();
-
 	}
 
 }

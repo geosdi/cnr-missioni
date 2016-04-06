@@ -1,15 +1,14 @@
 package it.cnr.missioni.dropwizard.resources.nazione;
 
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
-
+import it.cnr.missioni.dropwizard.delegate.nazione.INazioneDelegate;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.rest.api.resources.nazione.NazioneRestService;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.dropwizard.delegate.nazione.INazioneDelegate;
-import it.cnr.missioni.model.configuration.Nazione;
-import it.cnr.missioni.rest.api.resources.nazione.NazioneRestService;
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -37,7 +36,6 @@ public class NazioneRestServiceResource implements NazioneRestService {
 	@Override
 	public Response getNazioneByQuery(String id, int from, int size, boolean all) throws Exception {
 		return Response.ok(this.nazioneDelegate.getNazioneByQuery(id, from, size, all)).build();
-
 	}
 
 	/**
@@ -60,7 +58,6 @@ public class NazioneRestServiceResource implements NazioneRestService {
 	@Override
 	public Response updateNazione(Nazione nazione) throws Exception {
 		return Response.ok(this.nazioneDelegate.updateNazione(nazione)).build();
-
 	}
 
 	/**
@@ -72,7 +69,6 @@ public class NazioneRestServiceResource implements NazioneRestService {
 	@Override
 	public Response deleteNazione(String nazioneID) throws Exception {
 		return Response.ok(this.nazioneDelegate.deleteNazione(nazioneID)).build();
-
 	}
 
 }

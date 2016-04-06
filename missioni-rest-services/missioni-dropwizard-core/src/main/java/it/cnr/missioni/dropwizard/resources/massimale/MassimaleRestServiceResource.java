@@ -1,15 +1,14 @@
 package it.cnr.missioni.dropwizard.resources.massimale;
 
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
-
+import it.cnr.missioni.dropwizard.delegate.massimale.IMassimaleDelegate;
+import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.rest.api.resources.massimale.MassimaleRestService;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.dropwizard.delegate.massimale.IMassimaleDelegate;
-import it.cnr.missioni.model.configuration.Massimale;
-import it.cnr.missioni.rest.api.resources.massimale.MassimaleRestService;
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -41,7 +40,6 @@ public class MassimaleRestServiceResource implements MassimaleRestService {
 			String tipo) throws Exception {
 		return Response.ok(this.massimaleDelegate.getMassimaleByQuery(from, size, livello, areaGeografica,id, notId, tipo))
 				.build();
-
 	}
 
 	/**
@@ -64,7 +62,6 @@ public class MassimaleRestServiceResource implements MassimaleRestService {
 	@Override
 	public Response updateMassimale(Massimale massimale) throws Exception {
 		return Response.ok(this.massimaleDelegate.updateMassimale(massimale)).build();
-
 	}
 
 	/**
@@ -76,7 +73,6 @@ public class MassimaleRestServiceResource implements MassimaleRestService {
 	@Override
 	public Response deleteMassimale(String massimaleID) throws Exception {
 		return Response.ok(this.massimaleDelegate.deleteMassimale(massimaleID)).build();
-
 	}
 
 }

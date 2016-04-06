@@ -1,18 +1,11 @@
 package it.cnr.missioni.rest.api.resources.veicoloCNR;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.path.veicoloCNR.VeicoloCNRServiceRSPathConfig;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -24,7 +17,7 @@ import it.cnr.missioni.rest.api.path.veicoloCNR.VeicoloCNRServiceRSPathConfig;
 public interface VeicoloCNRRestService {
 
 	/**
-	 * 
+	 * @param id
 	 * @param stato
 	 * @param targa
 	 * @param cartaCircolazione
@@ -38,7 +31,7 @@ public interface VeicoloCNRRestService {
 	 */
 	@GET
 	@Path(value = VeicoloCNRServiceRSPathConfig.GET_VEICOLO_CNR_BY_QUERY)
-	Response getVeicoloCNRByQuery(@QueryParam(value = "stato") String stato, @QueryParam(value = "targa") String targa,
+	Response getVeicoloCNRByQuery(@QueryParam(value = "id") String id,@QueryParam(value = "stato") String stato, @QueryParam(value = "targa") String targa,
 			@QueryParam(value = "cartaCircolazione") String cartaCircolazione,
 			@QueryParam(value = "polizzaAssicurativa") String polizzaAssicurativa,
 			@QueryParam(value = "notId") String notId, @QueryParam(value = "from") int from,

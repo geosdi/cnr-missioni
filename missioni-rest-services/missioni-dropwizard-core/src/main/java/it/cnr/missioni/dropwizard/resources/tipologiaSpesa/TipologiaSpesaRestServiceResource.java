@@ -1,15 +1,14 @@
 package it.cnr.missioni.dropwizard.resources.tipologiaSpesa;
 
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
-
+import it.cnr.missioni.dropwizard.delegate.tipologiaSpesa.ITipologiaSpesaDelegate;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.rest.api.resources.tipologiaSpesa.TipologiaSpesaRestService;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.dropwizard.delegate.tipologiaSpesa.ITipologiaSpesaDelegate;
-import it.cnr.missioni.model.configuration.TipologiaSpesa;
-import it.cnr.missioni.rest.api.resources.tipologiaSpesa.TipologiaSpesaRestService;
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -43,7 +42,6 @@ public class TipologiaSpesaRestServiceResource implements TipologiaSpesaRestServ
 		return Response.ok(
 				this.tipologiaSpesaDelegate.getTipologiaSpesaByQuery(id, estera,italia, tipologiaTrattamento, from, size, all))
 				.build();
-
 	}
 
 	/**
@@ -66,7 +64,6 @@ public class TipologiaSpesaRestServiceResource implements TipologiaSpesaRestServ
 	@Override
 	public Response updateTipologiaSpesa(TipologiaSpesa tipologiaSpesa) throws Exception {
 		return Response.ok(this.tipologiaSpesaDelegate.updateTipologiaSpesa(tipologiaSpesa)).build();
-
 	}
 
 	/**
@@ -78,7 +75,6 @@ public class TipologiaSpesaRestServiceResource implements TipologiaSpesaRestServ
 	@Override
 	public Response deleteTipologiaSpesa(String tipologiaSpesaID) throws Exception {
 		return Response.ok(this.tipologiaSpesaDelegate.deleteTipologiaSpesa(tipologiaSpesaID)).build();
-
 	}
 
 }

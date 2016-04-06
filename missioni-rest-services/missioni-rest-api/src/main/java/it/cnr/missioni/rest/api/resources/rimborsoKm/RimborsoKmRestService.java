@@ -1,18 +1,11 @@
 package it.cnr.missioni.rest.api.resources.rimborsoKm;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.rest.api.path.rimborsoKm.RimborsoKmServiceRSPathConfig;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -25,9 +18,7 @@ import it.cnr.missioni.rest.api.path.rimborsoKm.RimborsoKmServiceRSPathConfig;
 public interface RimborsoKmRestService {
 
 	/**
-	 * 
-	 * @param from
-	 * @param size
+	 *
 	 * @return
 	 * @throws Exception
 	 */

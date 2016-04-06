@@ -35,21 +35,6 @@
  */
 package it.cnr.missioni.connector.core;
 
-import javax.annotation.Resource;
-
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
@@ -57,6 +42,15 @@ import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
 
 /**
  * 
@@ -89,6 +83,18 @@ public class MassimaleRestServiceTest {
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
+	
+//	@Test
+//	public void A_createTest() throws Exception {
+//		List<Massimale> lista = MassimaleFunction.creaMassiveMassimale();
+//		lista.stream().forEach(m->{
+//			try {
+//				missioniCoreClientConnector.addMassimale(m);
+//			} catch (Exception e) {
+//			}
+//		});
+//		Thread.sleep(5000);
+//	}
 
 	@Test
 	public void A_addMassimaleTest() throws Exception {

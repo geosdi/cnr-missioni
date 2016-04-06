@@ -1,15 +1,14 @@
 package it.cnr.missioni.dropwizard.resources.users;
 
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
-
+import it.cnr.missioni.dropwizard.delegate.users.IUserDelegate;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.resources.user.UsersRestService;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.dropwizard.delegate.users.IUserDelegate;
-import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.rest.api.resources.user.UsersRestService;
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
 
 /**
  * 
@@ -33,19 +32,8 @@ public class UserRestServiceResource implements UsersRestService {
 	 */
 	@Override
 	public Response authorize(String userName, String password) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	// @Override
-	// public Response getLastUsers() throws Exception {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
 
 	/**
 	 * 
