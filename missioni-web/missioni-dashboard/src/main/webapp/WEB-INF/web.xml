@@ -6,9 +6,9 @@
 
 
 	<context-param>
-		<description>Missioni Dashboard production mode</description>
+		<description>Missioni Dashboard</description>
 		<param-name>productionMode</param-name>
-		<param-value>${productionMode}</param-value>
+  		<param-value>true</param-value>
 	</context-param>
 	<servlet>
 		<servlet-name>CnrMissioniDashboard</servlet-name>
@@ -17,16 +17,16 @@
 			<param-name>UI</param-name>
 			<param-value>it.cnr.missioni.dashboard.DashboardUI</param-value>
 		</init-param>
-		<init-param>
-			<param-name>pushmode</param-name>
-			<param-value>automatic</param-value>
-		</init-param>
+<!-- 		<init-param> -->
+<!-- 			<param-name>pushmode</param-name> -->
+<!-- 			<param-value>automatic</param-value> -->
+<!-- 		</init-param> -->
 		<init-param>
 			<param-name>widgetset</param-name>
 			<param-value>it.cnr.missioni.dashboard.DashboardWidgetSet</param-value>
 		</init-param>
 
-		<async-supported>true</async-supported>
+<!-- 		<async-supported>true</async-supported> -->
 
 	</servlet>
 	<servlet-mapping>
