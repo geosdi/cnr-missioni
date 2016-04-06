@@ -27,7 +27,6 @@ import it.cnr.missioni.dashboard.view.admin.GestioneVeicoloCNRView;
 
 public enum DashboardViewType {
 	//USER MENU
-    HOME_ADMIN("home admin", AdminHomeView.class, FontAwesome.HOME, true,false),
     HOME("home", HomeView.class, FontAwesome.HOME, true,false),
     COMPLETA_REGISTRAZIONE("completa registrazione", null, FontAwesome.USER, true,false),
     GESTIONE_MISSIONE("gestione missione", GestioneMissioneView.class, FontAwesome.SUITCASE, true,false),
@@ -35,6 +34,7 @@ public enum DashboardViewType {
     GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio", GestioneVeicoloView.class, FontAwesome.CAR, true,false),
     CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, true,false),
     //ADMIN MENU
+    HOME_ADMIN("home admin", AdminHomeView.class, FontAwesome.HOME, true,true),
     GESTIONE_USER_ADMIN("gestione user", GestioneUserAdminView.class, FontAwesome.USERS, true,true),
     GESTIONE_MISSIONE_ADMIN("gestione missione admin", GestioneMissioneAdminView.class, FontAwesome.SUITCASE, true,true),
     GESTIONE_RIMBORSO_ADMIN("gestione rimborso admin", GestioneRimborsoAdminView.class, FontAwesome.EURO, true,true),
