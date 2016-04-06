@@ -287,10 +287,10 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
             implements IUserSearchBuilder {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = 5963891982301629069L;
-		private String searchType = "prefix";
+         *
+         */
+        private static final long serialVersionUID = 5963891982301629069L;
+        private String searchType = "prefix";
         private String nome = null;
         private String cognome = null;
         private String codiceFiscale = null;
@@ -309,13 +309,13 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         private boolean all = false;
 
         private UserSearchBuilder() {
-        	this.fieldSort = SearchConstants.USER_FIELD_COGNOME;
+            this.fieldSort = SearchConstants.USER_FIELD_COGNOME;
         }
 
         public static IUserSearchBuilder getUserSearchBuilder() {
             return new UserSearchBuilder();
         }
-        
+
         /**
          * @param nome
          * @return {@link IUserSearchBuilder}

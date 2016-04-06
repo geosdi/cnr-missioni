@@ -12,11 +12,11 @@ public interface IDirettoreSearchBuilder extends ISearchBuilder<IDirettoreSearch
             implements IDirettoreSearchBuilder {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -2499082941102110757L;
+         *
+         */
+        private static final long serialVersionUID = -2499082941102110757L;
 
-		private DirettoreSearchBuilder() {
+        private DirettoreSearchBuilder() {
         }
 
         public static IDirettoreSearchBuilder getDirettoreSearchBuilder() {

@@ -11,7 +11,7 @@ import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 public interface IQualificaUserDelegate {
 
 /**
- * 
+ * @param id
  * @param from
  * @param size
  * @param all
@@ -19,7 +19,7 @@ public interface IQualificaUserDelegate {
  * @throws Exception
  */
 
-	QualificaUserStore getQualificaUserByQuery(int from, int size,boolean all) throws Exception;
+	QualificaUserStore getQualificaUserByQuery(String id,int from, int size,boolean all) throws Exception;
 
 	/**
 	 * 

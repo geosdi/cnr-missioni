@@ -38,7 +38,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
      * @return {@link IMassimaleSearchBuilder}
      */
     IMassimaleSearchBuilder withTipo(String tipo);
-    
+
     /**
      * @return {@link String}
      */
@@ -92,7 +92,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         private String tipo;
 
         private MassimaleSearchBuilder() {
-        	this.fieldSort = SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA;
+            this.fieldSort = SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA;
         }
 
         public static IMassimaleSearchBuilder getMassimaleSearchBuilder() {

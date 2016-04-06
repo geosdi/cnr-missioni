@@ -5,44 +5,42 @@ import it.cnr.missioni.el.model.search.ExactSearch;
 /**
  * @author Salvia Vito
  */
-public interface IRimborsoKmSearchBuilder extends ISearchBuilder<IRimborsoKmSearchBuilder>{
-	
-	public class RimborsoKmSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IRimborsoKmSearchBuilder>
-	implements IRimborsoKmSearchBuilder{
+public interface IRimborsoKmSearchBuilder extends ISearchBuilder<IRimborsoKmSearchBuilder> {
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -817549323873815355L;
+    public class RimborsoKmSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IRimborsoKmSearchBuilder>
+            implements IRimborsoKmSearchBuilder {
 
-		private RimborsoKmSearchBuilder() {
-		}
+        /**
+         *
+         */
+        private static final long serialVersionUID = -817549323873815355L;
 
-		public static RimborsoKmSearchBuilder getRimborsoKmSearchBuilder() {
-			return new RimborsoKmSearchBuilder();
-		}
+        private RimborsoKmSearchBuilder() {
+        }
 
-		/**
-		 * 
-		 * @param value
-	     * @return {@link IRimborsoKmSearchBuilder}
-		 */
-		public IRimborsoKmSearchBuilder withId(String id) {
-			this.setId(id);
-			if (id != null && !id.trim().equals(""))
-				booleanModelSearch.getListaSearch()
-						.add(new ExactSearch(SearchConstants.RIMBORSO_KM_FIELD_ID, id));
-			return self();
-		}
+        public static RimborsoKmSearchBuilder getRimborsoKmSearchBuilder() {
+            return new RimborsoKmSearchBuilder();
+        }
 
-		/**
-		 * 
-		 * @return
-		 */
-		protected IRimborsoKmSearchBuilder self() {
-			return this;
-		}
+        /**
+         * @param id
+         * @return {@link IRimborsoKmSearchBuilder}
+         */
+        public IRimborsoKmSearchBuilder withId(String id) {
+            this.setId(id);
+            if (id != null && !id.trim().equals(""))
+                booleanModelSearch.getListaSearch()
+                        .add(new ExactSearch(SearchConstants.RIMBORSO_KM_FIELD_ID, id));
+            return self();
+        }
 
-	}
+        /**
+         * @return
+         */
+        protected IRimborsoKmSearchBuilder self() {
+            return this;
+        }
+
+    }
 
 }

@@ -1,121 +1,101 @@
 package it.cnr.missioni.el.model.search.builder;
 
+import it.cnr.missioni.el.model.search.*;
 import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.joda.time.DateTime;
-
-import it.cnr.missioni.el.model.search.DateRangeSearch;
-import it.cnr.missioni.el.model.search.EnumBooleanType;
-import it.cnr.missioni.el.model.search.ExactSearch;
-import it.cnr.missioni.el.model.search.ExistFieldSearch;
-import it.cnr.missioni.el.model.search.MultiMatchSearch;
 
 /**
  * @author Salvia Vito
  */
 
-public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBuilder>{
-	
-	/**
-	 * 
-	 * @param fromDataInserimento
-	 * @param toDataInserimento
+public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBuilder> {
+
+    /**
+     * @param fromDataInserimento
+     * @param toDataInserimento
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withRangeDataInserimento(DateTime fromDataInserimento, DateTime toDataInserimento);
-	
-	/**
-	 * 
-	 * @param idUser
+     */
+    IMissioneSearchBuilder withRangeDataInserimento(DateTime fromDataInserimento, DateTime toDataInserimento);
+
+    /**
+     * @param idUser
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withIdUser(String idUser);
-	
-	/**
-	 * 
-	 * @param stato
+     */
+    IMissioneSearchBuilder withIdUser(String idUser);
+
+    /**
+     * @param stato
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withStato(String stato);
-	
-	/**
-	 * 
-	 * @param numeroOrdineRimborso
+     */
+    IMissioneSearchBuilder withStato(String stato);
+
+    /**
+     * @param numeroOrdineRimborso
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso);
-	
-	/**
-	 * 
-	 * @param fromDataRimborso
-	 * @param toDataRimborso
+     */
+    IMissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso);
+
+    /**
+     * @param fromDataRimborso
+     * @param toDataRimborso
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withRangeDataRimborso(DateTime fromDataRimborso, DateTime toDataRimborso);
-	
-	/**
-	 * 
-	 * @param oggetto
+     */
+    IMissioneSearchBuilder withRangeDataRimborso(DateTime fromDataRimborso, DateTime toDataRimborso);
+
+    /**
+     * @param oggetto
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withOggetto(String oggetto);
-	
-	/**
-	 * 
-	 * @param multiMatchValue
+     */
+    IMissioneSearchBuilder withOggetto(String oggetto);
+
+    /**
+     * @param multiMatchValue
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withMultiMatch(String multiMatchValue);
-	
-	/**
-	 * 
-	 * @param fieldExist
-	 * @return
-	 */
-	IMissioneSearchBuilder withFieldExist(String fieldExist);
-	
-	/**
-	 * 
-	 * @param fieldNotExist
+     */
+    IMissioneSearchBuilder withMultiMatch(String multiMatchValue);
+
+    /**
+     * @param fieldExist
+     * @return
+     */
+    IMissioneSearchBuilder withFieldExist(String fieldExist);
+
+    /**
+     * @param fieldNotExist
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withFieldNotExist(String fieldNotExist);
-	
-	/**
-	 * 
-	 * @param fieldMultiMatch
+     */
+    IMissioneSearchBuilder withFieldNotExist(String fieldNotExist);
+
+    /**
+     * @param fieldMultiMatch
      * @return {@link IMissioneSearchBuilder}
-	 */
-	IMissioneSearchBuilder withMultiMatchField(String fieldMultiMatch);
-	
-	/**
-	 * 
+     */
+    IMissioneSearchBuilder withMultiMatchField(String fieldMultiMatch);
+
+    /**
      * @return {@link String}
-	 */
-	String getStato();
-	
-	/**
-	 * 
-	 * @param stato
-	 */
-	void setStato(String stato);
-	
-	/**
-	 * 
+     */
+    String getStato();
+
+    /**
+     * @param stato
+     */
+    void setStato(String stato);
+
+    /**
      * @return {@link String}
-	 */
-	String getIdUser(); 
-	
-	/**
-	 * 
-	 * @param idUser
-	 */
-	void setIdUser(String idUser);
-	
-	/**
-	 * 
+     */
+    String getIdUser();
+
+    /**
+     * @param idUser
+     */
+    void setIdUser(String idUser);
+
+    /**
      * @return {@link DateTime}
-	 */
-	DateTime getFromDataInserimento();
+     */
+    DateTime getFromDataInserimento();
 
     /**
      * @param fromDataInserimento
@@ -211,16 +191,16 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
      * @param fieldMultiMatch
      */
     public void setFieldMultiMatch(String fieldMultiMatch);
-	
+
     class MissioneSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IMissioneSearchBuilder>
-    implements  IMissioneSearchBuilder{
+            implements IMissioneSearchBuilder {
 
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -1367921814725571059L;
-		private DateTime fromDataInserimento = null;
+         *
+         */
+        private static final long serialVersionUID = -1367921814725571059L;
+        private DateTime fromDataInserimento = null;
         private DateTime toDataInserimento = null;
         private String idUser = null;
         private String stato = null;
@@ -233,16 +213,15 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         private String fieldNotExist;
         private String fieldMultiMatch = "missione.localita,missione.oggetto,missione.id,missione.shortUser";
 
-        private MissioneSearchBuilder(){
-        	this.fieldSort = SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO;
+        private MissioneSearchBuilder() {
+            this.fieldSort = SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO;
         }
-        
+
         public static MissioneSearchBuilder getMissioneSearchBuilder() {
             return new MissioneSearchBuilder();
         }
 
         /**
-         * 
          * @param fromDataInserimento
          * @param toDataInserimento
          * @return {@link IMissioneSearchBuilder}
@@ -257,7 +236,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param idUser
          * @return {@link IMissioneSearchBuilder}
          */
@@ -269,7 +247,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param stato
          * @return {@link IMissioneSearchBuilder}
          */
@@ -281,7 +258,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param numeroOrdineRimborso
          * @return {@link IMissioneSearchBuilder}
          */
@@ -294,7 +270,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param fromDataRimborso
          * @param toDataRimborso
          * @return {@link IMissioneSearchBuilder}
@@ -309,7 +284,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param id
          * @return {@link IMissioneSearchBuilder}
          */
@@ -321,7 +295,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param oggetto
          * @return {@link IMissioneSearchBuilder}
          */
@@ -335,7 +308,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param multiMatchValue
          * @return {@link IMissioneSearchBuilder}
          */
@@ -348,7 +320,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param fieldExist
          * @return {@link IMissioneSearchBuilder}
          */
@@ -361,7 +332,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param fieldNotExist
          * @return {@link IMissioneSearchBuilder}
          */
@@ -374,7 +344,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         * 
          * @param fieldMultiMatch
          * @return {@link IMissioneSearchBuilder}
          */
@@ -538,7 +507,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
 
-
         /**
          * @return {@link String}
          */
@@ -554,7 +522,6 @@ public interface  IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchB
         }
 
         /**
-         *
          * @return {@link IMissioneSearchBuilder}
          */
         protected IMissioneSearchBuilder self() {
