@@ -79,7 +79,7 @@ public class MissioneWindowAdmin extends IWindow.AbstractWindow<Missione, Missio
         // LocalitaOggettoMissioneForm(missione, isAdmin, enabled,modifica);
         this.localitaOggettoMissioneForm = ILocalitaOggettoMissioneForm.LocalitaOggettoMissioneForm
                 .getDatiPeriodoMissioneForm().withBean(bean).withIsAdmin(isAdmin).withEnabled(enabled)
-                .withIsVisible(bean.isMissioneEstera()).withModifica(modifica).build();
+                .withModifica(modifica).build().withIsVisible(bean.isMissioneEstera());
         // this.localitaOggettoMissioneForm.setVisibleField(missione.isMissioneEstera());
         detailsWrapper
                 .addComponent(buildTab("Localita\\Oggetto", FontAwesome.SUITCASE, this.localitaOggettoMissioneForm));
