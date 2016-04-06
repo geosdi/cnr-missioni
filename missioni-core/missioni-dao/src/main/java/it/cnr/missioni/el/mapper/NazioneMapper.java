@@ -1,10 +1,9 @@
 package it.cnr.missioni.el.mapper;
 
+import it.cnr.missioni.model.configuration.Nazione;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.support.jackson.GPJacksonSupport;
 import org.springframework.stereotype.Component;
-
-import it.cnr.missioni.model.configuration.Nazione;
 
 /**
  * @author Salvia Vito
@@ -14,7 +13,7 @@ public class NazioneMapper extends GPBaseMapper<Nazione> {
 
     public NazioneMapper() {
         super(Nazione.class, new GPJacksonSupport()
-        		);
+        );
     }
 
     @Override

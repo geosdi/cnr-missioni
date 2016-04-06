@@ -1,11 +1,9 @@
 package it.cnr.missioni.el.mapper;
 
+import it.cnr.missioni.model.configuration.Direttore;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.support.jackson.GPJacksonSupport;
 import org.springframework.stereotype.Component;
-
-import it.cnr.missioni.model.configuration.Direttore;
-import it.cnr.missioni.model.configuration.Massimale;
 
 /**
  * @author Salvia Vito
@@ -15,7 +13,7 @@ public class DirettoreMapper extends GPBaseMapper<Direttore> {
 
     public DirettoreMapper() {
         super(Direttore.class, new GPJacksonSupport()
-        		);
+        );
     }
 
     @Override

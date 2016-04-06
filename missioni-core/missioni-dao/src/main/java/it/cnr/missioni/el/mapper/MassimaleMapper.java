@@ -1,10 +1,9 @@
 package it.cnr.missioni.el.mapper;
 
+import it.cnr.missioni.model.configuration.Massimale;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.support.jackson.GPJacksonSupport;
 import org.springframework.stereotype.Component;
-
-import it.cnr.missioni.model.configuration.Massimale;
 
 /**
  * @author Salvia Vito
@@ -14,7 +13,7 @@ public class MassimaleMapper extends GPBaseMapper<Massimale> {
 
     public MassimaleMapper() {
         super(Massimale.class, new GPJacksonSupport()
-        		);
+        );
     }
 
     @Override

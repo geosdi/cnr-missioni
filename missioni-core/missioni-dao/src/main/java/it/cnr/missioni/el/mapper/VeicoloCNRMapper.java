@@ -1,10 +1,9 @@
 package it.cnr.missioni.el.mapper;
 
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.support.jackson.GPJacksonSupport;
 import org.springframework.stereotype.Component;
-
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 
 /**
  * @author Salvia Vito
@@ -14,7 +13,7 @@ public class VeicoloCNRMapper extends GPBaseMapper<VeicoloCNR> {
 
     public VeicoloCNRMapper() {
         super(VeicoloCNR.class, new GPJacksonSupport()
-        		);
+        );
     }
 
     @Override

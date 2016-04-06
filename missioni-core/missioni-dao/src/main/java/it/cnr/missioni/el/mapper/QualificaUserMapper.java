@@ -1,12 +1,9 @@
 package it.cnr.missioni.el.mapper;
 
+import it.cnr.missioni.model.configuration.QualificaUser;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.support.jackson.GPJacksonSupport;
 import org.springframework.stereotype.Component;
-
-import it.cnr.missioni.model.configuration.QualificaUser;
-import it.cnr.missioni.model.configuration.RimborsoKm;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 
 /**
  * @author Salvia Vito
@@ -16,7 +13,7 @@ public class QualificaUserMapper extends GPBaseMapper<QualificaUser> {
 
     public QualificaUserMapper() {
         super(QualificaUser.class, new GPJacksonSupport()
-        		);
+        );
     }
 
     @Override
