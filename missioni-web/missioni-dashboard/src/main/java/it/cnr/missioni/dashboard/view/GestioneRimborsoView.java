@@ -183,7 +183,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
             @Override
             public void buttonClick(ClickEvent event) {
 //				MissioneWindowAdmin.open(selectedMissione, true, false, true);
-                MissioneWindowAdmin.getMissioneWindowAdmin().withBean(selectedMissione).withIsAdmin(true).withEnabled(false).withModifica(true);
+                MissioneWindowAdmin.getMissioneWindowAdmin().withBean(selectedMissione).withIsAdmin(true).withEnabled(false).withModifica(true).build();
             }
         });
         buttonPDF = buildButton("PDF", "Download del PDF", FontAwesome.FILE_PDF_O);
@@ -302,7 +302,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
                     .getMissione(
                             IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withId(selectedMissione.getId()))
                     .getMissioni().get(0);
-
         } catch (Exception e) {
             Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                     Type.ERROR_MESSAGE);
