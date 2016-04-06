@@ -3,7 +3,6 @@ package it.cnr.missioni.dashboard.view;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-
 import it.cnr.missioni.dashboard.DashboardNavigator;
 import it.cnr.missioni.dashboard.menu.DashboardMenu;
 
@@ -15,19 +14,14 @@ import it.cnr.missioni.dashboard.menu.DashboardMenu;
 public class MainView extends HorizontalLayout {
 
     public MainView() {
-    	
-    	
         setSizeFull();
         addStyleName("mainview");
-
         addComponent(new DashboardMenu());
-
         ComponentContainer content = new CssLayout();
         content.addStyleName("view-content");
         content.setSizeFull();
         addComponent(content);
         setExpandRatio(content, 1.0f);
-
         new DashboardNavigator(content);
     }
 }
