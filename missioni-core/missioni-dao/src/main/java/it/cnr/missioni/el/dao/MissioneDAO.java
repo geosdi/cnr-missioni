@@ -91,8 +91,9 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
 		long value = 0;
 
 		DateTime now = new DateTime();
-		DateTime from = now.withDayOfMonth(1).withMonthOfYear(1);
-		DateTime to = now.withYear(now.getYear()).withDayOfMonth(31).withMonthOfYear(12);
+		
+		DateTime from = new DateTime(now.getYear(),1,1,0,0);
+		DateTime to = new DateTime(now.getYear(),12,31,23,59);
 
 		MissioneSearchBuilder missioneSearchBuilder = MissioneSearchBuilder.getMissioneSearchBuilder()
 				.withRangeDataInserimento(from,to);
