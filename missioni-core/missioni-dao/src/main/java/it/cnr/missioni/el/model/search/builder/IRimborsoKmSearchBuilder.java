@@ -27,7 +27,7 @@ public interface IRimborsoKmSearchBuilder extends ISearchBuilder<IRimborsoKmSear
          * @return {@link IRimborsoKmSearchBuilder}
          */
         public IRimborsoKmSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch()
                         .add(new ExactSearch(SearchConstants.RIMBORSO_KM_FIELD_ID, id));

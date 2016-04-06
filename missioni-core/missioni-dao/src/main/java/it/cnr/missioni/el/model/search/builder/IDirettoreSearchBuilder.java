@@ -27,7 +27,7 @@ public interface IDirettoreSearchBuilder extends ISearchBuilder<IDirettoreSearch
          * @return {@link IDirettoreSearchBuilder}
          */
         public IDirettoreSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, id));
             return self();

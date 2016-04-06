@@ -460,7 +460,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
          * @return {@link IUserSearchBuilder}
          */
         public IUserSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch()
                         .add(new ExactSearch(SearchConstants.USER_FIELD_ID, id));

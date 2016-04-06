@@ -28,7 +28,7 @@ public interface INazioneSearchBuilder extends ISearchBuilder<INazioneSearchBuil
          * @return {@link INazioneSearchBuilder}
          */
         public INazioneSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch()
                         .add(new ExactSearch(SearchConstants.NAZIONE_FIELD_ID, id));

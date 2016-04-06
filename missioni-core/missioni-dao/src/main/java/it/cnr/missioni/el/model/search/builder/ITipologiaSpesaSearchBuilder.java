@@ -31,29 +31,14 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
     String getTipoTrattamento();
 
     /**
-     * @param tipoTrattamento
-     */
-    void setTipoTrattamento(String tipoTrattamento);
-
-    /**
      * @return {@link boolean}
      */
     boolean isItalia();
 
     /**
-     * @param italia
-     */
-    void setItalia(boolean italia);
-
-    /**
      * @return {@link boolean}
      */
     boolean isEstera();
-
-    /**
-     * @param estera
-     */
-    void setEstera(boolean estera);
 
     public class TipologiaSpesaSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<ITipologiaSpesaSearchBuilder>
             implements ITipologiaSpesaSearchBuilder {
@@ -79,7 +64,7 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
          * @return {@link ITipologiaSpesaSearchBuilder}
          */
         public ITipologiaSpesaSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ID, id));
             return self();
@@ -126,13 +111,6 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
         }
 
         /**
-         * @param tipoTrattamento
-         */
-        public void setTipoTrattamento(String tipoTrattamento) {
-            this.tipoTrattamento = tipoTrattamento;
-        }
-
-        /**
          * @return {@link boolean}
          */
         public boolean isItalia() {
@@ -140,24 +118,10 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
         }
 
         /**
-         * @param italia
-         */
-        public void setItalia(boolean italia) {
-            this.italia = italia;
-        }
-
-        /**
          * @return {@link boolean}
          */
         public boolean isEstera() {
             return estera;
-        }
-
-        /**
-         * @param estera
-         */
-        public void setEstera(boolean estera) {
-            this.estera = estera;
         }
 
         /**

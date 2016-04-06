@@ -33,20 +33,9 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
     IVeicoloCNRSearchBuilder withCartaCircolazione(String cartaCircolazione);
 
     /**
-     * @param notId
-     * @return {@link IVeicoloCNRSearchBuilder}
-     */
-    IVeicoloCNRSearchBuilder withNotId(String notId);
-
-    /**
      * @return {@link String}
      */
     String getStato();
-
-    /**
-     * @param stato
-     */
-    void setStato(String stato);
 
     /**
      * @return {@link String}
@@ -54,19 +43,9 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
     String getTarga();
 
     /**
-     * @param targa
-     */
-    void setTarga(String targa);
-
-    /**
      * @return {@link String}
      */
     String getCartaCircolazione();
-
-    /**
-     * @param cartaCircolazione
-     */
-    void setCartaCircolazione(String cartaCircolazione);
 
     /**
      * @return {@link String}
@@ -74,19 +53,9 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
     String getPolizzaAssicurativa();
 
     /**
-     * @param polizzaAssicurativa
-     */
-    void setPolizzaAssicurativa(String polizzaAssicurativa);
-
-    /**
      * @return {@link String}
      */
     String getNotId();
-
-    /**
-     * @param notId
-     */
-    void setNotId(String notId);
 
     public class VeicoloCNRSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IVeicoloCNRSearchBuilder>
             implements IVeicoloCNRSearchBuilder {
@@ -148,7 +117,7 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
          * @return {@link IVeicoloCNRSearchBuilder}
          */
         public IVeicoloCNRSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch()
                         .add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, id));
@@ -187,24 +156,10 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         }
 
         /**
-         * @param stato
-         */
-        public void setStato(String stato) {
-            this.stato = stato;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getTarga() {
             return targa;
-        }
-
-        /**
-         * @param targa
-         */
-        public void setTarga(String targa) {
-            this.targa = targa;
         }
 
         /**
@@ -215,24 +170,10 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         }
 
         /**
-         * @param cartaCircolazione
-         */
-        public void setCartaCircolazione(String cartaCircolazione) {
-            this.cartaCircolazione = cartaCircolazione;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getPolizzaAssicurativa() {
             return polizzaAssicurativa;
-        }
-
-        /**
-         * @param polizzaAssicurativa
-         */
-        public void setPolizzaAssicurativa(String polizzaAssicurativa) {
-            this.polizzaAssicurativa = polizzaAssicurativa;
         }
 
         /**
@@ -243,20 +184,11 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         }
 
         /**
-         * @param notId
-         */
-        public void setNotId(String notId) {
-            this.notId = notId;
-        }
-
-        /**
          * @return {@link IVeicoloCNRSearchBuilder}
          */
         protected IVeicoloCNRSearchBuilder self() {
             return this;
         }
-
-
     }
 
 }

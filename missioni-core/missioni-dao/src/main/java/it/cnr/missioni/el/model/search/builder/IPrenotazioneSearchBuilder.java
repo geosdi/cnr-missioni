@@ -19,19 +19,9 @@ public interface IPrenotazioneSearchBuilder extends ISearchBuilder<IPrenotazione
     DateTime getDataFrom();
 
     /**
-     * @param dataFrom
-     */
-    void setDataFrom(DateTime dataFrom);
-
-    /**
      * @return the dataTo
      */
     DateTime getDataTo();
-
-    /**
-     * @param dataTo
-     */
-    void setDataTo(DateTime dataTo);
 
     public class PrenotazioneSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IPrenotazioneSearchBuilder>
             implements IPrenotazioneSearchBuilder {
@@ -72,24 +62,10 @@ public interface IPrenotazioneSearchBuilder extends ISearchBuilder<IPrenotazione
         }
 
         /**
-         * @param dataFrom
-         */
-        public void setDataFrom(DateTime dataFrom) {
-            this.dataFrom = dataFrom;
-        }
-
-        /**
          * @return the dataTo
          */
         public DateTime getDataTo() {
             return dataTo;
-        }
-
-        /**
-         * @param dataTo
-         */
-        public void setDataTo(DateTime dataTo) {
-            this.dataTo = dataTo;
         }
 
         /**

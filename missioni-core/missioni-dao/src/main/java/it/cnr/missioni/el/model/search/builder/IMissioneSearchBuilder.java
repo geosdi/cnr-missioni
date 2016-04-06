@@ -78,19 +78,9 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
     String getStato();
 
     /**
-     * @param stato
-     */
-    void setStato(String stato);
-
-    /**
      * @return {@link String}
      */
     String getIdUser();
-
-    /**
-     * @param idUser
-     */
-    void setIdUser(String idUser);
 
     /**
      * @return {@link DateTime}
@@ -98,19 +88,9 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
     DateTime getFromDataInserimento();
 
     /**
-     * @param fromDataInserimento
-     */
-    void setFromDataInserimento(DateTime fromDataInserimento);
-
-    /**
      * @return {@link DateTime}
      */
     DateTime getToDataInserimento();
-
-    /**
-     * @param toDataInserimento
-     */
-    void setToDataInserimento(DateTime toDataInserimento);
 
     /**
      * @return {@link Long}
@@ -118,19 +98,9 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
     Long getNumeroOrdineRimborso();
 
     /**
-     * @param numeroOrdineRimborso
-     */
-    public void setNumeroOrdineRimborso(Long numeroOrdineRimborso);
-
-    /**
      * @return {@link DateTime}
      */
     public DateTime getFromDataRimbroso();
-
-    /**
-     * @param fromDataRimbroso
-     */
-    public void setFromDataRimbroso(DateTime fromDataRimbroso);
 
     /**
      * @return {@link DateTime}
@@ -138,19 +108,10 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
     public DateTime getToDataRimbroso();
 
     /**
-     * @param toDataRimbroso
-     */
-    public void setToDataRimbroso(DateTime toDataRimbroso);
-
-    /**
      * @return {@link String}
      */
     public String getOggetto();
 
-    /**
-     * @param oggetto
-     */
-    public void setOggetto(String oggetto);
 
     /**
      * @return {@link String}
@@ -158,39 +119,20 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
     public String getMultiMatchValue();
 
     /**
-     * @param multiMatchValue
-     */
-    public void setMultiMatchValue(String multiMatchValue);
-
-    /**
      * @return {@link String}
      */
     public String getFieldExist();
-
-    /**
-     * @param fieldExist
-     */
-    public void setFieldExist(String fieldExist);
 
     /**
      * @return {@link String}
      */
     public String getFieldNotExist();
 
-    /**
-     * @param fieldNotExist
-     */
-    public void setFieldNotExist(String fieldNotExist);
 
     /**
      * @return {@link String}
      */
     public String getFieldMultiMatch();
-
-    /**
-     * @param fieldMultiMatch
-     */
-    public void setFieldMultiMatch(String fieldMultiMatch);
 
     class MissioneSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IMissioneSearchBuilder>
             implements IMissioneSearchBuilder {
@@ -360,24 +302,10 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         }
 
         /**
-         * @param fromDataInserimento
-         */
-        public void setFromDataInserimento(DateTime fromDataInserimento) {
-            this.fromDataInserimento = fromDataInserimento;
-        }
-
-        /**
          * @return {@link DateTime}
          */
         public DateTime getToDataInserimento() {
             return toDataInserimento;
-        }
-
-        /**
-         * @param toDataInserimento
-         */
-        public void setToDataInserimento(DateTime toDataInserimento) {
-            this.toDataInserimento = toDataInserimento;
         }
 
         /**
@@ -388,25 +316,12 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         }
 
         /**
-         * @param idUser
-         */
-        public void setIdUser(String idUser) {
-            this.idUser = idUser;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getStato() {
             return stato;
         }
 
-        /**
-         * @param stato
-         */
-        public void setStato(String stato) {
-            this.stato = stato;
-        }
 
         /**
          * @return {@link Long}
@@ -415,12 +330,6 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
             return numeroOrdineRimborso;
         }
 
-        /**
-         * @param numeroOrdineRimborso
-         */
-        public void setNumeroOrdineRimborso(Long numeroOrdineRimborso) {
-            this.numeroOrdineRimborso = numeroOrdineRimborso;
-        }
 
         /**
          * @return {@link DateTime}
@@ -429,25 +338,12 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
             return fromDataRimbroso;
         }
 
-        /**
-         * @param fromDataRimbroso
-         */
-        public void setFromDataRimbroso(DateTime fromDataRimbroso) {
-            this.fromDataRimbroso = fromDataRimbroso;
-        }
 
         /**
          * @return {@link DateTime}
          */
         public DateTime getToDataRimbroso() {
             return toDataRimbroso;
-        }
-
-        /**
-         * @param toDataRimbroso
-         */
-        public void setToDataRimbroso(DateTime toDataRimbroso) {
-            this.toDataRimbroso = toDataRimbroso;
         }
 
         /**
@@ -458,24 +354,10 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         }
 
         /**
-         * @param oggetto
-         */
-        public void setOggetto(String oggetto) {
-            this.oggetto = oggetto;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getMultiMatchValue() {
             return multiMatchValue;
-        }
-
-        /**
-         * @param multiMatchValue
-         */
-        public void setMultiMatchValue(String multiMatchValue) {
-            this.multiMatchValue = multiMatchValue;
         }
 
         /**
@@ -486,26 +368,11 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         }
 
         /**
-         * @param fieldExist
-         */
-        public void setFieldExist(String fieldExist) {
-            this.fieldExist = fieldExist;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getFieldNotExist() {
             return fieldNotExist;
         }
-
-        /**
-         * @param fieldNotExist
-         */
-        public void setFieldNotExist(String fieldNotExist) {
-            this.fieldNotExist = fieldNotExist;
-        }
-
 
         /**
          * @return {@link String}
@@ -515,19 +382,11 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         }
 
         /**
-         * @param fieldMultiMatch
-         */
-        public void setFieldMultiMatch(String fieldMultiMatch) {
-            this.fieldMultiMatch = fieldMultiMatch;
-        }
-
-        /**
          * @return {@link IMissioneSearchBuilder}
          */
         protected IMissioneSearchBuilder self() {
             return this;
         }
-
     }
 
 }

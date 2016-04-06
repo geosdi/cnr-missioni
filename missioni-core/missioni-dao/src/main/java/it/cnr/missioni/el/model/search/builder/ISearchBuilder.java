@@ -78,19 +78,9 @@ public interface ISearchBuilder<T> extends Serializable {
     String getFieldSort();
 
     /**
-     * @param fieldSort
-     */
-    void setFieldSort(String fieldSort);
-
-    /**
      * @return {@link String}
      */
     String getId();
-
-    /**
-     * @param id
-     */
-    void setId(String id);
 
     abstract class AbstractSearchBuilder<T> implements ISearchBuilder<T> {
 
@@ -172,24 +162,10 @@ public interface ISearchBuilder<T> extends Serializable {
         }
 
         /**
-         * @param id
-         */
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        /**
          * @return {@link int}
          */
         public int getFrom() {
             return from;
-        }
-
-        /**
-         * @param from
-         */
-        public void setFrom(int from) {
-            this.from = from;
         }
 
         /**
@@ -200,24 +176,10 @@ public interface ISearchBuilder<T> extends Serializable {
         }
 
         /**
-         * @param size
-         */
-        public void setSize(int size) {
-            this.size = size;
-        }
-
-        /**
          * @return {@link boolean}
          */
         public boolean isAll() {
             return all;
-        }
-
-        /**
-         * @param all
-         */
-        public void setAll(boolean all) {
-            this.all = all;
         }
 
         /**
@@ -228,13 +190,6 @@ public interface ISearchBuilder<T> extends Serializable {
         }
 
         /**
-         * @param booleanModelSearch
-         */
-        public void setBooleanModelSearch(BooleanModelSearch booleanModelSearch) {
-            this.booleanModelSearch = booleanModelSearch;
-        }
-
-        /**
          * @return {@link SortOrder}
          */
         public SortOrder getSortOrder() {
@@ -242,24 +197,10 @@ public interface ISearchBuilder<T> extends Serializable {
         }
 
         /**
-         * @param sortOrder
-         */
-        public void setSortOrder(SortOrder sortOrder) {
-            this.sortOrder = sortOrder;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getFieldSort() {
             return this.fieldSort;
-        }
-
-        /**
-         * @param fieldSort
-         */
-        public void setFieldSort(String fieldSort) {
-            this.fieldSort = fieldSort;
         }
 
     }

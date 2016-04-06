@@ -18,11 +18,6 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
      */
     String getValue();
 
-    /**
-     * @param value
-     */
-    void setValue(String value);
-
     public class QualificaUserSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IQualificaUserSearchBuilder>
             implements IQualificaUserSearchBuilder {
 
@@ -43,7 +38,7 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
          * @return {@link IQualificaUserSearchBuilder}
          */
         public IQualificaUserSearchBuilder withValue(String value) {
-            this.setValue(value);
+            this.value = value;
             if (value != null && !value.trim().equals(""))
                 booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_VALUE, value));
             return self();
@@ -54,13 +49,6 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
          */
         public String getValue() {
             return value;
-        }
-
-        /**
-         * @param value
-         */
-        public void setValue(String value) {
-            this.value = value;
         }
 
         /**
@@ -75,7 +63,7 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
          * @return {@link IQualificaUserSearchBuilder}
          */
         public IQualificaUserSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch()
                         .add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id));

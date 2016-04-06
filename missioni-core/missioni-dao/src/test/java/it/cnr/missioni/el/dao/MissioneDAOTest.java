@@ -81,7 +81,7 @@ public class MissioneDAOTest {
     public void D_findMissioneByStato_1Test() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
                 .withStato(StatoEnum.PRESA_IN_CARICO.name());
-        missioneSearchBuilder.setStato(StatoEnum.PRESA_IN_CARICO.name());
+        missioneSearchBuilder.withStato(StatoEnum.PRESA_IN_CARICO.name());
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONE BY STATO", lista.size() == 2);
 
@@ -147,8 +147,8 @@ public class MissioneDAOTest {
                 .withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
                         new DateTime(2015, 8, 31, 0, 0, DateTimeZone.UTC));
 
-        missioneSearchBuilder.setStato(StatoEnum.PRESA_IN_CARICO.name());
-        missioneSearchBuilder.setIdUser("01");
+        missioneSearchBuilder.withStato(StatoEnum.PRESA_IN_CARICO.name());
+        missioneSearchBuilder.withIdUser("01");
 
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONE BY ALL", lista.size() == 1);

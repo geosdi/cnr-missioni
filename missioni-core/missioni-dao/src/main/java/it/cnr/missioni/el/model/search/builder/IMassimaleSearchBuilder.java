@@ -45,19 +45,9 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
     String getNotId();
 
     /**
-     * @param notId
-     */
-    void setNotId(String notId);
-
-    /**
      * @return {@link String}
      */
     String getLivello();
-
-    /**
-     * @param livello
-     */
-    void setLivello(String livello);
 
     /**
      * @return {@link String}
@@ -65,19 +55,9 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
     String getAreaGeografica();
 
     /**
-     * @param areaGeografica
-     */
-    void setAreaGeografica(String areaGeografica);
-
-    /**
      * @return {@link String}
      */
     String getTipo();
-
-    /**
-     * @param tipo
-     */
-    void setTipo(String tipo);
 
     class MassimaleSearchBuilder extends ISearchBuilder.AbstractSearchBuilder<IMassimaleSearchBuilder>
             implements IMassimaleSearchBuilder {
@@ -104,7 +84,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
          * @return {@link IMassimaleSearchBuilder}
          */
         public IMassimaleSearchBuilder withId(String id) {
-            this.setId(id);
+            this.id = id;
             if (id != null && !id.trim().equals(""))
                 booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, id));
             return self();
@@ -126,7 +106,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
          * @return {@link IMassimaleSearchBuilder}
          */
         public IMassimaleSearchBuilder withLivello(String livello) {
-            this.setLivello(livello);
+            this.livello = livello;
             if (livello != null && !livello.trim().equals(""))
                 booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_LIVELLO, livello));
             return self();
@@ -137,7 +117,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
          * @return {@link IMassimaleSearchBuilder}
          */
         public IMassimaleSearchBuilder withAreaGeografica(String areaGeografica) {
-            this.setAreaGeografica(areaGeografica);
+            this.areaGeografica = areaGeografica;
             if (areaGeografica != null && !areaGeografica.trim().equals(""))
                 booleanModelSearch.getListaSearch()
                         .add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA, areaGeografica));
@@ -164,24 +144,10 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         }
 
         /**
-         * @param notId
-         */
-        public void setNotId(String notId) {
-            this.notId = notId;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getLivello() {
             return livello;
-        }
-
-        /**
-         * @param livello
-         */
-        public void setLivello(String livello) {
-            this.livello = livello;
         }
 
         /**
@@ -192,24 +158,10 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         }
 
         /**
-         * @param areaGeografica
-         */
-        public void setAreaGeografica(String areaGeografica) {
-            this.areaGeografica = areaGeografica;
-        }
-
-        /**
          * @return {@link String}
          */
         public String getTipo() {
             return tipo;
-        }
-
-        /**
-         * @param tipo
-         */
-        public void setTipo(String tipo) {
-            this.tipo = tipo;
         }
 
         /**
