@@ -1,16 +1,15 @@
 package it.cnr.missioni.model.adapter;
 
-import java.util.Map;
-
+import it.cnr.missioni.model.user.Veicolo;
 import org.geosdi.geoplatform.response.collection.GenericMapAdapter;
 import org.geosdi.geoplatform.response.collection.GenericMapType;
 
-import it.cnr.missioni.model.user.Veicolo;
+import java.util.Map;
 
 /**
  * @author Salvia Vito
  */
-public class VeicoloMapAdapter extends GenericMapAdapter<String, Veicolo>{
+public class VeicoloMapAdapter extends GenericMapAdapter<String, Veicolo> {
 
     @Override
     public Map<String, Veicolo> unmarshal(GenericMapType<String, Veicolo> v) throws Exception {
