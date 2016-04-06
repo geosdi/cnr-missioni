@@ -6,7 +6,7 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
  * @author Salvia Vito
  */
 public enum TipologiaSpesaIndexSettings {
-	
+
     TIPOLOGIA_SPESA_DOC_INDEX_SETTINGS(new BaseIndexSettings("cnr_missioni_index_configuration", "tipologia_spesa_type"));
 
     private final GPIndexCreator.GPIndexSettings value;

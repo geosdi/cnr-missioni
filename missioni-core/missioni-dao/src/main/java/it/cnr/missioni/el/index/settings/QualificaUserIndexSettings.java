@@ -6,7 +6,7 @@ import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
  * @author Salvia Vito
  */
 public enum QualificaUserIndexSettings {
-	
+
     QUALIFICA_USER_DOC_INDEX_SETTINGS(new BaseIndexSettings("cnr_missioni_index_configuration", "qualifica_user_type"));
 
     private final GPIndexCreator.GPIndexSettings value;
