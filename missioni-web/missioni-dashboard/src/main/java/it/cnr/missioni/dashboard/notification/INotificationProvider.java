@@ -4,22 +4,18 @@ import java.util.Collection;
 
 
 /**
- * 
  * @author Salvia Vito
- *
  */
 public interface INotificationProvider {
 
+    void check();
 
-	void check();
-	
     /**
      * @return The number of unread notifications for the current user.
      */
     int getUnreadNotificationsCount();
-    
+
     /**
-     * 
      * @param prenotazione
      */
     void addPrenotazione(String prenotazione);
@@ -28,7 +24,6 @@ public interface INotificationProvider {
      * @return Notifications for the current user.
      */
     Collection<DashboardNotification> getNotifications();
-
 
 
 }

@@ -1,32 +1,30 @@
 package it.cnr.missioni.dashboard.binder;
 
-public interface IBinder<TO extends Object, FROM extends Object,B> {
+public interface IBinder<TO extends Object, FROM extends Object, B> {
 
-	B withFrom(FROM from);
-	
-	TO bind();
+    B withFrom(FROM from);
 
-	abstract class AbstractBinder<TO extends Object, FROM extends Object,B extends IBinder> implements IBinder<TO, FROM,B> {
+    TO bind();
 
-		
-		protected FROM from;
-		
-		/**
-		 * 
-		 */
-		protected AbstractBinder() {
-		}
+    abstract class AbstractBinder<TO extends Object, FROM extends Object, B extends IBinder> implements IBinder<TO, FROM, B> {
 
-		/**
-		 * @param from
-		 */
-		@Override
-		public B withFrom(FROM from) {
-			this.from = from;
-			return self();
-		}
+        protected FROM from;
 
-		protected abstract B self();
+        /**
+         *
+         */
+        protected AbstractBinder() {
+        }
 
-	}
+        /**
+         * @param from
+         */
+        @Override
+        public B withFrom(FROM from) {
+            this.from = from;
+            return self();
+        }
+
+        protected abstract B self();
+    }
 }

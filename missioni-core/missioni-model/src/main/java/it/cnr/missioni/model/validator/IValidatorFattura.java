@@ -1,117 +1,117 @@
 package it.cnr.missioni.model.validator;
 
-import org.joda.time.DateTime;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Fattura;
+import org.joda.time.DateTime;
 
 /**
  * @author Salvia Vito
  */
 public interface IValidatorFattura<B> {
 
-	B withMissione(Missione missione);
+    B withMissione(Missione missione);
 
-	B withDataFattura(DateTime dataFattura);
+    B withDataFattura(DateTime dataFattura);
 
-	B withFattura(Fattura fattura);
+    B withFattura(Fattura fattura);
 
-	B withTipologiaSpesa(TipologiaSpesa tiplogiaSpesa);
+    B withTipologiaSpesa(TipologiaSpesa tiplogiaSpesa);
 
-	String getMessage();
+    String getMessage();
 
-	boolean build() throws Exception;
+    boolean build() throws Exception;
 
-	abstract class AbstractValidatorFattura<B> implements IValidatorFattura<B> {
+    public interface IStepValidator {
 
-		protected Missione missione;
-		protected DateTime dataFattura;
-		protected Fattura fattura;
-		protected TipologiaSpesa tipologiaSpesa;
-		protected boolean check = true;
-		protected String message;
+        void setNextValidator(IStepValidator validator);
 
-		protected AbstractValidatorFattura() {
-		}
+        void check() throws Exception;
 
-		public B withMissione(Missione missione) {
-			this.missione = missione;
-			return self();
-		}
+        abstract class AbstractStepValidator implements IStepValidator {
 
-		public B withDataFattura(DateTime dataFattura) {
-			this.dataFattura = dataFattura;
-			return self();
-		}
+            protected IStepValidator nextValidator;
 
-		public B withFattura(Fattura fattura) {
-			this.fattura = fattura;
-			return self();
-		}
+            /**
+             * @return the nextValidator
+             */
+            public IStepValidator getNextValidator() {
+                return nextValidator;
+            }
 
-		public B withTipologiaSpesa(TipologiaSpesa tipologiaSpesa) {
-			this.tipologiaSpesa = tipologiaSpesa;
-			return self();
-		}
+            /**
+             * @param nextValidator
+             */
+            public void setNextValidator(IStepValidator nextValidator) {
+                this.nextValidator = nextValidator;
+            }
+        }
+    }
 
-		protected abstract B self();
+    abstract class AbstractValidatorFattura<B> implements IValidatorFattura<B> {
 
-		protected abstract void initialize() throws Exception;
+        protected Missione missione;
+        protected DateTime dataFattura;
+        protected Fattura fattura;
+        protected TipologiaSpesa tipologiaSpesa;
+        protected boolean check = true;
+        protected String message;
 
-		public boolean build() throws Exception {
-			initialize();
-			return check;
-		}
+        protected AbstractValidatorFattura() {
+        }
 
-		/**
-		 * @return the message
-		 */
-		public String getMessage() {
-			return message;
-		}
+        public B withMissione(Missione missione) {
+            this.missione = missione;
+            return self();
+        }
 
-		// Per le fattura dove non è possibile dare una data antecedente
-		// all'inizio missione
-		class InitialStep extends IStepValidator.AbstractStepValidator {
+        public B withDataFattura(DateTime dataFattura) {
+            this.dataFattura = dataFattura;
+            return self();
+        }
 
-			/**
-			 * @throws Exception
-			 */
-			@Override
-			public void check() throws Exception {
-				if (!tipologiaSpesa.isNoCheckData()
-						&& dataFattura.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())) {
-					check = false;
-					message = "error_date_fattura";
-				} else if (nextValidator != null)
-					this.nextValidator.check();
-			}
-		}
-	}
+        public B withFattura(Fattura fattura) {
+            this.fattura = fattura;
+            return self();
+        }
 
-	public interface IStepValidator {
+        public B withTipologiaSpesa(TipologiaSpesa tipologiaSpesa) {
+            this.tipologiaSpesa = tipologiaSpesa;
+            return self();
+        }
 
-		void setNextValidator(IStepValidator validator);
+        protected abstract B self();
 
-		void check() throws Exception;
+        protected abstract void initialize() throws Exception;
 
-		abstract class AbstractStepValidator implements IStepValidator {
+        public boolean build() throws Exception {
+            initialize();
+            return check;
+        }
 
-			protected IStepValidator nextValidator;
+        /**
+         * @return the message
+         */
+        public String getMessage() {
+            return message;
+        }
 
-			/**
-			 * @return the nextValidator
-			 */
-			public IStepValidator getNextValidator() {
-				return nextValidator;
-			}
+        // Per le fattura dove non è possibile dare una data antecedente
+        // all'inizio missione
+        class InitialStep extends IStepValidator.AbstractStepValidator {
 
-			/**
-			 * @param nextValidator
-			 */
-			public void setNextValidator(IStepValidator nextValidator) {
-				this.nextValidator = nextValidator;
-			}
-		}
-	}
+            /**
+             * @throws Exception
+             */
+            @Override
+            public void check() throws Exception {
+                if (!tipologiaSpesa.isNoCheckData()
+                        && dataFattura.isBefore(missione.getDatiPeriodoMissione().getInizioMissione())) {
+                    check = false;
+                    message = "error_date_fattura";
+                } else if (nextValidator != null)
+                    this.nextValidator.check();
+            }
+        }
+    }
 }

@@ -53,7 +53,6 @@ public interface ICNRMissionValidator<D extends Object, MESSAGE> {
             logger.trace("################################ {} - Validating........ {}\n",
                     getValidatorName(), pojo);
             Set<ConstraintViolation<D>> constraintViolations = this.validator.validate(pojo);
-
             return constraintViolations.isEmpty() ? null : buildMessage(constraintViolations);
         }
 
