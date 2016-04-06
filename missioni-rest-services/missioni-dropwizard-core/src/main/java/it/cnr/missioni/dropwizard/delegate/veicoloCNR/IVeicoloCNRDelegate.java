@@ -12,19 +12,19 @@ import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 public interface IVeicoloCNRDelegate {
 
 /**
- * 
+ * @param id
  * @param stato
  * @param targa
  * @param cartaCircolazione
  * @param polizzaAsscurativa
- * @param id
+ * @param notId
  * @param from
  * @param size
  * @param all
  * @return
  * @throws Exception
  */
-	VeicoloCNRStore getVeicoloCNRByQuery(String stato,String targa,String cartaCircolazione,String polizzaAsscurativa,String id, int from, int size,boolean all) throws Exception;
+	VeicoloCNRStore getVeicoloCNRByQuery(String id,String stato,String targa,String cartaCircolazione,String polizzaAsscurativa,String notId, int from, int size,boolean all) throws Exception;
 
 	/**
 	 * 
