@@ -35,6 +35,8 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.joda.time.DateTime;
@@ -53,6 +55,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
+import it.cnr.missioni.el.utility.PrenotazioneFunction;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 
@@ -87,6 +90,18 @@ public class PrenotazioneRestServiceTest {
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
+	
+//	@Test
+//	public void A_createTest() throws Exception {
+//		List<Prenotazione> lista = PrenotazioneFunction.creaMassivePrenotazioni();
+//		lista.stream().forEach(p->{
+//			try {
+//				missioniCoreClientConnector.addPrenotazione(p);
+//			} catch (Exception e) {
+//			}
+//		});
+//		Thread.sleep(1000);
+//	}
 	
 	@Test
 	public void A_testFindPrenotazione() throws Exception {

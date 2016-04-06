@@ -35,6 +35,8 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.AfterClass;
@@ -52,6 +54,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
+import it.cnr.missioni.el.utility.VeicoloCNRFunction;
 import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
@@ -88,6 +91,18 @@ public class VeicoloCNRRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
+//	@Test
+//	public void A_createTest() throws Exception {
+//		List<VeicoloCNR> lista = VeicoloCNRFunction.creaMassiveVeicoloCNR();
+//		lista.stream().forEach(m->{
+//			try {
+//				missioniCoreClientConnector.addVeicoloCNR(m);
+//			} catch (Exception e) {
+//			}
+//		});
+//		Thread.sleep(1000);
+//	}
+	
 	@Test
 	public void A_addVeicolotest() throws Exception {
 		VeicoloCNR v = new VeicoloCNR();
@@ -188,5 +203,23 @@ public class VeicoloCNRRestServiceTest {
 		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		Thread.sleep(1000);		
 		Assert.assertTrue("FINR  VEICOLO CNR", veicoloCNRStore.getTotale()== 1);
+	}
+	
+	@Test
+	public void F_testFindVeicoloCNRBiId() throws Exception {
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withId("01");
+		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		logger.debug("############################NUMBER_OF_VEICOLO_CNR: {}\n", veicoloCNRStore.getTotale());
+		Assert.assertTrue("FINR  VEICOLO CNR", veicoloCNRStore.getTotale() == 1);
+	}
+	
+	@Test
+	public void F_testFindVeicoloCNRBiId_2() throws Exception {
+		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder
+				.getVeicoloCNRSearchBuilder().withId("05");
+		VeicoloCNRStore veicoloCNRStore = missioniCoreClientConnector.getVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		logger.debug("############################NUMBER_OF_VEICOLO_CNR: {}\n", veicoloCNRStore.getTotale());
+		Assert.assertTrue("FINR  VEICOLO CNR", veicoloCNRStore.getTotale() == 0);
 	}
 }

@@ -38,7 +38,7 @@ package it.cnr.missioni.connector.core;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.UUID;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ws.rs.core.Response;
@@ -62,7 +62,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
-import it.cnr.missioni.model.configuration.Direttore;
+import it.cnr.missioni.el.utility.MissioneFunction;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
@@ -101,6 +101,18 @@ public class MissioneRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
+//	@Test
+//	public void A_createTest() throws Exception {
+//		List<Missione> lista = MissioneFunction.creaMassiveMissioni();
+//		lista.stream().forEach(m->{
+//			try {
+//				missioniCoreClientConnector.addMissione(m);
+//			} catch (Exception e) {
+//			}
+//		});
+//		Thread.sleep(1000);
+//	}
+//	
 	@Test
 	public void A_testFindMissione() throws Exception {	
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder

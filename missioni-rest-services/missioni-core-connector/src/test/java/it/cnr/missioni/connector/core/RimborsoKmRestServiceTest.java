@@ -86,7 +86,7 @@ public class RimborsoKmRestServiceTest {
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
-
+	
 	@Test
 	public void A_deleteRimborsoKmTest() throws Exception {
 		missioniCoreClientConnector.deleteRimborsoKm("01");

@@ -54,6 +54,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.utility.TipologiaSpesaFunction;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
@@ -89,6 +90,18 @@ public class TipologiaSpesaRestServiceTest {
 	public static void afterClass() {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
+	
+//	@Test
+//	public void A_createTest() throws Exception {
+//		List<TipologiaSpesa> lista = TipologiaSpesaFunction.creaMassiveTipologiaSpesa();
+//		lista.stream().forEach(m->{
+//			try {
+//				missioniCoreClientConnector.addTipologiaSpesa(m);
+//			} catch (Exception e) {
+//			}
+//		});
+//		Thread.sleep(1000);
+//	}
 
 	@Test
 	public void A_addTipologiaSpesaTest() throws Exception {

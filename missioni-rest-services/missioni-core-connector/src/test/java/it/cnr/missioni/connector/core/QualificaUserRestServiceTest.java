@@ -87,6 +87,18 @@ public class QualificaUserRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
+//	@Test
+//	public void A_createTest() throws Exception {
+//		List<QualificaUser> lista = QualificaFunction.creaMassiveQualifica();
+//		lista.stream().forEach(p->{
+//			try {
+//				missioniCoreClientConnector.addQualificaUser(p);
+//			} catch (Exception e) {
+//			}
+//		});
+//		Thread.sleep(1000);
+//	}
+	
 	@Test
 	public void A_addQualificaUserTest() throws Exception {
 		QualificaUser qualificaUser = new QualificaUser();
@@ -118,5 +130,23 @@ public class QualificaUserRestServiceTest {
 		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
 		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaUserSearchBuilder);
 		Assert.assertTrue("DELETE QUALIFICA USER", qualificaUserStore.getTotale() == 2);
+	}
+	
+	@Test
+	public void B_findQualificaByIDTest() throws Exception {
+		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
+				.getQualificaUserSearchBuilder().withId("01");
+		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaSearchBuilder);
+		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", qualificaUserStore.getTotale());
+		Assert.assertTrue("FIND  QUALIFICA BY ID", qualificaUserStore.getTotale()== 1);
+	}
+	
+	@Test
+	public void B_findQualificaByID_2Test() throws Exception {
+		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
+				.getQualificaUserSearchBuilder().withId("05");
+		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaSearchBuilder);
+		logger.debug("############################NUMBER_ALL_QUALIFICA_USER: {}\n", qualificaUserStore.getTotale());
+		Assert.assertTrue("FIND  QUALIFICA BY ID", qualificaUserStore.getTotale() == 0);
 	}
 }
