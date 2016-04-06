@@ -3,7 +3,7 @@ package it.cnr.missioni.dashboard.component.wizard.rimborso;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification.Type;
 import it.cnr.missioni.dashboard.client.ClientConnector;
-import it.cnr.missioni.dashboard.component.form.rimborso.FatturaRimborsoForm;
+import it.cnr.missioni.dashboard.component.form.rimborso.LayoutFatturaRimborso;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
@@ -34,12 +34,13 @@ import java.util.Map;
 public class FatturaRimborsoStep implements WizardStep {
 
     private Missione missione;
-    private FatturaRimborsoForm fatturaRimborsoForm;
+    private LayoutFatturaRimborso fatturaRimborsoForm;
 
 
     public FatturaRimborsoStep(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
         this.missione = missione;
-        this.fatturaRimborsoForm = new FatturaRimborsoForm(missione, isAdmin, enabled, modifica);
+//        this.fatturaRimborsoForm = new LayoutFatturaRimborso(missione, isAdmin, enabled, modifica);
+        this.fatturaRimborsoForm = LayoutFatturaRimborso.getFatturaRimborsoForm().withMissione(missione).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
     }
 
     public String getCaption() {

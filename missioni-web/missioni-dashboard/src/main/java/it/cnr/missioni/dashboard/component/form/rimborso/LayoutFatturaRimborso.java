@@ -41,7 +41,7 @@ import java.util.UUID;
 /**
  * @author Salvia Vito
  */
-public class FatturaRimborsoForm extends VerticalLayout {
+public class LayoutFatturaRimborso extends VerticalLayout {
 
     /**
      *
@@ -56,23 +56,69 @@ public class FatturaRimborsoForm extends VerticalLayout {
     private Missione missione;
     private Button reset;
     private Button ok;
+    private boolean isAdmin;
+    private boolean enabled;
+    private boolean modifica;
 
-    public FatturaRimborsoForm(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
+    private LayoutFatturaRimborso(){}
+    
+    public static LayoutFatturaRimborso getFatturaRimborsoForm(){
+    	return new LayoutFatturaRimborso();
+    }
+    
+    public LayoutFatturaRimborso withMissione(Missione missione){
+    	this.missione = missione;
+    	return self();
+    }
+    
+    public LayoutFatturaRimborso withIsAdmin(boolean isAdmin){
+    	this.isAdmin = isAdmin;
+    	return self();
+    }
+    
+    public LayoutFatturaRimborso withEnabled(boolean enabled){
+    	this.enabled = enabled;
+    	return self();
+    }
+    
+    public LayoutFatturaRimborso withModifica(boolean modifica){
+    	this.modifica = modifica;
+    	return self();
+    }
+    
+    public LayoutFatturaRimborso build(){
         this.formFattura = IFormFattura.FormFattura.getFormFattura().withModifica(modifica).withEnabled(enabled)
                 .withIsAdmin(isAdmin).withMissione(missione).build();
-        // this.formFattura = new FormFattura(missione, isAdmin, enabled,
-        // modifica);
-        this.missione = missione;
         addComponent(formFattura);
-        // if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
         if (enabled) {
             HorizontalLayout l = buildFatturaButton();
             addComponent(l);
             setComponentAlignment(l, Alignment.MIDDLE_RIGHT);
         }
         addComponent(elencoFattureTable);
-
+        return self();
     }
+    
+    public LayoutFatturaRimborso self(){
+    	return this;
+    }
+    
+//    public FatturaRimborsoForm(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
+//        this.formFattura = IFormFattura.FormFattura.getFormFattura().withModifica(modifica).withEnabled(enabled)
+//                .withIsAdmin(isAdmin).withMissione(missione).build();
+//        // this.formFattura = new FormFattura(missione, isAdmin, enabled,
+//        // modifica);
+//        this.missione = missione;
+//        addComponent(formFattura);
+//        // if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
+//        if (enabled) {
+//            HorizontalLayout l = buildFatturaButton();
+//            addComponent(l);
+//            setComponentAlignment(l, Alignment.MIDDLE_RIGHT);
+//        }
+//        addComponent(elencoFattureTable);
+//
+//    }
 
     // Ogni fattura deve essere compresa tra le date di inizio e fine
     // missione
