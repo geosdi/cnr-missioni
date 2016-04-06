@@ -59,6 +59,11 @@ public class LayoutFatturaRimborso extends VerticalLayout {
     private boolean isAdmin;
     private boolean enabled;
     private boolean modifica;
+    private TableTypeEnum tableTypeEnum = TableTypeEnum.LIGHT;
+    
+    public enum TableTypeEnum{
+    	FULL,LIGHT;
+    }
 
     private LayoutFatturaRimborso(){}
     
@@ -86,6 +91,11 @@ public class LayoutFatturaRimborso extends VerticalLayout {
     	return self();
     }
     
+    public LayoutFatturaRimborso withTableType(TableTypeEnum tableTypeEnum){
+    	this.tableTypeEnum = tableTypeEnum;
+    	return self();
+    }
+    
     public LayoutFatturaRimborso build(){
         this.formFattura = IFormFattura.FormFattura.getFormFattura().withModifica(modifica).withEnabled(enabled)
                 .withIsAdmin(isAdmin).withMissione(missione).build();
@@ -102,23 +112,6 @@ public class LayoutFatturaRimborso extends VerticalLayout {
     public LayoutFatturaRimborso self(){
     	return this;
     }
-    
-//    public FatturaRimborsoForm(Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
-//        this.formFattura = IFormFattura.FormFattura.getFormFattura().withModifica(modifica).withEnabled(enabled)
-//                .withIsAdmin(isAdmin).withMissione(missione).build();
-//        // this.formFattura = new FormFattura(missione, isAdmin, enabled,
-//        // modifica);
-//        this.missione = missione;
-//        addComponent(formFattura);
-//        // if ((isAdmin || !modifica) && !missione.getRimborso().isPagata()) {
-//        if (enabled) {
-//            HorizontalLayout l = buildFatturaButton();
-//            addComponent(l);
-//            setComponentAlignment(l, Alignment.MIDDLE_RIGHT);
-//        }
-//        addComponent(elencoFattureTable);
-//
-//    }
 
     // Ogni fattura deve essere compresa tra le date di inizio e fine
     // missione
@@ -199,8 +192,9 @@ public class LayoutFatturaRimborso extends VerticalLayout {
                     }
                     // aggiorno la tabella
                     formFattura.aggiornaFatturaTab(new Fattura());
-                    elencoFattureTable.aggiornaTable(
-                            new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
+                    buildTable(tableTypeEnum);
+//                    elencoFattureTable.aggiornaTable(
+//                            new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
                     elencoFattureTable.aggiornaTotale(formFattura.getMissione().getRimborso().getTotale());
                     // Se estera ricancello la combobox
                     if (missione.isMissioneEstera())
@@ -216,8 +210,22 @@ public class LayoutFatturaRimborso extends VerticalLayout {
         layout.addComponents(ok, reset);
         layout.setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
         layout.setComponentAlignment(reset, Alignment.BOTTOM_RIGHT);
-
         return layout;
+    }
+    
+    private void buildTable(TableTypeEnum tableTypeEnum){
+    	switch(tableTypeEnum){
+    	case FULL:
+            elencoFattureTable.aggiornaTableRiepilogo(
+                    new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
+            break;
+    	case LIGHT:
+            elencoFattureTable.aggiornaTable(
+                    new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
+            break;
+            default :
+            	break;
+    	}
     }
 
     public interface IFormFattura extends IForm<Fattura, IFormFattura> {
