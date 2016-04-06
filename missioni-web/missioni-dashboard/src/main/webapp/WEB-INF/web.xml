@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="WebApp_ID"
-         version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-    <display-name>CNR-Missioni Dashboard</display-name>
+<web-app id="WebApp_ID" version="3.0"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<display-name>CNR-Missioni Dashboard</display-name>
 
 
-    <context-param>
-        <description>Missioni Dashboard production mode</description>
-        <param-name>productionMode</param-name>
-        <param-value>${productionMode}</param-value>
-    </context-param>
-    <servlet>
-        <servlet-name>CnrMissioniDashboard</servlet-name>
-        <servlet-class>it.cnr.missioni.dashboard.DashboardServlet</servlet-class>
-        <init-param>
-            <param-name>UI</param-name>
-            <param-value>it.cnr.missioni.dashboard.DashboardUI</param-value>
-        </init-param>
-        <init-param>
-            <param-name>pushmode</param-name>
-            <param-value>automatic</param-value>
-        </init-param>
-        <init-param>
-            <param-name>widgetset</param-name>
-            <param-value>it.cnr.missioni.dashboard.DashboardWidgetSet</param-value>
-        </init-param>
+	<context-param>
+		<description>Missioni Dashboard</description>
+		<param-name>productionMode</param-name>
+  		<param-value>true</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>CnrMissioniDashboard</servlet-name>
+		<servlet-class>it.cnr.missioni.dashboard.DashboardServlet</servlet-class>
+		<init-param>
+			<param-name>UI</param-name>
+			<param-value>it.cnr.missioni.dashboard.DashboardUI</param-value>
+		</init-param>
+<!-- 		<init-param> -->
+<!-- 			<param-name>pushmode</param-name> -->
+<!-- 			<param-value>automatic</param-value> -->
+<!-- 		</init-param> -->
+		<init-param>
+			<param-name>widgetset</param-name>
+			<param-value>it.cnr.missioni.dashboard.DashboardWidgetSet</param-value>
+		</init-param>
 
-        <async-supported>true</async-supported>
+<!-- 		<async-supported>true</async-supported> -->
 
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>CnrMissioniDashboard</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CnrMissioniDashboard</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
 
 </web-app>
