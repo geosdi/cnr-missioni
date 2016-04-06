@@ -47,7 +47,6 @@ public class MissioneRestServiceResource implements MissioneRestService {
 	public Response getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
 			Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
 			String multiMatch, String fieldExist, String fieldNotExist, int from, int size) throws Exception {
-		// TODO Auto-generated method stub
 		return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso,
 				dataFromMissione, dataToMissione, dataFromRimborso, dataToRimborso, oggetto, multiMatch, fieldExist,
 				fieldNotExist, from, size)).build();
@@ -190,7 +189,6 @@ public class MissioneRestServiceResource implements MissioneRestService {
 	/**
 	 * 
 	 * @param missione
-	 * @param modifica
 	 * @return
 	 * @throws Exception
 	 */

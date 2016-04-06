@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MissioniIndexConfiguratorConfig {
-	
+
     @Bean(name = "missioniIndexConfigurator", initMethod = "configure")
     public static GPIndexConfigurator missioniIndexConfigurator() {
         return new GPBaseIndexConfigurator();

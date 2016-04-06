@@ -35,6 +35,8 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.AfterClass;
@@ -52,6 +54,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
+import it.cnr.missioni.el.utility.NazioneFunction;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
@@ -88,6 +91,18 @@ public class NazioneRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
+//	@Test
+//	public void A_createTest() throws Exception {
+//		List<Nazione> lista = NazioneFunction.creaMassiveNazioni();
+//		lista.stream().forEach(n->{
+//			try {
+//				missioniCoreClientConnector.addNazione(n);
+//			} catch (Exception e) {
+//			}
+//		});
+//		Thread.sleep(1000);
+//	}
+	
 	@Test
 	public void A_addNazioneTest() throws Exception {
 		Nazione nazione = new Nazione();
