@@ -1,10 +1,10 @@
- {
-	"veicoloCNR": {
-		"id" : "01",
-		"targa":"09876",
-		"polizzaAssicurativa":"polizza n.2",
-		"cartaCircolazione":"carta 1234",
-		"tipo" : "Ford",
-		"stato" : "DISPONIBILE"
-		}
+{
+  "veicoloCNR": {
+    "id": "01",
+    "targa": "09876",
+    "polizzaAssicurativa": "polizza n.2",
+    "cartaCircolazione": "carta 1234",
+    "tipo": "Ford",
+    "stato": "DISPONIBILE"
+  }
 }

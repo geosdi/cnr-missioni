@@ -1,10 +1,10 @@
- {
-	"massimale": {
-		"id" : "01",
-		"value" : 120,
-		"areaGeografica" : "A",
-		"descrizione" : "Massimale Ricercatore",
-		"livello" : "I",
-		"tipo" : "RIMBORSO_DOCUMENTATO"
-	}
+{
+  "massimale": {
+    "id": "01",
+    "value": 120,
+    "areaGeografica": "A",
+    "descrizione": "Massimale Ricercatore",
+    "livello": "I",
+    "tipo": "RIMBORSO_DOCUMENTATO"
+  }
 }

@@ -1,7 +1,7 @@
- {
-	"nazione": {
-		"id" : "01",
-		"value" : "Germania",
-		"areaGeografica" : "A"
-	}
+{
+  "nazione": {
+    "id": "01",
+    "value": "Germania",
+    "areaGeografica": "A"
+  }
 }

@@ -1,59 +1,59 @@
- {
-               "user": {
-                  "id": "01",
-                  "dataRegistrazione": "2015-01-04T00:00:00.000Z",
-                  "dateLastModified": "2015-01-04T00:00:00.000Z",
-                  "registrazioneCompletata": true,
-                  "responsabileGruppo": true,
-                  "anagrafica": {
-                     "nome": "Vito",
-                     "cognome": "Salvia",
-                     "codiceFiscale": "slvvtttttttttttt",
-                     "dataNascita": "1982-07-30T00:00:00.000Z",
-                     "luogoNascita": "Potenza",
-                     "genere": "UOMO"
-                  },
-                  "residenza": {
-                     "comune": "Tito",
-                     "indirizzo": "Via Verdi",
-                     "domicilioFiscale": "Via Convento"
-                  },
-                  "patente": {
-                     "numeroPatente": "12334",
-                     "dataRilascio": "2001-12-15T00:00:00.000Z",
-                     "validaFinoAl": "2021-12-15T00:00:00.000Z",
-                     "rilasciataDa": "MCTC"
-                  },
-                  "datiCNR": {
-                     "livello": "V",
-                     "descrizioneQualifica": "Assegnista",
-                     "datoreLavoro": "02",
-                     "shortDescriptionDatoreLavoro": "Rossi Paolo",
-                     "matricola": "1111111",
-                     "codiceTerzo": null,
-                     "mail": "vito.salvia@gmail.com",
-                     "iban": "IT0000000000000000",
-                     "idQualifica": "01"
-                  },
-                  "credenziali": {
-                     "username": "vito.salvia",
-                     "password": "644f35315498faf4dd45a1ff2eb01b31",
-                     "ruoloUtente": "UTENTE_ADMIN"
-                  },
-                  "mappaVeicolo": {
-                     "entry": [
-                        {
-                           "value": {
-                              "tipo": "Ford Fiesta",
-                              "cartaCircolazione": "12234",
-                              "polizzaAssicurativa": "A1B2",
-                              "veicoloPrincipale": true,
-                              "id": "01",
-                              "targa": "AA111BB"
-                           },
-                           "key": "01"
-                        }
-                     ]
-                  }
-               }
+{
+  "user": {
+    "id": "01",
+    "dataRegistrazione": "2015-01-04T00:00:00.000Z",
+    "dateLastModified": "2015-01-04T00:00:00.000Z",
+    "registrazioneCompletata": true,
+    "responsabileGruppo": true,
+    "anagrafica": {
+      "nome": "Vito",
+      "cognome": "Salvia",
+      "codiceFiscale": "slvvtttttttttttt",
+      "dataNascita": "1982-07-30T00:00:00.000Z",
+      "luogoNascita": "Potenza",
+      "genere": "UOMO"
+    },
+    "residenza": {
+      "comune": "Tito",
+      "indirizzo": "Via Verdi",
+      "domicilioFiscale": "Via Convento"
+    },
+    "patente": {
+      "numeroPatente": "12334",
+      "dataRilascio": "2001-12-15T00:00:00.000Z",
+      "validaFinoAl": "2021-12-15T00:00:00.000Z",
+      "rilasciataDa": "MCTC"
+    },
+    "datiCNR": {
+      "livello": "V",
+      "descrizioneQualifica": "Assegnista",
+      "datoreLavoro": "02",
+      "shortDescriptionDatoreLavoro": "Rossi Paolo",
+      "matricola": "1111111",
+      "codiceTerzo": null,
+      "mail": "vito.salvia@gmail.com",
+      "iban": "IT0000000000000000",
+      "idQualifica": "01"
+    },
+    "credenziali": {
+      "username": "vito.salvia",
+      "password": "644f35315498faf4dd45a1ff2eb01b31",
+      "ruoloUtente": "UTENTE_ADMIN"
+    },
+    "mappaVeicolo": {
+      "entry": [
+        {
+          "value": {
+            "tipo": "Ford Fiesta",
+            "cartaCircolazione": "12234",
+            "polizzaAssicurativa": "A1B2",
+            "veicoloPrincipale": true,
+            "id": "01",
+            "targa": "AA111BB"
+          },
+          "key": "01"
+        }
+      ]
+    }
+  }
 }
