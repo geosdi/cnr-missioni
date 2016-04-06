@@ -307,7 +307,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
     protected void addActionButtonDettagli() {
 //		MissioneWindowAdmin.open(selectedMissione, true, false, true);
-        MissioneWindowAdmin.getMissioneWindowAdmin().withBean(selectedMissione).withIsAdmin(true).withEnabled(false).withModifica(true);
+        MissioneWindowAdmin.getMissioneWindowAdmin().withBean(selectedMissione).withIsAdmin(false).withEnabled(false).withModifica(true).build();
     }
 
     protected boolean enableButtonWindowAnticipoPagamento() {
