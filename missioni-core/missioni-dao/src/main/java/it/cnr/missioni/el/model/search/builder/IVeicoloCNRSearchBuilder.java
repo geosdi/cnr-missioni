@@ -33,6 +33,12 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
     IVeicoloCNRSearchBuilder withCartaCircolazione(String cartaCircolazione);
 
     /**
+     * @param notId
+     * @return {@link IVeicoloCNRSearchBuilder}
+     */
+    IVeicoloCNRSearchBuilder withNotId(String notId);
+
+    /**
      * @return {@link String}
      */
     String getStato();
@@ -160,6 +166,13 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
          */
         public String getTarga() {
             return targa;
+        }
+
+        /**
+         * @param targa
+         */
+        public void setTarga(String targa) {
+            this.targa = targa;
         }
 
         /**
