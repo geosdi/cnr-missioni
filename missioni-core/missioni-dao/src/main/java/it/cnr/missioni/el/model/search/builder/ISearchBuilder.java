@@ -33,19 +33,19 @@ public interface ISearchBuilder<T> extends Serializable {
      * @return {@link T}
      */
     T withId(String id);
-    
+
     /**
      * @param fieldSort
      * @return {@link T}
      */
     T withFieldSort(String fieldSort);
-    
+
     /**
      * @param sortOrder
      * @return {@link T}
      */
     T withSortOrder(SortOrder sortOrder);
-    
+
     /**
      * @param all
      * @return {@link T}
@@ -106,7 +106,6 @@ public interface ISearchBuilder<T> extends Serializable {
         protected SortOrder sortOrder = SortOrder.ASC;
         protected String fieldSort;
 
-
         protected AbstractSearchBuilder() {
         }
 
@@ -122,16 +121,16 @@ public interface ISearchBuilder<T> extends Serializable {
             this.size = size;
             return self();
         }
-        
+
         /**
-         * @param size
+         * @param sortOrder
          * @return {@link T}
          */
         public T withSortOrder(SortOrder sortOrder) {
             this.sortOrder = sortOrder;
             return self();
         }
-        
+
         /**
          * @param all
          * @return {@link T}
@@ -140,9 +139,9 @@ public interface ISearchBuilder<T> extends Serializable {
             this.all = all;
             return self();
         }
-        
+
         /**
-         * @param size
+         * @param fieldSort
          * @return {@link T}
          */
         public T withFieldSort(String fieldSort) {
@@ -248,21 +247,21 @@ public interface ISearchBuilder<T> extends Serializable {
         public void setSortOrder(SortOrder sortOrder) {
             this.sortOrder = sortOrder;
         }
-        
+
         /**
          * @return {@link String}
          */
-        public String getFieldSort(){
-        	return this.fieldSort;
+        public String getFieldSort() {
+            return this.fieldSort;
         }
 
         /**
          * @param fieldSort
          */
-        public void setFieldSort(String fieldSort){
-        	this.fieldSort = fieldSort;
+        public void setFieldSort(String fieldSort) {
+            this.fieldSort = fieldSort;
         }
-        
+
     }
 
 }
