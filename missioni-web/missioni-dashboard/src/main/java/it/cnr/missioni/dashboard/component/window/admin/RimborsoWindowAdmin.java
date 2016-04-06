@@ -10,73 +10,72 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
-import it.cnr.missioni.dashboard.component.form.rimborso.DatiGeneraliRimborsoForm;
-import it.cnr.missioni.dashboard.component.form.rimborso.DatiPeriodoEsteraMissioneForm;
 import it.cnr.missioni.dashboard.component.form.rimborso.FatturaRimborsoForm;
+import it.cnr.missioni.dashboard.component.form.rimborso.IDatiGeneraliRimborsoForm;
+import it.cnr.missioni.dashboard.component.form.rimborso.IDatiPeriodoEsteraMissioneForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
-import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 
-public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
+public class RimborsoWindowAdmin extends IWindow.AbstractWindow<Missione, RimborsoWindowAdmin> {
 
+    public static final String ID = "rimborsoadminwindow";
     /**
      *
      */
     private static final long serialVersionUID = -8551406658251796691L;
 
-    public static final String ID = "rimborsoadminwindow";
-
-
-    private Rimborso rimborso;
-    private Missione missione;
-
-    private DatiGeneraliRimborsoForm datiGeneraliForm;
+    private IDatiGeneraliRimborsoForm datiGeneraliForm;
     private FatturaRimborsoForm fatturaForm;
-    private DatiPeriodoEsteraMissioneForm datiPeriodoEsteraMissioneForm;
+    private IDatiPeriodoEsteraMissioneForm datiPeriodoEsteraMissioneForm;
 
+    protected RimborsoWindowAdmin() {
+    }
 
-    private RimborsoWindowAdmin(final Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
-        super(isAdmin, enabled, modifica);
-        this.missione = missione;
-        this.rimborso = missione.getRimborso();
-        addStyleName("profile-window");
+    public static RimborsoWindowAdmin getRimborsoWindowAdmin() {
+        return new RimborsoWindowAdmin();
+    }
+
+    public RimborsoWindowAdmin build() {
         setId(ID);
         Responsive.makeResponsive(this);
-
-        build();
+        buildWindow();
         buildTabs();
         if (enabled)
             content.addComponent(buildFooter());
+        UI.getCurrent().addWindow(this);
+        this.focus();
+        return self();
     }
 
     private void buildTabs() {
         buildRimborsoTab();
-        if (missione.isMissioneEstera())
+        if (bean.isMissioneEstera())
             buildDatiEsteriTab();
         buildFatturaTab();
     }
 
 
     private void buildRimborsoTab() {
-        this.datiGeneraliForm = new DatiGeneraliRimborsoForm(missione, isAdmin, enabled, modifica);
+//        this.datiGeneraliForm = new DatiGeneraliRimborsoForm(missione, isAdmin, enabled, modifica);
+        this.datiGeneraliForm = IDatiGeneraliRimborsoForm.DatiGeneraliRimborsoForm.getDatiGeneraliRimborsoForm().withBean(bean.getRimborso()).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
         detailsWrapper.addComponent(buildTab("Generale", FontAwesome.GEAR, this.datiGeneraliForm));
     }
 
 
     private void buildFatturaTab() {
-        this.fatturaForm = new FatturaRimborsoForm(missione, isAdmin, enabled, modifica);
+        this.fatturaForm = new FatturaRimborsoForm(bean, isAdmin, enabled, modifica);
         detailsWrapper.addComponent(buildTab("Fattura", FontAwesome.EURO, this.fatturaForm));
 
     }
 
     private void buildDatiEsteriTab() {
-        this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), isAdmin, enabled, modifica, missione);
+//        this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), isAdmin, enabled, modifica, missione);
+        this.datiPeriodoEsteraMissioneForm = IDatiPeriodoEsteraMissioneForm.DatiPeriodoEsteraMissioneForm.getDatiPeriodoEsteraMissioneForm().withBean(bean.getDatiMissioneEstera()).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
         detailsWrapper.addComponent(buildTab("Dati Missione Estera", FontAwesome.CALENDAR, this.datiPeriodoEsteraMissioneForm));
     }
 
@@ -93,14 +92,13 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
             public void buttonClick(ClickEvent event) {
                 try {
                     Rimborso r = datiGeneraliForm.validate();
-                    missione.setRimborso(r);
-                    DashboardEventBus.post(new UpdateRimborsoAction(missione));
+                    bean.setRimborso(r);
+                    DashboardEventBus.post(new UpdateRimborsoAction(bean));
                     close();
                 } catch (InvalidValueException | CommitException e) {
                     Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
                             Type.ERROR_MESSAGE);
                 }
-
             }
         });
         ok.focus();
@@ -109,11 +107,8 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow {
         return footer;
     }
 
-    public static void open(final Missione missione, boolean isAdmin, boolean enabled, boolean modifica) {
-        DashboardEventBus.post(new CloseOpenWindowsEvent());
-        Window w = new RimborsoWindowAdmin(missione, isAdmin, enabled, modifica);
-        UI.getCurrent().addWindow(w);
-        w.focus();
+    public RimborsoWindowAdmin self() {
+        return this;
     }
 
 }
