@@ -70,7 +70,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow<Missione, Rimbor
 
     private void buildFatturaTab() {
 //        this.fatturaForm = new LayoutFatturaRimborso(bean, isAdmin, enabled, modifica);
-        this.fatturaForm = LayoutFatturaRimborso.getFatturaRimborsoForm().withMissione(bean).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build().withTableType(TableTypeEnum.FULL);
+        this.fatturaForm = LayoutFatturaRimborso.getFatturaRimborsoForm().withMissione(bean).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).withTableType(TableTypeEnum.FULL).build();
         detailsWrapper.addComponent(buildTab("Fattura", FontAwesome.EURO, this.fatturaForm));
     }
 
