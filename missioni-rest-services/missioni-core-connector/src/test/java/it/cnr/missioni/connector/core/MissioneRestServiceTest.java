@@ -157,7 +157,7 @@ public class MissioneRestServiceTest {
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
 				.getMissioneSearchBuilder().withId("M_04");
 
-		missioneSearchBuilder.setId("M_04");
+		missioneSearchBuilder.withId("M_04");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		logger.debug("############################NUMERO ORDINE MISSIONE\n"
 				+ missioniStore.getMissioni().get(0).getRimborso().getNumeroOrdine());
