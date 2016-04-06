@@ -54,17 +54,13 @@ public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> impl
             throws Exception {
         List<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>();
         logger.debug("###############Try to find Prenotazioni by Query: {}\n\n");
-
         Long total = count();
-
         SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
                 .setTypes(getIndexType()).setQuery(prenotazioneSearchBuilder.buildQuery()).setSize(total.intValue())
                 .execute().actionGet());
-
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         for (SearchHit searchHit : searchResponse.getHits().hits()) {
             Prenotazione prenotazione = this.mapper.read(searchHit.getSourceAsString());
             if (!prenotazione.isIdSetted()) {
@@ -72,7 +68,6 @@ public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> impl
             }
             listaPrenotazioni.add(prenotazione);
         }
-
         return new PageResult<Prenotazione>(searchResponse.getHits().getTotalHits(), listaPrenotazioni);
     }
 

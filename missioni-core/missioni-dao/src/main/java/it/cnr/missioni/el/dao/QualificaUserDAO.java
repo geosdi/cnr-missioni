@@ -39,7 +39,6 @@ public class QualificaUserDAO extends AbstractElasticSearchDAO<QualificaUser> im
      */
     @Override
     public List<QualificaUser> findLasts() throws Exception {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -53,20 +52,14 @@ public class QualificaUserDAO extends AbstractElasticSearchDAO<QualificaUser> im
             throws Exception {
         List<QualificaUser> listaQualificaUser = new ArrayList<QualificaUser>();
         logger.debug("###############Try to find Qualifica User by Query: {}\n\n");
-
-
         Page p = new Page(qualificaUserSearchBuilder.getFrom(), qualificaUserSearchBuilder.isAll() ? count().intValue() : qualificaUserSearchBuilder.getSize());
-
-
         SearchResponse searchResponse = p
                 .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
                         .setQuery(qualificaUserSearchBuilder.buildQuery()))
                 .addSort(qualificaUserSearchBuilder.getFieldSort(), qualificaUserSearchBuilder.getSortOrder()).execute().actionGet();
-
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         for (SearchHit searchHit : searchResponse.getHits().hits()) {
             QualificaUser qualificaUser = this.mapper.read(searchHit.getSourceAsString());
             if (!qualificaUser.isIdSetted()) {
@@ -74,7 +67,6 @@ public class QualificaUserDAO extends AbstractElasticSearchDAO<QualificaUser> im
             }
             listaQualificaUser.add(qualificaUser);
         }
-
         return new PageResult<QualificaUser>(searchResponse.getHits().getTotalHits(), listaQualificaUser);
     }
 

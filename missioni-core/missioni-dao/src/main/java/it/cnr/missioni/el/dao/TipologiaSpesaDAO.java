@@ -39,7 +39,6 @@ public class TipologiaSpesaDAO extends AbstractElasticSearchDAO<TipologiaSpesa> 
      */
     @Override
     public List<TipologiaSpesa> findLasts() throws Exception {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -53,20 +52,14 @@ public class TipologiaSpesaDAO extends AbstractElasticSearchDAO<TipologiaSpesa> 
             throws Exception {
         List<TipologiaSpesa> listaTipologiaSpesa = new ArrayList<TipologiaSpesa>();
         logger.debug("###############Try to find Tipologia Spesa by Query: {}\n\n");
-
-
         Page p = new Page(tipologiaSpesaSearchBuilder.getFrom(), tipologiaSpesaSearchBuilder.isAll() ? count().intValue() : tipologiaSpesaSearchBuilder.getSize());
-
-
         SearchResponse searchResponse = p
                 .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
                         .setQuery(tipologiaSpesaSearchBuilder.buildQuery()))
                 .addSort(tipologiaSpesaSearchBuilder.getFieldSort(), tipologiaSpesaSearchBuilder.getSortOrder()).execute().actionGet();
-
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         for (SearchHit searchHit : searchResponse.getHits().hits()) {
             TipologiaSpesa tipologiaSpesa = this.mapper.read(searchHit.getSourceAsString());
             if (!tipologiaSpesa.isIdSetted()) {
@@ -74,7 +67,6 @@ public class TipologiaSpesaDAO extends AbstractElasticSearchDAO<TipologiaSpesa> 
             }
             listaTipologiaSpesa.add(tipologiaSpesa);
         }
-
         return new PageResult<TipologiaSpesa>(searchResponse.getHits().getTotalHits(), listaTipologiaSpesa);
     }
 

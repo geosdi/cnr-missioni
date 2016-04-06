@@ -39,7 +39,6 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
      */
     @Override
     public List<VeicoloCNR> findLasts() throws Exception {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -52,20 +51,14 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
     public PageResult<VeicoloCNR> findVeicoloCNRByQuery(IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
         List<VeicoloCNR> listaVeicoliCNR = new ArrayList<VeicoloCNR>();
         logger.debug("###############Try to find VeicoloCNR by Query: {}\n\n");
-
-
         Page p = new Page(veicoloCNRSearchBuilder.getFrom(), veicoloCNRSearchBuilder.isAll() ? count().intValue() : veicoloCNRSearchBuilder.getSize());
-
-
         SearchResponse searchResponse = p
                 .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
                         .setQuery(veicoloCNRSearchBuilder.buildQuery()))
                 .addSort(veicoloCNRSearchBuilder.getFieldSort(), veicoloCNRSearchBuilder.getSortOrder()).execute().actionGet();
-
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         for (SearchHit searchHit : searchResponse.getHits().hits()) {
             VeicoloCNR veicoloCNR = this.mapper.read(searchHit.getSourceAsString());
             if (!veicoloCNR.isIdSetted()) {
@@ -73,7 +66,6 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
             }
             listaVeicoliCNR.add(veicoloCNR);
         }
-
         return new PageResult<VeicoloCNR>(searchResponse.getHits().getTotalHits(), listaVeicoliCNR);
     }
 

@@ -40,7 +40,6 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
      */
     @Override
     public List<RimborsoKm> findLasts() throws Exception {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -54,17 +53,13 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
             throws Exception {
         List<RimborsoKm> listaRimborsoKm = new ArrayList<RimborsoKm>();
         logger.debug("###############Try to find RimboroKm by Query: {}\n\n");
-
-
         SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
                 .setTypes(getIndexType()).setQuery(rimborsoKmSearchBuilder.buildQuery())
         ).execute()
                 .actionGet();
-
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         for (SearchHit searchHit : searchResponse.getHits().hits()) {
             RimborsoKm rimborsoKm = this.mapper.read(searchHit.getSourceAsString());
             if (!rimborsoKm.isIdSetted()) {
@@ -72,7 +67,6 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
             }
             listaRimborsoKm.add(rimborsoKm);
         }
-
         return new PageResult<RimborsoKm>(searchResponse.getHits().getTotalHits(), listaRimborsoKm);
     }
 

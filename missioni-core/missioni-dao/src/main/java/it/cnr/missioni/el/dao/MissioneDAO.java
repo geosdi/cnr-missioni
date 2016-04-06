@@ -51,7 +51,6 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         for (SearchHit searchHit : searchResponse.getHits().hits()) {
             Missione missione = this.mapper.read(searchHit.getSourceAsString());
             if (!missione.isIdSetted()) {
@@ -68,12 +67,9 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
      */
     public long getMaxNumeroOrdineRimborso() throws Exception {
         long value = 0;
-
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso");
         List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
-
         return lista.size() + 1;
-
     }
 
     /**
@@ -84,17 +80,13 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
      */
     public String getMaxNumeroMissioneAnno() throws Exception {
         long value = 0;
-
         DateTime now = new DateTime();
-        DateTime from = now.withDayOfMonth(1).withMonthOfYear(1);
-        DateTime to = now.withYear(now.getYear()).withDayOfMonth(31).withMonthOfYear(12);
-
+        DateTime from = now.withDayOfMonth(1).withMonthOfYear(1).withHourOfDay(0).withMinuteOfHour(0);
+        DateTime to = now.withYear(now.getYear()).withMonthOfYear(12).withDayOfMonth(31).withHourOfDay(23).withMinuteOfHour(59);
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
                 .withRangeDataInserimento(from, to);
         List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
-
         return (lista.size() + 1) + "-" + now.getYear();
-
     }
 
     /**
@@ -104,8 +96,6 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
     @Override
     public StatisticheMissioni getStatisticheMissioni() throws Exception {
         logger.debug("###############Try to find Statistiche: {}\n\n");
-
-
         SearchResponse searchResponse = this.elastichSearchClient.prepareSearch(getIndexName())
 
                 .addAggregation(
@@ -115,22 +105,14 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         StatisticheMissioni statisticheMissioni = new StatisticheMissioni();
-
         Terms termsByComune = searchResponse.getAggregations().get("by_stato");
         Collection<Terms.Bucket> bucketsByStato = termsByComune.getBuckets();
-
         bucketsByStato.forEach(bucketByStato -> {
-
             statisticheMissioni.getMappaStatistiche().put(StatoEnum.getStatoEnum(bucketByStato.getKey().toString().toUpperCase()),
                     bucketByStato.getDocCount());
-
         });
-
-
         return statisticheMissioni;
-
     }
 
     /**
@@ -139,7 +121,6 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
      */
     @Override
     public List<Missione> findLasts() throws Exception {
-        // TODO Auto-generated method stub
         return null;
     }
 

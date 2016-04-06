@@ -29,21 +29,16 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
      */
     @Override
     public PageResult<User> findUserByQuery(IUserSearchBuilder userSearchBuilder) throws Exception {
-
         List<User> listaUsers = new ArrayList<User>();
         logger.debug("###############Try to find Users by Query: {}\n\n");
-
         Page p = new Page(userSearchBuilder.getFrom(), userSearchBuilder.isAll() ? count().intValue() : userSearchBuilder.getSize());
-
         SearchResponse searchResponse = p
                 .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
                         .setQuery(userSearchBuilder.buildQuery()))
                 .addSort(userSearchBuilder.getFieldSort(), userSearchBuilder.getSortOrder()).execute().actionGet();
-
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
         }
-
         for (SearchHit searchHit : searchResponse.getHits().hits()) {
             User user = this.mapper.read(searchHit.getSourceAsString());
             if (!user.isIdSetted()) {
@@ -51,13 +46,11 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
             }
             listaUsers.add(user);
         }
-
         return new PageResult<User>(searchResponse.getHits().getTotalHits(), listaUsers);
     }
 
     @Override
     public List<User> findLasts() throws Exception {
-        // TODO Auto-generated method stub
         return null;
     }
 
