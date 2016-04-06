@@ -67,15 +67,15 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 * @param userName
 	 * @param userSurname
 	 * @param userEmail
-	 * @param missioneID
+	 * @param numeroOrdine
 	 * @param pdfBuilder
 	 * @return
 	 * @return
 	 */
 	@Override
 	public UpdateRimborsoMessage buildUpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-			String rimborsoID, String pagata, String avvisoPagamento, Double importoDovuto, PDFBuilder pdfBuilder) {
-		return new UpdateRimborsoMessage(userName, userSurname, userEmail, rimborsoID, pagata, avvisoPagamento,
+			String numeroOrdine, String pagata, String avvisoPagamento, Double importoDovuto, PDFBuilder pdfBuilder) {
+		return new UpdateRimborsoMessage(userName, userSurname, userEmail, numeroOrdine, pagata, avvisoPagamento,
 				importoDovuto, pdfBuilder);
 	}
 

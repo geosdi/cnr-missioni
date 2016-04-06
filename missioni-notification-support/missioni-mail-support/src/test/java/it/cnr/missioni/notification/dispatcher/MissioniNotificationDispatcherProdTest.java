@@ -139,8 +139,6 @@ public class MissioniNotificationDispatcherProdTest {
                 .newPDFBuilder();
     	    	pdfBuilder.withUser(buildUserTest())
                 .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest());
-
-    	
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildUpdateRimborsoMessage("Vito", "Salvia", "vito.salvia@gmail.com",
                 		UUID.randomUUID().toString(),"Si","01", new Double(130),pdfBuilder));

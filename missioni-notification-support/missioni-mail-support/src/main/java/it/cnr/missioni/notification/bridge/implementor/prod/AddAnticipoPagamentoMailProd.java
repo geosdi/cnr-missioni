@@ -54,24 +54,18 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 		this.missioneID = (String) message.getMessageParameters().get("missioneID");
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("anticipoPagamentoPDFBuilder");
 		
-		
 		Path tempFilePath = Files.createTempFile("Anticipo Pagamento".concat("-").concat(missioneID).concat("-") .concat(userSurname), ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
 		pdfBuilder.build();
-		
 		List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
-
 		IMissioniMessagePreparator missioniMessagePreparatorAdmin = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorAdmin.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-			
-			
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
 				message.setTo(new String[] { cnrMissioniEmail });
-
 
 				Map model = new HashMap();
 				model.put("userName", userName);
@@ -79,7 +73,6 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 				model.put("missioneID", missioneID);
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 						"template/addAnticipoPagamentoMailNotificationAdmin.html.vm", "UTF-8", model);
-
 				message.setText(messageText, Boolean.TRUE);
 				createAttachment(message, missioniMessagePreparatorAdmin);
 			}
@@ -102,15 +95,12 @@ public class AddAnticipoPagamentoMailProd extends MissioniMailProd {
 				createAttachment(message, missioniMessagePreparatorUser);
 			}
 		});
-
-
 		lista.add(missioniMessagePreparatorUser);
 		return lista;
 	}
 
 	private void createAttachment(MimeMessageHelper message, IMissioniMessagePreparator missioniMessagePreparator)
 			throws Exception {
-
 		message.addAttachment(this.file.getName(), this.file);
 		missioniMessagePreparator.addAttachment(this.file);
 	}

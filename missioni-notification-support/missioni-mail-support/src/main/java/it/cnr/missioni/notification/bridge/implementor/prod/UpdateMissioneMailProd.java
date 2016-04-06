@@ -56,22 +56,18 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 		this.missioneID = (String) message.getMessageParameters().get("missioneID");
 		this.stato = (String) message.getMessageParameters().get("stato");
 		this.responsabileEmail = (String) message.getMessageParameters().get("responsabileEmail");
-
-		
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 
 		Path tempFilePath = Files.createTempFile("Missione - ".concat(userSurname).concat("-"), ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
 		pdfBuilder.build();
-
 		if (pdfBuilder.isMezzoProprio()) {
 			Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userName), ".pdf");
 			fileVeicolo = tempFilePathVeicolo.toFile();
 			pdfBuilder.withFileVeicolo(fileVeicolo);
 			pdfBuilder.buildVeicolo();
 		}
-
 		IMissioniMessagePreparator missioniMessagePreparatorResponsabileGruppo = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorResponsabileGruppo.setMimeMessagePreparator(new MimeMessagePreparator() {
 
@@ -88,7 +84,6 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 						"template/updateMissioneMailNotificationResponsabileGruppo.html.vm", "UTF-8", model);
-
 				message.setText(messageText, Boolean.TRUE);
 				createAttachment(message, missioniMessagePreparatorResponsabileGruppo);
 				createAttachmentVeicoloProprio(message, missioniMessagePreparatorResponsabileGruppo);
@@ -115,7 +110,6 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 				message.setText(messageText, Boolean.TRUE);
 				createAttachment(message, missioniMessagePreparatorResponsabileGruppo);
 				createAttachmentVeicoloProprio(message, missioniMessagePreparatorResponsabileGruppo);
-
 			}
 		});
 
@@ -125,7 +119,6 @@ public class UpdateMissioneMailProd extends MissioniMailProd {
 
 	private void createAttachment(MimeMessageHelper message, IMissioniMessagePreparator missioniMessagePreparator)
 			throws Exception {
-
 		message.addAttachment(this.file.getName(), this.file);
 		missioniMessagePreparator.addAttachment(this.file);
 	}

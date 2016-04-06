@@ -14,16 +14,16 @@ import java.util.Map;
 public class UpdateRimborsoMessage extends CNRMissioniMessage {
 
     private final PDFBuilder rimborsoPDFBuilder;
-    private final String rimborsoID;
+    private final String numeroOrdine;
     private String pagata;
     private String mandatoPagamento;
     private Double totaleDovuto;
 
 
     public UpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-             String theRimborsoID, String thePagata,String theMandatoPagamento,Double totaleDovuto, PDFBuilder theRimborsoPDFBuilder) {
+             String theNumeroOrdine, String thePagata,String theMandatoPagamento,Double totaleDovuto, PDFBuilder theRimborsoPDFBuilder) {
         super(userName, userSurname, userEmail);
-        this.rimborsoID = theRimborsoID;
+        this.numeroOrdine = theNumeroOrdine;
         this.pagata = thePagata;
         this.mandatoPagamento = theMandatoPagamento;
         this.totaleDovuto = totaleDovuto;
@@ -42,11 +42,10 @@ public class UpdateRimborsoMessage extends CNRMissioniMessage {
      * @param map
      */
     protected void injectParameters(Map<String, Object> map) {
-        map.put("rimborsoID", this.rimborsoID);
+        map.put("numeroOrdine", this.numeroOrdine);
         map.put("pagata", this.pagata);
         map.put("mandatoPagamento", this.mandatoPagamento);
         map.put("rimborsoPDFBuilder", this.rimborsoPDFBuilder);
         map.put("totaleDovuto", this.totaleDovuto);
-
     }
 }

@@ -58,7 +58,6 @@ public class AddMissioneMailProd extends MissioniMailProd {
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
 		pdfBuilder.build();
-		
 		if (pdfBuilder.isMezzoProprio()) {
 			Path tempFilePathVeicolo = Files.createTempFile("Modulo Mezzo Proprio - ".concat(userSurname).concat("-"), ".pdf");
 			fileVeicolo = tempFilePathVeicolo.toFile();
@@ -66,12 +65,9 @@ public class AddMissioneMailProd extends MissioniMailProd {
 			pdfBuilder.buildVeicolo();
 		}
 		List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
-
 		IMissioniMessagePreparator missioniMessagePreparatorAdmin = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorAdmin.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-			
-			
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
@@ -83,38 +79,30 @@ public class AddMissioneMailProd extends MissioniMailProd {
 				model.put("userSurname", userSurname);
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 						"template/addMissioneMailNotificationAdmin.html.vm", "UTF-8", model);
-
 				message.setText(messageText, Boolean.TRUE);
 				createAttachment(message, missioniMessagePreparatorAdmin);
 				createAttachmentVeicoloProprio(message, missioniMessagePreparatorAdmin);
 			}
 		});
 		lista.add(missioniMessagePreparatorAdmin);
-		
 		IMissioniMessagePreparator missioniMessagePreparatorResponsabileGruppo = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorResponsabileGruppo.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-			
-			
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
 				message.setTo(new String[] { responsabileEmail });
-
-
 				Map model = new HashMap();
 				model.put("userName", userName);
 				model.put("userSurname", userSurname);
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 						"template/addMissioneMailNotificationResponsabileGruppo.html.vm", "UTF-8", model);
-
 				message.setText(messageText, Boolean.TRUE);
 				createAttachment(message, missioniMessagePreparatorResponsabileGruppo);
 				createAttachmentVeicoloProprio(message, missioniMessagePreparatorResponsabileGruppo);
 			}
 		});
 		lista.add(missioniMessagePreparatorResponsabileGruppo);
-		
 		
 		IMissioniMessagePreparator missioniMessagePreparatorUser = super.createMissioniMessagePreparator();
 		missioniMessagePreparatorUser.setMimeMessagePreparator(new MimeMessagePreparator() {
@@ -133,15 +121,12 @@ public class AddMissioneMailProd extends MissioniMailProd {
 				createAttachmentVeicoloProprio(message, missioniMessagePreparatorUser);
 			}
 		});
-
-
 		lista.add(missioniMessagePreparatorUser);
 		return lista;
 	}
 
 	private void createAttachment(MimeMessageHelper message, IMissioniMessagePreparator missioniMessagePreparator)
 			throws Exception {
-
 		message.addAttachment(this.file.getName(), this.file);
 		missioniMessagePreparator.addAttachment(this.file);
 	}

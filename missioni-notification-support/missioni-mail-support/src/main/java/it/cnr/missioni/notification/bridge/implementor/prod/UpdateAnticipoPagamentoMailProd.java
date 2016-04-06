@@ -53,8 +53,6 @@ public class UpdateAnticipoPagamentoMailProd extends MissioniMailProd {
 		IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
 		missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-
-
 			PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("anticipoPagamentoPDFBuilder");
 
 			@Override
@@ -69,16 +67,12 @@ public class UpdateAnticipoPagamentoMailProd extends MissioniMailProd {
 				String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
 						"template/updateAnticipoPagamentoMailNotificationUser.html.vm", "UTF-8", model);
 				message.setText(messageText, Boolean.TRUE);
-
 				Path tempFilePath = Files.createTempFile("Anticipo Pagamento".concat("-").concat(missioneID).concat("-") .concat(userName), ".pdf");
 				File file = tempFilePath.toFile();
-
 				pdfBuilder.withFile(file);
 				pdfBuilder.build();
 				message.addAttachment(file.getName(), file);
 				missioniMessagePreparator.addAttachment(file);
-				
-
 			}
 		});
 		lista.add(missioniMessagePreparator);

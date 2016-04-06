@@ -26,11 +26,10 @@ import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
  */
 public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
 
-	
 	private String userName;
 	private String userSurname;
 	private String userEmail;
-	private String rimborsoID;
+	private String numeroOrdine;
 	private String pagata;
 	private String mandatoPagamento;
 	private Double totaleDovuto;
@@ -47,12 +46,11 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
     public List<IMissioniMessagePreparator> prepareMessage(IMissioniMailNotificationTask.IMissioneNotificationMessage message,
             VelocityEngine velocityEngine, GPMailDetail gpMailDetail) throws Exception {
     	 List<IMissioniMessagePreparator> lista = new ArrayList<IMissioniMessagePreparator>();
-
     	 
          this.userName = (String) message.getMessageParameters().get("userName");
          this.userSurname = (String) message.getMessageParameters().get("userSurname");
          this.userEmail = (String) message.getMessageParameters().get("userEmail");
-         this.rimborsoID = (String) message.getMessageParameters().get("rimborsoID");
+         this.numeroOrdine = (String) message.getMessageParameters().get("numeroOrdine");
          this.pagata = (String) message.getMessageParameters().get("pagata");
          this.mandatoPagamento = (String) message.getMessageParameters().get("mandatoPagamento");
          this.totaleDovuto = (Double) message.getMessageParameters().get("totaleDovuto");
@@ -60,8 +58,6 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
         IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
         missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-
-            
             PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
@@ -70,24 +66,19 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
                 Map model = new HashMap();
                 model.put("userName", userName);
                 model.put("userSurname", userSurname);
-                model.put("rimborsoID", rimborsoID);
+                model.put("numeroOrdine", numeroOrdine);
                 model.put("pagata", pagata);
                 model.put("mandatoPagamento", mandatoPagamento);
                 model.put("totaleDovuto", totaleDovuto);
-
-
                 String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                         "template/updateRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
-
                 Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userSurname).concat("-"), ".pdf");
                 File file = tempFilePath.toFile();
-
                 pdfBuilder.withFile(file);
                 pdfBuilder.build();
                 message.addAttachment(file.getName(), file);
                 missioniMessagePreparator.addAttachment(file);
-
             }
         });
         lista.add(missioniMessagePreparator);
@@ -99,7 +90,7 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
 	 */
 	@Override
 	protected String getSubjectMessage() {
-		return "Update Rimborso-".concat(rimborsoID).concat("-").concat(userSurname);
+		return "Update Rimborso-".concat(userSurname).concat("-Numero ordine:").concat(numeroOrdine);
 	}
 
     /**
