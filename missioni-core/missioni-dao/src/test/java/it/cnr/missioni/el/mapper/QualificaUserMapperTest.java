@@ -8,9 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 
-
 /**
- * @author Salvia Vito 
+ * @author Salvia Vito
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class QualificaUserMapperTest {
@@ -29,9 +28,9 @@ public class QualificaUserMapperTest {
 
     @Test
     public void readEsempio1FromFileTest() throws Exception {
-    	
+
         logger.info("\n\n@@@@@@@@@@@@@@@@Mapper : {}, read from File : {}\n\n",
-        		qualificaUserMapper, qualificaUserMapper
+                qualificaUserMapper, qualificaUserMapper
                         .read(new ClassPathResource("esempioQualificaUser.json").getFile()));
     }
 

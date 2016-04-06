@@ -8,9 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
 
-
 /**
- * @author Salvia Vito 
+ * @author Salvia Vito
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MissioneMapperTest {
@@ -30,7 +29,7 @@ public class MissioneMapperTest {
     @Test
     public void readEsempio1FromFileTest() throws Exception {
         logger.info("\n\n@@@@@@@@@@@@@@@@Mapper : {}, read from File : {}\n\n",
-        		missioneMapper, missioneMapper
+                missioneMapper, missioneMapper
                         .read(new ClassPathResource("esempioMissione.json").getFile()));
     }
 
