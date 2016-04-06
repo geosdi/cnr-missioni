@@ -1,13 +1,12 @@
 package it.cnr.missioni.rest.api.response.tipologiaSpesa;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-import it.cnr.missioni.model.configuration.TipologiaSpesa;
 
 /**
  * 
@@ -31,8 +30,6 @@ public class TipologiaSpesaStore implements Serializable {
     public TipologiaSpesaStore(List<TipologiaSpesa> tipologiaSpesa) {
         this.setTipologiaSpesa(tipologiaSpesa);
     }
-
-
 
     /**
 	 * @return the tipologiaSpesa
@@ -69,6 +66,5 @@ public class TipologiaSpesaStore implements Serializable {
 	public String toString() {
 		return "TipologiaSpesaStore [tipologiaSpesa=" + tipologiaSpesa + ", totale=" + totale + "]";
 	}
-
 
 }

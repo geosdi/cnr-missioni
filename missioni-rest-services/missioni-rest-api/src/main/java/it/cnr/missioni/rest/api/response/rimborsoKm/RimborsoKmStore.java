@@ -5,14 +5,13 @@
  */
 package it.cnr.missioni.rest.api.response.rimborsoKm;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import it.cnr.missioni.model.configuration.RimborsoKm;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-import it.cnr.missioni.model.configuration.RimborsoKm;
 
 /**
  * 
@@ -67,8 +66,5 @@ public class RimborsoKmStore implements Serializable {
 	public void setTotale(long totale) {
 		this.totale = totale;
 	}
-
-
-
 
 }

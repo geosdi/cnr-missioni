@@ -5,14 +5,13 @@
  */
 package it.cnr.missioni.rest.api.response.veicoloCNR;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 
 /**
  * 
@@ -64,6 +63,5 @@ public class VeicoloCNRStore implements Serializable {
 	public void setTotale(long totale) {
 		this.totale = totale;
 	}
-
 
 }

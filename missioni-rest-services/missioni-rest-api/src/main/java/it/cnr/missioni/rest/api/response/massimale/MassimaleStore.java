@@ -5,14 +5,13 @@
  */
 package it.cnr.missioni.rest.api.response.massimale;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import it.cnr.missioni.model.configuration.Massimale;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-import it.cnr.missioni.model.configuration.Massimale;
 
 /**
  * 
@@ -44,7 +43,6 @@ public class MassimaleStore implements Serializable {
 	public MassimaleStore() {
 	}
 
-
 	/**
 	 * @return the massimale
 	 */
@@ -52,14 +50,12 @@ public class MassimaleStore implements Serializable {
 		return massimale;
 	}
 
-
 	/**
 	 * @param massimale 
 	 */
 	public void setMassimale(List<Massimale> massimale) {
 		this.massimale = massimale;
 	}
-
 
 	/**
 	 * @return the totale
