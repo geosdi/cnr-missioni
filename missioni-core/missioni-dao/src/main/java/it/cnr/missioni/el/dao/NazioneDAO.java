@@ -1,10 +1,7 @@
 package it.cnr.missioni.el.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
+import it.cnr.missioni.model.configuration.Nazione;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
@@ -14,8 +11,9 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.springframework.stereotype.Component;
 
-import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
-import it.cnr.missioni.model.configuration.Nazione;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Salvia Vito
@@ -23,60 +21,59 @@ import it.cnr.missioni.model.configuration.Nazione;
 @Component(value = "nazioneDAO")
 public class NazioneDAO extends AbstractElasticSearchDAO<Nazione> implements INazioneDAO {
 
-	@Resource(name = "nazioneMapper")
-	@Override
-	public <Mapper extends GPBaseMapper<Nazione>> void setMapper(Mapper theMapper) {
-		this.mapper = theMapper;
-	}
+    @Resource(name = "nazioneMapper")
+    @Override
+    public <Mapper extends GPBaseMapper<Nazione>> void setMapper(Mapper theMapper) {
+        this.mapper = theMapper;
+    }
 
-	@Resource(name = "nazioneIndexCreator")
-	@Override
-	public <IC extends GPIndexCreator> void setIndexCreator(IC ic) {
-		super.setIndexCreator(ic);
-	}
+    @Resource(name = "nazioneIndexCreator")
+    @Override
+    public <IC extends GPIndexCreator> void setIndexCreator(IC ic) {
+        super.setIndexCreator(ic);
+    }
 
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-	@Override
-	public List<Nazione> findLasts() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /**
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<Nazione> findLasts() throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	/**
-	 * 
-	 * @param nazioneSearchBuilder
-	 * @return
-	 * @throws Exception
-	 */
-	@Override
-	public PageResult<Nazione> findNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
-		List<Nazione> listaNazione = new ArrayList<Nazione>();
-		logger.debug("###############Try to find Nazione by Query: {}\n\n");
+    /**
+     * @param nazioneSearchBuilder
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public PageResult<Nazione> findNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
+        List<Nazione> listaNazione = new ArrayList<Nazione>();
+        logger.debug("###############Try to find Nazione by Query: {}\n\n");
 
-		Page p = new Page(nazioneSearchBuilder.getFrom(), nazioneSearchBuilder.isAll() ? count().intValue() : nazioneSearchBuilder.getSize() );
+        Page p = new Page(nazioneSearchBuilder.getFrom(), nazioneSearchBuilder.isAll() ? count().intValue() : nazioneSearchBuilder.getSize());
 
-		
-		SearchResponse searchResponse = p
-				.buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
-						.setQuery(nazioneSearchBuilder.buildQuery()))
-				.addSort(nazioneSearchBuilder.getFieldSort(), nazioneSearchBuilder.getSortOrder()).execute().actionGet();
 
-		if (searchResponse.status() != RestStatus.OK) {
-			throw new IllegalStateException("Error in Elastic Search Query.");
-		}
+        SearchResponse searchResponse = p
+                .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
+                        .setQuery(nazioneSearchBuilder.buildQuery()))
+                .addSort(nazioneSearchBuilder.getFieldSort(), nazioneSearchBuilder.getSortOrder()).execute().actionGet();
 
-		for (SearchHit searchHit : searchResponse.getHits().hits()) {
-			Nazione nazione = this.mapper.read(searchHit.getSourceAsString());
-			if (!nazione.isIdSetted()) {
-				nazione.setId(searchHit.getId());
-			}
-			listaNazione.add(nazione);
-		}
+        if (searchResponse.status() != RestStatus.OK) {
+            throw new IllegalStateException("Error in Elastic Search Query.");
+        }
 
-		return new PageResult<Nazione>(searchResponse.getHits().getTotalHits(), listaNazione);
-	}
+        for (SearchHit searchHit : searchResponse.getHits().hits()) {
+            Nazione nazione = this.mapper.read(searchHit.getSourceAsString());
+            if (!nazione.isIdSetted()) {
+                nazione.setId(searchHit.getId());
+            }
+            listaNazione.add(nazione);
+        }
+
+        return new PageResult<Nazione>(searchResponse.getHits().getTotalHits(), listaNazione);
+    }
 
 }
