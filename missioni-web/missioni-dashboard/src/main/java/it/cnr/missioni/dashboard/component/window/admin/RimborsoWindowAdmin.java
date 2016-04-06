@@ -62,7 +62,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow<Missione, Rimbor
 
     private void buildRimborsoTab() {
 //        this.datiGeneraliForm = new DatiGeneraliRimborsoForm(missione, isAdmin, enabled, modifica);
-        this.datiGeneraliForm = IDatiGeneraliRimborsoForm.DatiGeneraliRimborsoForm.getDatiGeneraliRimborsoForm().withBean(bean.getRimborso()).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
+        this.datiGeneraliForm = IDatiGeneraliRimborsoForm.DatiGeneraliRimborsoForm.getDatiGeneraliRimborsoForm().withMissione(bean).withBean(bean.getRimborso()).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
         detailsWrapper.addComponent(buildTab("Generale", FontAwesome.GEAR, this.datiGeneraliForm));
     }
 
@@ -70,7 +70,6 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow<Missione, Rimbor
     private void buildFatturaTab() {
         this.fatturaForm = new FatturaRimborsoForm(bean, isAdmin, enabled, modifica);
         detailsWrapper.addComponent(buildTab("Fattura", FontAwesome.EURO, this.fatturaForm));
-
     }
 
     private void buildDatiEsteriTab() {
