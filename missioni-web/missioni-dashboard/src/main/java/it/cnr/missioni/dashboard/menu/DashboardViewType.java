@@ -27,42 +27,48 @@ import it.cnr.missioni.dashboard.view.admin.GestioneVeicoloCNRView;
 
 public enum DashboardViewType {
 	//USER MENU
-    HOME("home", HomeView.class, FontAwesome.HOME, true,false),
-    COMPLETA_REGISTRAZIONE("completa registrazione", null, FontAwesome.USER, true,false),
-    GESTIONE_MISSIONE("gestione missione", GestioneMissioneView.class, FontAwesome.SUITCASE, true,false),
-    GESTIONE_RIMBORSO("gestione rimborso", GestioneRimborsoView.class, FontAwesome.EURO, true,false),
-    GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio", GestioneVeicoloView.class, FontAwesome.CAR, true,false),
-    CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, true,false),
+    HOME("home", HomeView.class, FontAwesome.HOME, true,false,true),
+    COMPLETA_REGISTRAZIONE("completa registrazione", null, FontAwesome.USER, true,false,false),
+    GESTIONE_MISSIONE("gestione missione", GestioneMissioneView.class, FontAwesome.SUITCASE, true,false,true),
+    GESTIONE_RIMBORSO("gestione rimborso", GestioneRimborsoView.class, FontAwesome.EURO, true,false,true),
+    GESTIONE_VEICOLO_PROPRIO("gestione veicolo proprio", GestioneVeicoloView.class, FontAwesome.CAR, true,false,true),
+    CALENDARIO("prenotazione veicolo CNR", PrenotazioneVeicoloCNRView.class, FontAwesome.CALENDAR, true,false,true),
     //ADMIN MENU
-    HOME_ADMIN("home admin", AdminHomeView.class, FontAwesome.HOME, true,true),
-    GESTIONE_USER_ADMIN("gestione user", GestioneUserAdminView.class, FontAwesome.USERS, true,true),
-    GESTIONE_MISSIONE_ADMIN("gestione missione admin", GestioneMissioneAdminView.class, FontAwesome.SUITCASE, true,true),
-    GESTIONE_RIMBORSO_ADMIN("gestione rimborso admin", GestioneRimborsoAdminView.class, FontAwesome.EURO, true,true),
-    GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR", GestioneVeicoloCNRView.class, FontAwesome.CAR, true,true),
-    GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user", GestioneQualificaUserView.class, FontAwesome.GRADUATION_CAP, true,true),
-    GESTIONE_NAZIONE_ADMIN("gestione nazione", GestioneNazioneView.class, FontAwesome.GLOBE, true,true),
-    GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km", GestioneRimborsoKmView.class, FontAwesome.EURO, true,true),
-    GESTIONE_TIPOLOGIA_SPESA_ADMIN("gestione tipologia spesa", GestioneTipologiaSpesaView.class, FontAwesome.LIST, true,true),
-    GESTIONE_MASSIMALE_ADMIN("gestione massimale", GestioneMassimaleView.class, FontAwesome.EURO, true,true);
+    HOME_ADMIN("home admin", AdminHomeView.class, FontAwesome.HOME, true,true,true),
+    GESTIONE_USER_ADMIN("gestione user", GestioneUserAdminView.class, FontAwesome.USERS, true,true,true),
+    GESTIONE_MISSIONE_ADMIN("gestione missione admin", GestioneMissioneAdminView.class, FontAwesome.SUITCASE, true,true,true),
+    GESTIONE_RIMBORSO_ADMIN("gestione rimborso admin", GestioneRimborsoAdminView.class, FontAwesome.EURO, true,true,true),
+    GESTIONE_VEICOLO_CNR_ADMIN("gestione veicolo CNR", GestioneVeicoloCNRView.class, FontAwesome.CAR, true,true,true),
+    GESTIONE_QUALIFICA_USER_ADMIN("gestione qualifica user", GestioneQualificaUserView.class, FontAwesome.GRADUATION_CAP, true,true,true),
+    GESTIONE_NAZIONE_ADMIN("gestione nazione", GestioneNazioneView.class, FontAwesome.GLOBE, true,true,true),
+    GESTIONE_RIMBORSO_KM_ADMIN("gestione rimborso km", GestioneRimborsoKmView.class, FontAwesome.EURO, true,true,true),
+    GESTIONE_TIPOLOGIA_SPESA_ADMIN("gestione tipologia spesa", GestioneTipologiaSpesaView.class, FontAwesome.LIST, true,true,true),
+    GESTIONE_MASSIMALE_ADMIN("gestione massimale", GestioneMassimaleView.class, FontAwesome.EURO, true,true,true);
 
     private final String viewName;
     private final Class<? extends View> viewClass;
     private final Resource icon;
     private final boolean stateful;
     private final boolean isAdmin;
+    private final boolean registrationComplete;
 
     private DashboardViewType(final String viewName,
             final Class<? extends View> viewClass, final Resource icon,
-            final boolean stateful,final boolean isAdmin) {
+            final boolean stateful,final boolean isAdmin,final boolean registrationComplete) {
         this.viewName = viewName;
         this.viewClass = viewClass;
         this.icon = icon;
         this.stateful = stateful;
         this.isAdmin = isAdmin;
+        this.registrationComplete = registrationComplete;
     }
 
     public static List<DashboardViewType> getMenuUser() {
-    	return Arrays.asList(DashboardViewType.values()).stream().filter(f -> !f.isAdmin).collect(Collectors.toList());
+    	return Arrays.asList(DashboardViewType.values()).stream().filter(f -> !f.isAdmin).filter(f -> f.registrationComplete).collect(Collectors.toList());
+    }
+    
+    public static List<DashboardViewType> getMenuUserRegistrationNotComplete() {
+    	return Arrays.asList(DashboardViewType.values()).stream().filter(f -> !f.isAdmin).filter(f -> !f.registrationComplete).collect(Collectors.toList());
     }
 
     public static List<DashboardViewType> getMenuAdmin() {

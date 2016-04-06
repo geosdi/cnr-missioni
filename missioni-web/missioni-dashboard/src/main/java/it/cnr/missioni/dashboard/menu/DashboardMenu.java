@@ -159,32 +159,31 @@ public final class DashboardMenu extends CustomComponent {
                 notificationsBadge = new Label();
                 notificationsBadge.setId(NOTIFICATIONS_BADGE_ID);
                 menuItemComponent = buildBadgeWrapper(menuItemComponent, notificationsBadge);
-                menuItemsLayout.addComponent(menuItemComponent);
             }
-            // se l'user ha completato la registrazione
-            if (user.isRegistrazioneCompletata() && view != DashboardViewType.COMPLETA_REGISTRAZIONE)
-                menuItemsLayout.addComponent(menuItemComponent);
-            // se l'user non ha completato la registrazione
-            if (!user.isRegistrazioneCompletata() && view == DashboardViewType.COMPLETA_REGISTRAZIONE) {
-                menuItemsLayout.addComponent(menuItemComponent);
-            }
+            menuItemsLayout.addComponent(menuItemComponent);
         });
+        if (user.getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN) {
+            menuItemsLayout.addComponent(new Label("<hr />", ContentMode.HTML));
+            menuItemsLayout.addComponent(new Label("Menù Admin"));
+            DashboardViewType.getMenuAdmin().stream().forEach(view -> {
+                Component menuItemComponent = new ValoMenuItemButton(view);
+                menuItemsLayout.addComponent(menuItemComponent);
+            });
+        }
     }
-
-    private void buildMenuAdminType() {
-        DashboardViewType.getMenuAdmin().stream().forEach(view -> {
+    
+    private void buildMenuUserRegistrationNotCompleteType() {
+        DashboardViewType.getMenuUserRegistrationNotComplete().stream().forEach(view -> {
             Component menuItemComponent = new ValoMenuItemButton(view);
             menuItemsLayout.addComponent(menuItemComponent);
         });
     }
 
     private Component buildMenuItems() {
-        buildMenuUserType();
-        if (user.getCredenziali().getRuoloUtente() == RuoloUserEnum.UTENTE_ADMIN) {
-            menuItemsLayout.addComponent(new Label("<hr />", ContentMode.HTML));
-            menuItemsLayout.addComponent(new Label("Menù Admin"));
-            buildMenuAdminType();
-        }
+    	if(user.isRegistrazioneCompletata())
+        	buildMenuUserType();
+    	else
+    		buildMenuUserRegistrationNotCompleteType();
         return menuItemsLayout;
     }
 
