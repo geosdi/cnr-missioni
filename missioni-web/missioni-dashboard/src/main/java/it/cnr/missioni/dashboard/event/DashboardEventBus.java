@@ -3,7 +3,6 @@ package it.cnr.missioni.dashboard.event;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.SubscriberExceptionContext;
 import com.google.common.eventbus.SubscriberExceptionHandler;
-
 import it.cnr.missioni.dashboard.DashboardUI;
 
 /**

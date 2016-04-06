@@ -1,9 +1,7 @@
 package it.cnr.missioni.dashboard.notification;
 
 /**
- * 
  * @author Salvia Vito
- *
  */
 public final class DashboardNotification {
     private long id;
@@ -28,20 +26,20 @@ public final class DashboardNotification {
     }
 
     /**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
-	}
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	/**
-	 * @param title 
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public boolean isRead() {
+    public boolean isRead() {
         return read;
     }
 

@@ -1,13 +1,7 @@
 package it.cnr.missioni.dashboard;
 
+import com.vaadin.server.*;
 import org.jsoup.nodes.Element;
-
-import com.vaadin.server.BootstrapFragmentResponse;
-import com.vaadin.server.BootstrapListener;
-import com.vaadin.server.BootstrapPageResponse;
-import com.vaadin.server.ServiceException;
-import com.vaadin.server.SessionInitEvent;
-import com.vaadin.server.SessionInitListener;
 
 @SuppressWarnings("serial")
 public class DashboardSessionInitListener implements SessionInitListener {
