@@ -59,7 +59,7 @@ public class LayoutFatturaRimborso extends VerticalLayout {
     private boolean isAdmin;
     private boolean enabled;
     private boolean modifica;
-    private TableTypeEnum tableTypeEnum = TableTypeEnum.LIGHT;
+    private static TableTypeEnum tableTypeEnum = TableTypeEnum.LIGHT;
     
     public enum TableTypeEnum{
     	FULL,LIGHT;
@@ -192,9 +192,8 @@ public class LayoutFatturaRimborso extends VerticalLayout {
                     }
                     // aggiorno la tabella
                     formFattura.aggiornaFatturaTab(new Fattura());
-                    buildTable(tableTypeEnum);
-//                    elencoFattureTable.aggiornaTable(
-//                            new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
+                    elencoFattureTable.aggiornaTable(
+                            new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
                     elencoFattureTable.aggiornaTotale(formFattura.getMissione().getRimborso().getTotale());
                     // Se estera ricancello la combobox
                     if (missione.isMissioneEstera())
@@ -213,20 +212,7 @@ public class LayoutFatturaRimborso extends VerticalLayout {
         return layout;
     }
     
-    private void buildTable(TableTypeEnum tableTypeEnum){
-    	switch(tableTypeEnum){
-    	case FULL:
-            elencoFattureTable.aggiornaTableRiepilogo(
-                    new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
-            break;
-    	case LIGHT:
-            elencoFattureTable.aggiornaTable(
-                    new ArrayList<Fattura>(formFattura.getMissione().getRimborso().getMappaFattura().values()));
-            break;
-            default :
-            	break;
-    	}
-    }
+
 
     public interface IFormFattura extends IForm<Fattura, IFormFattura> {
 
@@ -368,15 +354,15 @@ public class LayoutFatturaRimborso extends VerticalLayout {
                 else
                     buildTipologiaCombo(listaTipologiaSpesaItalia);
                 elencoFattureTable = new ElencoFattureTable(getFieldGroup(), dataField, missione);
-                elencoFattureTable
-                        .aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
+                buildTable(tableTypeEnum);
+//                elencoFattureTable
+//                        .aggiornaTable(new ArrayList<Fattura>(missione.getRimborso().getMappaFattura().values()));
                 elencoFattureTable.aggiornaTotale(missione.getRimborso().getTotale());
                 if (enabled) {
                     addComponent(dataField);
                     addComponent(numeroFatturaField);
                     addComponent(tipologiaSpesaField);
                     addComponent(importoField);
-
                     addComponent(altroField);
                     addComponent(valutaField);
                 }
@@ -384,6 +370,21 @@ public class LayoutFatturaRimborso extends VerticalLayout {
                 setComponentAlignment(elencoFattureTable, Alignment.MIDDLE_LEFT);
                 addValidator();
                 addListener();
+            }
+            
+            private void buildTable(TableTypeEnum tableTypeEnum){
+            	switch(tableTypeEnum){
+            	case FULL:
+                    elencoFattureTable.aggiornaTableRiepilogo(
+                            new ArrayList<Fattura>(getMissione().getRimborso().getMappaFattura().values()));
+                    break;
+            	case LIGHT:
+                    elencoFattureTable.aggiornaTable(
+                            new ArrayList<Fattura>(getMissione().getRimborso().getMappaFattura().values()));
+                    break;
+                    default :
+                    	break;
+            	}
             }
 
             /**
