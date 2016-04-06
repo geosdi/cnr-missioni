@@ -1,123 +1,121 @@
 package it.cnr.missioni.model.user;
 
-import java.io.Serializable;
-
 import org.hibernate.validator.constraints.NotBlank;
+
+import java.io.Serializable;
 
 /**
  * @author Salvia Vito
  */
-public class Veicolo  implements Serializable{
+public class Veicolo implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8495194560567649985L;
-	/**
-	 * 
-	 */
-	private String id;
-	@NotBlank
-	private String tipo;
-	@NotBlank
-	private String targa;
-	@NotBlank
-	private String cartaCircolazione;
-	@NotBlank
-	private String polizzaAssicurativa;
-	private boolean veicoloPrincipale;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8495194560567649985L;
 
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
+    private String id;
+    @NotBlank
+    private String tipo;
+    @NotBlank
+    private String targa;
+    @NotBlank
+    private String cartaCircolazione;
+    @NotBlank
+    private String polizzaAssicurativa;
+    private boolean veicoloPrincipale;
 
-	/**
-	 * @param id 
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-	/**
-	 * @return the tipo
-	 */
-	public String getTipo() {
-		return tipo;
-	}
+    /**
+     * @param id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	/**
-	 * @param tipo
-	 */
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
 
-	/**
-	 * @return the targa
-	 */
-	public String getTarga() {
-		return targa;
-	}
+    /**
+     * @param tipo
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	/**
-	 * @param targa
-	 */
-	public void setTarga(String targa) {
-		this.targa = targa;
-	}
+    /**
+     * @return the targa
+     */
+    public String getTarga() {
+        return targa;
+    }
 
-	/**
-	 * @return the cartaCircolazione
-	 */
-	public String getCartaCircolazione() {
-		return cartaCircolazione;
-	}
+    /**
+     * @param targa
+     */
+    public void setTarga(String targa) {
+        this.targa = targa;
+    }
 
-	/**
-	 * @param cartaCircolazione
-	 */
-	public void setCartaCircolazione(String cartaCircolazione) {
-		this.cartaCircolazione = cartaCircolazione;
-	}
+    /**
+     * @return the cartaCircolazione
+     */
+    public String getCartaCircolazione() {
+        return cartaCircolazione;
+    }
 
-	/**
-	 * @return the polizzaAssicurativa
-	 */
-	public String getPolizzaAssicurativa() {
-		return polizzaAssicurativa;
-	}
+    /**
+     * @param cartaCircolazione
+     */
+    public void setCartaCircolazione(String cartaCircolazione) {
+        this.cartaCircolazione = cartaCircolazione;
+    }
 
-	/**
-	 * @param polizzaAssicurativa
-	 */
-	public void setPolizzaAssicurativa(String polizzaAssicurativa) {
-		this.polizzaAssicurativa = polizzaAssicurativa;
-	}
+    /**
+     * @return the polizzaAssicurativa
+     */
+    public String getPolizzaAssicurativa() {
+        return polizzaAssicurativa;
+    }
 
-	/**
-	 * @return the veicoloPrincipale
-	 */
-	public boolean isVeicoloPrincipale() {
-		return veicoloPrincipale;
-	}
+    /**
+     * @param polizzaAssicurativa
+     */
+    public void setPolizzaAssicurativa(String polizzaAssicurativa) {
+        this.polizzaAssicurativa = polizzaAssicurativa;
+    }
 
-	/**
-	 * @param veicoloPrincipale 
-	 */
-	public void setVeicoloPrincipale(boolean veicoloPrincipale) {
-		this.veicoloPrincipale = veicoloPrincipale;
-	}
+    /**
+     * @return the veicoloPrincipale
+     */
+    public boolean isVeicoloPrincipale() {
+        return veicoloPrincipale;
+    }
 
-	/**
-	 * @return
-	 */
-	@Override
-	public String toString() {
-		return "Veicolo [id=" + id + ", tipo=" + tipo + ", targa=" + targa + ", cartaCircolazione=" + cartaCircolazione
-				+ ", polizzaAssicurativa=" + polizzaAssicurativa + ", veicoloPrincipale=" + veicoloPrincipale + "]";
-	}
+    /**
+     * @param veicoloPrincipale
+     */
+    public void setVeicoloPrincipale(boolean veicoloPrincipale) {
+        this.veicoloPrincipale = veicoloPrincipale;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Veicolo [id=" + id + ", tipo=" + tipo + ", targa=" + targa + ", cartaCircolazione=" + cartaCircolazione
+                + ", polizzaAssicurativa=" + polizzaAssicurativa + ", veicoloPrincipale=" + veicoloPrincipale + "]";
+    }
 
 }

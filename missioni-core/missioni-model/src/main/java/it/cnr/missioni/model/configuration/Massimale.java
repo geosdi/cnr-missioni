@@ -1,170 +1,163 @@
 package it.cnr.missioni.model.configuration;
 
+import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
+import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.geosdi.geoplatform.experimental.el.api.model.Document;
-import org.hibernate.validator.constraints.NotBlank;
-
-import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
-import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
-import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
-
 /**
  * @author Salvia Vito
  */
 @XmlRootElement(name = "massimale")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "value","areaGeografica","livello","descrizione","tipo","valueMezzaGiornata"})
+@XmlType(propOrder = {"id", "value", "areaGeografica", "livello", "descrizione", "tipo", "valueMezzaGiornata"})
 public class Massimale implements Document {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2229956102808552004L;
-	/**
-	 * 
-	 */
-	private String id;
-	@NotNull
-	private Double value;
-	@NotNull
-	private AreaGeograficaEnum areaGeografica;
-	@NotNull
-	private LivelloUserEnum livello;
-	@NotBlank
-	private String descrizione;
-	@NotNull
-	private TrattamentoMissioneEsteraEnum tipo;
-//	@NotNull
-	private Double valueMezzaGiornata;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2229956102808552004L;
+    /**
+     *
+     */
+    private String id;
+    @NotNull
+    private Double value;
+    @NotNull
+    private AreaGeograficaEnum areaGeografica;
+    @NotNull
+    private LivelloUserEnum livello;
+    @NotBlank
+    private String descrizione;
+    @NotNull
+    private TrattamentoMissioneEsteraEnum tipo;
+    //	@NotNull
+    private Double valueMezzaGiornata;
 
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.geosdi.geoplatform.experimental.el.api.model.Document#isIdSetted()
+     */
+    @Override
+    public Boolean isIdSetted() {
+        return ((this.id != null) && !(this.id.isEmpty()));
+    }
 
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
+    /**
+     * @param id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.geosdi.geoplatform.experimental.el.api.model.Document#isIdSetted()
-	 */
-	@Override
-	public Boolean isIdSetted() {
-		return ((this.id != null) && !(this.id.isEmpty()));
-	}
+    /**
+     * @return the value
+     */
+    public Double getValue() {
+        return value;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
+    /**
+     * @param value
+     */
+    public void setValue(Double value) {
+        this.value = value;
+    }
 
-	/**
-	 * @param id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * @return the areaGeografica
+     */
+    public AreaGeograficaEnum getAreaGeografica() {
+        return areaGeografica;
+    }
 
-	/**
-	 * @return the value
-	 */
-	public Double getValue() {
-		return value;
-	}
+    /**
+     * @param areaGeografica
+     */
+    public void setAreaGeografica(AreaGeograficaEnum areaGeografica) {
+        this.areaGeografica = areaGeografica;
+    }
 
-	/**
-	 * @param value 
-	 */
-	public void setValue(Double value) {
-		this.value = value;
-	}
+    /**
+     * @return the livello
+     */
+    public LivelloUserEnum getLivello() {
+        return livello;
+    }
 
-	/**
-	 * @return the areaGeografica
-	 */
-	public AreaGeograficaEnum getAreaGeografica() {
-		return areaGeografica;
-	}
+    /**
+     * @param livello
+     */
+    public void setLivello(LivelloUserEnum livello) {
+        this.livello = livello;
+    }
 
-	/**
-	 * @param areaGeografica 
-	 */
-	public void setAreaGeografica(AreaGeograficaEnum areaGeografica) {
-		this.areaGeografica = areaGeografica;
-	}
+    /**
+     * @return the descrizione
+     */
+    public String getDescrizione() {
+        return descrizione;
+    }
 
-	/**
-	 * @return the livello
-	 */
-	public LivelloUserEnum getLivello() {
-		return livello;
-	}
+    /**
+     * @param descrizione
+     */
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
 
-	/**
-	 * @param livello 
-	 */
-	public void setLivello(LivelloUserEnum livello) {
-		this.livello = livello;
-	}
+    /**
+     * @return the tipo
+     */
+    public TrattamentoMissioneEsteraEnum getTipo() {
+        return tipo;
+    }
 
-	/**
-	 * @return the descrizione
-	 */
-	public String getDescrizione() {
-		return descrizione;
-	}
+    /**
+     * @param tipo
+     */
+    public void setTipo(TrattamentoMissioneEsteraEnum tipo) {
+        this.tipo = tipo;
+    }
 
-	/**
-	 * @param descrizione 
-	 */
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
-	}
+    /**
+     * @return the valueMezzaGiornata
+     */
+    public Double getValueMezzaGiornata() {
+        return valueMezzaGiornata;
+    }
 
-	/**
-	 * @return the tipo
-	 */
-	public TrattamentoMissioneEsteraEnum getTipo() {
-		return tipo;
-	}
+    /**
+     * @param valueMezzaGiornata
+     */
+    public void setValueMezzaGiornata(Double valueMezzaGiornata) {
+        this.valueMezzaGiornata = valueMezzaGiornata;
+    }
 
-	/**
-	 * @param tipo 
-	 */
-	public void setTipo(TrattamentoMissioneEsteraEnum tipo) {
-		this.tipo = tipo;
-	}
-
-	/**
-	 * @return the valueMezzaGiornata
-	 */
-	public Double getValueMezzaGiornata() {
-		return valueMezzaGiornata;
-	}
-
-	/**
-	 * @param valueMezzaGiornata 
-	 */
-	public void setValueMezzaGiornata(Double valueMezzaGiornata) {
-		this.valueMezzaGiornata = valueMezzaGiornata;
-	}
-
-	/**
-	 * @return
-	 */
-	@Override
-	public String toString() {
-		return "Massimale [id=" + id + ", value=" + value + ", areaGeografica=" + areaGeografica + ", livello="
-				+ livello + ", descrizione=" + descrizione + ", tipo=" + tipo + ", valueMezzaGiornata="
-				+ valueMezzaGiornata + "]";
-	}
-
-
-
+    /**
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Massimale [id=" + id + ", value=" + value + ", areaGeografica=" + areaGeografica + ", livello="
+                + livello + ", descrizione=" + descrizione + ", tipo=" + tipo + ", valueMezzaGiornata="
+                + valueMezzaGiornata + "]";
+    }
 
 }

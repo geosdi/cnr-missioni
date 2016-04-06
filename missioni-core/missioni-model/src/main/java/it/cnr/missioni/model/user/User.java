@@ -1,294 +1,291 @@
 package it.cnr.missioni.model.user;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import it.cnr.missioni.model.adapter.VeicoloMapAdapter;
+import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.joda.time.DateTime;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.geosdi.geoplatform.experimental.el.api.model.Document;
-import org.joda.time.DateTime;
-
-import it.cnr.missioni.model.adapter.VeicoloMapAdapter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Salvia Vito
  */
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "dataRegistrazione", "dateLastModified", "registrazioneCompletata", "responsabileGruppo",
-		"anagrafica", "residenza", "patente", "datiCNR", "credenziali", "mappaVeicolo" })
+@XmlType(propOrder = {"id", "dataRegistrazione", "dateLastModified", "registrazioneCompletata", "responsabileGruppo",
+        "anagrafica", "residenza", "patente", "datiCNR", "credenziali", "mappaVeicolo"})
 public class User implements Document {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -479690150958936950L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -479690150958936950L;
 
-	private String id;
+    private String id;
+    private DateTime dataRegistrazione;
+    private DateTime dateLastModified;
+    private boolean registrazioneCompletata;
+    private boolean responsabileGruppo;
+    @Valid
+    private Anagrafica anagrafica = new Anagrafica();
+    @Valid
+    private Residenza residenza = new Residenza();
+    @Valid
+    private Patente patente = new Patente();
+    @Valid
+    private DatiCNR datiCNR = new DatiCNR();
+    @Valid
+    private Credenziali credenziali = new Credenziali();
+    @XmlJavaTypeAdapter(value = VeicoloMapAdapter.class)
+    private Map<String, Veicolo> mappaVeicolo = new HashMap<String, Veicolo>() {
+        @Override
+        public Veicolo put(String key, Veicolo value) {
+            return super.put(key.toUpperCase(), value);
+        }
+    };
 
-	private DateTime dataRegistrazione;
-	private DateTime dateLastModified;
-	private boolean registrazioneCompletata;
-	private boolean responsabileGruppo;
-	@Valid
-	private Anagrafica anagrafica = new Anagrafica();
-	@Valid
-	private Residenza residenza = new Residenza();
-	@Valid
-	private Patente patente = new Patente();
-	@Valid
-	private DatiCNR datiCNR = new DatiCNR();
-	@Valid
-	private Credenziali credenziali = new Credenziali();
-	@XmlJavaTypeAdapter(value = VeicoloMapAdapter.class)
-	private Map<String, Veicolo> mappaVeicolo=new HashMap<String,Veicolo>(){@Override public Veicolo put(String key,Veicolo value){return super.put(key.toUpperCase(),value);}};
+    public boolean isVeicoloPrincipaleSettato() {
+        for (Veicolo v : mappaVeicolo.values()) {
+            if (v.isVeicoloPrincipale())
+                return true;
+        }
+        return false;
+    }
 
-	public boolean isVeicoloPrincipaleSettato() {
-		for (Veicolo v : mappaVeicolo.values()) {
-			if (v.isVeicoloPrincipale())
-				return true;
-		}
-		return false;
-	}
-	
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * org.geosdi.geoplatform.experimental.el.api.model.Document#isIdSetted()
+     */
+    @Override
+    public Boolean isIdSetted() {
+        return ((this.id != null) && !(this.id.isEmpty()));
+    }
 
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.geosdi.geoplatform.experimental.el.api.model.Document#isIdSetted()
-	 */
-	@Override
-	public Boolean isIdSetted() {
-		return ((this.id != null) && !(this.id.isEmpty()));
-	}
+    /**
+     * @param id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
+    /**
+     * @return the dataRegistrazione
+     */
+    public DateTime getDataRegistrazione() {
+        return dataRegistrazione;
+    }
 
-	/**
-	 * @param id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * @param dataRegistrazione
+     */
+    public void setDataRegistrazione(DateTime dataRegistrazione) {
+        this.dataRegistrazione = dataRegistrazione;
+    }
 
-	/**
-	 * @return the dataRegistrazione
-	 */
-	public DateTime getDataRegistrazione() {
-		return dataRegistrazione;
-	}
+    /**
+     * @return the dateLastModified
+     */
+    public DateTime getDateLastModified() {
+        return dateLastModified;
+    }
 
-	/**
-	 * @param dataRegistrazione
-	 */
-	public void setDataRegistrazione(DateTime dataRegistrazione) {
-		this.dataRegistrazione = dataRegistrazione;
-	}
+    /**
+     * @param dateLastModified
+     */
+    public void setDateLastModified(DateTime dateLastModified) {
+        this.dateLastModified = dateLastModified;
+    }
 
-	/**
-	 * @return the dateLastModified
-	 */
-	public DateTime getDateLastModified() {
-		return dateLastModified;
-	}
+    /**
+     * @return the registrazioneCompletata
+     */
+    public boolean isRegistrazioneCompletata() {
+        return registrazioneCompletata;
+    }
 
-	/**
-	 * @param dateLastModified
-	 */
-	public void setDateLastModified(DateTime dateLastModified) {
-		this.dateLastModified = dateLastModified;
-	}
+    /**
+     * @param registrazioneCompletata
+     */
+    public void setRegistrazioneCompletata(boolean registrazioneCompletata) {
+        this.registrazioneCompletata = registrazioneCompletata;
+    }
 
-	/**
-	 * @return the registrazioneCompletata
-	 */
-	public boolean isRegistrazioneCompletata() {
-		return registrazioneCompletata;
-	}
+    /**
+     * @return the responsabileGruppo
+     */
+    public boolean isResponsabileGruppo() {
+        return responsabileGruppo;
+    }
 
-	/**
-	 * @param registrazioneCompletata
-	 */
-	public void setRegistrazioneCompletata(boolean registrazioneCompletata) {
-		this.registrazioneCompletata = registrazioneCompletata;
-	}
+    /**
+     * @param responsabileGruppo
+     */
+    public void setResponsabileGruppo(boolean responsabileGruppo) {
+        this.responsabileGruppo = responsabileGruppo;
+    }
 
-	/**
-	 * @return the responsabileGruppo
-	 */
-	public boolean isResponsabileGruppo() {
-		return responsabileGruppo;
-	}
+    /**
+     * @return the anagrafica
+     */
+    public Anagrafica getAnagrafica() {
+        return anagrafica;
+    }
 
-	/**
-	 * @param responsabileGruppo
-	 */
-	public void setResponsabileGruppo(boolean responsabileGruppo) {
-		this.responsabileGruppo = responsabileGruppo;
-	}
+    /**
+     * @param anagrafica
+     */
+    public void setAnagrafica(Anagrafica anagrafica) {
+        this.anagrafica = anagrafica;
+    }
 
+    /**
+     * @return the datiCNR
+     */
+    public DatiCNR getDatiCNR() {
+        return datiCNR;
+    }
 
+    /**
+     * @param datiCNR
+     */
+    public void setDatiCNR(DatiCNR datiCNR) {
+        this.datiCNR = datiCNR;
+    }
 
-	/**
-	 * @return the anagrafica
-	 */
-	public Anagrafica getAnagrafica() {
-		return anagrafica;
-	}
+    /**
+     * @return the residenza
+     */
+    public Residenza getResidenza() {
+        return residenza;
+    }
 
-	/**
-	 * @param anagrafica
-	 */
-	public void setAnagrafica(Anagrafica anagrafica) {
-		this.anagrafica = anagrafica;
-	}
+    /**
+     * @param residenza
+     */
+    public void setResidenza(Residenza residenza) {
+        this.residenza = residenza;
+    }
 
-	/**
-	 * @return the datiCNR
-	 */
-	public DatiCNR getDatiCNR() {
-		return datiCNR;
-	}
+    /**
+     * @return the patente
+     */
+    public Patente getPatente() {
+        return patente;
+    }
 
-	/**
-	 * @param datiCNR
-	 */
-	public void setDatiCNR(DatiCNR datiCNR) {
-		this.datiCNR = datiCNR;
-	}
+    /**
+     * @param patente
+     */
+    public void setPatente(Patente patente) {
+        this.patente = patente;
+    }
 
-	/**
-	 * @return the residenza
-	 */
-	public Residenza getResidenza() {
-		return residenza;
-	}
+    /**
+     * @return the credenziali
+     */
+    public Credenziali getCredenziali() {
+        return credenziali;
+    }
 
-	/**
-	 * @param residenza
-	 */
-	public void setResidenza(Residenza residenza) {
-		this.residenza = residenza;
-	}
+    /**
+     * @param credenziali
+     */
+    public void setCredenziali(Credenziali credenziali) {
+        this.credenziali = credenziali;
+    }
 
-	/**
-	 * @return the patente
-	 */
-	public Patente getPatente() {
-		return patente;
-	}
+    /**
+     * @return the mappaVeicolo
+     */
+    public Map<String, Veicolo> getMappaVeicolo() {
+        return mappaVeicolo;
+    }
 
-	/**
-	 * @param patente
-	 */
-	public void setPatente(Patente patente) {
-		this.patente = patente;
-	}
+    /**
+     * @param mappaVeicolo
+     */
+    public void setMappaVeicolo(Map<String, Veicolo> mappaVeicolo) {
+        this.mappaVeicolo = mappaVeicolo;
+    }
 
-	/**
-	 * @return the credenziali
-	 */
-	public Credenziali getCredenziali() {
-		return credenziali;
-	}
+    public Veicolo getVeicoloPrincipale() {
+        if (!mappaVeicolo.isEmpty())
+            return (this.mappaVeicolo.values().stream().filter(v -> v.isVeicoloPrincipale())
+                    .collect(Collectors.toList())).get(0);
+        return null;
+    }
 
-	/**
-	 * @param credenziali
-	 */
-	public void setCredenziali(Credenziali credenziali) {
-		this.credenziali = credenziali;
-	}
+    public Veicolo getVeicoloWithTarga(String targa, String id) {
+        if (!mappaVeicolo.isEmpty()) {
 
-	/**
-	 * @return the mappaVeicolo
-	 */
-	public Map<String, Veicolo> getMappaVeicolo() {
-		return mappaVeicolo;
-	}
+            List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getTarga().equalsIgnoreCase(targa)).collect(Collectors.toList());
 
-	/**
-	 * @param mappaVeicolo
-	 */
-	public void setMappaVeicolo(Map<String, Veicolo> mappaVeicolo) {
-		this.mappaVeicolo = mappaVeicolo;
-	}
+            if (id != null) {
+                lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
+            }
 
-	public Veicolo getVeicoloPrincipale() {
-		if (!mappaVeicolo.isEmpty())
-			return (this.mappaVeicolo.values().stream().filter(v -> v.isVeicoloPrincipale())
-					.collect(Collectors.toList())).get(0);
-		return null;
-	}
+            return lista.isEmpty() ? null : lista.get(0);
+        }
+        return null;
 
-	public Veicolo getVeicoloWithTarga(String targa, String id) {
-		if (!mappaVeicolo.isEmpty()) {
-			
-			List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getTarga().equalsIgnoreCase(targa)).collect(Collectors.toList());
-			
-			if (id != null){
-				lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
-			}
-				
-			return lista.isEmpty() ? null : lista.get(0);
-		}
-		return null;
+    }
 
-	}
+    public Veicolo getVeicoloWithCartaCircolazione(String cartaCircolazione, String id) {
 
-	public Veicolo getVeicoloWithCartaCircolazione(String cartaCircolazione, String id) {
-		
-		if (!mappaVeicolo.isEmpty()) {
-			
-			List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getCartaCircolazione().equalsIgnoreCase(cartaCircolazione)).collect(Collectors.toList());
-			
-			if (id != null){
-				lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
-			}
-				
-			return lista.isEmpty() ? null : lista.get(0);
-		}
-		return null;
-	}
+        if (!mappaVeicolo.isEmpty()) {
 
-	public Veicolo getVeicoloWithPolizzaAssicurativa(String polizzaAssicurativa, String id) {
-		if (!mappaVeicolo.isEmpty()) {
-			
-			List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getPolizzaAssicurativa().equalsIgnoreCase(polizzaAssicurativa)).collect(Collectors.toList());
-			
-			if (id != null){
-				lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
-			}
-				
-			return lista.isEmpty() ? null : lista.get(0);
-		}
-		return null;
-	}
+            List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getCartaCircolazione().equalsIgnoreCase(cartaCircolazione)).collect(Collectors.toList());
 
-	/**
-	 * @return
-	 */
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", dataRegistrazione=" + dataRegistrazione + ", dateLastModified=" + dateLastModified
-				+ ", registrazioneCompletata=" + registrazioneCompletata + ", responsabileGruppo=" + responsabileGruppo
-				+ ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente="
-				+ patente + ", datiCNR=" + datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo
-				+ "]";
-	}
+            if (id != null) {
+                lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
+            }
+
+            return lista.isEmpty() ? null : lista.get(0);
+        }
+        return null;
+    }
+
+    public Veicolo getVeicoloWithPolizzaAssicurativa(String polizzaAssicurativa, String id) {
+        if (!mappaVeicolo.isEmpty()) {
+
+            List<Veicolo> lista = this.mappaVeicolo.values().stream().filter(v -> v.getPolizzaAssicurativa().equalsIgnoreCase(polizzaAssicurativa)).collect(Collectors.toList());
+
+            if (id != null) {
+                lista = lista.stream().filter(v -> !v.getId().equals(id)).collect(Collectors.toList());
+            }
+
+            return lista.isEmpty() ? null : lista.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", dataRegistrazione=" + dataRegistrazione + ", dateLastModified=" + dateLastModified
+                + ", registrazioneCompletata=" + registrazioneCompletata + ", responsabileGruppo=" + responsabileGruppo
+                + ", anagrafica=" + anagrafica + ", residenza=" + residenza + ", patente="
+                + patente + ", datiCNR=" + datiCNR + ", credenziali=" + credenziali + ", mappaVeicolo=" + mappaVeicolo
+                + "]";
+    }
 
 }
