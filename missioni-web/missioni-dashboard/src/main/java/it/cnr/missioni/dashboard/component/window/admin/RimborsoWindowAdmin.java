@@ -13,6 +13,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.component.form.rimborso.LayoutFatturaRimborso;
+import it.cnr.missioni.dashboard.component.form.rimborso.LayoutFatturaRimborso.TableTypeEnum;
 import it.cnr.missioni.dashboard.component.form.rimborso.IDatiGeneraliRimborsoForm;
 import it.cnr.missioni.dashboard.component.form.rimborso.IDatiPeriodoEsteraMissioneForm;
 import it.cnr.missioni.dashboard.component.window.IWindow;
@@ -69,7 +70,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow<Missione, Rimbor
 
     private void buildFatturaTab() {
 //        this.fatturaForm = new LayoutFatturaRimborso(bean, isAdmin, enabled, modifica);
-        this.fatturaForm = LayoutFatturaRimborso.getFatturaRimborsoForm().withMissione(bean).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
+        this.fatturaForm = LayoutFatturaRimborso.getFatturaRimborsoForm().withMissione(bean).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build().withTableType(TableTypeEnum.FULL);
         detailsWrapper.addComponent(buildTab("Fattura", FontAwesome.EURO, this.fatturaForm));
     }
 
