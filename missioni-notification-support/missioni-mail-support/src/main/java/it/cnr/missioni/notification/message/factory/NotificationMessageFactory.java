@@ -18,12 +18,14 @@ public interface NotificationMessageFactory {
 	 * @param userName
 	 * @param userSurname
 	 * @param userEmail
-	 *            * @param userEmail
 	 * @param responsabileMail
+	 * @param cnrMissioniEmail
+	 * @param pdfBuilder
+	 * @param missioneId
 	 * @return {@link AddMissioneMessage}
 	 */
 	AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
-			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder);
+			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder,String missioneId);
 
 	/**
 	 * @param userName

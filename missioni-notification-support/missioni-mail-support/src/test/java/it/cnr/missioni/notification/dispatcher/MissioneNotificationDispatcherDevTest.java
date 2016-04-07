@@ -56,7 +56,7 @@ public class MissioneNotificationDispatcherDevTest {
     public void dispatchAddMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
                 .buildAddMissioneMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com","",
-                        "vito.salvia@gmail.com", MissionePDFBuilder.newPDFBuilder()));
+                        "vito.salvia@gmail.com", MissionePDFBuilder.newPDFBuilder(),"1-2016"));
     }
 
     @Test

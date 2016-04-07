@@ -130,7 +130,7 @@ class MissioneDelegate implements IMissioneDelegate {
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
 				user.getDatiCNR().getMail(), mailResponsabile, (missione.isMissioneEstera()
 						? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
-				pdfBuilder));
+				pdfBuilder,missione.getId()));
 
 		return Boolean.TRUE;
 	}

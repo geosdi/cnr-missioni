@@ -16,13 +16,15 @@ public class AddMissioneMessage extends CNRMissioniMessage {
     private final String cnrMissioniEmail;
     private final PDFBuilder missionePDFBuilder;
     private final String responsabileEMail;
+    private final String missioneId;
 
     public AddMissioneMessage(String userName, String userSurname, String userEmail,String responsabileEMail,
-            String theCnrMissioniEmail, PDFBuilder theMissionePDFBuilder) {
+            String theCnrMissioniEmail, PDFBuilder theMissionePDFBuilder,String missioneId) {
         super(userName, userSurname, userEmail);
         this.cnrMissioniEmail = theCnrMissioniEmail;
         this.responsabileEMail = responsabileEMail;
         this.missionePDFBuilder = theMissionePDFBuilder;
+        this.missioneId = missioneId;
     }
 
     /**
@@ -41,5 +43,7 @@ public class AddMissioneMessage extends CNRMissioniMessage {
         map.put("cnrMissioniEmail", this.cnrMissioniEmail);
         map.put("responsabileEmail", this.responsabileEMail);
         map.put("missionePDFBuilder", this.missionePDFBuilder);
+        map.put("missioneId", this.missioneId);
+
     }
 }

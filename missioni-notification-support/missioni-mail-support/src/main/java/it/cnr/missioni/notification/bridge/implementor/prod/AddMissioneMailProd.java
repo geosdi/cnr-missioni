@@ -34,6 +34,7 @@ public class AddMissioneMailProd extends MissioniMailProd {
 	private String responsabileEmail;
 	private File file;
 	private File fileVeicolo;
+	private String missioneId;
 
 	/**
 	 * @param message
@@ -53,7 +54,8 @@ public class AddMissioneMailProd extends MissioniMailProd {
 		this.cnrMissioniEmail = (String) message.getMessageParameters().get("cnrMissioniEmail");
 		this.responsabileEmail = (String) message.getMessageParameters().get("responsabileEmail");
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
-		
+		this.missioneId = (String) message.getMessageParameters().get("missioneId");
+
 		Path tempFilePath = Files.createTempFile("Missione - ".concat(userSurname).concat("-"), ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
@@ -144,7 +146,7 @@ public class AddMissioneMailProd extends MissioniMailProd {
 	 */
 	@Override
 	protected String getSubjectMessage() {
-		return "Ordine di Missione-".concat(userSurname);
+		return "Ordine di Missione-".concat(this.missioneId).concat("-").concat(userSurname);
 	}
 	
 

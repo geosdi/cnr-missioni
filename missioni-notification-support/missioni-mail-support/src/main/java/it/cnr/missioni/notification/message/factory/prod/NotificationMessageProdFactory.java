@@ -25,12 +25,13 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 * @param userEmail
 	 * @param cnrMissioniEmail
 	 * @param pdfBuilder
+	 * @param missioneId
 	 * @return {@link AddMissioneMessage}
 	 */
 	@Override
 	public AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
-			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder) {
-		return new AddMissioneMessage(userName, userSurname, userEmail, responsabileMail, cnrMissioniEmail, pdfBuilder);
+			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder,String missioneId) {
+		return new AddMissioneMessage(userName, userSurname, userEmail, responsabileMail, cnrMissioniEmail, pdfBuilder,missioneId);
 	}
 
 	/**

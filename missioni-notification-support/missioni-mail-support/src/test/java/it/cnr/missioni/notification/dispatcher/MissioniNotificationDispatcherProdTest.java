@@ -91,7 +91,7 @@ public class MissioniNotificationDispatcherProdTest {
                         "vito.salvia@gmail.com", MissionePDFBuilder
                                 .newPDFBuilder()
                                 .withUser(buildUserTest())
-                                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest())));
+                                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest()),"1-2016"));
         Thread.sleep(6000);
     }
 
@@ -128,7 +128,7 @@ public class MissioniNotificationDispatcherProdTest {
                 .withMissione(buildMissioneTest()).withVeicolo(buildVeicoloTest()).withDirettore(buildDirettoreTest());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
-                        "vito.salvia@gmail.com", pdfBuilder));
+                        "vito.salvia@gmail.com", pdfBuilder,"1-2016"));
         Thread.sleep(6000);
     }
 
