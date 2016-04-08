@@ -72,7 +72,7 @@ public final class ElencoFattureTable extends ITable.AbstractTable {
             setContainerDataSource(
                     new BeanItemContainer<Fattura>(Fattura.class, ((List<Fattura>) lista)));
             setVisibleColumns("numeroFattura", "data", "shortDescriptionTipologiaSpesa", "valuta", "altro", "importo");
-            setColumnHeaders("Numero Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo €");
+            setColumnHeaders("N.Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo €");
             setId("numeroFattura");
             Object[] properties = {"data", "numeroFattura"};
             boolean[] ordering = {false, false};
@@ -93,7 +93,7 @@ public final class ElencoFattureTable extends ITable.AbstractTable {
             setContainerDataSource(
                     new BeanItemContainer<Fattura>(Fattura.class, ((List<Fattura>) lista)));
             setVisibleColumns("numeroFattura", "data", "shortDescriptionTipologiaSpesa", "valuta", "altro", "importo", "importoSpettante");
-            setColumnHeaders("Numero Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo €", "Importo Spettante €");
+            setColumnHeaders("N.Fattura", "Data", "Tipologia Spesa", "Valuta", "Altro", "Importo €", "Importo Spettante €");
             setId("numeroFattura");
             Object[] properties = {"data", "numeroFattura"};
             boolean[] ordering = {false, false};

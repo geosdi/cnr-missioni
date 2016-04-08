@@ -165,6 +165,7 @@ public class InitDAOTest {
         t.setItalia(false);
         t.setTipoTrattamento(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
         t.setValue("Aereo");
+        t.setVoceSpesa(VoceSpesaEnum.ALTRO);
         t.setNoCheckData(true);
         lista.add(t);
 

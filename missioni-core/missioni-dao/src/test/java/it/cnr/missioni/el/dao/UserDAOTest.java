@@ -58,7 +58,6 @@ public class UserDAOTest {
 
     @Test
     public void B_findUserByUsernameValidaTest() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withUsername("vito.salvia");
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -69,7 +68,6 @@ public class UserDAOTest {
 
     @Test
     public void C_findUserByUsernameErrataTest() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withUsername("vito.salvi");
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -78,10 +76,8 @@ public class UserDAOTest {
 
     @Test
     public void D_updatePasswordUser() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withUsername("vito.salvia");
-
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
         User user = lista.get(0);
         String oldPassword = user.getCredenziali().getPassword();
@@ -97,7 +93,6 @@ public class UserDAOTest {
 
     @Test
     public void E_findUserByCognome() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withCognome("Salv");
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -106,7 +101,6 @@ public class UserDAOTest {
 
     @Test
     public void F_findUserByNome() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withNome("Vi");
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -115,7 +109,6 @@ public class UserDAOTest {
 
     @Test
     public void G_findUserByCodiceFiscale() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withCodiceFiscale("slvv");
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -134,17 +127,14 @@ public class UserDAOTest {
 
     @Test
     public void G_findUserErrataALL() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withCodiceFiscale("slvvttttttttttt").withNome("Vito").withCognome("salvia").withMatricola("4111111");
-
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
         Assert.assertTrue("FIND USER BY ALL", lista.size() == 0);
     }
 
     @Test
     public void H_findUserByMatricola() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withSearchType("exact").withMatricola("1111111");
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -161,7 +151,6 @@ public class UserDAOTest {
 
     @Test
     public void L_findUserByTarga() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withTarga("AA111BB");
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -244,7 +233,6 @@ public class UserDAOTest {
 
     @Test
     public void T_findByMultiMatch() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withMultiMatch("Salvia 1111111");
         List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
@@ -262,7 +250,6 @@ public class UserDAOTest {
 
     @Test
     public void U_findByMail() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withMail("prova@gmail.com");
 
@@ -272,7 +259,6 @@ public class UserDAOTest {
 
     @Test
     public void V_findByRespnsabileGruppo() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withResponsabileGruppo(true).withAll(true);
 
@@ -282,28 +268,22 @@ public class UserDAOTest {
 
     @Test
     public void V_findByNotRespnsabileGruppo() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withResponsabileGruppo(false).withAll(true);
-
         List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
         Assert.assertTrue("FIND ALL USER", lista.size() == 3);
     }
 
     @Test
     public void V_findByIdNotPresent() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId("10");
-
         List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
         Assert.assertTrue("FIND USER BY ID", lista.isEmpty());
     }
 
     @Test
     public void V_findById() throws Exception {
-
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId("01");
-
         List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
         Assert.assertTrue("FIND USER BY ID", lista.size() == 1);
     }

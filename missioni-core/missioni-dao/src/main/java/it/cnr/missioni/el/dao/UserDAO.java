@@ -22,7 +22,6 @@ import java.util.List;
 public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO {
 
     /**
-     * @param p
      * @param userSearchBuilder
      * @return
      * @throws Exception

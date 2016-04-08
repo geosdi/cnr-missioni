@@ -11,8 +11,7 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 public interface IUserDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<User> {
 
     /**
-     * @param p
-     * @param utenteModelSearch
+     * @param userSearchBuilder
      * @return
      * @throws Exception
      */

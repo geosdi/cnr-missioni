@@ -45,6 +45,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow<Missione, Rimbor
         setId(ID);
         Responsive.makeResponsive(this);
         buildWindow();
+        setWidth("47%");
         buildTabs();
         if (enabled)
             content.addComponent(buildFooter());
