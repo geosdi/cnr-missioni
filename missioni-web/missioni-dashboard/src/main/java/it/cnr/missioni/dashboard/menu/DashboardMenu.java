@@ -24,10 +24,13 @@ import it.cnr.missioni.model.user.User;
  * A responsive menu component providing user information and the controls for
  * primary navigation between the views.
  */
-@SuppressWarnings({"serial", "unchecked"})
 public final class DashboardMenu extends CustomComponent {
 
-    public static final String ID = "dashboard-menu";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 188633224189004887L;
+	public static final String ID = "dashboard-menu";
     public static final String REPORTS_BADGE_ID = "dashboard-menu-reports-badge";
     public static final String NOTIFICATIONS_BADGE_ID = "dashboard-menu-notifications-badge";
     private static final String STYLE_VISIBLE = "valo-menu-visible";
@@ -113,7 +116,7 @@ public final class DashboardMenu extends CustomComponent {
             @Override
             public void menuSelected(final MenuItem selectedItem) {
 //				CredenzialiWindow.open(DashboardUI.getCurrentUser(), false, true, true);
-                CredenzialiWindow.getCredenzialiWindow().withBean(new User()).withIsAdmin(false).withEnabled(true).withModifica(true).build();
+                CredenzialiWindow.getCredenzialiWindow().withBean(DashboardUI.getCurrentUser()).withIsAdmin(false).withEnabled(true).withModifica(true).build();
 
             }
         });
@@ -136,7 +139,12 @@ public final class DashboardMenu extends CustomComponent {
 
     private Component buildToggleButton() {
         Button valoMenuToggleButton = new Button("Menu", new ClickListener() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 8886382223713313751L;
+
+			@Override
             public void buttonClick(final ClickEvent event) {
                 if (getCompositionRoot().getStyleName().contains(STYLE_VISIBLE)) {
                     getCompositionRoot().removeStyleName(STYLE_VISIBLE);

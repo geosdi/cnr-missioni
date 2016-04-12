@@ -35,16 +35,12 @@
  */
 package it.cnr.missioni.connector.core;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
+import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
+import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
+import it.cnr.missioni.model.prenotazione.VeicoloCNR;
+import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
@@ -52,12 +48,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
-import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
-import it.cnr.missioni.el.utility.VeicoloCNRFunction;
-import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
+import javax.annotation.Resource;
 
 /**
  * 
