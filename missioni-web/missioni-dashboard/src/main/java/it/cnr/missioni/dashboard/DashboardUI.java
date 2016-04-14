@@ -21,6 +21,7 @@ import it.cnr.missioni.dashboard.action.DeletePrenotazioneAction;
 import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.action.MissioneAction;
 import it.cnr.missioni.dashboard.action.PrenotazioneAction;
+import it.cnr.missioni.dashboard.action.RecuperaPasswordAction;
 import it.cnr.missioni.dashboard.action.RimborsoAction;
 import it.cnr.missioni.dashboard.action.UpdateCredenzialiUserAction;
 import it.cnr.missioni.dashboard.action.UpdateUserAction;
@@ -128,6 +129,11 @@ extends UI
 	@Subscribe
 	public void userRegistrationRequested(final UpdateCredenzialiUserAction updateCredenzialiUserAction) {
 		updateCredenzialiUserAction.doAction();
+	}
+	
+	@Subscribe
+	public void recuperaPasswordRequested(final RecuperaPasswordAction recuperaPasswordAction) {
+		recuperaPasswordAction.doAction();
 	}
 
 	@Subscribe

@@ -17,6 +17,7 @@ import com.vaadin.ui.themes.Reindeer;
 import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.action.LoginAction;
 import it.cnr.missioni.dashboard.component.window.CredenzialiWindow;
+import it.cnr.missioni.dashboard.component.window.RecuperaPasswordWindow;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
@@ -56,7 +57,7 @@ public class LoginView extends VerticalLayout implements Serializable {
         loginPanel.addStyleName("login-panel");
         loginPanel.addComponent(buildLabels());
         loginPanel.addComponent(buildFields());
-        Button button = new Button("Registrati", new Button.ClickListener() {
+        Button buttonRegistrati = new Button("Registrati", new Button.ClickListener() {
             /**
              *
              */
@@ -68,8 +69,26 @@ public class LoginView extends VerticalLayout implements Serializable {
                 CredenzialiWindow.getCredenzialiWindow().withBean(new User()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
             }
         });
-        button.setStyleName(Reindeer.BUTTON_LINK);
-        loginPanel.addComponent(button);
+        buttonRegistrati.setStyleName(Reindeer.BUTTON_LINK);
+        loginPanel.addComponent(buttonRegistrati);
+        
+        Button buttonRecuperaPassword = new Button("Recupera Password", new Button.ClickListener() {
+
+
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 5787072526591206237L;
+
+			@Override
+            public void buttonClick(ClickEvent clickEvent) {
+//				CredenzialiWindow.open(new User(),false,true,false);
+                RecuperaPasswordWindow.getRecuperaPasswordWindow().withIsAdmin(false).withEnabled(true).withModifica(false).build();
+            }
+        });
+        buttonRecuperaPassword.setStyleName(Reindeer.BUTTON_LINK);
+        loginPanel.addComponent(buttonRecuperaPassword);
+        
         return loginPanel;
     }
 
