@@ -159,7 +159,12 @@ public class MissioniNotificationDispatcherProdTest {
         Thread.sleep(6000);
     }
     
-
+    @Test
+    public void dispatchRecuperaPasswordMailProdTest() throws Exception {
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
+                .buildRecuperaPasswordMessage("Vito", "Salvia", "vito.salvia@gmail.com","new_password"));
+        Thread.sleep(6000);
+    }
     
     Veicolo buildVeicoloTest(){
     	Veicolo v = new Veicolo();

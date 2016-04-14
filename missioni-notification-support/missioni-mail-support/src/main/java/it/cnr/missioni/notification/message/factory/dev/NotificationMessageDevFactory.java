@@ -4,6 +4,7 @@ import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
+import it.cnr.missioni.notification.message.RecuperaPasswordMessage;
 import it.cnr.missioni.notification.message.UpdateAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateRimborsoMessage;
@@ -157,6 +158,28 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 		};
 	}
 	
+	/**
+	 * 
+	 * @param userName
+	 * @param userSurname
+	 * @param userEmail
+	 * @param password
+	 * @return
+	 */
+	@Override
+	public RecuperaPasswordMessage buildRecuperaPasswordMessage(String userName, String userSurname,
+			String userEmail, String password) {
+		return new RecuperaPasswordMessage(userName, userSurname, userEmail, password) {
+
+			/**
+			 * @return {@link MissioniMailImplementor.NotificationMessageType}
+			 */
+			@Override
+			public MissioniMailImplementor.NotificationMessageType getNotificationMessageType() {
+				return MissioniMailImplementor.NotificationMessageType.RECUPERA_PASSWORD_MAIL_DEV;
+			}
+		};
+	}
 	
 	
 }

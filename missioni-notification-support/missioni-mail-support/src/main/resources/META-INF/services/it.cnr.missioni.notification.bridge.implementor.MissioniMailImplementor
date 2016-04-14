@@ -12,3 +12,5 @@ it.cnr.missioni.notification.bridge.implementor.dev.RimborsoMissioneDoneMailDev
 it.cnr.missioni.notification.bridge.implementor.prod.RimborsoMissioneDoneMailProd
 it.cnr.missioni.notification.bridge.implementor.dev.UpdateRimborsoMissioneMailDev
 it.cnr.missioni.notification.bridge.implementor.prod.UpdateRimborsoMissioneMailProd
+it.cnr.missioni.notification.bridge.implementor.dev.RecuperaPasswordMailDev
+it.cnr.missioni.notification.bridge.implementor.prod.RecuperaPasswordMailProd

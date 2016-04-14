@@ -3,6 +3,7 @@ package it.cnr.missioni.notification.message.factory;
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
+import it.cnr.missioni.notification.message.RecuperaPasswordMessage;
 import it.cnr.missioni.notification.message.UpdateAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateRimborsoMessage;
@@ -25,7 +26,7 @@ public interface NotificationMessageFactory {
 	 * @return {@link AddMissioneMessage}
 	 */
 	AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
-			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder,String missioneId);
+			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder, String missioneId);
 
 	/**
 	 * @param userName
@@ -36,7 +37,7 @@ public interface NotificationMessageFactory {
 	 * @return {@link UpdateMissioneMessage}
 	 */
 	UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname, String stato,
-			String userEmail,String responsabileGruppoEmail, String missioneID, PDFBuilder pdfBuilder);
+			String userEmail, String responsabileGruppoEmail, String missioneID, PDFBuilder pdfBuilder);
 
 	/**
 	 * @param userName
@@ -88,5 +89,16 @@ public interface NotificationMessageFactory {
 	 * @return
 	 */
 	UpdateAnticipoPagamentoMessage buildUpdateAnticipoPagamentoMessage(String userName, String userSurname,
-			String userEmail, String cnrMissioniEmail,String missioneID, PDFBuilder pdfBuilder);
+			String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder);
+
+	/**
+	 * 
+	 * @param userName
+	 * @param userSurname
+	 * @param userEmail
+	 * @param password
+	 * @return
+	 */
+	RecuperaPasswordMessage buildRecuperaPasswordMessage(String userName, String userSurname, String userEmail,
+			String password);
 }

@@ -3,6 +3,7 @@ package it.cnr.missioni.notification.message.factory.prod;
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
+import it.cnr.missioni.notification.message.RecuperaPasswordMessage;
 import it.cnr.missioni.notification.message.UpdateAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateRimborsoMessage;
@@ -30,8 +31,9 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 */
 	@Override
 	public AddMissioneMessage buildAddMissioneMessage(String userName, String userSurname, String userEmail,
-			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder,String missioneId) {
-		return new AddMissioneMessage(userName, userSurname, userEmail, responsabileMail, cnrMissioniEmail, pdfBuilder,missioneId);
+			String responsabileMail, String cnrMissioniEmail, PDFBuilder pdfBuilder, String missioneId) {
+		return new AddMissioneMessage(userName, userSurname, userEmail, responsabileMail, cnrMissioniEmail, pdfBuilder,
+				missioneId);
 	}
 
 	/**
@@ -44,8 +46,9 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 */
 	@Override
 	public UpdateMissioneMessage buildUpdateMissioneMessage(String userName, String userSurname, String stato,
-			String userEmail,String esponsabileGruppoEmail, String missioneID, PDFBuilder pdfBuilder) {
-		return new UpdateMissioneMessage(userName, userSurname, stato, userEmail,esponsabileGruppoEmail, missioneID, pdfBuilder);
+			String userEmail, String esponsabileGruppoEmail, String missioneID, PDFBuilder pdfBuilder) {
+		return new UpdateMissioneMessage(userName, userSurname, stato, userEmail, esponsabileGruppoEmail, missioneID,
+				pdfBuilder);
 	}
 
 	/**
@@ -91,8 +94,9 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	 */
 	@Override
 	public AddAnticipoPagamentoMessage buildAddAnticipoPagamentoMessage(String userName, String userSurname,
-			String userEmail, String cnrMissioniEmail,String missioneID, PDFBuilder pdfBuilder) {
-		return new AddAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder);
+			String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
+		return new AddAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail, missioneID,
+				pdfBuilder);
 	}
 
 	/**
@@ -107,7 +111,23 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	@Override
 	public UpdateAnticipoPagamentoMessage buildUpdateAnticipoPagamentoMessage(String userName, String userSurname,
 			String userEmail, String cnrMissioniEmail, String missioneID, PDFBuilder pdfBuilder) {
-		return new UpdateAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail,missioneID, pdfBuilder);
+		return new UpdateAnticipoPagamentoMessage(userName, userSurname, userEmail, cnrMissioniEmail, missioneID,
+				pdfBuilder);
+
+	}
+
+	/**
+	 * 
+	 * @param userName
+	 * @param userSurname
+	 * @param userEmail
+	 * @param password
+	 * @return
+	 */
+	@Override
+	public RecuperaPasswordMessage buildRecuperaPasswordMessage(String userName, String userSurname, String userEmail,
+			String password) {
+		return new RecuperaPasswordMessage(userName, userSurname, userEmail, password);
 
 	}
 

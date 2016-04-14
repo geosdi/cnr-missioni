@@ -93,4 +93,11 @@ public class MissioneNotificationDispatcherDevTest {
                         "vito.salvia@gmail.com","01", AnticipoPagamentoPDFBuilder.newPDFBuilder()));
     }
     
+    @Test
+    public void dispatchRecuperaPasswordMailDevTest() throws Exception {
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
+                .buildRecuperaPasswordMessage("Vito", "Salvia", "vito.salvia@gmail.com",
+                        "new_password"));
+    }
+    
 }
