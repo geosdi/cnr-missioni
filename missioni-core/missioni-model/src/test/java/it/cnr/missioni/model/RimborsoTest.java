@@ -93,7 +93,7 @@ public class RimborsoTest {
                 super.setDataRimborso(new DateTime());
                 super.setMandatoPagamento("01");
                 Fattura fattura = new Fattura();
-                fattura.setNumeroFattura(new Long(138));
+                fattura.setNumeroFattura("138");
                 fattura.setData(new DateTime(2015, 11, 12, 13, 0, DateTimeZone.UTC));
                 fattura.setImporto(30.0);
                 fattura.setValuta("Euro");
@@ -102,7 +102,7 @@ public class RimborsoTest {
                 fattura.setId("01");
                 super.getMappaFattura().put("01", fattura);
                 fattura = new Fattura();
-                fattura.setNumeroFattura(new Long(138));
+                fattura.setNumeroFattura("138");
                 fattura.setData(new DateTime(2015, 11, 12, 18, 0, DateTimeZone.UTC));
                 fattura.setImporto(25.0);
                 fattura.setValuta("Euro");
@@ -111,7 +111,7 @@ public class RimborsoTest {
                 fattura.setId("03");
                 super.getMappaFattura().put("03", fattura);
                 fattura = new Fattura();
-                fattura.setNumeroFattura(new Long(135));
+                fattura.setNumeroFattura("135");
                 fattura.setData(new DateTime(2015, 11, 13, 13, 0, DateTimeZone.UTC));
                 fattura.setImporto(89.8);
                 fattura.setValuta("Euro");

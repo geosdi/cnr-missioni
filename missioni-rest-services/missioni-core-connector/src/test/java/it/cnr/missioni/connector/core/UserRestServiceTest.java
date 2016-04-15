@@ -41,6 +41,9 @@ import it.cnr.missioni.model.user.Anagrafica;
 import it.cnr.missioni.model.user.Credenziali;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
+import it.cnr.missioni.support.builder.generator.IRandomPasswordGenerator;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -120,7 +123,7 @@ public class UserRestServiceTest {
 		anagrafica.setNome("Giuseppe");
 		Credenziali credenziali = new Credenziali();
 		credenziali.setUsername("giuseppe.Gialli");
-		credenziali.setPassword(credenziali.md5hash("giuseppegialli"));
+		credenziali.setPassword(("giuseppegialli"));
 		user.setCredenziali(credenziali);
 		user.setAnagrafica(anagrafica);
 		user.setRegistrazioneCompletata(false);
@@ -172,7 +175,6 @@ public class UserRestServiceTest {
 
 	@Test
 	public void I_findUserALL() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withCodiceFiscale("slvv");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USERS_SIZE: {}\n", userStore.getUsers().size());
@@ -181,7 +183,6 @@ public class UserRestServiceTest {
 
 	@Test
 	public void L_findUserErrataALL() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withNome("Vito")
 				.withCognome("salvia").withMatricola("4111111").withCodiceFiscale("slvvttttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
@@ -204,7 +205,6 @@ public class UserRestServiceTest {
 
 	@Test
 	public void O_testFindByTarga() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withTarga("AA111BB");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
@@ -213,7 +213,6 @@ public class UserRestServiceTest {
 
 	@Test
 	public void P_testFindByTargaErrata() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withTarga("AA111CC");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID FOUND{}\n", userStore);
@@ -232,7 +231,6 @@ public class UserRestServiceTest {
 
 	@Test
 	public void R_testUserByCodiceFiscale() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withNotId("01")
 				.withCodiceFiscale("slvvtttttttttttt");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
@@ -242,17 +240,14 @@ public class UserRestServiceTest {
 
 	@Test
 	public void S_findByRespnsabileGruppo() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(true)
 				.withAll(true);
-
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() == 1);
 	}
 
 	@Test
 	public void T_findByNotRespnsabileGruppo() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(false)
 				.withAll(true);
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
@@ -261,25 +256,20 @@ public class UserRestServiceTest {
 	
 	@Test
 	public void U_findByIdNotPresent() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId("10");
-
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY ID", userStore.getTotale() == 0);
 	}
 	
 	@Test
 	public void U__findById() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId("01");
-
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 1);
 	}
 	
 	@Test
 	public void V_findByMultiMatch() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 				.withMultiMatch("Salvia 1111111");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
@@ -288,10 +278,14 @@ public class UserRestServiceTest {
 
 	@Test
 	public void Z_findByMultiMatch2() throws Exception {
-
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
 				.withMultiMatch("Paolo Salvia");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		Assert.assertTrue("FIND ALL USER", userStore.getUsers().size() == 1);
+	}
+	
+	@Test
+	public void recuperePasswordTest() throws Exception {
+		missioniCoreClientConnector.sendRecuperaPasswordMail("Vito", "Salvia", "vito.salvia@gmail.com", IRandomPasswordGenerator.RandomPasswordGenerator.getRandomPasswordGenerator().withLenght(8).withSeed(DateTime.now(DateTimeZone.UTC).toString().getBytes()).build());
 	}
 }

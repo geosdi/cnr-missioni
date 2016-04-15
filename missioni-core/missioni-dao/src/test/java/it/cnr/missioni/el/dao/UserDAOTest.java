@@ -3,6 +3,8 @@ package it.cnr.missioni.el.dao;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.el.utility.UserFunction;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
+
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
@@ -81,7 +83,7 @@ public class UserDAOTest {
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
         User user = lista.get(0);
         String oldPassword = user.getCredenziali().getPassword();
-        user.getCredenziali().setPassword(user.getCredenziali().md5hash("salvia.vito"));
+        user.getCredenziali().setPassword(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("salvia.vito").build());
         userDAO.update(user);
         Thread.sleep(1000);
         lista = userDAO.findUserByQuery(userSearchBuilder).getResults();

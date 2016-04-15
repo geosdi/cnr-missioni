@@ -43,7 +43,7 @@ public class FatturaTest {
     private Fattura createFattura(){
         return new Fattura(){
             {
-                super.setNumeroFattura(new Long(1));
+                super.setNumeroFattura("1");
                 super.setData(new DateTime());
                 super.setImporto(25.00);
                 super.setImportoSpettante(25.00);

@@ -160,7 +160,7 @@ public class UserTest {
                 credenziali = new Credenziali();
                 credenziali.setUsername("vito.salvia");
                 credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
-                credenziali.setPassword(credenziali.md5hash("vitosalvia"));
+                credenziali.setPassword(("vitosalvia"));
                 super.setCredenziali(credenziali);
                 super.setAnagrafica(anagrafica);
                 Veicolo veicolo = new Veicolo();
