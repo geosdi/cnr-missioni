@@ -52,15 +52,11 @@ public class MassimaleDAO extends AbstractElasticSearchDAO<Massimale> implements
     public PageResult<Massimale> findMassimaleByQuery(IMassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
         List<Massimale> listaMassimale = new ArrayList<Massimale>();
         logger.debug("###############Try to find Massimale by Query: {}\n\n");
-
-        Page p = new Page(massimaleSearchBuilder.getFrom(), massimaleSearchBuilder.getSize());
-
-
-        SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
-                .setTypes(getIndexType()).setQuery(massimaleSearchBuilder.buildQuery())
-                .setFrom(massimaleSearchBuilder.getFrom()).setSize(massimaleSearchBuilder.getSize())
+        Page p = new Page(massimaleSearchBuilder.getFrom(), massimaleSearchBuilder.isAll() ? count().intValue() : massimaleSearchBuilder.getSize());
+        SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
+                .setTypes(getIndexType()).setQuery(massimaleSearchBuilder.buildQuery()))
                 .addSort(massimaleSearchBuilder.getFieldSort(), massimaleSearchBuilder.getSortOrder()).execute()
-                .actionGet());
+                .actionGet();
 
         if (searchResponse.status() != RestStatus.OK) {
             throw new IllegalStateException("Error in Elastic Search Query.");
