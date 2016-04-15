@@ -50,7 +50,7 @@ public class RecuperaPasswordWindow extends IWindow.AbstractWindow<String, Recup
 
 	private Component buildCredenzialiTab() {
 		HorizontalLayout root = new HorizontalLayout();
-		root.setCaption("Credenziali");
+		root.setCaption("Recupera Password");
 		root.setIcon(FontAwesome.LOCK);
 		root.setWidth(100.0f, Unit.PERCENTAGE);
 		root.setSpacing(true);
