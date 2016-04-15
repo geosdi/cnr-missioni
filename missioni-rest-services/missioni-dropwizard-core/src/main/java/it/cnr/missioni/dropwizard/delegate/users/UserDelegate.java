@@ -6,11 +6,15 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.notification.dispatcher.MissioniMailDispatcher;
+import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
+import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
 import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 
@@ -31,6 +35,10 @@ class UserDelegate implements IUserDelegate {
 	//
 	@Resource(name = "userDAO")
 	private IUserDAO userDAO;
+	@Resource(name = "missioniMailDispatcher")
+	private MissioniMailDispatcher missioniMailDispatcher;
+	@Autowired
+	private NotificationMessageFactory notificationMessageFactory;
 
 	/**
 	 * 
@@ -127,6 +135,20 @@ class UserDelegate implements IUserDelegate {
 			throw new IllegalParameterFault("The Parameter userID must not be null " + "or an Empty String.");
 		}
 		this.userDAO.delete(userID);
+		return Boolean.TRUE;
+	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Boolean recuperaPassword(RecuperaPasswordRequest request) throws Exception {
+		if (request == null)
+			throw new IllegalParameterFault("The Parameter Request must not be null.");
+		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildRecuperaPasswordMessage(request.getUserName(), request.getUserSurname(), request.getEmail(), request.getPassword()));
 		return Boolean.TRUE;
 	}
 

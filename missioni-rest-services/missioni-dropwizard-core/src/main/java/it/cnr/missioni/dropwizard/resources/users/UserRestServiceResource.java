@@ -2,6 +2,7 @@ package it.cnr.missioni.dropwizard.resources.users;
 
 import it.cnr.missioni.dropwizard.delegate.users.IUserDelegate;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
 import it.cnr.missioni.rest.api.resources.user.UsersRestService;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
@@ -95,6 +96,16 @@ public class UserRestServiceResource implements UsersRestService {
 	@Override
 	public Response deleteUser(String userID) throws Exception {
 		return Response.ok(this.userDelegate.deleteUser(userID)).build();
+	}
+	
+	/**
+	 * @param userID
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Response recuperaPassword(RecuperaPasswordRequest request) throws Exception {
+		return Response.ok(this.userDelegate.recuperaPassword(request)).build();
 	}
 
 }

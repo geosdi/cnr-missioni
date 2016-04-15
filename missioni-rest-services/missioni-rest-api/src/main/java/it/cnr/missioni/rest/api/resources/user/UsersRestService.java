@@ -1,7 +1,10 @@
 package it.cnr.missioni.rest.api.resources.user;
 
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.path.missione.MissioneServiceRSPathConfig;
 import it.cnr.missioni.rest.api.path.user.UsersServiceRSPathConfig;
+import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
+import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -101,4 +104,13 @@ public interface UsersRestService {
 	@DELETE
 	@Path(value = UsersServiceRSPathConfig.DELETE_USER_PATH)
 	Response deleteUser(@QueryParam(value = "userID") String userID) throws Exception;
+	
+	/**
+	 * @param request
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@POST
+	@Path(value = UsersServiceRSPathConfig.RECUPERA_PASSWORD_PATH)
+	Response recuperaPassword(RecuperaPasswordRequest request) throws Exception;
 }
