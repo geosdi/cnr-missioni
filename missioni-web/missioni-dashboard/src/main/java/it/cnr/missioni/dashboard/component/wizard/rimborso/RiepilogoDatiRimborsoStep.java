@@ -11,6 +11,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.wizards.WizardStep;
@@ -70,17 +71,16 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
         if (missione.isMezzoProprio())
             details.addComponent(
                     Utility.buildLabel("Rimborso KM: ", Double.toString(missione.getRimborso().getRimborsoKm()) + " €"));
-        if (missione.isMissioneEstera())
-            details.addComponent(
-                    Utility.buildLabel("Tot. lordo TAM: ", Double.toString(missione.getRimborso().getTotaleTAM()) + " €"));
         details.addComponent(
                 Utility.buildLabel("Totale Fatture: ", Double.toString(missione.getRimborso().getTotale()) + " €"));
         details.addComponent(
-                Utility.buildLabel("Totale Fatture Spettante: ", Double.toString(missione.getRimborso().getTotaleSpettante()) + " €"));
+                Utility.buildLabel("Totale Fatture Spettante: ", Utility.getStringDecimalFormat(missione.getRimborso().getTotaleSpettante()) + " €"));
 
         if (missione.isMissioneEstera()) {
-            details.addComponent(Utility.buildLabel("GG all'estero: ", Integer.toString(Utility.getDaysEstero(missione))));
-            details.addComponent(Utility.buildLabel("Tot. lordo TAM: ", missione.getRimborso().getTotaleTAM().toString()));
+            if (missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO){
+                details.addComponent(Utility.buildLabel("GG all'estero: ", Integer.toString(Utility.getDaysEstero(missione))));
+            	details.addComponent(Utility.buildLabel("Tot. lordo TAM: ", Utility.getStringDecimalFormat(missione.getRimborso().getTotaleTAM())+ " €"));
+            }
             details.addComponent(Utility.buildLabel("Attraversamento Frontiera Andata: ",
                     new SimpleDateFormat("dd/MM/yyyy HH:mm").format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate())));
             details.addComponent(Utility.buildLabel("Attraversamento Frontiera Ritorno: ",
