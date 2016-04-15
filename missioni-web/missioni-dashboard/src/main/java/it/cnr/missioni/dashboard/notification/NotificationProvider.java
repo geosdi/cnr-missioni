@@ -35,9 +35,9 @@ public class NotificationProvider implements INotificationProvider {
         chechRegistrationComplete();
     }
 
-    public void addPrenotazione(String prenotazione) {
-        notifications.add(buildNotification(prenotazione, "Prenotazione"));
-    }
+//    public void addPrenotazione(String prenotazione) {
+//        notifications.add(buildNotification(prenotazione, "Prenotazione"));
+//    }
 
     private void chechRegistrationComplete() {
         DashboardNotification n = null;
