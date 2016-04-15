@@ -45,6 +45,7 @@ import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.request.NotificationMissionRequest;
+import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
@@ -268,6 +269,19 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
         request.setMissionID(missioneID);
         return client.target(super.getRestServiceURL())
                 .path("v1/missioni/notifyMissionAdministration/")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(request,
+                        MediaType.APPLICATION_JSON), Boolean.class);
+    }
+    
+    public boolean sendRecuperaPasswordMail(String userName,String userSurname,String email,String password) throws Exception {
+        RecuperaPasswordRequest request = new RecuperaPasswordRequest();
+        request.setEmail(email);
+        request.setUserName(userName);
+        request.setPassword(password);
+        request.setUserSurname(userSurname);
+        return client.target(super.getRestServiceURL())
+                .path("v1/users/recuperaPassword/")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(request,
                         MediaType.APPLICATION_JSON), Boolean.class);
