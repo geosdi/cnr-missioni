@@ -195,7 +195,7 @@ public class MissioniNotificationDispatcherProdTest {
         credenziali = new Credenziali();
         credenziali.setUsername("vito.salvia");
         credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
-        credenziali.setPassword(credenziali.md5hash("vitosalvia"));
+        credenziali.setPassword(("vitosalvia"));
         user.setCredenziali(credenziali);
         user.setAnagrafica(anagrafica);
         Veicolo veicolo = new Veicolo();
@@ -239,6 +239,7 @@ public class MissioniNotificationDispatcherProdTest {
         missione.setId("M_01");
         missione.setOggetto("Conferenza");
         missione.setLocalita("Roma");
+        missione.setAltreLocalita("Napoli");
         missione.setIdUser("01");
         missione.setMissioneEstera(false);
         missione.setStato(StatoEnum.PRESA_IN_CARICO);
@@ -261,7 +262,7 @@ public class MissioniNotificationDispatcherProdTest {
         missione.setDatiMissioneEstera(datiMissioneEstera);
 
         Fattura fattura = new Fattura();
-        fattura.setNumeroFattura(new Long(134));
+        fattura.setNumeroFattura("134");
         fattura.setData(new DateTime(2015, 11, 12, 13, 0, DateTimeZone.UTC));
         fattura.setImporto(89.8);
         fattura.setIdTipologiaSpesa("01");
@@ -270,7 +271,7 @@ public class MissioniNotificationDispatcherProdTest {
         fattura.setId("1111111111111");
 
         Fattura fattura_2 = new Fattura();
-        fattura_2.setNumeroFattura(new Long(135));
+        fattura_2.setNumeroFattura("135");
         fattura_2.setData(new DateTime(2015, 11, 13, 13, 0, DateTimeZone.UTC));
         fattura_2.setImporto(89.8);
         fattura.setIdTipologiaSpesa("01");
