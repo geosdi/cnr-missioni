@@ -48,7 +48,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
                 getType());
         super.checkArguments();
-		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
+		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         String dataInserimentoMissione = missione.getDataInserimento().toString();
         String dataInizio = formatDataTime.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
@@ -58,7 +58,6 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         if (missione.isMissioneEstera()){
             dataAttraversamentoFrontieraAndata =formatDataTime.format( missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate());
             dataAttraversamentoFrontieraRitorno = formatDataTime.format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate());
-
         }
 
         Map<String, Fattura> treeMap = new TreeMap<String, Fattura>(missione.getRimborso().getMappaFattura());
