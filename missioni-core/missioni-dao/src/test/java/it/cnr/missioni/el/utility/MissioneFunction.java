@@ -46,7 +46,7 @@ public class MissioneFunction {
         missione.setDatiPeriodoMissione(datiPeriodoMissione);
 
         Fattura fattura = new Fattura();
-        fattura.setNumeroFattura(new Long(134));
+        fattura.setNumeroFattura("134");
         fattura.setData(new DateTime(2015, 11, 12, 13, 0, DateTimeZone.UTC));
         fattura.setImporto(89.8);
         fattura.setValuta("Euro");
@@ -55,7 +55,7 @@ public class MissioneFunction {
         fattura.setId("1111111111111");
 
         Fattura fattura_2 = new Fattura();
-        fattura_2.setNumeroFattura(new Long(135));
+        fattura_2.setNumeroFattura("135");
         fattura_2.setData(new DateTime(2015, 11, 13, 13, 0, DateTimeZone.UTC));
         fattura_2.setImporto(89.8);
         fattura_2.setValuta("Euro");
