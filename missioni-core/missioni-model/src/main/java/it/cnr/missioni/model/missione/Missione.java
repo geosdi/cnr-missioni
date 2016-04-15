@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"id", "localita", "oggetto", "responsabileGruppo", "shortResponsabileGruppo", "shortUser", "motivazioni", "altreDisposizioni", "stato", "fondo", "GAE", "missioneEstera", "idUser", "idUserSeguito", "shortUserSeguito", "idVeicolo", "shortDescriptionVeicolo", "dataInserimento",
+@XmlType(propOrder = {"id", "localita","altreLocalita", "oggetto", "responsabileGruppo", "shortResponsabileGruppo", "shortUser", "motivazioni", "altreDisposizioni", "stato", "fondo", "GAE", "missioneEstera", "idUser", "idUserSeguito", "shortUserSeguito", "idVeicolo", "shortDescriptionVeicolo", "dataInserimento",
         "dateLastModified", "mezzoProprio", "distanza", "geoPoint", "idNazione", "shortDescriptionNazione", "datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti", "rimborso"})
 public class Missione implements Document {
 
@@ -26,6 +26,7 @@ public class Missione implements Document {
     private String id;
     @NotBlank
     private String localita;
+    private String altreLocalita;
     @NotBlank
     private String oggetto;
     @NotBlank
@@ -106,7 +107,17 @@ public class Missione implements Document {
     }
 
 
-    /**
+    public String getAltreLocalita() {
+		return altreLocalita;
+	}
+
+
+	public void setAltreLocalita(String altreLocalita) {
+		this.altreLocalita = altreLocalita;
+	}
+
+
+	/**
      * @return the oggetto
      */
     public String getOggetto() {
@@ -546,22 +557,22 @@ public class Missione implements Document {
     }
 
 
-    /**
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "Missione [id=" + id + ", localita=" + localita + ", oggetto=" + oggetto + ", responsabileGruppo="
-                + responsabileGruppo + ", shortResponsabileGruppo=" + shortResponsabileGruppo + ", shortUser="
-                + shortUser + ", motivazioni=" + motivazioni + ", altreDisposizioni=" + altreDisposizioni + ", stato="
-                + stato + ", fondo=" + fondo + ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", idUser="
-                + idUser + ", idUserSeguito=" + idUserSeguito + ", shortUserSeguito=" + shortUserSeguito
-                + ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo
-                + ", dataInserimento=" + dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio="
-                + mezzoProprio + ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
-                + ", shortDescriptionNazione=" + shortDescriptionNazione + ", tipoVeicolo=" + tipoVeicolo
-                + ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
-                + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
-    }
+	@Override
+	public String toString() {
+		return "Missione [id=" + id + ", localita=" + localita + ", altreLocalita=" + altreLocalita + ", oggetto="
+				+ oggetto + ", responsabileGruppo=" + responsabileGruppo + ", shortResponsabileGruppo="
+				+ shortResponsabileGruppo + ", shortUser=" + shortUser + ", motivazioni=" + motivazioni
+				+ ", altreDisposizioni=" + altreDisposizioni + ", stato=" + stato + ", fondo=" + fondo + ", GAE=" + GAE
+				+ ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idUserSeguito=" + idUserSeguito
+				+ ", shortUserSeguito=" + shortUserSeguito + ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo="
+				+ shortDescriptionVeicolo + ", dataInserimento=" + dataInserimento + ", dateLastModified="
+				+ dateLastModified + ", mezzoProprio=" + mezzoProprio + ", distanza=" + distanza + ", geoPoint="
+				+ geoPoint + ", idNazione=" + idNazione + ", shortDescriptionNazione=" + shortDescriptionNazione
+				+ ", tipoVeicolo=" + tipoVeicolo + ", datiPeriodoMissione=" + datiPeriodoMissione
+				+ ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti
+				+ ", rimborso=" + rimborso + "]";
+	}
+
+
 
 }
