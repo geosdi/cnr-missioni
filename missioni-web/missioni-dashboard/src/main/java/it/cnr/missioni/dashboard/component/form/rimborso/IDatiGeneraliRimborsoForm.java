@@ -127,8 +127,9 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
                         rimborso = number * rimborsoKmStore.getRimborsoKm().get(0).getValue();
                     }
                 }
-                setTotRimborsoKm(rimborso);
-                labelTotRimborsoKm.setValue("Tot. Rimborso km: " + rimborso);
+                totRimborsoKm = rimborso;
+                setTotRimborsoKm(totRimborsoKm);
+                labelTotRimborsoKm.setValue("Tot. Rimborso km: " + Utility.getDoubleDecimalFormat(totRimborsoKm));
             } catch (Exception e) {
                 Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                         Type.ERROR_MESSAGE);

@@ -13,6 +13,8 @@ import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+
 import org.joda.time.DateTime;
 
 import java.util.Date;
@@ -81,8 +83,10 @@ public interface IDatiPeriodoEsteraMissioneForm extends IForm<DatiMissioneEstera
             if (modifica) {
                 attraversamentoFrontieraAndataField.setValue(bean.getAttraversamentoFrontieraAndata().toDate());
                 attraversamentoFrontieraRitornoField.setValue(bean.getAttraversamentoFrontieraRitorno().toDate());
-                addComponent(Utility.buildLabel("GG all'estero: ", Integer.toString(Utility.getDaysEstero(missione))));
-                addComponent(Utility.buildLabel("Tot. lordo TAM: ", missione.getRimborso().getTotaleTAM().toString()));
+                if(missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO){
+                	addComponent(Utility.buildLabel("GG all'estero: ", Integer.toString(Utility.getDaysEstero(missione))));
+                	addComponent(Utility.buildLabel("Tot. lordo TAM: ", missione.getRimborso().getTotaleTAM().toString()));
+                }
             }
             attraversamentoFrontieraRitornoField.setReadOnly(!enabled);
             attraversamentoFrontieraAndataField.setReadOnly(!enabled);

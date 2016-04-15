@@ -70,7 +70,6 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
                         .withAll(true).withResponsabileGruppo(true);
 
                 UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-
                 userStore.getUsers().forEach(u -> {
                     listaResponsabiliGruppoField.addItem(u.getId());
                     listaResponsabiliGruppoField.setItemCaption(u.getId(),
@@ -85,9 +84,7 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
             try {
                 IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                         .withAll(true);
-
                 UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-
                 userStore.getUsers().forEach(u -> {
                     listaSeguito.addItem(u.getId());
                     listaSeguito.setItemCaption(u.getId(),
@@ -112,7 +109,6 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
             bean.setResponsabileGruppo(listaResponsabiliGruppoField.getValue().toString());
             bean.setShortResponsabileGruppo(
                     listaResponsabiliGruppoField.getItemCaption(listaResponsabiliGruppoField.getValue()));
-
             // Selezionato user a seguito
             if (listaSeguito.getValue() != null) {
                 bean.setIdUserSeguito(listaSeguito.getValue().toString());
