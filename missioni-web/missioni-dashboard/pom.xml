@@ -121,6 +121,15 @@
     </profiles>
 
     <dependencies>
+    
+        <!-- =========================================================== -->
+        <!-- ================ MISSIONI CORE SUPPORT ================ -->
+        <!-- =========================================================== -->
+        <dependency>
+            <groupId>it.cnr</groupId>
+            <artifactId>missioni-core-support</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
