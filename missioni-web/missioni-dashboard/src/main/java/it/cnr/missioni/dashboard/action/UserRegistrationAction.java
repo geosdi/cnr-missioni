@@ -5,6 +5,8 @@ import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
+
 import org.joda.time.DateTime;
 
 /**
@@ -23,7 +25,7 @@ public class UserRegistrationAction implements IAction {
             user.setRegistrazioneCompletata(false);
             user.setDataRegistrazione(new DateTime());
             user.setDateLastModified(new DateTime());
-            user.getCredenziali().setPassword(user.getCredenziali().md5hash(user.getCredenziali().getPassword()));
+            user.getCredenziali().setPassword(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword(user.getCredenziali().getPassword()).build());
             user.getCredenziali().setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
             ClientConnector.addUser(user);
             Utility.getNotification(Utility.getMessage("success_message"), null, Type.HUMANIZED_MESSAGE);

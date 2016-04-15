@@ -7,6 +7,7 @@ import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
+import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
 
 /**
  * @author Salvia Vito
@@ -30,7 +31,7 @@ public class LoginAction implements IAction {
                 Utility.getNotification(Utility.getMessage("error_message"),
                         Utility.getMessage("username_not_present"), Type.ERROR_MESSAGE);
                 return false;
-            } else if (!(user = userStore.getUsers().get(0)).getCredenziali().getPassword().equals(user.getCredenziali().md5hash(password))) {
+            } else if (!(user = userStore.getUsers().get(0)).getCredenziali().getPassword().equals(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword(password).build())) {
                 Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("password_error"),
                         Type.ERROR_MESSAGE);
                 return false;
