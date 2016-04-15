@@ -77,7 +77,7 @@ public class RimborsoWindowAdmin extends IWindow.AbstractWindow<Missione, Rimbor
 
     private void buildDatiEsteriTab() {
 //        this.datiPeriodoEsteraMissioneForm = new DatiPeriodoEsteraMissioneForm(missione.getDatiMissioneEstera(), isAdmin, enabled, modifica, missione);
-        this.datiPeriodoEsteraMissioneForm = IDatiPeriodoEsteraMissioneForm.DatiPeriodoEsteraMissioneForm.getDatiPeriodoEsteraMissioneForm().withBean(bean.getDatiMissioneEstera()).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
+        this.datiPeriodoEsteraMissioneForm = IDatiPeriodoEsteraMissioneForm.DatiPeriodoEsteraMissioneForm.getDatiPeriodoEsteraMissioneForm().withMissione(bean).withBean(bean.getDatiMissioneEstera()).withIsAdmin(isAdmin).withEnabled(enabled).withModifica(modifica).build();
         detailsWrapper.addComponent(buildTab("Dati Missione Estera", FontAwesome.CALENDAR, this.datiPeriodoEsteraMissioneForm));
     }
 
