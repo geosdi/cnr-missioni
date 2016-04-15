@@ -178,46 +178,52 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		document.add(new Paragraph("\n"));
 
-		PdfPTable tableLocalita = new PdfPTable(2);
+		PdfPTable tabletableInfo = new PdfPTable(2);
 		//Localita
 		PdfPCell cellLocalita = new PdfPCell(new Paragraph("Localit" + new Character('\u00E0'), fontBold));
 		cellLocalita.setBorder(Rectangle.NO_BORDER);
-		tableLocalita.addCell(cellLocalita);
-		tableLocalita.addCell( new PdfPCell(new Paragraph(missione.getLocalita(), fontNormal)));
+		tabletableInfo.addCell(cellLocalita);
+		tabletableInfo.addCell( new PdfPCell(new Paragraph(missione.getLocalita(), fontNormal)));
+		
+		//Altre localita
+		PdfPCell cellAltreLocalita = new PdfPCell(new Paragraph("Altre Localit" + new Character('\u00E0'), fontBold));
+		cellAltreLocalita.setBorder(Rectangle.NO_BORDER);
+		tabletableInfo.addCell(cellAltreLocalita);
+		tabletableInfo.addCell( new PdfPCell(new Paragraph(missione.getAltreLocalita() != null ? missione.getAltreLocalita() : "", fontNormal)));
 		
 		PdfPCell cellDistanza = new PdfPCell(new Paragraph("Distanza dalla sede di servizio km:", fontBold));
 		cellDistanza.setBorder(Rectangle.NO_BORDER);
-		tableLocalita.addCell(cellDistanza);
-		tableLocalita.addCell(new PdfPCell(new Paragraph("" + missione.getDistanza(), fontNormal)));
+		tabletableInfo.addCell(cellDistanza);
+		tabletableInfo.addCell(new PdfPCell(new Paragraph("" + missione.getDistanza(), fontNormal)));
 
 		//Tipo veicolo
 		PdfPCell cellMezzoUtilizzato = new PdfPCell(new Paragraph("Mezzo Utilizzato:", fontBold));
 		cellMezzoUtilizzato.setBorder(Rectangle.NO_BORDER);
-		tableLocalita.addCell(cellMezzoUtilizzato);
+		tabletableInfo.addCell(cellMezzoUtilizzato);
 
 		String tipoVeicolo = missione.getTipoVeicolo();
-		tableLocalita.addCell(new PdfPCell(new Paragraph(
+		tabletableInfo.addCell(new PdfPCell(new Paragraph(
 				tipoVeicolo + (missione.getMotivazioni() != null ? " - " + missione.getMotivazioni() : ""),
 				fontNormal)));
 		
 		//Altre disposizioni
 		PdfPCell cellAltreDisposizioni = new PdfPCell(new Paragraph("Altre Disposizioni:", fontBold));
 		cellAltreDisposizioni.setBorder(Rectangle.NO_BORDER);
-		tableLocalita.addCell(cellAltreDisposizioni);
+		tabletableInfo.addCell(cellAltreDisposizioni);
 
-		tableLocalita.addCell(new PdfPCell(new Paragraph((missione.getAltreDisposizioni() != null ? missione.getAltreDisposizioni() : ""),
+		tabletableInfo.addCell(new PdfPCell(new Paragraph((missione.getAltreDisposizioni() != null ? missione.getAltreDisposizioni() : ""),
 				fontNormal)));
 
 		if (missione.isMissioneEstera()) {
 			PdfPCell cellMissioneEstera = new PdfPCell(new Paragraph("Tipologia Rimborso", fontBold));
 			cellMissioneEstera.setBorder(Rectangle.NO_BORDER);
-			tableLocalita.addCell(cellMissioneEstera);
+			tabletableInfo.addCell(cellMissioneEstera);
 			PdfPCell cellMissioneEstera2 = new PdfPCell(new Paragraph(
 					missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum().getStato(), fontNormal));
-			tableLocalita.addCell(cellMissioneEstera2);
+			tabletableInfo.addCell(cellMissioneEstera2);
 		}
 
-		document.add(tableLocalita);
+		document.add(tabletableInfo);
 
 		Paragraph paragraphObbligo = new Paragraph();
 		document.add(paragraphObbligo);
@@ -274,7 +280,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		paragraphDataFooter.setAlignment(Paragraph.ALIGN_LEFT);
 		document.add(paragraphDataFooter);
 
-		Chunk underline = new Chunk("Avvertenza:Ai fini dell" + new Character('\u2032')
+		Chunk underline = new Chunk("Avvertenza:Ai fini dell'"
 				+ " ammissione a pagamento della missione "
 				+ "il presente modulo e quello di richiesta rimborso devono essere compilati integralmente depennando eventuali dizioni che non interessano. "
 				+ "\nLe spese non documentate non possono venire rimborsate. Per spese effettuate in valuta, ove non sia"
