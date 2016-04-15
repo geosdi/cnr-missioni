@@ -3,6 +3,8 @@ package it.cnr.missioni.el.utility;
 import it.cnr.missioni.model.user.*;
 import it.cnr.missioni.model.user.Anagrafica.Genere;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
+import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
+
 import org.joda.time.DateTime;
 import org.joda.time.chrono.ISOChronology;
 
@@ -15,7 +17,6 @@ import java.util.Map;
  * @author Salvia Vito
  */
 public class UserFunction {
-
 
     public static List<User> creaMassiveUsers() {
 
@@ -37,7 +38,7 @@ public class UserFunction {
         credenziali = new Credenziali();
         credenziali.setUsername("vito.salvia");
         credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_ADMIN);
-        credenziali.setPassword(credenziali.md5hash("vitosalvia"));
+        credenziali.setPassword(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("vitosalvia").build());
         user.setCredenziali(credenziali);
         user.setAnagrafica(anagrafica);
         Veicolo veicolo = new Veicolo();
@@ -83,7 +84,7 @@ public class UserFunction {
         anagrafica.setNome("Luigi");
         credenziali = new Credenziali();
         credenziali.setUsername("luigi.franco");
-        credenziali.setPassword(credenziali.md5hash("luigifranco"));
+        credenziali.setPassword(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("luigifranco").build());
         credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_ADMIN);
         user.setCredenziali(credenziali);
         user.setAnagrafica(anagrafica);
@@ -98,7 +99,7 @@ public class UserFunction {
         anagrafica.setNome("Mario");
         credenziali = new Credenziali();
         credenziali.setUsername("mario.bianchi");
-        credenziali.setPassword(credenziali.md5hash("mariobianchi"));
+        credenziali.setPassword(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("mariobianchi").build());
         credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_SEMPLICE);
         user.setCredenziali(credenziali);
         user.setAnagrafica(anagrafica);
@@ -111,7 +112,7 @@ public class UserFunction {
         anagrafica = new Anagrafica();
         credenziali = new Credenziali();
         credenziali.setUsername("admin");
-        credenziali.setPassword(credenziali.md5hash("admin"));
+        credenziali.setPassword(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("admin").build());
         credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_ADMIN);
         user.setCredenziali(credenziali);
         user.setRegistrazioneCompletata(false);
