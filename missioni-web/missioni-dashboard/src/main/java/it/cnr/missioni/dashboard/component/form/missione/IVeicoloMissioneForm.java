@@ -88,18 +88,14 @@ public interface IVeicoloMissioneForm extends IForm<Missione, IVeicoloMissioneFo
 
             altreDisposizioniField = (TextArea) getFieldGroup().buildAndBind("Altre Disposizioni", "altreDisposizioni",
                     TextArea.class);
-
             labelVeicoloProprio = new Label();
-
             // Visualizza il veicolo principale dell'user
             if (bean.isMezzoProprio()) {
                 labelVeicoloProprio.setValue("Veicolo: " + v.getTipo() + " Targa: " + v.getTarga());
                 labelVeicoloProprio.setVisible(true);
-
             } else {
                 labelVeicoloProprio.setVisible(false);
             }
-
             addComponent(optionGroupMezzo);
             addComponent(labelVeicoloProprio);
             addComponent(motivazioneField);

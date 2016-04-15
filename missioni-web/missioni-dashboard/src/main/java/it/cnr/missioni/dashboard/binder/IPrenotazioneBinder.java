@@ -3,6 +3,8 @@ package it.cnr.missioni.dashboard.binder;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.binder.IBinder;
+
 import org.joda.time.DateTime;
 
 import java.util.function.Function;

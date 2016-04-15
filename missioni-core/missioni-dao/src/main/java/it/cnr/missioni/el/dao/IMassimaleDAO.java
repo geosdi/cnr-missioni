@@ -12,5 +12,4 @@ public interface IMassimaleDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO
 
     PageResult<Massimale> findMassimaleByQuery(IMassimaleSearchBuilder massimaleSearchBuilder) throws Exception;
 
-
 }

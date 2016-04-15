@@ -113,8 +113,12 @@ public final class ElencoFattureTable extends ITable.AbstractTable {
         Object v = property.getValue();
         if (v instanceof DateTime) {
             DateTime dateValue = (DateTime) v;
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             return format.format(dateValue.toDate());
+        }
+        if (v instanceof Double) {
+            Double d = (Double) v;
+            return Utility.getStringDecimalFormat(d.doubleValue());
         }
         return super.formatPropertyValue(rowId, colId, property);
     }

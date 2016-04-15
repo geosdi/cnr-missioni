@@ -111,14 +111,11 @@ extends UI
 
 	@Subscribe
 	public void userLoginRequested(final LoginAction loginAction) throws InterruptedException {
-
 		if (loginAction.doAction()) {
 			notificationProvider.check();
 			updateContent();
 			DashboardEventBus.post(new DashboardEvent.NotificationsCountUpdatedEvent());
-
 		}
-
 	}
 
 	@Subscribe

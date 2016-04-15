@@ -1,7 +1,7 @@
 package it.cnr.missioni.el.model.search;
 
 import org.elasticsearch.index.query.QueryBuilder;
-import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO.Page;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -28,7 +28,7 @@ public class LocalitaOggettoStep implements WizardStep {
     }
 
     public Component getContent() {
-        this.localitaOggettoMissioneForm.withIsVisible(missione.isMissioneEstera());
+        this.localitaOggettoMissioneForm.setVisibleListaNazione(missione.isMissioneEstera());
         return this.localitaOggettoMissioneForm;
     }
 

@@ -18,7 +18,7 @@ public interface INotificationProvider {
     /**
      * @param prenotazione
      */
-    void addPrenotazione(String prenotazione);
+//    void addPrenotazione(String prenotazione);
 
     /**
      * @return Notifications for the current user.

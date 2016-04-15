@@ -8,7 +8,6 @@ import it.cnr.missioni.el.model.search.PrefixSearch;
 /**
  * @author Salvia Vito
  */
-
 public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
 
     /**

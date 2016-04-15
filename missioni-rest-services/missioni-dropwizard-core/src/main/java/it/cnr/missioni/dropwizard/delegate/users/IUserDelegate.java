@@ -1,6 +1,7 @@
 package it.cnr.missioni.dropwizard.delegate.users;
 
 import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
 /**
@@ -77,4 +78,12 @@ public interface IUserDelegate {
 	 * @throws Exception
 	 */
 	Boolean deleteUser(String userID) throws Exception;
+	
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	Boolean recuperaPassword(RecuperaPasswordRequest request) throws Exception;
 }
