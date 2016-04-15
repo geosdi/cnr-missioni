@@ -1,12 +1,13 @@
 package it.cnr.missioni.el.dao;
 
-import it.cnr.missioni.model.configuration.*;
-import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
-import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
-import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
-import it.cnr.missioni.model.user.*;
-import it.cnr.missioni.model.user.Anagrafica.Genere;
-import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
@@ -22,8 +23,24 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.Resource;
-import java.util.*;
+import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.configuration.Nazione;
+import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
+import it.cnr.missioni.model.configuration.QualificaUser;
+import it.cnr.missioni.model.configuration.TipologiaSpesa;
+import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
+import it.cnr.missioni.model.user.Anagrafica;
+import it.cnr.missioni.model.user.Anagrafica.Genere;
+import it.cnr.missioni.model.user.Credenziali;
+import it.cnr.missioni.model.user.DatiCNR;
+import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
+import it.cnr.missioni.model.user.Patente;
+import it.cnr.missioni.model.user.Residenza;
+import it.cnr.missioni.model.user.RuoloUserEnum;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.model.user.Veicolo;
+import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
 
 /**
  * @author Salvia Vito
@@ -68,11 +85,6 @@ public class InitDAOTest {
     @Resource(name = "nazioneDAO")
     private INazioneDAO nazioneDAO;
 
-    @Resource(name = "rimborsoKmIndexCreator")
-    private GPIndexCreator rimborsoKmDocIndexCreator;
-    @Resource(name = "rimborsoKmDAO")
-    private IRimborsoKmDAO rimborsoKmDAO;
-
     @Resource(name = "tipologiaSpesaIndexCreator")
     private GPIndexCreator tipoligiaSpesaDocIndexCreator;
     @Resource(name = "tipologiaSpesaDAO")
@@ -83,23 +95,15 @@ public class InitDAOTest {
     @Resource(name = "massimaleDAO")
     private IMassimaleDAO massimaleDAO;
 
-    @Resource(name = "direttoreIndexCreator")
-    private GPIndexCreator direttoreDocIndexCreator;
-    @Resource(name = "direttoreDAO")
-    private IDirettoreDAO direttoreDAO;
-
     @Before
     public void setUp() {
         Assert.assertNotNull(missioniIndexConfigurator);
-
         Assert.assertNotNull(qualificaUserDocIndexCreator);
         Assert.assertNotNull(qualificaUserDAO);
         Assert.assertNotNull(userDocIndexCreator);
         Assert.assertNotNull(qualificaUserDAO);
         Assert.assertNotNull(nazioneDocIndexCreator);
         Assert.assertNotNull(nazioneDAO);
-        Assert.assertNotNull(rimborsoKmDocIndexCreator);
-        Assert.assertNotNull(rimborsoKmDAO);
         Assert.assertNotNull(tipoligiaSpesaDocIndexCreator);
         Assert.assertNotNull(tipologiaSpesaDAO);
         Assert.assertNotNull(veicoloCNRDocIndexCreator);
@@ -110,10 +114,22 @@ public class InitDAOTest {
         Assert.assertNotNull(missioneDAO);
         Assert.assertNotNull(massimaleDocIndexCreator);
         Assert.assertNotNull(massimaleDAO);
-        Assert.assertNotNull(direttoreDocIndexCreator);
-        Assert.assertNotNull(direttoreDAO);
-
     }
+    
+//    @Test
+//    public void getMassimali() throws Exception{
+//    	IMassimaleSearchBuilder m = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder().withAll(true);
+//        PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(m);
+//    	System.out.println("\nSize:"+page.getResults().size());
+//    	page.getResults().stream().forEach(f->{
+//    		try {
+//				massimaleDAO.delete(f.getId());
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    	});
+//    }
 
     @Test
     public void insertUserTest() throws Exception {
@@ -123,22 +139,6 @@ public class InitDAOTest {
     @Test
     public void insertQualificaTest() throws Exception {
         qualificaUserDAO.persist(creaQualifiche());
-    }
-
-    @Test
-    public void insertRimborsoKmTest() throws Exception {
-        RimborsoKm r = new RimborsoKm();
-        r.setId(UUID.randomUUID().toString());
-        r.setValue(0.36);
-        rimborsoKmDAO.persist(r);
-    }
-
-    @Test
-    public void insertDirettoreTest() throws Exception {
-        Direttore d = new Direttore();
-        d.setId(UUID.randomUUID().toString());
-        d.setValue("Dott. Vincenzo Lapenna");
-        direttoreDAO.persist(d);
     }
 
     @Test
@@ -240,7 +240,6 @@ public class InitDAOTest {
         t.setValue("Treno");
         t.setVoceSpesa(VoceSpesaEnum.ALTRO);
         lista.add(t);
-
 
         t = new TipologiaSpesa();
         t.setId(UUID.randomUUID().toString());
@@ -424,7 +423,6 @@ public class InitDAOTest {
         t.setValue("Taxi");
         t.setVoceSpesa(VoceSpesaEnum.ALTRO);
         lista.add(t);
-
 
         return lista;
     }
@@ -750,7 +748,6 @@ public class InitDAOTest {
         m.setValue(125.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.D);
         m.setId(UUID.randomUUID().toString());
@@ -791,7 +788,6 @@ public class InitDAOTest {
         m.setValue(130.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.E);
         m.setId(UUID.randomUUID().toString());
@@ -832,7 +828,6 @@ public class InitDAOTest {
         m.setValue(140.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.F);
         m.setId(UUID.randomUUID().toString());
@@ -872,7 +867,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO);
         m.setValue(155.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.G);
@@ -915,7 +909,6 @@ public class InitDAOTest {
         m.setValue(40.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.A);
         m.setId(UUID.randomUUID().toString());
@@ -956,7 +949,6 @@ public class InitDAOTest {
         m.setValue(40.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.B);
         m.setId(UUID.randomUUID().toString());
@@ -997,7 +989,6 @@ public class InitDAOTest {
         m.setValue(45.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.C);
         m.setId(UUID.randomUUID().toString());
@@ -1038,7 +1029,6 @@ public class InitDAOTest {
         m.setValue(60.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.D);
         m.setId(UUID.randomUUID().toString());
@@ -1079,7 +1069,6 @@ public class InitDAOTest {
         m.setValue(65.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.E);
         m.setId(UUID.randomUUID().toString());
@@ -1120,7 +1109,6 @@ public class InitDAOTest {
         m.setValue(70.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.F);
         m.setId(UUID.randomUUID().toString());
@@ -1160,7 +1148,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         m.setValue(75.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.G);
@@ -1185,7 +1172,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         m.setValue(60.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.A);
@@ -1211,7 +1197,6 @@ public class InitDAOTest {
         m.setValue(60.0);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.B);
         m.setId(UUID.randomUUID().toString());
@@ -1235,7 +1220,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         m.setValue(60.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.C);
@@ -1260,7 +1244,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         m.setValue(70.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.D);
@@ -1285,7 +1268,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         m.setValue(80.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.E);
@@ -1310,7 +1292,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         m.setValue(85.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.F);
@@ -1335,7 +1316,6 @@ public class InitDAOTest {
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         m.setValue(95.0);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.G);
@@ -1364,7 +1344,6 @@ public class InitDAOTest {
         m.setValueMezzaGiornata(30.55);
         lista.add(m);
 
-
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.ITALIA);
         m.setId(UUID.randomUUID().toString());
@@ -1379,7 +1358,7 @@ public class InitDAOTest {
         m.setId(UUID.randomUUID().toString());
         m.setLivello(LivelloUserEnum.III);
         m.setTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
-        m.setValue(61.0);
+        m.setValue(61.10);
         m.setValueMezzaGiornata(30.55);
         lista.add(m);
 
@@ -1391,7 +1370,6 @@ public class InitDAOTest {
         m.setValue(44.26);
         m.setValueMezzaGiornata(22.26);
         lista.add(m);
-
 
         m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.ITALIA);
@@ -1480,7 +1458,6 @@ public class InitDAOTest {
         n.setId(UUID.randomUUID().toString());
         n.setValue("Svizzera-Ginevra");
         lista.add(n);
-
         n = new Nazione();
         n.setAreaGeografica(AreaGeograficaEnum.F);
         n.setId(UUID.randomUUID().toString());
@@ -1501,7 +1478,6 @@ public class InitDAOTest {
         n.setId(UUID.randomUUID().toString());
         n.setValue("Stati Uniti-Washington");
         lista.add(n);
-
         n = new Nazione();
         n.setAreaGeografica(AreaGeograficaEnum.E);
         n.setId(UUID.randomUUID().toString());
@@ -2507,7 +2483,7 @@ public class InitDAOTest {
         credenziali = new Credenziali();
         credenziali.setUsername("luigi.franco@imaa.cnr.it");
         credenziali.setRuoloUtente(RuoloUserEnum.UTENTE_ADMIN);
-        credenziali.setPassword(credenziali.md5hash("luigifranco"));
+        credenziali.setPassword(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("luigifranco").build());
         user.setCredenziali(credenziali);
         user.setAnagrafica(anagrafica);
         Veicolo veicolo = new Veicolo();
