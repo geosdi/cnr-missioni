@@ -32,6 +32,7 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
 
                 .startObject("id")
                 .field("type", "string")
+                
                 .endObject()
                 .startObject("GAE")
                 .field("type", "string")
@@ -60,6 +61,9 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .field("type", "string")
                 .endObject()
                 .startObject("localita")
+                .field("type", "string")
+                .endObject()
+                .startObject("altreLocalita")
                 .field("type", "string")
                 .endObject()
                 .startObject("mezzoProprio")
@@ -247,7 +251,7 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .field("type", "double")
                 .endObject()
                 .startObject("numeroFattura")
-                .field("type", "double")
+                .field("type", "string")
                 .endObject()
                 .startObject("shortDescriptionTipologiaSpesa")
                 .field("type", "string")

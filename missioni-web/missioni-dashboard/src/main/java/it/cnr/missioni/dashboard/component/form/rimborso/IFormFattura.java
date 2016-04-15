@@ -104,14 +104,14 @@ public interface IFormFattura extends IForm<Fattura, IFormFattura> {
         @Override
         public void buildTab() {
             bean = new Fattura();
-            numeroFatturaField = (TextField) getFieldGroup().buildAndBind("Numero Fattura", "numeroFattura");
+            numeroFatturaField = (TextField) getFieldGroup().buildAndBind("Numero Giustificativo", "numeroFattura");
             tipologiaSpesaField = new ComboBox("Tipologia Spesa");
             tipologiaSpesaField.setValidationVisible(false);
             tipologiaSpesaField.setImmediate(true);
             getFieldGroup().bind(tipologiaSpesaField, "idTipologiaSpesa");
             importoField = (TextField) getFieldGroup().buildAndBind("Importo", "importo");
             valutaField = (TextField) getFieldGroup().buildAndBind("Valuta", "valuta");
-            altroField = (TextField) getFieldGroup().buildAndBind("Altro", "altro");
+            altroField = (TextField) getFieldGroup().buildAndBind("Altro\\Descrizione", "altro");
             dataField = new DateField("Data");
             dataField.setDateOutOfRangeMessage("Data non possibile");
             dataField.setResolution(Resolution.HOUR);

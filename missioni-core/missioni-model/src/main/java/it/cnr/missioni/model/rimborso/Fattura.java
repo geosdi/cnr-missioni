@@ -18,7 +18,7 @@ public class Fattura implements Serializable {
 
     private String id;
     @NotNull
-    private Long numeroFattura;
+    private String numeroFattura;
     @NotNull
     private DateTime data;
     @NotNull
@@ -49,14 +49,14 @@ public class Fattura implements Serializable {
     /**
      * @return the numeroFattura
      */
-    public Long getNumeroFattura() {
+    public String getNumeroFattura() {
         return numeroFattura;
     }
 
     /**
      * @param numeroFattura
      */
-    public void setNumeroFattura(Long numeroFattura) {
+    public void setNumeroFattura(String numeroFattura) {
         this.numeroFattura = numeroFattura;
     }
 
