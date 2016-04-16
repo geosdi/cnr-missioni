@@ -45,30 +45,13 @@ public class RimborsoKmDAOTest {
     }
 
     @Test
-    public void A_deleteRimborsoKmTest() throws Exception {
-        rimborsoKmDAO.delete("01");
-    }
-
-    @Test
-    public void B_addRimborsoKmtest() throws Exception {
-
-        RimborsoKm rimborsoKm = new RimborsoKm();
-        rimborsoKm.setId("01");
-        rimborsoKm.setValue(0.36);
-
-        rimborsoKmDAO.persist(rimborsoKm);
-        Thread.sleep(1000);
-        logger.debug("############################NUMBER_ALL_RIMBORSO_KM: {}\n", rimborsoKmDAO.count().intValue());
-        IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
-                .getRimborsoKmSearchBuilder();
-        List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
-        Assert.assertTrue("FIND RIMBORSO KM", lista.size() == 1);
+    public void A_countRimborsoKmTest() throws Exception {
+        Assert.assertTrue("###########COUNT RIMORSO_KM", this.rimborsoKmDAO.count() == 1);
     }
 
     @Test
     public void C_updateRimborsoKmTest() throws Exception {
-        RimborsoKm rimborsoKm = new RimborsoKm();
-        rimborsoKm.setId("01");
+    	RimborsoKm rimborsoKm = rimborsoKmDAO.findRimborsoKmByQuery(IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder()).getResults().get(0);
         rimborsoKm.setValue(0.40);
         Thread.sleep(1000);
         rimborsoKmDAO.update(rimborsoKm);
@@ -87,15 +70,6 @@ public class RimborsoKmDAOTest {
         rimborsoKm.setId("02");
         rimborsoKm.setValue(0.36);
         rimborsoKmDAO.persist(rimborsoKm);
-    }
-
-    @Test
-    public void E_findByIdTest() throws Exception {
-        IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
-                .getRimborsoKmSearchBuilder().withId("01");
-        List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
-        Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.size() == 1);
-        Assert.assertTrue("FIND  RIMBORSO KM BY ID", lista.get(0).getId().equals("01"));
     }
 
     @Test

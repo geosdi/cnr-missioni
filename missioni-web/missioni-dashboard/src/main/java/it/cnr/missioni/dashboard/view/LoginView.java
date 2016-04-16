@@ -83,7 +83,7 @@ public class LoginView extends VerticalLayout implements Serializable {
 			@Override
             public void buttonClick(ClickEvent clickEvent) {
 //				CredenzialiWindow.open(new User(),false,true,false);
-                RecuperaPasswordWindow.getRecuperaPasswordWindow().withIsAdmin(false).withEnabled(true).withModifica(false).build();
+                RecuperaPasswordWindow.getRecuperaPasswordWindow().withBean(new User()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
             }
         });
         buttonRecuperaPassword.setStyleName(Reindeer.BUTTON_LINK);

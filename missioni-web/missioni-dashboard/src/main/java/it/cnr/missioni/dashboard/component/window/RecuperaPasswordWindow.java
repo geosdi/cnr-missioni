@@ -2,6 +2,8 @@ package it.cnr.missioni.dashboard.component.window;
 
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
+import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroupFieldFactory;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button.ClickEvent;
@@ -17,11 +19,13 @@ import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.action.RecuperaPasswordAction;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.BeanFieldGrouFactory;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
+import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 
-public class RecuperaPasswordWindow extends IWindow.AbstractWindow<String, RecuperaPasswordWindow> {
+public class RecuperaPasswordWindow extends IWindow.AbstractWindow<User, RecuperaPasswordWindow> {
 
 	public static final String ID = "recuperapasswordwindow";
 	/**
@@ -30,6 +34,8 @@ public class RecuperaPasswordWindow extends IWindow.AbstractWindow<String, Recup
 	private static final long serialVersionUID = -5199469615215392155L;
 
 	private TextField emailField;
+    private BeanFieldGroup<User> fieldGroup;
+
 
 	protected RecuperaPasswordWindow() {
 	}
@@ -39,6 +45,8 @@ public class RecuperaPasswordWindow extends IWindow.AbstractWindow<String, Recup
 	}
 
 	public RecuperaPasswordWindow build() {
+        fieldGroup = new BeanFieldGroup<User>(User.class);
+        buildFieldGroup();
 		this.setID(ID);
 		buildWindow();
 		detailsWrapper.addComponent(buildCredenzialiTab());
@@ -47,6 +55,13 @@ public class RecuperaPasswordWindow extends IWindow.AbstractWindow<String, Recup
 		this.focus();
 		return self();
 	}
+	
+    private void buildFieldGroup() {
+        fieldGroup.setItemDataSource(bean);
+        fieldGroup.setBuffered(true);
+        FieldGroupFieldFactory fieldFactory = new BeanFieldGrouFactory();
+        fieldGroup.setFieldFactory(fieldFactory);
+    }
 
 	private Component buildCredenzialiTab() {
 		HorizontalLayout root = new HorizontalLayout();
@@ -59,7 +74,7 @@ public class RecuperaPasswordWindow extends IWindow.AbstractWindow<String, Recup
 		details.addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
 		root.addComponent(details);
 		root.setExpandRatio(details, 1);
-		emailField = new TextField("Email");
+		emailField = (TextField) fieldGroup.buildAndBind("Email", "datiCNR.mail");
 		details.addComponent(emailField);
 		emailField.addValidator(new Validator() {
 

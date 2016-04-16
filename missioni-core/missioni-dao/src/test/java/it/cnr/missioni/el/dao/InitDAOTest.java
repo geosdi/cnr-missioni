@@ -15,6 +15,7 @@ import org.joda.time.DateTime;
 import org.joda.time.chrono.ISOChronology;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,6 +95,13 @@ public class InitDAOTest {
     private GPIndexCreator massimaleDocIndexCreator;
     @Resource(name = "massimaleDAO")
     private IMassimaleDAO massimaleDAO;
+    
+   static String idQualificaUser;
+    
+    @BeforeClass
+    public static void oneTimeSetUp() {
+    	idQualificaUser = UUID.randomUUID().toString();
+    }
 
     @Before
     public void setUp() {
@@ -114,6 +122,7 @@ public class InitDAOTest {
         Assert.assertNotNull(missioneDAO);
         Assert.assertNotNull(massimaleDocIndexCreator);
         Assert.assertNotNull(massimaleDAO);
+        logger.info("#########ID:{}\n",idQualificaUser);
     }
     
 //    @Test
@@ -2420,48 +2429,52 @@ public class InitDAOTest {
     private List<QualificaUser> creaQualifiche() {
         List<QualificaUser> lista = new ArrayList<QualificaUser>();
         QualificaUser q = new QualificaUser();
-        q.setId("01");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Assegnista");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("02");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Collaboratore Amministrativo");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("03");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Borsista");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("04");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Associato");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("05");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Collaboratore");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("06");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Ricercatore");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("07");
+        q.setId(idQualificaUser);
         q.setValue("Tecnologo");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("08");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("CTER");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("09");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("OPTER");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("10");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Operatore Amministrativo");
         lista.add(q);
         q = new QualificaUser();
-        q.setId("11");
+        q.setId(UUID.randomUUID().toString());
         q.setValue("Funzionario Amministrativo");
+        lista.add(q);
+        q = new QualificaUser();
+        q.setId(UUID.randomUUID().toString());
+        q.setValue("Direttore");
         lista.add(q);
         return lista;
     }
@@ -2492,19 +2505,17 @@ public class InitDAOTest {
         veicolo.setCartaCircolazione("12234");
         veicolo.setPolizzaAssicurativa("A1B2");
         veicolo.setVeicoloPrincipale(true);
-        veicolo.setId("01");
+        veicolo.setId(UUID.randomUUID().toString());
         Map<String, Veicolo> mappaVeicoli = new HashMap<String, Veicolo>();
         mappaVeicoli.put(veicolo.getId(), veicolo);
         user.setMappaVeicolo(mappaVeicoli);
         DatiCNR datiCNR = new DatiCNR();
-//		datiCNR.setDatoreLavoro("02");
-//		datiCNR.setShortDescriptionDatoreLavoro("Rossi Paolo");
         datiCNR.setIban("IT0000000000000000");
         datiCNR.setLivello(LivelloUserEnum.III);
         datiCNR.setMail("luigi.franco@imaa.cnr.it");
         datiCNR.setMatricola("1111111");
         datiCNR.setDescrizioneQualifica("Tecnologo");
-        datiCNR.setIdQualifica("07");
+        datiCNR.setIdQualifica(this.idQualificaUser);
         user.setDatiCNR(datiCNR);
         Patente p = new Patente();
         p.setDataRilascio(new DateTime(2001, 12, 15, 0, 0, ISOChronology.getInstanceUTC()));
