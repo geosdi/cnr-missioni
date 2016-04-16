@@ -34,7 +34,6 @@ public interface IVeicoloForm extends IForm<Veicolo, IVeicoloForm> {
         private TextField polizzaAssicurativaField;
         private CheckBox veicoloPrincipaleField;
         private User user;
-        private Veicolo veicolo;
 
         private VeicoloForm() {
         }
@@ -93,7 +92,7 @@ public interface IVeicoloForm extends IForm<Veicolo, IVeicoloForm> {
                                     Utility.getMessage("request_error"), Type.ERROR_MESSAGE);
                         }
                         if (userStore.getTotale() > 0 || user.getVeicoloWithTarga(targaField.getValue(),
-                                (modifica ? veicolo.getId() : null)) != null)
+                                (modifica ? bean.getId() : null)) != null)
                             throw new InvalidValueException(Utility.getMessage("targa_present"));
                     }
                 }
@@ -121,7 +120,7 @@ public interface IVeicoloForm extends IForm<Veicolo, IVeicoloForm> {
                         }
                         if (userStore.getTotale() > 0
                                 || user.getVeicoloWithPolizzaAssicurativa(polizzaAssicurativaField.getValue(),
-                                (modifica ? veicolo.getId() : null)) != null)
+                                (modifica ? bean.getId() : null)) != null)
                             throw new InvalidValueException(Utility.getMessage("polizza_present"));
                     }
                 }
@@ -149,7 +148,7 @@ public interface IVeicoloForm extends IForm<Veicolo, IVeicoloForm> {
                         }
                         if (userStore.getTotale() > 0
                                 || user.getVeicoloWithCartaCircolazione(cartaCircolazioneField.getValue(),
-                                (modifica ? veicolo.getId() : null)) != null)
+                                (modifica ? bean.getId() : null)) != null)
                             throw new InvalidValueException(Utility.getMessage("carta_circolazione_present"));
                     }
                 }
