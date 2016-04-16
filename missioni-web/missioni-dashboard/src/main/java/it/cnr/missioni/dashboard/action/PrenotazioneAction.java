@@ -4,7 +4,6 @@ import com.vaadin.ui.Notification.Type;
 
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.binder.IPrenotazioneBinder;
-import it.cnr.missioni.dashboard.broadcast.Broadcaster;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.calendar.PrenotazioneEvent;
 import it.cnr.missioni.dashboard.event.DashboardEvent;
@@ -26,10 +25,7 @@ public class PrenotazioneAction implements IAction {
 	}
 
 	public boolean doAction() {
-
 		try {
-			
-			
 			Prenotazione prenotazione = IPrenotazioneBinder.PrenotazioneBinder.getPrenotazioneBinder().withFrom(prenotazioneEvent).withModifica(modifica).withUser(DashboardUI.getCurrentUser()).bind();
 			String message = "";
 			//Nel caso sia una nuova prenotazione
@@ -48,16 +44,11 @@ public class PrenotazioneAction implements IAction {
 			String p = prenotazione.buildStringMessage();
 			DashboardEventBus.post(new DashboardEvent.CalendarUpdateEvent(null));
 //	        Broadcaster.broadcast(message.concat(p));
-
 			return true;
-
 		} catch (Exception e) {
 			Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
 					Type.ERROR_MESSAGE);
 			return false;
 		}
-
 	}
-
-
 }
