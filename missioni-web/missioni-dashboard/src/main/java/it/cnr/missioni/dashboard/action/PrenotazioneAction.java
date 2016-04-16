@@ -34,13 +34,13 @@ public class PrenotazioneAction implements IAction {
 			String message = "";
 			//Nel caso sia una nuova prenotazione
 			if(!modifica){
-				message = "Nuova prenotazione inserita: ";
+//				message = "Nuova prenotazione inserita: ";
 				ClientConnector.addPrenotazione(prenotazione);
-
 			}
 			//Modifica
 			else{
-				message = "Prenotazione modificata: ";
+//				message = "Prenotazione modificata: ";
+				ClientConnector.updatePrenotazione(prenotazione);
 			}
 			Thread.sleep(1000);
 			prenotazioneEvent.setCaption(prenotazione.getDescrizione());
