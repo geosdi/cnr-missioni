@@ -2515,7 +2515,7 @@ public class InitDAOTest {
         datiCNR.setMail("luigi.franco@imaa.cnr.it");
         datiCNR.setMatricola("1111111");
         datiCNR.setDescrizioneQualifica("Tecnologo");
-        datiCNR.setIdQualifica(this.idQualificaUser);
+        datiCNR.setIdQualifica(idQualificaUser);
         user.setDatiCNR(datiCNR);
         Patente p = new Patente();
         p.setDataRilascio(new DateTime(2001, 12, 15, 0, 0, ISOChronology.getInstanceUTC()));
