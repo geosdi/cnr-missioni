@@ -91,7 +91,7 @@ public interface ILocalitaOggettoMissioneForm extends IForm<Missione, ILocalitaO
 			// buildFields();
 			HorizontalLayout layoutLocalita = new HorizontalLayout();
 			layoutLocalita.addComponent(localitaField);
-			if (isAdmin){
+			if (isAdmin) {
 				listaStatoField = (ComboBox) getFieldGroup().buildAndBind("Stato", "stato", ComboBox.class);
 				addComponent(listaStatoField);
 			}
@@ -111,19 +111,17 @@ public interface ILocalitaOggettoMissioneForm extends IForm<Missione, ILocalitaO
 			localitaField.setReadOnly(!enabled);
 			listaNazioneField.setImmediate(true);
 			listaNazioneField.setValidationVisible(false);
-			if (bean.isMissioneEstera()) {
-				getFieldGroup().bind(listaNazioneField, "idNazione");
-				try {
-					NazioneStore nazioneStore = ClientConnector.getNazione(
-							INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withAll(true));
-					nazioneStore.getNazione().forEach(c -> {
-						listaNazioneField.addItem(c.getId());
-						listaNazioneField.setItemCaption(c.getId(), c.getValue());
-					});
-				} catch (Exception e) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
-							Type.ERROR_MESSAGE);
-				}
+			getFieldGroup().bind(listaNazioneField, "idNazione");
+			try {
+				NazioneStore nazioneStore = ClientConnector
+						.getNazione(INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withAll(true));
+				nazioneStore.getNazione().forEach(c -> {
+					listaNazioneField.addItem(c.getId());
+					listaNazioneField.setItemCaption(c.getId(), c.getValue());
+				});
+			} catch (Exception e) {
+				Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+						Type.ERROR_MESSAGE);
 			}
 		}
 
