@@ -199,6 +199,14 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         document.add(new Paragraph("\n"));
 
         PdfPTable tablePagamento = new PdfPTable(2);
+        
+        PdfPCell cellTotKm = new PdfPCell(
+                new Paragraph("Tot.Km da rimborsare", fontBold));
+        cellTotKm.setBorder(Rectangle.NO_BORDER);
+        tablePagamento.addCell(cellTotKm);
+        PdfPCell cellTotKm2 = new PdfPCell(new Paragraph(missione.getRimborso().getTotKm() != null ? missione.getRimborso().getTotKm().toString():"0.0", fontNormal));
+        cellTotKm2.setMinimumHeight(20f);
+        tablePagamento.addCell(cellTotKm2);
         PdfPCell cellAvviso = new PdfPCell(
                 new Paragraph("Avviso di pagamento presso (Via Citt" + new Character('\u00E0') + " CAP)", fontBold));
         cellAvviso.setBorder(Rectangle.NO_BORDER);

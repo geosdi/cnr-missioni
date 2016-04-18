@@ -23,6 +23,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.Anagrafica.Genere;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
 
@@ -97,7 +98,6 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		String articol = user.getAnagrafica().getGenere() == Genere.UOMO ? "Il" : "La";
 		String suffix = user.getAnagrafica().getGenere() == Genere.UOMO ? "o" : "a";
-
 		
 		Paragraph paragraphUtente = new Paragraph(articol+" sottoscritt"+suffix+" Dr. " + this.user.getAnagrafica().getCognome()
 				+ " " + user.getAnagrafica().getNome() + ", C.F. " + user.getAnagrafica().getCodiceFiscale()
@@ -119,10 +119,10 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		" da svolgersi a " + missione.getLocalita() + ", nazione " + missione.getShortDescriptionNazione()
 				+ " per il periodo " + formatData.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate()) +
 
-		" per la durata presunta di n." + days + " gg.\n" +
-
-		"La missione avrà inizio alle ore " + missione.getDatiPeriodoMissione().getInizioMissione().getHourOfDay()
-				+ " e terminerà presumibilmente alle ore"
+		" per la durata presunta di n." + days + " gg.\n");
+		
+		Paragraph paragraphTam = new Paragraph("\nLa missione avrà inizio alle ore " + missione.getDatiPeriodoMissione().getInizioMissione().getHourOfDay()
+				+ " e terminerà presumibilmente alle ore "
 				+ missione.getDatiPeriodoMissione().getFineMissione().getHourOfDay() + " (da compilarsi solo per " +
 
 		"T.a.m.)");
@@ -155,6 +155,8 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.add(paragraphChiede);
 		document.add(paragraphDettagli);
 		document.add(paragraphAttivita);
+		if(missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO)
+			document.add(paragraphTam);
 		document.add(paragraphAllegati);
 		document.add(paragraphElencoAllegati);
 		document.add(paragraphInFede);
