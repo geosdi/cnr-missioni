@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.model.prenotazione;
 
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import org.joda.time.DateTime;

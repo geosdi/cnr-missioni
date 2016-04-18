@@ -72,9 +72,9 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
             details.addComponent(
                     Utility.buildLabel("Rimborso KM: ", Double.toString(missione.getRimborso().getRimborsoKm()) + " €"));
         details.addComponent(
-                Utility.buildLabel("Totale Fatture: ", Double.toString(missione.getRimborso().getTotale()) + " €"));
+                Utility.buildLabel("Totale: ", Double.toString(missione.getRimborso().getTotale()) + " €"));
         details.addComponent(
-                Utility.buildLabel("Totale Fatture Spettante: ", Utility.getStringDecimalFormat(missione.getRimborso().getTotaleSpettante()) + " €"));
+                Utility.buildLabel("Totale Spettante: ", Utility.getStringDecimalFormat(missione.getRimborso().getTotaleSpettante()) + " €"));
 
         if (missione.isMissioneEstera()) {
             if (missione.getDatiMissioneEstera().getTrattamentoMissioneEsteraEnum() == TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO){

@@ -53,7 +53,6 @@ public interface IMd5PasswordGenerator extends IMissioniGenerator<IMd5PasswordGe
 			}
 			return hashString;
 		}
-
 	}
 
 }

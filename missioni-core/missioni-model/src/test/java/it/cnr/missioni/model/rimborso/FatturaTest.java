@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.model.rimborso;
 
 import it.cnr.missioni.model.rimborso.Fattura;
 import org.joda.time.DateTime;

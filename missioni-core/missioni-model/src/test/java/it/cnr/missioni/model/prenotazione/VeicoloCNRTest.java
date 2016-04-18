@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.model.prenotazione;
 
 import it.cnr.missioni.model.prenotazione.StatoVeicoloEnum;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;

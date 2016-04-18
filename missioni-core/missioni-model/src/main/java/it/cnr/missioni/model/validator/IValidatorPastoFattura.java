@@ -61,15 +61,17 @@ public interface IValidatorPastoFattura extends IValidatorFattura<IValidatorPast
             s3_italia.setNextValidator(finalStep);
             // ESTERA
             this.s1_estera = new Step1_Estera();
-            Step2_Estera s2_estera = new Step2_Estera();
+/*            Step2_Estera s2_estera = new Step2_Estera();
             Step3_Estera s3_estera = new Step3_Estera();
             Step4_Estera s4_estera = new Step4_Estera();
             Step5_Estera s5_estera = new Step5_Estera();
-            this.s1_estera.setNextValidator(s2_estera);
-            s2_estera.setNextValidator(s3_estera);
+            this.s1_estera.setNextValidator(s2_estera);*/
+            this.s1_estera.setNextValidator(finalStep);
+
+/*            s2_estera.setNextValidator(s3_estera);
             s3_estera.setNextValidator(s4_estera);
             s4_estera.setNextValidator(s5_estera);
-            s5_estera.setNextValidator(finalStep);
+            s5_estera.setNextValidator(finalStep);*/
             stepTipoMissione.setNextValidator(initialStep);
             stepTipoMissione.check();
         }
@@ -233,13 +235,13 @@ public interface IValidatorPastoFattura extends IValidatorFattura<IValidatorPast
              */
             @Override
             public void check() throws Exception {
-                if (dataFattura.isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
+/*                if (dataFattura.isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata())
                         && dataFattura
-                        .isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())) {
+                        .isBefore(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())) {*/
                     maxNumOccurrence = 2;
-                    finalStep.check();
+/*                    finalStep.check();
                 } else
-                    this.nextValidator.check();
+                    this.nextValidator.check();*/
             }
 
         }
@@ -247,19 +249,19 @@ public interface IValidatorPastoFattura extends IValidatorFattura<IValidatorPast
         // Se data della fattura compresa tra data inizio e data frontiera
         // andata e date inizio missione e data andata frontiera sono in giorni
         // differenti
-        class Step2_Estera extends IStepValidator.AbstractStepValidator {
+/*        class Step2_Estera extends IStepValidator.AbstractStepValidator {
 
-            /**
+            *//**
              * @param validator
-             */
+             *//*
             @Override
             public void setNextValidator(IStepValidator validator) {
                 this.nextValidator = validator;
             }
 
-            /**
+            *//**
              * @return
-             */
+             *//*
             @Override
             public void check() throws Exception {
                 if (dataFattura.isAfter(missione.getDatiPeriodoMissione().getInizioMissione())
@@ -276,24 +278,24 @@ public interface IValidatorPastoFattura extends IValidatorFattura<IValidatorPast
                     this.nextValidator.check();
             }
 
-        }
+        }*/
 
         // Se data della fattura compresa tra data inizio e data frontiera
         // andata e date inizio missione e data andata frontiera sono nello
         // stesso giorno
-        class Step3_Estera extends IStepValidator.AbstractStepValidator {
+/*        class Step3_Estera extends IStepValidator.AbstractStepValidator {
 
-            /**
+            *//**
              * @param validator
-             */
+             *//*
             @Override
             public void setNextValidator(IStepValidator validator) {
                 this.nextValidator = validator;
             }
 
-            /**
+            *//**
              * @return
-             */
+             *//*
             @Override
             public void check() throws Exception {
                 if (dataFattura.isAfter(missione.getDatiPeriodoMissione().getInizioMissione())
@@ -308,23 +310,23 @@ public interface IValidatorPastoFattura extends IValidatorFattura<IValidatorPast
                     this.nextValidator.check();
             }
 
-        }
+        }*/
 
         // Se data della fattura compresa tra data Fine e data frontiera ritorno
         // e data ritorno e data ritorno frontiera sono in gg differenti
-        class Step4_Estera extends IStepValidator.AbstractStepValidator {
+/*        class Step4_Estera extends IStepValidator.AbstractStepValidator {
 
-            /**
+            *//**
              * @param validator
-             */
+             *//*
             @Override
             public void setNextValidator(IStepValidator validator) {
                 this.nextValidator = validator;
             }
 
-            /**
+            *//**
              * @return
-             */
+             *//*
             @Override
             public void check() throws Exception {
                 if (dataFattura.isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
@@ -342,23 +344,23 @@ public interface IValidatorPastoFattura extends IValidatorFattura<IValidatorPast
                     this.nextValidator.check();
             }
 
-        }
+        }*/
 
         // Se data della fattura compresa tra data Fine e data frontiera ritorno
         // e data ritorno e data ritorno frontiera sono nello stesso giorno
-        class Step5_Estera extends IStepValidator.AbstractStepValidator {
+/*        class Step5_Estera extends IStepValidator.AbstractStepValidator {
 
-            /**
+            *//**
              * @param validator
-             */
+             *//*
             @Override
             public void setNextValidator(IStepValidator validator) {
                 this.nextValidator = validator;
             }
 
-            /**
+            *//**
              * @return
-             */
+             *//*
             @Override
             public void check() throws Exception {
                 if (dataFattura.isAfter(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno())
@@ -377,7 +379,7 @@ public interface IValidatorPastoFattura extends IValidatorFattura<IValidatorPast
                 nextValidator.check();
             }
 
-        }
+        }*/
 
         class FinalStep extends IStepValidator.AbstractStepValidator {
 

@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.model.configuration;
 
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;

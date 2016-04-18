@@ -15,7 +15,7 @@ public class GeneratorTest {
 
 	@Test
 	public void md5GeneratorTest(){
-		String md5Password = IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().build();
+		String md5Password = IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("prova").build();
 		Assert.assertTrue("MD5 PASSWORD GENERATOR", md5Password.equals("189bbbb00c5f1fb7fba9ad9285f193d1"));
 	}
 	

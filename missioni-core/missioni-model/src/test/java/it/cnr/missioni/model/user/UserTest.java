@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.model.user;
 
 import it.cnr.missioni.model.user.*;
 import it.cnr.missioni.model.user.Anagrafica.Genere;

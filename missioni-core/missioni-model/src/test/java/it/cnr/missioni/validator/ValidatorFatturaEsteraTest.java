@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.validator;
 
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
@@ -33,7 +33,7 @@ public class ValidatorFatturaEsteraTest {
         t.setVoceSpesa(VoceSpesaEnum.PASTO);
         IValidatorPastoFattura v = ValidatorPastoFattura.getValidatorPastoFattura().withDataFattura(dataFattura).withMissione(missione).withTipologiaSpesa(t);
         v.build();
-        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 0);
+        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 2);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class ValidatorFatturaEsteraTest {
         t.setVoceSpesa(VoceSpesaEnum.PASTO);
         IValidatorPastoFattura v = ValidatorPastoFattura.getValidatorPastoFattura().withDataFattura(dataFattura).withMissione(missione).withTipologiaSpesa(t);
         v.build();
-        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 0);
+        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 2);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class ValidatorFatturaEsteraTest {
         t.setVoceSpesa(VoceSpesaEnum.PASTO);
         IValidatorPastoFattura v = ValidatorPastoFattura.getValidatorPastoFattura().withDataFattura(dataFattura).withMissione(missione).withTipologiaSpesa(t);
         v.build();
-        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 1);
+        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 2);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class ValidatorFatturaEsteraTest {
         t.setVoceSpesa(VoceSpesaEnum.PASTO);
         IValidatorPastoFattura v = ValidatorPastoFattura.getValidatorPastoFattura().withDataFattura(dataFattura).withMissione(missione).withTipologiaSpesa(t);
         v.build();
-        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 0);
+        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 2);
     }
 
     @Test
@@ -159,7 +159,7 @@ public class ValidatorFatturaEsteraTest {
         t.setVoceSpesa(VoceSpesaEnum.PASTO);
         IValidatorPastoFattura v = ValidatorPastoFattura.getValidatorPastoFattura().withDataFattura(dataFattura).withMissione(missione).withTipologiaSpesa(t);
         v.build();
-        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 1);
+        Assert.assertTrue("FIND MAX OCCORRENZE", v.getMaxNumOccurrence() == 2);
     }
 
 }

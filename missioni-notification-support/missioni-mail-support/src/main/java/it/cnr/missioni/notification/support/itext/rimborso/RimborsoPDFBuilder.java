@@ -1,32 +1,20 @@
 package it.cnr.missioni.notification.support.itext.rimborso;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.TreeMap;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.notification.support.itext.PDFBuilder;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -169,10 +157,11 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         document.add(new Paragraph("\n"));
 
-        PdfPTable tableScontrino = new PdfPTable(5);
+        PdfPTable tableScontrino = new PdfPTable(6);
 
         tableScontrino.addCell(new PdfPCell(new Paragraph("Data", fontBold)));
-        tableScontrino.addCell(new PdfPCell(new Paragraph("Descrizione", fontBold)));
+        tableScontrino.addCell(new PdfPCell(new Paragraph("Tipologia Spesa", fontBold)));
+        tableScontrino.addCell(new PdfPCell(new Paragraph("Altro\\Descrizione", fontBold)));
         tableScontrino.addCell(new PdfPCell(new Paragraph("Numero Giustificativo", fontBold)));
         tableScontrino.addCell(new PdfPCell(new Paragraph("Importo", fontBold)));
         tableScontrino.addCell(new PdfPCell(new Paragraph("Valuta", fontBold)));
@@ -180,6 +169,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         for (Fattura fattura : listaScontrini) {
             tableScontrino.addCell(new PdfPCell(new Paragraph(formatDataTime.format(fattura.getData().toDate()), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getShortDescriptionTipologiaSpesa(), fontNormal)));
+            tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getAltro() != null ? fattura.getAltro() : "", fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getNumeroFattura().toString(), fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(new DecimalFormat("#0.00").format(fattura.getImporto()) + " € ", fontNormal)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getValuta() + "", fontNormal)));

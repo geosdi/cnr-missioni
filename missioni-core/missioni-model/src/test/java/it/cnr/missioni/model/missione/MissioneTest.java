@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.model.missione;
 
 import it.cnr.missioni.model.missione.DatiMissioneEstera;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;

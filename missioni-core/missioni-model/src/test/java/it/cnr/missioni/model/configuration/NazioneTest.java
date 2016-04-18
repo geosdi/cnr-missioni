@@ -1,6 +1,6 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.model.configuration;
 
-import it.cnr.missioni.model.configuration.QualificaUser;
+import it.cnr.missioni.model.configuration.Nazione;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Salvia Vito
  */
-public class QualificaUserTest {
+public class NazioneTest {
 
     private static Validator validator;
 
@@ -27,23 +27,23 @@ public class QualificaUserTest {
 
     @Test
     public void fatturaErrataTest() {
-        QualificaUser qualificaUser = createQualificaUser();
-        qualificaUser.setValue(null);
-        Set<ConstraintViolation<QualificaUser>> constraintViolations = validator.validate(qualificaUser);
-        assertEquals(1, constraintViolations.size());
+        Nazione nazione = new Nazione();
+        Set<ConstraintViolation<Nazione>> constraintViolations = validator.validate(nazione);
+        assertEquals(2, constraintViolations.size());
     }
 
     @Test
     public void fatturaOkTest() {
-        QualificaUser qualificaUser = createQualificaUser();
-        Set<ConstraintViolation<QualificaUser>> constraintViolations = validator.validate(qualificaUser);
+        Nazione nazione = createNazione();
+        Set<ConstraintViolation<Nazione>> constraintViolations = validator.validate(nazione);
         assertEquals(0, constraintViolations.size());
     }
 
-    private QualificaUser createQualificaUser(){
-        return new QualificaUser(){
+    private Nazione createNazione(){
+        return new Nazione(){
             {
-                super.setValue("Ricercatore");
+                super.setValue("GERMANIA");
+                super.setAreaGeografica(AreaGeograficaEnum.G);
             }
         };
     }

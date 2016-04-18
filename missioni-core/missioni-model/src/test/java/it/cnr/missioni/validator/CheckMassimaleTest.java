@@ -1,4 +1,4 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.validator;
 
 
 import it.cnr.missioni.model.configuration.Massimale;

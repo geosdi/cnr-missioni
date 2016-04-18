@@ -1,8 +1,9 @@
-package it.cnr.missioni.model;
+package it.cnr.missioni.validator;
 
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.configuration.TipologiaSpesa.VoceSpesaEnum;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.model.validator.IValidatorPastoFattura;
 import it.cnr.missioni.model.validator.IValidatorPastoFattura.ValidatorPastoFattura;
 import org.joda.time.DateTime;
@@ -21,6 +22,7 @@ public class ValidatorFatturaItaliaTest {
         DateTime dataFine = new DateTime(2016, 1, 1, 20, 0);
         DateTime dataFattura = new DateTime(2016, 1, 1, 15, 0);
         Missione missione = new Missione();
+        missione.setRimborso(new Rimborso());
         missione.getDatiPeriodoMissione().setInizioMissione(dataInizio);
         missione.getDatiPeriodoMissione().setFineMissione(dataFine);
         TipologiaSpesa t = new TipologiaSpesa();
@@ -37,6 +39,7 @@ public class ValidatorFatturaItaliaTest {
         DateTime dataFine = new DateTime(2016, 1, 2, 20, 0);
         DateTime dataFattura = new DateTime(2016, 1, 1, 15, 0);
         Missione missione = new Missione();
+        missione.setRimborso(new Rimborso());
         missione.getDatiPeriodoMissione().setInizioMissione(dataInizio);
         missione.getDatiPeriodoMissione().setFineMissione(dataFine);
         TipologiaSpesa t = new TipologiaSpesa();
@@ -53,6 +56,7 @@ public class ValidatorFatturaItaliaTest {
         DateTime dataFine = new DateTime(2016, 1, 2, 20, 0);
         DateTime dataFattura = new DateTime(2016, 1, 2, 15, 0);
         Missione missione = new Missione();
+        missione.setRimborso(new Rimborso());
         missione.getDatiPeriodoMissione().setInizioMissione(dataInizio);
         missione.getDatiPeriodoMissione().setFineMissione(dataFine);
         TipologiaSpesa t = new TipologiaSpesa();
@@ -69,6 +73,7 @@ public class ValidatorFatturaItaliaTest {
         DateTime dataFine = new DateTime(2016, 1, 3, 20, 0);
         DateTime dataFattura = new DateTime(2016, 1, 2, 15, 0);
         Missione missione = new Missione();
+        missione.setRimborso(new Rimborso());
         missione.getDatiPeriodoMissione().setInizioMissione(dataInizio);
         missione.getDatiPeriodoMissione().setFineMissione(dataFine);
         TipologiaSpesa t = new TipologiaSpesa();
@@ -85,6 +90,7 @@ public class ValidatorFatturaItaliaTest {
         DateTime dataFine = new DateTime(2016, 1, 6, 20, 0);
         DateTime dataFattura = new DateTime(2016, 1, 2, 15, 0);
         Missione missione = new Missione();
+        missione.setRimborso(new Rimborso());
         missione.getDatiPeriodoMissione().setInizioMissione(dataInizio);
         missione.getDatiPeriodoMissione().setFineMissione(dataFine);
         TipologiaSpesa t = new TipologiaSpesa();
