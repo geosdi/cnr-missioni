@@ -344,8 +344,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		tableImage.addCell(cellImage3);
 		document.add(tableImage);
 		
-		
-		Chunk underline = new Chunk("RICHIESTA AUTORIZZAZIONE ALL' USO DEL MEZO PROPRIO\n\n");
+		Chunk underline = new Chunk("RICHIESTA AUTORIZZAZIONE ALL' USO DEL MEZZO PROPRIO\n\n");
 
 		underline.setUnderline(0.2f, -2f);
 		Paragraph paragraphUnderline = new Paragraph("\n\n", fontBold);

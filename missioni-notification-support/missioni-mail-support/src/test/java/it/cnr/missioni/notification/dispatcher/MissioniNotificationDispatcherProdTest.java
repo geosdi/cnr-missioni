@@ -134,7 +134,7 @@ public class MissioniNotificationDispatcherProdTest {
 
     @Test
     public void dispatchUpdateRimborsoMissioneMailProdTest() throws Exception {
-    	
+   
     	PDFBuilder pdfBuilder = RimborsoPDFBuilder
                 .newPDFBuilder();
     	    	pdfBuilder.withUser(buildUserTest())

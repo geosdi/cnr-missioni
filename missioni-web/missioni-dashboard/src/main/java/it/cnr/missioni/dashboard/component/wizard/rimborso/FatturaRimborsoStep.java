@@ -59,8 +59,8 @@ public class FatturaRimborsoStep implements WizardStep {
             String livello = user.getDatiCNR().getLivello().name();
             //se è a seguito
             if (missione.getIdUserSeguito() != null) {
-                userASeguito = ClientConnector.getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUser())).getUsers().get(0);
-                livello = user.getDatiCNR().getLivello().getStato() >= userASeguito.getDatiCNR().getLivello().getStato() ? user.getDatiCNR().getLivello().name() : userASeguito.getDatiCNR().getLivello().name();
+                userASeguito = ClientConnector.getUser(IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withId(missione.getIdUserSeguito())).getUsers().get(0);
+                livello = userASeguito.getDatiCNR().getLivello().getStato() <= user.getDatiCNR().getLivello().getStato() ? userASeguito.getDatiCNR().getLivello().name()  :user.getDatiCNR().getLivello().name()  ;
             }
             Massimale massimaleItalia = getMassimale(AreaGeograficaEnum.ITALIA.name(), livello);
             Massimale massimaleEstero = null;
