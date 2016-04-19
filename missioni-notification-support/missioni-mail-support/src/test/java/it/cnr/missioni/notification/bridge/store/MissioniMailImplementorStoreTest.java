@@ -25,7 +25,7 @@ public class MissioniMailImplementorStoreTest {
         Set<MissioniMailImplementor> missioniMailImplementors = missioniMailImplementorStore.getAllImplementors();
 
         logger.info("##################MISSIONI_MAIL_IMPLEMENTORS : {}\n", missioniMailImplementors);
-        Assert.assertEquals(8, missioniMailImplementors.size());
+        Assert.assertEquals(16, missioniMailImplementors.size());
     }
 
     @Test
