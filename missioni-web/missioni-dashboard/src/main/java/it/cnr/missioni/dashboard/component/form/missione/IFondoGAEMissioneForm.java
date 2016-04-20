@@ -85,7 +85,7 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
                 IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                         .withAll(true);
                 UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-                userStore.getUsers().forEach(u -> {
+                userStore.getUsers().stream().filter(u -> u.getDatiCNR().getLivello().getStato() <= 3).forEach(u -> {
                     listaSeguito.addItem(u.getId());
                     listaSeguito.setItemCaption(u.getId(),
                             u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
