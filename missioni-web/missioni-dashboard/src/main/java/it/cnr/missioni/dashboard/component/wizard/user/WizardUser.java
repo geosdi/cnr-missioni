@@ -42,7 +42,6 @@ public class WizardUser extends IWizard.AbstractWizard {
     @Override
     public void activeStepChanged(WizardStepActivationEvent event) {
         Page.getCurrent().setTitle(event.getActivatedStep().getCaption());
-
     }
 
     /**
