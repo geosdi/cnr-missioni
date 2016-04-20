@@ -8,7 +8,7 @@ import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
@@ -53,7 +53,7 @@ class MassimaleDelegate implements IMassimaleDelegate {
 				.withId(id)
 				.withTipo(tipo);
 
-		PageResult<Massimale> pageResult = this.massimaleDAO.findMassimaleByQuery(massimaleUserSearchBuilder);
+		GPPageableElasticSearchDAO.IPageResult<Massimale> pageResult = this.massimaleDAO.findMassimaleByQuery(massimaleUserSearchBuilder);
 		MassimaleStore massimaleStore = new MassimaleStore();
 		massimaleStore.setMassimale(pageResult.getResults());
 		massimaleStore.setTotale(pageResult.getTotal());

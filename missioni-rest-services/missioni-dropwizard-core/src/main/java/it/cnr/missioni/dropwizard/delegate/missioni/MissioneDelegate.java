@@ -1,33 +1,9 @@
 package it.cnr.missioni.dropwizard.delegate.missioni;
 
-import java.text.DecimalFormat;
-import java.util.Locale;
-
-import javax.annotation.Resource;
-import javax.ws.rs.core.StreamingOutput;
-
-import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
-import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO.IPageResult;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
-import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
-import org.geosdi.geoplatform.support.google.spring.services.distance.GPDistanceMatrixService;
-import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.uuid.EthernetAddress;
 import com.fasterxml.uuid.Generators;
 import com.fasterxml.uuid.impl.TimeBasedGenerator;
-import com.google.maps.model.DistanceMatrix;
-import com.google.maps.model.DistanceMatrixElement;
-import com.google.maps.model.DistanceMatrixElementStatus;
-import com.google.maps.model.DistanceMatrixRow;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.TravelMode;
-
+import com.google.maps.model.*;
 import it.cnr.missioni.el.dao.IDirettoreDAO;
 import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
@@ -53,6 +29,21 @@ import it.cnr.missioni.rest.api.response.missione.MissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.VeicoloMissioneStreaming;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
+import org.geosdi.geoplatform.exception.IllegalParameterFault;
+import org.geosdi.geoplatform.exception.ResourceNotFoundFault;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO.IPageResult;
+import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
+import org.geosdi.geoplatform.support.google.spring.services.distance.GPDistanceMatrixService;
+import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
+import javax.ws.rs.core.StreamingOutput;
+import java.text.DecimalFormat;
+import java.util.Locale;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -179,7 +170,7 @@ class MissioneDelegate implements IMissioneDelegate {
 				missione.getRimborso().getNumeroOrdine().toString() : "",
 				missione.getRimborso().isPagata() ? "Si" : "No", missione.getRimborso().getMandatoPagamento() != null
 						? missione.getRimborso().getMandatoPagamento() : "",missione.getRimborso().getTotaleDovuto() != null ?
-				missione.getRimborso().getTotaleDovuto() : 0.0, RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0))));
+				missione.getRimborso().getTotaleDovuto() : 0.0));
 		return Boolean.TRUE;
 	}
 
@@ -196,7 +187,7 @@ class MissioneDelegate implements IMissioneDelegate {
 				.withNumeroOrdineMissione(numeroOrdineRimborso).withRangeDataInserimento(fromInserimento, toInserimento)
 				.withRangeDataRimborso(fromRimborso, toRimborso).withOggetto(oggetto).withMultiMatch(multiMatch)
 				.withFieldExist(fieldExist).withFieldNotExist(fieldNotExist).withFrom(from).withSize(size);
-		PageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
+		GPPageableElasticSearchDAO.IPageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
 		MissioniStore missioniStore = new MissioniStore();
 		missioniStore.setMissioni(pageResult.getResults());
 		missioniStore.setTotale(pageResult.getTotal());

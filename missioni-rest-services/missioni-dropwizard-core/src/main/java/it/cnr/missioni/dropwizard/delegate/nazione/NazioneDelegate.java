@@ -8,7 +8,7 @@ import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
@@ -46,7 +46,7 @@ class NazioneDelegate implements INazioneDelegate {
 		INazioneSearchBuilder nazioneUserSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withFrom(from)
 				.withSize(size).withAll(all).withId(id);
 
-		PageResult<Nazione> pageResult = this.nazioneDAO.findNazioneByQuery(nazioneUserSearchBuilder);
+		GPPageableElasticSearchDAO.IPageResult<Nazione> pageResult = this.nazioneDAO.findNazioneByQuery(nazioneUserSearchBuilder);
 		NazioneStore nazioneStore = new NazioneStore();
 		nazioneStore.setNazione(pageResult.getResults());
 		nazioneStore.setTotale(pageResult.getTotal());

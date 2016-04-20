@@ -8,7 +8,7 @@ import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
 import it.cnr.missioni.rest.api.response.rimborsoKm.RimborsoKmStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
@@ -41,7 +41,7 @@ class RimborsoKmDelegate implements IRimborsoKmDelegate {
 	@Override
 	public RimborsoKmStore getRimborsoKmByQuery() throws Exception {
 		IRimborsoKmSearchBuilder rimborsoSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder();
-		PageResult<RimborsoKm> pageResult = this.rimborsoKmDAO.findRimborsoKmByQuery(rimborsoSearchBuilder);
+		GPPageableElasticSearchDAO.IPageResult<RimborsoKm> pageResult = this.rimborsoKmDAO.findRimborsoKmByQuery(rimborsoSearchBuilder);
 		RimborsoKmStore rimborsoKmStore = new RimborsoKmStore();
 		rimborsoKmStore.setRimborsoKm(pageResult.getResults());
 		rimborsoKmStore.setTotale(pageResult.getTotal());

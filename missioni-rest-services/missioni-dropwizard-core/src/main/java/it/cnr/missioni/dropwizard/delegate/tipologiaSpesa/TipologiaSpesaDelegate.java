@@ -8,7 +8,7 @@ import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
@@ -51,7 +51,7 @@ class TipologiaSpesaDelegate implements ITipologiaSpesaDelegate {
 		ITipologiaSpesaSearchBuilder tipologiaSpesaUserSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder
 				.getTipologiaSpesaSearchBuilder().withFrom(from).withSize(size)
 				.withTipoTrattamento(tipologiaTrattamento).withAll(all).withId(id).withEstera(estera).withItalia(italia);
-		PageResult<TipologiaSpesa> pageResult = this.tipologiaSpesaDAO
+		GPPageableElasticSearchDAO.IPageResult<TipologiaSpesa> pageResult = this.tipologiaSpesaDAO
 				.findTipologiaSpesaByQuery(tipologiaSpesaUserSearchBuilder);
 		TipologiaSpesaStore tipologiaSpesaStore = new TipologiaSpesaStore();
 		tipologiaSpesaStore.setTipologiaSpesa(pageResult.getResults());

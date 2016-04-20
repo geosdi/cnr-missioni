@@ -8,7 +8,7 @@ import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
@@ -45,7 +45,7 @@ class QualificaUserDelegate implements IQualificaUserDelegate {
 
 		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
 				.getQualificaUserSearchBuilder().withId(id).withFrom(from).withSize(size).withAll(all);
-		PageResult<QualificaUser> pageResult = this.qualificaUserDAO
+		GPPageableElasticSearchDAO.IPageResult<QualificaUser> pageResult = this.qualificaUserDAO
 				.findQualificaUserByQuery(qualificaUserSearchBuilder);
 		QualificaUserStore qualificaUserStore = new QualificaUserStore();
 		qualificaUserStore.setQualificaUser(pageResult.getResults());

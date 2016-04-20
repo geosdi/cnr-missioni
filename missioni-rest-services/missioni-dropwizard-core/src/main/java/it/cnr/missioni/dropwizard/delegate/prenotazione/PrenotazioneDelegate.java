@@ -8,7 +8,7 @@ import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -87,7 +87,7 @@ class PrenotazioneDelegate implements IPrenotazioneDelegate {
 	public PrenotazioniStore getPrenotazioneByQuery(Long dataFrom, Long dataTo) throws Exception {
 		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder()
 				.withRangeData(new DateTime(dataFrom), new DateTime(dataTo));
-		PageResult<Prenotazione> pageResult = this.prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder);
+		GPPageableElasticSearchDAO.IPageResult<Prenotazione> pageResult = this.prenotazioneDAO.findPrenotazioneByQuery(prenotazioneSearchBuilder);
 		PrenotazioniStore prenotazioniStore = new PrenotazioniStore();
 		prenotazioniStore.setPrenotazioni(pageResult.getResults());
 		prenotazioniStore.setTotale(pageResult.getTotal());

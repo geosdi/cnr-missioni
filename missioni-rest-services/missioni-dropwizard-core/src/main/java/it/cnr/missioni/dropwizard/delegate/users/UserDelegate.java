@@ -11,7 +11,7 @@ import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
 import it.cnr.missioni.rest.api.response.user.UserStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ class UserDelegate implements IUserDelegate {
 				.withPolizzaAssicurativa(polizzaAssicurativa).withIban(iban).withMail(mail).withNotId(notId).withId(id)
 				.withMultiMatch(multiMatch).withResponsabileGruppo(responsabileGruppo).withAll(all).withFrom(from)
 				.withSize(size);
-		PageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
+		GPPageableElasticSearchDAO.IPageResult<User> pageResult = this.userDAO.findUserByQuery(userSearchBuilder);
 		UserStore userStore = new UserStore();
 		userStore.setUsers(pageResult.getResults());
 		userStore.setTotale(pageResult.getTotal());

@@ -8,7 +8,7 @@ import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 import org.geosdi.geoplatform.exception.IllegalParameterFault;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 
@@ -51,7 +51,7 @@ class VeicoloCNRDelegate implements IVeicoloCNRDelegate {
 		IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder = IVeicoloCNRSearchBuilder.VeicoloCNRSearchBuilder.getVeicoloCNRSearchBuilder().withId(id)
 				.withStato(stato).withCartaCircolazione(cartaCircolazione).withPolizzaAssicurativa(polizzaAssicurtiva)
 				.withTarga(targa).withNotId(notId).withFrom(from).withSize(size).withAll(all);
-		PageResult<VeicoloCNR> pageResult = this.veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder);
+		GPPageableElasticSearchDAO.IPageResult<VeicoloCNR> pageResult = this.veicoloCNRDAO.findVeicoloCNRByQuery(veicoloCNRSearchBuilder);
 		VeicoloCNRStore veicoloCNRStore = new VeicoloCNRStore();
 		veicoloCNRStore.setTotale(pageResult.getTotal());
 		veicoloCNRStore.setVeicoliCNR(pageResult.getResults());
