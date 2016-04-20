@@ -36,10 +36,15 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
     public <T> void aggiornaTable(T missioniStore) {
         this.removeAllItems();
         if (((MissioniStore) missioniStore).getTotale() > 0) {
+            BeanItemContainer<Missione> listaMissioni =
+                    new BeanItemContainer<Missione>(Missione.class);
+            listaMissioni.addNestedContainerProperty("rimborso.sigla");
             setVisible(true);
-            setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore) missioniStore).getMissioni()));
-            setVisibleColumns("localita", "oggetto", "stato", "dataInserimento");
-            setColumnHeaders("Località", "Oggetto", "Stato", "Data Inserimento");
+            listaMissioni.addAll(((MissioniStore) missioniStore).getMissioni());
+            setContainerDataSource(listaMissioni);
+            //setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore) missioniStore).getMissioni()));
+            setVisibleColumns("id","rimborso.sigla","localita", "oggetto", "stato", "dataInserimento");
+            setColumnHeaders("Id","Sigla","Località", "Oggetto", "Stato", "Data Inserimento");
             setId("id");
             Object[] properties = {"dataInserimento"};
             boolean[] ordering = {false};
@@ -60,10 +65,15 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
     public <T> void aggiornaTableAdmin(T missioniStore) {
         this.removeAllItems();
         if (((MissioniStore) missioniStore).getTotale() > 0) {
+        	BeanItemContainer<Missione> listaMissioni =
+                    new BeanItemContainer<Missione>(Missione.class);
+            listaMissioni.addNestedContainerProperty("rimborso.sigla");
             setVisible(true);
-            setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore) missioniStore).getMissioni()));
-            setVisibleColumns("shortUser", "localita", "oggetto", "stato", "dataInserimento");
-            setColumnHeaders("User", "Localita", "Oggetto", "Stato", "Data Inserimento");
+            setContainerDataSource(listaMissioni);
+            listaMissioni.addAll(((MissioniStore) missioniStore).getMissioni());
+            //setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore) missioniStore).getMissioni()));
+            setVisibleColumns("id","rimborso.sigla","shortUser", "localita", "oggetto", "stato", "dataInserimento");
+            setColumnHeaders("Id","Sigla","User", "Localita", "Oggetto", "Stato", "Data Inserimento");
             setId("id");
             Object[] properties = {"dataInserimento"};
             boolean[] ordering = {false};
