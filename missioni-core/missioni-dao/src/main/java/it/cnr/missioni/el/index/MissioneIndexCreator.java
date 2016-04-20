@@ -29,10 +29,8 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .startObject("properties")
                 .startObject("missione")
                 .startObject("properties")
-
                 .startObject("id")
                 .field("type", "string")
-                
                 .endObject()
                 .startObject("GAE")
                 .field("type", "string")
@@ -189,6 +187,9 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .startObject("avvisoPagamento")
                 .field("type", "string")
                 .endObject()
+                .startObject("sigla")
+                .field("type", "string")
+                .endObject()
                 .startObject("dataRimborso")
                 .field("type", "date")
                 .field("format", "strict_date_optional_time||epoch_millis")
@@ -265,8 +266,6 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .endObject()
                 .endObject()
                 .endObject()
-
-
                 .endObject()
                 .endObject()
                 .endObject()

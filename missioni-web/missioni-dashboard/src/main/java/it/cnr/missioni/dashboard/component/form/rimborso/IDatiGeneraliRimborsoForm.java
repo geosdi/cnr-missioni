@@ -48,6 +48,7 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
         private CheckBox pagataField;
         private TextField totaleDovutoField;
         private TextField avvisoPagamentoField;
+        private TextField siglaField;
         private DateField dataFineMissioneField;
         private Label anticipoPagamentoLabel;
         private Label labelTotRimborsoKm = new Label("Tot. Rimborso km: ");
@@ -78,6 +79,7 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
         public void buildTab() {
             importoDaTerziField = (TextField) getFieldGroup().buildAndBind("Importo da Terzi", "importoDaTerzi");
             avvisoPagamentoField = (TextField) getFieldGroup().buildAndBind("Avviso di Pagamento", "avvisoPagamento");
+            siglaField = (TextField) getFieldGroup().buildAndBind("Sigla", "sigla");
             dataFineMissioneField = new DateField("Data fine missione");
             dataFineMissioneField.setDateOutOfRangeMessage("Data non possibile");
             dataFineMissioneField.setResolution(Resolution.MINUTE);
@@ -95,7 +97,7 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
                 addComponent(pagataField);
                 addComponent(mandatoPagamentoField);
                 addComponent(totaleDovutoField);
-
+                addComponent(siglaField);
             }
             addComponent(importoDaTerziField);
             addComponent(avvisoPagamentoField);

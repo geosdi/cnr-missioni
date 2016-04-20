@@ -39,6 +39,7 @@ public class Rimborso implements Serializable {
     private boolean pagata;
     @Min(value = 0)
     private double importoDaTerzi;
+    private String sigla;
     @XmlJavaTypeAdapter(value = FatturaMapAdapter.class)
     private Map<String, Fattura> mappaFattura = new HashMap<String, Fattura>();
 
@@ -280,7 +281,15 @@ public class Rimborso implements Serializable {
         this.importoDaTerzi = importoDaTerzi;
     }
 
-    /**
+    public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
+
+	/**
      * @return the mappaFattura
      */
     public Map<String, Fattura> getMappaFattura() {
@@ -294,16 +303,14 @@ public class Rimborso implements Serializable {
         this.mappaFattura = mappaFattura;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "Rimborso [mandatoPagamento=" + mandatoPagamento + ", numeroOrdine=" + numeroOrdine + ", dataRimborso="
-                + dataRimborso + ", dateLastModified=" + dateLastModified + ", totale=" + totale + ", totaleTAM="
-                + totaleTAM + ", avvisoPagamento=" + avvisoPagamento + ", totKm=" + totKm + ", rimborsoKm=" + rimborsoKm
-                + ", anticipazionePagamento=" + anticipazionePagamento + ", totaleDovuto=" + totaleDovuto + ", pagata="
-                + pagata + ", importoDaTerzi=" + importoDaTerzi
-                + ", mappaFattura=" + mappaFattura + "]";
-    }
+	@Override
+	public String toString() {
+		return "Rimborso [mandatoPagamento=" + mandatoPagamento + ", numeroOrdine=" + numeroOrdine + ", dataRimborso="
+				+ dataRimborso + ", dateLastModified=" + dateLastModified + ", totale=" + totale + ", totaleTAM="
+				+ totaleTAM + ", avvisoPagamento=" + avvisoPagamento + ", totKm=" + totKm + ", rimborsoKm=" + rimborsoKm
+				+ ", anticipazionePagamento=" + anticipazionePagamento + ", totaleDovuto=" + totaleDovuto + ", pagata="
+				+ pagata + ", importoDaTerzi=" + importoDaTerzi + ", sigla=" + sigla + ", mappaFattura=" + mappaFattura
+				+ ", totaleFattureGiornaliera=" + totaleFattureGiornaliera + "]";
+	}
+
 }
