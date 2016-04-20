@@ -119,7 +119,6 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
      */
     public String getOggetto();
 
-
     /**
      * @return {@link String}
      */
