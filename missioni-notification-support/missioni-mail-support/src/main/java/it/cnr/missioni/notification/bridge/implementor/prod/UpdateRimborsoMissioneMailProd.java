@@ -1,24 +1,18 @@
 package it.cnr.missioni.notification.bridge.implementor.prod;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.mail.internet.MimeMessage;
-
+import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
+import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
 import org.apache.velocity.app.VelocityEngine;
 import org.geosdi.geoplatform.support.mail.configuration.detail.GPMailDetail;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
-import it.cnr.missioni.notification.support.itext.PDFBuilder;
-import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
+import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -58,10 +52,10 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
         IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
         missioniMessagePreparator.setMimeMessagePreparator(new MimeMessagePreparator() {
 
-            PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
+//            PDFBuilder pdfBuilder = (PDFBuilder) message.getMessageParameters().get("rimborsoPDFBuilder");
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
+                MimeMessageHelper message = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.FALSE);
                 message.setTo(new String[]{userEmail});
                 Map model = new HashMap();
                 model.put("userName", userName);
@@ -73,12 +67,12 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
                 String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                         "template/updateRimborsoMissioneMailNotification.html.vm", "UTF-8", model);
                 message.setText(messageText, Boolean.TRUE);
-                Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userSurname).concat("-"), ".pdf");
-                File file = tempFilePath.toFile();
-                pdfBuilder.withFile(file);
-                pdfBuilder.build();
-                message.addAttachment(file.getName(), file);
-                missioniMessagePreparator.addAttachment(file);
+                //Path tempFilePath = Files.createTempFile("Rimborso-Missione - ".concat(userSurname).concat("-"), ".pdf");
+                //File file = tempFilePath.toFile();
+                //pdfBuilder.withFile(file);
+                //pdfBuilder.build();
+                //message.addAttachment(file.getName(), file);
+                //missioniMessagePreparator.addAttachment(file);
             }
         });
         lista.add(missioniMessagePreparator);
@@ -90,7 +84,7 @@ public class UpdateRimborsoMissioneMailProd extends MissioniMailProd {
 	 */
 	@Override
 	protected String getSubjectMessage() {
-		return "Update Rimborso-".concat(userSurname).concat("-Numero ordine:").concat(numeroOrdine);
+		return "Rimborso-".concat(userSurname).concat("-Numero ordine:").concat(numeroOrdine);
 	}
 
     /**

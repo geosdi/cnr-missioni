@@ -76,7 +76,7 @@ public class MissioneNotificationDispatcherDevTest {
     @Test
     public void dispatchUpdateRimborsoMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
-                .buildUpdateRimborsoMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com", UUID.randomUUID().toString(),"Si","01",new Double(130), RimborsoPDFBuilder.newPDFBuilder()));
+                .buildUpdateRimborsoMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com", UUID.randomUUID().toString(),"Si","01",new Double(130)));
     }
     
     @Test

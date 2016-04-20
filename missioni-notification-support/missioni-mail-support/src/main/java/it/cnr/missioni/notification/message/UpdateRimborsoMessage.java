@@ -1,7 +1,6 @@
 package it.cnr.missioni.notification.message;
 
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
-import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import net.jcip.annotations.Immutable;
 
 import java.util.Map;
@@ -13,7 +12,6 @@ import java.util.Map;
 @Immutable
 public class UpdateRimborsoMessage extends CNRMissioniMessage {
 
-    private final PDFBuilder rimborsoPDFBuilder;
     private final String numeroOrdine;
     private String pagata;
     private String mandatoPagamento;
@@ -21,13 +19,12 @@ public class UpdateRimborsoMessage extends CNRMissioniMessage {
 
 
     public UpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-             String theNumeroOrdine, String thePagata,String theMandatoPagamento,Double totaleDovuto, PDFBuilder theRimborsoPDFBuilder) {
+             String theNumeroOrdine, String thePagata,String theMandatoPagamento,Double totaleDovuto) {
         super(userName, userSurname, userEmail);
         this.numeroOrdine = theNumeroOrdine;
         this.pagata = thePagata;
         this.mandatoPagamento = theMandatoPagamento;
         this.totaleDovuto = totaleDovuto;
-        this.rimborsoPDFBuilder = theRimborsoPDFBuilder;
     }
 
     /**
@@ -45,7 +42,6 @@ public class UpdateRimborsoMessage extends CNRMissioniMessage {
         map.put("numeroOrdine", this.numeroOrdine);
         map.put("pagata", this.pagata);
         map.put("mandatoPagamento", this.mandatoPagamento);
-        map.put("rimborsoPDFBuilder", this.rimborsoPDFBuilder);
         map.put("totaleDovuto", this.totaleDovuto);
     }
 }

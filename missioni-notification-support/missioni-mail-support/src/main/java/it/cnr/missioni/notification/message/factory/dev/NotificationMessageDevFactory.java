@@ -50,7 +50,6 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 	 * @param userName
 	 * @param userSurname
 	 * @param userEmail
-	 * @param cnrMissioniEmail
 	 * @return {@link UpdateMissioneMessage}
 	 */
 	@Override
@@ -95,13 +94,12 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 	 * @param userSurname
 	 * @param userEmail
 	 * @param numeroOrdine
-	 * @param pdfBuilder
 	 * @return
 	 */
 	@Override
 	public UpdateRimborsoMessage buildUpdateRimborsoMessage(String userName, String userSurname, String userEmail,
-			String numeroOrdine, String pagata,String avvisoPagamento,Double importoDovuto, PDFBuilder pdfBuilder) {
-		return new UpdateRimborsoMessage(userName, userSurname, userEmail, numeroOrdine, pagata,avvisoPagamento,importoDovuto, pdfBuilder) {
+			String numeroOrdine, String pagata,String avvisoPagamento,Double importoDovuto) {
+		return new UpdateRimborsoMessage(userName, userSurname, userEmail, numeroOrdine, pagata,avvisoPagamento,importoDovuto) {
 
 			@Override
 			public MissioniMailImplementor.NotificationMessageType getNotificationMessageType() {
