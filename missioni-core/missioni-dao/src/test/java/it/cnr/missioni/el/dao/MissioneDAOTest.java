@@ -66,8 +66,14 @@ public class MissioneDAOTest {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01");
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONE BY USER", lista.size() == 2);
-
     }
+    
+//    @Test
+//    public void B_findMissioneByAllUser_1Test() throws Exception {
+//        IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder();
+//        List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
+//        Assert.assertTrue("FIND MISSIONE BY USER", lista.size() == 2);
+//    }
 
     @Test
     public void C_findMissioneByUser_2Test() throws Exception {
@@ -125,7 +131,7 @@ public class MissioneDAOTest {
     public void L_findMissioniByData_1() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
                 .withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
-                        new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+                        new DateTime(2015, 8, 13, 0, 1, DateTimeZone.UTC));
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONE BY DATA", lista.size() == 1);
     }
@@ -166,8 +172,7 @@ public class MissioneDAOTest {
     @Test
     public void P_findMissioniByDataRimborso_1() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC), null);
-
+                .withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC), new DateTime(2015, 12, 13, 0, 1, DateTimeZone.UTC));
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", lista.size() == 1);
     }
@@ -198,7 +203,7 @@ public class MissioneDAOTest {
     @Test
     public void S_findByOggetto2() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withOggetto("Riunione prova");
+                .withOggetto("prova");
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND BY OGGETTO", lista.size() == 2);
     }

@@ -80,9 +80,9 @@ public class RimborsoKmDAOTest {
         Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.isEmpty());
     }
 
-    @Test
+/*    @Test
     public void tearDown() throws Exception {
         this.rimborsoKmDocIndexCreator.deleteIndex();
-    }
+    }*/
 
 }

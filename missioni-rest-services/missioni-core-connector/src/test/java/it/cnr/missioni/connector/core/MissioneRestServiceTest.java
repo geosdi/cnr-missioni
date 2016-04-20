@@ -35,29 +35,6 @@
  */
 package it.cnr.missioni.connector.core;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
-
-import org.apache.commons.io.IOUtils;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
@@ -66,6 +43,22 @@ import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import it.cnr.missioni.rest.api.response.missione.distance.DistanceResponse;
+import org.apache.commons.io.IOUtils;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 /**
  *
@@ -126,7 +119,7 @@ public class MissioneRestServiceTest {
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue(missioniStore.getTotale() == 0);
 	}
-
+	
 	@Test
 	public void C_testInsertMissione() throws Exception {
 		Missione missione = new Missione();
@@ -171,7 +164,7 @@ public class MissioneRestServiceTest {
 	public void F_testFindMissioneByRimborso() throws Exception {
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
 				.getMissioneSearchBuilder()
-				.withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC), null);
+				.withRangeDataRimborso(new DateTime(2015, 12, 12, 0, 0, DateTimeZone.UTC), new DateTime(2015, 12, 12, 23, 0, DateTimeZone.UTC));
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY DATA RIMBORSO", missioniStore.getMissioni().size() == 1);
 	}
@@ -188,7 +181,7 @@ public class MissioneRestServiceTest {
 	public void H_testFindMissioneByData() throws Exception {
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
 				.getMissioneSearchBuilder().withRangeDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC),
-						new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
+						new DateTime(2015, 8, 13, 1, 0, DateTimeZone.UTC));
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", missioniStore.getMissioni().size() == 1);
 	}
@@ -236,21 +229,23 @@ public class MissioneRestServiceTest {
 	@Test
 	public void O_findByOggetto2() throws Exception {
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
-				.getMissioneSearchBuilder().withOggetto("riunione prova");
+				.getMissioneSearchBuilder().withOggetto("prova");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
 	}
 
 	@Test
 	public void V_findNumeroRimboroUser() throws Exception {
+		Thread.sleep(1000);
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
 				.getMissioneSearchBuilder().withIdUser("01").withFieldExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 1);
+		Assert.assertTrue("FIND NUMERO RIMBORSO MISSIONI", missioniStore.getMissioni().size() == 1);
 	}
 
 	@Test
 	public void V_findNumeroRimboroUser2() throws Exception {
+		Thread.sleep(1000);
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
 				.getMissioneSearchBuilder().withIdUser("02").withFieldExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);

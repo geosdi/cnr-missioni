@@ -122,7 +122,6 @@ public class UserDAOTest {
 
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withCodiceFiscale("slvvtttttttttttt").withNome("Vito").withCognome("salvia").withMatricola("1111111");
-
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
         Assert.assertTrue("FIND USER BY ALL", lista.size() == 1);
     }
@@ -254,7 +253,6 @@ public class UserDAOTest {
     public void U_findByMail() throws Exception {
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withMail("prova@gmail.com");
-
         List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
         Assert.assertTrue("FIND ALL USER", lista.size() == 0);
     }

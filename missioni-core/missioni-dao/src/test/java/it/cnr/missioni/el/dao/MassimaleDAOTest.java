@@ -7,7 +7,7 @@ import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.model.user.DatiCNR.LivelloUserEnum;
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.junit.Assert;
@@ -63,7 +63,7 @@ public class MassimaleDAOTest {
     @Test
     public void B_findMassimaleTest() throws Exception {
         IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
-        PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
+        GPPageableElasticSearchDAO.IPageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
         logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
         Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 11);
 
@@ -82,7 +82,7 @@ public class MassimaleDAOTest {
         massimaleDAO.persist(m);
         Thread.sleep(1000);
         IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
-        PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
+        GPPageableElasticSearchDAO.IPageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
         logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
         Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 12);
     }
@@ -99,7 +99,7 @@ public class MassimaleDAOTest {
         massimaleDAO.update(m);
         Thread.sleep(1000);
         IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
-        PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
+        GPPageableElasticSearchDAO.IPageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
         logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
         Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 12);
     }
@@ -109,7 +109,7 @@ public class MassimaleDAOTest {
         massimaleDAO.delete("12");
         Thread.sleep(1000);
         IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
-        PageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
+        GPPageableElasticSearchDAO.IPageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
         logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
         Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 11);
     }
