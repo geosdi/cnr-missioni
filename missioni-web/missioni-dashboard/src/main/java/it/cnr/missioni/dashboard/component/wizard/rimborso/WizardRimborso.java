@@ -25,8 +25,6 @@ public class WizardRimborso extends IWizard.AbstractWizard {
     private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStepFirst;
     private RiepilogoDatiRimborsoStep riepilogoDatiRimborsoStepLast;
     private IEventResetSelectedMissione resetEvent;
-
-    //	private AnticipazioniPagamentoStep anticipazioniPagamentoStep;
     private DatiMissioneEsteraStep datiMissioneEsteraStep;
 
     public WizardRimborso() {
@@ -56,7 +54,6 @@ public class WizardRimborso extends IWizard.AbstractWizard {
             }
             getWizard().addStep(this.fatturaRimborsoStep, "datiFattura");
             getWizard().addStep(this.riepilogoDatiRimborsoStepLast, "riepilogoDatiRimborso");
-
         } catch (Exception e) {
             Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                     Type.ERROR_MESSAGE);
