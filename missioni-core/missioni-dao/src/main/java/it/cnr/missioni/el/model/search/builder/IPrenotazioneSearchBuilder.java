@@ -1,6 +1,8 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import it.cnr.missioni.el.model.search.DateRangeSearch;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
+import org.geosdi.geoplatform.experimental.el.search.date.IGPDateQuerySearch;
 import org.joda.time.DateTime;
 
 /**
@@ -49,8 +51,12 @@ public interface IPrenotazioneSearchBuilder extends ISearchBuilder<IPrenotazione
         public IPrenotazioneSearchBuilder withRangeData(DateTime dataFrom, DateTime dataTo) {
             this.dataFrom = dataFrom;
             this.dataTo = dataTo;
-            booleanModelSearch.getListaSearch().add(new DateRangeSearch(SearchConstants.PRENOTAZIONE_FIELD_DATA_FROM,
-                    dataFrom, dataTo));
+            listAbstractBooleanSearch.add(new IGPDateQuerySearch.GPDateQuerySearch(SearchConstants.PRENOTAZIONE_FIELD_DATA_FROM, IBooleanSearch.BooleanQueryType.MUST , dataFrom,dataTo));
+            return self();
+        }
+
+        public IPrenotazioneSearchBuilder build(){
+            this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(IBooleanSearch[]::new));
             return self();
         }
 

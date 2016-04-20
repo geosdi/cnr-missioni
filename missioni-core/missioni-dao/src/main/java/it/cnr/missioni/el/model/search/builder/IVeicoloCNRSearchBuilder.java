@@ -1,7 +1,9 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import it.cnr.missioni.el.model.search.EnumBooleanType;
-import it.cnr.missioni.el.model.search.ExactSearch;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 
 /**
  * @author Salvia Vito
@@ -91,7 +93,7 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         public IVeicoloCNRSearchBuilder withStato(String stato) {
             this.stato = stato;
             if (stato != null && !stato.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_STATO, stato));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.VEICOLO_CNR_FIELD_STATO, stato, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -102,7 +104,7 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         public IVeicoloCNRSearchBuilder withTarga(String targa) {
             this.targa = targa;
             if (targa != null && !targa.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_TARGA, targa));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.VEICOLO_CNR_FIELD_TARGA, targa, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -113,8 +115,7 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         public IVeicoloCNRSearchBuilder withPolizzaAssicurativa(String polizzaAssicurativa) {
             this.polizzaAssicurativa = polizzaAssicurativa;
             if (polizzaAssicurativa != null && !polizzaAssicurativa.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA, polizzaAssicurativa));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.VEICOLO_CNR_FIELD_POLIZZA_ASSICURATIVA, polizzaAssicurativa, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -125,8 +126,7 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         public IVeicoloCNRSearchBuilder withId(String id) {
             this.id = id;
             if (id != null && !id.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, id));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -137,8 +137,7 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         public IVeicoloCNRSearchBuilder withCartaCircolazione(String cartaCircolazione) {
             this.cartaCircolazione = cartaCircolazione;
             if (cartaCircolazione != null && !cartaCircolazione.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_CARTA_CIRCOLAZIONE, cartaCircolazione));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.VEICOLO_CNR_FIELD_CARTA_CIRCOLAZIONE, cartaCircolazione, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -149,8 +148,12 @@ public interface IVeicoloCNRSearchBuilder extends ISearchBuilder<IVeicoloCNRSear
         public IVeicoloCNRSearchBuilder withNotId(String notId) {
             this.notId = notId;
             if (notId != null && !notId.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, notId, EnumBooleanType.MUST_NOT));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.VEICOLO_CNR_FIELD_ID, notId, IBooleanSearch.BooleanQueryType.MUST_NOT, MatchQueryBuilder.Operator.AND));
+            return self();
+        }
+
+        public IVeicoloCNRSearchBuilder build(){
+            this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(IBooleanSearch[]::new));
             return self();
         }
 

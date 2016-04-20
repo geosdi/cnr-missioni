@@ -1,7 +1,9 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import it.cnr.missioni.el.model.search.EnumBooleanType;
-import it.cnr.missioni.el.model.search.ExactSearch;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 
 /**
  * @author Salvia Vito
@@ -86,7 +88,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         public IMassimaleSearchBuilder withId(String id) {
             this.id = id;
             if (id != null && !id.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, id));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MASSIMALE_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -97,7 +99,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         public IMassimaleSearchBuilder withNotId(String notId) {
             this.notId = notId;
             if (notId != null && !notId.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_ID, notId, EnumBooleanType.MUST_NOT));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MASSIMALE_FIELD_ID, notId, IBooleanSearch.BooleanQueryType.MUST_NOT, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -108,7 +110,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         public IMassimaleSearchBuilder withLivello(String livello) {
             this.livello = livello;
             if (livello != null && !livello.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_LIVELLO, livello));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MASSIMALE_FIELD_LIVELLO, livello, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -119,8 +121,7 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         public IMassimaleSearchBuilder withAreaGeografica(String areaGeografica) {
             this.areaGeografica = areaGeografica;
             if (areaGeografica != null && !areaGeografica.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA, areaGeografica));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MASSIMALE_FIELD_AREA_GEOGRAFICA, areaGeografica, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -131,8 +132,12 @@ public interface IMassimaleSearchBuilder extends ISearchBuilder<IMassimaleSearch
         public IMassimaleSearchBuilder withTipo(String tipo) {
             this.tipo = tipo;
             if (tipo != null && !tipo.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.MASSIMALE_FIELD_TIPO, tipo));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MASSIMALE_FIELD_TIPO, tipo, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            return self();
+        }
+
+        public IMassimaleSearchBuilder build(){
+            this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(IBooleanSearch[]::new));
             return self();
         }
 

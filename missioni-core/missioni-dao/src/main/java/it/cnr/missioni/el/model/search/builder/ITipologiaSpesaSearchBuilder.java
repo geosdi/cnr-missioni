@@ -1,6 +1,9 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import it.cnr.missioni.el.model.search.ExactSearch;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 
 /**
  * @author Salvia Vito
@@ -66,7 +69,7 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
         public ITipologiaSpesaSearchBuilder withId(String id) {
             this.id = id;
             if (id != null && !id.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ID, id));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -77,7 +80,7 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
         public ITipologiaSpesaSearchBuilder withEstera(boolean estera) {
             this.estera = estera;
             if (estera)
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ESTERA, estera));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ESTERA, estera, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -88,7 +91,7 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
         public ITipologiaSpesaSearchBuilder withItalia(boolean italia) {
             this.italia = italia;
             if (italia)
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ITALIA, italia));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_ITALIA, italia, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
             return self();
         }
 
@@ -99,7 +102,12 @@ public interface ITipologiaSpesaSearchBuilder extends ISearchBuilder<ITipologiaS
         public ITipologiaSpesaSearchBuilder withTipoTrattamento(String tipoTrattamento) {
             this.tipoTrattamento = tipoTrattamento;
             if (tipoTrattamento != null && !tipoTrattamento.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_TIPO_TRATTAMENTO, tipoTrattamento));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.TIPOLOGIA_SPESA_FIELD_TIPO_TRATTAMENTO, tipoTrattamento, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            return self();
+        }
+
+        public ITipologiaSpesaSearchBuilder build(){
+            this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(IBooleanSearch[]::new));
             return self();
         }
 

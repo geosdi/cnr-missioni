@@ -16,6 +16,6 @@ public interface IPrenotazioneDAO extends GPElasticSearchDAO.GPElasticSearchBase
      * @return
      * @throws Exception
      */
-    PageResult<Prenotazione> findPrenotazioneByQuery(IPrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception;
+    IPageResult<Prenotazione> findPrenotazioneByQuery(IPrenotazioneSearchBuilder prenotazioneSearchBuilder) throws Exception;
 
 }

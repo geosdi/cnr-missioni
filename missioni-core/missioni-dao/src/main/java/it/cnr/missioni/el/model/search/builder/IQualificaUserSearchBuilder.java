@@ -1,6 +1,9 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import it.cnr.missioni.el.model.search.ExactSearch;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 
 /**
  * @author Salvia Vito
@@ -40,7 +43,26 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
         public IQualificaUserSearchBuilder withValue(String value) {
             this.value = value;
             if (value != null && !value.trim().equals(""))
-                booleanModelSearch.getListaSearch().add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_VALUE, value));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.QUALIFICA_USER_FIELD_VALUE, value, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            return self();
+        }
+
+        /**
+         * @param id
+         * @return {@link IQualificaUserSearchBuilder}
+         */
+        public IQualificaUserSearchBuilder withId(String id) {
+            this.id = id;
+            if (id != null && !id.trim().equals(""))
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+
+/*            booleanModelSearch.getListaSearch()
+                    .add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id));*/
+            return self();
+        }
+
+        public IQualificaUserSearchBuilder build(){
+            this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(IBooleanSearch[]::new));
             return self();
         }
 
@@ -58,17 +80,7 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
             return this;
         }
 
-        /**
-         * @param id
-         * @return {@link IQualificaUserSearchBuilder}
-         */
-        public IQualificaUserSearchBuilder withId(String id) {
-            this.id = id;
-            if (id != null && !id.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id));
-            return self();
-        }
+
 
     }
 

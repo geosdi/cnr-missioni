@@ -1,6 +1,9 @@
 package it.cnr.missioni.el.model.search.builder;
 
-import it.cnr.missioni.el.model.search.ExactSearch;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 
 /**
  * @author Salvia Vito
@@ -15,7 +18,6 @@ public interface INazioneSearchBuilder extends ISearchBuilder<INazioneSearchBuil
          *
          */
         private static final long serialVersionUID = -807918615534715747L;
-
         private NazioneSearchBuilder() {
             this.fieldSort = SearchConstants.NAZIONE_FIELD_VALUE;
         }
@@ -30,8 +32,12 @@ public interface INazioneSearchBuilder extends ISearchBuilder<INazioneSearchBuil
         public INazioneSearchBuilder withId(String id) {
             this.id = id;
             if (id != null && !id.trim().equals(""))
-                booleanModelSearch.getListaSearch()
-                        .add(new ExactSearch(SearchConstants.NAZIONE_FIELD_ID, id));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.NAZIONE_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            return self();
+        }
+
+        public INazioneSearchBuilder build(){
+            this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(IBooleanSearch[]::new));
             return self();
         }
 

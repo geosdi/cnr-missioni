@@ -4,7 +4,6 @@ import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 
 /**
  * @author Salvia Vito
@@ -12,12 +11,11 @@ import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 public interface IMissioneDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<Missione> {
 
     /**
-     * @param p
-     * @param missioneModelSearch
+     * @param missioneSearchBuilder
      * @return
      * @throws Exception
      */
-    PageResult<Missione> findMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception;
+    IPageResult<Missione> findMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception;
 
     /**
      * @return

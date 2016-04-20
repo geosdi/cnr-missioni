@@ -2,13 +2,11 @@ package it.cnr.missioni.el.dao;
 
 import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -44,15 +42,18 @@ public class MassimaleDAO extends AbstractElasticSearchDAO<Massimale> implements
     }
 
     /**
-     * @param nazioneSearchBuilder
+     * @param massimaleSearchBuilder
      * @return
      * @throws Exception
      */
     @Override
-    public PageResult<Massimale> findMassimaleByQuery(IMassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
+    public IPageResult<Massimale> findMassimaleByQuery(IMassimaleSearchBuilder massimaleSearchBuilder) throws Exception {
         List<Massimale> listaMassimale = new ArrayList<Massimale>();
         logger.debug("###############Try to find Massimale by Query: {}\n\n");
-        Page p = new Page(massimaleSearchBuilder.getFrom(), massimaleSearchBuilder.isAll() ? count().intValue() : massimaleSearchBuilder.getSize());
+        Integer size = massimaleSearchBuilder.isAll() ? count().intValue() : massimaleSearchBuilder.getSize();
+        return super.find(new MultiFieldsSearch(massimaleSearchBuilder.getFieldSort(), SortOrder.DESC,massimaleSearchBuilder.getFrom(),size,massimaleSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+
+/*        Page p = new Page(massimaleSearchBuilder.getFrom(), massimaleSearchBuilder.isAll() ? count().intValue() : massimaleSearchBuilder.getSize());
         SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
                 .setTypes(getIndexType()).setQuery(massimaleSearchBuilder.buildQuery()))
                 .addSort(massimaleSearchBuilder.getFieldSort(), massimaleSearchBuilder.getSortOrder()).execute()
@@ -70,7 +71,7 @@ public class MassimaleDAO extends AbstractElasticSearchDAO<Massimale> implements
             listaMassimale.add(massimale);
         }
 
-        return new PageResult<Massimale>(searchResponse.getHits().getTotalHits(), listaMassimale);
+        return new PageResult<Massimale>(searchResponse.getHits().getTotalHits(), listaMassimale);*/
     }
 
 }
