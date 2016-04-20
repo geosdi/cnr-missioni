@@ -12,7 +12,6 @@ public class GeneratorTest {
 	
     private static final Logger logger = LoggerFactory.getLogger(GeneratorTest.class);
 
-
 	@Test
 	public void md5GeneratorTest(){
 		String md5Password = IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword("prova").build();
@@ -22,7 +21,7 @@ public class GeneratorTest {
 	@Test
 	public void randomPasswordGeneratorTest(){
 		String password = IRandomPasswordGenerator.RandomPasswordGenerator.getRandomPasswordGenerator().withLenght(8).withSeed(DateTime.now(DateTimeZone.UTC).toString().getBytes()).build();
-		logger.info("###############RANDOM PASSWORD GENERATO {}\n",password);
+		logger.info("###############RANDOM PASSWORD GENERATOR {}\n",password);
 	}
 	
 }
