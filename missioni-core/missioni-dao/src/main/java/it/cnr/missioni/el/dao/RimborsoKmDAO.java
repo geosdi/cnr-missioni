@@ -3,13 +3,11 @@ package it.cnr.missioni.el.dao;
 import com.google.common.base.Preconditions;
 import it.cnr.missioni.el.model.search.builder.IRimborsoKmSearchBuilder;
 import it.cnr.missioni.model.configuration.RimborsoKm;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -49,25 +47,11 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
      * @throws Exception
      */
     @Override
-    public PageResult<RimborsoKm> findRimborsoKmByQuery(IRimborsoKmSearchBuilder rimborsoKmSearchBuilder)
+    public IPageResult<RimborsoKm> findRimborsoKmByQuery(IRimborsoKmSearchBuilder rimborsoKmSearchBuilder)
             throws Exception {
         List<RimborsoKm> listaRimborsoKm = new ArrayList<RimborsoKm>();
         logger.debug("###############Try to find RimboroKm by Query: {}\n\n");
-        SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
-                .setTypes(getIndexType()).setQuery(rimborsoKmSearchBuilder.buildQuery())
-        ).execute()
-                .actionGet();
-        if (searchResponse.status() != RestStatus.OK) {
-            throw new IllegalStateException("Error in Elastic Search Query.");
-        }
-        for (SearchHit searchHit : searchResponse.getHits().hits()) {
-            RimborsoKm rimborsoKm = this.mapper.read(searchHit.getSourceAsString());
-            if (!rimborsoKm.isIdSetted()) {
-                rimborsoKm.setId(searchHit.getId());
-            }
-            listaRimborsoKm.add(rimborsoKm);
-        }
-        return new PageResult<RimborsoKm>(searchResponse.getHits().getTotalHits(), listaRimborsoKm);
+        return super.find(new MultiFieldsSearch("", SortOrder.DESC,0,1,rimborsoKmSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
     }
 
 

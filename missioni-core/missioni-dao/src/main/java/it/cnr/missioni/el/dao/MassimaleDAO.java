@@ -52,26 +52,6 @@ public class MassimaleDAO extends AbstractElasticSearchDAO<Massimale> implements
         logger.debug("###############Try to find Massimale by Query: {}\n\n");
         Integer size = massimaleSearchBuilder.isAll() ? count().intValue() : massimaleSearchBuilder.getSize();
         return super.find(new MultiFieldsSearch(massimaleSearchBuilder.getFieldSort(), SortOrder.DESC,massimaleSearchBuilder.getFrom(),size,massimaleSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
-
-/*        Page p = new Page(massimaleSearchBuilder.getFrom(), massimaleSearchBuilder.isAll() ? count().intValue() : massimaleSearchBuilder.getSize());
-        SearchResponse searchResponse = p.buildPage(this.elastichSearchClient.prepareSearch(getIndexName())
-                .setTypes(getIndexType()).setQuery(massimaleSearchBuilder.buildQuery()))
-                .addSort(massimaleSearchBuilder.getFieldSort(), massimaleSearchBuilder.getSortOrder()).execute()
-                .actionGet();
-
-        if (searchResponse.status() != RestStatus.OK) {
-            throw new IllegalStateException("Error in Elastic Search Query.");
-        }
-
-        for (SearchHit searchHit : searchResponse.getHits().hits()) {
-            Massimale massimale = this.mapper.read(searchHit.getSourceAsString());
-            if (!massimale.isIdSetted()) {
-                massimale.setId(searchHit.getId());
-            }
-            listaMassimale.add(massimale);
-        }
-
-        return new PageResult<Massimale>(searchResponse.getHits().getTotalHits(), listaMassimale);*/
     }
 
 }

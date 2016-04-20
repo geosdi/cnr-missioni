@@ -2,13 +2,11 @@ package it.cnr.missioni.el.dao;
 
 import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -44,31 +42,16 @@ public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> impl
     }
 
     /**
-     * @param dataFrom
-     * @param dataTo
+     * @param prenotazioneSearchBuilder
      * @return
      * @throws Exception
      */
     @Override
-    public PageResult<Prenotazione> findPrenotazioneByQuery(IPrenotazioneSearchBuilder prenotazioneSearchBuilder)
+    public IPageResult<Prenotazione> findPrenotazioneByQuery(IPrenotazioneSearchBuilder prenotazioneSearchBuilder)
             throws Exception {
         List<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>();
         logger.debug("###############Try to find Prenotazioni by Query: {}\n\n");
-        Long total = count();
-        SearchResponse searchResponse = (this.elastichSearchClient.prepareSearch(getIndexName())
-                .setTypes(getIndexType()).setQuery(prenotazioneSearchBuilder.buildQuery()).setSize(total.intValue())
-                .execute().actionGet());
-        if (searchResponse.status() != RestStatus.OK) {
-            throw new IllegalStateException("Error in Elastic Search Query.");
-        }
-        for (SearchHit searchHit : searchResponse.getHits().hits()) {
-            Prenotazione prenotazione = this.mapper.read(searchHit.getSourceAsString());
-            if (!prenotazione.isIdSetted()) {
-                prenotazione.setId(searchHit.getId());
-            }
-            listaPrenotazioni.add(prenotazione);
-        }
-        return new PageResult<Prenotazione>(searchResponse.getHits().getTotalHits(), listaPrenotazioni);
+        return super.find(new MultiFieldsSearch("", SortOrder.DESC,0,count().intValue(),prenotazioneSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
     }
 
 }

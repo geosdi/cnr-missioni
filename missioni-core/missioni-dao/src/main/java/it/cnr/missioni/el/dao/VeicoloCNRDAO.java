@@ -2,13 +2,11 @@ package it.cnr.missioni.el.dao;
 
 import it.cnr.missioni.el.model.search.builder.IVeicoloCNRSearchBuilder;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -48,25 +46,11 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
      * @throws Exception
      */
     @Override
-    public PageResult<VeicoloCNR> findVeicoloCNRByQuery(IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
+    public IPageResult<VeicoloCNR> findVeicoloCNRByQuery(IVeicoloCNRSearchBuilder veicoloCNRSearchBuilder) throws Exception {
         List<VeicoloCNR> listaVeicoliCNR = new ArrayList<VeicoloCNR>();
         logger.debug("###############Try to find VeicoloCNR by Query: {}\n\n");
-        Page p = new Page(veicoloCNRSearchBuilder.getFrom(), veicoloCNRSearchBuilder.isAll() ? count().intValue() : veicoloCNRSearchBuilder.getSize());
-        SearchResponse searchResponse = p
-                .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
-                        .setQuery(veicoloCNRSearchBuilder.buildQuery()))
-                .addSort(veicoloCNRSearchBuilder.getFieldSort(), veicoloCNRSearchBuilder.getSortOrder()).execute().actionGet();
-        if (searchResponse.status() != RestStatus.OK) {
-            throw new IllegalStateException("Error in Elastic Search Query.");
-        }
-        for (SearchHit searchHit : searchResponse.getHits().hits()) {
-            VeicoloCNR veicoloCNR = this.mapper.read(searchHit.getSourceAsString());
-            if (!veicoloCNR.isIdSetted()) {
-                veicoloCNR.setId(searchHit.getId());
-            }
-            listaVeicoliCNR.add(veicoloCNR);
-        }
-        return new PageResult<VeicoloCNR>(searchResponse.getHits().getTotalHits(), listaVeicoliCNR);
+        Integer size = veicoloCNRSearchBuilder.isAll() ? count().intValue() : veicoloCNRSearchBuilder.getSize();
+        return super.find(new MultiFieldsSearch(veicoloCNRSearchBuilder.getFieldSort(), SortOrder.DESC,veicoloCNRSearchBuilder.getFrom(),size,veicoloCNRSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
     }
 
 }

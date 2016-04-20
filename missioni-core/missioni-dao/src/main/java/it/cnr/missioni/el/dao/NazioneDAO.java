@@ -2,13 +2,11 @@ package it.cnr.missioni.el.dao;
 
 import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Nazione;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -48,25 +46,11 @@ public class NazioneDAO extends AbstractElasticSearchDAO<Nazione> implements INa
      * @throws Exception
      */
     @Override
-    public PageResult<Nazione> findNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
+    public IPageResult<Nazione> findNazioneByQuery(INazioneSearchBuilder nazioneSearchBuilder) throws Exception {
         List<Nazione> listaNazione = new ArrayList<Nazione>();
         logger.debug("###############Try to find Nazione by Query: {}\n\n");
-        Page p = new Page(nazioneSearchBuilder.getFrom(), nazioneSearchBuilder.isAll() ? count().intValue() : nazioneSearchBuilder.getSize());
-        SearchResponse searchResponse = p
-                .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
-                        .setQuery(nazioneSearchBuilder.buildQuery()))
-                .addSort(nazioneSearchBuilder.getFieldSort(), nazioneSearchBuilder.getSortOrder()).execute().actionGet();
-        if (searchResponse.status() != RestStatus.OK) {
-            throw new IllegalStateException("Error in Elastic Search Query.");
-        }
-        for (SearchHit searchHit : searchResponse.getHits().hits()) {
-            Nazione nazione = this.mapper.read(searchHit.getSourceAsString());
-            if (!nazione.isIdSetted()) {
-                nazione.setId(searchHit.getId());
-            }
-            listaNazione.add(nazione);
-        }
-        return new PageResult<Nazione>(searchResponse.getHits().getTotalHits(), listaNazione);
+        Integer size = nazioneSearchBuilder.isAll() ? count().intValue() : nazioneSearchBuilder.getSize();
+        return super.find(new MultiFieldsSearch(nazioneSearchBuilder.getFieldSort(), SortOrder.DESC,nazioneSearchBuilder.getFrom(),size,nazioneSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
     }
 
 }

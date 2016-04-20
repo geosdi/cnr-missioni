@@ -6,13 +6,13 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
@@ -28,34 +28,15 @@ import java.util.List;
 public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements IMissioneDAO {
 
     /**
-     * @param p
-     * @param missioneModelSearch
+     * @param missioneSearchBuilder
      * @return
      * @throws Exception
      */
     @Override
-    public PageResult<Missione> findMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception {
+    public IPageResult<Missione> findMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception {
         List<Missione> listaMissioni = new ArrayList<Missione>();
         logger.debug("###############Try to find Missione by Query: {}\n\n");
-        Page p = new Page(missioneSearchBuilder.getFrom(), missioneSearchBuilder.getSize());
-        SearchResponse searchResponse = p
-                .buildPage(this.elastichSearchClient.prepareSearch(getIndexName()).setTypes(getIndexType())
-                        .setQuery(missioneSearchBuilder.buildQuery()))
-                .setFrom(missioneSearchBuilder.getFrom()).setSize(missioneSearchBuilder.getSize())
-                .addSort(missioneSearchBuilder.getFieldSort(), missioneSearchBuilder.getSortOrder()).execute()
-                .actionGet();
-
-        if (searchResponse.status() != RestStatus.OK) {
-            throw new IllegalStateException("Error in Elastic Search Query.");
-        }
-        for (SearchHit searchHit : searchResponse.getHits().hits()) {
-            Missione missione = this.mapper.read(searchHit.getSourceAsString());
-            if (!missione.isIdSetted()) {
-                missione.setId(searchHit.getId());
-            }
-            listaMissioni.add(missione);
-        }
-        return new PageResult<Missione>(searchResponse.getHits().getTotalHits(), listaMissioni);
+        return super.find(new MultiFieldsSearch(missioneSearchBuilder.getFieldSort(), SortOrder.DESC,missioneSearchBuilder.getFrom(),missioneSearchBuilder.getSize(),missioneSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
     }
 
     /**
