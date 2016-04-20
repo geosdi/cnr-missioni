@@ -52,6 +52,7 @@
       "numeroOrdine": 1,
       "dataRimborso": "2015-12-12T13:14:00.000Z",
       "dateLastModified": null,
+      "sigla" : "aaa",
       "totale": 179.6,
       "totaleTAM": 0,
       "avvisoPagamento": "Via Verdi",
