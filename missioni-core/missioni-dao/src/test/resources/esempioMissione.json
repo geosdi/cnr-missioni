@@ -15,6 +15,7 @@
     "idUser": "01",
     "idUserSeguito": null,
     "shortUserSeguito": null,
+    "motivazioneSeguito":null,
     "idVeicolo": "AA111BB",
     "shortDescriptionVeicolo": "Ford Fiesta",
     "dataInserimento": "2015-11-13T00:00:00.000Z",

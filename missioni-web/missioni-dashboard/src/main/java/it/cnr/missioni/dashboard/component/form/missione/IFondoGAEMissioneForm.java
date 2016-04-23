@@ -1,5 +1,6 @@
 package it.cnr.missioni.dashboard.component.form.missione;
 
+import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -8,6 +9,7 @@ import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Notification.Type;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
@@ -32,6 +34,7 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
         private TextField GAEField;
         private ComboBox listaResponsabiliGruppoField;
         private ComboBox listaSeguito;
+        private TextArea motivazioneSeguitoField;
 
         private FondoGAEMissioneForm() {
         }
@@ -52,6 +55,8 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
             buildFields();
             fondoField = (TextField) getFieldGroup().buildAndBind("Fondo", "fondo");
             GAEField = (TextField) getFieldGroup().buildAndBind("GAE", "GAE");
+            motivazioneSeguitoField = (TextArea) getFieldGroup().buildAndBind("Motivazione Seguito", "motivazioneSeguito",TextArea.class);
+
             getFieldGroup().bind(listaResponsabiliGruppoField, "responsabileGruppo");
             getFieldGroup().bind(listaSeguito, "idUserSeguito");
             addStyleName(ValoTheme.FORMLAYOUT_LIGHT);
@@ -59,7 +64,9 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
             addComponent(GAEField);
             addComponent(listaResponsabiliGruppoField);
             addComponent(listaSeguito);
+            addComponent(motivazioneSeguitoField);
             addListener();
+            addValidator();
         }
 
         private void buildFields() {
@@ -104,9 +111,11 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
             GAEField.validate();
             listaResponsabiliGruppoField.validate();
             listaSeguito.validate();
+            motivazioneSeguitoField.validate();
             bean.setGAE(GAEField.getValue());
             bean.setFondo(fondoField.getValue());
             bean.setResponsabileGruppo(listaResponsabiliGruppoField.getValue().toString());
+            bean.setMotivazioneSeguito(motivazioneSeguitoField.getValue());
             bean.setShortResponsabileGruppo(
                     listaResponsabiliGruppoField.getItemCaption(listaResponsabiliGruppoField.getValue()));
             // Selezionato user a seguito
@@ -125,6 +134,21 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
          */
         @Override
         public void addValidator() {
+            // Se veicolo è proprio motivazione è obbligatoria
+        	motivazioneSeguitoField.addValidator(new Validator() {
+
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = -1429913799420405927L;
+
+                @Override
+                public void validate(Object value) throws InvalidValueException {
+
+                    if ((motivazioneSeguitoField.getValue() == null || motivazioneSeguitoField.getValue().isEmpty())   && listaSeguito.getValue() != null)
+                        throw new InvalidValueException(Utility.getMessage("motivazione_seguito_error"));
+                }
+            });
         }
 
         /**
@@ -132,7 +156,23 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
          */
         @Override
         public void addListener() {
-            listaResponsabiliGruppoField.addBlurListener(new BlurListener() {
+            listaSeguito.addBlurListener(new BlurListener() {
+
+                /**
+				 * 
+				 */
+				private static final long serialVersionUID = 937009710885963269L;
+
+				@Override
+                public void blur(BlurEvent event) {
+                    try {
+                        if(listaSeguito.getValue() == null)
+                        	motivazioneSeguitoField.setValidationVisible(false);
+                    } catch (Exception e) {
+                    }
+                }
+            });
+        	listaResponsabiliGruppoField.addBlurListener(new BlurListener() {
 
                 /**
                  *

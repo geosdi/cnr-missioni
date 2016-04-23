@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"id", "localita","altreLocalita", "oggetto", "responsabileGruppo", "shortResponsabileGruppo", "shortUser", "motivazioni", "altreDisposizioni", "stato", "fondo", "GAE", "missioneEstera", "idUser", "idUserSeguito", "shortUserSeguito", "idVeicolo", "shortDescriptionVeicolo", "dataInserimento",
+@XmlType(propOrder = {"id", "localita","altreLocalita", "oggetto", "responsabileGruppo", "shortResponsabileGruppo", "shortUser", "motivazioni", "altreDisposizioni", "stato", "fondo", "GAE", "missioneEstera", "idUser", "idUserSeguito", "shortUserSeguito","motivazioneSeguito", "idVeicolo", "shortDescriptionVeicolo", "dataInserimento",
         "dateLastModified", "mezzoProprio", "distanza", "geoPoint", "idNazione", "shortDescriptionNazione", "datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti", "rimborso"})
 public class Missione implements Document {
 
@@ -43,6 +43,7 @@ public class Missione implements Document {
     private String idUser;
     private String idUserSeguito;
     private String shortUserSeguito;
+    private String motivazioneSeguito;
     private String idVeicolo;
     private String shortDescriptionVeicolo;
     private DateTime dataInserimento;
@@ -309,7 +310,17 @@ public class Missione implements Document {
     }
 
 
-    /**
+    public String getMotivazioneSeguito() {
+		return motivazioneSeguito;
+	}
+
+
+	public void setMotivazioneSeguito(String motivazioneSeguito) {
+		this.motivazioneSeguito = motivazioneSeguito;
+	}
+
+
+	/**
      * @return the shortUserSeguito
      */
     public String getShortUserSeguito() {
@@ -564,14 +575,16 @@ public class Missione implements Document {
 				+ shortResponsabileGruppo + ", shortUser=" + shortUser + ", motivazioni=" + motivazioni
 				+ ", altreDisposizioni=" + altreDisposizioni + ", stato=" + stato + ", fondo=" + fondo + ", GAE=" + GAE
 				+ ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idUserSeguito=" + idUserSeguito
-				+ ", shortUserSeguito=" + shortUserSeguito + ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo="
-				+ shortDescriptionVeicolo + ", dataInserimento=" + dataInserimento + ", dateLastModified="
-				+ dateLastModified + ", mezzoProprio=" + mezzoProprio + ", distanza=" + distanza + ", geoPoint="
-				+ geoPoint + ", idNazione=" + idNazione + ", shortDescriptionNazione=" + shortDescriptionNazione
-				+ ", tipoVeicolo=" + tipoVeicolo + ", datiPeriodoMissione=" + datiPeriodoMissione
-				+ ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti
-				+ ", rimborso=" + rimborso + "]";
+				+ ", shortUserSeguito=" + shortUserSeguito + ", motivazioneSeguito=" + motivazioneSeguito
+				+ ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo
+				+ ", dataInserimento=" + dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio="
+				+ mezzoProprio + ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
+				+ ", shortDescriptionNazione=" + shortDescriptionNazione + ", tipoVeicolo=" + tipoVeicolo
+				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
+				+ ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
 	}
+
+
 
 
 
