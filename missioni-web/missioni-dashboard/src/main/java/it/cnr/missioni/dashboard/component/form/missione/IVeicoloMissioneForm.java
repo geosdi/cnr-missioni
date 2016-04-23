@@ -80,8 +80,6 @@ public interface IVeicoloMissioneForm extends IForm<Missione, IVeicoloMissioneFo
             v = user.getVeicoloPrincipale();
             optionGroupMezzo = new OptionGroup("Veicolo");
             optionGroupMezzo.addItems(VEICOLO_CNR, VEICOLO_PROPRIO, NOLEGGIO, NESSUNO);
-            if(bean.getTipoVeicolo().equals("Veicolo CNR"))
-            	bean.setTipoVeicolo(VEICOLO_CNR);
             optionGroupMezzo.select(bean.getTipoVeicolo());
             optionGroupMezzo.setReadOnly(!enabled);
 

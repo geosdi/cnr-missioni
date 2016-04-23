@@ -52,7 +52,7 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
             setColumnWidth("dataInserimento", 160);
             setColumnWidth("oggetto", 160);
             setColumnExpandRatio("oggetto", 2);
-            setColumnExpandRatio("localita", 2);
+            setColumnExpandRatio("localita", 1);
 //			setColumnWidth("id", 30);
         }
     }
