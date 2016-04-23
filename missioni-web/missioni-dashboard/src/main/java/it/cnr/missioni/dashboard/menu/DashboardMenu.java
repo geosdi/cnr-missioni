@@ -252,6 +252,7 @@ public final class DashboardMenu extends CustomComponent {
             setPrimaryStyleName("valo-menu-item");
             setIcon(view.getIcon());
             setCaption(view.getViewName().substring(0, 1).toUpperCase() + view.getViewName().substring(1));
+            setCaptionAsHtml(true);
             DashboardEventBus.register(this);
             addClickListener(new ClickListener() {
                 /**
