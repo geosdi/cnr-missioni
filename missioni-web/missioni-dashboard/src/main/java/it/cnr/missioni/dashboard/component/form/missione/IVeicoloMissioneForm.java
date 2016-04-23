@@ -12,13 +12,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.OptionGroup;
 import com.vaadin.ui.TextArea;
+
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 import it.cnr.missioni.rest.api.response.user.UserStore;
