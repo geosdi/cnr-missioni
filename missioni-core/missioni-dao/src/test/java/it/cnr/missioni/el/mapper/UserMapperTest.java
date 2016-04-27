@@ -1,11 +1,14 @@
 package it.cnr.missioni.el.mapper;
 
+import org.joda.time.DateTime;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+
+import it.cnr.missioni.model.user.User;
 
 
 /**
@@ -31,6 +34,20 @@ public class UserMapperTest {
         logger.info("\n\n@@@@@@@@@@@@@@@@Mapper : {}, read from File : {}\n\n",
                 userMapper, userMapper
                         .read(new ClassPathResource("esempioUser.json").getFile()));
+    }
+    
+    @Test
+    public void writeMountainNowUserAsStringTest() throws Exception {
+        logger.info("##########################USER_AS_STRING : \n{}\n",
+                this.userMapper.writeAsString(createUser()));
+    }
+    
+    private User createUser(){
+    	return new User(){
+    		{
+    			super.setDataRegistrazione(new DateTime());
+    		}
+    	};
     }
 
 }

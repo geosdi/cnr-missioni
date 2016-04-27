@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import static org.geosdi.geoplatform.support.jackson.property.GPJacksonSupportEnum.WRITE_DATES_AS_TIMESTAMPS_DISABLE;
 
+import java.util.TimeZone;
+
 /**
  * @author Salvia Vito
  */
@@ -17,7 +19,7 @@ public class UserMapper extends GPBaseMapper<User> {
     public UserMapper() {
         super(User.class, new GPJacksonSupport()
                 .registerModule(new JodaModule())
-                .configure(WRITE_DATES_AS_TIMESTAMPS_DISABLE));
+                .configure(WRITE_DATES_AS_TIMESTAMPS_DISABLE).setTimeZone(TimeZone.getDefault()));
     }
 
     @Override
