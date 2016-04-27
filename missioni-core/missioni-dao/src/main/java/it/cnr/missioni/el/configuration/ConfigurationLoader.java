@@ -1,15 +1,16 @@
 package it.cnr.missioni.el.configuration;
 
-import javax.annotation.Resource;
-
+import it.cnr.missioni.el.dao.IDirettoreDAO;
+import it.cnr.missioni.el.dao.IMissioneIdDAO;
+import it.cnr.missioni.el.dao.IRimborsoKmDAO;
+import it.cnr.missioni.model.configuration.Direttore;
+import it.cnr.missioni.model.configuration.MissioneId;
+import it.cnr.missioni.model.configuration.RimborsoKm;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import it.cnr.missioni.el.dao.IDirettoreDAO;
-import it.cnr.missioni.el.dao.IRimborsoKmDAO;
-import it.cnr.missioni.model.configuration.Direttore;
-import it.cnr.missioni.model.configuration.RimborsoKm;
+import javax.annotation.Resource;
 
 @Configuration
 public class ConfigurationLoader {
@@ -24,6 +25,12 @@ public class ConfigurationLoader {
 	@DependsOn(value="missioniIndexConfigurator")
 	public RimborsoKmConfiguration getRimborsoKmConfiguration(){
 		return new RimborsoKmConfiguration();
+	}
+
+	@Bean(name="missioneIdConfiguration", initMethod="configure")
+	@DependsOn(value="missioniIndexConfigurator")
+	public MissioneIdConfiguration getMissioneIdConfiguration(){
+		return new MissioneIdConfiguration();
 	}
 
 	static class DirettoreConfiguration implements IConfiguration{
@@ -50,6 +57,20 @@ public class ConfigurationLoader {
 				RimborsoKm r = new RimborsoKm();
 				r.setValue(0.36);
 				rimborsoKmDAO.persist(r);
+			}
+		}
+	}
+
+	static class MissioneIdConfiguration implements IConfiguration{
+
+		@Resource(name = "missioneIdDAO")
+		private IMissioneIdDAO missioneIdDAO;
+
+		public void configure() throws Exception{
+			if(missioneIdDAO.count() <= 0 ){
+				MissioneId r = new MissioneId();
+				r.setValue("1");
+				missioneIdDAO.persist(r);
 			}
 		}
 	}
