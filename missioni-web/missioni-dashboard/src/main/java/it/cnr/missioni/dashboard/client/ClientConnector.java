@@ -76,6 +76,15 @@ public class ClientConnector {
 	public static UserStore getUser(IUserSearchBuilder userSearchBuilder) throws Exception {
 		return missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 	}
+	
+	/**
+	 * @param username
+	 * @return {@link User}
+	 * @throws Exception
+	 */
+	public static User getUserByUsername(String username) throws Exception {
+		return missioniCoreClientConnector.getUserByUsername(username);
+	}
 
 	/***
 	 * @param missioneSearchBuilder
