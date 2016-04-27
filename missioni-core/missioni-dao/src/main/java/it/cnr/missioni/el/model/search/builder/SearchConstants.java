@@ -13,6 +13,8 @@ public class SearchConstants {
     public final static String USER_FIELD_NUMERO_PATENTE = "user.patente.numeroPatente";
     public final static String USER_FIELD_RESPONSABILIE_GRUPPO = "user.responsabileGruppo";
     public final static String USER_FIELD_MATRICOLA = "user.datiCNR.matricola";
+    public final static String USER_REGISTRAZIONE_COMPLETATA = "user.registrazioneCompletata";
+
     public final static String USER_FIELD_IBAN = "user.datiCNR.iban";
     public final static String USER_FIELD_MAIL = "user.datiCNR.mail";
     public final static String USER_FIELD_VEICOLO_TARGA = "user.mappaVeicolo.entry.value.targa";
