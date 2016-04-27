@@ -202,7 +202,7 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .field("format", "strict_date_optional_time||epoch_millis")
                 .endObject()
                 .startObject("numeroOrdine")
-                .field("type", "long")
+                .field("type", "string")
                 .endObject()
                 .startObject("rimborsoKm")
                 .field("type", "double")

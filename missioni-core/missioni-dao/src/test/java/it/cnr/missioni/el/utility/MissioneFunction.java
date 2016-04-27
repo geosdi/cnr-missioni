@@ -3,6 +3,7 @@ package it.cnr.missioni.el.utility;
 import it.cnr.missioni.model.missione.DatiPeriodoMissione;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
+import it.cnr.missioni.model.missione.Missione.TipoVeicoloEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import org.elasticsearch.common.geo.GeoPoint;
@@ -32,7 +33,7 @@ public class MissioneFunction {
         missione.setGAE("GAE");
         missione.setDataInserimento(new DateTime(2015, 11, 13, 0, 0, DateTimeZone.UTC));
         missione.setMezzoProprio(true);
-        missione.setTipoVeicolo("Veicolo Proprio");
+        missione.setTipoVeicolo(TipoVeicoloEnum.AUTOVETTURA_DI_SERVIZIO);
         missione.setResponsabileGruppo("01");
         missione.setShortResponsabileGruppo("Salvia Vito");
         missione.setIdVeicolo("AA111BB");
@@ -64,7 +65,7 @@ public class MissioneFunction {
         fattura_2.setId("2222222222222");
 
         Rimborso rimborso = new Rimborso();
-        rimborso.setNumeroOrdine(new Long(1));
+        rimborso.setNumeroOrdine("M_01");
         rimborso.setAvvisoPagamento("Via Verdi");
         rimborso.setAnticipazionePagamento(0.0);
         rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));
@@ -92,7 +93,7 @@ public class MissioneFunction {
         missione.setDataInserimento(new DateTime(2015, 8, 13, 0, 0, DateTimeZone.UTC));
         missione.setGeoPoint(new GeoPoint(45.4654219, 9.1859243));
         missione.setDistanza("901 Km");
-        missione.setTipoVeicolo("Veicolo Proprio");
+        missione.setTipoVeicolo(TipoVeicoloEnum.AUTOVETTURA_DI_SERVIZIO);
         missione.setMezzoProprio(true);
         listaMissioni.add(missione);
 
@@ -110,7 +111,7 @@ public class MissioneFunction {
         missione.setDataInserimento(new DateTime(2015, 11, 23, 0, 0, DateTimeZone.UTC));
         missione.setGeoPoint(new GeoPoint(45.4654219, 9.1859243));
         missione.setDistanza("901 Km");
-        missione.setTipoVeicolo("Veicolo Proprio");
+        missione.setTipoVeicolo(TipoVeicoloEnum.AUTOVETTURA_DI_SERVIZIO);
         missione.setMezzoProprio(true);
         listaMissioni.add(missione);
 

@@ -1,9 +1,5 @@
 package it.cnr.missioni.model.missione;
 
-import it.cnr.missioni.model.missione.DatiMissioneEstera;
-import it.cnr.missioni.model.missione.DatiPeriodoMissione;
-import it.cnr.missioni.model.missione.Missione;
-import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import org.joda.time.DateTime;
@@ -91,7 +87,7 @@ public class MissioneTest {
                 fattura_2.setValuta("Euro");
                 fattura_2.setId("2222222222222");
                 Rimborso rimborso = new Rimborso();
-                rimborso.setNumeroOrdine(new Long(1));
+                rimborso.setNumeroOrdine("M_01");
                 rimborso.setAvvisoPagamento("Via Verdi");
                 rimborso.setAnticipazionePagamento(0.0);
                 rimborso.setDataRimborso(new DateTime(2015, 12, 12, 13, 14, DateTimeZone.UTC));

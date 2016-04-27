@@ -21,7 +21,7 @@ public interface IMissioneDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<
      * @return
      * @throws Exception
      */
-    long getMaxNumeroOrdineRimborso() throws Exception;
+/*    long getMaxNumeroOrdineRimborso() throws Exception;*/
 
     /**
      * @return

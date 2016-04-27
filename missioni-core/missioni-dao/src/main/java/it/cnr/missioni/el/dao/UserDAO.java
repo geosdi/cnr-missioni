@@ -1,17 +1,23 @@
 package it.cnr.missioni.el.dao;
 
-import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
-import it.cnr.missioni.model.user.User;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
+import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
 import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
+import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch.BooleanQueryType;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
+import it.cnr.missioni.el.model.search.builder.SearchConstants;
+import it.cnr.missioni.model.user.User;
 
 /**
  * @author Salvia Vito
@@ -28,9 +34,21 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
     public IPageResult<User> findUserByQuery(IUserSearchBuilder userSearchBuilder) throws Exception {
         List<User> listaUsers = new ArrayList<User>();
         logger.debug("###############Try to find Users by Query: {}\n\n");
-
         Integer size = userSearchBuilder.isAll() ? count().intValue() : userSearchBuilder.getSize();
         return super.find(new MultiFieldsSearch(userSearchBuilder.getFieldSort(), SortOrder.DESC,userSearchBuilder.getFrom(),size,userSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+    }
+    
+    /**
+     * 
+     * @param userSearchBuilder
+     * @return
+     * @throws Exception
+     */
+    public User findUserByUsername(String username) throws Exception{
+        logger.debug("###############Try to find Users by Username: {}\n\n");
+        List<User> users = super.find(new MultiFieldsSearch(new BooleanExactSearch(SearchConstants.USER_FIELD_USERNAME,
+                username, BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND))).getResults();
+        return ((users != null) && (users.size() == 1)) ? users.get(0) : null;
     }
 
     @Override

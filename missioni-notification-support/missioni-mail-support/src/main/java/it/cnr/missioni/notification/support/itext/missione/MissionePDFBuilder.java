@@ -201,7 +201,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		cellMezzoUtilizzato.setBorder(Rectangle.NO_BORDER);
 		tabletableInfo.addCell(cellMezzoUtilizzato);
 
-		String tipoVeicolo = missione.getTipoVeicolo();
+		String tipoVeicolo = missione.getTipoVeicolo().getValue();
 		tabletableInfo.addCell(new PdfPCell(new Paragraph(
 				tipoVeicolo + (missione.getMotivazioni() != null ? " - " + missione.getMotivazioni() : ""),
 				fontNormal)));

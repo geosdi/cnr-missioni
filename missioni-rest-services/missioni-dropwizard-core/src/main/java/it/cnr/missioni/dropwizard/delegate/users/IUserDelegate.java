@@ -1,5 +1,8 @@
 package it.cnr.missioni.dropwizard.delegate.users;
 
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -47,6 +50,14 @@ public interface IUserDelegate {
 			String targa, String numeroPatente, String cartaCircolazione, String polizzaAssicurativa, String iban,
 			String mail, String notId, String id, Boolean responsabileGruppo, String multiMatch,String searchType, boolean all, int from,
 			int size) throws Exception;
+	
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
+	User getUserByUsername(String username) throws Exception;
 
 	/**
 	 * 

@@ -231,6 +231,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
 
         private UserSearchBuilder() {
             this.fieldSort = SearchConstants.USER_FIELD_COGNOME;
+            listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_REGISTRAZIONE_COMPLETATA, true, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
         }
 
         public static IUserSearchBuilder getUserSearchBuilder() {

@@ -25,13 +25,14 @@ public class LoginAction implements IAction {
 
     public boolean doAction() {
         try {
-            IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withUsername(username);
-            UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-            if (userStore.getTotale() == 0) {
+//            IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withUsername(username);
+//            UserStore userStore = ClientConnector.getUser(userSearchBuilder);
+            User user = ClientConnector.getUserByUsername(username);
+            if (user == null) {
                 Utility.getNotification(Utility.getMessage("error_message"),
                         Utility.getMessage("username_not_present"), Type.ERROR_MESSAGE);
                 return false;
-            } else if (!(user = userStore.getUsers().get(0)).getCredenziali().getPassword().equals(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword(password).build())) {
+            } else if (!user.getCredenziali().getPassword().equals(IMd5PasswordGenerator.Md5PasswordGenerator.getMd5PasswordGenerator().withPassword(password).build())) {
                 Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("password_error"),
                         Type.ERROR_MESSAGE);
                 return false;

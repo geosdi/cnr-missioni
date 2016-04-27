@@ -82,6 +82,10 @@ class UserDelegate implements IUserDelegate {
 		userStore.setTotale(pageResult.getTotal());
 		return userStore;
 	}
+	
+	public User getUserByUsername(String username) throws Exception{
+		return this.userDAO.findUserByUsername(username);
+	}
 
 	/**
 	 * @return

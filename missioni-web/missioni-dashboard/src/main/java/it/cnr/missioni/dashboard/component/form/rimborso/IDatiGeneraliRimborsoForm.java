@@ -50,6 +50,7 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
         private TextField avvisoPagamentoField;
         private TextField siglaField;
         private DateField dataFineMissioneField;
+        private DateField dataInizioMissioneField;
         private Label anticipoPagamentoLabel;
         private Label labelTotRimborsoKm = new Label("Tot. Rimborso km: ");
         private Missione missione;
@@ -88,6 +89,15 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
             dataFineMissioneField.setRangeStart(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
             dataFineMissioneField.setValue(missione.getDatiPeriodoMissione().getFineMissione().toDate());
             dataFineMissioneField.setReadOnly(!enabled);
+            
+            dataInizioMissioneField = new DateField("Data fine missione");
+            dataInizioMissioneField.setDateOutOfRangeMessage("Data non possibile");
+            dataInizioMissioneField.setResolution(Resolution.MINUTE);
+            dataInizioMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
+            dataInizioMissioneField.setValidationVisible(false);
+            dataInizioMissioneField.setValue(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
+            dataInizioMissioneField.setReadOnly(!enabled);
+            
             totKmField = (TextField) getFieldGroup().buildAndBind("Km da rimborsare", "totKm");
             if (isAdmin || modifica) {
                 mandatoPagamentoField = (TextField) getFieldGroup().buildAndBind("Mandato di Pagamento",
@@ -101,6 +111,7 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
             }
             addComponent(importoDaTerziField);
             addComponent(avvisoPagamentoField);
+            addComponent(dataInizioMissioneField);
             addComponent(dataFineMissioneField);
             if (mezzoProprio) {
                 addComponent(totKmField);
@@ -178,6 +189,24 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
                 }
             });
 
+            dataInizioMissioneField.addBlurListener(new BlurListener() {
+
+                /**
+                 *
+                 */
+                private static final long serialVersionUID = 9131736226036796594L;
+
+                @Override
+                public void blur(BlurEvent event) {
+                    try {
+                    	dataInizioMissioneField.validate();
+                    } catch (Exception e) {
+                    	dataInizioMissioneField.setValidationVisible(true);
+                    }
+
+                }
+            });
+            
             totKmField.addValueChangeListener(new ValueChangeListener() {
 
                 /**
@@ -198,12 +227,17 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
                 ((AbstractField<?>) f).setValidationVisible(true);
             });
             dataFineMissioneField.setValidationVisible(true);
+            dataInizioMissioneField.setValidationVisible(true);
             getFieldGroup().commit();
             dataFineMissioneField.validate();
+            dataInizioMissioneField.validate();
+
             BeanItem<Rimborso> beanItem = (BeanItem<Rimborso>) getFieldGroup().getItemDataSource();
             bean = beanItem.getBean();
             bean.setRimborsoKm(getTotRimborsoKm());
             missione.getDatiPeriodoMissione().setFineMissione(new DateTime(dataFineMissioneField.getValue()));
+            missione.getDatiPeriodoMissione().setInizioMissione(new DateTime(dataInizioMissioneField.getValue()));
+
             return bean;
         }
 

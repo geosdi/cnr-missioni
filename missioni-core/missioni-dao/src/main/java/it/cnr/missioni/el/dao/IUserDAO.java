@@ -15,5 +15,13 @@ public interface IUserDAO extends GPElasticSearchDAO.GPElasticSearchBaseDAO<User
      * @throws Exception
      */
     IPageResult<User> findUserByQuery(IUserSearchBuilder userSearchBuilder) throws Exception;
+    
+    /**
+     * 
+     * @param userSearchBuilder
+     * @return
+     * @throws Exception
+     */
+    User findUserByUsername(String username) throws Exception;
 
 }

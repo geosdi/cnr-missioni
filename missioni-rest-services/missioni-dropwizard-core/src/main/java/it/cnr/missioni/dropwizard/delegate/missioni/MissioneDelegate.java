@@ -235,7 +235,7 @@ class MissioneDelegate implements IMissioneDelegate {
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
 		if (missione.isRimborsoSetted() && missione.getRimborso().getNumeroOrdine() == null)
-			missione.getRimborso().setNumeroOrdine(this.missioneDAO.getMaxNumeroOrdineRimborso());
+			missione.getRimborso().setNumeroOrdine(missione.getId());
 		this.missioneDAO.update(missione);
 		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
 		if (missione.isRimborsoSetted()) {

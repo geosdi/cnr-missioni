@@ -27,6 +27,9 @@ import java.util.List;
 @Component(value = "missioneDAO")
 public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements IMissioneDAO {
 
+    @Resource(name = "missioneIdDAO")
+    private IMissioneIdDAO missioneIdDAO;
+
     /**
      * @param missioneSearchBuilder
      * @return
@@ -39,16 +42,16 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
         return super.find(new MultiFieldsSearch(missioneSearchBuilder.getFieldSort(), SortOrder.DESC,missioneSearchBuilder.getFrom(),missioneSearchBuilder.getSize(),missioneSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
     }
 
-    /**
+/*    *//**
      * @return
      * @throws Exception
-     */
+     *//*
     public long getMaxNumeroOrdineRimborso() throws Exception {
         long value = 0;
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso");
         List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
         return lista.size() + 1;
-    }
+    }*/
 
     /**
      * Trova il numero di missioni inserite in un anno per calcolare l'id
@@ -64,7 +67,12 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
                 .withRangeDataInserimento(from, to);
         List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
-        return (lista.size() + 1) + "-" + now.getYear();
+        String id = null;
+        if(lista.isEmpty())
+            id =  this.missioneIdDAO.find(new Page(0,1)).getResults().get(0).getValue();
+        else
+        id = lista.size() + 1+"";
+        return id.concat("-" + now.getYear());
     }
 
     /**

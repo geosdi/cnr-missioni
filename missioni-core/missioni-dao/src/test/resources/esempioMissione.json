@@ -94,6 +94,6 @@
         ]
       }
     },
-    "tipoVeicolo": "Veicolo Proprio"
+    "tipoVeicolo": "VEICOLO_PROPRIO"
   }
 }

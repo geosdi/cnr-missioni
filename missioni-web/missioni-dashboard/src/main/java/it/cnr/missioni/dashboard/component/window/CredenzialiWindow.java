@@ -86,15 +86,16 @@ public class CredenzialiWindow extends IWindow.AbstractWindow<User, CredenzialiW
 
                 @Override
                 public void validate(Object value) throws InvalidValueException {
-                    UserStore userStore = null;
+                	User user = null;
                     try {
-                        IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withUsername(usernameField.getValue());
-                        userStore = ClientConnector.getUser(userSearchBuilder);
+//                        IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withUsername(usernameField.getValue());
+                         user = ClientConnector.getUserByUsername(usernameField.getValue());
+//                        userStore = ClientConnector.getUser(userSearchBuilder);
                     } catch (Exception e) {
                         Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                                 Type.ERROR_MESSAGE);
                     }
-                    if (userStore.getTotale() > 0)
+                    if (user != null)
                         throw new InvalidValueException(Utility.getMessage("user_already_inserted"));
                 }
             });

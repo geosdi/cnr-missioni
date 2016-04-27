@@ -58,22 +58,28 @@ public class UserDAOTest {
         logger.debug("############################NUMBER_OF_USERS: {}\n", this.userDAO.count().intValue());
     }
 
+//    @Test
+//    public void B_findUserByUsernameValidaTest() throws Exception {
+//        IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
+//                .withUsername("vito.salvia");
+//        List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
+//        logger.debug("############################UTENTE_WITH_USERNAME : {}\n",
+//                lista.get(0).getAnagrafica().getCognome() + " " + lista.get(0).getAnagrafica().getNome());
+//        Assert.assertTrue("FIND USER BY USERNAME VALIDA", lista.get(0) != null);
+//    }
+    
     @Test
-    public void B_findUserByUsernameValidaTest() throws Exception {
-        IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
-                .withUsername("vito.salvia");
-        List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
+    public void B_findUserByUsernameValida_Test() throws Exception {
+        User user = userDAO.findUserByUsername("vito.salvia");
         logger.debug("############################UTENTE_WITH_USERNAME : {}\n",
-                lista.get(0).getAnagrafica().getCognome() + " " + lista.get(0).getAnagrafica().getNome());
-        Assert.assertTrue("FIND USER BY USERNAME VALIDA", lista.get(0) != null);
+        		user.getAnagrafica().getCognome() + " " + user.getAnagrafica().getNome());
+        Assert.assertTrue("FIND USER BY USERNAME VALIDA", user != null);
     }
 
     @Test
     public void C_findUserByUsernameErrataTest() throws Exception {
-        IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
-                .withUsername("vito.salvi");
-        List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
-        Assert.assertTrue("FIND USER BY USERNAME ERRATA", lista.isEmpty());
+        User user = userDAO.findUserByUsername("vito.salvi");
+        Assert.assertTrue("FIND USER BY USERNAME VALIDA", user == null);
     }
 
     @Test
@@ -165,7 +171,7 @@ public class UserDAOTest {
         List<User> lista = userDAO.findUserByQuery(userSearchBuilder).getResults();
         // logger.debug("############################USER_ID FOUND{}\n",
         // userStore);
-        Assert.assertTrue("FIND USER BY ID", lista.size() == 3);
+        Assert.assertTrue("FIND USER BY ID", lista.size() == 0);
 
     }
 
@@ -271,7 +277,7 @@ public class UserDAOTest {
         IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                 .withResponsabileGruppo(false).withAll(true);
         List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
-        Assert.assertTrue("FIND ALL USER", lista.size() == 3);
+        Assert.assertTrue("FIND ALL USER", lista.size() == 0);
     }
 
     @Test

@@ -28,6 +28,7 @@ public class UserFunction {
         user = new User();
         user.setId("01");
         user.setResponsabileGruppo(true);
+        user.setRegistrazioneCompletata(true);
         anagrafica = new Anagrafica();
         anagrafica.setGenere(Genere.UOMO);
         anagrafica.setCognome("Salvia");

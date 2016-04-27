@@ -13,6 +13,7 @@ import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.Missione.TipoVeicoloEnum;
 import it.cnr.missioni.model.user.Veicolo;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemu.wizards.WizardStep;
@@ -55,7 +56,7 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
         root.addComponent(details);
 //		root.setExpandRatio(details, 1);
         String tipoMissione = missione.isMissioneEstera() ? "Estera" : "Italia";
-        String tipoVeicolo = missione.getTipoVeicolo();
+        TipoVeicoloEnum tipoVeicolo = missione.getTipoVeicolo();
         details.addComponent(Utility.buildLabel("Tipo Missione: ", tipoMissione));
         details.addComponent(Utility.buildLabel("Località: ", missione.getLocalita()));
         if (missione.isMissioneEstera()) {
@@ -67,7 +68,7 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
         details.addComponent(Utility.buildLabel("GAE: ", missione.getGAE() != null ? missione.getGAE() : ""));
         details.addComponent(Utility.buildLabel("Responsabile Gruppo: ", missione.getShortResponsabileGruppo()));
         details.addComponent(Utility.buildLabel("Distanza: ", missione.getDistanza()));
-        details.addComponent(Utility.buildLabel("Veicolo: ", tipoVeicolo));
+        details.addComponent(Utility.buildLabel("Veicolo: ", tipoVeicolo.getValue()));
         if (missione.getTipoVeicolo().equals("Veicolo Proprio") || missione.getTipoVeicolo().equals("Noleggio")) {
             Veicolo v = DashboardUI.getCurrentUser().getVeicoloPrincipale();
             details.addComponent(Utility.buildLabel("Motivazione: ", missione.getMotivazioni()));
