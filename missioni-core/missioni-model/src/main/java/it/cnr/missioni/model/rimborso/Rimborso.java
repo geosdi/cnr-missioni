@@ -24,7 +24,7 @@ public class Rimborso implements Serializable {
      */
     private static final long serialVersionUID = 8658916823848446391L;
     private String mandatoPagamento;
-    private Long numeroOrdine;
+    private String numeroOrdine;
     private DateTime dataRimborso;
     private DateTime dateLastModified;
     private Double totale = 0.0;
@@ -103,14 +103,14 @@ public class Rimborso implements Serializable {
     /**
      * @return the numeroOrdine
      */
-    public Long getNumeroOrdine() {
+    public String getNumeroOrdine() {
         return numeroOrdine;
     }
 
     /**
      * @param numeroOrdine
      */
-    public void setNumeroOrdine(Long numeroOrdine) {
+    public void setNumeroOrdine(String numeroOrdine) {
         this.numeroOrdine = numeroOrdine;
     }
 
