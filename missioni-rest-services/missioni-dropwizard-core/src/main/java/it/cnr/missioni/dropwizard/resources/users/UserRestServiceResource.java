@@ -1,15 +1,16 @@
 package it.cnr.missioni.dropwizard.resources.users;
 
-import it.cnr.missioni.dropwizard.delegate.users.IUserDelegate;
-import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
-import it.cnr.missioni.rest.api.resources.user.UsersRestService;
+import javax.annotation.Resource;
+import javax.ws.rs.core.Response;
+
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.ws.rs.core.Response;
+import it.cnr.missioni.dropwizard.delegate.users.IUserDelegate;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.rest.api.request.RecuperaPasswordRequest;
+import it.cnr.missioni.rest.api.resources.user.UsersRestService;
 
 /**
  * 
@@ -68,6 +69,17 @@ public class UserRestServiceResource implements UsersRestService {
 				from, size)).build();
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public Response getUserByQuery(String username) throws Exception{
+		return Response.ok(this.userDelegate.getUserByUsername(username)).build();
+	}
+	
 	/**
 	 * @param user
 	 * @return

@@ -78,6 +78,10 @@ public interface UsersRestService {
 			@QueryParam(value = "all") boolean all, @QueryParam(value = "from") int from,
 			@QueryParam(value = "size") int size) throws Exception;
 
+	@GET
+	@Path(value = UsersServiceRSPathConfig.GET_USER_BY_USERNAME)
+	Response getUserByQuery(@QueryParam(value = "username") String username) throws Exception;
+	
 	/**
 	 * @param user
 	 * @return {@link Response}

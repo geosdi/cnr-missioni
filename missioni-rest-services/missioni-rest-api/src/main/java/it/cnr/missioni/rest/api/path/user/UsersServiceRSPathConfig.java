@@ -19,6 +19,8 @@ public final class UsersServiceRSPathConfig extends ApplicationServiceRSPathConf
     public static final String UPDATE_USER_PATH = USERS_PATH + "/updateUser";
     public static final String DELETE_USER_PATH = USERS_PATH + "/deleteUser";
     public static final String RECUPERA_PASSWORD_PATH = USERS_PATH + "/recuperaPassword";
+    public static final String GET_USER_BY_USERNAME = USERS_PATH + "/getUserByUsername";
+
 
 
     private UsersServiceRSPathConfig() {

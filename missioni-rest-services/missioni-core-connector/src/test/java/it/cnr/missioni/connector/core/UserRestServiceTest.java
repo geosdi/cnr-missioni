@@ -100,18 +100,16 @@ public class UserRestServiceTest {
 	
 	@Test
 	public void A_testFindUserByUsername() throws Exception {
-		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvia");
-		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertNotNull(userStore);
-		logger.debug("############################USER_ID FOUND{}\n", userStore);
+		User user = missioniCoreClientConnector.getUserByUsername("vito.salvia");
+		Assert.assertNotNull(user);
+		logger.debug("############################USER_ID FOUND{}\n", user);
 	}
 
 	@Test
 	public void B_testFindUserByUsernameErrata() throws Exception {
-		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withUsername("vito.salvi");
-		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		logger.debug("############################USER_ID FOUND{}\n", userStore);
-		Assert.assertTrue(userStore.getTotale() == 0);
+		User user = missioniCoreClientConnector.getUserByUsername("vito.salvi");
+		logger.debug("############################USER_ID FOUND\n");
+		Assert.assertNull(user);
 	}
 
 	@Test
@@ -226,7 +224,7 @@ public class UserRestServiceTest {
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withNotId("01");
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
 		logger.debug("############################USER_ID MUST NOT{}\n", userStore.getUsers().size());
-		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 3);
+		Assert.assertTrue("FIND USER BY ID", userStore.getUsers().size() == 0);
 	}
 
 	@Test
@@ -251,7 +249,7 @@ public class UserRestServiceTest {
 		IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withResponsabileGruppo(false)
 				.withAll(true);
 		UserStore userStore = missioniCoreClientConnector.getUserByQuery(userSearchBuilder);
-		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() ==3);
+		Assert.assertTrue("FIND NO RESPONSABILI GRUPPO", userStore.getUsers().size() ==0);
 	}
 	
 	@Test
