@@ -1,17 +1,19 @@
 package it.cnr.missioni.model.missione;
 
-import it.cnr.missioni.model.rimborso.Rimborso;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
 import org.elasticsearch.common.geo.GeoPoint;
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
 import org.hibernate.validator.constraints.NotBlank;
 import org.joda.time.DateTime;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.*;
+import it.cnr.missioni.model.rimborso.Rimborso;
 
 /**
  * @author Salvia Vito
