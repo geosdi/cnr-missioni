@@ -55,7 +55,6 @@ public class Rimborso implements Serializable {
     }
 
     public List<Fattura> getNumberOfFatturaInDay(DateTime from, DateTime to, String idTipologiaSpesa) {
-
         return (List<Fattura>) getMappaFattura().values().stream().filter(f -> f.getData().isAfter(from))
                 .filter(f -> f.getData().isBefore(to)).filter(f -> f.getIdTipologiaSpesa().equals(idTipologiaSpesa)).collect(Collectors.toList());
 
