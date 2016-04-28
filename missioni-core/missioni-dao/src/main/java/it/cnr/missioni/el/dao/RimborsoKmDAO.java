@@ -51,7 +51,7 @@ public class RimborsoKmDAO extends AbstractElasticSearchDAO<RimborsoKm> implemen
             throws Exception {
         List<RimborsoKm> listaRimborsoKm = new ArrayList<RimborsoKm>();
         logger.debug("###############Try to find RimboroKm by Query: {}\n\n");
-        return super.find(new MultiFieldsSearch("", SortOrder.DESC,0,1,rimborsoKmSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+        return super.find(new MultiFieldsSearch("", SortOrder.DESC,0,1,null));
     }
 
 

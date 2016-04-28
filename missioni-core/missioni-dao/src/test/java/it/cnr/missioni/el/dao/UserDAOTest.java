@@ -1,9 +1,9 @@
 package it.cnr.missioni.el.dao;
 
-import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
-import it.cnr.missioni.el.utility.UserFunction;
-import it.cnr.missioni.model.user.User;
-import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
@@ -18,9 +18,10 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
+import it.cnr.missioni.el.utility.UserFunction;
+import it.cnr.missioni.model.user.User;
+import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
 
 /**
  * @author Salvia Vito
@@ -293,6 +294,7 @@ public class UserDAOTest {
         List<User> lista = this.userDAO.findUserByQuery(userSearchBuilder).getResults();
         Assert.assertTrue("FIND USER BY ID", lista.size() == 1);
     }
+    
 
 //	public void tearDown() throws Exception {
 //		this.userDocIndexCreator.deleteIndex();

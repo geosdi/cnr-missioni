@@ -39,7 +39,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
     public IPageResult<Missione> findMissioneByQuery(IMissioneSearchBuilder missioneSearchBuilder) throws Exception {
         List<Missione> listaMissioni = new ArrayList<Missione>();
         logger.debug("###############Try to find Missione by Query: {}\n\n");
-        return super.find(new MultiFieldsSearch(missioneSearchBuilder.getFieldSort(), SortOrder.DESC,missioneSearchBuilder.getFrom(),missioneSearchBuilder.getSize(),missioneSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+        return super.find(new MultiFieldsSearch(missioneSearchBuilder.getFieldSort(), SortOrder.DESC,missioneSearchBuilder.getFrom(),missioneSearchBuilder.getSize(),missioneSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[missioneSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
 /*    *//**

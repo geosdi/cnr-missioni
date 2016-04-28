@@ -51,7 +51,7 @@ public class QualificaUserDAO extends AbstractElasticSearchDAO<QualificaUser> im
         List<QualificaUser> listaQualificaUser = new ArrayList<QualificaUser>();
         logger.debug("###############Try to find Qualifica User by Query: {}\n\n");
         Integer size = qualificaUserSearchBuilder.isAll() ? count().intValue() : qualificaUserSearchBuilder.getSize();
-        return super.find(new MultiFieldsSearch(qualificaUserSearchBuilder.getFieldSort(), SortOrder.DESC,qualificaUserSearchBuilder.getFrom(),size,qualificaUserSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+        return super.find(new MultiFieldsSearch(qualificaUserSearchBuilder.getFieldSort(), SortOrder.DESC,qualificaUserSearchBuilder.getFrom(),size,qualificaUserSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[qualificaUserSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
 }

@@ -35,7 +35,7 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
         List<User> listaUsers = new ArrayList<User>();
         logger.debug("###############Try to find Users by Query: {}\n\n");
         Integer size = userSearchBuilder.isAll() ? count().intValue() : userSearchBuilder.getSize();
-        return super.find(new MultiFieldsSearch(userSearchBuilder.getFieldSort(), SortOrder.DESC,userSearchBuilder.getFrom(),size,userSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+        return super.find(new MultiFieldsSearch(userSearchBuilder.getFieldSort(), SortOrder.DESC,userSearchBuilder.getFrom(),size,userSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[userSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
     
     /**

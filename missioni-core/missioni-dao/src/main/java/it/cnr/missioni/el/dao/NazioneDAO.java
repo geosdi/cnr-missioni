@@ -50,7 +50,7 @@ public class NazioneDAO extends AbstractElasticSearchDAO<Nazione> implements INa
         List<Nazione> listaNazione = new ArrayList<Nazione>();
         logger.debug("###############Try to find Nazione by Query: {}\n\n");
         Integer size = nazioneSearchBuilder.isAll() ? count().intValue() : nazioneSearchBuilder.getSize();
-        return super.find(new MultiFieldsSearch(nazioneSearchBuilder.getFieldSort(), SortOrder.DESC,nazioneSearchBuilder.getFrom(),size,nazioneSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+        return super.find(new MultiFieldsSearch(nazioneSearchBuilder.getFieldSort(), SortOrder.DESC,nazioneSearchBuilder.getFrom(),size,nazioneSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[nazioneSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
 }

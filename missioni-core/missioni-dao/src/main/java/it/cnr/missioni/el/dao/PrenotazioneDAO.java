@@ -51,7 +51,7 @@ public class PrenotazioneDAO extends AbstractElasticSearchDAO<Prenotazione> impl
             throws Exception {
         List<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>();
         logger.debug("###############Try to find Prenotazioni by Query: {}\n\n");
-        return super.find(new MultiFieldsSearch("", SortOrder.DESC,0,count().intValue(),prenotazioneSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+        return super.find(new MultiFieldsSearch("", SortOrder.DESC,0,count().intValue(),prenotazioneSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[prenotazioneSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
 }

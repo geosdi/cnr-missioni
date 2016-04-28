@@ -50,7 +50,7 @@ public class VeicoloCNRDAO extends AbstractElasticSearchDAO<VeicoloCNR> implemen
         List<VeicoloCNR> listaVeicoliCNR = new ArrayList<VeicoloCNR>();
         logger.debug("###############Try to find VeicoloCNR by Query: {}\n\n");
         Integer size = veicoloCNRSearchBuilder.isAll() ? count().intValue() : veicoloCNRSearchBuilder.getSize();
-        return super.find(new MultiFieldsSearch(veicoloCNRSearchBuilder.getFieldSort(), SortOrder.DESC,veicoloCNRSearchBuilder.getFrom(),size,veicoloCNRSearchBuilder.getListAbstractBooleanSearch().stream().toArray(IBooleanSearch[]::new)));
+        return super.find(new MultiFieldsSearch(veicoloCNRSearchBuilder.getFieldSort(), SortOrder.DESC,veicoloCNRSearchBuilder.getFrom(),size,veicoloCNRSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[veicoloCNRSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
 }
