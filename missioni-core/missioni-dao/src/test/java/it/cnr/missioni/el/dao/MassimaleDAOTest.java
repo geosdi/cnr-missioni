@@ -66,19 +66,16 @@ public class MassimaleDAOTest {
         GPPageableElasticSearchDAO.IPageResult<Massimale> page = massimaleDAO.findMassimaleByQuery(massimaleSearchBuilder);
         logger.debug("############################NUMBER_ALL_MASSIMALE: {}\n", page.getTotal());
         Assert.assertTrue("FIND  MASSIMALE", page.getTotal() == 11);
-
     }
 
     @Test
     public void C_addMassimaleTest() throws Exception {
-
         Massimale m = new Massimale();
         m.setAreaGeografica(AreaGeograficaEnum.B);
         m.setDescrizione("Ricercatore");
         m.setLivello(LivelloUserEnum.I);
         m.setValue(new Double(120));
         m.setId("12");
-
         massimaleDAO.persist(m);
         Thread.sleep(1000);
         IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
