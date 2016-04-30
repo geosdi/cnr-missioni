@@ -34,9 +34,9 @@ public final class ElencoQualificaUserTable extends ITable.AbstractTable {
 
             setVisibleColumns("value");
             setColumnHeaders("Qualifica");
-            Object[] properties = {"value"};
-            boolean[] ordering = {true};
-            sort(properties, ordering);
+//            Object[] properties = {"value"};
+//            boolean[] ordering = {true};
+//            sort(properties, ordering);
             setId("id");
         }
     }

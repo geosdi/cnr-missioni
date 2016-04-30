@@ -128,8 +128,10 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
             public void buttonClick(final ClickEvent event) {
 
                 try {
-                    missioneSearchBuilder.withMultiMatch(multiMatchField.getValue());
+                    missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withMultiMatch(multiMatchField.getValue());
                     missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
+                    buildPagination(missioniStore.getTotale());
+                    addListenerPagination();
                     aggiornaTable();
                 } catch (Exception e) {
                     Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),

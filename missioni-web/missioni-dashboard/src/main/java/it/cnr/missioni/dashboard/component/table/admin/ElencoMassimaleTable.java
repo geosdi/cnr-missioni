@@ -32,9 +32,9 @@ public final class ElencoMassimaleTable extends ITable.AbstractTable {
 
             setVisibleColumns("value", "valueMezzaGiornata", "descrizione", "livello", "areaGeografica", "tipo");
             setColumnHeaders("Importo", "Importo Mezza Giornata", "Descrizione", "Livello", "Area Geografica", "tipo");
-            Object[] properties = {"areaGeografica"};
-            boolean[] ordering = {true};
-            sort(properties, ordering);
+//            Object[] properties = {"areaGeografica"};
+//            boolean[] ordering = {true};
+//            sort(properties, ordering);
             setId("id");
         }
     }

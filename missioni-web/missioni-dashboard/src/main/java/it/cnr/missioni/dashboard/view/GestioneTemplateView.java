@@ -1,18 +1,25 @@
 package it.cnr.missioni.dashboard.view;
 
+import java.util.List;
+
+import org.vaadin.pagingcomponent.PagingComponent;
+import org.vaadin.pagingcomponent.PagingComponent.Builder;
+import org.vaadin.pagingcomponent.utilities.FakeList;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.FontIcon;
 import com.vaadin.server.Responsive;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import it.cnr.missioni.dashboard.event.DashboardEventBus;
-import org.vaadin.pagingcomponent.PagingComponent;
-import org.vaadin.pagingcomponent.PagingComponent.Builder;
-import org.vaadin.pagingcomponent.utilities.FakeList;
 
-import java.util.List;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 
 /**
  * @param <T>
@@ -24,7 +31,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
      *
      */
     private static final long serialVersionUID = -2229015666954113261L;
-    protected final VerticalLayout itemsArea = new VerticalLayout();
+    protected  VerticalLayout itemsArea = new VerticalLayout();
     protected TextField multiMatchField;
     protected PagingComponent<T> pagingComponent;
     protected Button buttonCerca;
@@ -39,6 +46,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
     protected Button buttonAnticipoPagamentoPdf;
     private VerticalLayout layoutTable;
     private VerticalLayout layoutPagination = new VerticalLayout();
+    protected Builder<T> builder;
 
     public GestioneTemplateView() {
         inizialize();
@@ -98,8 +106,9 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
      */
     protected void buildPagination(Long totale) {
         List<T> fakeList = new FakeList<T>(totale.intValue());
-        Builder<T> builder = PagingComponent.paginate(fakeList);
+        builder = PagingComponent.paginate(fakeList);
         pagingComponent = builder.build();
+        //builder.page(org.vaadin.pagingcomponent.Page.FIRST);
         setVisibleButtons(totale);
         this.pagingComponent
                 .setVisible(pagingComponent.getComponentsManager().getNumberOfItemsPerPage() < totale ? true : false);

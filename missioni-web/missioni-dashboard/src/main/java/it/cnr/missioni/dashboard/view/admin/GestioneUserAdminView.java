@@ -17,6 +17,8 @@ import it.cnr.missioni.dashboard.view.GestioneTemplateView;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
+
+import org.vaadin.pagingcomponent.Page;
 import org.vaadin.pagingcomponent.listener.impl.LazyPagingComponentListener;
 
 import java.util.Collection;
@@ -98,15 +100,16 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
             public void buttonClick(final ClickEvent event) {
 
                 try {
-                    userSearchBuilder.withMultiMatch(multiMatchField.getValue());
+                    userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder().withMultiMatch(multiMatchField.getValue());
                     userStore = ClientConnector.getUser(userSearchBuilder);
+                    buildPagination(userStore.getTotale());
+                    addListenerPagination();
                     elencoUserTable.aggiornaTable(userStore);
                 } catch (Exception e) {
                     Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                             Type.ERROR_MESSAGE);
                 }
             }
-
         });
         return buttonCerca;
     }
@@ -156,7 +159,6 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
              *
              */
             private static final long serialVersionUID = 2537782371968033967L;
-
             @Override
             protected Collection<User> getItemsList(int startIndex, int endIndex) {
                 try {
@@ -167,9 +169,7 @@ public class GestioneUserAdminView extends GestioneTemplateView<User> {
                 }
                 elencoUserTable.aggiornaTable(userStore);
                 return userStore != null ? userStore.getUsers() : null;
-
             }
-
             @Override
             protected Component displayItem(int index, User item) {
                 return new Label(item.toString());

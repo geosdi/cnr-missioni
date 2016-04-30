@@ -51,7 +51,7 @@ public class TipologiaSpesaDAO extends AbstractElasticSearchDAO<TipologiaSpesa> 
         List<TipologiaSpesa> listaTipologiaSpesa = new ArrayList<TipologiaSpesa>();
         logger.debug("###############Try to find Tipologia Spesa by Query: {}\n\n");
         Integer size = tipologiaSpesaSearchBuilder.isAll() ? count().intValue() : tipologiaSpesaSearchBuilder.getSize();
-        return super.find(new MultiFieldsSearch(tipologiaSpesaSearchBuilder.getFieldSort(), SortOrder.DESC,tipologiaSpesaSearchBuilder.getFrom(),size,tipologiaSpesaSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[tipologiaSpesaSearchBuilder.getListAbstractBooleanSearch().size()])));
+        return super.find(new MultiFieldsSearch(tipologiaSpesaSearchBuilder.getFieldSort(), SortOrder.ASC,tipologiaSpesaSearchBuilder.getFrom(),size,tipologiaSpesaSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[tipologiaSpesaSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
 }

@@ -44,9 +44,9 @@ public final class ElencoRimborsiTable extends ITable.AbstractTable {
             setVisibleColumns("rimborso.numeroOrdine","rimborso.sigla", "rimborso.dataRimborso", "rimborso.totale", "id", "oggetto", "localita");
             setColumnHeaders("Numero Ordine","Sigla", "Data Rimborso", "Totale", "ID Missione", "Oggetto", "Località");
             setId("rimborso.numeroOrdine");
-            Object[] properties = {"rimborso.dataRimborso", "rimborso.numeroOrdine"};
-            boolean[] ordering = {false, true};
-            sort(properties, ordering);
+//            Object[] properties = {"rimborso.dataRimborso", "rimborso.numeroOrdine"};
+//            boolean[] ordering = {false, true};
+//            sort(properties, ordering);
             setColumnExpandRatio("oggetto", 2);
             setColumnExpandRatio("localita", 1);
         }

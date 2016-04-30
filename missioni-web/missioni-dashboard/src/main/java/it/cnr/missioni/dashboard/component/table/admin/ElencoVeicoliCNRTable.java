@@ -40,9 +40,9 @@ public final class ElencoVeicoliCNRTable extends ITable.AbstractTable {
             setVisibleColumns("tipo", "targa", "cartaCircolazione", "polizzaAssicurativa", "stato");
             setColumnHeaders("Tipo", "targa", "Carta Circolazione", "Polizza Assicurativa", "Stato");
             setId("targa");
-            Object[] properties = {"tipo", "targa"};
-            boolean[] ordering = {true, false};
-            sort(properties, ordering);
+//            Object[] properties = {"tipo", "targa"};
+//            boolean[] ordering = {true, false};
+//            sort(properties, ordering);
             setId("targa");
         }
     }

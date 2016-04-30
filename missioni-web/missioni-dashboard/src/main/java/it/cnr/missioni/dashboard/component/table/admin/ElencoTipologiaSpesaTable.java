@@ -36,9 +36,9 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
                     new BeanItemContainer<TipologiaSpesa>(TipologiaSpesa.class, ((TipologiaSpesaStore) tipologiaSpesaStore).getTipologiaSpesa()));
             setVisibleColumns("value", "estera", "italia", "voceSpesa");
             setColumnHeaders("Descrizione", "Estera", "italia", "Voce Spesa");
-            Object[] properties = {"value"};
-            boolean[] ordering = {true};
-            sort(properties, ordering);
+//            Object[] properties = {"value"};
+//            boolean[] ordering = {true};
+//            sort(properties, ordering);
             setId("id");
         }
     }

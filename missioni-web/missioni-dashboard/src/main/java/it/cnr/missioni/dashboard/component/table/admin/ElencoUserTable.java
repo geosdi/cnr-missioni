@@ -54,8 +54,8 @@ public final class ElencoUserTable extends ITable.AbstractTable {
             setColumnWidth("responsabileGruppo", 150);
             setColumnWidth("credenziali.ruoloUtente", 70);
             setId("id");
-            Object[] properties = {"anagrafica.cognome", "anagrafica.nome"};
-            boolean[] ordering = {true, true};
+            Object[] properties = {"anagrafica.nome"};
+            boolean[] ordering = { true};
             sort(properties, ordering);
         }
     }

@@ -46,9 +46,9 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
             setVisibleColumns("id","rimborso.sigla","localita", "oggetto", "stato", "dataInserimento");
             setColumnHeaders("Id","Sigla","Località", "Oggetto", "Stato", "Data Inserimento");
             setId("id");
-            Object[] properties = {"dataInserimento"};
-            boolean[] ordering = {false};
-            sort(properties, ordering);
+//            Object[] properties = {"dataInserimento"};
+//            boolean[] ordering = {false};
+//            sort(properties, ordering);
             setColumnWidth("dataInserimento", 160);
             setColumnWidth("oggetto", 160);
             setColumnExpandRatio("oggetto", 2);

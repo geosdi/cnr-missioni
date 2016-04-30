@@ -35,9 +35,9 @@ public final class ElencoVeicoliTable extends ITable.AbstractTable {
             setVisibleColumns("tipo", "targa", "cartaCircolazione", "polizzaAssicurativa", "veicoloPrincipale");
             setColumnHeaders("Tipo", "targa", "Carta Circolazione", "Polizza Assicurativa", "Veicolo Principale");
             setId("targa");
-            Object[] properties = {"tipo", "targa"};
-            boolean[] ordering = {false, false};
-            sort(properties, ordering);
+//            Object[] properties = {"tipo", "targa"};
+//            boolean[] ordering = {false, false};
+//            sort(properties, ordering);
             setId("targa");
         }
     }
