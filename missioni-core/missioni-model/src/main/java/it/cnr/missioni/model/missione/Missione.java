@@ -20,7 +20,7 @@ import it.cnr.missioni.model.rimborso.Rimborso;
  */
 @XmlRootElement(name = "missione")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "id", "localita", "altreLocalita", "oggetto", "responsabileGruppo", "shortResponsabileGruppo",
+@XmlType(propOrder = { "id", "localita", "altreLocalita","progressivo", "oggetto", "responsabileGruppo", "shortResponsabileGruppo",
 		"shortUser", "motivazioni", "altreDisposizioni", "stato", "fondo", "GAE", "missioneEstera", "idUser",
 		"idUserSeguito", "shortUserSeguito", "motivazioneSeguito", "idVeicolo", "shortDescriptionVeicolo",
 		"dataInserimento", "dateLastModified", "mezzoProprio", "distanza", "geoPoint", "idNazione",
@@ -35,6 +35,7 @@ public class Missione implements Document {
 	@NotBlank
 	private String localita;
 	private String altreLocalita;
+	private String progressivo;
 	@NotBlank
 	private String oggetto;
 	@NotBlank
@@ -138,6 +139,14 @@ public class Missione implements Document {
 
 	public void setAltreLocalita(String altreLocalita) {
 		this.altreLocalita = altreLocalita;
+	}
+
+	public String getProgressivo() {
+		return progressivo;
+	}
+
+	public void setProgressivo(String progressivo) {
+		this.progressivo = progressivo;
 	}
 
 	/**

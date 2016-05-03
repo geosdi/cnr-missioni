@@ -23,7 +23,6 @@ public class MissioneFunction {
         List<Missione> listaMissioni = new ArrayList<Missione>();
 
         Missione missione = new Missione();
-        missione.setId("M_01");
         missione.setOggetto("Conferenza prova per lo sviluppo di applicazioni");
         missione.setLocalita("Roma");
         missione.setIdUser("01");
@@ -79,7 +78,6 @@ public class MissioneFunction {
         listaMissioni.add(missione);
 
         missione = new Missione();
-        missione.setId("M_02");
         missione.getDatiPeriodoMissione().setInizioMissione(new DateTime(2015, 02, 11, 13, 14, DateTimeZone.UTC));
         missione.getDatiPeriodoMissione().setFineMissione(new DateTime(2015, 02, 15, 13, 14, DateTimeZone.UTC));
 
@@ -98,7 +96,6 @@ public class MissioneFunction {
         listaMissioni.add(missione);
 
         missione = new Missione();
-        missione.setId("M_03");
         missione.setOggetto("Riunione prova");
         missione.setLocalita("Milano");
         missione.getDatiPeriodoMissione().setInizioMissione(new DateTime(2015, 02, 11, 13, 14, DateTimeZone.UTC));

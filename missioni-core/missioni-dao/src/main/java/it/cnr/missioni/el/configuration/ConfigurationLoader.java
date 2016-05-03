@@ -69,7 +69,7 @@ public class ConfigurationLoader {
 		public void configure() throws Exception{
 			if(missioneIdDAO.count() <= 0 ){
 				MissioneId r = new MissioneId();
-				r.setValue("1");
+				r.setValue("336");
 				missioneIdDAO.persist(r);
 			}
 		}

@@ -18,6 +18,7 @@ public class Fattura implements Serializable {
 
     private String id;
     @NotNull
+    @NotBlank
     private String numeroFattura;
     @NotNull
     private DateTime data;

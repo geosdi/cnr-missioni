@@ -28,7 +28,7 @@ public class QualificaUserTest {
     @Test
     public void fatturaErrataTest() {
         QualificaUser qualificaUser = createQualificaUser();
-        qualificaUser.setValue(null);
+        qualificaUser.setValue(" ");
         Set<ConstraintViolation<QualificaUser>> constraintViolations = validator.validate(qualificaUser);
         assertEquals(1, constraintViolations.size());
     }

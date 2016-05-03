@@ -9,7 +9,6 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
-import org.geosdi.geoplatform.experimental.el.dao.PageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
@@ -25,7 +24,6 @@ import org.slf4j.Logger;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;

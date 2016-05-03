@@ -1,6 +1,17 @@
 package it.cnr.missioni.notification.support.itext;
 
 import com.google.common.base.Preconditions;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.missione.Missione;
@@ -8,7 +19,14 @@ import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -234,6 +252,41 @@ public interface PDFBuilder {
             Preconditions.checkArgument((this.missione != null), "The Parameter Missione must not be null.");
             Preconditions.checkArgument(((this.file != null) || (this.outputStream != null)),
                     "You must define File or OutputStream Parameter.");
+        }
+        
+        protected void writeHeader(Document document) throws Exception{
+
+    		PdfPTable tableImage = new PdfPTable(3);
+    		PdfPCell cellImage1 = new PdfPCell();
+    		PdfPCell cellImage2 = new PdfPCell();
+    		PdfPCell cellImage3 = new PdfPCell();
+    		cellImage1.setBorder(Rectangle.NO_BORDER);
+    		cellImage2.setBorder(Rectangle.NO_BORDER);
+    		cellImage3.setBorder(Rectangle.NO_BORDER);
+    		Image logoMinistero = Image
+    				.getInstance("https://missioni.imaa.cnr.it/logoMinistero.jpg");
+    		logoMinistero.scalePercent(30, 30);
+    		logoMinistero.setAlignment(Image.ALIGN_CENTER);
+    		Image logoCnr = Image.getInstance("https://missioni.imaa.cnr.it/logoCnr.jpg");
+    		logoCnr.setAlignment(Image.ALIGN_CENTER);
+    		logoCnr.scalePercent(30, 30);
+    		Image logoImaa = Image.getInstance("https://missioni.imaa.cnr.it/logoImaa.jpg");
+    		logoImaa.setAlignment(Image.ALIGN_CENTER);
+    		logoImaa.scalePercent(15, 15);
+    		cellImage1.addElement(logoCnr);
+    		cellImage2.addElement(logoMinistero);
+    		cellImage3.addElement(logoImaa);
+    		tableImage.addCell(cellImage1);
+    		tableImage.addCell(cellImage2);
+    		tableImage.addCell(cellImage3);
+    		document.add(tableImage);
+
+    		Paragraph paragraphIntestazione = new Paragraph();
+    		paragraphIntestazione.setAlignment(Element.ALIGN_CENTER);
+    		Chunk chunkIntestazione = new Chunk("\nConsiglio Nazionale dell Ricerche\n",
+    				new Font(Font.FontFamily.TIMES_ROMAN, Font.DEFAULTSIZE, Font.ITALIC));
+    		paragraphIntestazione.add(chunkIntestazione);
+    		document.add(paragraphIntestazione);
         }
 
         /**

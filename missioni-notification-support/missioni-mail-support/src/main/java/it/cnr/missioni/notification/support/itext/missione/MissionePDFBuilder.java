@@ -57,48 +57,16 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
 				getType());
 		super.checkArguments();
+
 		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
+		document.addSubject("Richiesta Anticipo Pagamento");
+		document.open();
+		writeHeader(document);
+
 		DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
-
-
-
-		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
-		document.addSubject("Richiesta Missione");
-		document.open();
-
-		PdfPTable tableImage = new PdfPTable(3);
-		PdfPCell cellImage1 = new PdfPCell();
-		PdfPCell cellImage2 = new PdfPCell();
-		PdfPCell cellImage3 = new PdfPCell();
-		cellImage1.setBorder(Rectangle.NO_BORDER);
-		cellImage2.setBorder(Rectangle.NO_BORDER);
-		cellImage3.setBorder(Rectangle.NO_BORDER);
-		Image logoMinistero = Image
-				.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoMinistero.jpg");
-		logoMinistero.scalePercent(30, 30);
-		logoMinistero.setAlignment(Image.ALIGN_CENTER);
-		Image logoCnr = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoCnr.jpg");
-		logoCnr.setAlignment(Image.ALIGN_CENTER);
-		logoCnr.scalePercent(30, 30);
-		Image logoImaa = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoImaa.jpg");
-		logoImaa.setAlignment(Image.ALIGN_CENTER);
-		logoImaa.scalePercent(15, 15);
-		cellImage1.addElement(logoCnr);
-		cellImage2.addElement(logoMinistero);
-		cellImage3.addElement(logoImaa);
-		tableImage.addCell(cellImage1);
-		tableImage.addCell(cellImage2);
-		tableImage.addCell(cellImage3);
-		document.add(tableImage);
-
-		Paragraph paragraphIntestazione = new Paragraph();
-		paragraphIntestazione.setAlignment(Element.ALIGN_CENTER);
-		Chunk chunkIntestazione = new Chunk("\nConsiglio Nazionale dell Ricerche\n",
-				new Font(Font.FontFamily.TIMES_ROMAN, Font.DEFAULTSIZE, Font.ITALIC));
-		paragraphIntestazione.add(chunkIntestazione);
-		document.add(paragraphIntestazione);
-
+		
 		Paragraph paragraphOrdine = new Paragraph();
 		paragraphOrdine.setAlignment(Element.ALIGN_CENTER);
 		paragraphOrdine.add(new Chunk("\nORDINE DI MISSIONE\n", fontBold));
@@ -106,7 +74,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		//Ordine di missione
 		Paragraph paragraphOrdine2 = new Paragraph(
-				"Ordine di missione N." + missione.getId() + " " + " del " + formatDataTime.format(missione.getDataInserimento().toDate()) + "\n\n\n", fontBold);
+				"Ordine di missione N." + missione.getProgressivo() + " " + " del " + formatDataTime.format(missione.getDataInserimento().toDate()) + "\n\n\n", fontBold);
 		paragraphOrdine2.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragraphOrdine2);
 
@@ -307,42 +275,52 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 	 */
 	@Override
 	public void buildVeicolo() throws Exception {
-		logger.debug(
-				"############################{} ::::::::::::<<<<<<<<< PDF VEICOLO GENERATION BEGIN" + " >>>>>>>>>>>>\n",
+		logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
 				getType());
 		Preconditions.checkArgument((this.veicolo != null), "The Parameter Veicolo must not be null.");
 		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-
-		PdfWriter.getInstance(document,
-				((this.fileVeicolo != null) ? new FileOutputStream(this.fileVeicolo) : this.outputStream));
-		document.addSubject("Modulo Mezzo Proprio");
+		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
+		document.addSubject("Richiesta Mezzo Proprio");
 		document.open();
-
+		writeHeader(document);
 		
-		PdfPTable tableImage = new PdfPTable(3);
-		PdfPCell cellImage1 = new PdfPCell();
-		PdfPCell cellImage2 = new PdfPCell();
-		PdfPCell cellImage3 = new PdfPCell();
-		cellImage1.setBorder(Rectangle.NO_BORDER);
-		cellImage2.setBorder(Rectangle.NO_BORDER);
-		cellImage3.setBorder(Rectangle.NO_BORDER);
-		Image logoMinistero = Image
-				.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoMinistero.jpg");
-		logoMinistero.scalePercent(30, 30);
-		logoMinistero.setAlignment(Image.ALIGN_CENTER);
-		Image logoCnr = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoCnr.jpg");
-		logoCnr.setAlignment(Image.ALIGN_CENTER);
-		logoCnr.scalePercent(30, 30);
-		Image logoImaa = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoImaa.jpg");
-		logoImaa.setAlignment(Image.ALIGN_CENTER);
-		logoImaa.scalePercent(15, 15);
-		cellImage1.addElement(logoCnr);
-		cellImage2.addElement(logoMinistero);
-		cellImage3.addElement(logoImaa);
-		tableImage.addCell(cellImage1);
-		tableImage.addCell(cellImage2);
-		tableImage.addCell(cellImage3);
-		document.add(tableImage);
+		
+//		logger.debug(
+//				"############################{} ::::::::::::<<<<<<<<< PDF VEICOLO GENERATION BEGIN" + " >>>>>>>>>>>>\n",
+//				getType());
+//		Preconditions.checkArgument((this.veicolo != null), "The Parameter Veicolo must not be null.");
+//		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+//
+//		PdfWriter.getInstance(document,
+//				((this.fileVeicolo != null) ? new FileOutputStream(this.fileVeicolo) : this.outputStream));
+//		document.addSubject("Modulo Mezzo Proprio");
+//		document.open();
+//
+//		
+//		PdfPTable tableImage = new PdfPTable(3);
+//		PdfPCell cellImage1 = new PdfPCell();
+//		PdfPCell cellImage2 = new PdfPCell();
+//		PdfPCell cellImage3 = new PdfPCell();
+//		cellImage1.setBorder(Rectangle.NO_BORDER);
+//		cellImage2.setBorder(Rectangle.NO_BORDER);
+//		cellImage3.setBorder(Rectangle.NO_BORDER);
+//		Image logoMinistero = Image
+//				.getInstance("https://missioni.imaa.cnr.it/logoMinistero.jpg");
+//		logoMinistero.scalePercent(30, 30);
+//		logoMinistero.setAlignment(Image.ALIGN_CENTER);
+//		Image logoCnr = Image.getInstance("https://missioni.imaa.cnr.it/logoCnr.jpg");
+//		logoCnr.setAlignment(Image.ALIGN_CENTER);
+//		logoCnr.scalePercent(30, 30);
+//		Image logoImaa = Image.getInstance("https://missioni.imaa.cnr.it/logoImaa.jpg");
+//		logoImaa.setAlignment(Image.ALIGN_CENTER);
+//		logoImaa.scalePercent(15, 15);
+//		cellImage1.addElement(logoCnr);
+//		cellImage2.addElement(logoMinistero);
+//		cellImage3.addElement(logoImaa);
+//		tableImage.addCell(cellImage1);
+//		tableImage.addCell(cellImage2);
+//		tableImage.addCell(cellImage3);
+//		document.add(tableImage);
 		
 		Chunk underline = new Chunk("RICHIESTA AUTORIZZAZIONE ALL' USO DEL MEZZO PROPRIO\n\n");
 

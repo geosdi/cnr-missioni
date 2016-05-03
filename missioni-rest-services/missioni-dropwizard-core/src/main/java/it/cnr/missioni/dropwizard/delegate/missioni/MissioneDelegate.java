@@ -121,7 +121,7 @@ class MissioneDelegate implements IMissioneDelegate {
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(),
 				user.getDatiCNR().getMail(), mailResponsabile, (missione.isMissioneEstera()
 						? this.cnrMissioniEsteroEmail.getEmail() : this.cnrMissioniItaliaEmail.getEmail()),
-				pdfBuilder,missione.getId()));
+				pdfBuilder,missione.getProgressivo()));
 
 		return Boolean.TRUE;
 	}
@@ -147,7 +147,7 @@ class MissioneDelegate implements IMissioneDelegate {
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 						: this.cnrMissioniItaliaEmail.getEmail()),
-				missione.getId(), RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0))));
+				missione.getProgressivo(), RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0))));
 
 		return Boolean.TRUE;
 	}
@@ -205,8 +205,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		if ((missione == null)) {
 			throw new IllegalParameterFault("The Parameter missione must not be null ");
 		}
-		if (missione.getId() == null)
-			missione.setId(this.missioneDAO.getMaxNumeroMissioneAnno());
+		if (missione.getId() == null){
+//			missione.setId(this.missioneDAO.getMaxNumeroMissioneAnno());
+			missione.setProgressivo(this.missioneDAO.getMaxNumeroMissioneAnno());
+		}
 		this.missioneDAO.persist(missione);
 		User user = this.userDAO.find(missione.getIdUser());
 		if (user == null)
@@ -259,7 +261,7 @@ class MissioneDelegate implements IMissioneDelegate {
 			}
 			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUpdateMissioneMessage(
 					user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), missione.getStato().getStato(),
-					user.getDatiCNR().getMail(), mailResponsabile, missione.getId(), pdfBuilder));
+					user.getDatiCNR().getMail(), mailResponsabile, missione.getProgressivo(), pdfBuilder));
 		}
 		return Boolean.TRUE;
 	}

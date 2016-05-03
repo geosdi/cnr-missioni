@@ -2,6 +2,7 @@ package it.cnr.missioni.model.configuration;
 
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -26,6 +27,7 @@ public class TipologiaSpesa implements Document {
      */
     private String id;
     @NotNull
+    @NotBlank
     private String value;
     @NotNull
     private TrattamentoMissioneEsteraEnum tipoTrattamento;

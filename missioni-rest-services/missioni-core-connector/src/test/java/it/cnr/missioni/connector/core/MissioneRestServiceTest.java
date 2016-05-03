@@ -104,6 +104,24 @@ public class MissioneRestServiceTest {
 //		Thread.sleep(1000);
 //	}
 //	
+	
+	@Test
+	public void A_insertMissione() throws Exception {	
+		Missione m = new Missione();
+		m.setIdUser("71635a5a-1d53-419e-a001-6e586fd98cf2");
+		missioniCoreClientConnector.addMissione(m);
+		Thread.sleep(1000);
+		Missione m2 = new Missione();
+		m2.setIdUser("71635a5a-1d53-419e-a001-6e586fd98cf2");
+		missioniCoreClientConnector.addMissione(m2);
+		Thread.sleep(1000);
+
+		Missione m3 = new Missione();
+		m3.setIdUser("71635a5a-1d53-419e-a001-6e586fd98cf2");
+		missioniCoreClientConnector.addMissione(m3);
+	}
+	
+	
 	@Test
 	public void A_testFindMissione() throws Exception {	
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder

@@ -51,47 +51,17 @@ public class AnticipoPagamentoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
 		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
-		document.addSubject("Richiesta Rimborso");
+		document.addSubject("Richiesta Anticipo Pagamento");
 		document.open();
+		writeHeader(document);
 
-		PdfPTable tableImage = new PdfPTable(3);
-		PdfPCell cellImage1 = new PdfPCell();
-		PdfPCell cellImage2 = new PdfPCell();
-		PdfPCell cellImage3 = new PdfPCell();
-		cellImage1.setBorder(Rectangle.NO_BORDER);
-		cellImage2.setBorder(Rectangle.NO_BORDER);
-		cellImage3.setBorder(Rectangle.NO_BORDER);
-		Image logoMinistero = Image
-				.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoMinistero.jpg");
-		logoMinistero.scalePercent(30, 30);
-		logoMinistero.setAlignment(Image.ALIGN_CENTER);
-		Image logoCnr = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoCnr.jpg");
-		logoCnr.setAlignment(Image.ALIGN_CENTER);
-		logoCnr.scalePercent(30, 30);
-		Image logoImaa = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoImaa.jpg");
-		logoImaa.setAlignment(Image.ALIGN_CENTER);
-		logoImaa.scalePercent(15, 15);
-		cellImage1.addElement(logoCnr);
-		cellImage2.addElement(logoMinistero);
-		cellImage3.addElement(logoImaa);
-		tableImage.addCell(cellImage1);
-		tableImage.addCell(cellImage2);
-		tableImage.addCell(cellImage3);
-		document.add(tableImage);
-
-		Paragraph paragraphIntestazione = new Paragraph();
-		paragraphIntestazione.setAlignment(Element.ALIGN_CENTER);
-		Chunk chunkIntestazione = new Chunk("\nConsiglio Nazionale dell Ricerche\n",
-				new Font(Font.FontFamily.TIMES_ROMAN, Font.DEFAULTSIZE, Font.ITALIC));
-		paragraphIntestazione.add(chunkIntestazione);
-		document.add(paragraphIntestazione);
 
 		Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
 		Font fontNormal = new Font(Font.FontFamily.TIMES_ROMAN, 9);
 		Font fontNormal6 = new Font(Font.FontFamily.TIMES_ROMAN, 6);
 
 		Paragraph paragraphHeader = new Paragraph(
-				"\nRichiesta di anticipo missione " + missione.getId() + " del " + formatData.format(missione.getDataInserimento().toDate()) + "\n\n\n",
+				"\nRichiesta di anticipo missione " + missione.getProgressivo() + " del " + formatData.format(missione.getDataInserimento().toDate()) + "\n\n\n",
 				fontBold);
 		paragraphHeader.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragraphHeader);

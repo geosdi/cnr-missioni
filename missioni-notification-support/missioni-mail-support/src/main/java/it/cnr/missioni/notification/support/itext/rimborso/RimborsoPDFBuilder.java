@@ -1,20 +1,31 @@
 package it.cnr.missioni.notification.support.itext.rimborso;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import it.cnr.missioni.model.rimborso.Fattura;
-import it.cnr.missioni.notification.support.itext.PDFBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.FileOutputStream;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import it.cnr.missioni.model.rimborso.Fattura;
+import it.cnr.missioni.notification.support.itext.PDFBuilder;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -33,11 +44,21 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
     @Override
     public void build() throws Exception {
-        logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
-                getType());
+		logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
+				getType());
         super.checkArguments();
+		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
+        document.addSubject("Richiesta Rimborso");
+		document.open();
+		writeHeader(document);
+    	
+    	
+//        logger.debug("############################{} ::::::::::::<<<<<<<<< PDF GENERATION BEGIN" + " >>>>>>>>>>>>\n",
+//                getType());
+//        super.checkArguments();
 		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
-        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+//        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         String dataInserimentoMissione = missione.getDataInserimento().toString();
         String dataInizio = formatDataTime.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
         String dataFine = formatDataTime.format(missione.getDatiPeriodoMissione().getFineMissione().toDate());
@@ -52,48 +73,48 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
         List<Fattura> listaScontrini = new ArrayList<Fattura>(treeMap.values());
         
-        PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
-        document.addSubject("Richiesta Rimborso");
-        document.open();
+//        PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
+//        document.addSubject("Richiesta Rimborso");
+//        document.open();
 
-        PdfPTable tableImage = new PdfPTable(3);
-        PdfPCell cellImage1 = new PdfPCell();
-        PdfPCell cellImage2 = new PdfPCell();
-        PdfPCell cellImage3 = new PdfPCell();
-        cellImage1.setBorder(Rectangle.NO_BORDER);
-        cellImage2.setBorder(Rectangle.NO_BORDER);
-        cellImage3.setBorder(Rectangle.NO_BORDER);
-        Image logoMinistero = Image
-                .getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoMinistero.jpg");
-        logoMinistero.scalePercent(30, 30);
-        logoMinistero.setAlignment(Image.ALIGN_CENTER);
-        Image logoCnr = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoCnr.jpg");
-        logoCnr.setAlignment(Image.ALIGN_CENTER);
-        logoCnr.scalePercent(30, 30);
-        Image logoImaa = Image.getInstance("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoImaa.jpg");
-        logoImaa.setAlignment(Image.ALIGN_CENTER);
-        logoImaa.scalePercent(15, 15);
-        cellImage1.addElement(logoCnr);
-        cellImage2.addElement(logoMinistero);
-        cellImage3.addElement(logoImaa);
-        tableImage.addCell(cellImage1);
-        tableImage.addCell(cellImage2);
-        tableImage.addCell(cellImage3);
-        document.add(tableImage);
-
-        Paragraph paragraphIntestazione = new Paragraph();
-        paragraphIntestazione.setAlignment(Element.ALIGN_CENTER);
-        Chunk chunkIntestazione = new Chunk("\nConsiglio Nazionale dell Ricerche\n",
-                new Font(Font.FontFamily.TIMES_ROMAN, Font.DEFAULTSIZE, Font.ITALIC));
-        paragraphIntestazione.add(chunkIntestazione);
-        document.add(paragraphIntestazione);
+//        PdfPTable tableImage = new PdfPTable(3);
+//        PdfPCell cellImage1 = new PdfPCell();
+//        PdfPCell cellImage2 = new PdfPCell();
+//        PdfPCell cellImage3 = new PdfPCell();
+//        cellImage1.setBorder(Rectangle.NO_BORDER);
+//        cellImage2.setBorder(Rectangle.NO_BORDER);
+//        cellImage3.setBorder(Rectangle.NO_BORDER);
+//        Image logoMinistero = Image
+//                .getInstance("https://missioni.imaa.cnr.it/logoMinistero.jpg");
+//        logoMinistero.scalePercent(30, 30);
+//        logoMinistero.setAlignment(Image.ALIGN_CENTER);
+//        Image logoCnr = Image.getInstance("https://missioni.imaa.cnr.it/logoCnr.jpg");
+//        logoCnr.setAlignment(Image.ALIGN_CENTER);
+//        logoCnr.scalePercent(30, 30);
+//        Image logoImaa = Image.getInstance("https://missioni.imaa.cnr.it/logoImaa.jpg");
+//        logoImaa.setAlignment(Image.ALIGN_CENTER);
+//        logoImaa.scalePercent(15, 15);
+//        cellImage1.addElement(logoCnr);
+//        cellImage2.addElement(logoMinistero);
+//        cellImage3.addElement(logoImaa);
+//        tableImage.addCell(cellImage1);
+//        tableImage.addCell(cellImage2);
+//        tableImage.addCell(cellImage3);
+//        document.add(tableImage);
+//
+//        Paragraph paragraphIntestazione = new Paragraph();
+//        paragraphIntestazione.setAlignment(Element.ALIGN_CENTER);
+//        Chunk chunkIntestazione = new Chunk("\nConsiglio Nazionale dell Ricerche\n",
+//                new Font(Font.FontFamily.TIMES_ROMAN, Font.DEFAULTSIZE, Font.ITALIC));
+//        paragraphIntestazione.add(chunkIntestazione);
+//        document.add(paragraphIntestazione);
 
         Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
         Font fontNormal = new Font(Font.FontFamily.TIMES_ROMAN, 9);
         Font fontNormal6 = new Font(Font.FontFamily.TIMES_ROMAN, 6);
 
         Paragraph paragraphHeader = new Paragraph("\nRichiesta di rimborso della missione autorizzata con Ordine n. "
-                + missione.getId() + " del " + dataInserimentoMissione + "\n\n\n", fontBold);
+                + missione.getProgressivo() + " del " + dataInserimentoMissione + "\n\n\n", fontBold);
         paragraphHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(paragraphHeader);
 

@@ -31,12 +31,14 @@ public class Prenotazione implements Document {
     private DateTime dataTo;
     private String idUser;
     @NotNull
+    @NotBlank
     private String idVeicoloCNR;
     @NotBlank
     private String localita;
     private String descrizione;
     private boolean allDay;
     @NotNull
+    @NotBlank
     private String descriptionVeicoloCNR;
 
     /*

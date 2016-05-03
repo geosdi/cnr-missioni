@@ -1,6 +1,7 @@
 package it.cnr.missioni.model.configuration;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,6 +23,7 @@ public class MissioneId implements Document {
     private static final long serialVersionUID = -6943445899519373384L;
     private String id;
     @NotNull
+    @NotBlank
     private String value;
 
     /*

@@ -18,7 +18,7 @@ public class DatiCNR implements Serializable {
     @NotNull
     private LivelloUserEnum livello;
     @NotBlank
-    private String IdQualifica;
+    private String idQualifica;
     @NotBlank
     private String descrizioneQualifica;
     private String datoreLavoro;
@@ -50,14 +50,14 @@ public class DatiCNR implements Serializable {
      * @return the idQualifica
      */
     public String getIdQualifica() {
-        return IdQualifica;
+        return idQualifica;
     }
 
     /**
      * @param idQualifica
      */
     public void setIdQualifica(String idQualifica) {
-        IdQualifica = idQualifica;
+    	this.idQualifica = idQualifica;
     }
 
     /**
@@ -163,7 +163,7 @@ public class DatiCNR implements Serializable {
      */
     @Override
     public String toString() {
-        return "DatiCNR [livello=" + livello + ", IdQualifica=" + IdQualifica + ", descrizioneQualifica="
+        return "DatiCNR [livello=" + livello + ", IdQualifica=" + idQualifica + ", descrizioneQualifica="
                 + descrizioneQualifica + ", datoreLavoro=" + datoreLavoro + ", shortDescriptionDatoreLavoro="
                 + shortDescriptionDatoreLavoro + ", matricola=" + matricola + ", codiceTerzo=" + codiceTerzo + ", mail="
                 + mail + ", iban=" + iban + "]";

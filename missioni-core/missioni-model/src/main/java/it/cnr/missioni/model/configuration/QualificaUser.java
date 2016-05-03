@@ -1,6 +1,8 @@
 package it.cnr.missioni.model.configuration;
 
 import org.geosdi.geoplatform.experimental.el.api.model.Document;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -23,6 +25,7 @@ public class QualificaUser implements Document {
     private static final long serialVersionUID = -1723673255852798697L;
     private String id;
     @NotNull
+    @NotBlank
     private String value;
 
     public QualificaUser(String value) {
