@@ -1,7 +1,10 @@
-package it.cnr.missioni.el.restore;
+package it.cnr.missioni.el.backup;
+
+import static org.geosdi.geoplatform.support.jackson.property.GPJacksonSupportEnum.WRITE_DATES_AS_TIMESTAMPS_DISABLE;
 
 import java.io.File;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.annotation.Resource;
 
@@ -21,7 +24,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 
+import it.cnr.missioni.el.backup.IBackupStore.DirettoreBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.MassimaleBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.MissioneBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.NazioneBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.PrenotazioneBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.QualificaBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.RimborsoKmBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.TipologiaSpesaBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.UrlImageBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.UserBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.VeicoloCnrBackupStore;
 import it.cnr.missioni.el.dao.IDirettoreDAO;
 import it.cnr.missioni.el.dao.IMassimaleDAO;
 import it.cnr.missioni.el.dao.IMissioneDAO;
@@ -33,17 +48,6 @@ import it.cnr.missioni.el.dao.ITipologiaSpesaDAO;
 import it.cnr.missioni.el.dao.IUrlImageDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.dao.IVeicoloCNRDAO;
-import it.cnr.missioni.el.restore.IBackupStore.DirettoreBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.MassimaleBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.MissioneBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.NazioneBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.PrenotazioneBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.QualificaBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.RimborsoKmBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.TipologiaSpesaBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.UrlImageBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.UserBackupStore;
-import it.cnr.missioni.el.restore.IBackupStore.VeicoloCnrBackupStore;
 import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione;
@@ -62,7 +66,7 @@ import it.cnr.missioni.model.user.User;
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 @RunWith(value = SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-DAO-Test.xml"})
-public class RestoreDAOTest {
+public class BackupDAOTest {
 
     @GeoPlatformLog
     static Logger logger;
@@ -125,7 +129,7 @@ public class RestoreDAOTest {
     private IMassimaleDAO massimaleDAO;
 
     
-    ObjectMapper mapper = new ObjectMapper();
+    BackupMapper mapper = new BackupMapper();
 
     @Before
     public void setUp() {
