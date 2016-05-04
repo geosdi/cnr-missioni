@@ -1,5 +1,8 @@
 package it.cnr.missioni.dashboard.component.form.user;
 
+import java.util.Comparator;
+import java.util.List;
+
 import com.vaadin.data.Validator;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -14,9 +17,11 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
+import it.cnr.missioni.dashboard.utility.IComparator;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
+import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.user.DatiCNR;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
@@ -182,7 +187,7 @@ public interface IDatiCNRUserForm extends IForm<DatiCNR, IDatiCNRUserForm> {
                         .getQualificaUserSearchBuilder().withAll(true);
                 QualificaUserStore qualificaStore = ClientConnector.getQualificaUser(qualificaUserSearchBuilder);
 
-                qualificaStore.getQualificaUser().forEach(q -> {
+                qualificaStore.getQualificaUser().stream().sorted(new IComparator.QualificaComparator()).forEach(q -> {
                     qualificaField.addItem(q.getId());
                     qualificaField.setItemCaption(q.getId(), q.getValue());
                 });

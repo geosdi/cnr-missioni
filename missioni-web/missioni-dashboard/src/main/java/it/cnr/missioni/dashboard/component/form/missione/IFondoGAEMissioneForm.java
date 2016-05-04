@@ -14,6 +14,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
+import it.cnr.missioni.dashboard.utility.IComparator;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
@@ -77,7 +78,7 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
                         .withAll(true).withResponsabileGruppo(true);
 
                 UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-                userStore.getUsers().forEach(u -> {
+                userStore.getUsers().stream().sorted(new IComparator.UserComparator()).forEach(u -> {
                     listaResponsabiliGruppoField.addItem(u.getId());
                     listaResponsabiliGruppoField.setItemCaption(u.getId(),
                             u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
@@ -92,7 +93,7 @@ public interface IFondoGAEMissioneForm extends IForm<Missione, IFondoGAEMissione
                 IUserSearchBuilder userSearchBuilder = IUserSearchBuilder.UserSearchBuilder.getUserSearchBuilder()
                         .withAll(true);
                 UserStore userStore = ClientConnector.getUser(userSearchBuilder);
-                userStore.getUsers().stream().filter(u -> u.getDatiCNR().getLivello().getStato() <= 3).forEach(u -> {
+                userStore.getUsers().stream().sorted(new IComparator.UserComparator()).filter(u -> u.getDatiCNR().getLivello().getStato() <= 3).forEach(u -> {
                     listaSeguito.addItem(u.getId());
                     listaSeguito.setItemCaption(u.getId(),
                             u.getAnagrafica().getCognome() + " " + u.getAnagrafica().getNome());
