@@ -284,44 +284,6 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.open();
 		writeHeader(document);
 		
-		
-//		logger.debug(
-//				"############################{} ::::::::::::<<<<<<<<< PDF VEICOLO GENERATION BEGIN" + " >>>>>>>>>>>>\n",
-//				getType());
-//		Preconditions.checkArgument((this.veicolo != null), "The Parameter Veicolo must not be null.");
-//		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-//
-//		PdfWriter.getInstance(document,
-//				((this.fileVeicolo != null) ? new FileOutputStream(this.fileVeicolo) : this.outputStream));
-//		document.addSubject("Modulo Mezzo Proprio");
-//		document.open();
-//
-//		
-//		PdfPTable tableImage = new PdfPTable(3);
-//		PdfPCell cellImage1 = new PdfPCell();
-//		PdfPCell cellImage2 = new PdfPCell();
-//		PdfPCell cellImage3 = new PdfPCell();
-//		cellImage1.setBorder(Rectangle.NO_BORDER);
-//		cellImage2.setBorder(Rectangle.NO_BORDER);
-//		cellImage3.setBorder(Rectangle.NO_BORDER);
-//		Image logoMinistero = Image
-//				.getInstance("https://missioni.imaa.cnr.it/logoMinistero.jpg");
-//		logoMinistero.scalePercent(30, 30);
-//		logoMinistero.setAlignment(Image.ALIGN_CENTER);
-//		Image logoCnr = Image.getInstance("https://missioni.imaa.cnr.it/logoCnr.jpg");
-//		logoCnr.setAlignment(Image.ALIGN_CENTER);
-//		logoCnr.scalePercent(30, 30);
-//		Image logoImaa = Image.getInstance("https://missioni.imaa.cnr.it/logoImaa.jpg");
-//		logoImaa.setAlignment(Image.ALIGN_CENTER);
-//		logoImaa.scalePercent(15, 15);
-//		cellImage1.addElement(logoCnr);
-//		cellImage2.addElement(logoMinistero);
-//		cellImage3.addElement(logoImaa);
-//		tableImage.addCell(cellImage1);
-//		tableImage.addCell(cellImage2);
-//		tableImage.addCell(cellImage3);
-//		document.add(tableImage);
-		
 		Chunk underline = new Chunk("RICHIESTA AUTORIZZAZIONE ALL' USO DEL MEZZO PROPRIO\n\n");
 
 		underline.setUnderline(0.2f, -2f);
@@ -334,7 +296,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		Paragraph paragraphDichiarazione = new Paragraph("Il sottoscritto " + user.getAnagrafica().getCognome() + " "
 				+ user.getAnagrafica().getNome() + " qualifica: " + user.getDatiCNR().getDescrizioneQualifica()
-				+ ", in esecuzione dell' incarico ricevuto con ordine di missione n. " + missione.getId() + " del "
+				+ ", in esecuzione dell' incarico ricevuto con ordine di missione n. " + missione.getProgressivo() + " del "
 				+ (formatDataTime.format(missione.getDataInserimento().toDate())), fontNormal);
 		document.add(paragraphDichiarazione);
 

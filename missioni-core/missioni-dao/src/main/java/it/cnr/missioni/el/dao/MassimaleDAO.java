@@ -51,7 +51,7 @@ public class MassimaleDAO extends AbstractElasticSearchDAO<Massimale> implements
         List<Massimale> listaMassimale = new ArrayList<Massimale>();
         logger.debug("###############Try to find Massimale by Query: {}\n\n");
         Integer size = massimaleSearchBuilder.isAll() ? count().intValue() : massimaleSearchBuilder.getSize();
-        return super.find(new MultiFieldsSearch(massimaleSearchBuilder.getFieldSort(), SortOrder.DESC,massimaleSearchBuilder.getFrom(),size,massimaleSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[massimaleSearchBuilder.getListAbstractBooleanSearch().size()])));
+        return super.find(new MultiFieldsSearch(massimaleSearchBuilder.getFieldSort(), SortOrder.ASC,massimaleSearchBuilder.getFrom(),size,massimaleSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[massimaleSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
 }
