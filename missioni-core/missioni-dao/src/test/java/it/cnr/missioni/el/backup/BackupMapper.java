@@ -7,7 +7,12 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 public class BackupMapper extends ObjectMapper{
 
 
-	    public BackupMapper() {
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6367271949305227955L;
+
+		public BackupMapper() {
 	        super();
 	        registerModule(new JodaModule());
 	        configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
