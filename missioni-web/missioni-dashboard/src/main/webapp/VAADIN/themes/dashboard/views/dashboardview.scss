@@ -267,8 +267,8 @@
 	border-top-color: #156ab3;
 	border-bottom-color: #1156a8;
   	background-color: #197de1 !important;
-  		background-image: -webkit-linear-gradient(top, #1b87e3 2%, #166ed5 98%);
-	background-image: linear-gradient(to bottom,#1b87e3 2%, #166ed5 98%);
+  	background-image: -webkit-linear-gradient(top, #1b87e3 2%, #166ed5 98%);
+	background-image: linear-gradient(to bottom,#1b87e3 2%, #166ed5 98%) !important;
 	-webkit-box-shadow: inset 0 1px 0 #4d98e6, inset 0 -1px 0 #166bca, 0 2px 3px rgba(0, 0, 0, 0.05);
 	box-shadow: inset 0 1px 0 #4d98e6, inset 0 -1px 0 #166bca, 0 2px 3px rgba(0, 0, 0, 0.05);
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
@@ -383,5 +383,8 @@
 	font-size:12px;
 }
 
+.wizard .v-button{
+	background-image: -moz-linear-gradient(top, #1b87e3 2%, #166ed5 98%) !important;
+}
 
 }
