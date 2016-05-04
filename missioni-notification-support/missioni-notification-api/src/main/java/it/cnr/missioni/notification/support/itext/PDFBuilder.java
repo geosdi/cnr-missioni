@@ -11,9 +11,11 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import it.cnr.missioni.model.configuration.Direttore;
+import it.cnr.missioni.model.configuration.UrlImage;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -79,6 +81,12 @@ public interface PDFBuilder {
      * @return {@link PDFBuilder}
      */
     PDFBuilder withDirettore(Direttore direttore);
+    
+    /**
+     * @param urlImage
+     * @return {@link PDFBuilder}
+     */
+    PDFBuilder withUrlImage(UrlImage urlImage);
 
     /**
      * @throws Exception
@@ -155,6 +163,7 @@ public interface PDFBuilder {
         protected File fileVeicolo;
         protected OutputStream outputStream;
         private boolean isMezzoProprio;
+        private UrlImage urlImage;
 
         protected AbstractPDFBuilder() {
         }
@@ -177,6 +186,15 @@ public interface PDFBuilder {
         public PDFBuilder withDirettore(Direttore direttore) {
             this.direttore = direttore;
             return self();
+        }
+        
+        /**
+         * @param urlImage
+         * @return {@link PDFBuilder}
+         */
+        public PDFBuilder withUrlImage(UrlImage urlImage){
+        	this.urlImage = urlImage;
+        	return self();
         }
 
         /**
@@ -250,6 +268,7 @@ public interface PDFBuilder {
         protected void checkArguments() throws Exception {
             Preconditions.checkArgument((this.user != null), "The Parameter User must not be null.");
             Preconditions.checkArgument((this.missione != null), "The Parameter Missione must not be null.");
+            Preconditions.checkArgument((this.urlImage != null), "The Parameter UrlImage must not be null.");
             Preconditions.checkArgument(((this.file != null) || (this.outputStream != null)),
                     "You must define File or OutputStream Parameter.");
         }
@@ -264,13 +283,13 @@ public interface PDFBuilder {
     		cellImage2.setBorder(Rectangle.NO_BORDER);
     		cellImage3.setBorder(Rectangle.NO_BORDER);
     		Image logoMinistero = Image
-    				.getInstance("https://missioni.imaa.cnr.it/logoMinistero.jpg");
+    				.getInstance(urlImage.getLogoMinistero());
     		logoMinistero.scalePercent(30, 30);
     		logoMinistero.setAlignment(Image.ALIGN_CENTER);
-    		Image logoCnr = Image.getInstance("https://missioni.imaa.cnr.it/logoCnr.jpg");
+    		Image logoCnr = Image.getInstance(urlImage.getLogoCnr());
     		logoCnr.setAlignment(Image.ALIGN_CENTER);
     		logoCnr.scalePercent(30, 30);
-    		Image logoImaa = Image.getInstance("https://missioni.imaa.cnr.it/logoImaa.jpg");
+    		Image logoImaa = Image.getInstance(urlImage.getLogoImaa());
     		logoImaa.setAlignment(Image.ALIGN_CENTER);
     		logoImaa.scalePercent(15, 15);
     		cellImage1.addElement(logoCnr);
@@ -280,7 +299,6 @@ public interface PDFBuilder {
     		tableImage.addCell(cellImage2);
     		tableImage.addCell(cellImage3);
     		document.add(tableImage);
-
     		Paragraph paragraphIntestazione = new Paragraph();
     		paragraphIntestazione.setAlignment(Element.ALIGN_CENTER);
     		Chunk chunkIntestazione = new Chunk("\nConsiglio Nazionale dell Ricerche\n",

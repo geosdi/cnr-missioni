@@ -1,6 +1,7 @@
 package it.cnr.missioni.notification.dispatcher;
 
 import it.cnr.missioni.model.configuration.Direttore;
+import it.cnr.missioni.model.configuration.UrlImage;
 import it.cnr.missioni.model.missione.*;
 import it.cnr.missioni.model.rimborso.Fattura;
 import it.cnr.missioni.model.rimborso.Rimborso;
@@ -74,7 +75,7 @@ public class MissioniNotificationDispatcherProdTest {
                         "vito.salvia@gmail.com", MissionePDFBuilder
                                 .newPDFBuilder()
                                 .withUser(buildUserTest())
-                                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest()),"1-2016"));
+                                .withMissione(buildMissioneTest()).withUrlImage(buildUrlImageTest()).withDirettore(buildDirettoreTest()),"1-2016"));
         Thread.sleep(6000);
     }
 
@@ -86,12 +87,10 @@ public class MissioniNotificationDispatcherProdTest {
                         MissionePDFBuilder
                                 .newPDFBuilder()
                                 .withUser(buildUserTest())
-                                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest())));
+                                .withMissione(buildMissioneTest()).withUrlImage(buildUrlImageTest()).withDirettore(buildDirettoreTest())));
         Thread.sleep(4000);
     }
     
-    
-
     @Test
     public void createFileTest() throws Exception {
         MissionePDFBuilder
@@ -108,7 +107,7 @@ public class MissioniNotificationDispatcherProdTest {
                 .newPDFBuilder();
     	pdfBuilder.setMezzoProprio(true);
     	pdfBuilder.withUser(buildUserTest())
-                .withMissione(buildMissioneTest()).withVeicolo(buildVeicoloTest()).withDirettore(buildDirettoreTest());
+                .withMissione(buildMissioneTest()).withVeicolo(buildVeicoloTest()).withUrlImage(buildUrlImageTest()).withDirettore(buildDirettoreTest());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildAddMissioneMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
                         "vito.salvia@gmail.com", pdfBuilder,"1-2016"));
@@ -121,7 +120,7 @@ public class MissioniNotificationDispatcherProdTest {
     	PDFBuilder pdfBuilder = RimborsoPDFBuilder
                 .newPDFBuilder();
     	    	pdfBuilder.withUser(buildUserTest())
-                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest());
+                .withMissione(buildMissioneTest()).withUrlImage(buildUrlImageTest()).withDirettore(buildDirettoreTest());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildUpdateRimborsoMessage("Vito", "Salvia", "vito.salvia@gmail.com",
                 		UUID.randomUUID().toString(),"Si","01", new Double(130)));
@@ -135,7 +134,7 @@ public class MissioniNotificationDispatcherProdTest {
                 .newPDFBuilder();
     	    	pdfBuilder.withUser(buildUserTest())
     	    	.withFile(new File("./target/AnticipoPagamento.pdf"))
-                .withMissione(buildMissioneTest()).withDirettore(buildDirettoreTest());
+                .withMissione(buildMissioneTest()).withUrlImage(buildUrlImageTest()).withDirettore(buildDirettoreTest());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildAddAnticipoPagamentoMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
                 		UUID.randomUUID().toString(),pdfBuilder));
@@ -162,6 +161,14 @@ public class MissioniNotificationDispatcherProdTest {
     	Direttore d = new Direttore();
     	d.setValue("Dott. Vincenzo Lapenna");
     	return d;
+    }
+    
+    UrlImage buildUrlImageTest(){
+    	UrlImage urlImage = new UrlImage();
+		urlImage.setLogoMinistero("https://missioni.imaa.cnr.it/logoMinistero.jpg");
+		urlImage.setLogoCnr("https://missioni.imaa.cnr.it/logoCnr.jpg");
+		urlImage.setLogoImaa("https://missioni.imaa.cnr.it/logoImaa.jpg");
+    	return urlImage;
     }
     
     User buildUserTest() {

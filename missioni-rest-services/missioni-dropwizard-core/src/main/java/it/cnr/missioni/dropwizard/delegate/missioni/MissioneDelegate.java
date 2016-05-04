@@ -6,10 +6,12 @@ import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import com.google.maps.model.*;
 import it.cnr.missioni.el.dao.IDirettoreDAO;
 import it.cnr.missioni.el.dao.IMissioneDAO;
+import it.cnr.missioni.el.dao.IUrlImageDAO;
 import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
 import it.cnr.missioni.model.configuration.Direttore;
+import it.cnr.missioni.model.configuration.UrlImage;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
@@ -64,6 +66,8 @@ class MissioneDelegate implements IMissioneDelegate {
 	private IMissioneDAO missioneDAO;
 	@Resource(name = "direttoreDAO")
 	private IDirettoreDAO direttoreDAO;
+	@Resource(name = "urlImageDAO")
+	private IUrlImageDAO urlImageDAO;
 	@Resource(name = "userDAO")
 	private IUserDAO userDAO;
 	@Resource(name = "missioniMailDispatcher")
@@ -104,7 +108,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
-		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0));
 		if (missione.isMezzoProprio()) {
 			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
 			Veicolo veicolo = user.getVeicoloPrincipale();
@@ -143,11 +150,14 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
 		this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
 				user.getAnagrafica().getNome(), user.getAnagrafica().getCognome(), user.getDatiCNR().getMail(),
 				(missione.isMissioneEstera() ? this.cnrMissioniEsteroEmail.getEmail()
 						: this.cnrMissioniItaliaEmail.getEmail()),
-				missione.getProgressivo(), RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0))));
+				missione.getProgressivo(), RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0))));
 
 		return Boolean.TRUE;
 	}
@@ -216,7 +226,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
-		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0));
 		if (missione.isMezzoProprio()) {
 			pdfBuilder.setMezzoProprio(missione.isMezzoProprio());
 			Veicolo veicolo = user.getVeicoloPrincipale();
@@ -239,7 +252,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		if (missione.isRimborsoSetted() && missione.getRimborso().getNumeroOrdine() == null)
 			missione.getRimborso().setNumeroOrdine(missione.getId());
 		this.missioneDAO.update(missione);
-		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
+		PDFBuilder pdfBuilder = MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0));
 		if (missione.isRimborsoSetted()) {
 //			this.missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildAddRimborsoMessage(
 //					user.getAnagrafica().getNome(),
@@ -295,7 +311,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
-		return new MissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0)));
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
+		return new MissioneStreaming(MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0)));
 	}
 
 	/**
@@ -318,8 +337,11 @@ class MissioneDelegate implements IMissioneDelegate {
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
 		Veicolo veicolo = user.getMappaVeicolo().get(missione.getIdVeicolo());
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
 		return new VeicoloMissioneStreaming(
-				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withVeicolo(veicolo).withDirettore(lista.getResults().get(0)));
+				MissionePDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withVeicolo(veicolo).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0)));
 	}
 
 	/**
@@ -341,7 +363,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
-		return new MissioneStreaming(RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0)));
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
+		return new MissioneStreaming(RimborsoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0)));
 	}
 
 	/**
@@ -459,7 +484,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
-		PDFBuilder pdfBuilder = AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0));
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
+		PDFBuilder pdfBuilder = AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0));
 		Missione m = this.missioneDAO.find(missione.getId());
 		this.missioneDAO.update(missione);
 
@@ -499,7 +527,10 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
+		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
+		if(listaUrlImage.getTotal() == 0)
+			throw new ResourceNotFoundFault("Nessun url image inserita");
 		return new AnticipoPagamentoStreaming(
-				AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withDirettore(lista.getResults().get(0)));
+				AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0)));
 	}
 }

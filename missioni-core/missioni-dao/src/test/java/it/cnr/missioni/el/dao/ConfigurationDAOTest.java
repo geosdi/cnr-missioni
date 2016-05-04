@@ -32,24 +32,32 @@ public class ConfigurationDAOTest {
     private IConfiguration direttoreConfiguration;
     @Resource(name = "rimborsoKmConfiguration")
     private IConfiguration rimborsoKmConfiguration;
+    @Resource(name = "urlImageConfiguration")
+    private IConfiguration urlImageConfiguration;
 	@Resource(name = "direttoreDAO")
 	private IDirettoreDAO direttoreDAO;
     @Resource(name = "rimborsoKmDAO")
     private IRimborsoKmDAO rimborsoKmDAO;
+    @Resource(name = "urlImageDAO")
+    private IUrlImageDAO urlImageAO;
 
     @Before
     public void setUp() {
         Assert.assertNotNull(massimaleDocIndexConfigurator);
         Assert.assertNotNull(direttoreConfiguration);
         Assert.assertNotNull(rimborsoKmConfiguration);
+        Assert.assertNotNull(urlImageConfiguration);
+        Assert.assertNotNull(urlImageAO);
         Assert.assertNotNull(direttoreDAO);
         Assert.assertNotNull(rimborsoKmDAO);
     }
     
     @Test
     public void checkConfiguration() throws Exception{
+    	Thread.sleep(1000);
     	Assert.assertTrue("COUNT DIRETTORE", direttoreDAO.count() == 1);
     	Assert.assertTrue("COUNT RIMBORSO KM", rimborsoKmDAO.count() == 1);
+    	Assert.assertTrue("COUNT URL IMAGE", urlImageAO.count() == 1);
     }
 
 }
