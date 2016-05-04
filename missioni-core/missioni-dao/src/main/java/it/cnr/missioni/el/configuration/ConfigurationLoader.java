@@ -92,9 +92,9 @@ public class ConfigurationLoader {
 		public void configure() throws Exception{
 			if(urlImageIdDAO.count() <= 0 ){
 				UrlImage urlImage = new UrlImage();
-				urlImage.setLogoMinistero("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoMinistero.jpg");
-				urlImage.setLogoCnr("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoCnr.jpg");
-				urlImage.setLogoImaa("http://www.missioni.imaa.cnr.it/rimborsomissioni/icons/logoImaa.jpg");
+				urlImage.setLogoMinistero("https://missioni.imaa.cnr.it/logoMinistero.jpg");
+				urlImage.setLogoCnr("https://missioni.imaa.cnr.it/logoCnr.jpg");
+				urlImage.setLogoImaa("https://missioni.imaa.cnr.it/logoImaa.jpg");
 				urlImageIdDAO.persist(urlImage);
 			}
 		}
