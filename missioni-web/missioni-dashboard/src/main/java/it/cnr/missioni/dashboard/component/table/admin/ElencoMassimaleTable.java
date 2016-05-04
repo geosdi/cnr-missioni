@@ -1,7 +1,12 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.DefaultItemSorter;
+import com.vaadin.data.util.ItemSorter;
+
 import it.cnr.missioni.dashboard.component.table.ITable;
+import it.cnr.missioni.dashboard.utility.CaseInsensitivePropertyComparator;
+import it.cnr.missioni.dashboard.utility.CaseInsensitivePropertyEnumComparator;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.rest.api.response.massimale.MassimaleStore;
 
@@ -32,9 +37,12 @@ public final class ElencoMassimaleTable extends ITable.AbstractTable {
 
             setVisibleColumns("value", "valueMezzaGiornata", "descrizione", "livello", "areaGeografica", "tipo");
             setColumnHeaders("Importo", "Importo Mezza Giornata", "Descrizione", "Livello", "Area Geografica", "tipo");
-//            Object[] properties = {"areaGeografica"};
-//            boolean[] ordering = {true};
-//            sort(properties, ordering);
+			ItemSorter itemSort = new DefaultItemSorter(new CaseInsensitivePropertyEnumComparator());
+			BeanItemContainer ic = (BeanItemContainer) this.getContainerDataSource();
+			ic.setItemSorter(itemSort);
+            Object[] properties = {"areaGeografica"};
+            boolean[] ordering = {true};
+            sort(properties, ordering);
             setId("id");
         }
     }

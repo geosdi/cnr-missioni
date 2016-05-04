@@ -2,11 +2,14 @@ package it.cnr.missioni.dashboard.component.table.admin;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.DefaultItemSorter;
+import com.vaadin.data.util.ItemSorter;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Table;
 import it.cnr.missioni.dashboard.action.admin.AdminUpdateUserAction;
 import it.cnr.missioni.dashboard.component.table.ITable;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
+import it.cnr.missioni.dashboard.utility.CaseInsensitivePropertyComparator;
 import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.rest.api.response.user.UserStore;
@@ -54,9 +57,12 @@ public final class ElencoUserTable extends ITable.AbstractTable {
             setColumnWidth("responsabileGruppo", 150);
             setColumnWidth("credenziali.ruoloUtente", 70);
             setId("id");
-//            Object[] properties = {"anagrafica.nome"};
-//            boolean[] ordering = { true};
-//            sort(properties, ordering);
+			ItemSorter itemSort = new DefaultItemSorter(new CaseInsensitivePropertyComparator());
+			BeanItemContainer ic = (BeanItemContainer) this.getContainerDataSource();
+			ic.setItemSorter(itemSort);
+            Object[] properties = {"anagrafica.cognome","anagrafica.nome"};
+            boolean[] ordering = { true,true};
+            sort(properties, ordering);
         }
     }
 

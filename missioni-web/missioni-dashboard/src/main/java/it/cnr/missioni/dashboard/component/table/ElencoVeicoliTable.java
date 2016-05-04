@@ -1,10 +1,14 @@
 package it.cnr.missioni.dashboard.component.table;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.DefaultItemSorter;
+import com.vaadin.data.util.ItemSorter;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+
+import it.cnr.missioni.dashboard.utility.CaseInsensitivePropertyComparator;
 import it.cnr.missioni.model.user.Veicolo;
 
 import java.util.List;
@@ -35,9 +39,12 @@ public final class ElencoVeicoliTable extends ITable.AbstractTable {
             setVisibleColumns("tipo", "targa", "cartaCircolazione", "polizzaAssicurativa", "veicoloPrincipale");
             setColumnHeaders("Tipo", "targa", "Carta Circolazione", "Polizza Assicurativa", "Veicolo Principale");
             setId("targa");
-//            Object[] properties = {"tipo", "targa"};
-//            boolean[] ordering = {false, false};
-//            sort(properties, ordering);
+			ItemSorter itemSort = new DefaultItemSorter(new CaseInsensitivePropertyComparator());
+			BeanItemContainer ic = (BeanItemContainer) this.getContainerDataSource();
+			ic.setItemSorter(itemSort);
+            Object[] properties = {"tipo", "targa"};
+            boolean[] ordering = {false, false};
+            sort(properties, ordering);
             setId("targa");
         }
     }

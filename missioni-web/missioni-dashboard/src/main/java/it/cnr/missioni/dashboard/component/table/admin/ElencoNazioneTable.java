@@ -1,7 +1,11 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.DefaultItemSorter;
+import com.vaadin.data.util.ItemSorter;
+
 import it.cnr.missioni.dashboard.component.table.ITable;
+import it.cnr.missioni.dashboard.utility.CaseInsensitivePropertyComparator;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
 
@@ -29,9 +33,12 @@ public final class ElencoNazioneTable extends ITable.AbstractTable {
                     new BeanItemContainer<Nazione>(Nazione.class, ((NazioneStore) nazioneStore).getNazione()));
             setVisibleColumns("value", "areaGeografica");
             setColumnHeaders("Nazione", "Area Geografica");
-//            Object[] properties = {"value"};
-//            boolean[] ordering = {true};
-//            sort(properties, ordering);
+			ItemSorter itemSort = new DefaultItemSorter(new CaseInsensitivePropertyComparator());
+			BeanItemContainer ic = (BeanItemContainer) this.getContainerDataSource();
+			ic.setItemSorter(itemSort);
+            Object[] properties = {"value"};
+            boolean[] ordering = {true};
+            sort(properties, ordering);
             setId("id");
         }
     }

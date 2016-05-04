@@ -1,11 +1,14 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.DefaultItemSorter;
+import com.vaadin.data.util.ItemSorter;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import it.cnr.missioni.dashboard.component.table.ITable;
+import it.cnr.missioni.dashboard.utility.CaseInsensitivePropertyComparator;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
 
@@ -36,9 +39,12 @@ public final class ElencoTipologiaSpesaTable extends ITable.AbstractTable {
                     new BeanItemContainer<TipologiaSpesa>(TipologiaSpesa.class, ((TipologiaSpesaStore) tipologiaSpesaStore).getTipologiaSpesa()));
             setVisibleColumns("value", "estera", "italia", "voceSpesa");
             setColumnHeaders("Descrizione", "Estera", "italia", "Voce Spesa");
-//            Object[] properties = {"value"};
-//            boolean[] ordering = {true};
-//            sort(properties, ordering);
+			ItemSorter itemSort = new DefaultItemSorter(new CaseInsensitivePropertyComparator());
+			BeanItemContainer ic = (BeanItemContainer) this.getContainerDataSource();
+			ic.setItemSorter(itemSort);
+            Object[] properties = {"value"};
+            boolean[] ordering = {true};
+            sort(properties, ordering);
             setId("id");
         }
     }

@@ -1,7 +1,11 @@
 package it.cnr.missioni.dashboard.component.table.admin;
 
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.DefaultItemSorter;
+import com.vaadin.data.util.ItemSorter;
+
 import it.cnr.missioni.dashboard.component.table.ITable;
+import it.cnr.missioni.dashboard.utility.CaseInsensitivePropertyComparator;
 import it.cnr.missioni.model.prenotazione.VeicoloCNR;
 import it.cnr.missioni.rest.api.response.veicoloCNR.VeicoloCNRStore;
 
@@ -40,9 +44,12 @@ public final class ElencoVeicoliCNRTable extends ITable.AbstractTable {
             setVisibleColumns("tipo", "targa", "cartaCircolazione", "polizzaAssicurativa", "stato");
             setColumnHeaders("Tipo", "targa", "Carta Circolazione", "Polizza Assicurativa", "Stato");
             setId("targa");
-//            Object[] properties = {"tipo", "targa"};
-//            boolean[] ordering = {true, false};
-//            sort(properties, ordering);
+			ItemSorter itemSort = new DefaultItemSorter(new CaseInsensitivePropertyComparator());
+			BeanItemContainer ic = (BeanItemContainer) this.getContainerDataSource();
+			ic.setItemSorter(itemSort);
+            Object[] properties = {"tipo", "targa"};
+            boolean[] ordering = {true, false};
+            sort(properties, ordering);
             setId("targa");
         }
     }
