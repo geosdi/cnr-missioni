@@ -1,0 +1,235 @@
+{
+  "list" : [ {
+    "id" : "7774a8b7-333a-47b7-a5d6-06940b187495",
+    "value" : "Altro mezzo trasporto",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "75d9b5e7-2896-4689-852b-b3336e9d3140",
+    "value" : "Pasto",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "PASTO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "f3cd10b0-54d7-4448-a1eb-564615583469",
+    "value" : "Aereo",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : true
+  }, {
+    "id" : "93e527f7-6146-49f4-b3c2-f93b0efb9087",
+    "value" : "Altro mezzo di trasporto",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "40264c7b-9cd8-47b3-8971-7865e4255e02",
+    "value" : "Spese visto",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "36dd9269-6949-456c-852b-7b01748a3590",
+    "value" : "Altro pasto",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "8d594414-c639-40be-b1f0-03c68a73d1bd",
+    "value" : "Nave",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "9d70c9b0-e7d7-4c3a-93fc-edc4320a0f95",
+    "value" : "Taxi",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "d07c430a-632a-4a5b-849b-2023e34c31b3",
+    "value" : "Altro",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "dcd95fbf-62ef-4c2c-892f-2e04232d0a60",
+    "value" : "Altro pasto",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "6be34381-fd29-492c-a786-9cd486b91141",
+    "value" : "Treno",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "e35151d8-a216-4164-b1ca-9c4bf62de579",
+    "value" : "Albergo",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "e1fff5b6-cc6f-4512-ba23-0748596514ed",
+    "value" : "Altre spese viaggio",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "459ff582-277d-4642-bf6f-b0aaed890d0a",
+    "value" : "Noleggio auto",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "74c5f6af-8eee-46a8-a0b1-5b04e066aaf0",
+    "value" : "Spese visto",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "2db0097b-558f-46b8-a0fc-7e4464aaad96",
+    "value" : "Altro Albergo",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "f00c5ee1-5fdb-4d05-bda7-940f2883c22c",
+    "value" : "Nave",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "6d3e9bfa-1346-48dc-ab74-b27def1957cf",
+    "value" : "Taxi",
+    "tipoTrattamento" : "TRATTAMENTO_ALTERNATIVO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : false,
+    "noCheckData" : false
+  }, {
+    "id" : "8d5fa895-3e23-4ba4-b1cf-471548232d50",
+    "value" : "Aereo",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : true
+  }, {
+    "id" : "8c8eb06c-e8c4-4794-a7f8-27641069bfb9",
+    "value" : "Autobus\\corriera",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "09a83b85-6ade-434b-b58f-7901cb79b7b3",
+    "value" : "Cuccetta",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "3064581b-c691-4ff8-8178-5ad5cccb69fc",
+    "value" : "Indennità kilometrica",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "f4e16c65-27b4-40c7-8dcf-d8a7e917b0e5",
+    "value" : "Iscrizione congresso",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : true
+  }, {
+    "id" : "b709c5ab-e6b0-43c9-bfdc-29d3344d5a12",
+    "value" : "Pedaggio autostrada",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "3e39cf60-44e0-4c12-a291-c24f2406ca07",
+    "value" : "Altri costi congressuali",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "34e2f20f-9518-4997-bd50-011e42b78c86",
+    "value" : "Altro",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "5b43fd7e-f161-4584-8505-87c494d2e3ac",
+    "value" : "Altro albergo",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "c0325940-5aae-421d-922c-0395f1b27ab8",
+    "value" : "Parcheggio",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  }, {
+    "id" : "dea83eff-3912-4b2a-a757-e99ef5578959",
+    "value" : "Spese bagagli",
+    "tipoTrattamento" : "RIMBORSO_DOCUMENTATO",
+    "voceSpesa" : "ALTRO",
+    "estera" : true,
+    "italia" : true,
+    "noCheckData" : false
+  } ]
+}

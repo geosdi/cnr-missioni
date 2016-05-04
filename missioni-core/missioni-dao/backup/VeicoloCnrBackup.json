@@ -1,0 +1,19 @@
+{
+  "list" : [ {
+    "id" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "tipo" : "PUNTO BIANCA EG462GM",
+    "targa" : "EG462GM",
+    "cartaCircolazione" : "XX",
+    "polizzaAssicurativa" : "XX",
+    "veicoloPrincipale" : false,
+    "stato" : "DISPONIBILE"
+  }, {
+    "id" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "tipo" : "PUNTO BLU ES578BM",
+    "targa" : "ES578BM",
+    "cartaCircolazione" : "X",
+    "polizzaAssicurativa" : "X",
+    "veicoloPrincipale" : false,
+    "stato" : "DISPONIBILE"
+  } ]
+}

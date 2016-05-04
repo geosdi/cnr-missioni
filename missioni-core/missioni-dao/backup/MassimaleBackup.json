@@ -1,0 +1,963 @@
+{
+  "list" : [ {
+    "id" : "67381d0b-eb93-4272-aaac-7528905f326b",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "0c1d6950-f194-4ed8-afbf-049ac2829c18",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "f018033f-9c7d-4141-9618-bac7117c9ded",
+    "value" : 40.0,
+    "areaGeografica" : "A",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "95c36312-59d4-49d8-8b0e-65f0bb7f42c9",
+    "value" : 60.0,
+    "areaGeografica" : "D",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "ea5c6a10-9ae5-4ae3-85b8-a490149a5ab6",
+    "value" : 65.0,
+    "areaGeografica" : "E",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "505aa18c-706d-449b-863f-f5352e2436b2",
+    "value" : 65.0,
+    "areaGeografica" : "E",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "7f43d5b5-8da7-42df-89cc-86100f89574e",
+    "value" : 60.0,
+    "areaGeografica" : "A",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "42ac5c61-8025-42c9-bd02-2defcba9499f",
+    "value" : 60.0,
+    "areaGeografica" : "C",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "c543c00c-9ffc-4389-a43c-97a59c8b2f5b",
+    "value" : 70.0,
+    "areaGeografica" : "D",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "d40f8e72-eb27-442d-b2f4-fb745e028602",
+    "value" : 80.0,
+    "areaGeografica" : "E",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "5ba7800f-f972-47fb-acda-2a23b5a412de",
+    "value" : 95.0,
+    "areaGeografica" : "G",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4375f3c1-1ddf-4e76-bfc6-e49929207737",
+    "value" : 95.0,
+    "areaGeografica" : "G",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "403825cf-efac-44ae-8094-0cdccfae5b21",
+    "value" : 44.26,
+    "areaGeografica" : "ITALIA",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 22.26
+  }, {
+    "id" : "7f049680-6fd8-4e9d-ad03-257fa6684ffc",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "f83818c5-7778-45b4-93f2-b6f792935bd2",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "88a6d3e4-42d0-4a03-a474-3b5303b46dbc",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "563bf504-6060-4197-b397-cefc22cb08f9",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "2aa9850f-885c-4e4b-a397-7eebbdc7ddb9",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "d2c9227b-c082-4943-b861-4b7c5aa11d8e",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "50c99311-3c93-4392-913f-750569304d79",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "0b3ae845-b65d-4d7f-a3c1-bcac4e0c886f",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "10c807e0-2852-4e4d-835b-bb6f8263461d",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "8acd34a1-cd58-4832-9c67-283dbdefa407",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "a28e0a72-dc82-4af9-acab-18568467cd42",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "c6d65cfc-081b-4f3b-9329-40357350f157",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "25e0d8b7-f87a-4462-add5-418d532922ec",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "9daa41ac-b85c-46f7-92d3-454102ecdf79",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "1144f293-77fd-4ae5-898f-334bdcde08fa",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "42ff4a99-917a-4a94-8c70-83a670c16c75",
+    "value" : 40.0,
+    "areaGeografica" : "B",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "2ba10f0e-ab0f-4984-b813-0a310bd4d967",
+    "value" : 45.0,
+    "areaGeografica" : "C",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "8a43d50e-abe5-4a3d-9409-d235b8fa88fb",
+    "value" : 45.0,
+    "areaGeografica" : "C",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "e8ad8540-7f71-4e1d-88d2-36471c82b28b",
+    "value" : 45.0,
+    "areaGeografica" : "C",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "f99f28c2-955b-4edb-ac77-7ff9268909fa",
+    "value" : 45.0,
+    "areaGeografica" : "C",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "6d7839c7-9030-429d-84af-28ce84875ce4",
+    "value" : 60.0,
+    "areaGeografica" : "D",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "01c9d68d-0027-4fcc-b684-d7ba124451c5",
+    "value" : 65.0,
+    "areaGeografica" : "E",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "f32584d0-bd88-4424-b5ce-112d41374c11",
+    "value" : 65.0,
+    "areaGeografica" : "E",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "3c173ac0-0162-48b4-b5fe-859832aaccbe",
+    "value" : 70.0,
+    "areaGeografica" : "F",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "7baa8a4f-6115-45e1-975e-a69f9b2d9dc9",
+    "value" : 70.0,
+    "areaGeografica" : "F",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4868456e-c3e6-43bc-b865-937829c86cbc",
+    "value" : 70.0,
+    "areaGeografica" : "F",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "056ffc7e-41d0-4b54-bc3c-baea6e4875ef",
+    "value" : 75.0,
+    "areaGeografica" : "G",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "c90bf408-33ae-4cba-86e1-1430596ae5ed",
+    "value" : 75.0,
+    "areaGeografica" : "G",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "f0d14057-3b66-4d9c-921d-9a579bcee679",
+    "value" : 75.0,
+    "areaGeografica" : "G",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "ec7d8f92-22c0-44ce-b63a-2bb5d4f6ee7a",
+    "value" : 60.0,
+    "areaGeografica" : "A",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "fe3368d7-545e-46ad-91af-63eeeec5ce64",
+    "value" : 60.0,
+    "areaGeografica" : "B",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "9b579cb7-f3a3-4370-9c2b-b7931f426213",
+    "value" : 85.0,
+    "areaGeografica" : "F",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "37a7c3e1-6925-4b1c-bd4e-228dce7a09e2",
+    "value" : 85.0,
+    "areaGeografica" : "F",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "643cdd22-a474-46ef-895a-7afeb70308a6",
+    "value" : 61.1,
+    "areaGeografica" : "ITALIA",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 30.55
+  }, {
+    "id" : "10742784-50a6-4bbe-b2a5-314561d37f09",
+    "value" : 44.26,
+    "areaGeografica" : "ITALIA",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 22.26
+  }, {
+    "id" : "844586d9-69a1-44c6-9258-99d679a486f5",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "dea1dd69-109b-4034-b31a-171072ddf72b",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4ccd3d0f-f1a6-4d54-abe5-0771c0e85e03",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "8dac36bb-ff25-4c35-83cc-a02ad67d8b3c",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "2def61e9-beae-463c-b205-004b2e90c290",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "7c5effab-e17b-4411-939e-b7161e0f9119",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "7b1cb67e-90b7-4f4a-af2a-219d8d9566a6",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "c7f60c57-c94a-4d83-8817-58e17380a7bb",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "b0ad5f4c-ecac-42bb-9324-bb079bfc8d85",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "ef735b5f-d84a-46af-b320-6307bf94afd7",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "e99b2b08-d2ec-43b1-9d32-46e600c6edb4",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "68116ece-af01-4e7a-866e-97b3284c58f4",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "75e5519c-d131-4821-9e9f-d8cf1c98ac37",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "ea8ed3a9-e574-4e01-b159-fa42ba860855",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4e431ac7-6abc-4db6-8eef-797c7fe1b5f4",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "45a2c605-ed69-488a-9bcd-99e031ec8a34",
+    "value" : 40.0,
+    "areaGeografica" : "A",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "97bc0d0f-da4c-4d65-9811-d6be8b6557d9",
+    "value" : 40.0,
+    "areaGeografica" : "A",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "bdd72469-fc09-49b3-89fd-4a2a2494e64c",
+    "value" : 40.0,
+    "areaGeografica" : "B",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "10cecb4d-69ee-4de9-8a02-dfd941f62cf5",
+    "value" : 40.0,
+    "areaGeografica" : "B",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "a00dabfb-1eb2-484c-b3b1-9358de1a3589",
+    "value" : 60.0,
+    "areaGeografica" : "D",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "f008f3f2-e387-468c-9071-50a79c03dfa5",
+    "value" : 60.0,
+    "areaGeografica" : "D",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "b2df8ac8-4568-4d4f-8245-8131cba16e00",
+    "value" : 60.0,
+    "areaGeografica" : "A",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "52bf2717-afc9-4150-a277-a6ad29923ec6",
+    "value" : 60.0,
+    "areaGeografica" : "B",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "780f5a2f-6033-401a-a43c-64475b645edf",
+    "value" : 60.0,
+    "areaGeografica" : "C",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "748733c5-492b-47b9-8d7a-b34caf440603",
+    "value" : 70.0,
+    "areaGeografica" : "D",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "52c8de98-a41b-4b11-aa92-19428ec4988d",
+    "value" : 80.0,
+    "areaGeografica" : "E",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "fffbfba9-e88a-412b-9cd1-eb13f8e8f624",
+    "value" : 85.0,
+    "areaGeografica" : "F",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "6298f74e-e459-4a30-bba3-fdf9afa8c7b7",
+    "value" : 95.0,
+    "areaGeografica" : "G",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "3f3305a2-526b-4ca6-b736-3d1a0152859a",
+    "value" : 61.1,
+    "areaGeografica" : "ITALIA",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 30.55
+  }, {
+    "id" : "3297b658-9f3a-44b3-8f80-dcc0ddb3d298",
+    "value" : 44.26,
+    "areaGeografica" : "ITALIA",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 22.26
+  }, {
+    "id" : "c68a02ac-27ea-4483-adec-887366494770",
+    "value" : 44.26,
+    "areaGeografica" : "ITALIA",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 22.26
+  }, {
+    "id" : "4e2c478b-25ce-4b8f-899e-ecfa3b7f389c",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "e30b29c4-44a7-4a41-bc9c-c2255765cfc2",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "a11fa798-a686-4bcc-afe9-824e7aaf13bc",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "386977c2-aa35-43b5-aefc-3f9b652a81be",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4c1bc78b-4cc0-4979-9e91-85f087d1104c",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "fc559d3e-bc8c-4305-9304-4e65a7668759",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "c43134ec-8595-4261-bfbb-90fa743c97f3",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "85f6d5f4-27ab-4036-b211-67d7310fa30b",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "f7f2aa51-14e3-42b2-9a03-c2496b1ab11b",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "b8801b92-364d-408d-a82b-44369c4b3a09",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "88fc5ebe-9f15-424e-aab4-947c9cea1c78",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "7a3ee9aa-d31e-4bb7-a821-e152ce8e6160",
+    "value" : 125.0,
+    "areaGeografica" : "D",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "414d3520-bb46-4e86-8ee3-53753b6e5729",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "779bf43c-1b14-425e-ae93-7381e32202fb",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "557fcfbe-86be-4708-81a3-e172bcdf9e08",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "7e5e4971-1ea9-418c-b036-7c4dc9be7f4b",
+    "value" : 40.0,
+    "areaGeografica" : "A",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4b016272-dfbc-46f6-9ece-7e1643d9fd67",
+    "value" : 40.0,
+    "areaGeografica" : "B",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4a9a3116-19b4-42b9-a281-5f60adeb6444",
+    "value" : 65.0,
+    "areaGeografica" : "E",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "9dc1c3dd-0c2d-4306-a534-c81c8442d2e1",
+    "value" : 70.0,
+    "areaGeografica" : "D",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4ed3af54-ccc1-4fef-a76e-31b71bdf2e9f",
+    "value" : 80.0,
+    "areaGeografica" : "E",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "86f81ffc-5f15-46cd-a0da-9c74cfeed3b6",
+    "value" : 61.1,
+    "areaGeografica" : "ITALIA",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 30.55
+  }, {
+    "id" : "34577d3c-9651-40cb-b851-c0487e9becac",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "11769d55-7676-4205-9a24-424030492787",
+    "value" : 120.0,
+    "areaGeografica" : "C",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "5243fc9b-eeaa-41aa-858a-cf997933b5cb",
+    "value" : 140.0,
+    "areaGeografica" : "F",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "406cd9d1-d435-484c-90ba-6ff8fbf1d789",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "II",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "4b0d95d0-43a8-4e0e-80b0-1323792aa30f",
+    "value" : 120.0,
+    "areaGeografica" : "A",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "522f8e13-307d-440f-a3de-14b943088993",
+    "value" : 120.0,
+    "areaGeografica" : "B",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "552c3704-22c8-4649-aecb-7c4993818c37",
+    "value" : 130.0,
+    "areaGeografica" : "E",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "bf58a51b-d743-43af-b97f-8a0f4f576309",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "a43b5549-840f-4814-ba47-15a96afe824b",
+    "value" : 155.0,
+    "areaGeografica" : "G",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "TRATTAMENTO_ALTERNATIVO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "84c0089e-59f6-45cc-8398-9964492fedca",
+    "value" : 40.0,
+    "areaGeografica" : "A",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "89bd7916-f5d0-40c9-867d-ab243e288d0c",
+    "value" : 40.0,
+    "areaGeografica" : "B",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "405b8c46-da41-48e2-8618-c9b4147849f4",
+    "value" : 45.0,
+    "areaGeografica" : "C",
+    "livello" : "VII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "ecb8afc8-6e06-4970-b1ca-1a038fc83cdf",
+    "value" : 60.0,
+    "areaGeografica" : "D",
+    "livello" : "IV",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "b323b0cd-4da7-460c-b707-7b1bbdf43802",
+    "value" : 70.0,
+    "areaGeografica" : "F",
+    "livello" : "VI",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "8e53e6b4-f93e-4691-bc47-33dba56ffabd",
+    "value" : 70.0,
+    "areaGeografica" : "F",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "cb75549e-a0b1-4328-a876-c67a3acadd5c",
+    "value" : 75.0,
+    "areaGeografica" : "G",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "703ebce2-b0a7-4070-b9d2-8d49242ce684",
+    "value" : 75.0,
+    "areaGeografica" : "G",
+    "livello" : "VIII",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "418966d3-17f2-4888-a8e4-a341eceb664f",
+    "value" : 60.0,
+    "areaGeografica" : "B",
+    "livello" : "III",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "99d5b066-7354-478f-b1c5-9c009d160910",
+    "value" : 60.0,
+    "areaGeografica" : "C",
+    "livello" : "I",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : null
+  }, {
+    "id" : "7f18079e-f803-4806-88fb-b22948b57ac4",
+    "value" : 44.26,
+    "areaGeografica" : "ITALIA",
+    "livello" : "V",
+    "descrizione" : null,
+    "tipo" : "RIMBORSO_DOCUMENTATO",
+    "valueMezzaGiornata" : 22.26
+  } ]
+}

@@ -1,0 +1,3327 @@
+{
+  "list" : [ {
+    "id" : "26ef97f2-0c4d-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461743618655,
+    "dateLastModified" : 1461764193438,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Filomena",
+      "cognome" : "Pietrapertosa",
+      "codiceFiscale" : "PTRFMN73P70D971Y",
+      "dataNascita" : 118191600000,
+      "luogoNascita" : "Genzano di Lucania (PZ)",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Pignola",
+      "indirizzo" : "C.da Magnone s.n.",
+      "domicilioFiscale" : "Potenza Via Poggio delle Macine, 30"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2179775B",
+      "dataRilascio" : 698886000000,
+      "validaFinoAl" : 1645657200000,
+      "rilasciataDa" : "Prefetto di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "9886",
+      "codiceTerzo" : "23143",
+      "mail" : "filomena.pietrapertosa@imaa.cnr.it",
+      "iban" : "IT27I0100504200000000008698"
+    },
+    "credenziali" : {
+      "username" : "filomena.pietrapertosa",
+      "password" : "32c45757c977221ffdf97d3fe98a03d1",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "d8a2a18c-07c4-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461245271069,
+    "dateLastModified" : 1461245920708,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Margherita",
+      "cognome" : "Santarsiere",
+      "codiceFiscale" : "SNTMGH63L57G942X",
+      "dataNascita" : -203907600000,
+      "luogoNascita" : "Potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Viale Guglielmo Marconi, 116",
+      "domicilioFiscale" : "Viale Guglielmo Marconi, 116"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2083843P",
+      "dataRilascio" : 1393282800000,
+      "validaFinoAl" : 1563314400000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "02",
+      "descrizioneQualifica" : "Collaboratore di amministrazione",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "5860",
+      "codiceTerzo" : "2644",
+      "mail" : "margherita.santarsiere@imaa.cnr.it",
+      "iban" : "IT97Q0100504200000000006462"
+    },
+    "credenziali" : {
+      "username" : "margherita.santarsiere",
+      "password" : "7d0d9ba997cec3fc6e9e33d02eb5a819",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "00486088-0c7c-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461763740153,
+    "dateLastModified" : 1461764124126,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Monica",
+      "cognome" : "Salvia",
+      "codiceFiscale" : "SLVMNC72E63G942O",
+      "dataNascita" : 75423600000,
+      "luogoNascita" : "Potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Vineola 133/B",
+      "domicilioFiscale" : "Via Vineola 133/B, Potenza"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ216517OC",
+      "dataRilascio" : 667177200000,
+      "validaFinoAl" : 1629756000000,
+      "rilasciataDa" : "Prefetto di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8329",
+      "codiceTerzo" : "3857",
+      "mail" : "monica.salvia@imaa.cnr.it",
+      "iban" : "IT20U0578704205078572701444"
+    },
+    "credenziali" : {
+      "username" : "monica.salvia",
+      "password" : "b2bb5b58ea2dada8064312819de17f21",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "5af34ae8-0bc7-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461686153359,
+    "dateLastModified" : 1461686768140,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Nicola",
+      "cognome" : "Afflitto",
+      "codiceFiscale" : "FFLNCL63T30G942T",
+      "dataNascita" : -189565200000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Pietragalla",
+      "indirizzo" : "Via Duca D'Aosta, 7",
+      "domicilioFiscale" : "Via Duca D'Aosta, 7"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2077468K",
+      "dataRilascio" : 427932000000,
+      "validaFinoAl" : 1703890800000,
+      "rilasciataDa" : "Prefettura di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "V",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8646",
+      "codiceTerzo" : "4143",
+      "mail" : "nicola.afflitto@imaa.cnr.it",
+      "iban" : "IT48S0100504200000000009428"
+    },
+    "credenziali" : {
+      "username" : "nicola.afflitto",
+      "password" : "370d5203be883d3a180a9c3d6cf71408",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "d3819e6e-0c46-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461740901703,
+    "dateLastModified" : 1461741101816,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "mariapia",
+      "cognome" : "faruolo",
+      "codiceFiscale" : "FRLMRP80A41G942Z",
+      "dataNascita" : 315529200000,
+      "luogoNascita" : "potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "tito",
+      "indirizzo" : "via nuova 30",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5176538G",
+      "dataRilascio" : 916441200000,
+      "validaFinoAl" : 1547852400000,
+      "rilasciataDa" : "motorizzazione civile di potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "17082",
+      "codiceTerzo" : "107898",
+      "mail" : "mariapia.faruolo@imaa.cnr.it",
+      "iban" : "IT85T0301503200000002890320"
+    },
+    "credenziali" : {
+      "username" : "mariapia.faruolo",
+      "password" : "09eb0ad5574362fc0c2865f9f58b40fc",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "8057726c-0c45-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461740332677,
+    "dateLastModified" : 1461740332677,
+    "registrazioneCompletata" : false,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : null,
+      "cognome" : null,
+      "codiceFiscale" : null,
+      "dataNascita" : null,
+      "luogoNascita" : null,
+      "genere" : null
+    },
+    "residenza" : {
+      "comune" : null,
+      "indirizzo" : null,
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : null,
+      "dataRilascio" : null,
+      "validaFinoAl" : null,
+      "rilasciataDa" : null
+    },
+    "datiCNR" : {
+      "livello" : null,
+      "idQualifica" : null,
+      "descrizioneQualifica" : null,
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : null,
+      "codiceTerzo" : null,
+      "mail" : null,
+      "iban" : null
+    },
+    "credenziali" : {
+      "username" : "carolina.flizzola",
+      "password" : "52395d299d97d041cc675251a9811251",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "01381b09-0de3-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461917931045,
+    "dateLastModified" : 1462197856711,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Nicola",
+      "cognome" : "Pergola",
+      "codiceFiscale" : "PRGNCL68A05G942H",
+      "dataNascita" : -62816400000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Vienna 1",
+      "domicilioFiscale" : "Via Vienna 1"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2110651W",
+      "dataRilascio" : 526687200000,
+      "validaFinoAl" : 1473112800000,
+      "rilasciataDa" : "Prefettura di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "5843",
+      "codiceTerzo" : "2633",
+      "mail" : "nicola.pergola@imaa.cnr.it",
+      "iban" : "IT79T0101004200100000101285"
+    },
+    "credenziali" : {
+      "username" : "nicola.pergola",
+      "password" : "41da79c1abca9abd8641babf70d32e1e",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : {
+      "7d93c1f9-fac8-42ca-9d95-f1caf7292f37" : {
+        "id" : "7d93c1f9-fac8-42ca-9d95-f1caf7292f37",
+        "tipo" : "MAZDA 5",
+        "targa" : "DB034SP",
+        "cartaCircolazione" : "A003584MT06",
+        "polizzaAssicurativa" : "30/43475414",
+        "veicoloPrincipale" : true
+      }
+    },
+    "veicoloPrincipaleSettato" : true,
+    "veicoloPrincipale" : {
+      "id" : "7d93c1f9-fac8-42ca-9d95-f1caf7292f37",
+      "tipo" : "MAZDA 5",
+      "targa" : "DB034SP",
+      "cartaCircolazione" : "A003584MT06",
+      "polizzaAssicurativa" : "30/43475414",
+      "veicoloPrincipale" : true
+    }
+  }, {
+    "id" : "6bd202d0-0c49-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461742016236,
+    "dateLastModified" : 1461923999365,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "LUCIA",
+      "cognome" : "MONA",
+      "codiceFiscale" : "MNOLCU76R58C129C",
+      "dataNascita" : 214441200000,
+      "luogoNascita" : "CASTELLAMMARE DI STABIA ",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "PIGNOLA",
+      "indirizzo" : "CONTRADA PANTANO 40",
+      "domicilioFiscale" : "CONTRADA PANTANO 40"
+    },
+    "patente" : {
+      "numeroPatente" : "NA5427548N",
+      "dataRilascio" : 954885600000,
+      "validaFinoAl" : 1585177200000,
+      "rilasciataDa" : "MTCT-NA"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "9640",
+      "codiceTerzo" : "19573",
+      "mail" : "lucia.mona@imaa.cnr.it",
+      "iban" : "IT55W0101040290000065000070"
+    },
+    "credenziali" : {
+      "username" : "lucia.mona",
+      "password" : "abc34f90c5be7e7ff33d15dbde2a0105",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "528f7b7c-0de7-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461919785499,
+    "dateLastModified" : 1461936441269,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Enzo",
+      "cognome" : "Rizzo",
+      "codiceFiscale" : "RZZNZE73D28Z700F",
+      "dataNascita" : 104799600000,
+      "luogoNascita" : "Melbourne (Australia)",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Tito",
+      "indirizzo" : "via Roma, 413",
+      "domicilioFiscale" : "via Roma, 413"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2203817L",
+      "dataRilascio" : 768693600000,
+      "validaFinoAl" : 1636326000000,
+      "rilasciataDa" : "Prefettura di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "10125",
+      "codiceTerzo" : "24719",
+      "mail" : "enzo.rizzo@imaa.cnr.it",
+      "iban" : "IT61H0760104200000013948757"
+    },
+    "credenziali" : {
+      "username" : "enzo.rizzo",
+      "password" : "2c989ac55d1068a6e00373c801675416",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "45bf9f82-106b-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462196359902,
+    "dateLastModified" : 1462197029556,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Luigi",
+      "cognome" : "Capozzoli",
+      "codiceFiscale" : "Cpzlgu84h28g793h",
+      "dataNascita" : 457221600000,
+      "luogoNascita" : "Polla",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Teggiano",
+      "indirizzo" : "Via Santa Lucia Filippini",
+      "domicilioFiscale" : "Via Santa Lucia Filippini, snc, Teggiano (SA)"
+    },
+    "patente" : {
+      "numeroPatente" : "SA5252533K",
+      "dataRilascio" : 1035759600000,
+      "validaFinoAl" : 1687903200000,
+      "rilasciataDa" : "MCTC-SA"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "  151934",
+      "codiceTerzo" : " ",
+      "mail" : "luigi.capozzoli@imaa.cnr.it",
+      "iban" : "IT97C0760115200000008096311"
+    },
+    "credenziali" : {
+      "username" : "luigi.capozzoli",
+      "password" : "49bdf681a1a5f9cd006f10b4acfd8285",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "96e27f43-106b-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462196496028,
+    "dateLastModified" : 1462197203040,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "felice",
+      "cognome" : "perciante",
+      "codiceFiscale" : "PRCFLC82H23E409N",
+      "dataNascita" : 393631200000,
+      "luogoNascita" : "lagonegro",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "lagonegro",
+      "indirizzo" : "via cristoforo grossi, 06",
+      "domicilioFiscale" : "via cristoforo grossi, 06"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5049841D",
+      "dataRilascio" : 971474400000,
+      "validaFinoAl" : 1602367200000,
+      "rilasciataDa" : "MCTC-PZ"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "03",
+      "descrizioneQualifica" : "Borsista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "185300",
+      "codiceTerzo" : null,
+      "mail" : "felice.perciante@imaa.cnr.it",
+      "iban" : "IT44F0200832974001232658191"
+    },
+    "credenziali" : {
+      "username" : "felice.perciante",
+      "password" : "733b63699feff8d4a695d3dc884b260d",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "e6dcb353-0d10-11e6-a675-005056a63867",
+    "dataRegistrazione" : 1461827692405,
+    "dateLastModified" : 1461828553738,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Giuseppe",
+      "cognome" : "D'Amico",
+      "codiceFiscale" : "DMCGPP73R08G793E",
+      "dataNascita" : 118882800000,
+      "luogoNascita" : "Polla (SA)",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Polla (SA)",
+      "indirizzo" : "Via Giardini, 5",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "U16384041C",
+      "dataRilascio" : 1097791200000,
+      "validaFinoAl" : 1645052400000,
+      "rilasciataDa" : "U.C.O."
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "10333",
+      "codiceTerzo" : "99565",
+      "mail" : "giuseppe.damico@imaa.cnr.it",
+      "iban" : "IT59 P054 2476 3200 00000150 012 "
+    },
+    "credenziali" : {
+      "username" : "gdamico",
+      "password" : "c8b8a8566fd101f78fb158527029e147",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "e3d19a3b-905c-4ef5-863e-a86b68a4318d",
+    "dataRegistrazione" : 1458744757152,
+    "dateLastModified" : 1461744152723,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Luigi",
+      "cognome" : "Franco",
+      "codiceFiscale" : "FRNLGU74C02G793K",
+      "dataNascita" : 131414400000,
+      "luogoNascita" : "Polla",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "S.Arsenio",
+      "indirizzo" : "Via Roma 27",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "SA2548911N",
+      "dataRilascio" : 1008374400000,
+      "validaFinoAl" : 1677715200000,
+      "rilasciataDa" : "MCTC"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "07",
+      "descrizioneQualifica" : "Tecnologo",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "14343",
+      "codiceTerzo" : "114646",
+      "mail" : "luigi.franco@imaa.cnr.it",
+      "iban" : "IT50Z0878476440010000011636"
+    },
+    "credenziali" : {
+      "username" : "luigi.franco@imaa.cnr.it",
+      "password" : "bb773422ba3e90814070c46c55e4da71",
+      "ruoloUtente" : "UTENTE_ADMIN"
+    },
+    "mappaVeicolo" : {
+      "01" : {
+        "id" : "01",
+        "tipo" : "Golf",
+        "targa" : "DK969XJ",
+        "cartaCircolazione" : "xxxxx",
+        "polizzaAssicurativa" : "xxxxx",
+        "veicoloPrincipale" : true
+      }
+    },
+    "veicoloPrincipaleSettato" : true,
+    "veicoloPrincipale" : {
+      "id" : "01",
+      "tipo" : "Golf",
+      "targa" : "DK969XJ",
+      "cartaCircolazione" : "xxxxx",
+      "polizzaAssicurativa" : "xxxxx",
+      "veicoloPrincipale" : true
+    }
+  }, {
+    "id" : "f043d128-0dd5-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461912319136,
+    "dateLastModified" : 1462349331721,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Antonio",
+      "cognome" : "Satriani",
+      "codiceFiscale" : "STRNTN62L30G942K",
+      "dataNascita" : -234320400000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "via Sant'Elia 82 Potenza",
+      "domicilioFiscale" : " via Sant'Elia 82 Potenza"
+    },
+    "patente" : {
+      "numeroPatente" : "U1C686533K",
+      "dataRilascio" : 1395183600000,
+      "validaFinoAl" : 1564437600000,
+      "rilasciataDa" : "MTI-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "1613",
+      "codiceTerzo" : "809",
+      "mail" : "antonio.satriani@imaa.cnr.it",
+      "iban" : "IT31F0100504200000000008313"
+    },
+    "credenziali" : {
+      "username" : "antonio.satriani",
+      "password" : "1dc685a407282c9dd4d3ff8658fcec4e",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "547c7ae4-0c5b-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461749708030,
+    "dateLastModified" : 1462351528539,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Jessica",
+      "cognome" : "Bellanova",
+      "codiceFiscale" : "BLLJSC77C61Z112A",
+      "dataNascita" : 227746800000,
+      "luogoNascita" : "Norimberga (Germania)",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Satriano di Lucania",
+      "indirizzo" : "Via Nazionale, 8",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "U1L988160J",
+      "dataRilascio" : 1443218400000,
+      "validaFinoAl" : 1774047600000,
+      "rilasciataDa" : "MIT - UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "73849",
+      "codiceTerzo" : "73849",
+      "mail" : "jessica.bellanova@imaa.cnr.it",
+      "iban" : "IT21 B076 0115 9000 0006 0233 475"
+    },
+    "credenziali" : {
+      "username" : "jessica.bellanova",
+      "password" : "27b3ed57376dfb1191d63b7e8ea29216",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "4cc65ccd-0e11-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461937814659,
+    "dateLastModified" : 1461938484427,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Pietro Pasquale",
+      "cognome" : "Ragone",
+      "codiceFiscale" : "RGNPRP60D17F052Y",
+      "dataNascita" : -306378000000,
+      "luogoNascita" : "Matera",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Salandra",
+      "indirizzo" : "Via Giuseppe Usricchio, 3",
+      "domicilioFiscale" : "Salandra"
+    },
+    "patente" : {
+      "numeroPatente" : "MT5141668C",
+      "dataRilascio" : 1406152800000,
+      "validaFinoAl" : 1587074400000,
+      "rilasciataDa" : "MC-MT"
+    },
+    "datiCNR" : {
+      "livello" : "IV",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "18160",
+      "codiceTerzo" : "156812",
+      "mail" : "pietropasquale.ragone@imaa.cnr.it",
+      "iban" : "IT16K0538703207000002038202"
+    },
+    "credenziali" : {
+      "username" : "piero1960",
+      "password" : "ec0790e208f9b1aac058e306b564d2b7",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "d416b7cb-11da-11e6-942d-005056a63867",
+    "dataRegistrazione" : 1462354224010,
+    "dateLastModified" : 1462356300150,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Luciano",
+      "cognome" : "Telesca",
+      "codiceFiscale" : "TLSLCN68H11H307I",
+      "dataNascita" : -49168800000,
+      "luogoNascita" : "Rionero in Vulture",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Giovanni XXIII, 23",
+      "domicilioFiscale" : "Via Giovanni XXIII, 23, 85100 Potenza"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2189198L",
+      "dataRilascio" : 722127600000,
+      "validaFinoAl" : 1984345200000,
+      "rilasciataDa" : "PREFETTO DI POTENZA"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8699",
+      "codiceTerzo" : "4196",
+      "mail" : "luciano.telesca@imaa.cnr.it",
+      "iban" : "IT98E0760104200001013719891"
+    },
+    "credenziali" : {
+      "username" : "lucianotelesca",
+      "password" : "9faa8e532a9dc0a637b8a2418f81afdf",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "b38cfbc5-0bc6-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461685872510,
+    "dateLastModified" : 1461745738923,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Luca",
+      "cognome" : "Medici",
+      "codiceFiscale" : "MDCLCU65E05I462C",
+      "dataNascita" : -147056400000,
+      "luogoNascita" : "Sassuolo",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Sassuolo",
+      "indirizzo" : "Piazza R. Rossellini 23",
+      "domicilioFiscale" : "Sassuolo"
+    },
+    "patente" : {
+      "numeroPatente" : "U1G760848K",
+      "dataRilascio" : 1419980400000,
+      "validaFinoAl" : 1746396000000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8072",
+      "codiceTerzo" : "3634",
+      "mail" : "luca.medici@imaa.cnr.it",
+      "iban" : "IT14C0200867015000020146981"
+    },
+    "credenziali" : {
+      "username" : "luca.medici",
+      "password" : "b6d607f58a4f0c3157be7d3d88f60811",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : {
+      "0312ac8b-4733-4575-88fa-939f3e42b8cf" : {
+        "id" : "0312ac8b-4733-4575-88fa-939f3e42b8cf",
+        "tipo" : "Toyota Corolla",
+        "targa" : "DD630RK",
+        "cartaCircolazione" : "A034950MO06",
+        "polizzaAssicurativa" : "Italiana Assicurazioni",
+        "veicoloPrincipale" : true
+      }
+    },
+    "veicoloPrincipaleSettato" : true,
+    "veicoloPrincipale" : {
+      "id" : "0312ac8b-4733-4575-88fa-939f3e42b8cf",
+      "tipo" : "Toyota Corolla",
+      "targa" : "DD630RK",
+      "cartaCircolazione" : "A034950MO06",
+      "polizzaAssicurativa" : "Italiana Assicurazioni",
+      "veicoloPrincipale" : true
+    }
+  }, {
+    "id" : "bf045f95-f10a-11e5-9c1b-005056a63867",
+    "dataRegistrazione" : 1458746415696,
+    "dateLastModified" : 1461852666297,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Giuseppe",
+      "cognome" : "La Scaleia",
+      "codiceFiscale" : "LSCGPP77M16G793S",
+      "dataNascita" : 240530400000,
+      "luogoNascita" : "Polla",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Marsicovetere",
+      "indirizzo" : "Via provinciale 169",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "pz5031765h",
+      "dataRilascio" : 913417200000,
+      "validaFinoAl" : 1544310000000,
+      "rilasciataDa" : "MCTC di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : "e3d19a3b-905c-4ef5-863e-a86b68a4318d",
+      "shortDescriptionDatoreLavoro" : "Franco Luigi",
+      "matricola" : "12828",
+      "codiceTerzo" : null,
+      "mail" : "glascaleia@gmail.com",
+      "iban" : " IT41W0760104200000097831044"
+    },
+    "credenziali" : {
+      "username" : "glascaleia",
+      "password" : "497b8c28e0d5a465614b2742bbdacb6f",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "fcbb38f0-0dec-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461922218488,
+    "dateLastModified" : 1461922703416,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Claudia",
+      "cognome" : "Belviso",
+      "codiceFiscale" : "BLVCLD72B50G942N",
+      "dataNascita" : 66524400000,
+      "luogoNascita" : "Potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Tirreno 4",
+      "domicilioFiscale" : "Via Tirreno 4"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2164965X",
+      "dataRilascio" : 661388400000,
+      "validaFinoAl" : 1608073200000,
+      "rilasciataDa" : "Prefettura di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12830",
+      "codiceTerzo" : "54020",
+      "mail" : "claudia.belviso@imaa.cnr.it",
+      "iban" : "IT96G0103004200000000323843"
+    },
+    "credenziali" : {
+      "username" : "claudia.belviso@imaa.cnr.it",
+      "password" : "e7920c249850bef05923d6e2a0ab6517",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "4e30483d-0bb2-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461677112511,
+    "dateLastModified" : 1461689520665,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Aldo",
+      "cognome" : "Giunta",
+      "codiceFiscale" : "GNTLDA77E21F839N",
+      "dataNascita" : 233017200000,
+      "luogoNascita" : "Napoli",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Napoli",
+      "indirizzo" : "Via Emilio Scaglione 240",
+      "domicilioFiscale" : "Via Emilio Scaglione 240"
+    },
+    "patente" : {
+      "numeroPatente" : "NA7060384X",
+      "dataRilascio" : 1448665200000,
+      "validaFinoAl" : 1779314400000,
+      "rilasciataDa" : "Motorizzazione Civile di Napoli"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "11288",
+      "codiceTerzo" : "98798",
+      "mail" : "aldo.giunta@imaa.cnr.it",
+      "iban" : "IT45J0760103400001011049473"
+    },
+    "credenziali" : {
+      "username" : "aldo.giunta",
+      "password" : "257743bb69ffa4ab129549d1381853c5",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "34c3a129-0c7d-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461764257700,
+    "dateLastModified" : 1461764257700,
+    "registrazioneCompletata" : false,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : null,
+      "cognome" : null,
+      "codiceFiscale" : null,
+      "dataNascita" : null,
+      "luogoNascita" : null,
+      "genere" : null
+    },
+    "residenza" : {
+      "comune" : null,
+      "indirizzo" : null,
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : null,
+      "dataRilascio" : null,
+      "validaFinoAl" : null,
+      "rilasciataDa" : null
+    },
+    "datiCNR" : {
+      "livello" : null,
+      "idQualifica" : null,
+      "descrizioneQualifica" : null,
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : null,
+      "codiceTerzo" : null,
+      "mail" : null,
+      "iban" : null
+    },
+    "credenziali" : {
+      "username" : "mrgallipoli",
+      "password" : "656b84276837a03dc098b925736fe644",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "a44c504b-070e-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461167014749,
+    "dateLastModified" : 1461167014749,
+    "registrazioneCompletata" : false,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : null,
+      "cognome" : null,
+      "codiceFiscale" : null,
+      "dataNascita" : null,
+      "luogoNascita" : null,
+      "genere" : null
+    },
+    "residenza" : {
+      "comune" : null,
+      "indirizzo" : null,
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : null,
+      "dataRilascio" : null,
+      "validaFinoAl" : null,
+      "rilasciataDa" : null
+    },
+    "datiCNR" : {
+      "livello" : null,
+      "idQualifica" : null,
+      "descrizioneQualifica" : null,
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : null,
+      "codiceTerzo" : null,
+      "mail" : null,
+      "iban" : null
+    },
+    "credenziali" : {
+      "username" : "ciao",
+      "password" : "d0970714757783e6cf17b26fb8e2298f",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "27151826-0bc7-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461686066335,
+    "dateLastModified" : 1461686066335,
+    "registrazioneCompletata" : false,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : null,
+      "cognome" : null,
+      "codiceFiscale" : null,
+      "dataNascita" : null,
+      "luogoNascita" : null,
+      "genere" : null
+    },
+    "residenza" : {
+      "comune" : null,
+      "indirizzo" : null,
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : null,
+      "dataRilascio" : null,
+      "validaFinoAl" : null,
+      "rilasciataDa" : null
+    },
+    "datiCNR" : {
+      "livello" : null,
+      "idQualifica" : null,
+      "descrizioneQualifica" : null,
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : null,
+      "codiceTerzo" : null,
+      "mail" : null,
+      "iban" : null
+    },
+    "credenziali" : {
+      "username" : "gab",
+      "password" : "ea934ab7a77a1f3b6371e05bb0d05903",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "55c6226e-0e11-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461937829757,
+    "dateLastModified" : 1461938630563,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Antonio",
+      "cognome" : "Speranza",
+      "codiceFiscale" : "SPRNTN70L11A509B",
+      "dataNascita" : 16495200000,
+      "luogoNascita" : "Avellino",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Barile (PZ)",
+      "indirizzo" : "C.da Acqua del Salice,24",
+      "domicilioFiscale" : "Barile (PZ)"
+    },
+    "patente" : {
+      "numeroPatente" : "U17965956J",
+      "dataRilascio" : 1191448800000,
+      "validaFinoAl" : 1545433200000,
+      "rilasciataDa" : "U.C.O."
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "07",
+      "descrizioneQualifica" : "Tecnologo",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8752",
+      "codiceTerzo" : "4249",
+      "mail" : "antonio.speranza@imaa.cnr.it",
+      "iban" : "IT79L0101075650100000003040"
+    },
+    "credenziali" : {
+      "username" : "antonio.speranza",
+      "password" : "ada7a4895d200f90dd92f81083a0d107",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "145160aa-0e0d-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461936001954,
+    "dateLastModified" : 1462174224984,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "FABIO",
+      "cognome" : "MADONNA",
+      "codiceFiscale" : "MDNFBA78E13C495R",
+      "dataNascita" : 263862000000,
+      "luogoNascita" : "CERCOLA",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "POTENZA",
+      "indirizzo" : "VIA POGGIO DELLE MACINE, 49",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "NA5135911C",
+      "dataRilascio" : 867362400000,
+      "validaFinoAl" : 1497996000000,
+      "rilasciataDa" : "MCTC NAPOLI"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "11097",
+      "codiceTerzo" : "72310",
+      "mail" : "fabio.madonna@imaa.cnr.it",
+      "iban" : "IT43X0200804205000010487672"
+    },
+    "credenziali" : {
+      "username" : "fabio.madonna",
+      "password" : "5dc0c0954cec5f9806989a5a81df4853",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "bd41107f-0bb6-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461679016838,
+    "dateLastModified" : 1462183999095,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Mariarosaria",
+      "cognome" : "Calvello",
+      "codiceFiscale" : "CLVMRS78H58L418O",
+      "dataNascita" : 266968800000,
+      "luogoNascita" : "Tricarico",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "irsina",
+      "indirizzo" : "via luigi longo 7",
+      "domicilioFiscale" : "via luigi longo 7"
+    },
+    "patente" : {
+      "numeroPatente" : "MT5007513K",
+      "dataRilascio" : 844898400000,
+      "validaFinoAl" : 1476050400000,
+      "rilasciataDa" : "M.C.T.C di MT"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "15778",
+      "codiceTerzo" : "83765",
+      "mail" : "mariarosaria.calvello@imaa.cnr.it",
+      "iban" : "IT64E0301503200000003493928"
+    },
+    "credenziali" : {
+      "username" : "mariarosaria.calvello",
+      "password" : "3289dd3e17e299c21fde75e3db766fc2",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "7545c4bd-1055-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462186990688,
+    "dateLastModified" : 1462187632567,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Carmela",
+      "cognome" : "Cornacchia",
+      "codiceFiscale" : "CRNCML76H52A662T",
+      "dataNascita" : 203378400000,
+      "luogoNascita" : "BARI",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "ALTAMURA",
+      "indirizzo" : "VIA BERLINO 102/D",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "BA5426041E",
+      "dataRilascio" : 1075244400000,
+      "validaFinoAl" : 1718143200000,
+      "rilasciataDa" : "MCTC-BA"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12831",
+      "codiceTerzo" : "55953",
+      "mail" : "carmela.cornacchia@imaa.cnr.it",
+      "iban" : "IT15Z0705641330000010301482"
+    },
+    "credenziali" : {
+      "username" : "carmela.cornacchia@imaa.cnr.it",
+      "password" : "fef5c57d522b34a4e7445304df5023f3",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "2ed151c0-1065-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462193744451,
+    "dateLastModified" : 1462195065439,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Tony Alfredo",
+      "cognome" : "Stabile",
+      "codiceFiscale" : "STBTYL77S26Z614G",
+      "dataNascita" : 249346800000,
+      "luogoNascita" : "Caracas (Venezuela)",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Sant'Arsenio (SA)",
+      "indirizzo" : "Via Fosso del Mulino, 15",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "SA5049286J",
+      "dataRilascio" : 865375200000,
+      "validaFinoAl" : 1495663200000,
+      "rilasciataDa" : "M.C.T.C. di Salerno"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "15977",
+      "codiceTerzo" : "156280",
+      "mail" : "tony.stabile@imaa.cnr.it",
+      "iban" : "IT84P0878476440020000012098"
+    },
+    "credenziali" : {
+      "username" : "tonyalfredo.stabile",
+      "password" : "b01850967a34eb1135a5de21e5f3f11d",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "d93f1e42-0e25-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461946640268,
+    "dateLastModified" : 1462197064613,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Valeria",
+      "cognome" : "Giampaolo",
+      "codiceFiscale" : "GMPVLR83R53H926D",
+      "dataNascita" : 434847600000,
+      "luogoNascita" : "San Giovanni Rotondo (FG)",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Piazza Albino Pierro, 36",
+      "domicilioFiscale" : "Piazza Albino Pierro, 36"
+    },
+    "patente" : {
+      "numeroPatente" : "U1C210227G",
+      "dataRilascio" : 1392418800000,
+      "validaFinoAl" : 1728770400000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "146379",
+      "codiceTerzo" : null,
+      "mail" : "valeria.giampaolo@imaa.cnr.it",
+      "iban" : "IT73C0316901600CC0010116352"
+    },
+    "credenziali" : {
+      "username" : "valeria.giampaolo@imaa.cnr.it",
+      "password" : "45c016cb0e8e6497dd6051c80ebf9ec1",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "2aee6cf7-1116-11e6-841a-005056a63867",
+    "dataRegistrazione" : 1462269758848,
+    "dateLastModified" : 1462273803994,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Carmelina",
+      "cognome" : "Cosmi",
+      "codiceFiscale" : "CSMCML60L65B715M",
+      "dataNascita" : -297824400000,
+      "luogoNascita" : "CAPUA",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Caserta",
+      "indirizzo" : "Via A. di Borbone 13",
+      "domicilioFiscale" : "Via A. di Borbone 13 - 81100 Caserta"
+    },
+    "patente" : {
+      "numeroPatente" : "FR2087978E",
+      "dataRilascio" : 360626400000,
+      "validaFinoAl" : 1471989600000,
+      "rilasciataDa" : "Prefettura di Frosinone"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "5633",
+      "codiceTerzo" : "2525",
+      "mail" : "carmelina.cosmi@imaa.cnr.it",
+      "iban" : "IT69G0101014903100000002364"
+    },
+    "credenziali" : {
+      "username" : "carmelina.cosmi",
+      "password" : "0d9db3c542b433f533fb5dd8248112bb",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "6eafe26a-11d7-11e6-942d-005056a63867",
+    "dataRegistrazione" : 1462352765393,
+    "dateLastModified" : 1462354104177,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Dimitri",
+      "cognome" : "Dello Buono",
+      "codiceFiscale" : "DLLDTR67S18H703L",
+      "dataNascita" : -66963600000,
+      "luogoNascita" : "SALERNO",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "TITO",
+      "indirizzo" : "C.DA S. LOJA",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "U1P468131W",
+      "dataRilascio" : 1457391600000,
+      "validaFinoAl" : 1794956400000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "07",
+      "descrizioneQualifica" : "Tecnologo",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "10904",
+      "codiceTerzo" : "158216",
+      "mail" : "dimitri.dellobuono@cnr.it",
+      "iban" : "IT24Z0301503200000003113689"
+    },
+    "credenziali" : {
+      "username" : "dimitri.dellobuono",
+      "password" : "97cb0043a6802f82c988a2a462f61d95",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : {
+      "d6984ac5-c133-4555-b90d-62dcb959b018" : {
+        "id" : "d6984ac5-c133-4555-b90d-62dcb959b018",
+        "tipo" : "jaguar",
+        "targa" : "ch214ga",
+        "cartaCircolazione" : "a",
+        "polizzaAssicurativa" : "a",
+        "veicoloPrincipale" : true
+      }
+    },
+    "veicoloPrincipaleSettato" : true,
+    "veicoloPrincipale" : {
+      "id" : "d6984ac5-c133-4555-b90d-62dcb959b018",
+      "tipo" : "jaguar",
+      "targa" : "ch214ga",
+      "cartaCircolazione" : "a",
+      "polizzaAssicurativa" : "a",
+      "veicoloPrincipale" : true
+    }
+  }, {
+    "id" : "a77a06b6-0c5e-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461751135755,
+    "dateLastModified" : 1461751916043,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Senatro",
+      "cognome" : "Di Leo",
+      "codiceFiscale" : "DLISTR76M21G942J",
+      "dataNascita" : 209426400000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Montemurro",
+      "indirizzo" : "Via Imperatrice 51/A",
+      "domicilioFiscale" : "Montemurro Via Imperatrice 51/A"
+    },
+    "patente" : {
+      "numeroPatente" : "U1G678983K",
+      "dataRilascio" : 1418943600000,
+      "validaFinoAl" : 1755727200000,
+      "rilasciataDa" : "Ministero delle Infrastrutture e dei Trasporti  - UCO "
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "07",
+      "descrizioneQualifica" : "Tecnologo",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "15442",
+      "codiceTerzo" : "62455",
+      "mail" : "senatro.dileo@imaa.cnr.it",
+      "iban" : "IT90 C076 0104 2000 0005 3901302"
+    },
+    "credenziali" : {
+      "username" : "senatro.dileo",
+      "password" : "25e5c517fc65df9d719ced25e940d5ec",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "2552e4d2-0bbe-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461682197891,
+    "dateLastModified" : 1461682521860,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Serena",
+      "cognome" : "Trippetta",
+      "codiceFiscale" : "TRPSRN74B42G942J",
+      "dataNascita" : 128991600000,
+      "luogoNascita" : "Potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "via Albert Luthuli n.27",
+      "domicilioFiscale" : "via Albert Luthuli n. 27 - 85100 Potenza"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2191645A",
+      "dataRilascio" : 731199600000,
+      "validaFinoAl" : 1706828400000,
+      "rilasciataDa" : "Prefetto di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "17086",
+      "codiceTerzo" : null,
+      "mail" : "serena.trippetta@imaa.cnr.it",
+      "iban" : "IT14L0103004200000001441955"
+    },
+    "credenziali" : {
+      "username" : "serena.trippetta",
+      "password" : "6a3a812637c4fcf083bd516dde1aec97",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "99f7cf8d-0c45-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461740375674,
+    "dateLastModified" : 1461740960939,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Carolina",
+      "cognome" : "Filizzola",
+      "codiceFiscale" : "FLZCLN74L44E409I",
+      "dataNascita" : 142120800000,
+      "luogoNascita" : "Lagonegro (PZ)",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "via Mazzini, 241",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2189450B",
+      "dataRilascio" : 724374000000,
+      "validaFinoAl" : 1688421600000,
+      "rilasciataDa" : "Prefetto di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "9903",
+      "codiceTerzo" : "14987",
+      "mail" : "carolina.filizzola@imaa.cnr.it",
+      "iban" : "IT47Q0306742220000000051426"
+    },
+    "credenziali" : {
+      "username" : "carolina.filizzola",
+      "password" : "52395d299d97d041cc675251a9811251",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "af802711-0bbb-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461681141244,
+    "dateLastModified" : 1461691022829,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Francesco",
+      "cognome" : "Amato",
+      "codiceFiscale" : "MTAFNC77M03F839G",
+      "dataNascita" : 239407200000,
+      "luogoNascita" : "Napoli",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Napoli",
+      "indirizzo" : "Via Emilio Scaglione 240",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "NA5184059Y",
+      "dataRilascio" : 877557600000,
+      "validaFinoAl" : 1508968800000,
+      "rilasciataDa" : "M.C.T.C. di NA"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "182586",
+      "codiceTerzo" : "182586",
+      "mail" : "francesco.amato@imaa.cnr.it",
+      "iban" : "IT03F0760103400001016341776"
+    },
+    "credenziali" : {
+      "username" : "francesco.amato",
+      "password" : "da9414242c08c6b9920692661be13695",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "dc200835-0c5c-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461750365093,
+    "dateLastModified" : 1461834206708,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Sabatino",
+      "cognome" : "Piscitelli",
+      "codiceFiscale" : "PSCSTN64M17G793J",
+      "dataNascita" : -169606800000,
+      "luogoNascita" : "Polla",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Satriano di Lucania",
+      "indirizzo" : "Via Nazionale 8",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "SA2246834W",
+      "dataRilascio" : 415494000000,
+      "validaFinoAl" : 1692223200000,
+      "rilasciataDa" : "Prefettura di Salerno"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "6980",
+      "codiceTerzo" : "",
+      "mail" : "sabatino.piscitelli@imaa.cnr.it",
+      "iban" : "IT98L0538776411000002365529"
+    },
+    "credenziali" : {
+      "username" : "sabatino.piscitelli",
+      "password" : "e10adc3949ba59abbe56e057f20f883e",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "344fc857-0bc7-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461686088535,
+    "dateLastModified" : 1461686088535,
+    "registrazioneCompletata" : false,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : null,
+      "cognome" : null,
+      "codiceFiscale" : null,
+      "dataNascita" : null,
+      "luogoNascita" : null,
+      "genere" : null
+    },
+    "residenza" : {
+      "comune" : null,
+      "indirizzo" : null,
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : null,
+      "dataRilascio" : null,
+      "validaFinoAl" : null,
+      "rilasciataDa" : null
+    },
+    "datiCNR" : {
+      "livello" : null,
+      "idQualifica" : null,
+      "descrizioneQualifica" : null,
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : null,
+      "codiceTerzo" : null,
+      "mail" : null,
+      "iban" : null
+    },
+    "credenziali" : {
+      "username" : "gabriele.nole@imaa.cnr.it",
+      "password" : "ea934ab7a77a1f3b6371e05bb0d05903",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "f15522af-0dec-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461922199362,
+    "dateLastModified" : 1461922565161,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Antonio",
+      "cognome" : "Lettino",
+      "codiceFiscale" : "LTTNTN66L30D971H",
+      "dataNascita" : -108093600000,
+      "luogoNascita" : "Genzano di Lucania",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Genzano di Lucania",
+      "indirizzo" : "Via delle Puglie 18A",
+      "domicilioFiscale" : "Genzano di Lucania"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2114446C",
+      "dataRilascio" : 532738800000,
+      "validaFinoAl" : 1464472800000,
+      "rilasciataDa" : "Prefettura Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "07",
+      "descrizioneQualifica" : "Tecnologo",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "10406",
+      "codiceTerzo" : "18520",
+      "mail" : "antonio.lettino@imaa.cnr.it",
+      "iban" : "IT27A0760104200000063813364"
+    },
+    "credenziali" : {
+      "username" : "antonio.lettino",
+      "password" : "24780a4644db0dca20cb0927ce66e246",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "8376de79-0bcf-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461689657304,
+    "dateLastModified" : 1462199059332,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Nikolaos",
+      "cognome" : "Papagiannopoulos",
+      "codiceFiscale" : "PPGNLS85L27Z115Y",
+      "dataNascita" : 491263200000,
+      "luogoNascita" : "Calcide (Grecia)",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Contrada Santa Loja",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "760002577",
+      "dataRilascio" : 1093557600000,
+      "validaFinoAl" : 2542485600000,
+      "rilasciataDa" : "ISTIAIAS"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "165921",
+      "codiceTerzo" : "165921",
+      "mail" : "nikolaos.papagiannopoulos@imaa.cnr.it",
+      "iban" : "IT 37 U 01030 04200 000001673728"
+    },
+    "credenziali" : {
+      "username" : "nikolaos.papagiannopoulos",
+      "password" : "d56b7d234e1c4b035b3eaf65cc90a358",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "0d5f9d6a-f117-11e5-9c1b-005056a63867",
+    "dataRegistrazione" : 1458751701549,
+    "dateLastModified" : 1462290857588,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Lorenzo",
+      "cognome" : "Amato",
+      "codiceFiscale" : "MTALNZ79T23G942X",
+      "dataNascita" : 314751600000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "P.le Bucarest, 34 85100 PZ",
+      "domicilioFiscale" : "P.le Bucarest, 34 85100 PZ"
+    },
+    "patente" : {
+      "numeroPatente" : "U1M894166V",
+      "dataRilascio" : 1448578800000,
+      "validaFinoAl" : 1766444400000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12865",
+      "codiceTerzo" : "108070",
+      "mail" : "lorenzo.amato@imaa.cnr.it",
+      "iban" : "IT54T0760104200001019938008"
+    },
+    "credenziali" : {
+      "username" : "lorenzo.amato@imaa.cnr.it",
+      "password" : "097e592770c47483fe1509604ea18b1d",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "b2e42c80-0e1c-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461942710447,
+    "dateLastModified" : 1462357486017,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Giuseppe",
+      "cognome" : "GRIPPO",
+      "codiceFiscale" : "GRPGPP66H07G616V",
+      "dataNascita" : -112672800000,
+      "luogoNascita" : "Pietragalla",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Pietragalla",
+      "indirizzo" : "Via Gen. C. A. Dalla Chiesa, 16",
+      "domicilioFiscale" : "Via Gen. C. A. Dalla Chiesa, 16"
+    },
+    "patente" : {
+      "numeroPatente" : "bvnb",
+      "dataRilascio" : 456357600000,
+      "validaFinoAl" : 1529272800000,
+      "rilasciataDa" : "Prefettura di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "V",
+      "idQualifica" : "02",
+      "descrizioneQualifica" : "Collaboratore di amministrazione",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "201",
+      "codiceTerzo" : "104",
+      "mail" : "giuseppe.grippo@imaa.cnr.it",
+      "iban" : "IT69E"
+    },
+    "credenziali" : {
+      "username" : "giuseppe.grippo",
+      "password" : "bd862a3c911756891d90787db2e5b6f0",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "f9800ee9-f113-11e5-9c1b-005056a63867",
+    "dataRegistrazione" : 1458750379716,
+    "dateLastModified" : 1458750830838,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Tiziana",
+      "cognome" : "Forlenza",
+      "codiceFiscale" : "FRLTZN75E52G942K",
+      "dataNascita" : 169081200000,
+      "luogoNascita" : "Potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Avigliano",
+      "indirizzo" : "Corso Garibaldi, n. 66",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5042167N",
+      "dataRilascio" : 948409200000,
+      "validaFinoAl" : 1578783600000,
+      "rilasciataDa" : "MCTC-PZ"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "14342",
+      "codiceTerzo" : "132614",
+      "mail" : "tiziana.forlenza@imaa.cnr.it",
+      "iban" : "IT64L0760104200000057926172"
+    },
+    "credenziali" : {
+      "username" : "tiziana.forlenza",
+      "password" : "8c82b26a99cdc4736ae4c8073e39803d",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "387f2a7f-0e1c-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461942505104,
+    "dateLastModified" : 1462360255238,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Vincenzo",
+      "cognome" : "Cuomo",
+      "codiceFiscale" : "CMUVCN49P09F839G",
+      "dataNascita" : -641005200000,
+      "luogoNascita" : "napoli",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Napoli",
+      "indirizzo" : "Via Santa Teresella degli Spagnoli,59",
+      "domicilioFiscale" : "c/o C.da S. Loja  - Zona In d.le - 85050 Tito Scalo (PZ)"
+    },
+    "patente" : {
+      "numeroPatente" : "1234",
+      "dataRilascio" : 1294095600000,
+      "validaFinoAl" : 1559685600000,
+      "rilasciataDa" : "prefettura"
+    },
+    "datiCNR" : {
+      "livello" : "I",
+      "idQualifica" : "04",
+      "descrizioneQualifica" : "Associato",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "11507",
+      "codiceTerzo" : "11507",
+      "mail" : "vincenzo.cuomo@imaa.cnr.it",
+      "iban" : "IT45B020080345000000530061"
+    },
+    "credenziali" : {
+      "username" : "vincenzo.cuomo",
+      "password" : "b8394835152ede1e4ab14cdae81d8b35",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "23dd98d4-0d18-11e6-a675-005056a63867",
+    "dataRegistrazione" : 1461830801325,
+    "dateLastModified" : 1461832005556,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Emanuele",
+      "cognome" : "Tramutola",
+      "codiceFiscale" : "TRMMNL75H01G942L",
+      "dataNascita" : 170809200000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Piazzale Vilnius 41",
+      "domicilioFiscale" : "Piazzale Vilnius 41"
+    },
+    "patente" : {
+      "numeroPatente" : "U1J728079U",
+      "dataRilascio" : 1430258400000,
+      "validaFinoAl" : 1748728800000,
+      "rilasciataDa" : "Ministero delle Infrastrutture e dei Trasporti -  Ufficio Centrale Operativo"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "15999",
+      "codiceTerzo" : " Ufficio Centrale Operativo",
+      "mail" : "emanuele.tramutola@imaa.cnr.it",
+      "iban" : "IT93P0100504200000000011700"
+    },
+    "credenziali" : {
+      "username" : "emanuele.tramutola",
+      "password" : "0a73ccaccbea15241986907964a5db19",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "7c991143-0c4d-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461743762373,
+    "dateLastModified" : 1461745649686,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Luisa",
+      "cognome" : "GALASSO",
+      "codiceFiscale" : "GLSLSU76P56L328K",
+      "dataNascita" : 211672800000,
+      "luogoNascita" : "TRANI",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Pietragalla ",
+      "indirizzo" : "Via Gen. Dalla Chiesa 16",
+      "domicilioFiscale" : "Via Gen. Dalla Chiesa 16"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5059098A",
+      "dataRilascio" : 990396000000,
+      "validaFinoAl" : 1621548000000,
+      "rilasciataDa" : "MCTC-PZ"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "10343",
+      "codiceTerzo" : "57318",
+      "mail" : "luisa.galasso@imaa.cnr.it",
+      "iban" : "IT83B0316901600CC0010564678"
+    },
+    "credenziali" : {
+      "username" : "luisa.galasso",
+      "password" : "9c87335ddbed1075a8540ed3d8f42e75",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "95f2d26a-0bdf-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461696560262,
+    "dateLastModified" : 1461866679021,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Marco",
+      "cognome" : "Rosoldi",
+      "codiceFiscale" : "RSLMRC72C27A662R",
+      "dataNascita" : 70498800000,
+      "luogoNascita" : "Bari",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Casamassima",
+      "indirizzo" : "Via Turi 81/B",
+      "domicilioFiscale" : "Casamassima"
+    },
+    "patente" : {
+      "numeroPatente" : "BA2738397X",
+      "dataRilascio" : 699058800000,
+      "validaFinoAl" : 1679868000000,
+      "rilasciataDa" : "Prefetto di Bari"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "161833",
+      "codiceTerzo" : "161833",
+      "mail" : "marco.rosoldi@imaa.cnr.it",
+      "iban" : "IT69R0760104000001027901691 "
+    },
+    "credenziali" : {
+      "username" : "marco",
+      "password" : "ed99ea66607de16b13187dc0dc76f3c4",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "e4cd895b-0bff-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461710436453,
+    "dateLastModified" : 1461744168572,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Stefano",
+      "cognome" : "Pignatti Morano",
+      "codiceFiscale" : "PGNSFN65H10L781S",
+      "dataNascita" : -143946000000,
+      "luogoNascita" : "Verona",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Roma",
+      "indirizzo" : "Via Colli della Farnesina 246",
+      "domicilioFiscale" : "idem"
+    },
+    "patente" : {
+      "numeroPatente" : "RM7751294M",
+      "dataRilascio" : 1399672800000,
+      "validaFinoAl" : 1717970400000,
+      "rilasciataDa" : "motorizzazione Roma"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "0937",
+      "codiceTerzo" : null,
+      "mail" : "pignatti@imaa.cnr.it",
+      "iban" : "IT80H0306903248100000011076"
+    },
+    "credenziali" : {
+      "username" : "pignatti@imaa.cnr.it",
+      "password" : "99ef0f3932ac75e4e5a6d6f1b9bb0a88",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "5f392dbe-ffbe-11e5-8521-005056a63867",
+    "dataRegistrazione" : 1460362881005,
+    "dateLastModified" : 1460630610571,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Canio",
+      "cognome" : "De Bonis",
+      "codiceFiscale" : "dbncna77l03g942r",
+      "dataNascita" : 236728800000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Luthuli 27",
+      "domicilioFiscale" : "Via Luthuli 27"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5188986A",
+      "dataRilascio" : 1379368800000,
+      "validaFinoAl" : 1532901600000,
+      "rilasciataDa" : "MC-PZ"
+    },
+    "datiCNR" : {
+      "livello" : "VIII",
+      "idQualifica" : "09",
+      "descrizioneQualifica" : "OPTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "11974",
+      "codiceTerzo" : null,
+      "mail" : "canio.debonis@imaa.cnr.it",
+      "iban" : "IT43M0760104200000065251480"
+    },
+    "credenziali" : {
+      "username" : "caniodebonis",
+      "password" : "6074a34b5e7f05d84e6923c07034d687",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "0a797198-f110-11e5-9c1b-005056a63867",
+    "dataRegistrazione" : 1458748690186,
+    "dateLastModified" : 1458749137459,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Ermann",
+      "cognome" : "Ripepi",
+      "codiceFiscale" : "RPPRRN85B19G590V",
+      "dataNascita" : 477615600000,
+      "luogoNascita" : "Picerno",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Picerno",
+      "indirizzo" : "Corso Vittorio Emanuele II n. 40",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5180088P",
+      "dataRilascio" : 1058738400000,
+      "validaFinoAl" : 1676761200000,
+      "rilasciataDa" : "MCTC-PZ"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12947",
+      "codiceTerzo" : "",
+      "mail" : "ermann.ripepi@imaa.cnr.it",
+      "iban" : "IT18Y0326822300052756721110"
+    },
+    "credenziali" : {
+      "username" : "ermann.ripepi@imaa.cnr.it",
+      "password" : "0f3676ea3a48a98ad21b2a233f63df15",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "034f0e6f-0c48-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461741411400,
+    "dateLastModified" : 1461741411400,
+    "registrazioneCompletata" : false,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : null,
+      "cognome" : null,
+      "codiceFiscale" : null,
+      "dataNascita" : null,
+      "luogoNascita" : null,
+      "genere" : null
+    },
+    "residenza" : {
+      "comune" : null,
+      "indirizzo" : null,
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : null,
+      "dataRilascio" : null,
+      "validaFinoAl" : null,
+      "rilasciataDa" : null
+    },
+    "datiCNR" : {
+      "livello" : null,
+      "idQualifica" : null,
+      "descrizioneQualifica" : null,
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : null,
+      "codiceTerzo" : null,
+      "mail" : null,
+      "iban" : null
+    },
+    "credenziali" : {
+      "username" : "simona.loperte",
+      "password" : "f33c40a185e63278f3b625ff34f6195e",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "f815d72a-1039-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462175184260,
+    "dateLastModified" : 1462175994776,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Giuseppe",
+      "cognome" : "Mazzeo",
+      "codiceFiscale" : "MZZGPP77D16G942R",
+      "dataNascita" : 229993200000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Largo Umbria 3",
+      "domicilioFiscale" : "Largo Umbria 3"
+    },
+    "patente" : {
+      "numeroPatente" : "U1N149319D",
+      "dataRilascio" : 1450220400000,
+      "validaFinoAl" : 1776290400000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12834",
+      "codiceTerzo" : "104064",
+      "mail" : "giuseppe.mazzeo@imaa.cnr.it",
+      "iban" : "IT03Q0301503200000003433519"
+    },
+    "credenziali" : {
+      "username" : "giuseppe-mazzeo",
+      "password" : "e86a20340767c3bbd31cc87d4e78c953",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "8999c34c-0e10-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461937487211,
+    "dateLastModified" : 1462186063920,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Aldo",
+      "cognome" : "Amodeo",
+      "codiceFiscale" : "MDALDA64D12G596L",
+      "dataNascita" : -180579600000,
+      "luogoNascita" : "Piedimonte Matese",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Tito",
+      "indirizzo" : "Via Nuova 45",
+      "domicilioFiscale" : "Via Nuova 45 Tito (PZ)"
+    },
+    "patente" : {
+      "numeroPatente" : "CE21622898",
+      "dataRilascio" : 407804400000,
+      "validaFinoAl" : 1681250400000,
+      "rilasciataDa" : "Prefettura di Caserta"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8047",
+      "codiceTerzo" : "3623",
+      "mail" : "aldo.amodeo@imaa.cnr.it",
+      "iban" : "IT06I0101074760000046000259"
+    },
+    "credenziali" : {
+      "username" : "amodeo",
+      "password" : "abc34f90c5be7e7ff33d15dbde2a0105",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : {
+      "22178137-c15b-4186-9f3d-7ffd1fd52ad5" : {
+        "id" : "22178137-c15b-4186-9f3d-7ffd1fd52ad5",
+        "tipo" : "Ford C-Max",
+        "targa" : "ED600ET",
+        "cartaCircolazione" : "BZ0750490",
+        "polizzaAssicurativa" : "288532741",
+        "veicoloPrincipale" : true
+      }
+    },
+    "veicoloPrincipaleSettato" : true,
+    "veicoloPrincipale" : {
+      "id" : "22178137-c15b-4186-9f3d-7ffd1fd52ad5",
+      "tipo" : "Ford C-Max",
+      "targa" : "ED600ET",
+      "cartaCircolazione" : "BZ0750490",
+      "polizzaAssicurativa" : "288532741",
+      "veicoloPrincipale" : true
+    }
+  }, {
+    "id" : "c0942756-f10a-11e5-9c1b-005056a63867",
+    "dataRegistrazione" : 1458746418735,
+    "dateLastModified" : 1459241466517,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Francesco",
+      "cognome" : "Izzi",
+      "codiceFiscale" : "ZZIFNC80E12C619L",
+      "dataNascita" : 326930400000,
+      "luogoNascita" : "Chiaromonte",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Piazza Albino Pierro, 33",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5030041J",
+      "dataRilascio" : 910134000000,
+      "validaFinoAl" : 1539813600000,
+      "rilasciataDa" : "MTCT"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12829",
+      "codiceTerzo" : "115476",
+      "mail" : "francesco.izzi@gmail.com",
+      "iban" : "IT30K0760104200000073256786"
+    },
+    "credenziali" : {
+      "username" : "francesco.izzi",
+      "password" : "8229d362502a43fdbe8cb82d133980e3",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : {
+      "33c1d459-0a81-4b79-b177-ab8215eb7cd4" : {
+        "id" : "33c1d459-0a81-4b79-b177-ab8215eb7cd4",
+        "tipo" : "BMW",
+        "targa" : "CR888YN",
+        "cartaCircolazione" : "1234",
+        "polizzaAssicurativa" : "1234",
+        "veicoloPrincipale" : true
+      }
+    },
+    "veicoloPrincipaleSettato" : true,
+    "veicoloPrincipale" : {
+      "id" : "33c1d459-0a81-4b79-b177-ab8215eb7cd4",
+      "tipo" : "BMW",
+      "targa" : "CR888YN",
+      "cartaCircolazione" : "1234",
+      "polizzaAssicurativa" : "1234",
+      "veicoloPrincipale" : true
+    }
+  }, {
+    "id" : "d4ad2024-0bc4-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461685069084,
+    "dateLastModified" : 1461744170787,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Filomena",
+      "cognome" : "Romano",
+      "codiceFiscale" : "RMNFMN62E41I157G",
+      "dataNascita" : -242096400000,
+      "luogoNascita" : "San Severino Lucano",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Tito",
+      "indirizzo" : "C.da Frascgete,12",
+      "domicilioFiscale" : "C.da Frascgete,12 , Tito "
+    },
+    "patente" : {
+      "numeroPatente" : "Pz2045122W",
+      "dataRilascio" : 352594800000,
+      "validaFinoAl" : 1614034800000,
+      "rilasciataDa" : "Prefetto di  Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "5618",
+      "codiceTerzo" : "2514",
+      "mail" : "filomena.romano@imaa.cnr.it",
+      "iban" : "IT89X0100504200000000003812"
+    },
+    "credenziali" : {
+      "username" : "FRomano",
+      "password" : "912b6ef9ac63bf5bc3ed7709ef280fea",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "69617963-0bc4-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461684889077,
+    "dateLastModified" : 1461685685200,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Angelo",
+      "cognome" : "Aromando",
+      "codiceFiscale" : "RMNNGL65A29G793G",
+      "dataNascita" : -155350800000,
+      "luogoNascita" : "Polla (SA)",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Sant'Arsenio (SA)",
+      "indirizzo" : "Piazza Domenico Pica, 38",
+      "domicilioFiscale" : "Sant'Arsenio (SA)"
+    },
+    "patente" : {
+      "numeroPatente" : "SA2252123H",
+      "dataRilascio" : 420242400000,
+      "validaFinoAl" : 1706482800000,
+      "rilasciataDa" : "Prefettura di Salerno"
+    },
+    "datiCNR" : {
+      "livello" : "IV",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "1087",
+      "codiceTerzo" : "591",
+      "mail" : "angelo.aromando@imaa.cnr.it",
+      "iban" : "IT16P0100504200000000003774"
+    },
+    "credenziali" : {
+      "username" : "angelo.aromando",
+      "password" : "0549345c5c23fbc91c95e19d1c8c5121",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "94d8b7d1-0c4b-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461742944054,
+    "dateLastModified" : 1461743575555,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Francesco",
+      "cognome" : "Marchese",
+      "codiceFiscale" : "MRCFNC75R10G942F",
+      "dataNascita" : 182127600000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Viale Marconi 48",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "U1E117644S",
+      "dataRilascio" : 1403042400000,
+      "validaFinoAl" : 1728511200000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "10869",
+      "codiceTerzo" : "19832",
+      "mail" : "francesco.marchese@imaa.cnr.it",
+      "iban" : "IT13G0300204201000004118711"
+    },
+    "credenziali" : {
+      "username" : "fmarchese",
+      "password" : "3a173ca1279426687bd696aa8b28b452",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "ee823e41-030d-11e6-afa2-005056a63867",
+    "dataRegistrazione" : 1460726905225,
+    "dateLastModified" : 1460727205682,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Lucia",
+      "cognome" : "Telesca",
+      "codiceFiscale" : "TLSLCU76T44G942D",
+      "dataNascita" : 218502000000,
+      "luogoNascita" : "Potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Rossellino, 27",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "xxxxx",
+      "dataRilascio" : 969400800000,
+      "validaFinoAl" : 1600552800000,
+      "rilasciataDa" : "motorizzazione civile"
+    },
+    "datiCNR" : {
+      "livello" : "V",
+      "idQualifica" : "02",
+      "descrizioneQualifica" : "Collaboratore Amministrativo",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8356",
+      "codiceTerzo" : "4153",
+      "mail" : "lucia.telesca@imaa.cnr.it",
+      "iban" : "xxxxxxxxxxxxx"
+    },
+    "credenziali" : {
+      "username" : "lucia.telesca",
+      "password" : "e3a90a4414a932229fd4b0fd30dbbdcb",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461922355354,
+    "dateLastModified" : 1461922913821,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Antonio ",
+      "cognome" : "Lanorte",
+      "codiceFiscale" : "LNRNTN69D17G942U",
+      "dataNascita" : -22381200000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Sanremo 99",
+      "domicilioFiscale" : "Via Sanremo 99"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2132912K",
+      "dataRilascio" : 1297724400000,
+      "validaFinoAl" : 1531778400000,
+      "rilasciataDa" : "Motorizzazione Civile Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "07",
+      "descrizioneQualifica" : "Tecnologo",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "11390",
+      "codiceTerzo" : "158231",
+      "mail" : "antonio.lanorte@imaa.cnr.it",
+      "iban" : "IT85A0760104200000050865633"
+    },
+    "credenziali" : {
+      "username" : "alanorte",
+      "password" : "09d50b39e2a161b031627948b292250f",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : {
+      "c16bfe33-6492-4f2c-b790-74f5357888fa" : {
+        "id" : "c16bfe33-6492-4f2c-b790-74f5357888fa",
+        "tipo" : "Golf",
+        "targa" : "DE086NK",
+        "cartaCircolazione" : "A01293PZ06",
+        "polizzaAssicurativa" : "00027605207856",
+        "veicoloPrincipale" : true
+      }
+    },
+    "veicoloPrincipaleSettato" : true,
+    "veicoloPrincipale" : {
+      "id" : "c16bfe33-6492-4f2c-b790-74f5357888fa",
+      "tipo" : "Golf",
+      "targa" : "DE086NK",
+      "cartaCircolazione" : "A01293PZ06",
+      "polizzaAssicurativa" : "00027605207856",
+      "veicoloPrincipale" : true
+    }
+  }, {
+    "id" : "9263453e-1056-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462187469051,
+    "dateLastModified" : 1462188808462,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Giuseppe",
+      "cognome" : "Calamita",
+      "codiceFiscale" : "CLMGPP79H05F052A",
+      "dataNascita" : 297381600000,
+      "luogoNascita" : "Matera",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Montescaglioso",
+      "indirizzo" : "Via Generale Rocco D'Alessio 10",
+      "domicilioFiscale" : "Via Generale Rocco D'Alessio 10, Montescaglioso"
+    },
+    "patente" : {
+      "numeroPatente" : "U1B205993N",
+      "dataRilascio" : 1334613600000,
+      "validaFinoAl" : 1564264800000,
+      "rilasciataDa" : "U.C.O."
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "104635",
+      "codiceTerzo" : "104635",
+      "mail" : "giuseppe.calamita@imaa.cnr.it",
+      "iban" : "IT72C0306716100000000030269"
+    },
+    "credenziali" : {
+      "username" : "GiuseppeCalamita",
+      "password" : "19e62eb75f10e33262a25db97791da4a",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "1027aa6b-104d-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462183385079,
+    "dateLastModified" : 1462185001417,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Rosa ",
+      "cognome" : "Lasaponara",
+      "codiceFiscale" : "LSPRSO65L48E326N",
+      "dataNascita" : -141526800000,
+      "luogoNascita" : "IRSINA (MT)",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "POTENZA",
+      "indirizzo" : "CORSO UMBERTO I N.32",
+      "domicilioFiscale" : "CORSO UMBERTO I N.32"
+    },
+    "patente" : {
+      "numeroPatente" : "MT2109614K",
+      "dataRilascio" : 759625200000,
+      "validaFinoAl" : 1720389600000,
+      "rilasciataDa" : "PREFETTO MATERA"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "9000",
+      "codiceTerzo" : "4497",
+      "mail" : "rosa.lasaponara@imaa.cnr.it",
+      "iban" : "IT96J0100504200000000007431"
+    },
+    "credenziali" : {
+      "username" : "rosa.lasaponara@imaa.cnr.it",
+      "password" : "1ee1877c6655ecc71dfead311c771bd0",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "2ec5538c-1054-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462186442917,
+    "dateLastModified" : 1462187302074,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "FORTUNATO",
+      "cognome" : "DE SANTIS",
+      "codiceFiscale" : "DSNFTN65L30D643E",
+      "dataNascita" : -139626000000,
+      "luogoNascita" : "FOGGIA",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "TROIA (FG)",
+      "indirizzo" : "Via Dante 4 - 71029",
+      "domicilioFiscale" : "Via Dante 4 - 71029"
+    },
+    "patente" : {
+      "numeroPatente" : "AE3446050",
+      "dataRilascio" : 1395183600000,
+      "validaFinoAl" : 1722290400000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "V",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "4942",
+      "codiceTerzo" : "2183",
+      "mail" : "fortunato.desantis@imaa.cnr.it",
+      "iban" : "IT36T0101078690100000000800"
+    },
+    "credenziali" : {
+      "username" : "desantis@imaa.cnr.it",
+      "password" : "b564181fd4f10b1fd87889e33342ca71",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "7e290837-0d58-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461858440536,
+    "dateLastModified" : 1461858776697,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Alfredo",
+      "cognome" : "Falconieri",
+      "codiceFiscale" : "FLCLRD79H04H703E",
+      "dataNascita" : 297295200000,
+      "luogoNascita" : "Salerno",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "via Tirreno Traversa Prima, 4",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5127624H",
+      "dataRilascio" : 1181772000000,
+      "validaFinoAl" : 1497391200000,
+      "rilasciataDa" : "MCTC-PZ"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "01",
+      "descrizioneQualifica" : "Assegnista",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "150783",
+      "codiceTerzo" : "150783",
+      "mail" : "alferdo.falconieri@imaa.cnr.it",
+      "iban" : "IT93H0301503200000003528930"
+    },
+    "credenziali" : {
+      "username" : "alfredo.falconieri",
+      "password" : "d19328129f819be40b2757553b01024e",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "44f272be-0bb3-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461677526506,
+    "dateLastModified" : 1461834237670,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Teodosio",
+      "cognome" : "Lacava",
+      "codiceFiscale" : "LCVTDS72D24G942D",
+      "dataNascita" : 72918000000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Anzio 41",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5056104J",
+      "dataRilascio" : 982796400000,
+      "validaFinoAl" : 1612134000000,
+      "rilasciataDa" : "Motorizzazione Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "10124",
+      "codiceTerzo" : "55177",
+      "mail" : "teodosio.lacava@imaa.cnr.it",
+      "iban" : "IT42Z0200804202000004683310"
+    },
+    "credenziali" : {
+      "username" : "teodosio.lacava",
+      "password" : "94b85572e251e2ad702797bd4c41298c",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "ecfeb0c7-0c75-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461761130814,
+    "dateLastModified" : 1461834227066,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "angela",
+      "cognome" : "perrone ",
+      "codiceFiscale" : "prrngl72p66g942q",
+      "dataNascita" : 86306400000,
+      "luogoNascita" : "potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "potenza",
+      "indirizzo" : "via anzio 41",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "PZ2171850E",
+      "dataRilascio" : 677541600000,
+      "validaFinoAl" : 1622498400000,
+      "rilasciataDa" : "Prefettura di Potenza"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "9904",
+      "codiceTerzo" : "22755",
+      "mail" : "angela.perrone@imaa.cnr.it",
+      "iban" : "IT05A0200804205000004423424"
+    },
+    "credenziali" : {
+      "username" : "perrone",
+      "password" : "3f21660c924f51a3e6ad73a137769fd9",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "d025058f-1064-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462193585614,
+    "dateLastModified" : 1462194389020,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Erwan",
+      "cognome" : "Gueguen",
+      "codiceFiscale" : "GGNRWN65E29Z110Q",
+      "dataNascita" : -144982800000,
+      "luogoNascita" : "RENNES (FRANCIA)",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "POTENZA",
+      "indirizzo" : "Via Aria Silvana, 156C",
+      "domicilioFiscale" : "Via Aria Silvana, 156C - Potenza"
+    },
+    "patente" : {
+      "numeroPatente" : "830956300179 PZ5148137K",
+      "dataRilascio" : 432511200000,
+      "validaFinoAl" : 1557612000000,
+      "rilasciataDa" : "Prefecture du Morbihan"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "8681",
+      "codiceTerzo" : "4178",
+      "mail" : "erwan.gueguen@imaa.cnr.it",
+      "iban" : "IT03Y0103016101000063183052"
+    },
+    "credenziali" : {
+      "username" : "egueguen29",
+      "password" : "16b4d8c378763f31baf1e9d37d95247f",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "c326f6f1-1069-11e6-9b59-005056a63867",
+    "dataRegistrazione" : 1462195711303,
+    "dateLastModified" : 1462196892110,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Gelsomina",
+      "cognome" : "Pappalardo",
+      "codiceFiscale" : "PPPGSM62C57F839N",
+      "dataNascita" : -245984400000,
+      "luogoNascita" : "Napoli",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Pignola",
+      "indirizzo" : "Contrada Tora 8",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "xx",
+      "dataRilascio" : 342745200000,
+      "validaFinoAl" : 1605049200000,
+      "rilasciataDa" : "xx"
+    },
+    "datiCNR" : {
+      "livello" : "II",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "5598",
+      "codiceTerzo" : "2502",
+      "mail" : "gelsomina.pappalardo@imaa.cnr.it",
+      "iban" : "IT22K0200804205000401334355"
+    },
+    "credenziali" : {
+      "username" : "gelsomina.pappalardo@imaa.cnr.it",
+      "password" : "e034ccc11a6721c3f673811650bedc69",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "665ec045-10fb-11e6-8404-005056a63867",
+    "dataRegistrazione" : 1462258261846,
+    "dateLastModified" : 1462258524902,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Gerardo",
+      "cognome" : "Romano",
+      "codiceFiscale" : "RMNGRD80E23G942A",
+      "dataNascita" : 327880800000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Trav. I via Tirreno n 2",
+      "domicilioFiscale" : "Potenza, Trav. I via Tirreno n 2"
+    },
+    "patente" : {
+      "numeroPatente" : "U1C427651K",
+      "dataRilascio" : 1393887600000,
+      "validaFinoAl" : 1551567600000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "04",
+      "descrizioneQualifica" : "Associato",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12889",
+      "codiceTerzo" : "131593",
+      "mail" : "gerardo.romano@imaa.cnr.it",
+      "iban" : "IT98G0859704200000050315920"
+    },
+    "credenziali" : {
+      "username" : "gerardo.romano",
+      "password" : "fc547a6eea67e2faaf9c746b3b4ad7f4",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "176bc7cf-021f-11e6-afa2-005056a63867",
+    "dataRegistrazione" : 1460624323988,
+    "dateLastModified" : 1462263256535,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "Vincenzo ",
+      "cognome" : "Lapenna",
+      "codiceFiscale" : "LPNVCN59H08G942Q",
+      "dataNascita" : -333507600000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "Via Parigi, 74",
+      "domicilioFiscale" : null
+    },
+    "patente" : {
+      "numeroPatente" : "xxxx",
+      "dataRilascio" : 1425337200000,
+      "validaFinoAl" : 1523656800000,
+      "rilasciataDa" : "xxxx"
+    },
+    "datiCNR" : {
+      "livello" : "I",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12533",
+      "codiceTerzo" : "5060",
+      "mail" : "vincenzo.lapenna@imaa.cnr.it",
+      "iban" : "IT72O0100504200000000002791"
+    },
+    "credenziali" : {
+      "username" : "vincenzo.lapenna",
+      "password" : "2671221ce09f39c6d24f465510655662",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "3c07d76a-0de4-11e6-9aa9-005056a63867",
+    "dataRegistrazione" : 1461918459213,
+    "dateLastModified" : 1462284447186,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Valentina",
+      "cognome" : "Sarli",
+      "codiceFiscale" : "SRLVNT77C61G942I",
+      "dataNascita" : 227746800000,
+      "luogoNascita" : "Potenza",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Potenza",
+      "indirizzo" : "via Anzio 29",
+      "domicilioFiscale" : "via Anzio 29, 85100 - Potenza"
+    },
+    "patente" : {
+      "numeroPatente" : "U1N419160K",
+      "dataRilascio" : 1452466800000,
+      "validaFinoAl" : 1774047600000,
+      "rilasciataDa" : "MIT-UCO"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "05",
+      "descrizioneQualifica" : "Collaboratore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "CT",
+      "codiceTerzo" : "185926",
+      "mail" : "valentina.sarli@imaa.cnr.it",
+      "iban" : "IT09V0760104200000089728 653"
+    },
+    "credenziali" : {
+      "username" : "vsarli",
+      "password" : "ab88b5595c84d18e16582e92a88818ca",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "c33f7d00-0bb6-11e6-9a70-005056a63867",
+    "dataRegistrazione" : 1461679026879,
+    "dateLastModified" : 1462354381946,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : true,
+    "anagrafica" : {
+      "nome" : "giulia",
+      "cognome" : "pavese",
+      "codiceFiscale" : "PVSGLI60H55F052Q",
+      "dataNascita" : -301280400000,
+      "luogoNascita" : "matera",
+      "genere" : "DONNA"
+    },
+    "residenza" : {
+      "comune" : "Reggio Emilia",
+      "indirizzo" : "Via Rossena 18",
+      "domicilioFiscale" : "Via Rossena 18"
+    },
+    "patente" : {
+      "numeroPatente" : "MT5090822N",
+      "dataRilascio" : 1177020000000,
+      "validaFinoAl" : 1492639200000,
+      "rilasciataDa" : "MCTC-MT"
+    },
+    "datiCNR" : {
+      "livello" : "III",
+      "idQualifica" : "06",
+      "descrizioneQualifica" : "Ricercatore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "755",
+      "codiceTerzo" : "444",
+      "mail" : "giulia.pavse@imaa.cnr.it",
+      "iban" : "IT83D0200803450000005508362"
+    },
+    "credenziali" : {
+      "username" : "giulia.pavese@imaa.cnr.it",
+      "password" : "0787d9d3b95f55536efa4cad7d757673",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "c7179a8c-111f-11e6-841a-005056a63867",
+    "dataRegistrazione" : 1462273886315,
+    "dateLastModified" : 1462354644895,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "GREGORY",
+      "cognome" : "DE MARTINO",
+      "codiceFiscale" : "DMRGGR75L25G942M",
+      "dataNascita" : 175471200000,
+      "luogoNascita" : "POTENZA",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "POTENZA",
+      "indirizzo" : "VIA DELLE MATTINE 198",
+      "domicilioFiscale" : "VIA DELLE MATTINE 198 - 85100 POTENZA"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5073674T",
+      "dataRilascio" : 760230000000,
+      "validaFinoAl" : 1656885600000,
+      "rilasciataDa" : "MCTC-PZ"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "05",
+      "descrizioneQualifica" : "Collaboratore",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "172248",
+      "codiceTerzo" : "172248",
+      "mail" : "demartinogreg@gmail.com",
+      "iban" : "IT74B0760104200000003887057"
+    },
+    "credenziali" : {
+      "username" : "GREGORY DE MARTINO",
+      "password" : "908ab5229106b587b8b1da10025cfc24",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  }, {
+    "id" : "8ec98067-f10c-11e5-9c1b-005056a63867",
+    "dataRegistrazione" : 1458747194195,
+    "dateLastModified" : 1462358004121,
+    "registrazioneCompletata" : true,
+    "responsabileGruppo" : false,
+    "anagrafica" : {
+      "nome" : "Donato",
+      "cognome" : "Maio",
+      "codiceFiscale" : "MAIDNT78M23G942L",
+      "dataNascita" : 272671200000,
+      "luogoNascita" : "Potenza",
+      "genere" : "UOMO"
+    },
+    "residenza" : {
+      "comune" : "Avigliano",
+      "indirizzo" : "Località Stagliuozzo N.21",
+      "domicilioFiscale" : "Località Stagliuozzo N.21"
+    },
+    "patente" : {
+      "numeroPatente" : "PZ5013036U",
+      "dataRilascio" : 854578800000,
+      "validaFinoAl" : 1485212400000,
+      "rilasciataDa" : "M.C.T.C di PZ"
+    },
+    "datiCNR" : {
+      "livello" : "VI",
+      "idQualifica" : "08",
+      "descrizioneQualifica" : "CTER",
+      "datoreLavoro" : null,
+      "shortDescriptionDatoreLavoro" : null,
+      "matricola" : "12827",
+      "codiceTerzo" : "121911",
+      "mail" : "donato.maio@imaa.cnr.it",
+      "iban" : "IT85X0578741860063570040504"
+    },
+    "credenziali" : {
+      "username" : "donato.maio",
+      "password" : "b6a665d8e17157d2e3771c8d2985877d",
+      "ruoloUtente" : "UTENTE_SEMPLICE"
+    },
+    "mappaVeicolo" : { },
+    "veicoloPrincipaleSettato" : false,
+    "veicoloPrincipale" : null
+  } ]
+}
