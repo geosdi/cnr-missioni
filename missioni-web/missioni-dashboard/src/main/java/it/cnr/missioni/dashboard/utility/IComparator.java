@@ -1,7 +1,6 @@
 package it.cnr.missioni.dashboard.utility;
 
 import java.util.Comparator;
-import java.util.List;
 
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.user.User;
@@ -18,8 +17,6 @@ public interface IComparator<E> extends Comparator<E>{
 	}
 	
 	class UserComparator implements IComparator<User>{
-
-		private List<Comparator<User>> listComparators;
 		
 		@Override
 		public int compare(User o1, User o2) {
