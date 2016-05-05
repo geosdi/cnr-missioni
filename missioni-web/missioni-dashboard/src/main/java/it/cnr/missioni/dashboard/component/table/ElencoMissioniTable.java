@@ -7,6 +7,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Table;
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import org.joda.time.DateTime;
 
@@ -42,18 +43,13 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
             setVisible(true);
             listaMissioni.addAll(((MissioniStore) missioniStore).getMissioni());
             setContainerDataSource(listaMissioni);
-            //setContainerDataSource(new BeanItemContainer<Missione>(Missione.class, ((MissioniStore) missioniStore).getMissioni()));
             setVisibleColumns("progressivo","rimborso.sigla","localita", "oggetto", "stato", "dataInserimento");
             setColumnHeaders("Id","Sigla","Località", "Oggetto", "Stato", "Data Inserimento");
             setId("id");
-//            Object[] properties = {"dataInserimento"};
-//            boolean[] ordering = {false};
-//            sort(properties, ordering);
             setColumnWidth("dataInserimento", 160);
             setColumnWidth("oggetto", 160);
             setColumnExpandRatio("oggetto", 2);
             setColumnExpandRatio("localita", 1);
-//			setColumnWidth("id", 30);
         }
     }
 
@@ -124,9 +120,12 @@ public final class ElencoMissioniTable extends ITable.AbstractTable {
                 Resource res = null;
                 if (missione.getRimborso() != null && missione.getRimborso().isPagata()) {
                     res = new ThemeResource("img/circle_green_16_ns.png"); // get the resource depending the integer value
-                } else {
-                    res = new ThemeResource("img/serve-red-circle-icone-8206-16.png"); // get the resource depending the integer value
-                }
+                } 
+                else if(missione.getStato() == StatoEnum.ANNULLATA)
+                	res = new ThemeResource("img/serve-red-circle-icone-8206-16.png"); 
+                else 
+                    res = new ThemeResource("img/orange-circle-icone-6032-16.png"); // get the resource depending the integer value
+                
                 Image i = new Image(missione.getStato().getStato(), res);
                 i.setDescription(missione.getStato().getStato());
                 return i;

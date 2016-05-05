@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum StatoEnum {
-    INSERITA("Inserita"), APPROVATA("Approvata"), RESPINTA("Respinta"), PRESA_IN_CARICO("Presa in carico"), PAGATA("Pagata");
+	ANNULLATA("Annullata"), INSERITA("Inserita"), APPROVATA("Approvata"), RESPINTA("Respinta"), PRESA_IN_CARICO("Presa in carico"), PAGATA("Pagata");
 
     private static Map<String, String> mappa = new HashMap<String, String>();
 
