@@ -1,34 +1,28 @@
 package it.cnr.missioni.notification.support.itext;
 
+import java.io.File;
+import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import com.google.common.base.Preconditions;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.configuration.UrlImage;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.model.user.Veicolo;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Giuseppe La Scaleia - CNR IMAA geoSDI Group
@@ -164,7 +158,13 @@ public interface PDFBuilder {
         protected OutputStream outputStream;
         private boolean isMezzoProprio;
         private UrlImage urlImage;
-
+        protected Font fontBold6 = FontFactory.getFont("Times-Roman", 6, Font.BOLD);
+        protected Font fontNormal6 = FontFactory.getFont("Times-Roman", 6);
+        protected Font fontNormal = FontFactory.getFont("Times-Roman", 9);
+        protected Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
+        protected DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
+        protected DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
+		
         protected AbstractPDFBuilder() {
         }
 

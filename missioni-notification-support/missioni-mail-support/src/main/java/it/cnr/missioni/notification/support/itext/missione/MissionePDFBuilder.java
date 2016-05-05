@@ -35,10 +35,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 	private static final Logger logger = LoggerFactory.getLogger(MissionePDFBuilder.class);
 
 
-	private Font fontBold6 = FontFactory.getFont("Times-Roman", 6, Font.BOLD);
-	private Font fontNormal6 = FontFactory.getFont("Times-Roman", 6);
-	private Font fontNormal = FontFactory.getFont("Times-Roman", 9);
-	private Font fontBold = FontFactory.getFont("Times-Roman", 9, Font.BOLD);
+
 	
 
 	protected MissionePDFBuilder() {
@@ -62,9 +59,6 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.addSubject("Richiesta Anticipo Pagamento");
 		document.open();
 		writeHeader(document);
-
-		DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
-		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
 		
 		Paragraph paragraphOrdine = new Paragraph();
 		paragraphOrdine.setAlignment(Element.ALIGN_CENTER);
@@ -290,8 +284,6 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		paragraphUnderline.add(underline);
 		paragraphUnderline.setAlignment(Element.ALIGN_CENTER);
 		document.add(paragraphUnderline);
-		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
-		DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
 
 		Paragraph paragraphDichiarazione = new Paragraph("Il sottoscritto " + user.getAnagrafica().getCognome() + " "
 				+ user.getAnagrafica().getNome() + " qualifica: " + user.getDatiCNR().getDescrizioneQualifica()

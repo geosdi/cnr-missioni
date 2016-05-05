@@ -1,12 +1,9 @@
 package it.cnr.missioni.notification.support.itext.rimborso;
 
 import java.io.FileOutputStream;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -52,7 +49,6 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         document.addSubject("Richiesta Rimborso");
 		document.open();
 		writeHeader(document);
-		DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
         String dataInserimentoMissione = missione.getDataInserimento().toString();
         String dataInizio = formatDataTime.format(missione.getDatiPeriodoMissione().getInizioMissione().toDate());
         String dataFine = formatDataTime.format(missione.getDatiPeriodoMissione().getFineMissione().toDate());
@@ -62,15 +58,8 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
             dataAttraversamentoFrontieraAndata =formatDataTime.format( missione.getDatiMissioneEstera().getAttraversamentoFrontieraAndata().toDate());
             dataAttraversamentoFrontieraRitorno = formatDataTime.format(missione.getDatiMissioneEstera().getAttraversamentoFrontieraRitorno().toDate());
         }
-
         Map<String, Fattura> treeMap = new TreeMap<String, Fattura>(missione.getRimborso().getMappaFattura());
-
         List<Fattura> listaScontrini = new ArrayList<Fattura>(treeMap.values());
-
-        Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
-        Font fontNormal = new Font(Font.FontFamily.TIMES_ROMAN, 9);
-        Font fontNormal6 = new Font(Font.FontFamily.TIMES_ROMAN, 6);
-
         Paragraph paragraphHeader = new Paragraph("\nRichiesta di rimborso della missione autorizzata con Ordine n. "
                 + missione.getProgressivo() + " del " + dataInserimentoMissione + "\n\n\n", fontBold);
         paragraphHeader.setAlignment(Element.ALIGN_CENTER);
