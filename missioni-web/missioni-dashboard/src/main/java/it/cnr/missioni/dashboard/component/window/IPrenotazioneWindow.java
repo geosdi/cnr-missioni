@@ -99,7 +99,7 @@ public interface IPrenotazioneWindow extends IWindow<PrenotazioneEvent, IPrenota
                         PrenotazioneEvent prenotazioneEvent = prenotazioneForm.validate();
                         if (prenotazioneEvent != null) {
                             DashboardEventBus.post(new PrenotazioneAction(prenotazioneEvent, modifica,list));
-                            close();
+                            //close();
                         }
                     } catch (InvalidValueException | CommitException e) {
                         Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("commit_failed"),
