@@ -169,7 +169,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
             public void buttonClick(final ClickEvent event) {
 
                 try {
-                    missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withMultiMatch(multiMatchField.getValue());
+                    missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withMultiMatch(multiMatchField.getValue()).withIdUser(DashboardUI.getCurrentUser().getId());
                     missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
                     buildPagination(missioniStore.getTotale());
                     addListenerPagination();
