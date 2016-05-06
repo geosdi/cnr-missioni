@@ -158,10 +158,10 @@ public interface PDFBuilder {
         protected OutputStream outputStream;
         private boolean isMezzoProprio;
         private UrlImage urlImage;
-        protected Font fontBold6 = FontFactory.getFont("Times-Roman", 6, Font.BOLD);
-        protected Font fontNormal6 = FontFactory.getFont("Times-Roman", 6);
-        protected Font fontNormal = FontFactory.getFont("Times-Roman", 9);
-        protected Font fontBold = new Font(Font.FontFamily.TIMES_ROMAN, 9);
+        protected Font fontBold_6 = FontFactory.getFont("Times-Roman", 6, Font.BOLD);
+        protected Font fontNormal_6 = FontFactory.getFont("Times-Roman", 6);
+        protected Font fontNormal_9 = FontFactory.getFont("Times-Roman", 9);
+        protected Font fontBold_9 = new Font(Font.FontFamily.TIMES_ROMAN, 9,Font.BOLD);
         protected DateFormat formatData = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALY);
         protected DateFormat formatDataTime = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALY);
 		
