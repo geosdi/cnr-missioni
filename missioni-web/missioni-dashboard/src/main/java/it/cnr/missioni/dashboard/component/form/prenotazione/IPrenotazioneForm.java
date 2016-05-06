@@ -127,18 +127,7 @@ public interface IPrenotazioneForm extends IForm<PrenotazioneEvent, IPrenotazion
 			BeanItem<PrenotazioneEvent> beanItem = (BeanItem<PrenotazioneEvent>) getFieldGroup().getItemDataSource();
 			PrenotazioneEvent prenotazione = beanItem.getBean();
 			prenotazione.setVeicoloDescription(veicoliCNRField.getItemCaption(prenotazione.getVeicolo()));
-			List<CalendarEvent> lista = calendarComponent.getEvents(prenotazione.getStart(), prenotazione.getEnd());
-			lista.forEach(c -> {
-				if (((PrenotazioneEvent) c).getVeicolo().equals(veicoliCNRField.getValue())
-						&& !((PrenotazioneEvent) c).getId().equals(bean.getId())) {
-					Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("event_present"),
-							Type.ERROR_MESSAGE);
-					isPresent = true;
-				}
-			});
-			if (!isPresent)
-				return prenotazione;
-			return null;
+			return prenotazione;
 		}
 
 		/**

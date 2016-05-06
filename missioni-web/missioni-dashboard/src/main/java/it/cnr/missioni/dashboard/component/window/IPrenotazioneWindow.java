@@ -1,5 +1,8 @@
 package it.cnr.missioni.dashboard.component.window;
 
+import java.util.List;
+
+import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.ui.Calendar;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
@@ -20,6 +23,13 @@ import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 
 public interface IPrenotazioneWindow extends IWindow<PrenotazioneEvent, IPrenotazioneWindow> {
+	
+	/**
+	 * 
+	 * @param list
+	 * @return {@link IPrenotazioneWindow}
+	 */
+	IPrenotazioneWindow withListPrenotazione(List<CalendarEvent> list);
 
     /**
      * @param calendarComponent
@@ -38,6 +48,7 @@ public interface IPrenotazioneWindow extends IWindow<PrenotazioneEvent, IPrenota
         // FIELD PRENOTAZIONE
         private IPrenotazioneForm prenotazioneForm;
         private Calendar calendarComponent;
+        private List<CalendarEvent> list;
 
         protected PrenotazioneWindow() {
         }
@@ -50,7 +61,8 @@ public interface IPrenotazioneWindow extends IWindow<PrenotazioneEvent, IPrenota
             buildWindow();
             setId(ID);
 //			this.prenotazioneForm = PrenotazioneForm(calendarComponent, prenotazione, isAdmin, enabled, modifica);
-            this.prenotazioneForm = IPrenotazioneForm.PrenotazioneForm.getPrenotazioneForm().withBean(bean).withCalendarComponents(calendarComponent).withIsAdmin(isAdmin).withModifica(modifica).withEnabled(enabled).build();
+            this.prenotazioneForm = IPrenotazioneForm.PrenotazioneForm.getPrenotazioneForm().withBean(bean).withCalendarComponents(calendarComponent).withIsAdmin(isAdmin).withModifica(modifica).withEnabled(enabled)
+            		.build();
             detailsWrapper.addComponent(buildTab("Prenotazione", FontAwesome.CALENDAR_O, this.prenotazioneForm));
             if (enabled)
                 content.addComponent(buildFooter());
@@ -67,6 +79,11 @@ public interface IPrenotazioneWindow extends IWindow<PrenotazioneEvent, IPrenota
             this.calendarComponent = calendarComponent;
             return self();
         }
+        
+        public IPrenotazioneWindow withListPrenotazione(List<CalendarEvent> list){
+        	this.list = list;
+        	return self();
+        }
 
         protected Component buildFooter() {
             ok.addStyleName(ValoTheme.BUTTON_PRIMARY);
@@ -81,7 +98,7 @@ public interface IPrenotazioneWindow extends IWindow<PrenotazioneEvent, IPrenota
                     try {
                         PrenotazioneEvent prenotazioneEvent = prenotazioneForm.validate();
                         if (prenotazioneEvent != null) {
-                            DashboardEventBus.post(new PrenotazioneAction(prenotazioneEvent, modifica));
+                            DashboardEventBus.post(new PrenotazioneAction(prenotazioneEvent, modifica,list));
                             close();
                         }
                     } catch (InvalidValueException | CommitException e) {

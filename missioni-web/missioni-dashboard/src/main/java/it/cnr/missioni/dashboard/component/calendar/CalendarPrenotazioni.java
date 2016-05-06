@@ -55,6 +55,7 @@ public class CalendarPrenotazioni implements Serializable {
     private VerticalLayout layoutCalendar;
     private String width;
     private String height;
+    private static List<CalendarEvent> events = new ArrayList<CalendarEvent>();
 
     public CalendarPrenotazioni(String width, String height) {
         this.width = width;
@@ -74,16 +75,16 @@ public class CalendarPrenotazioni implements Serializable {
         return calendarClone.getTime();
     }
 
-    private static Date getStartOfDay(java.util.Calendar calendar, Date date) {
-        java.util.Calendar calendarClone = (java.util.Calendar) calendar.clone();
-        calendarClone.setTime(date);
-        calendarClone.set(java.util.Calendar.MILLISECOND, 0);
-        calendarClone.set(java.util.Calendar.SECOND, 0);
-        calendarClone.set(java.util.Calendar.MINUTE, 0);
-        calendarClone.set(java.util.Calendar.HOUR, 0);
-        calendarClone.set(java.util.Calendar.HOUR_OF_DAY, 0);
-        return calendarClone.getTime();
-    }
+//    private static Date getStartOfDay(java.util.Calendar calendar, Date date) {
+//        java.util.Calendar calendarClone = (java.util.Calendar) calendar.clone();
+//        calendarClone.setTime(date);
+//        calendarClone.set(java.util.Calendar.MILLISECOND, 0);
+//        calendarClone.set(java.util.Calendar.SECOND, 0);
+//        calendarClone.set(java.util.Calendar.MINUTE, 0);
+//        calendarClone.set(java.util.Calendar.HOUR, 0);
+//        calendarClone.set(java.util.Calendar.HOUR_OF_DAY, 0);
+//        return calendarClone.getTime();
+//    }
 
     public void initContent() {
         initCalendar();
@@ -367,7 +368,7 @@ public class CalendarPrenotazioni implements Serializable {
         p.setEnd(end);
 //		PrenotazioneWindow.open(getCalendarComponent(), p,false,true, false);
         IPrenotazioneWindow.PrenotazioneWindow.getPrenotazioneWindow().withBean(p).withCalendarComponent(getCalendarComponent())
-                .withIsAdmin(false).withEnabled(true).withModifica(false).build();
+                .withIsAdmin(false).withEnabled(true).withModifica(false).withListPrenotazione(events).build();
     }
 
     private void nextMonth() {
@@ -427,13 +428,13 @@ public class CalendarPrenotazioni implements Serializable {
         captionLabel.setValue(month + " " + calendar.get(GregorianCalendar.YEAR));
     }
 
-    private PrenotazioneEvent getNewEvent(String caption, Date start, Date end) {
-        PrenotazioneEvent event = new PrenotazioneEvent();
-        event.setCaption(caption);
-        event.setStart(start);
-        event.setEnd(end);
-        return event;
-    }
+//    private PrenotazioneEvent getNewEvent(String caption, Date start, Date end) {
+//        PrenotazioneEvent event = new PrenotazioneEvent();
+//        event.setCaption(caption);
+//        event.setStart(start);
+//        event.setEnd(end);
+//        return event;
+//    }
 
     /*
      * Switch the view to week view.
@@ -535,7 +536,7 @@ public class CalendarPrenotazioni implements Serializable {
 
         private static final long serialVersionUID = -3655982234130426761L;
 
-        private List<CalendarEvent> events = new ArrayList<CalendarEvent>();
+
 
         public MyEventProvider() {
 
