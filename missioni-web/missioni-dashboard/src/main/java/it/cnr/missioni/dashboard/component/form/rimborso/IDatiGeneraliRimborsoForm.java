@@ -90,7 +90,7 @@ public interface IDatiGeneraliRimborsoForm extends IForm<Rimborso, IDatiGenerali
             dataFineMissioneField.setValue(missione.getDatiPeriodoMissione().getFineMissione().toDate());
             dataFineMissioneField.setReadOnly(!enabled);
             
-            dataInizioMissioneField = new DateField("Data fine missione");
+            dataInizioMissioneField = new DateField("Data inizio missione");
             dataInizioMissioneField.setDateOutOfRangeMessage("Data non possibile");
             dataInizioMissioneField.setResolution(Resolution.MINUTE);
             dataInizioMissioneField.setDateFormat("dd/MM/yyyy HH:mm");
