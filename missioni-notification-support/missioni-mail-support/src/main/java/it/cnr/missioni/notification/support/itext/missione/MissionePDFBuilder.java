@@ -52,7 +52,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 
 		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
 		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
-		document.addSubject("Richiesta Anticipo Pagamento");
+		document.addSubject("Richiesta Missione");
 		document.open();
 		writeHeader(document);
 		
@@ -262,7 +262,7 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 				getType());
 		Preconditions.checkArgument((this.veicolo != null), "The Parameter Veicolo must not be null.");
 		Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-		PdfWriter.getInstance(document, ((this.file != null) ? new FileOutputStream(this.file) : this.outputStream));
+		PdfWriter.getInstance(document, ((this.fileVeicolo != null) ? new FileOutputStream(this.fileVeicolo) : this.outputStream));
 		document.addSubject("Richiesta Mezzo Proprio");
 		document.open();
 		writeHeader(document);
