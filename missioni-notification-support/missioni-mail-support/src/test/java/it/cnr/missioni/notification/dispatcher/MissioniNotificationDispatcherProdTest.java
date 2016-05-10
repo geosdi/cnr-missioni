@@ -240,15 +240,16 @@ public class MissioniNotificationDispatcherProdTest {
         missione.setDistanza("100.00 Km");
         missione.setMotivazioni("prova");
         missione.setAltreDisposizioni("Altre disposizioni");
+        
         DatiPeriodoMissione datiPeriodoMissione = new DatiPeriodoMissione();
-        datiPeriodoMissione.setInizioMissione(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
-        datiPeriodoMissione.setFineMissione(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
+        datiPeriodoMissione.setInizioMissione(new DateTime(2015, 11, 11, 8, 0, DateTimeZone.UTC));
+        datiPeriodoMissione.setFineMissione(new DateTime(2015, 11, 12, 7, 59, DateTimeZone.UTC));
         missione.setDatiPeriodoMissione(datiPeriodoMissione);
         
         DatiMissioneEstera datiMissioneEstera = new DatiMissioneEstera();
-        datiMissioneEstera.setAttraversamentoFrontieraAndata(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
-        datiMissioneEstera.setAttraversamentoFrontieraRitorno(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
-        datiMissioneEstera.setTrattamentoMissioneEsteraEnum(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
+//        datiMissioneEstera.setAttraversamentoFrontieraAndata(new DateTime(2015, 11, 11, 0, 0, DateTimeZone.UTC));
+//        datiMissioneEstera.setAttraversamentoFrontieraRitorno(new DateTime(2015, 11, 15, 0, 0, DateTimeZone.UTC));
+//        datiMissioneEstera.setTrattamentoMissioneEsteraEnum(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO);
         missione.setDatiMissioneEstera(datiMissioneEstera);
 
         Fattura fattura = new Fattura();
