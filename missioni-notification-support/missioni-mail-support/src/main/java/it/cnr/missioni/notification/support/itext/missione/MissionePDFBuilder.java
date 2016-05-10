@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Hours;
+import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -182,18 +183,12 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		document.add(tabletableInfo);
 
 		Paragraph paragraphObbligo = new Paragraph();
-		document.add(paragraphObbligo);
-
+		document.add(paragraphObbligo);				
 		String caption;
 
 		Days days = Days.daysBetween(missione.getDatiPeriodoMissione().getInizioMissione(),
 				missione.getDatiPeriodoMissione().getFineMissione());
-
-		caption = days.getDays() + " gg - ";
-
-		caption.concat(Hours.hoursBetween(missione.getDatiPeriodoMissione().getInizioMissione(),
-				missione.getDatiPeriodoMissione().getFineMissione()) + " HH");
-
+		caption = (days.getDays()+1) + " gg - ";
 		Paragraph paragraphData = new Paragraph();
 		paragraphData.add((new Chunk("Durata Presunta:", fontBold_9)));
 		paragraphData.add(new Chunk(caption, fontNormal_9));
