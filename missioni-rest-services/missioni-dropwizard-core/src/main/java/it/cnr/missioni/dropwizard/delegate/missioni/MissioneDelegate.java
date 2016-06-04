@@ -380,7 +380,7 @@ class MissioneDelegate implements IMissioneDelegate {
 			throw new IllegalParameterFault("The Parameter Location must not be null or an " + "empty String");
 		}
 		GeocoderStore geocoderStore = new GeocoderStore();
-		GeocodingResult[] results = this.gpGeocodingService.newRequest().address(location).await();
+		GeocodingResult[] results = this.gpGeocodingService.newRequest().address(location).language("it").await();
 		if ((results != null) && (results.length > 0)) {
 			for (GeocodingResult geocodingResult : results) {
 				geocoderStore.addGeocoderResponse(new GeocoderResponse(geocodingResult.formattedAddress,
