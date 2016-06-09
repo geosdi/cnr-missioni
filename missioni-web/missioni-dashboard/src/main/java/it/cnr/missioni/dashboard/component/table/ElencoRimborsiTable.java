@@ -41,7 +41,7 @@ public final class ElencoRimborsiTable extends ITable.AbstractTable {
             listaMissioni.addAll(((MissioniStore) missioniStore).getMissioni());
             setVisible(true);
             setContainerDataSource(listaMissioni);
-            setVisibleColumns("rimborso.numeroOrdine","rimborso.sigla", "rimborso.dataRimborso", "rimborso.totale", "id", "oggetto", "localita");
+            setVisibleColumns("progressivo","rimborso.sigla", "rimborso.dataRimborso", "rimborso.totale", "id", "oggetto", "localita");
             setColumnHeaders("Numero Ordine","Sigla", "Data Rimborso", "Totale", "ID Missione", "Oggetto", "Località");
             setId("rimborso.numeroOrdine");
 //            Object[] properties = {"rimborso.dataRimborso", "rimborso.numeroOrdine"};
@@ -64,7 +64,7 @@ public final class ElencoRimborsiTable extends ITable.AbstractTable {
             listaMissioni.addAll(((MissioniStore) missioniStore).getMissioni());
             setVisible(true);
             setContainerDataSource(listaMissioni);
-            setVisibleColumns("shortUser", "rimborso.numeroOrdine","rimborso.sigla", "rimborso.dataRimborso", "rimborso.totale", "oggetto", "localita");
+            setVisibleColumns("shortUser", "progressivo","rimborso.sigla", "rimborso.dataRimborso", "rimborso.totale", "oggetto", "localita");
             setColumnHeaders("User", "Numero Ordine","Sigla", "Data Rimborso", "Totale", "Oggetto", "Località");
             setId("rimborso.numeroOrdine");
             Object[] properties = {"rimborso.dataRimborso", "rimborso.numeroOrdine"};
