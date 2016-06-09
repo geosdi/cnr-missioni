@@ -159,7 +159,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         private String multiMatchValue;
         private String fieldExist;
         private String fieldNotExist;
-        private String fieldMultiMatch = "missione.localita,missione.oggetto,missione.id,missione.shortUser";
+        private String fieldMultiMatch = "missione.localita,missione.oggetto,missione.id,missione.shortUser,missione.progressivo";
 
         private MissioneSearchBuilder() {
             this.fieldSort = SearchConstants.MISSIONE_FIELD_DATA_INSERIMENTO;
