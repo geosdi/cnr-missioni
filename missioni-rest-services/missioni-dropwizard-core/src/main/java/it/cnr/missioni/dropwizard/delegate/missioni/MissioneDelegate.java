@@ -249,8 +249,8 @@ class MissioneDelegate implements IMissioneDelegate {
 		IPageResult<Direttore> lista = this.direttoreDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(lista.getTotal() == 0)
 			throw new ResourceNotFoundFault("Nessun direttore inserito");
-		if (missione.isRimborsoSetted() && missione.getRimborso().getNumeroOrdine() == null)
-			missione.getRimborso().setNumeroOrdine(missione.getId());
+		if (missione.isRimborsoSetted())
+			missione.getRimborso().setNumeroOrdine(missione.getProgressivo());
 		this.missioneDAO.update(missione);
 		IPageResult<UrlImage> listaUrlImage = this.urlImageDAO.find(new GPPageableElasticSearchDAO.Page(0,1));
 		if(listaUrlImage.getTotal() == 0)
