@@ -169,7 +169,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
             public void buttonClick(final ClickEvent event) {
 
                 try {
-                    missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withMultiMatch(multiMatchField.getValue()).withIdUser(DashboardUI.getCurrentUser().getId());
+                	resetSearchBuilder();
                     missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
                     buildPagination(missioniStore.getTotale());
                     addListenerPagination();
@@ -183,6 +183,10 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
         });
         return buttonCerca;
+    }
+    
+    protected void resetSearchBuilder(){
+        missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withMultiMatch(multiMatchField.getValue()).withIdUser(DashboardUI.getCurrentUser().getId());
     }
 
 

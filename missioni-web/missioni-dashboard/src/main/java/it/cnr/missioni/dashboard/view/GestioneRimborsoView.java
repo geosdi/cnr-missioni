@@ -57,8 +57,12 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
     protected void inizialize() {
         this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withIdUser(getUser().getId()).withFieldExist("missione.rimborso")
-                .withFieldSort(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+                .withIdUser(getUser().getId()).withFieldExist("missione.rimborso");
+        }
+    
+    protected void resetSearchBuilder(){
+        this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
+                .withIdUser(getUser().getId()).withFieldExist("missione.rimborso").withMultiMatch(multiMatchField.getValue());;
     }
 
     protected User getUser() {
@@ -128,7 +132,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
             public void buttonClick(final ClickEvent event) {
 
                 try {
-                    missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withMultiMatch(multiMatchField.getValue()).withIdUser(DashboardUI.getCurrentUser().getId());;
+                	resetSearchBuilder();
                     missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
                     buildPagination(missioniStore.getTotale());
                     addListenerPagination();

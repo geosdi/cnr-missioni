@@ -31,8 +31,7 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 
     protected void inizialize() {
         this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withFieldExist("missione.rimborso")
-                .withFieldSort(SearchConstants.MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO);
+                .withFieldExist("missione.rimborso");
     }
 
     protected User getUser() {
@@ -45,6 +44,11 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
                     Type.ERROR_MESSAGE);
         }
         return null;
+    }
+    
+    protected void resetSearchBuilder(){
+        this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
+                .withFieldExist("missione.rimborso").withMultiMatch(multiMatchField.getValue());;
     }
 
     protected void openRimborsoDettgali() {
