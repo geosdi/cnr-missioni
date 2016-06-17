@@ -16,6 +16,8 @@ import com.vaadin.ui.TextArea;
 import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.form.IForm;
+import it.cnr.missioni.dashboard.event.DashboardEvent;
+import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.dashboard.utility.Utility;
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.model.missione.Missione;
@@ -133,13 +135,15 @@ public interface IVeicoloMissioneForm extends IForm<Missione, IVeicoloMissioneFo
 
                     if (value !=null && value.equals(TipoVeicoloEnum.VEICOLO_PROPRIO)) {
                         user.getMappaVeicolo().values().forEach(veicolo -> {
-                            if (veicolo.isVeicoloPrincipale())
+                            if (veicolo.isVeicoloPrincipale()){
                                 veicoloPrincipaleSetted = true;
+                            }
                         });
-
+                        DashboardEventBus.post(new DashboardEvent.DisableContinueButton(veicoloPrincipaleSetted));
                         // se non è presnte un veicolo settato come principale
-                        if (!veicoloPrincipaleSetted)
+                        if (!veicoloPrincipaleSetted){
                             throw new InvalidValueException(Utility.getMessage("no_veicolo"));
+                        }
                     }
                 }
             });
@@ -191,6 +195,7 @@ public interface IVeicoloMissioneForm extends IForm<Missione, IVeicoloMissioneFo
                     motivazioneField.setReadOnly(true);
                     motivazioneField.setValidationVisible(false);
                     labelVeicoloProprio.setVisible(false);
+                    DashboardEventBus.post(new DashboardEvent.DisableContinueButton(true));
                     break;
                 case VEICOLO_PROPRIO:
                     motivazioneField.setReadOnly(false);
@@ -201,6 +206,7 @@ public interface IVeicoloMissioneForm extends IForm<Missione, IVeicoloMissioneFo
                 case NOLEGGIO:
                     motivazioneField.setReadOnly(false);
                     labelVeicoloProprio.setVisible(false);
+                    DashboardEventBus.post(new DashboardEvent.DisableContinueButton(true));
                     break;
                 default:
                     break;

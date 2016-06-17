@@ -70,7 +70,6 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
     protected void addActionButtonRimborso() {
         // se è già associato il rimborso
         if (selectedMissione.getRimborso().isPagata())
-//			RimborsoWindowAdmin.open(selectedMissione, true, false, false);
             RimborsoWindowAdmin.getRimborsoWindowAdmin().withBean(selectedMissione).withIsAdmin(true).withEnabled(false).withModifica(false).build();
 
         else
@@ -83,7 +82,6 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
     }
 
     protected void openWindowAnticipoPagamenti() {
-//		AnticipoPagamentiWindow.open(selectedMissione, true, true, false);
         AnticipoPagamentiWindow.getAnticipoPagamentiWindow().withBean(selectedMissione).withIsAdmin(true).withEnabled(true).withModifica(false).build();
     }
 

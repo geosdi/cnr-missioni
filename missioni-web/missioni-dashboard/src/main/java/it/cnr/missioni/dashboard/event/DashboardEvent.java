@@ -281,4 +281,24 @@ public abstract class DashboardEvent {
             this.status = status;
         }
     }
+    
+    public static class DisableContinueButton {
+    	
+    	private boolean enabled;
+
+		public DisableContinueButton(boolean enabled) {
+			this.enabled = enabled;
+		}
+
+		public boolean isEnabled() {
+			return enabled;
+		}
+
+		public void setEnabled(boolean enabled) {
+			this.enabled = enabled;
+		}
+    	
+    	
+    	
+    }
 }

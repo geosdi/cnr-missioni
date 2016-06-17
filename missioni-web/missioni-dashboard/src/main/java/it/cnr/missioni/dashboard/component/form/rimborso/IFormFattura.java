@@ -118,6 +118,7 @@ public interface IFormFattura extends IForm<Fattura, IFormFattura> {
             dataField.setDateFormat("dd/MM/yyyy");
             dataField.setValidationVisible(false);
             dataField.setImmediate(true);
+            dataField.setRangeEnd(missione.getDatiPeriodoMissione().getFineMissione().toDate());
             getTipologiaSpesa(listaTipologiaSpesaItalia, false, false);
             if (missione.isMissioneEstera())
                 getTipologiaSpesa(listaTipologiaSpesaEstera,

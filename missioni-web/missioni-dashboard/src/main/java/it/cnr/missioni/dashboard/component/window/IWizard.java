@@ -1,12 +1,20 @@
 package it.cnr.missioni.dashboard.component.window;
 
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
+import it.cnr.missioni.dashboard.event.DashboardEvent.DisableContinueButton;
 import it.cnr.missioni.dashboard.event.DashboardEvent.IEventResetSelectedMissione;
+import it.cnr.missioni.dashboard.event.DashboardEvent.ResetSelectedMissioneEvent;
+import it.cnr.missioni.dashboard.utility.Utility;
+import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
+import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.user.User;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.event.WizardProgressListener;
+
+import com.google.common.eventbus.Subscribe;
+import com.vaadin.ui.Notification.Type;
 
 /**
  * @author Salvia Vito
@@ -67,6 +75,7 @@ public interface IWizard {
         }
 
         protected void buildWizard() {
+            DashboardEventBus.register(this);
             setWizard(new Wizard());
             getWizard().setUriFragmentEnabled(true);
             getWizard().setVisible(true);
@@ -104,6 +113,14 @@ public interface IWizard {
         public abstract void setEvent(IEventResetSelectedMissione event);
 
         public abstract void setModifica(boolean modifica);
+        
+        /**
+         * Reset missione se il wizard rimborso viene cancellato
+         */
+        @Subscribe
+        public void resetSelectedMissione(final DisableContinueButton event) {
+        	getWizard().getNextButton().setEnabled(event.isEnabled());
+        }
 
 
     }

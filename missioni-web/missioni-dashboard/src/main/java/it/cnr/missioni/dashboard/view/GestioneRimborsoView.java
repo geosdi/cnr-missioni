@@ -54,6 +54,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
     public GestioneRimborsoView() {
         super();
     }
+    
 
     protected void inizialize() {
         this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
@@ -269,7 +270,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
                     Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                             Type.ERROR_MESSAGE);
                 }
-                elencoRimborsiTable.aggiornaTable(missioniStore);
+                aggiornaTable();
+                //elencoRimborsiTable.aggiornaTable(missioniStore);
                 return missioniStore != null ? missioniStore.getMissioni() : null;
             }
 
@@ -288,7 +290,8 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
     public void aggiornaTableMissione(final TableRimborsiUpdatedEvent event) {
         try {
             this.missioniStore = ClientConnector.getMissione(this.missioneSearchBuilder);
-            elencoRimborsiTable.aggiornaTable(this.missioniStore);
+            aggiornaTable();
+            //elencoRimborsiTable.aggiornaTable(this.missioniStore);
             buildPagination(missioniStore.getTotale());
             addListenerPagination();
             disableButtons();

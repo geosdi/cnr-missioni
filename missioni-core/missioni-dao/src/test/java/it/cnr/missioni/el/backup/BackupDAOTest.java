@@ -12,6 +12,7 @@ import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -277,6 +278,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############BACKUP_VEICOLO_CNR", conf.getList().size() == count);
     }
     
+    @Ignore
     @Test
     public void n_readNazioneBackupTest() throws Exception {
     	IBackupStore<Nazione> conf = mapper.readValue(new File("./backup/NazioneBackup.json"), NazioneBackupStore.class);
@@ -287,6 +289,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void o_readTipologiaSpesaBackupTest() throws Exception {
     	IBackupStore<TipologiaSpesa> conf = mapper.readValue(new File("./backup/TipologiaSpesaBackup.json"), TipologiaSpesaBackupStore.class);
@@ -297,6 +300,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void p_readMassimaleBackupTest() throws Exception {
     	IBackupStore<Massimale> conf = mapper.readValue(new File("./backup/MassimaleBackup.json"), MassimaleBackupStore.class);
@@ -307,6 +311,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void q_readDirettoreBackupTest() throws Exception {
     	IBackupStore<Direttore> conf = mapper.readValue(new File("./backup/DirettoreBackup.json"), DirettoreBackupStore.class);
@@ -317,6 +322,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void r_readUrlImageBackupTest() throws Exception {
     	IBackupStore<UrlImage> conf = mapper.readValue(new File("./backup/UrlImageBackup.json"), UrlImageBackupStore.class);
@@ -326,6 +332,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############READ_URL_IMAGE", conf.getList().size() == this.urlImageDAO.count().intValue());
     }
     
+    @Ignore
     @Test
     public void s_readQualificaBackupTest() throws Exception {
     	IBackupStore<QualificaUser> conf = mapper.readValue(new File("./backup/QualificaUserBackup.json"), QualificaBackupStore.class);
@@ -335,6 +342,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############READ_QUALIFICA", conf.getList().size() == this.qualificaUserDAO.count().intValue());
     }
     
+    @Ignore
     @Test
     public void t_readRimborsoKmBackupTest() throws Exception {
     	IBackupStore<RimborsoKm> conf = mapper.readValue(new File("./backup/RimborsoKmBackup.json"), RimborsoKmBackupStore.class);
@@ -344,6 +352,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############READ_RIMBORSO_KM", conf.getList().size() == this.rimborsoKmDAO.count().intValue());
     }
     
+    @Ignore
     @Test
     public void u_readUserBackupTest() throws Exception {
     	IBackupStore<User> conf = mapper.readValue(new File("./backup/UserBackup.json"), UserBackupStore.class);
@@ -353,6 +362,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############READ_USER", conf.getList().size() == this.userDAO.count().intValue());
     }
     
+    @Ignore
     @Test
     public void v_readMissioneBackupTest() throws Exception {
     	IBackupStore<Missione> conf = mapper.readValue(new File("./backup/MissioneBackup.json"), MissioneBackupStore.class);
@@ -362,6 +372,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############READ_MISSIONE", conf.getList().size() == this.missioneDAO.count().intValue());
     }
     
+    @Ignore
     @Test
     public void x_readPrenotazioneBackupTest() throws Exception {
     	IBackupStore<Prenotazione> conf = mapper.readValue(new File("./backup/PrenotazioneBackup.json"), PrenotazioneBackupStore.class);
@@ -371,6 +382,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############READ_PRENOTAZIONE", conf.getList().size() == this.prenotazioneDAO.count().intValue());
     }
     
+    @Ignore
     @Test
     public void y_readVeicoloCnrBackupTest() throws Exception {
     	IBackupStore<VeicoloCNR> conf = mapper.readValue(new File("./backup/VeicoloCnrBackup.json"), VeicoloCnrBackupStore.class);

@@ -96,7 +96,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
                     Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                             Type.ERROR_MESSAGE);
                 }
-                elencoMissioniTable.aggiornaTable(missioniStore);
+                aggiornaTable();
+                //elencoMissioniTable.aggiornaTable(missioniStore);
                 return missioniStore != null ? missioniStore.getMissioni() : null;
             }
 
@@ -303,7 +304,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
     }
 
     protected void openWindowAnticipoPagamenti() {
-//		AnticipoPagamentiWindow.open(selectedMissione, false, true, false);
         AnticipoPagamentiWindow.getAnticipoPagamentiWindow().withBean(selectedMissione).withIsAdmin(false).withEnabled(true).withModifica(false).build();
     }
 
@@ -312,7 +312,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
     }
 
     protected void addActionButtonDettagli() {
-//		MissioneWindowAdmin.open(selectedMissione, true, false, true);
         MissioneWindowAdmin.getMissioneWindowAdmin().withBean(selectedMissione).withIsAdmin(false).withEnabled(false).withModifica(true).build();
     }
 
@@ -449,7 +448,8 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
     public void aggiornaTableMissione(final TableMissioniUpdateEvent event) {
         try {
             this.missioniStore = ClientConnector.getMissione(this.missioneSearchBuilder);
-            elencoMissioniTable.aggiornaTable(this.missioniStore);
+            //elencoMissioniTable.aggiornaTable(this.missioniStore);
+            aggiornaTable();
             buildPagination(missioniStore.getTotale());
             addListenerPagination();
             disableButtons();
