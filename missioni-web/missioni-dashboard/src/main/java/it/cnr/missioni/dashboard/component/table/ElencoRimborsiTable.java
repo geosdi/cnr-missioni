@@ -2,7 +2,14 @@ package it.cnr.missioni.dashboard.component.table;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Resource;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
+
 import it.cnr.missioni.model.missione.Missione;
+import it.cnr.missioni.model.missione.StatoEnum;
 import it.cnr.missioni.rest.api.response.missione.MissioniStore;
 import org.joda.time.DateTime;
 
@@ -64,8 +71,8 @@ public final class ElencoRimborsiTable extends ITable.AbstractTable {
             listaMissioni.addAll(((MissioniStore) missioniStore).getMissioni());
             setVisible(true);
             setContainerDataSource(listaMissioni);
-            setVisibleColumns("shortUser", "progressivo","rimborso.sigla", "rimborso.dataRimborso", "rimborso.totale", "oggetto", "localita");
-            setColumnHeaders("User", "Numero Ordine","Sigla", "Data Rimborso", "Totale", "Oggetto", "Località");
+            setVisibleColumns("shortUser", "progressivo","rimborso.sigla", "rimborso.dataRimborso","stato", "rimborso.totale", "oggetto", "localita");
+            setColumnHeaders("User", "Numero Ordine","Sigla", "Data Rimborso","Stato", "Totale", "Oggetto", "Località");
             setId("rimborso.numeroOrdine");
             Object[] properties = {"rimborso.dataRimborso", "rimborso.numeroOrdine"};
             boolean[] ordering = {false, true};
@@ -93,10 +100,35 @@ public final class ElencoRimborsiTable extends ITable.AbstractTable {
     }
 
     /**
-     *
-     */
-    @Override
-    public void addGeneratedColumn() {
-    }
+    *
+    */
+   @Override
+   public void addGeneratedColumn() {
+       addGeneratedColumn("stato", new ColumnGenerator() {
+
+           /**
+            *
+            */
+           private static final long serialVersionUID = -1135658612453220960L;
+
+           @Override
+           public Object generateCell(final Table source, final Object itemId, Object columnId) {
+
+               Missione missione = (Missione) itemId;
+               Resource res = null;
+               if (missione.getRimborso() != null && missione.getRimborso().isPagata()) {
+                   res = new ThemeResource("img/circle_green_16_ns.png"); // get the resource depending the integer value
+               } 
+               else if(missione.getStato() == StatoEnum.ANNULLATA)
+               	res = new ThemeResource("img/serve-red-circle-icone-8206-16.png"); 
+               else 
+                   res = new ThemeResource("img/orange-circle-icone-6032-16.png"); // get the resource depending the integer value
+               
+               Image i = new Image(missione.getStato().getStato(), res);
+               i.setDescription(missione.getStato().getStato());
+               return i;
+           }
+       });
+   }
 
 }

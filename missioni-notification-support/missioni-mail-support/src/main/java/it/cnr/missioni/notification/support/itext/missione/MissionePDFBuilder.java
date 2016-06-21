@@ -167,9 +167,21 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		PdfPCell cellAltreDisposizioni = new PdfPCell(new Paragraph("Altre Disposizioni:", fontBold_9));
 		cellAltreDisposizioni.setBorder(Rectangle.NO_BORDER);
 		tabletableInfo.addCell(cellAltreDisposizioni);
-
 		tabletableInfo.addCell(new PdfPCell(new Paragraph((missione.getAltreDisposizioni() != null ? missione.getAltreDisposizioni() : ""),
 				fontNormal_9)));
+		
+		//Obbligo Giornaliero
+		PdfPCell cellObbligoGiornaliero = new PdfPCell(new Paragraph("Obbligo Giornaliero:", fontBold_9));
+		cellObbligoGiornaliero.setBorder(Rectangle.NO_BORDER);
+		tabletableInfo.addCell(cellObbligoGiornaliero);
+		tabletableInfo.addCell(new PdfPCell(new Paragraph((missione.isObbligoGiornaliero() ? "Si": "No"),
+				fontNormal_9)));
+		
+		//Data consegna
+		PdfPCell cellDataConsegna = new PdfPCell(new Paragraph("Data Consegna:", fontBold_9));
+		cellDataConsegna.setBorder(Rectangle.NO_BORDER);
+		tabletableInfo.addCell(cellDataConsegna);
+		tabletableInfo.addCell("");
 
 		if (missione.isMissioneEstera()) {
 			PdfPCell cellMissioneEstera = new PdfPCell(new Paragraph("Tipologia Rimborso", fontBold_9));
@@ -214,7 +226,11 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		paragraphFondo.add(new Chunk("CUP:", fontNormal_9));
 		paragraphFondo.add("\n");
 		paragraphFondo.add(new Chunk(
-				"A seguito di:" + (missione.getShortUserSeguito() != null ? missione.getShortUserSeguito() : ""),
+				"A seguito di:" + (missione.getIdUserSeguito() != null ? missione.getShortUserSeguito() : ""),
+				fontNormal_9));
+		paragraphFondo.add("\n");
+		paragraphFondo.add(new Chunk(
+				"Motivazione A seguito:" + (missione.getIdUserSeguito()!= null ? missione.getMotivazioneSeguito() : ""),
 				fontNormal_9));
 		tableFondo.addCell(new PdfPCell(paragraphFondo));
 		PdfPCell cellFirmaResponsabile = new PdfPCell(

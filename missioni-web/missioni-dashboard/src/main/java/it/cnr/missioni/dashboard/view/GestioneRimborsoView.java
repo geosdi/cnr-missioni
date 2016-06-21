@@ -163,6 +163,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
     protected HorizontalLayout addActionButtons() {
         HorizontalLayout layout = new HorizontalLayout();
+        layout.addStyleName("no_white_space");
         layout.setSpacing(true);
         buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli del Rimborso", FontAwesome.EDIT);
         buttonDettagli.addClickListener(new Button.ClickListener() {

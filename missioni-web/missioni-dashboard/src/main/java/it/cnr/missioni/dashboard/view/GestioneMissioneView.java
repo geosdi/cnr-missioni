@@ -200,8 +200,9 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
 
     protected HorizontalLayout addActionButtons() {
         layout = new HorizontalLayout();
-        // layout.setWidth("100%");
-        layout.setSpacing(true);
+        layout.addStyleName("no_white_space");
+        //layout.setWidth("500px");
+        //layout.setSpacing(true);
 
         buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione", FontAwesome.PLUS);
         buttonNew.addClickListener(new Button.ClickListener() {

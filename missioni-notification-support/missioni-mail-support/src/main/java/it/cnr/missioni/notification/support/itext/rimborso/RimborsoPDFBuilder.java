@@ -139,7 +139,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getShortDescriptionTipologiaSpesa(), fontNormal_9)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getAltro() != null ? fattura.getAltro() : "", fontNormal_9)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getNumeroFattura().toString(), fontNormal_9)));
-            tableScontrino.addCell(new PdfPCell(new Paragraph(new DecimalFormat("#0.00").format(fattura.getImporto()) + " € ", fontNormal_9)));
+            tableScontrino.addCell(new PdfPCell(new Paragraph(new DecimalFormat("#0.00").format(fattura.getImporto()), fontNormal_9)));
             tableScontrino.addCell(new PdfPCell(new Paragraph(fattura.getValuta() + "", fontNormal_9)));
         }
         int size = listaScontrini.size();
@@ -186,7 +186,7 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         cellImportoTerzi.setBorder(Rectangle.NO_BORDER);
         tablePagamento.addCell(cellImportoTerzi);
         PdfPCell importoDaTerzi2 = new PdfPCell(new
-                Paragraph((new DecimalFormat("#0.00").format(missione.getRimborso().getImportoDaTerzi())+" €" ), fontNormal_9));
+                Paragraph((new DecimalFormat("#0.00").format(missione.getRimborso().getImportoDaTerzi()) ), fontNormal_9));
         importoDaTerzi2.setMinimumHeight(20f);
         tablePagamento.addCell(importoDaTerzi2);
         

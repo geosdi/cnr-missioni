@@ -93,6 +93,7 @@ public class GestioneVeicoloCNRView extends GestioneTemplateView<VeicoloCNR> {
 
     protected HorizontalLayout addActionButtons() {
         HorizontalLayout layout = new HorizontalLayout();
+        layout.addStyleName("no_white_space");
         layout.setSpacing(true);
         buttonNew = buildButton("Aggiungi Veicolo CNR", "Inserisce un nuovo veicolo CNR", FontAwesome.PLUS);
         buttonNew.addClickListener(new Button.ClickListener() {

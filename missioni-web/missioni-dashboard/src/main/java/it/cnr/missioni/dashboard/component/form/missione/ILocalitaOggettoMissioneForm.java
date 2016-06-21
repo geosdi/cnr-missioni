@@ -11,6 +11,7 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.event.FieldEvents.BlurEvent;
 import com.vaadin.event.FieldEvents.BlurListener;
 import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification.Type;
@@ -52,6 +53,7 @@ public interface ILocalitaOggettoMissioneForm extends IForm<Missione, ILocalitaO
 		private ComboBox listaNazioneField;
 		private ComboBox listaStatoField;
 		private TextArea altreLocalita;
+		private CheckBox obbligoGiornaliero;
 
 		private LocalitaOggettoMissioneForm() {
 		}
@@ -87,6 +89,8 @@ public interface ILocalitaOggettoMissioneForm extends IForm<Missione, ILocalitaO
 			distanzaField = (TextField) getFieldGroup().buildAndBind("Distanza", "distanza");
 			distanzaField.setEnabled(false);
 			altreLocalita = (TextArea) getFieldGroup().buildAndBind("Altre localita", "altreLocalita", TextArea.class);
+			obbligoGiornaliero = (CheckBox) getFieldGroup().buildAndBind("Obbligo Giornaliero", "obbligoGiornaliero", CheckBox.class);
+
 			// if(bean.isMissioneEstera())
 			// buildFields();
 			HorizontalLayout layoutLocalita = new HorizontalLayout();
@@ -97,6 +101,7 @@ public interface ILocalitaOggettoMissioneForm extends IForm<Missione, ILocalitaO
 			}
 			addComponent(localitaField);
 			addComponent(listaLocalitaField);
+			addComponent(obbligoGiornaliero);
 			addComponent(oggettoField);
 			addComponent(distanzaField);
 			addComponent(altreLocalita);

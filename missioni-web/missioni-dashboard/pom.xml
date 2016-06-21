@@ -17,7 +17,7 @@
     <name>CNR :: == Missioni Dashboard</name>
 
     <properties>
-        <productionMode>false</productionMode>
+        <productionMode>true</productionMode>
         <vaadin.version>7.5.5</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -64,8 +64,8 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
         addStyleName(ValoTheme.LAYOUT_CARD);
         addStyleName("panel-view");
         Responsive.makeResponsive(this);
-        layoutPagination.setHeight(50, Unit.PIXELS);
-        layoutPagination.setWidth(100, Unit.PERCENTAGE);
+//        layoutPagination.setHeight(50, Unit.PIXELS);
+//        layoutPagination.setWidth(100, Unit.PERCENTAGE);
         layoutPagination.setStyleName("layout-pagination");
         HorizontalLayout toolbar = new HorizontalLayout();
         toolbar.setWidth("100%");
@@ -79,7 +79,8 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
             fullTextsearchLayout.addComponent(buttonSearch);
         fullTextsearchLayout.setSpacing(true);
         fullTextsearchLayout.setStyleName("full-text-search");
-        fullTextsearchLayout.setWidthUndefined();
+        //fullTextsearchLayout.setWidthUndefined();
+        //fullTextsearchLayout.setWidth("600px");
         layoutTable = buildTable();
         layoutTable.setStyleName("layout-table-object");
         toolbar.addComponents(addActionButtons());
@@ -147,7 +148,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
 
     protected Component buildFilter() {
         multiMatchField = new TextField();
-        multiMatchField.setWidth("600px");
+        multiMatchField.setWidth("250px");
         multiMatchField.setInputPrompt("Testo da ricercare");
         multiMatchField.setIcon(FontAwesome.SEARCH);
         multiMatchField.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);

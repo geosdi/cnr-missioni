@@ -68,35 +68,35 @@ public class WizardSetupWindow extends Window {
         return this;
     }
 
-    public VerticalLayout getComponent() {
-        return mainLayout;
-    }
+//    public VerticalLayout getComponent() {
+//        return mainLayout;
+//    }
 
     public void build() {
         wizard.build();
         init();
         setContent(wizard.getWizard());
+        addStyleName("profile-window");
         UI.getCurrent().addWindow(this);
     }
 
     private void init() {
         DashboardEventBus.post(new CloseOpenWindowsEvent());
-        mainLayout = new VerticalLayout();
-        mainLayout.setSizeFull();
-        mainLayout.setMargin(true);
-        mainLayout.addStyleName("wizard");
-        mainLayout.addComponent(wizard.getWizard());
-        mainLayout.setComponentAlignment(wizard.getWizard(), Alignment.TOP_CENTER);
-        mainLayout.setExpandRatio(wizard.getWizard(), 1f);
+//        mainLayout = new VerticalLayout();
+//        mainLayout.setSizeFull();
+//        mainLayout.setMargin(true);
+//        mainLayout.addStyleName("wizard");
+//        mainLayout.addComponent(wizard.getWizard());
+//        mainLayout.setComponentAlignment(wizard.getWizard(), Alignment.TOP_CENTER);
+//        mainLayout.setExpandRatio(wizard.getWizard(), 1f);
         setId(ID);
         setVisible(true);
         Responsive.makeResponsive(this);
         setModal(true);
-//		setCloseShortcut(KeyCode.ESCAPE, null);
         setResizable(false);
         setClosable(false);
         setHeight("60%");
-        setWidth("45%");
+//        setWidth("45%");
     }
 
 }

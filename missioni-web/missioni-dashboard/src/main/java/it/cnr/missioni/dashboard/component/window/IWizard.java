@@ -84,6 +84,8 @@ public interface IWizard {
             getWizard().getCancelButton().setCaption("Cancella");
             getWizard().getNextButton().setCaption("Avanti");
             getWizard().getFinishButton().setCaption("Concludi");
+            //wizard.setSizeUndefined();
+            wizard.setStyleName("wizard");
             getWizard().setWidth("100%");
             getWizard().setHeight("95%");
         }

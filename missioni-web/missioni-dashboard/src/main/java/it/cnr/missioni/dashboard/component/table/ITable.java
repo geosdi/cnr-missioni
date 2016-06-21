@@ -34,6 +34,7 @@ public interface ITable {
             // addStyleName(ValoTheme.TABLE_NO_VERTICAL_LINES);
             addStyleName(ValoTheme.TABLE_SMALL);
             //
+            //addStyleName("custom_table");
             setColumnAlignment("revenue", Align.RIGHT);
             setRowHeaderMode(RowHeaderMode.HIDDEN);
             setSizeFull();

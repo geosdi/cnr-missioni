@@ -24,7 +24,7 @@ import it.cnr.missioni.model.rimborso.Rimborso;
 		"shortUser", "motivazioni", "altreDisposizioni", "stato", "fondo", "GAE", "missioneEstera", "idUser",
 		"idUserSeguito", "shortUserSeguito", "motivazioneSeguito", "idVeicolo", "shortDescriptionVeicolo",
 		"dataInserimento", "dateLastModified", "mezzoProprio", "distanza", "geoPoint", "idNazione",
-		"shortDescriptionNazione", "datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti", "rimborso" })
+		"shortDescriptionNazione", "datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti", "rimborso","obbligoGiornaliero" })
 public class Missione implements Document {
 
 	/**
@@ -63,6 +63,7 @@ public class Missione implements Document {
 	private GeoPoint geoPoint;
 	private String idNazione;
 	private String shortDescriptionNazione;
+	private boolean obbligoGiornaliero = false;
 
 	private TipoVeicoloEnum tipoVeicolo = TipoVeicoloEnum.AUTOVETTURA_DI_SERVIZIO;
 	@Valid
@@ -542,21 +543,40 @@ public class Missione implements Document {
 	public Boolean isRimborsoSetted() {
 		return this.rimborso != null;
 	}
+	
+	/**
+	 * 
+	 * @return {@link Boolean}
+	 */
+	public boolean isObbligoGiornaliero() {
+		return obbligoGiornaliero;
+	}
+
+	/**
+	 * 
+	 * @param obbligoGiornaliero
+	 */
+	public void setObbligoGiornaliero(boolean obbligoGiornaliero) {
+		this.obbligoGiornaliero = obbligoGiornaliero;
+	}
 
 	@Override
 	public String toString() {
-		return "Missione [id=" + id + ", localita=" + localita + ", altreLocalita=" + altreLocalita + ", oggetto="
-				+ oggetto + ", responsabileGruppo=" + responsabileGruppo + ", shortResponsabileGruppo="
-				+ shortResponsabileGruppo + ", shortUser=" + shortUser + ", motivazioni=" + motivazioni
-				+ ", altreDisposizioni=" + altreDisposizioni + ", stato=" + stato + ", fondo=" + fondo + ", GAE=" + GAE
-				+ ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idUserSeguito=" + idUserSeguito
-				+ ", shortUserSeguito=" + shortUserSeguito + ", motivazioneSeguito=" + motivazioneSeguito
-				+ ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo=" + shortDescriptionVeicolo
-				+ ", dataInserimento=" + dataInserimento + ", dateLastModified=" + dateLastModified + ", mezzoProprio="
-				+ mezzoProprio + ", distanza=" + distanza + ", geoPoint=" + geoPoint + ", idNazione=" + idNazione
-				+ ", shortDescriptionNazione=" + shortDescriptionNazione + ", tipoVeicolo=" + tipoVeicolo
+		return "Missione [id=" + id + ", localita=" + localita + ", altreLocalita=" + altreLocalita + ", progressivo="
+				+ progressivo + ", oggetto=" + oggetto + ", responsabileGruppo=" + responsabileGruppo
+				+ ", shortResponsabileGruppo=" + shortResponsabileGruppo + ", shortUser=" + shortUser + ", motivazioni="
+				+ motivazioni + ", altreDisposizioni=" + altreDisposizioni + ", stato=" + stato + ", fondo=" + fondo
+				+ ", GAE=" + GAE + ", missioneEstera=" + missioneEstera + ", idUser=" + idUser + ", idUserSeguito="
+				+ idUserSeguito + ", shortUserSeguito=" + shortUserSeguito + ", motivazioneSeguito="
+				+ motivazioneSeguito + ", idVeicolo=" + idVeicolo + ", shortDescriptionVeicolo="
+				+ shortDescriptionVeicolo + ", dataInserimento=" + dataInserimento + ", dateLastModified="
+				+ dateLastModified + ", mezzoProprio=" + mezzoProprio + ", distanza=" + distanza + ", geoPoint="
+				+ geoPoint + ", idNazione=" + idNazione + ", shortDescriptionNazione=" + shortDescriptionNazione
+				+ ", obbligoGiornaliero=" + obbligoGiornaliero + ", tipoVeicolo=" + tipoVeicolo
 				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
 				+ ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
 	}
+
+
 
 }

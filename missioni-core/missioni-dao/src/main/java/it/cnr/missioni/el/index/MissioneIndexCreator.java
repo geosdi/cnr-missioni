@@ -120,6 +120,9 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .startObject("lon")
                 .field("type", "double")
                 .endObject()
+                .startObject("obbligoGiornaliero")
+                .field("type", "boolean")
+                .endObject()
                 .endObject()
                 .endObject()
 
