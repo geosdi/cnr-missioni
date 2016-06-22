@@ -115,15 +115,14 @@ public class MissioniNotificationDispatcherProdTest {
     }
 
     @Test
-    public void dispatchUpdateRimborsoMissioneMailProdTest() throws Exception {
-   
+    public void dispatchAddRimborsoMissioneMailProdTest() throws Exception {
     	PDFBuilder pdfBuilder = RimborsoPDFBuilder
                 .newPDFBuilder();
     	    	pdfBuilder.withUser(buildUserTest())
                 .withMissione(buildMissioneTest()).withUrlImage(buildUrlImageTest()).withDirettore(buildDirettoreTest());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildUpdateRimborsoMessage("Vito", "Salvia", "vito.salvia@gmail.com",
-                		UUID.randomUUID().toString(),"Si","01", new Double(130)));
+                .buildAddRimborsoMessage("Vito", "Salvia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
+                		UUID.randomUUID().toString(),pdfBuilder));
         Thread.sleep(6000);
     }
     
