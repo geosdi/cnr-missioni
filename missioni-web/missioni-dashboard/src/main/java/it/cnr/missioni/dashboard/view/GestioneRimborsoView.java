@@ -151,11 +151,11 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
         this.elencoRimborsiTable.aggiornaTable(missioniStore);
     }
 
-    protected void openRimborsoDettgali() {
-        if (selectedMissione.isRimborsoSetted())
+    protected void openRimborsoDettagli() {
+        if (selectedMissione.isRimborsoSetted() && selectedMissione.isRimborsoCompleted())
 //			RimborsoWindowAdmin.open(selectedMissione, false, false, true);
             RimborsoWindowAdmin.getRimborsoWindowAdmin().withBean(selectedMissione).withIsAdmin(false).withEnabled(false).withModifica(true).build();
-        else
+        if (!selectedMissione.isRimborsoSetted() || !selectedMissione.isRimborsoCompleted())
             WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false)
                     .withEvent(new ResetSelectedMissioneRimborsoEvent())
                     .build();
@@ -175,7 +175,7 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                openRimborsoDettgali();
+                openRimborsoDettagli();
             }
 
         });

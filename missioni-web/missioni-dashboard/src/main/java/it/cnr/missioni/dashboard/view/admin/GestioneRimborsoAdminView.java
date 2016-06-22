@@ -31,7 +31,7 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
 
     protected void inizialize() {
         this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withFieldExist("missione.rimborso");
+                .withFieldExist("missione.rimborso").withRimborsoCompleted(true);
     }
 
     protected User getUser() {
@@ -51,15 +51,15 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
                 .withFieldExist("missione.rimborso").withMultiMatch(multiMatchField.getValue());;
     }
 
-    protected void openRimborsoDettgali() {
+    protected void openRimborsoDettagli() {
         if (selectedMissione.getStato() == StatoEnum.PAGATA)
-//			RimborsoWindowAdmin.open(selectedMissione, true, false, true);
             RimborsoWindowAdmin.getRimborsoWindowAdmin().withBean(selectedMissione).withIsAdmin(true).withEnabled(false).withModifica(true).build();
 
         else
             WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(true).withEnabled(true).withModifica(true).withEvent(new ResetSelectedMissioneRimborsoAdminEvent())
                     .build();
     }
+    
 
     protected void aggiornaTable() {
         this.elencoRimborsiTable.aggiornaTableAdmin(missioniStore);

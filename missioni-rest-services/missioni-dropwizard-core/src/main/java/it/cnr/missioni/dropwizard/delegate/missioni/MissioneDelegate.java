@@ -187,7 +187,7 @@ class MissioneDelegate implements IMissioneDelegate {
 	@Override
 	public MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
 			Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
-			String multiMatch, String fieldExist, String fieldNotExist, int from, int size) throws Exception {
+			String multiMatch, String fieldExist, String fieldNotExist,boolean rimborsoCompleted, int from, int size) throws Exception {
 		DateTime fromInserimento = dataFromMissione != null ? new DateTime(dataFromMissione) : null;
 		DateTime toInserimento = dataToMissione != null ? new DateTime(dataToMissione) : null;
 		DateTime fromRimborso = dataFromRimborso != null ? new DateTime(dataFromRimborso) : null;
@@ -196,7 +196,8 @@ class MissioneDelegate implements IMissioneDelegate {
 				.withIdUser(idUser).withId(idMissione).withStato(stato)
 				.withNumeroOrdineMissione(numeroOrdineRimborso).withRangeDataInserimento(fromInserimento, toInserimento)
 				.withRangeDataRimborso(fromRimborso, toRimborso).withOggetto(oggetto).withMultiMatch(multiMatch)
-				.withFieldExist(fieldExist).withFieldNotExist(fieldNotExist).withFrom(from).withSize(size);
+				.withFieldExist(fieldExist).withFieldNotExist(fieldNotExist).withRimborsoCompleted(rimborsoCompleted).
+				withFrom(from).withSize(size);
 		GPPageableElasticSearchDAO.IPageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
 		MissioniStore missioniStore = new MissioniStore();
 		missioniStore.setMissioni(pageResult.getResults());

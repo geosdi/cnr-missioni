@@ -78,6 +78,11 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
      * @return {@link IMissioneSearchBuilder}
      */
     IMissioneSearchBuilder withMultiMatchField(String fieldMultiMatch);
+    /**
+     * @param completed
+     * @return {@link IMissioneSearchBuilder}
+     */
+    IMissioneSearchBuilder withRimborsoCompleted(boolean completed);
 
     /**
      * @return {@link String}
@@ -133,6 +138,12 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
      * @return {@link String}
      */
     public String getFieldNotExist();
+    
+    /**
+     * 
+     * @return {@link boolean}
+     */
+    public boolean isRimborsoCompleted();
 
 
     /**
@@ -159,6 +170,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         private String multiMatchValue;
         private String fieldExist;
         private String fieldNotExist;
+        private boolean rimborsoCompleted;
         private String fieldMultiMatch = "missione.localita,missione.oggetto,missione.id,missione.shortUser,missione.progressivo";
 
         private MissioneSearchBuilder() {
@@ -291,6 +303,17 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
             this.fieldMultiMatch = fieldMultiMatch;
             return self();
         }
+        
+        /**
+         * @param fieldMultiMatch
+         * @return {@link IMissioneSearchBuilder}
+         */
+        public IMissioneSearchBuilder withRimborsoCompleted(boolean allCompleted) {
+            this.rimborsoCompleted = allCompleted;
+            if(allCompleted == true)
+            	listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_COMPLETED, allCompleted, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            return self();
+        }
 
         public IMissioneSearchBuilder build(){
             this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch[]::new));
@@ -382,6 +405,13 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
          */
         public String getFieldMultiMatch() {
             return fieldMultiMatch;
+        }
+        
+        /**
+         * @return {@link boolean}
+         */
+        public boolean isRimborsoCompleted() {
+            return rimborsoCompleted;
         }
 
         /**

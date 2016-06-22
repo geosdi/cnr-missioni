@@ -29,6 +29,7 @@ public interface IMissioneDelegate {
 	 * @param multiMatch
 	 * @param fieldExist
 	 * @param fieldNotExist
+	 * @param rimborsoCompleted
 	 * @param from
 	 * @param size
 	 * @return
@@ -36,7 +37,7 @@ public interface IMissioneDelegate {
 	 */
 	MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
 			Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
-			String multiMatch, String fieldExist, String fieldNotExist, int from, int size) throws Exception;
+			String multiMatch, String fieldExist, String fieldNotExist,boolean rimborsoCompleted, int from, int size) throws Exception;
 
 	/**
 	 * @param userID

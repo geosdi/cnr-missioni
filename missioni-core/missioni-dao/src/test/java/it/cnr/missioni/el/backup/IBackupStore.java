@@ -5,6 +5,7 @@ import java.util.List;
 
 import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.configuration.MissioneId;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
@@ -70,6 +71,19 @@ public interface IBackupStore<E> {
 		}
 
 		public void setList(List<Direttore> list) {
+			this.list = list;
+		}
+	}
+	
+	public class MissioneIdBackupStore implements IBackupStore<MissioneId>{
+
+		private List<MissioneId> list = new ArrayList();
+
+		public List<MissioneId> getList() {
+			return list;
+		}
+
+		public void setList(List<MissioneId> list) {
 			this.list = list;
 		}
 	}

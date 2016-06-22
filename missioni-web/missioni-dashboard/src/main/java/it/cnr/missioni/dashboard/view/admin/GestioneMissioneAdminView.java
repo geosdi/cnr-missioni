@@ -101,7 +101,7 @@ public class GestioneMissioneAdminView extends GestioneMissioneView {
     protected void enableButtons() {
         this.buttonDettagli.setEnabled(selectedMissione.getStato() != StatoEnum.RESPINTA);
         this.buttonPDF.setEnabled(true);
-        this.buttonRimborso.setEnabled(selectedMissione.isRimborsoSetted());
+        this.buttonRimborso.setEnabled(selectedMissione.isRimborsoSetted() && selectedMissione.isRimborsoCompleted());
         buttonVeicoloMissionePDF.setEnabled(selectedMissione.isMezzoProprio());
         this.buttonAnticipoPagamento.setVisible(enableButtonWindowAnticipoPagamento());
         this.buttonAnticipoPagamentoPdf.setVisible(enableButtonDownloadPdf());

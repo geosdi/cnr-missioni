@@ -123,6 +123,9 @@ public class MissioneIndexCreator extends GPAbstractIndexCreator {
                 .startObject("obbligoGiornaliero")
                 .field("type", "boolean")
                 .endObject()
+                .startObject("rimborsoCompleted")
+                .field("type", "boolean")
+                .endObject()
                 .endObject()
                 .endObject()
 
