@@ -71,7 +71,7 @@ public class MissioniNotificationDispatcherProdTest {
     @Test
     public void dispatchAddMissioneMailProdTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildAddMissioneMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com","vito.salvia@alice.it",
+                .buildAddMissioneMessage("Giuseppe", "La Scaleia", "vito.salvia@gmail.com","vito.salvia@gmail.com",
                         "vito.salvia@gmail.com", MissionePDFBuilder
                                 .newPDFBuilder()
                                 .withUser(buildUserTest())

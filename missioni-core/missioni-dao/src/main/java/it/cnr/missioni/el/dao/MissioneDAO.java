@@ -61,18 +61,7 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
      * @throws Exception
      */
     public synchronized String getMaxNumeroMissioneAnno() throws Exception {
-//        long value = 0;
         DateTime now = new DateTime();
-//		DateTime from = new DateTime(now.getYear(),1,1,0,0);
-//		DateTime to = new DateTime(now.getYear(),12,31,23,59);
-//        IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-//                .withRangeDataInserimento(from, to);
-//        List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
-//        String id = null;
-//        if(lista.isEmpty())
-//            id =  this.missioneIdDAO.find(new Page(0,1)).getResults().get(0).getValue();
-//        else
-//        id = lista.size() + 1+"";
         MissioneId missioneId = this.missioneIdDAO.find(new Page(0,1)).getResults().get(0);
         String id = missioneId.getValue()+"-" + now.getYear();
         missioneId.setValue(Long.parseLong(missioneId.getValue())+1+"");

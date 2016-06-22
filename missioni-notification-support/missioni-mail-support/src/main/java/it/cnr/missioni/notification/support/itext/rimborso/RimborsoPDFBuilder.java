@@ -201,6 +201,12 @@ public class RimborsoPDFBuilder extends PDFBuilder.AbstractPDFBuilder {
         cellAnticipazioni2.setMinimumHeight(20f);
         tablePagamento.addCell(cellAnticipazioni2);
 
+		//Data consegna
+		PdfPCell cellDataConsegna = new PdfPCell(new Paragraph("Data Consegna:", fontNormal_9));
+		cellDataConsegna.setBorder(Rectangle.NO_BORDER);
+		tablePagamento.addCell(cellDataConsegna);
+		tablePagamento.addCell("");
+               
         document.add(tablePagamento);
 
         document.add(new Paragraph("Il Richiedente"));

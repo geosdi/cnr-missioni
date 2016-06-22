@@ -362,7 +362,7 @@ public class BackupDAOTest {
     	Assert.assertTrue("############READ_USER", conf.getList().size() == this.userDAO.count().intValue());
     }
     
-    @Ignore
+    //@Ignore
     @Test
     public void v_readMissioneBackupTest() throws Exception {
     	IBackupStore<Missione> conf = mapper.readValue(new File("./backup/MissioneBackup.json"), MissioneBackupStore.class);

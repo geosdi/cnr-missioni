@@ -176,12 +176,6 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		tabletableInfo.addCell(cellObbligoGiornaliero);
 		tabletableInfo.addCell(new PdfPCell(new Paragraph((missione.isObbligoGiornaliero() ? "Si": "No"),
 				fontNormal_9)));
-		
-		//Data consegna
-		PdfPCell cellDataConsegna = new PdfPCell(new Paragraph("Data Consegna:", fontBold_9));
-		cellDataConsegna.setBorder(Rectangle.NO_BORDER);
-		tabletableInfo.addCell(cellDataConsegna);
-		tabletableInfo.addCell("");
 
 		if (missione.isMissioneEstera()) {
 			PdfPCell cellMissioneEstera = new PdfPCell(new Paragraph("Tipologia Rimborso", fontBold_9));
