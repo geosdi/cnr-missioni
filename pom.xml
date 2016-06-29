@@ -149,6 +149,15 @@
             </dependency>
 
             <!-- =========================================================== -->
+            <!-- ================ GEOPLATFORM QUARTZ SUPPORT =============== -->
+            <!-- =========================================================== -->
+            <dependency>
+                <groupId>org.geosdi</groupId>
+                <artifactId>geoplatform-quartz-support</artifactId>
+                <version>${geoplatform-version}</version>
+            </dependency>
+
+            <!-- =========================================================== -->
             <!-- ================ GEOPLATFORM LOGGER SUPPORT =============== -->
             <!-- =========================================================== -->
             <dependency>
@@ -258,6 +267,7 @@
     <modules>
         <module>missioni-core</module>
         <module>missioni-notification-support</module>
+        <module>missioni-quartz-support</module>
         <module>missioni-rest-services</module>
         <module>missioni-web</module>
     </modules>
