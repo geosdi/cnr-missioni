@@ -48,42 +48,6 @@ public class LoginView extends VerticalLayout implements Serializable {
         notification.setDelayMsec(20000);
         notification.show(Page.getCurrent());
     }
-    
-//  private HorizontalLayout createToolbar(){
-//	HorizontalLayout toolbar = new HorizontalLayout();
-//    toolbar.addStyleName("dashboard-panel-toolbar");
-//    toolbar.setWidth("100%");
-//    MenuBar tools = new MenuBar();
-//    tools.addStyleName(ValoTheme.MENUBAR_BORDERLESS);
-//    MenuItem root = tools.addItem("", FontAwesome.COG, null);
-//    root.addItem("Registrati", new Command() {
-//        /**
-//		 * 
-//		 */
-//		private static final long serialVersionUID = -5366691424292210724L;
-//
-//		@Override
-//        public void menuSelected(final MenuItem selectedItem) {
-//            CredenzialiWindow.getCredenzialiWindow().withBean(new User()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
-//        }
-//    });
-//    root.addSeparator();
-//    root.addItem("Recupera Password", new Command() {
-//        /**
-//		 * 
-//		 */
-//		private static final long serialVersionUID = 2608884855326068277L;
-//
-//		@Override
-//        public void menuSelected(final MenuItem selectedItem) {
-//            RecuperaPasswordWindow.getRecuperaPasswordWindow().withBean(new User()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
-//        }
-//    });
-//    
-//    toolbar.addComponents(tools);
-//    toolbar.setComponentAlignment(tools, Alignment.BOTTOM_LEFT);
-//    return toolbar;
-//}
 
     private Component buildLoginForm() {
         final VerticalLayout loginPanel = new VerticalLayout();
@@ -93,6 +57,7 @@ public class LoginView extends VerticalLayout implements Serializable {
         loginPanel.addStyleName("login-panel");
         loginPanel.addComponent(buildLabels());
         loginPanel.addComponent(buildFields());
+       // loginPanel.addComponent(new CheckBox("Remember me", true));
         HorizontalLayout buttonsLayout = new HorizontalLayout();
         loginPanel.addComponent(buttonsLayout);
         Button buttonRegistrati = new Button("Registrati", new Button.ClickListener() {
@@ -103,7 +68,6 @@ public class LoginView extends VerticalLayout implements Serializable {
 
             @Override
             public void buttonClick(ClickEvent clickEvent) {
-//				CredenzialiWindow.open(new User(),false,true,false);
                 CredenzialiWindow.getCredenzialiWindow().withBean(new User()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
             }
         });
@@ -120,7 +84,6 @@ public class LoginView extends VerticalLayout implements Serializable {
 
 			@Override
             public void buttonClick(ClickEvent clickEvent) {
-//				CredenzialiWindow.open(new User(),false,true,false);
                 RecuperaPasswordWindow.getRecuperaPasswordWindow().withBean(new User()).withIsAdmin(false).withEnabled(true).withModifica(false).build();
             }
         });

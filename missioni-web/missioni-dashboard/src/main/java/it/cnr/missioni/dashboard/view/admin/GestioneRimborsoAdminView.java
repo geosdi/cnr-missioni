@@ -48,7 +48,7 @@ public class GestioneRimborsoAdminView extends GestioneRimborsoView {
     
     protected void resetSearchBuilder(){
         this.missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withFieldExist("missione.rimborso").withMultiMatch(multiMatchField.getValue());;
+                .withFieldExist("missione.rimborso").withMultiMatch(multiMatchField.getValue()).withRimborsoCompleted(true);
     }
 
     protected void openRimborsoDettagli() {

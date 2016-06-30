@@ -3,7 +3,6 @@ package it.cnr.missioni.dashboard.view.admin;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.ui.Notification.Type;
 
-import it.cnr.missioni.dashboard.DashboardUI;
 import it.cnr.missioni.dashboard.client.ClientConnector;
 import it.cnr.missioni.dashboard.component.window.AnticipoPagamentiWindow;
 import it.cnr.missioni.dashboard.component.window.WizardSetupWindow;

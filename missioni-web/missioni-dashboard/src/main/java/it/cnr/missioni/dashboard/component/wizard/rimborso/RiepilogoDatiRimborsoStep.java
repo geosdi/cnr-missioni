@@ -16,6 +16,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import it.cnr.missioni.dashboard.action.RimborsoAction;
+import it.cnr.missioni.dashboard.action.admin.UpdateRimborsoAction;
 import it.cnr.missioni.dashboard.component.table.ElencoFattureTable;
 import it.cnr.missioni.dashboard.event.DashboardEvent.CloseOpenWindowsEvent;
 import it.cnr.missioni.dashboard.event.DashboardEventBus;
@@ -141,7 +142,7 @@ public class RiepilogoDatiRimborsoStep implements WizardStep {
 
 							public void onClose(ConfirmDialog dialog) {
 								if(dialog.isConfirmed()){
-									DashboardEventBus.post(new RimborsoAction(missione,isAdmin));
+									DashboardEventBus.post(new UpdateRimborsoAction(missione));
 									DashboardEventBus.post(new CloseOpenWindowsEvent());
 								}
 							}

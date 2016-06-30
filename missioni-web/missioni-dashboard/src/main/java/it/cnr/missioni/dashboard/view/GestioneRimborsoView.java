@@ -153,7 +153,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
     protected void openRimborsoDettagli() {
         if (selectedMissione.isRimborsoSetted() && selectedMissione.isRimborsoCompleted())
-//			RimborsoWindowAdmin.open(selectedMissione, false, false, true);
             RimborsoWindowAdmin.getRimborsoWindowAdmin().withBean(selectedMissione).withIsAdmin(false).withEnabled(false).withModifica(true).build();
         if (!selectedMissione.isRimborsoSetted() || !selectedMissione.isRimborsoCompleted())
             WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withUser(getUser()).withIsAdmin(false).withEnabled(true).withModifica(false)
@@ -190,7 +189,6 @@ public class GestioneRimborsoView extends GestioneTemplateView<Missione> {
 
             @Override
             public void buttonClick(ClickEvent event) {
-//				MissioneWindowAdmin.open(selectedMissione, true, false, true);
                 MissioneWindowAdmin.getMissioneWindowAdmin().withBean(selectedMissione).withIsAdmin(true).withEnabled(false).withModifica(true).build();
             }
         });

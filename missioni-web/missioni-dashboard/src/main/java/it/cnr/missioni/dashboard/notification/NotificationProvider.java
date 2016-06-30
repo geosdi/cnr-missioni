@@ -46,7 +46,11 @@ public class NotificationProvider implements INotificationProvider {
             notifications.add(buildNotification("Dati User non completi", "E' necessario completare la registrazione"));
         }
         lista.forEach(m -> {
-            notifications.add(buildNotification("Id Missione: " + m.getId(), "Missione senza Rimborso"));
+            notifications.add(buildNotification("Id Missione: " + m.getProgressivo(), "Missione senza Rimborso"));
+        });
+        lista = getMissioneNoSend();
+        lista.forEach(m -> {
+            notifications.add(buildNotification("Id Missione: " + m.getProgressivo(), "Rimborso non inviato"));
         });
     }
 
@@ -81,6 +85,26 @@ public class NotificationProvider implements INotificationProvider {
             MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
             if (missioniStore.getTotale() > 0)
                 lista = missioniStore.getMissioni().stream().filter(m -> m.getDatiPeriodoMissione().getFineMissione().isBefore(new DateTime().minusDays(15))).collect(Collectors.toList());
+        } catch (Exception e) {
+            Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
+                    Type.ERROR_MESSAGE);
+        }
+        return lista;
+    }
+    
+    /**
+     * Verifica che non ci siano missioni non inviate
+     *
+     * @return
+     */
+    private List<Missione> getMissioneNoSend() {
+        List<Missione> lista = new ArrayList<Missione>();
+        IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser(DashboardUI.getCurrentUser().getId())
+                .withFieldExist("missione.rimborso");
+        try {
+            MissioniStore missioniStore = ClientConnector.getMissione(missioneSearchBuilder);
+            if (missioniStore.getTotale() > 0)
+                lista = missioniStore.getMissioni().stream().filter(m -> m.isRimborsoCompleted() == false).collect(Collectors.toList());
         } catch (Exception e) {
             Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                     Type.ERROR_MESSAGE);

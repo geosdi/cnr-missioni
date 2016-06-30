@@ -97,7 +97,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
                             Type.ERROR_MESSAGE);
                 }
                 aggiornaTable();
-                //elencoMissioniTable.aggiornaTable(missioniStore);
                 return missioniStore != null ? missioniStore.getMissioni() : null;
             }
 
@@ -201,9 +200,6 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
     protected HorizontalLayout addActionButtons() {
         layout = new HorizontalLayout();
         layout.addStyleName("no_white_space");
-        //layout.setWidth("500px");
-        //layout.setSpacing(true);
-
         buttonNew = buildButton("Nuova Missione", "Crea una nuova Missione", FontAwesome.PLUS);
         buttonNew.addClickListener(new Button.ClickListener() {
 
@@ -327,12 +323,17 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
     }
 
     protected void addActionButtonRimborso() {
-        // se è già associato il rimborso
-        if (selectedMissione.isRimborsoSetted()) {
-//			RimborsoWindowAdmin.open(selectedMissione, false, false, true);
+        // se è già associato il rimborso ed è stato completato
+        if (selectedMissione.isRimborsoSetted() && selectedMissione.isRimborsoCompleted()) {
             RimborsoWindowAdmin.getRimborsoWindowAdmin().withBean(selectedMissione).withIsAdmin(false).withEnabled(false).withModifica(true).build();
-        } else {
+        } 
+        //se non è stato associato alcun rimborso
+        else if (!selectedMissione.isRimborsoSetted()) {
             selectedMissione.setRimborso(new Rimborso());
+            WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withEvent(new ResetSelectedMissioneEvent())
+                    .withUser(this.getUser()).withEnabled(true).withIsAdmin(false).withModifica(false).build();
+        }
+        else if (!selectedMissione.isRimborsoCompleted()) {
             WizardSetupWindow.getWizardSetup().withTipo(new WizardRimborso()).withMissione(selectedMissione).withEvent(new ResetSelectedMissioneEvent())
                     .withUser(this.getUser()).withEnabled(true).withIsAdmin(false).withModifica(false).build();
         }
