@@ -26,7 +26,7 @@ class MissioniPresenceTriggerSchedulerConfig {
 
     @Bean
     public Trigger missioniPresenceTriggerScheduler(
-            @Qualifier(value = "missioniImaaQuartzScheduler") JobDetail missioniImaaQuartzScheduler,
+            @Qualifier(value = "missioniPresenceJobDetailScheduler") JobDetail missioniPresenceJobDetailScheduler,
             @Qualifier(value = "missioniImaaCronTriggerConfig") GPCronTriggerConfiguration missioniImaaCronTriggerConfig) {
         logger.debug("\n\n@@@@@@@@@@@@@@@@@CONFIGURING "
                         + "MISSIONI_PRESENCE_TRIGGER_SCHEDULER with {}\n\n",
@@ -38,7 +38,7 @@ class MissioniPresenceTriggerSchedulerConfig {
                         + missioniImaaCronTriggerConfig.getCronTriggerExpression())
                 .withSchedule(CronScheduleBuilder
                         .cronSchedule(missioniImaaCronTriggerConfig.getCronTriggerExpression()))
-                .forJob(missioniImaaQuartzScheduler)
+                .forJob(missioniPresenceJobDetailScheduler)
                 .build();
     }
 }
