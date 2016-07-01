@@ -37,6 +37,7 @@ package it.cnr.missioni.connector.core;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.IPrenotazioneSearchBuilder;
+import it.cnr.missioni.el.utility.PrenotazioneFunction;
 import it.cnr.missioni.model.prenotazione.Prenotazione;
 import it.cnr.missioni.rest.api.response.prenotazione.PrenotazioniStore;
 import org.joda.time.DateTime;
@@ -47,6 +48,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -82,20 +85,20 @@ public class PrenotazioneRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 	
-//	@Test
-//	public void A_createTest() throws Exception {
-//		List<Prenotazione> lista = PrenotazioneFunction.creaMassivePrenotazioni();
-//		lista.stream().forEach(p->{
-//			try {
-//				missioniCoreClientConnector.addPrenotazione(p);
-//			} catch (Exception e) {
-//			}
-//		});
-//		Thread.sleep(1000);
-//	}
+	@Test
+	public void A_createTest() throws Exception {
+		List<Prenotazione> lista = PrenotazioneFunction.creaMassivePrenotazioni();
+		lista.stream().forEach(p->{
+			try {
+				missioniCoreClientConnector.addPrenotazione(p);
+			} catch (Exception e) {
+			}
+		});
+		Thread.sleep(1000);
+	}
 	
 	@Test
-	public void A_testFindPrenotazione() throws Exception {
+	public void B_testFindPrenotazione() throws Exception {
 		
 		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());
 		PrenotazioniStore prenotazioniStore= missioniCoreClientConnector.getPrenotazioneByQuery(prenotazioneSearchBuilder);
@@ -103,7 +106,7 @@ public class PrenotazioneRestServiceTest {
 	}
 
 	@Test
-	public void B_addPrenotazionetest() throws Exception {
+	public void C_addPrenotazionetest() throws Exception {
 		Prenotazione p = new Prenotazione();
 		p.setId("03");
 		p.setDataFrom(new DateTime(2016,1,27,0,0));
@@ -118,7 +121,7 @@ public class PrenotazioneRestServiceTest {
 	}
 	
 	@Test
-	public void C_updatePrenotazionetest() throws Exception {
+	public void D_updatePrenotazionetest() throws Exception {
 		Prenotazione p = new Prenotazione();
 		p.setId("03");
 		DateTime now = new DateTime();
@@ -132,7 +135,7 @@ public class PrenotazioneRestServiceTest {
 	}
 	
 	@Test
-	public void D_deletePrenotazionetest() throws Exception {
+	public void E_deletePrenotazionetest() throws Exception {
 		missioniCoreClientConnector.deletePrenotazione("03");
 		Thread.sleep(1000);
 		IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder.getPrenotazioneSearchBuilder().withRangeData(new DateTime(2016,1,1,0,0), new DateTime());

@@ -164,9 +164,9 @@ public class TipologiaSpesaDAOTest {
 
     }
 
-//	@Test
-//	public void tearDown() throws Exception {
-//		this.tipoligiaSpesaDocIndexCreator.deleteIndex();
-//	}
+	@Test
+	public void tearDown() throws Exception {
+		this.tipoligiaSpesaDocIndexCreator.deleteIndex();
+	}
 
 }

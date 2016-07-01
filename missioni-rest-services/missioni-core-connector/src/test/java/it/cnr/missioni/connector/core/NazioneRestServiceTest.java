@@ -37,6 +37,7 @@ package it.cnr.missioni.connector.core;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.INazioneSearchBuilder;
+import it.cnr.missioni.el.utility.NazioneFunction;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.rest.api.response.nazione.NazioneStore;
@@ -47,6 +48,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -82,20 +85,20 @@ public class NazioneRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
-//	@Test
-//	public void A_createTest() throws Exception {
-//		List<Nazione> lista = NazioneFunction.creaMassiveNazioni();
-//		lista.stream().forEach(n->{
-//			try {
-//				missioniCoreClientConnector.addNazione(n);
-//			} catch (Exception e) {
-//			}
-//		});
-//		Thread.sleep(1000);
-//	}
+	@Test
+	public void A_createTest() throws Exception {
+		List<Nazione> lista = NazioneFunction.creaMassiveNazioni();
+		lista.stream().forEach(n->{
+			try {
+				missioniCoreClientConnector.addNazione(n);
+			} catch (Exception e) {
+			}
+		});
+		Thread.sleep(1000);
+	}
 	
 	@Test
-	public void A_addNazioneTest() throws Exception {
+	public void B_addNazioneTest() throws Exception {
 		Nazione nazione = new Nazione();
 		nazione.setValue("Giappone");
 		nazione.setId("03");
@@ -108,7 +111,7 @@ public class NazioneRestServiceTest {
 	}
 	
 	@Test
-	public void B_updateNazioneTest() throws Exception {
+	public void C_updateNazioneTest() throws Exception {
 		Nazione nazione = new Nazione();
 		nazione.setValue("Austria");
 		nazione.setId("03");
@@ -122,7 +125,7 @@ public class NazioneRestServiceTest {
 	}
 	
 	@Test
-	public void C_deleteNazioneTest() throws Exception {
+	public void D_deleteNazioneTest() throws Exception {
 		missioniCoreClientConnector.deleteNazione("03");
 		Thread.sleep(1000);
 		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder();
@@ -132,7 +135,7 @@ public class NazioneRestServiceTest {
 	}
 	
 	@Test
-	public void D_findByIdTest() throws Exception {
+	public void E_findByIdTest() throws Exception {
 		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withId("02");
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("FIND NAZIONE BY ID", nazioneStore.getNazione().size() == 1);
@@ -140,7 +143,7 @@ public class NazioneRestServiceTest {
 	}
 	
 	@Test
-	public void E_findByIdTest_2() throws Exception {
+	public void F_findByIdTest_2() throws Exception {
 		INazioneSearchBuilder nazioneSearchBuilder = INazioneSearchBuilder.NazioneSearchBuilder.getNazioneSearchBuilder().withId("03");
 		NazioneStore nazioneStore = missioniCoreClientConnector.getNazioneByQuery(nazioneSearchBuilder);
 		Assert.assertTrue("FIND NAZIONE BY ID", nazioneStore.getTotale() == 0);

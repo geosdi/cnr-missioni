@@ -133,9 +133,9 @@ public class QualificaUserDAOTest {
         Assert.assertTrue("FIND  QUALIFICA USER", lista.size() == 2);
     }
 
-//	@Test
-//	public void tearDown() throws Exception {
-//		this.qualificaUserDocIndexCreator.deleteIndex();
-//	}
+	@Test
+	public void tearDown() throws Exception {
+		this.qualificaUserDocIndexCreator.deleteIndex();
+	}
 
 }

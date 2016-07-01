@@ -45,12 +45,29 @@ public class RimborsoKmDAOTest {
     }
 
     @Test
-    public void A_countRimborsoKmTest() throws Exception {
+    public void A_addRimborsoKmtest() throws Exception {
+        RimborsoKm rimborsoKm = new RimborsoKm();
+        rimborsoKm.setId("02");
+        rimborsoKm.setValue(0.36);
+        rimborsoKmDAO.persist(rimborsoKm);
+    }
+
+    @Test
+    public void B_findByIdTest_2() throws Exception {
+    	Thread.sleep(1000);
+        IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
+                .getRimborsoKmSearchBuilder().withId("02");
+        List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
+        Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.isEmpty());
+    }
+    
+    @Test
+    public void C_countRimborsoKmTest() throws Exception {
         Assert.assertTrue("###########COUNT RIMORSO_KM", this.rimborsoKmDAO.count() == 1);
     }
 
     @Test
-    public void C_updateRimborsoKmTest() throws Exception {
+    public void D_updateRimborsoKmTest() throws Exception {
     	RimborsoKm rimborsoKm = rimborsoKmDAO.findRimborsoKmByQuery(IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder.getRimborsoKmSearchBuilder()).getResults().get(0);
         rimborsoKm.setValue(0.40);
         Thread.sleep(1000);
@@ -65,24 +82,8 @@ public class RimborsoKmDAOTest {
     }
 
     @Test
-    public void D_addRimborsoKmtest() throws Exception {
-        RimborsoKm rimborsoKm = new RimborsoKm();
-        rimborsoKm.setId("02");
-        rimborsoKm.setValue(0.36);
-        rimborsoKmDAO.persist(rimborsoKm);
-    }
-
-    @Test
-    public void F_findByIdTest_2() throws Exception {
-        IRimborsoKmSearchBuilder rimborsoKmSearchBuilder = IRimborsoKmSearchBuilder.RimborsoKmSearchBuilder
-                .getRimborsoKmSearchBuilder().withId("02");
-        List<RimborsoKm> lista = rimborsoKmDAO.findRimborsoKmByQuery(rimborsoKmSearchBuilder).getResults();
-        Assert.assertTrue("FIND RIMBORSO KM BY ID", lista.isEmpty());
-    }
-
-/*    @Test
     public void tearDown() throws Exception {
         this.rimborsoKmDocIndexCreator.deleteIndex();
-    }*/
+    }
 
 }

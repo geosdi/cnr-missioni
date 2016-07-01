@@ -302,7 +302,7 @@ public class MissioneDAOTest {
         Assert.assertTrue("FIND USER IN MISSIONE", lista.size() == 7);
     }
 
-    @Ignore
+    //@Ignore
 	@Test
 	public void Z_tearDown() throws Exception {
 		this.missioneDocIndexCreator.deleteIndex();

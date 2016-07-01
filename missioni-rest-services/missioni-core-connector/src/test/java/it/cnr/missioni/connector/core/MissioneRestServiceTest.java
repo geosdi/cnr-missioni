@@ -38,6 +38,7 @@ package it.cnr.missioni.connector.core;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
+import it.cnr.missioni.el.utility.MissioneFunction;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
@@ -59,6 +60,7 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  *
@@ -92,18 +94,18 @@ public class MissioneRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
-//	@Test
-//	public void A_createTest() throws Exception {
-//		List<Missione> lista = MissioneFunction.creaMassiveMissioni();
-//		lista.stream().forEach(m->{
-//			try {
-//				missioniCoreClientConnector.addMissione(m);
-//			} catch (Exception e) {
-//			}
-//		});
-//		Thread.sleep(1000);
-//	}
-//	
+	@Test
+	public void A_createTest() throws Exception {
+		List<Missione> lista = MissioneFunction.creaMassiveMissioni();
+		lista.stream().forEach(m->{
+			try {
+				missioniCoreClientConnector.addMissione(m);
+			} catch (Exception e) {
+			}
+		});
+		Thread.sleep(1000);
+	}
+	
 	
 	//@Ignore
 	@Test
@@ -340,5 +342,6 @@ public class MissioneRestServiceTest {
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", missioniStore.getTotale() == 0);
 	}
+	
 	
 }
