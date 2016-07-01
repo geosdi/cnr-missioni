@@ -23,7 +23,6 @@
             <groupId>it.cnr</groupId>
             <artifactId>missioni-core-support</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
