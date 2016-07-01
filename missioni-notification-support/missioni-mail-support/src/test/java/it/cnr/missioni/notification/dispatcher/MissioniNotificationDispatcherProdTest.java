@@ -157,25 +157,20 @@ public class MissioniNotificationDispatcherProdTest {
                 .newPDFBuilder();
     	pdfBuilder.withMissioneList(buildMissioneList());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildUsersInMissioneMessage(pdfBuilder,new String[] { "vito.salvia@gmail.com","vito.salvia@alice.it" }));
+                .buildUsersInMissioneMessage(pdfBuilder,new String[] { "vito.salvia@gmail.com","vito.salvia@alice.it" },buildMissioneList()));
         Thread.sleep(6000);
     }
     
     List<Missione> buildMissioneList(){
     	List<Missione> lista = new ArrayList<Missione>();
-    	
     	Missione missione = new Missione();
     	missione.setShortUser("Salvia Vito");
     	missione.setLocalita("Roma");
     	lista.add(missione);
-    	
     	missione = new Missione();
     	missione.setShortUser("Franco Luigi");
     	missione.setLocalita("Milano");
     	lista.add(missione);
-    	
-
-    	
     	return lista;
     }
     
