@@ -3,6 +3,7 @@ package it.cnr.missioni.notification.message.factory;
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
+import it.cnr.missioni.notification.message.NotifyUsersMissioneMessage;
 import it.cnr.missioni.notification.message.RecuperaPasswordMessage;
 import it.cnr.missioni.notification.message.UpdateAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
@@ -100,4 +101,11 @@ public interface NotificationMessageFactory {
 	 */
 	RecuperaPasswordMessage buildRecuperaPasswordMessage(String userName, String userSurname, String userEmail,
 			String password);
+	
+	/**
+	 * 
+	 * @param pdfBuilder
+	 * @return
+	 */
+	NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder);
 }

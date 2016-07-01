@@ -12,6 +12,8 @@ import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import it.cnr.missioni.notification.support.itext.anticipopagamento.AnticipoPagamentoPDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
+import it.cnr.missioni.notification.support.itext.user.UserMissionePDFBuilder;
+
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -24,7 +26,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -145,6 +149,34 @@ public class MissioniNotificationDispatcherProdTest {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
                 .buildRecuperaPasswordMessage("Vito", "Salvia", "vito.salvia@gmail.com","new_password"));
         Thread.sleep(6000);
+    }
+    
+    @Test
+    public void dispatchUsersInMissioneMailProdTest() throws Exception {
+    	    	PDFBuilder pdfBuilder = UserMissionePDFBuilder
+                .newPDFBuilder();
+    	pdfBuilder.withMissioneList(buildMissioneList());
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
+                .buildUsersInMissioneMessage(pdfBuilder));
+        Thread.sleep(6000);
+    }
+    
+    List<Missione> buildMissioneList(){
+    	List<Missione> lista = new ArrayList<Missione>();
+    	
+    	Missione missione = new Missione();
+    	missione.setShortUser("Salvia Vito");
+    	missione.setLocalita("Roma");
+    	lista.add(missione);
+    	
+    	missione = new Missione();
+    	missione.setShortUser("Franco Luigi");
+    	missione.setLocalita("Milano");
+    	lista.add(missione);
+    	
+
+    	
+    	return lista;
     }
     
     Veicolo buildVeicoloTest(){

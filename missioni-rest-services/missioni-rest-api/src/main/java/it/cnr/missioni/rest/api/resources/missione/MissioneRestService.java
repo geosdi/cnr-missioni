@@ -41,7 +41,7 @@ public interface MissioneRestService {
 	@Path(value = MissioneServiceRSPathConfig.GET_MISSIONE_BY_QUERY)
 	Response getMissioneByQuery(@QueryParam(value = "idMissione") String idMissione,
 			@QueryParam(value = "idUser") String idUser, @QueryParam(value = "stato") String stato,
-			@QueryParam(value = "numeroOrdineRimborso") Long numeroOrdineRimborso,
+			@QueryParam(value = "numeroOrdineRimborso") String numeroOrdineRimborso,
 			@QueryParam(value = "dataFromMissione") Long dataFromMissione,
 			@QueryParam(value = "dataToMissione") Long dataToMissione,
 			@QueryParam(value = "dataFromRimborso") Long dataFromRimborso,

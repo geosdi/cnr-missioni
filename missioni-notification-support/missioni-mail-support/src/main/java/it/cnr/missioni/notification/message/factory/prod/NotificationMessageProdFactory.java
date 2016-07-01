@@ -3,6 +3,7 @@ package it.cnr.missioni.notification.message.factory.prod;
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
+import it.cnr.missioni.notification.message.NotifyUsersMissioneMessage;
 import it.cnr.missioni.notification.message.RecuperaPasswordMessage;
 import it.cnr.missioni.notification.message.UpdateAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
@@ -127,6 +128,11 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 			String password) {
 		return new RecuperaPasswordMessage(userName, userSurname, userEmail, password);
 
+	}
+
+	@Override
+	public NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder) {
+		return new NotifyUsersMissioneMessage(pdfBuilder);
 	}
 
 }

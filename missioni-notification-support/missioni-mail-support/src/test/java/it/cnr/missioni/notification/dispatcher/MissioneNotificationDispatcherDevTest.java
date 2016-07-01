@@ -4,6 +4,8 @@ import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.support.itext.anticipopagamento.AnticipoPagamentoPDFBuilder;
 import it.cnr.missioni.notification.support.itext.missione.MissionePDFBuilder;
 import it.cnr.missioni.notification.support.itext.rimborso.RimborsoPDFBuilder;
+import it.cnr.missioni.notification.support.itext.user.UserMissionePDFBuilder;
+
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -99,5 +101,12 @@ public class MissioneNotificationDispatcherDevTest {
                 .buildRecuperaPasswordMessage("Vito", "Salvia", "vito.salvia@gmail.com",
                         "new_password"));
     }
+    
+    @Test
+    public void dispatchUsersInMissioneMailDevTest() throws Exception {
+        this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
+                .buildUsersInMissioneMessage(UserMissionePDFBuilder.newPDFBuilder()));
+    }
+    
     
 }

@@ -40,7 +40,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
      * @param numeroOrdineRimborso
      * @return {@link IMissioneSearchBuilder}
      */
-    IMissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso);
+    IMissioneSearchBuilder withNumeroOrdineMissione(String numeroOrdineRimborso);
 
     /**
      * @param fromDataRimborso
@@ -105,9 +105,9 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
     DateTime getToDataInserimento();
 
     /**
-     * @return {@link Long}
+     * @return {@link String}
      */
-    Long getNumeroOrdineRimborso();
+    String getNumeroOrdineRimborso();
 
     /**
      * @return {@link DateTime}
@@ -163,7 +163,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         private DateTime toDataInserimento = null;
         private String idUser = null;
         private String stato = null;
-        private Long numeroOrdineRimborso = null;
+        private String numeroOrdineRimborso = null;
         private DateTime fromDataRimbroso = null;
         private DateTime toDataRimbroso = null;
         private String oggetto = null;
@@ -220,7 +220,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
          * @param numeroOrdineRimborso
          * @return {@link IMissioneSearchBuilder}
          */
-        public IMissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso) {
+        public IMissioneSearchBuilder withNumeroOrdineMissione(String numeroOrdineRimborso) {
             this.numeroOrdineRimborso = numeroOrdineRimborso;
             if (numeroOrdineRimborso != null && !numeroOrdineRimborso.equals(""))
                 listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE, numeroOrdineRimborso, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
@@ -350,9 +350,9 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
 
 
         /**
-         * @return {@link Long}
+         * @return {@link String}
          */
-        public Long getNumeroOrdineRimborso() {
+        public String getNumeroOrdineRimborso() {
             return numeroOrdineRimborso;
         }
 

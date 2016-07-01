@@ -32,6 +32,8 @@ public class SearchConstants {
     public static final String MISSIONE_FIELD_RIMBORSO_DATA_RIMBORSO = "missione.rimborso.dataRimborso";
     public static final String MISSIONE_FIELD_RIMBORSO_COMPLETED = "missione.rimborsoCompleted";
     public final static String MISSIONE_FIELD_RIMBORSO = "missione.rimborso";
+    public final static String MISSIONE_FIELD_DATA_INIZIO = "missione.datiPeriodoMissione.inizioMissione";
+    public final static String MISSIONE_FIELD_DATA_FINE = "missione.datiPeriodoMissione.fineMissione";
 
     //PRENOTAZIONE
     public static final String PRENOTAZIONE_FIELD_DATA_FROM = "prenotazione.dataFrom";

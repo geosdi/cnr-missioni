@@ -15,7 +15,8 @@ abstract class CNRMissioniMessage implements IMissioniMailNotificationTask.IMiss
 
     private ImmutableMap<String, Object> messParameters;
     private final ThreadLocal<Map<String, Object>> threadLocalParameters;
-
+    
+    
     public CNRMissioniMessage(String userName, String userSurname, String userEmail) {
         this.threadLocalParameters = ThreadLocal.<Map<String, Object>>withInitial(new Supplier<Map<String, Object>>() {
 

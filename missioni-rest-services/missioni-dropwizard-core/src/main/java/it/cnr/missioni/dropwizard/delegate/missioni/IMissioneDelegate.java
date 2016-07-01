@@ -35,7 +35,7 @@ public interface IMissioneDelegate {
 	 * @return
 	 * @throws Exception
 	 */
-	MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
+	MissioniStore getMissioneByQuery(String idMissione, String idUser, String stato, String numeroOrdineRimborso,
 			Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
 			String multiMatch, String fieldExist, String fieldNotExist,boolean rimborsoCompleted, int from, int size) throws Exception;
 
