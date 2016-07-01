@@ -131,8 +131,8 @@ public class NotificationMessageProdFactory implements NotificationMessageFactor
 	}
 
 	@Override
-	public NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder) {
-		return new NotifyUsersMissioneMessage(pdfBuilder);
+	public NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder,String[] email) {
+		return new NotifyUsersMissioneMessage(pdfBuilder,email);
 	}
 
 }

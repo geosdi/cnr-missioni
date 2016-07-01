@@ -105,7 +105,7 @@ public class MissioneNotificationDispatcherDevTest {
     @Test
     public void dispatchUsersInMissioneMailDevTest() throws Exception {
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageDevFactory
-                .buildUsersInMissioneMessage(UserMissionePDFBuilder.newPDFBuilder()));
+                .buildUsersInMissioneMessage(UserMissionePDFBuilder.newPDFBuilder(),new String[0]));
     }
     
     

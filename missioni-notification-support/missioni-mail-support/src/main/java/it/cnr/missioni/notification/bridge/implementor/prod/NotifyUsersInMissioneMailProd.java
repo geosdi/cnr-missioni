@@ -25,6 +25,7 @@ public class NotifyUsersInMissioneMailProd extends MissioniMailProd {
 
 	private PDFBuilder pdfBuilder;
 	private File file;
+	private String[] email;
 
 	/**
 	 * @param message
@@ -38,6 +39,7 @@ public class NotifyUsersInMissioneMailProd extends MissioniMailProd {
 			IMissioniMailNotificationTask.IMissioneNotificationMessage message, VelocityEngine velocityEngine,
 			GPMailDetail gpMailDetail) throws Exception {
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
+		this.email = (String[]) message.getMessageParameters().get("email");
 		Path tempFilePath = Files.createTempFile("UsersMissione", ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
@@ -46,7 +48,7 @@ public class NotifyUsersInMissioneMailProd extends MissioniMailProd {
 		IMissioniMessagePreparator missioniMessagePreparator = super.createMissioniMessagePreparator();
 		missioniMessagePreparator.setMimeMessagePreparator(mimeMessage -> {
             MimeMessageHelper message1 = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
-            message1.setTo(new String[] { "vito.salvia@gmail.com" });
+            message1.setTo(email);
             Map model = new HashMap();
             String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                     "template/usersInMissioneNotification.html.vm", "UTF-8", model);

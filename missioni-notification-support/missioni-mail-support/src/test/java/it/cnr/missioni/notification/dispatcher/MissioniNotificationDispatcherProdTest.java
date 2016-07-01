@@ -157,7 +157,7 @@ public class MissioniNotificationDispatcherProdTest {
                 .newPDFBuilder();
     	pdfBuilder.withMissioneList(buildMissioneList());
         this.missioniMailDispatcher.dispatchMessage(this.notificationMessageProdFactory
-                .buildUsersInMissioneMessage(pdfBuilder));
+                .buildUsersInMissioneMessage(pdfBuilder,new String[] { "vito.salvia@gmail.com","vito.salvia@alice.it" }));
         Thread.sleep(6000);
     }
     

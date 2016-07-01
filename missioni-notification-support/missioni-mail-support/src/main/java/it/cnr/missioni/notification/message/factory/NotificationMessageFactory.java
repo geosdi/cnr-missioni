@@ -101,11 +101,12 @@ public interface NotificationMessageFactory {
 	 */
 	RecuperaPasswordMessage buildRecuperaPasswordMessage(String userName, String userSurname, String userEmail,
 			String password);
-	
+
 	/**
 	 * 
 	 * @param pdfBuilder
+	 * @param email
 	 * @return
 	 */
-	NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder);
+	NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder, String[] email);
 }

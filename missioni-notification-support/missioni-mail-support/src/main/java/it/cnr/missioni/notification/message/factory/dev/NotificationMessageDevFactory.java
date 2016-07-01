@@ -181,8 +181,8 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 	}
 
 	@Override
-	public NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder) {
-		return new NotifyUsersMissioneMessage(pdfBuilder) {
+	public NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder,String[] email) {
+		return new NotifyUsersMissioneMessage(pdfBuilder,email) {
 
 			/**
 			 * @return {@link MissioniMailImplementor.NotificationMessageType}

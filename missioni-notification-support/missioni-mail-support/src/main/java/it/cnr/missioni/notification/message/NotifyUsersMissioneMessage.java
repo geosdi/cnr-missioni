@@ -14,10 +14,12 @@ import net.jcip.annotations.Immutable;
 public class NotifyUsersMissioneMessage extends CNRMissioniMessage {
 
     private final PDFBuilder missionePDFBuilder;
+    private String[] email;
 
-    public NotifyUsersMissioneMessage(PDFBuilder theMissionePDFBuilder) {
+    public NotifyUsersMissioneMessage(PDFBuilder theMissionePDFBuilder,String[] email) {
         super("", "", "");
         this.missionePDFBuilder = theMissionePDFBuilder;
+        this.email = email;
     }
 
     /**
@@ -34,5 +36,6 @@ public class NotifyUsersMissioneMessage extends CNRMissioniMessage {
     @Override
     protected void injectParameters(Map<String, Object> map) {
         map.put("missionePDFBuilder", this.missionePDFBuilder);
+        map.put("email", this.email);
     }
 }

@@ -4,6 +4,7 @@ import it.cnr.missioni.el.dao.IMissioneDAO;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.notification.dispatcher.MissioniMailDispatcher;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
+import it.cnr.missioni.notification.spring.configuration.CNRMissioniEmail;
 import it.cnr.missioni.notification.support.itext.user.UserMissionePDFBuilder;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.geosdi.geoplatform.support.quartz.task.GPBaseJobTask;
@@ -33,13 +34,16 @@ public class MissioniPresenceJobTask extends GPBaseJobTask {
     private MissioniMailDispatcher missioniMailDispatcher;
     @Autowired
     private NotificationMessageFactory notificationMessageFactory;
+	@Resource(name = "cnrMissioniUsersEmail")
+	private CNRMissioniEmail cnrMissioniUsersEmail;
 
     @Override
     public void run(JobExecutionContext jobExecutionContext) throws TaskException {
         try {
             List<Missione> lista = missioneDAO.getUsersInMissione();
+            logger.info(":::::SIZE");
             if (!lista.isEmpty()) {
-                missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUsersInMissioneMessage(UserMissionePDFBuilder.newPDFBuilder().withMissioneList(lista)));
+                missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUsersInMissioneMessage(UserMissionePDFBuilder.newPDFBuilder().withMissioneList(lista),cnrMissioniUsersEmail.getEmail().split(",")));
             }
         } catch (Exception e) {
             logger.error("#####################MissioniPresenceJobTask-Error : {}", e.getMessage());
