@@ -42,10 +42,9 @@ public class CNRMissioniServiceApp extends Application<CNRMissioniServiceConfig>
         ctx.start();
 
         environment.jersey().register(new JacksonMessageBodyProvider(
-                new GPJacksonSupport()
-                        .registerModule(new JodaModule())
+                new GPJacksonSupport().registerModule(new JodaModule())
                         .configure(WRITE_DATES_AS_TIMESTAMPS_DISABLE)
-                        .getDefaultMapper(), environment.getValidator()));
+                        .getDefaultMapper()));
 
         environment.healthChecks().register("service-health-check",
                 new MissioniServiceHealthCheck());
