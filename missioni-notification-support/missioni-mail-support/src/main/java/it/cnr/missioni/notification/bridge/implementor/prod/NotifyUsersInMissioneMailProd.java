@@ -1,5 +1,6 @@
 package it.cnr.missioni.notification.bridge.implementor.prod;
 
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.notification.message.preparator.IMissioniMessagePreparator;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import it.cnr.missioni.notification.task.IMissioniMailNotificationTask;
@@ -26,6 +27,7 @@ public class NotifyUsersInMissioneMailProd extends MissioniMailProd {
 	private PDFBuilder pdfBuilder;
 	private File file;
 	private String[] email;
+	private List<Missione> listaMissioni;
 
 	/**
 	 * @param message
@@ -40,6 +42,7 @@ public class NotifyUsersInMissioneMailProd extends MissioniMailProd {
 			GPMailDetail gpMailDetail) throws Exception {
 		this.pdfBuilder = (PDFBuilder) message.getMessageParameters().get("missionePDFBuilder");
 		this.email = (String[]) message.getMessageParameters().get("email");
+		this.listaMissioni = (List<Missione>) message.getMessageParameters().get("listaMissioni");
 		Path tempFilePath = Files.createTempFile("UsersMissione", ".pdf");
 		file = tempFilePath.toFile();
 		pdfBuilder.withFile(file);
@@ -50,6 +53,7 @@ public class NotifyUsersInMissioneMailProd extends MissioniMailProd {
             MimeMessageHelper message1 = createMimeMessageHelper(mimeMessage, gpMailDetail, Boolean.TRUE);
             message1.setTo(email);
             Map model = new HashMap();
+            model.put("objects", listaMissioni);
             String messageText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                     "template/usersInMissioneNotification.html.vm", "UTF-8", model);
             message1.setText(messageText, Boolean.TRUE);

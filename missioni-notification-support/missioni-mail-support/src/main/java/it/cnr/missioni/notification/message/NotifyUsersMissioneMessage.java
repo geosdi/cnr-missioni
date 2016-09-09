@@ -1,7 +1,9 @@
 package it.cnr.missioni.notification.message;
 
+import java.util.List;
 import java.util.Map;
 
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
 import net.jcip.annotations.Immutable;
@@ -15,11 +17,13 @@ public class NotifyUsersMissioneMessage extends CNRMissioniMessage {
 
     private final PDFBuilder missionePDFBuilder;
     private String[] email;
+    private List<Missione> listaMissioni;
 
-    public NotifyUsersMissioneMessage(PDFBuilder theMissionePDFBuilder,String[] email) {
+    public NotifyUsersMissioneMessage(PDFBuilder theMissionePDFBuilder,String[] email,List<Missione> listaMissioni) {
         super("", "", "");
         this.missionePDFBuilder = theMissionePDFBuilder;
         this.email = email;
+        this.listaMissioni = listaMissioni;
     }
 
     /**
@@ -37,5 +41,6 @@ public class NotifyUsersMissioneMessage extends CNRMissioniMessage {
     protected void injectParameters(Map<String, Object> map) {
         map.put("missionePDFBuilder", this.missionePDFBuilder);
         map.put("email", this.email);
+        map.put("listaMissioni", this.listaMissioni);
     }
 }

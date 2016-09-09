@@ -43,7 +43,7 @@ public class MissioniPresenceJobTask extends GPBaseJobTask {
             List<Missione> lista = missioneDAO.getUsersInMissione();
             logger.info(":::::SIZE");
             if (!lista.isEmpty()) {
-                missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUsersInMissioneMessage(UserMissionePDFBuilder.newPDFBuilder().withMissioneList(lista),cnrMissioniUsersEmail.getEmail().split(",")));
+                missioniMailDispatcher.dispatchMessage(this.notificationMessageFactory.buildUsersInMissioneMessage(UserMissionePDFBuilder.newPDFBuilder().withMissioneList(lista),cnrMissioniUsersEmail.getEmail().split(","),lista));
             }
         } catch (Exception e) {
             logger.error("#####################MissioniPresenceJobTask-Error : {}", e.getMessage());

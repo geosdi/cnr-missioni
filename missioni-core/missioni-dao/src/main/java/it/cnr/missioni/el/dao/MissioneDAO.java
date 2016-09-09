@@ -48,17 +48,6 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
         return super.find(new MultiFieldsSearch(missioneSearchBuilder.getFieldSort(), SortOrder.DESC,missioneSearchBuilder.getFrom(),missioneSearchBuilder.getSize(),missioneSearchBuilder.getListAbstractBooleanSearch().toArray(new IBooleanSearch[missioneSearchBuilder.getListAbstractBooleanSearch().size()])));
     }
 
-/*    *//**
-     * @return
-     * @throws Exception
-     *//*
-    public long getMaxNumeroOrdineRimborso() throws Exception {
-        long value = 0;
-        IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withFieldExist("missione.rimborso");
-        List<Missione> lista = this.findMissioneByQuery(missioneSearchBuilder).getResults();
-        return lista.size() + 1;
-    }*/
-
     /**
      * Trova il numero di missioni inserite in un anno per calcolare l'id
      *

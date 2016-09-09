@@ -1,5 +1,7 @@
 package it.cnr.missioni.notification.message.factory;
 
+import java.util.List;
+
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
 import it.cnr.missioni.notification.message.AddRimborsoMessage;
@@ -8,6 +10,7 @@ import it.cnr.missioni.notification.message.RecuperaPasswordMessage;
 import it.cnr.missioni.notification.message.UpdateAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateRimborsoMessage;
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
 
 /**
@@ -106,7 +109,9 @@ public interface NotificationMessageFactory {
 	 * 
 	 * @param pdfBuilder
 	 * @param email
+	 * @param listaMissioni
 	 * @return
 	 */
-	NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder, String[] email);
+	NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder, String[] email,
+			List<Missione> listaMissioni);
 }

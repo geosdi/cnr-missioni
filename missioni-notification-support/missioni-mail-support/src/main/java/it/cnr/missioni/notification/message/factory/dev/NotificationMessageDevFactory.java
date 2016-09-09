@@ -1,5 +1,6 @@
 package it.cnr.missioni.notification.message.factory.dev;
 
+import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.notification.bridge.implementor.MissioniMailImplementor;
 import it.cnr.missioni.notification.message.AddAnticipoPagamentoMessage;
 import it.cnr.missioni.notification.message.AddMissioneMessage;
@@ -11,6 +12,9 @@ import it.cnr.missioni.notification.message.UpdateMissioneMessage;
 import it.cnr.missioni.notification.message.UpdateRimborsoMessage;
 import it.cnr.missioni.notification.message.factory.NotificationMessageFactory;
 import it.cnr.missioni.notification.support.itext.PDFBuilder;
+
+import java.util.List;
+
 import org.geosdi.geoplatform.configurator.bootstrap.Develop;
 import org.springframework.stereotype.Component;
 
@@ -181,8 +185,8 @@ public class NotificationMessageDevFactory implements NotificationMessageFactory
 	}
 
 	@Override
-	public NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder,String[] email) {
-		return new NotifyUsersMissioneMessage(pdfBuilder,email) {
+	public NotifyUsersMissioneMessage buildUsersInMissioneMessage(PDFBuilder pdfBuilder,String[] email,List<Missione> listaMissioni) {
+		return new NotifyUsersMissioneMessage(pdfBuilder,email,listaMissioni) {
 
 			/**
 			 * @return {@link MissioniMailImplementor.NotificationMessageType}
