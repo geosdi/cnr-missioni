@@ -1,4 +1,4 @@
-package it.cnr.missioni.dropwizard.delegate.missioni;
+ package it.cnr.missioni.dropwizard.delegate.missioni;
 
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.model.missione.Missione;
@@ -120,6 +120,15 @@ public interface IMissioneDelegate {
 	 * @throws Exception
 	 */
 	DistanceResponse getDistanceForMissione(String start, String end) throws Exception;
+	
+	/**
+	 * 
+	 * @param start
+	 * @param end
+	 * @return
+	 * @throws Exception
+	 */
+	Double getNewDistanceForMissione(String start, String end) throws Exception;
 
 	/**
 	 * 

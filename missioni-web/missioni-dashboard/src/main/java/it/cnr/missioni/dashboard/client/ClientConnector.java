@@ -261,6 +261,17 @@ public class ClientConnector {
 			throws Exception {
 		return missioniCoreClientConnector.getDistanceForMissione(start, end);
 	}
+	
+	/**
+	 * @param start
+	 * @param end
+	 * @return {@link DistanceResponse}
+	 * @throws Exception
+	 */
+	public static Double getNewDistanceForMissione(String start, String end)
+			throws Exception {
+		return missioniCoreClientConnector.getNewDistanceForMissione(start, end);
+	}
 
 	/**
 	 * @param location

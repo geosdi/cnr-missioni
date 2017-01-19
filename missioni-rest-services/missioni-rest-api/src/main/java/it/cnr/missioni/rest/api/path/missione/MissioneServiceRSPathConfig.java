@@ -29,7 +29,8 @@ public final class MissioneServiceRSPathConfig extends ApplicationServiceRSPathC
 
     public static final String GET_GEOCODER_STORE_FOR_MISSIONE_LOCATION_PATH = MISSIONI_PATH + "/getGeocoderStoreForMissioneLocation";
     public static final String GET_DISTANCE_FOR_MISSIONE_PATH = MISSIONI_PATH + "/getDistanceForMissione";
-
+    public static final String GET_NEW_DISTANCE_FOR_MISSIONE_PATH = MISSIONI_PATH + "/getNewDistanceForMissione";
+    
     private MissioneServiceRSPathConfig() {
     }
 }

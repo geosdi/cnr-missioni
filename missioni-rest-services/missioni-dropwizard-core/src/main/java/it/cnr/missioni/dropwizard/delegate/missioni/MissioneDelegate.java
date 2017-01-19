@@ -41,6 +41,7 @@ import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodi
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.geosdi.geoplatform.support.google.spring.services.distance.Unit.K;
 
 import javax.annotation.Resource;
 import javax.ws.rs.core.StreamingOutput;
@@ -84,6 +85,7 @@ class MissioneDelegate implements IMissioneDelegate {
 	private GPGeocodingService gpGeocodingService;
 	@Resource(name = "gpDistanceMatrixService")
 	private GPDistanceMatrixService gpDistanceMatrixService;
+	
 
 	/**
 	 * @param request
@@ -533,4 +535,26 @@ class MissioneDelegate implements IMissioneDelegate {
 		return new AnticipoPagamentoStreaming(
 				AnticipoPagamentoPDFBuilder.newPDFBuilder().withUser(user).withMissione(missione).withUrlImage(listaUrlImage.getResults().get(0)).withDirettore(lista.getResults().get(0)));
 	}
+
+	@Override
+	public Double getNewDistanceForMissione(String start, String end) throws Exception {
+		if ((start == null) || (start.isEmpty())) {
+			throw new IllegalParameterFault("The Parameter start must not be null or an " + "empty String");
+		}
+
+		if ((end == null) || (end.isEmpty())) {
+			throw new IllegalParameterFault("The Parameter end must not be null or an " + "empty String");
+		}
+        GeocodingResult[] results = gpGeocodingService.newRequest().address(start).await();
+        GeocodingResult[] resultsEnds = gpGeocodingService.newRequest().address(end).await();
+        
+        if(results.length == 0 || resultsEnds.length == 0)
+        	return new Double(-1);
+        return this.gpDistanceMatrixService
+        .distance(results[0].geometry.location.lat, results[0].geometry.location.lng,
+        		resultsEnds[0].geometry.location.lat, resultsEnds[0].geometry.location.lng,
+                K).doubleValue();	
+	}
 }
+
+

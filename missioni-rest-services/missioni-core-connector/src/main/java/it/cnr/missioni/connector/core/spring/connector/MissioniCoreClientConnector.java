@@ -287,6 +287,12 @@ public class MissioniCoreClientConnector extends AbstractClientConnector {
 				.queryParam("start", start).queryParam("end", end).request(MediaType.APPLICATION_JSON)
 				.get(DistanceResponse.MissioneDistanceResponse.class);
 	}
+	
+	public Double getNewDistanceForMissione(String start, String end) throws Exception {
+		return client.target(super.getRestServiceURL()).path("v1/missioni/getNewDistanceForMissione/")
+				.queryParam("start", start).queryParam("end", end).request(MediaType.APPLICATION_JSON)
+				.get(Double.class);
+	}
 
 	public GeocoderStore getGeocoderStoreForMissioneLocation(String location) throws Exception {
 		return client.target(super.getRestServiceURL()).path("v1/missioni/getGeocoderStoreForMissioneLocation/")

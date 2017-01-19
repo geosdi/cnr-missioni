@@ -1,7 +1,9 @@
 package it.cnr.missioni.dashboard.component.form.missione;
 
 import org.elasticsearch.common.geo.GeoPoint;
+import org.geosdi.geoplatform.support.google.spring.services.geocoding.GPGeocodingService;
 
+import com.google.maps.model.GeocodingResult;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.Validator;
@@ -177,10 +179,14 @@ public interface ILocalitaOggettoMissioneForm extends IForm<Missione, ILocalitaO
 				public void blur(BlurEvent event) {
 					try {
 						String localita = listaLocalitaField.getItemCaption(listaLocalitaField.getValue());
-						if (localita != null) {
-							DistanceResponse.MissioneDistanceResponse distance = ClientConnector.getDistanceForMissione(
-									"CNR-IMAA, Strada Per Contrada Petrucco, 85050 Zona Industriale PZ", localita);
-							distanzaField.setValue(distance.getDistance());
+						if (localita != null) {		
+							Double distance = ClientConnector.getNewDistanceForMissione(
+									"Tito Scalo Potenza", localita);
+							if(distance == -1 )
+								Utility.getNotification(Utility.getMessage("error_message"),
+										Utility.getMessage("no_distance"), Type.ERROR_MESSAGE);
+							else
+								distanzaField.setValue(distance.toString());
 						} else {
 							distanzaField.setValue(null);
 						}

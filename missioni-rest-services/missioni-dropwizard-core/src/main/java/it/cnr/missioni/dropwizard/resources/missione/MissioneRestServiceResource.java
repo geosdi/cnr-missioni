@@ -207,4 +207,10 @@ public class MissioneRestServiceResource implements MissioneRestService {
 		return Response.ok(this.missioneDelegate.downloadAnticipoPagamentoAsPdf(missionID))
 				.header("Content-Disposition", "attachment; filename=AnticipoPagamento.pdf").build();
 	}
+
+	@Override
+	public Response getNewDistanceForMissione(String start, String end) throws Exception {
+		return Response.ok(this.missioneDelegate.getNewDistanceForMissione(start, end)).build();
+	}
+	
 }

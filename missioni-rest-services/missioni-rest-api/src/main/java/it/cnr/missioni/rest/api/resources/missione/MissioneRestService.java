@@ -190,4 +190,15 @@ public interface MissioneRestService {
 	@Path(value = MissioneServiceRSPathConfig.DOWNLOAD_ANTICIPO_PAGAMENTO_AS_PDF_PATH)
 	@Produces(value = "application/pdf")
 	Response downloadAnticipoPagamentoAsPdf(@QueryParam(value = "missionID") String missionID) throws Exception;
+	
+	/**
+	 * @param start
+	 * @param end
+	 * @return {@link Response}
+	 * @throws Exception
+	 */
+	@GET
+	@Path(value = MissioneServiceRSPathConfig.GET_NEW_DISTANCE_FOR_MISSIONE_PATH)
+	Response getNewDistanceForMissione(@QueryParam(value = "start") String start, @QueryParam(value = "end") String end)
+			throws Exception;
 }
