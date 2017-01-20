@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.el.model.search.builder.IUserSearchBuilder;
 import it.cnr.missioni.el.utility.UserFunction;
+import it.cnr.missioni.model.user.RuoloUserEnum;
 import it.cnr.missioni.model.user.User;
 import it.cnr.missioni.support.builder.generator.IMd5PasswordGenerator;
 
@@ -74,6 +75,8 @@ public class UserDAOTest {
         User user = userDAO.findUserByUsername("vito.salvia");
         logger.debug("############################UTENTE_WITH_USERNAME : {}\n",
         		user.getAnagrafica().getCognome() + " " + user.getAnagrafica().getNome());
+//        user.getCredenziali().setRuoloUtente(RuoloUserEnum.UTENTE_ADMIN);
+//        userDAO.update(user);
         Assert.assertTrue("FIND USER BY USERNAME VALIDA", user != null);
     }
 

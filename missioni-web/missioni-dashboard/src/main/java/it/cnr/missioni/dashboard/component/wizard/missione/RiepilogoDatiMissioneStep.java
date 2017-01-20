@@ -67,7 +67,8 @@ public class RiepilogoDatiMissioneStep implements WizardStep {
         details.addComponent(Utility.buildLabel("Fondo: ", missione.getFondo() != null ? missione.getFondo() : ""));
         details.addComponent(Utility.buildLabel("GAE: ", missione.getGAE() != null ? missione.getGAE() : ""));
         details.addComponent(Utility.buildLabel("Responsabile Gruppo: ", missione.getShortResponsabileGruppo()));
-        details.addComponent(Utility.buildLabel("Distanza: ", missione.getDistanza()));
+		int d = new Double(missione.getDistanza()).intValue();
+        details.addComponent(Utility.buildLabel("Distanza: ", d));
         details.addComponent(Utility.buildLabel("Veicolo: ", tipoVeicolo.getValue()));
         if (missione.getTipoVeicolo().equals("Veicolo Proprio") || missione.getTipoVeicolo().equals("Noleggio")) {
             Veicolo v = DashboardUI.getCurrentUser().getVeicoloPrincipale();
