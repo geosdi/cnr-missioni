@@ -151,7 +151,8 @@ public class MissionePDFBuilder extends PDFBuilder.AbstractPDFBuilder {
 		PdfPCell cellDistanza = new PdfPCell(new Paragraph("Distanza dalla sede di servizio km:", fontBold_9));
 		cellDistanza.setBorder(Rectangle.NO_BORDER);
 		tabletableInfo.addCell(cellDistanza);
-		tabletableInfo.addCell(new PdfPCell(new Paragraph("" + missione.getDistanza(), fontNormal_9)));
+		Double d = new Double(missione.getDistanza());
+		tabletableInfo.addCell(new PdfPCell(new Paragraph("" + d.intValue(), fontNormal_9)));
 
 		//Tipo veicolo
 		PdfPCell cellMezzoUtilizzato = new PdfPCell(new Paragraph("Mezzo Utilizzato:", fontBold_9));
