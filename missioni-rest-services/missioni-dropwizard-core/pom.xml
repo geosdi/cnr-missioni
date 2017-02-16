@@ -30,7 +30,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
+        <hibernate.validator.version>5.4.0.Final</hibernate.validator.version>
         <java-uuid-generator.version>3.1.4</java-uuid-generator.version>
     </properties>
 
