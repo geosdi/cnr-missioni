@@ -343,5 +343,25 @@ public class MissioneRestServiceTest {
 		Assert.assertTrue("FIND  MISSIONI NO RIMBORSO", missioniStore.getTotale() == 0);
 	}
 	
+	@Test
+	public void Z_getNewDistanceForMissione_2() throws Exception {
+		Double distance = missioniCoreClientConnector
+				.getNewDistanceForMissione("Tito Scalo Potenza", "Paraguai");
+		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distance);
+	}
+	
+	@Test
+	public void Z_getNewDistanceForMissioneWithError_1() throws Exception {
+		Double distance = missioniCoreClientConnector
+				.getNewDistanceForMissione("Tito Scalo 85050 Potenza", "Paraguai");
+		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distance);
+	}
+	
+	@Test
+	public void Z_getNewDistanceForMissioneWithError_2() throws Exception {
+		Double distance = missioniCoreClientConnector
+				.getNewDistanceForMissione("Tito Scalo Potenza", "Tito Scalo 85050 Potenza");
+		logger.info("#####################DISTANCE FOR MISSIONE : {}\n", distance);
+	}
 	
 }

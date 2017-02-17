@@ -550,9 +550,11 @@ public class CalendarPrenotazioni implements Serializable {
         public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
             events = new ArrayList<CalendarEvent>();
             try {
+				int currentYear = DateTime.now().getYear();
                 IPrenotazioneSearchBuilder prenotazioneSearchBuilder = IPrenotazioneSearchBuilder.PrenotazioneSearchBuilder
                         .getPrenotazioneSearchBuilder()
-                        .withRangeData(new DateTime(startDate.getTime()), new DateTime(endDate.getTime()));
+                        .withRangeData(new DateTime(currentYear,1,1,0,0), new DateTime(currentYear,12,31,23,59));
+                        //.withRangeData(new DateTime(startDate.getTime()), new DateTime(endDate.getTime()));
                 PrenotazioniStore prenotazioniStore = ClientConnector.getPrenotazione(prenotazioneSearchBuilder);
 
                 if (prenotazioniStore != null) {

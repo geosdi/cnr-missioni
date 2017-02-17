@@ -110,7 +110,7 @@ public class Utility {
      * @param value
      * @return
      */
-    public static Label buildLabel(String caption, String value) {
+    public static Label buildLabel(String caption, Object value) {
         Label labelValue = new Label("<b>" + caption + "</b>" + value, ContentMode.HTML);
         labelValue.setStyleName(ValoTheme.LABEL_LIGHT);
         labelValue.setWidth("50%");

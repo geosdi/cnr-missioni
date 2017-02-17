@@ -77,8 +77,8 @@ public class PrenotazioneAction implements IAction {
 
 		@Override
 		public boolean test(CalendarEvent t) {
-			Interval interval = new Interval(t.getStart().getTime(), new DateTime(t.getEnd()).minusMinutes(1).getMillis(),DateTimeZone.getDefault());
-			Interval interval2 = new Interval(prenotazioneEvent.getStart().getTime(), new DateTime(prenotazioneEvent.getEnd()).plusMinutes(1).getMillis(),DateTimeZone.getDefault());
+			Interval interval = new Interval(t.getStart().getTime(), new DateTime(t.getEnd()).getMillis(),DateTimeZone.getDefault());
+			Interval interval2 = new Interval(prenotazioneEvent.getStart().getTime(), new DateTime(prenotazioneEvent.getEnd()).getMillis(),DateTimeZone.getDefault());
 
 			//La nuova prenotazione non deve essere contenuta in uan precendente prenotazione, nè contenerne una
 			return (interval.contains(prenotazioneEvent.getStart().getTime())
