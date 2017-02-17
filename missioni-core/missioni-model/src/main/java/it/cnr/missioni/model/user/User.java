@@ -221,9 +221,11 @@ public class User implements Document {
     }
 
     public Veicolo getVeicoloPrincipale() {
-        if (!mappaVeicolo.isEmpty())
-            return (this.mappaVeicolo.values().stream().filter(v -> v.isVeicoloPrincipale())
-                    .collect(Collectors.toList())).get(0);
+        if (!mappaVeicolo.isEmpty()){
+        	List<Veicolo> list = this.mappaVeicolo.values().stream().filter(v -> v.isVeicoloPrincipale())
+                    .collect(Collectors.toList());
+        	return !list.isEmpty() ? list.get(0) : null;
+        }
         return null;
     }
 
