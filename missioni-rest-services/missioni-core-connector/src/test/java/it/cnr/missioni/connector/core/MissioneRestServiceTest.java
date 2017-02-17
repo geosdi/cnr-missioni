@@ -38,6 +38,7 @@ package it.cnr.missioni.connector.core;
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.bean.StatisticheMissioni;
 import it.cnr.missioni.el.model.search.builder.IMissioneSearchBuilder;
+import it.cnr.missioni.el.utility.MissioneFunction;
 import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.rimborso.Rimborso;
 import it.cnr.missioni.rest.api.response.geocoder.GeocoderStore;
@@ -59,6 +60,7 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  *
@@ -92,32 +94,33 @@ public class MissioneRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
-//	@Test
-//	public void A_createTest() throws Exception {
-//		List<Missione> lista = MissioneFunction.creaMassiveMissioni();
-//		lista.stream().forEach(m->{
-//			try {
-//				missioniCoreClientConnector.addMissione(m);
-//			} catch (Exception e) {
-//			}
-//		});
-//		Thread.sleep(1000);
-//	}
-//	
+	@Test
+	public void A_createTest() throws Exception {
+		List<Missione> lista = MissioneFunction.creaMassiveMissioni();
+		lista.stream().forEach(m->{
+			try {
+				missioniCoreClientConnector.addMissione(m);
+			} catch (Exception e) {
+			}
+		});
+		Thread.sleep(1000);
+	}
 	
+	
+	//@Ignore
 	@Test
 	public void A_insertMissione() throws Exception {	
 		Missione m = new Missione();
-		m.setIdUser("71635a5a-1d53-419e-a001-6e586fd98cf2");
+		m.setIdUser("01");
 		missioniCoreClientConnector.addMissione(m);
 		Thread.sleep(1000);
 		Missione m2 = new Missione();
-		m2.setIdUser("71635a5a-1d53-419e-a001-6e586fd98cf2");
+		m2.setIdUser("01");
 		missioniCoreClientConnector.addMissione(m2);
 		Thread.sleep(1000);
 
 		Missione m3 = new Missione();
-		m3.setIdUser("71635a5a-1d53-419e-a001-6e586fd98cf2");
+		m3.setIdUser("01");
 		missioniCoreClientConnector.addMissione(m3);
 	}
 	
@@ -190,7 +193,7 @@ public class MissioneRestServiceTest {
 	@Test
 	public void G_testFindMissioneByNumeroRimborso() throws Exception {
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
-				.getMissioneSearchBuilder().withNumeroOrdineMissione(new Long(1));
+				.getMissioneSearchBuilder().withNumeroOrdineMissione("M_01");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
 		Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", missioniStore.getMissioni().size() == 1);
 	}
@@ -308,7 +311,7 @@ public class MissioneRestServiceTest {
 		IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder
 				.getMissioneSearchBuilder().withFieldNotExist("missione.rimborso");
 		MissioniStore missioniStore = missioniCoreClientConnector.getMissioneByQuery(missioneSearchBuilder);
-		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getMissioni().size() == 2);
+		Assert.assertTrue("FIND ALL MISSIONI", missioniStore.getTotale() == 14);
 	}
 
 	@Test

@@ -37,6 +37,7 @@ package it.cnr.missioni.connector.core;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.IMassimaleSearchBuilder;
+import it.cnr.missioni.el.utility.MassimaleFunction;
 import it.cnr.missioni.model.configuration.Massimale;
 import it.cnr.missioni.model.configuration.Nazione.AreaGeograficaEnum;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
@@ -49,6 +50,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -84,20 +87,20 @@ public class MassimaleRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 	
-//	@Test
-//	public void A_createTest() throws Exception {
-//		List<Massimale> lista = MassimaleFunction.creaMassiveMassimale();
-//		lista.stream().forEach(m->{
-//			try {
-//				missioniCoreClientConnector.addMassimale(m);
-//			} catch (Exception e) {
-//			}
-//		});
-//		Thread.sleep(5000);
-//	}
+	@Test
+	public void A_createTest() throws Exception {
+		List<Massimale> lista = MassimaleFunction.creaMassiveMassimale();
+		lista.stream().forEach(m->{
+			try {
+				missioniCoreClientConnector.addMassimale(m);
+			} catch (Exception e) {
+			}
+		});
+		Thread.sleep(5000);
+	}
 
 	@Test
-	public void A_addMassimaleTest() throws Exception {
+	public void B_addMassimaleTest() throws Exception {
 		Massimale massimale = new Massimale();
 		massimale.setValue(new Double(130));
 		massimale.setId("12");
@@ -111,7 +114,7 @@ public class MassimaleRestServiceTest {
 	}
 	
 	@Test
-	public void B_updateMassimaleTest() throws Exception {
+	public void C_updateMassimaleTest() throws Exception {
 		Massimale massimale = new Massimale();
 		massimale.setValue(new Double(130));
 		massimale.setId("12");
@@ -126,7 +129,7 @@ public class MassimaleRestServiceTest {
 	}
 	
 	@Test
-	public void C_deleteMassimaleTest() throws Exception {
+	public void D_deleteMassimaleTest() throws Exception {
 		missioniCoreClientConnector.deleteMassimale("12");
 		Thread.sleep(1000);
 		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder();
@@ -136,7 +139,7 @@ public class MassimaleRestServiceTest {
 	}
 
 	@Test
-	public void F_findByIdTest() throws Exception {
+	public void E_findByIdTest() throws Exception {
 		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder().withId("02");
 		MassimaleStore massimaleStore = missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
 		logger.debug("############################FIND_MASSIMALE_BY_ID: {}\n", massimaleStore.getTotale());
@@ -145,7 +148,7 @@ public class MassimaleRestServiceTest {
 	}
 
 	@Test
-	public void G_findByLivelloAreaGeograficaTest() throws Exception {
+	public void F_findByLivelloAreaGeograficaTest() throws Exception {
 		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withLivello(LivelloUserEnum.I.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.TRATTAMENTO_ALTERNATIVO.name());
@@ -154,7 +157,7 @@ public class MassimaleRestServiceTest {
 	}
 
 	@Test
-	public void H_findByLivelloAreaGeograficaTest_2() throws Exception {
+	public void G_findByLivelloAreaGeograficaTest_2() throws Exception {
 		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
@@ -163,7 +166,7 @@ public class MassimaleRestServiceTest {
 	}
 
 	@Test
-	public void I_findByLivelloAreaGeograficaTest_3() throws Exception {
+	public void H_findByLivelloAreaGeograficaTest_3() throws Exception {
 		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.C.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
@@ -172,7 +175,7 @@ public class MassimaleRestServiceTest {
 	}
 
 	@Test
-	public void L_findByIdNotTest() throws Exception {
+	public void I_findByIdNotTest() throws Exception {
 		IMassimaleSearchBuilder massimaleSearchBuilder = IMassimaleSearchBuilder.MassimaleSearchBuilder.getMassimaleSearchBuilder()
 				.withNotId("10").withLivello(LivelloUserEnum.IV.name()).withAreaGeografica(AreaGeograficaEnum.A.name())
 				.withTipo(TrattamentoMissioneEsteraEnum.RIMBORSO_DOCUMENTATO.name());
@@ -188,4 +191,6 @@ public class MassimaleRestServiceTest {
 		MassimaleStore massimaleStore = missioniCoreClientConnector.getMassimaleByQuery(massimaleSearchBuilder);
 		Assert.assertTrue("FIND MASSIMALE BY LIVELLO-AREA", massimaleStore.getTotale() == 0);
 	}	
+	
+	
 }

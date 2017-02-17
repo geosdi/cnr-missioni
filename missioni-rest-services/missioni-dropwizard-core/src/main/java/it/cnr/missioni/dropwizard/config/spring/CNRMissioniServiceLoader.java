@@ -47,6 +47,6 @@ import org.springframework.context.annotation.Configuration;
         "org.geosdi.geoplatform.experimental.el", "org.geosdi.geoplatform.support.async.spring",
         "org.geosdi.geoplatform.support.mail.spring", "it.cnr.missioni.el",
         "it.cnr.missioni.notification", "org.geosdi.geoplatform.support.google.spring",
-        "it.cnr.missioni.dropwizard"})
+        "it.cnr.missioni.spring.quartz, it.cnr.missioni.dropwizard"})
 public class CNRMissioniServiceLoader {
 }

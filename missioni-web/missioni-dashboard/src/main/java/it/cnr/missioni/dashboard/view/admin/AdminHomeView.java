@@ -17,7 +17,7 @@ public final class AdminHomeView extends HomeView {
      *
      */
     private static final long serialVersionUID = 6899889980687530074L;
-    protected IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder();
+    //protected IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder();
 
     public AdminHomeView() {
         super();
@@ -29,7 +29,7 @@ public final class AdminHomeView extends HomeView {
             elencoMissioniTable.aggiornaTableAdmin(ClientConnector.getMissione(IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()));
 
             elencoRimborsiTable.aggiornaTableAdmin(ClientConnector.getMissione(IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                    .withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO)));
+                    .withFieldExist(SearchConstants.MISSIONE_FIELD_RIMBORSO).withRimborsoCompleted(true)));
         } catch (Exception e) {
             Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                     Type.ERROR_MESSAGE);

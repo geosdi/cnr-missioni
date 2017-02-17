@@ -7,6 +7,7 @@ import it.cnr.missioni.model.missione.Missione;
 import it.cnr.missioni.model.missione.StatoEnum;
 import org.geosdi.geoplatform.experimental.el.configurator.GPIndexConfigurator;
 import org.geosdi.geoplatform.experimental.el.dao.GPElasticSearchDAO;
+import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO.IPageResult;
 import org.geosdi.geoplatform.experimental.el.index.GPIndexCreator;
 import org.geosdi.geoplatform.logger.support.annotation.GeoPlatformLog;
 import org.joda.time.DateTime;
@@ -14,6 +15,7 @@ import org.joda.time.DateTimeZone;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -67,13 +69,6 @@ public class MissioneDAOTest {
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONE BY USER", lista.size() == 2);
     }
-    
-//    @Test
-//    public void B_findMissioneByAllUser_1Test() throws Exception {
-//        IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder();
-//        List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
-//        Assert.assertTrue("FIND MISSIONE BY USER", lista.size() == 2);
-//    }
 
     @Test
     public void C_findMissioneByUser_2Test() throws Exception {
@@ -164,7 +159,7 @@ public class MissioneDAOTest {
     @Test
     public void O_findMissioniByRimborsoNumeroOrdine() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
-                .withNumeroOrdineMissione(new Long(1));
+                .withNumeroOrdineMissione("M_01");
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONE BY NUMERO ORDINE RIMBORSO", lista.size() == 1);
     }
@@ -180,16 +175,16 @@ public class MissioneDAOTest {
     @Test
     public void Q_findAllMissioni() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder();
-        List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
-        Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 3);
+        IPageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
+        Assert.assertTrue("FIND ALL MISSIONI", pageResult.getTotal() == 12);
     }
 
     @Test
     public void R_findAllMissioni() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder()
                 .withId("");
-        List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
-        Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 3);
+        IPageResult<Missione> pageResult = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder);
+        Assert.assertTrue("FIND ALL MISSIONI", pageResult.getTotal() == 12);
     }
 
     @Test
@@ -240,12 +235,6 @@ public class MissioneDAOTest {
         Assert.assertTrue("FIND ALL MISSIONI", lista.size() == 1);
     }
 
-/*    @Test
-    public void V_findByMaxNumeroOrdineMissione() throws Exception {
-        String max = this.missioneDAO.getMaxNumeroOrdineRimborso();
-        Assert.assertTrue("FIND ALL MISSIONI", max == 2);
-    }*/
-
     @Test
     public void V_findNumeroRimboroUser() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01")
@@ -286,13 +275,6 @@ public class MissioneDAOTest {
                 statisticheMissioni.getMappaStatistiche().get(StatoEnum.PRESA_IN_CARICO.getStato()) == 2);
     }
 
-/*    @Test
-    public void V_getMaxNumOrdineMissione() throws Exception {
-        long n = this.missioneDAO.getMaxNumeroOrdineRimborso();
-        logger.debug("############################MAX_NUM_ORDINE_MISSIONE : {}\n", n);
-
-    }*/
-
     @Test
     public void V_findRiByUser() throws Exception {
         IMissioneSearchBuilder missioneSearchBuilder = IMissioneSearchBuilder.MissioneSearchBuilder.getMissioneSearchBuilder().withIdUser("01");
@@ -313,9 +295,16 @@ public class MissioneDAOTest {
         List<Missione> lista = this.missioneDAO.findMissioneByQuery(missioneSearchBuilder).getResults();
         Assert.assertTrue("FIND MISSIONI BY ID", lista.size() == 0);
     }
+    
+    @Test
+    public void Z_findUserInMissione() throws Exception {
+        List<Missione> lista = this.missioneDAO.getUsersInMissione();
+        Assert.assertTrue("FIND USER IN MISSIONE", lista.size() == 7);
+    }
 
-//	@Test
-//	public void Z_tearDown() throws Exception {
-//		this.missioneDocIndexCreator.deleteIndex();
-//	}
+    //@Ignore
+	@Test
+	public void Z_tearDown() throws Exception {
+		this.missioneDocIndexCreator.deleteIndex();
+	}
 }

@@ -13,4 +13,5 @@
     
     <context:component-scan base-package="it.cnr.missioni.connector.core.spring" />
     
+    
 </beans>

@@ -38,18 +38,19 @@ public class MissioneRestServiceResource implements MissioneRestService {
 	 * @param multiMatch
 	 * @param fieldExist
 	 * @param fieldNotExist
+	 * @param rimborsoCompleted
 	 * @param from
 	 * @param size
 	 * @return
 	 * @throws Exception
 	 */
 	@Override
-	public Response getMissioneByQuery(String idMissione, String idUser, String stato, Long numeroOrdineRimborso,
+	public Response getMissioneByQuery(String idMissione, String idUser, String stato, String numeroOrdineRimborso,
 			Long dataFromMissione, Long dataToMissione, Long dataFromRimborso, Long dataToRimborso, String oggetto,
-			String multiMatch, String fieldExist, String fieldNotExist, int from, int size) throws Exception {
+			String multiMatch, String fieldExist, String fieldNotExist,boolean rimborsoCompleted, int from, int size) throws Exception {
 		return Response.ok(this.missioneDelegate.getMissioneByQuery(idMissione, idUser, stato, numeroOrdineRimborso,
 				dataFromMissione, dataToMissione, dataFromRimborso, dataToRimborso, oggetto, multiMatch, fieldExist,
-				fieldNotExist, from, size)).build();
+				fieldNotExist,rimborsoCompleted, from, size)).build();
 	}
 
 	/**

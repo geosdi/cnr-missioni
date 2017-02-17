@@ -63,6 +63,7 @@ public abstract class GestioneTemplateView<T> extends VerticalLayout implements 
         setWidth("98%");
         addStyleName(ValoTheme.LAYOUT_CARD);
         addStyleName("panel-view");
+        addStyleName("missione-view");
         Responsive.makeResponsive(this);
 //        layoutPagination.setHeight(50, Unit.PIXELS);
 //        layoutPagination.setWidth(100, Unit.PERCENTAGE);

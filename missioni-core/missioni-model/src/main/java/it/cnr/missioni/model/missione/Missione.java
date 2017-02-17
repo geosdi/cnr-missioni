@@ -24,7 +24,7 @@ import it.cnr.missioni.model.rimborso.Rimborso;
 		"shortUser", "motivazioni", "altreDisposizioni", "stato", "fondo", "GAE", "missioneEstera", "idUser",
 		"idUserSeguito", "shortUserSeguito", "motivazioneSeguito", "idVeicolo", "shortDescriptionVeicolo",
 		"dataInserimento", "dateLastModified", "mezzoProprio", "distanza", "geoPoint", "idNazione",
-		"shortDescriptionNazione", "datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti", "rimborso","obbligoGiornaliero" })
+		"shortDescriptionNazione", "datiPeriodoMissione", "datiMissioneEstera", "datiAnticipoPagamenti", "rimborso","obbligoGiornaliero","rimborsoCompleted" })
 public class Missione implements Document {
 
 	/**
@@ -64,6 +64,7 @@ public class Missione implements Document {
 	private String idNazione;
 	private String shortDescriptionNazione;
 	private boolean obbligoGiornaliero = false;
+	private boolean rimborsoCompleted = false;
 
 	private TipoVeicoloEnum tipoVeicolo = TipoVeicoloEnum.AUTOVETTURA_DI_SERVIZIO;
 	@Valid
@@ -559,6 +560,22 @@ public class Missione implements Document {
 	public void setObbligoGiornaliero(boolean obbligoGiornaliero) {
 		this.obbligoGiornaliero = obbligoGiornaliero;
 	}
+	
+	/**
+	 * 
+	 *  @return {@link Boolean}
+	 */
+	public boolean isRimborsoCompleted() {
+		return rimborsoCompleted;
+	}
+
+	/**
+	 * 
+	 * @param rimborsoCompleted
+	 */
+	public void setRimborsoCompleted(boolean rimborsoCompleted) {
+		this.rimborsoCompleted = rimborsoCompleted;
+	}
 
 	@Override
 	public String toString() {
@@ -572,10 +589,13 @@ public class Missione implements Document {
 				+ shortDescriptionVeicolo + ", dataInserimento=" + dataInserimento + ", dateLastModified="
 				+ dateLastModified + ", mezzoProprio=" + mezzoProprio + ", distanza=" + distanza + ", geoPoint="
 				+ geoPoint + ", idNazione=" + idNazione + ", shortDescriptionNazione=" + shortDescriptionNazione
-				+ ", obbligoGiornaliero=" + obbligoGiornaliero + ", tipoVeicolo=" + tipoVeicolo
-				+ ", datiPeriodoMissione=" + datiPeriodoMissione + ", datiMissioneEstera=" + datiMissioneEstera
-				+ ", datiAnticipoPagamenti=" + datiAnticipoPagamenti + ", rimborso=" + rimborso + "]";
+				+ ", obbligoGiornaliero=" + obbligoGiornaliero + ", rimborsoCompleted=" + rimborsoCompleted
+				+ ", tipoVeicolo=" + tipoVeicolo + ", datiPeriodoMissione=" + datiPeriodoMissione
+				+ ", datiMissioneEstera=" + datiMissioneEstera + ", datiAnticipoPagamenti=" + datiAnticipoPagamenti
+				+ ", rimborso=" + rimborso + "]";
 	}
+
+
 
 
 

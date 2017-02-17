@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import it.cnr.missioni.el.backup.IBackupStore.DirettoreBackupStore;
 import it.cnr.missioni.el.backup.IBackupStore.MassimaleBackupStore;
 import it.cnr.missioni.el.backup.IBackupStore.MissioneBackupStore;
+import it.cnr.missioni.el.backup.IBackupStore.MissioneIdBackupStore;
 import it.cnr.missioni.el.backup.IBackupStore.NazioneBackupStore;
 import it.cnr.missioni.el.backup.IBackupStore.PrenotazioneBackupStore;
 import it.cnr.missioni.el.backup.IBackupStore.QualificaBackupStore;
@@ -36,6 +37,7 @@ import it.cnr.missioni.el.backup.IBackupStore.VeicoloCnrBackupStore;
 import it.cnr.missioni.el.dao.IDirettoreDAO;
 import it.cnr.missioni.el.dao.IMassimaleDAO;
 import it.cnr.missioni.el.dao.IMissioneDAO;
+import it.cnr.missioni.el.dao.IMissioneIdDAO;
 import it.cnr.missioni.el.dao.INazioneDAO;
 import it.cnr.missioni.el.dao.IPrenotazioneDAO;
 import it.cnr.missioni.el.dao.IQualificaUserDAO;
@@ -46,6 +48,7 @@ import it.cnr.missioni.el.dao.IUserDAO;
 import it.cnr.missioni.el.dao.IVeicoloCNRDAO;
 import it.cnr.missioni.model.configuration.Direttore;
 import it.cnr.missioni.model.configuration.Massimale;
+import it.cnr.missioni.model.configuration.MissioneId;
 import it.cnr.missioni.model.configuration.Nazione;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.model.configuration.RimborsoKm;
@@ -123,6 +126,11 @@ public class BackupDAOTest {
     private GPIndexCreator massimaleDocIndexCreator;
     @Resource(name = "massimaleDAO")
     private IMassimaleDAO massimaleDAO;
+    
+    @Resource(name = "missioneIdIndexCreator")
+    private GPIndexCreator missioneIdDocIndexCreator;
+    @Resource(name = "missioneIdDAO")
+    private IMissioneIdDAO missioneIdDAO;
 
     
     BackupMapper mapper = new BackupMapper();
@@ -146,8 +154,11 @@ public class BackupDAOTest {
         Assert.assertNotNull(missioneDAO);
         Assert.assertNotNull(massimaleDocIndexCreator);
         Assert.assertNotNull(massimaleDAO);
+        Assert.assertNotNull(missioneIdDocIndexCreator);
+        Assert.assertNotNull(missioneIdDAO);
     }
     
+    @Ignore
     @Test
     public void a_backupNazioneTest() throws Exception {
     	int count = this.nazioneDAO.count().intValue();
@@ -159,6 +170,19 @@ public class BackupDAOTest {
     	Assert.assertTrue("############BACKUP_NAZIONE", conf.getList().size() == count);
     }
     
+    @Ignore
+    @Test
+    public void a_backupMissioneIdTest() throws Exception {
+    	int count = this.missioneIdDAO.count().intValue();
+    	List<MissioneId> lista = this.missioneIdDAO.find(new Page(0,count)).getResults();
+    	IBackupStore<MissioneId> conf = new MissioneIdBackupStore();
+    	conf.setList(lista);
+    	mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    	mapper.writeValue(new File("./backup/MissioneIDBackup.json"), conf);
+    	Assert.assertTrue("############BACKUP_MISSIONE_ID", conf.getList().size() == count);
+    }
+    
+    @Ignore
     @Test
     public void b_backupTipologiaSpesaTest() throws Exception {
     	int count = this.tipologiaSpesaDAO.count().intValue();
@@ -171,6 +195,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void c_backupMassimaleTest() throws Exception {
     	int count = this.massimaleDAO.count().intValue();
@@ -183,6 +208,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void d_backupDirettoreTest() throws Exception {
     	int count = this.direttoreDAO.count().intValue();
@@ -195,6 +221,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void e_backupUrlImageTest() throws Exception {
     	int count = this.urlImageDAO.count().intValue();
@@ -207,6 +234,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void f_backupQualificaTest() throws Exception {
     	int count = this.qualificaUserDAO.count().intValue();
@@ -219,6 +247,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void g_backupRimborsoKmTest() throws Exception {
     	int count = this.rimborsoKmDAO.count().intValue();
@@ -231,6 +260,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void h_backupUserTest() throws Exception {
     	int count = this.userDAO.count().intValue();
@@ -243,6 +273,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void i_backupMissioneTest() throws Exception {
     	int count = this.missioneDAO.count().intValue();
@@ -255,6 +286,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void l_backupPrenotazioneTest() throws Exception {
     	int count = this.prenotazioneDAO.count().intValue();
@@ -267,6 +299,7 @@ public class BackupDAOTest {
 
     }
     
+    @Ignore
     @Test
     public void m_backupVeicoloCnrTest() throws Exception {
     	int count = this.veicoloCNRDAO.count().intValue();
@@ -278,118 +311,203 @@ public class BackupDAOTest {
     	Assert.assertTrue("############BACKUP_VEICOLO_CNR", conf.getList().size() == count);
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void n_readNazioneBackupTest() throws Exception {
     	IBackupStore<Nazione> conf = mapper.readValue(new File("./backup/NazioneBackup.json"), NazioneBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@NAZIONE: {}\n",f);
+    		try {
+				nazioneDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		//logger.info("@@@@@@@@@@@@@@NAZIONE: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_NAZIONE", conf.getList().size() == this.nazioneDAO.count().intValue());
+    	//Assert.assertTrue("############READ_NAZIONE", conf.getList().size() == this.nazioneDAO.count().intValue());
 
     }
     
-    @Ignore
+//    @Ignore
     @Test
-    public void o_readTipologiaSpesaBackupTest() throws Exception {
-    	IBackupStore<TipologiaSpesa> conf = mapper.readValue(new File("./backup/TipologiaSpesaBackup.json"), TipologiaSpesaBackupStore.class);
+    public void o_readMissioneIdBackupTest() throws Exception {
+    	IBackupStore<MissioneId> conf = mapper.readValue(new File("./backup/MissioneIDBackup.json"), MissioneIdBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@TIPOLOGIA SPESA: {}\n",f);
+    		try {
+				missioneIdDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@TIPOLOGIA SPESA: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_TIPOLOGIA_SPESA", conf.getList().size() == this.tipologiaSpesaDAO.count().intValue());
+//    	Assert.assertTrue("############READ_TIPOLOGIA_SPESA", conf.getList().size() == this.tipologiaSpesaDAO.count().intValue());
 
     }
     
-    @Ignore
+//  @Ignore
+  @Test
+  public void o_readTipologiaSpesaBackupTest() throws Exception {
+  	IBackupStore<TipologiaSpesa> conf = mapper.readValue(new File("./backup/TipologiaSpesaBackup.json"), TipologiaSpesaBackupStore.class);
+  	conf.getList().stream().forEach(f->{
+  		try {
+				tipologiaSpesaDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//  		logger.info("@@@@@@@@@@@@@@TIPOLOGIA SPESA: {}\n",f);
+  	});
+//  	Assert.assertTrue("############READ_TIPOLOGIA_SPESA", conf.getList().size() == this.tipologiaSpesaDAO.count().intValue());
+
+  }
+    
+//    @Ignore
     @Test
     public void p_readMassimaleBackupTest() throws Exception {
     	IBackupStore<Massimale> conf = mapper.readValue(new File("./backup/MassimaleBackup.json"), MassimaleBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@MASSIMALE: {}\n",f);
+    		try {
+				massimaleDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@MASSIMALE: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_MASSIMALE", conf.getList().size() == this.massimaleDAO.count().intValue());
+//    	Assert.assertTrue("############READ_MASSIMALE", conf.getList().size() == this.massimaleDAO.count().intValue());
 
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void q_readDirettoreBackupTest() throws Exception {
     	IBackupStore<Direttore> conf = mapper.readValue(new File("./backup/DirettoreBackup.json"), DirettoreBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@DIRETTORE: {}\n",f);
+    		try {
+				direttoreDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@DIRETTORE: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_DIRETTORE", conf.getList().size() == this.direttoreDAO.count().intValue());
+//    	Assert.assertTrue("############READ_DIRETTORE", conf.getList().size() == this.direttoreDAO.count().intValue());
 
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void r_readUrlImageBackupTest() throws Exception {
     	IBackupStore<UrlImage> conf = mapper.readValue(new File("./backup/UrlImageBackup.json"), UrlImageBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@URL IMAGE: {}\n",f);
+    		try {
+				urlImageDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@URL IMAGE: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_URL_IMAGE", conf.getList().size() == this.urlImageDAO.count().intValue());
+//    	Assert.assertTrue("############READ_URL_IMAGE", conf.getList().size() == this.urlImageDAO.count().intValue());
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void s_readQualificaBackupTest() throws Exception {
     	IBackupStore<QualificaUser> conf = mapper.readValue(new File("./backup/QualificaUserBackup.json"), QualificaBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@QUALIFICA: {}\n",f);
+    		try {
+				qualificaUserDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@QUALIFICA: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_QUALIFICA", conf.getList().size() == this.qualificaUserDAO.count().intValue());
+//    	Assert.assertTrue("############READ_QUALIFICA", conf.getList().size() == this.qualificaUserDAO.count().intValue());
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void t_readRimborsoKmBackupTest() throws Exception {
     	IBackupStore<RimborsoKm> conf = mapper.readValue(new File("./backup/RimborsoKmBackup.json"), RimborsoKmBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@RIMBORSO KM: {}\n",f);
+    		try {
+				rimborsoKmDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@RIMBORSO KM: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_RIMBORSO_KM", conf.getList().size() == this.rimborsoKmDAO.count().intValue());
+//    	Assert.assertTrue("############READ_RIMBORSO_KM", conf.getList().size() == this.rimborsoKmDAO.count().intValue());
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void u_readUserBackupTest() throws Exception {
     	IBackupStore<User> conf = mapper.readValue(new File("./backup/UserBackup.json"), UserBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@USER: {}\n",f);
+    		try {
+				userDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@USER: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_USER", conf.getList().size() == this.userDAO.count().intValue());
+//    	Assert.assertTrue("############READ_USER", conf.getList().size() == this.userDAO.count().intValue());
     }
     
-    //@Ignore
+//    @Ignore
     @Test
     public void v_readMissioneBackupTest() throws Exception {
     	IBackupStore<Missione> conf = mapper.readValue(new File("./backup/MissioneBackup.json"), MissioneBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@MISSIONE: {}\n",f);
+    		try {
+    			if(f.isRimborsoSetted())
+    				f.setRimborsoCompleted(true);
+				missioneDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@MISSIONE: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_MISSIONE", conf.getList().size() == this.missioneDAO.count().intValue());
+//    	Assert.assertTrue("############READ_MISSIONE", conf.getList().size() == this.missioneDAO.count().intValue());
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void x_readPrenotazioneBackupTest() throws Exception {
     	IBackupStore<Prenotazione> conf = mapper.readValue(new File("./backup/PrenotazioneBackup.json"), PrenotazioneBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@PRENOTAZIONE: {}\n",f);
+    		try {
+				prenotazioneDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@PRENOTAZIONE: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_PRENOTAZIONE", conf.getList().size() == this.prenotazioneDAO.count().intValue());
+//    	Assert.assertTrue("############READ_PRENOTAZIONE", conf.getList().size() == this.prenotazioneDAO.count().intValue());
     }
     
-    @Ignore
+//    @Ignore
     @Test
     public void y_readVeicoloCnrBackupTest() throws Exception {
     	IBackupStore<VeicoloCNR> conf = mapper.readValue(new File("./backup/VeicoloCnrBackup.json"), VeicoloCnrBackupStore.class);
     	conf.getList().stream().forEach(f->{
-    		logger.info("@@@@@@@@@@@@@@VEICOLO CNR: {}\n",f);
+    		try {
+				veicoloCNRDAO.persist(f);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//    		logger.info("@@@@@@@@@@@@@@VEICOLO CNR: {}\n",f);
     	});
-    	Assert.assertTrue("############READ_VEICOLO_CNR", conf.getList().size() == this.veicoloCNRDAO.count().intValue());
+//    	Assert.assertTrue("############READ_VEICOLO_CNR", conf.getList().size() == this.veicoloCNRDAO.count().intValue());
     }
 
 }

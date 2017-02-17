@@ -91,7 +91,6 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
             public void buttonClick(ClickEvent event) {
                 selectedVeicolo = null;
                 elencoVeicoliTable.select(null);
-//				VeicoloWindow.open(new Veicolo(),false,true, false);
                 VeicoloWindow.getVeicoloWindow().withBean(new Veicolo()).withIsAdmin(false)
                         .withEnabled(true).withModifica(false).build();
             }
@@ -107,7 +106,6 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
 
             @Override
             public void buttonClick(ClickEvent event) {
-//				VeicoloWindow.open(selectedVeicolo,false,true, true);
                 VeicoloWindow.getVeicoloWindow().withBean(selectedVeicolo).withIsAdmin(false)
                         .withEnabled(true).withModifica(true).build();
             }
@@ -123,9 +121,6 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
      */
     @Override
     protected void initPagination() {
-//		buildPagination(!DashboardUI.getCurrentUser().getMappaVeicolo().isEmpty()
-//				? new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()) : 0);
-//		addListenerPagination();
 
     }
 
@@ -185,8 +180,6 @@ public class GestioneVeicoloView extends GestioneTemplateView<Veicolo> {
             this.elencoVeicoliTable
                     .aggiornaTable(new ArrayList<Veicolo>(DashboardUI.getCurrentUser().getMappaVeicolo().values()));
             disableButtons();
-//			buildPagination(new Long(DashboardUI.getCurrentUser().getMappaVeicolo().size()));
-//			addListenerPagination();
         } catch (Exception e) {
             Utility.getNotification(Utility.getMessage("error_message"), Utility.getMessage("request_error"),
                     Type.ERROR_MESSAGE);

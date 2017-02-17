@@ -55,9 +55,9 @@ public class MissioneIdDAOTest {
         Assert.assertTrue("###########COUNT MISSIONE ID", this.missioneIdDAO.count() == 1);
     }
 
-/*    @Test
+    @Test
     public void tearDown() throws Exception {
-        this.rimborsoKmDocIndexCreator.deleteIndex();
-    }*/
+        this.misioneIdDocIndexCreator.deleteIndex();
+    }
 
 }

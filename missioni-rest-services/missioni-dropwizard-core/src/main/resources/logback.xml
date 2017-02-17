@@ -35,6 +35,7 @@
     <logger name="it.cnr.missioni.model.validator" level="trace"/>
 
     <logger name="org.geosdi.geoplatform.support.google.spring.services.context" level="debug"/>
+    <logger name="it.cnr.missioni.spring.quartz" level="debug"/>
 
     <logger name="it.cnr.missioni.connector.core.UserTest" level="debug"/>
     <logger name="it.cnr.missioni.connector.core.MissioneTest" level="debug"/>

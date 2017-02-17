@@ -299,7 +299,7 @@ public class UserDAOTest {
     }
     
 
-//	public void tearDown() throws Exception {
-//		this.userDocIndexCreator.deleteIndex();
-//	}
+	public void tearDown() throws Exception {
+		this.userDocIndexCreator.deleteIndex();
+	}
 }

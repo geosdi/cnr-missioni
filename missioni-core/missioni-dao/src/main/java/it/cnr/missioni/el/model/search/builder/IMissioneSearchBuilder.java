@@ -40,7 +40,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
      * @param numeroOrdineRimborso
      * @return {@link IMissioneSearchBuilder}
      */
-    IMissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso);
+    IMissioneSearchBuilder withNumeroOrdineMissione(String numeroOrdineRimborso);
 
     /**
      * @param fromDataRimborso
@@ -78,6 +78,11 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
      * @return {@link IMissioneSearchBuilder}
      */
     IMissioneSearchBuilder withMultiMatchField(String fieldMultiMatch);
+    /**
+     * @param completed
+     * @return {@link IMissioneSearchBuilder}
+     */
+    IMissioneSearchBuilder withRimborsoCompleted(boolean completed);
 
     /**
      * @return {@link String}
@@ -100,9 +105,9 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
     DateTime getToDataInserimento();
 
     /**
-     * @return {@link Long}
+     * @return {@link String}
      */
-    Long getNumeroOrdineRimborso();
+    String getNumeroOrdineRimborso();
 
     /**
      * @return {@link DateTime}
@@ -133,6 +138,12 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
      * @return {@link String}
      */
     public String getFieldNotExist();
+    
+    /**
+     * 
+     * @return {@link boolean}
+     */
+    public boolean isRimborsoCompleted();
 
 
     /**
@@ -152,13 +163,14 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         private DateTime toDataInserimento = null;
         private String idUser = null;
         private String stato = null;
-        private Long numeroOrdineRimborso = null;
+        private String numeroOrdineRimborso = null;
         private DateTime fromDataRimbroso = null;
         private DateTime toDataRimbroso = null;
         private String oggetto = null;
         private String multiMatchValue;
         private String fieldExist;
         private String fieldNotExist;
+        private boolean rimborsoCompleted;
         private String fieldMultiMatch = "missione.localita,missione.oggetto,missione.id,missione.shortUser,missione.progressivo";
 
         private MissioneSearchBuilder() {
@@ -208,7 +220,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
          * @param numeroOrdineRimborso
          * @return {@link IMissioneSearchBuilder}
          */
-        public IMissioneSearchBuilder withNumeroOrdineMissione(Long numeroOrdineRimborso) {
+        public IMissioneSearchBuilder withNumeroOrdineMissione(String numeroOrdineRimborso) {
             this.numeroOrdineRimborso = numeroOrdineRimborso;
             if (numeroOrdineRimborso != null && !numeroOrdineRimborso.equals(""))
                 listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE, numeroOrdineRimborso, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
@@ -291,6 +303,17 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
             this.fieldMultiMatch = fieldMultiMatch;
             return self();
         }
+        
+        /**
+         * @param fieldMultiMatch
+         * @return {@link IMissioneSearchBuilder}
+         */
+        public IMissioneSearchBuilder withRimborsoCompleted(boolean allCompleted) {
+            this.rimborsoCompleted = allCompleted;
+            if(allCompleted == true)
+            	listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_COMPLETED, allCompleted, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            return self();
+        }
 
         public IMissioneSearchBuilder build(){
             this.multiFieldsSearch = new GPPageableElasticSearchDAO.MultiFieldsSearch(this.listAbstractBooleanSearch.stream().toArray(org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch[]::new));
@@ -327,9 +350,9 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
 
 
         /**
-         * @return {@link Long}
+         * @return {@link String}
          */
-        public Long getNumeroOrdineRimborso() {
+        public String getNumeroOrdineRimborso() {
             return numeroOrdineRimborso;
         }
 
@@ -382,6 +405,13 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
          */
         public String getFieldMultiMatch() {
             return fieldMultiMatch;
+        }
+        
+        /**
+         * @return {@link boolean}
+         */
+        public boolean isRimborsoCompleted() {
+            return rimborsoCompleted;
         }
 
         /**

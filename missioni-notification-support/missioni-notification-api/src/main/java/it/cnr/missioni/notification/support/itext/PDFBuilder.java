@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 import com.google.common.base.Preconditions;
@@ -47,11 +48,18 @@ public interface PDFBuilder {
      * @return {@link PDFBuilder}
      */
     PDFBuilder withVeicolo(Veicolo veicolo);
+    
     /**
      * @param file
      * @return {@link PDFBuilder}
      */
     PDFBuilder withFile(File file);
+    
+    /**
+     * @param file
+     * @return {@link PDFBuilder}
+     */
+    PDFBuilder withMissioneList(List<Missione> userList);
     
     /**
      * @param file
@@ -155,6 +163,7 @@ public interface PDFBuilder {
         protected Veicolo veicolo;
         protected File file;
         protected File fileVeicolo;
+        protected List<Missione> missioneList;
         protected OutputStream outputStream;
         private boolean isMezzoProprio;
         private UrlImage urlImage;
@@ -175,6 +184,16 @@ public interface PDFBuilder {
         @Override
         public PDFBuilder withUser(User user) {
             this.user = user;
+            return self();
+        }
+        
+        /**
+         * @param user
+         * @return {@link PDFBuilder}
+         */
+        @Override
+        public PDFBuilder withMissioneList(List<Missione> missioneList) {
+            this.missioneList = missioneList;
             return self();
         }
         
@@ -272,6 +291,16 @@ public interface PDFBuilder {
             Preconditions.checkArgument(((this.file != null) || (this.outputStream != null)),
                     "You must define File or OutputStream Parameter.");
         }
+        
+		/**
+         * @throws Exception
+         */
+        protected void checkArgumentsUserMissione() throws Exception {
+            Preconditions.checkArgument((!this.missioneList.isEmpty()), "The Parameter User must not be null.");;
+            Preconditions.checkArgument(((this.file != null) || (this.outputStream != null)),
+                    "You must define File or OutputStream Parameter.");
+        }
+        
         
         protected void writeHeader(Document document) throws Exception{
 

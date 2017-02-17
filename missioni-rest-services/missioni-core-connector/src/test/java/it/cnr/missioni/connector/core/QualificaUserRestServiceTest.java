@@ -35,6 +35,8 @@
  */
 package it.cnr.missioni.connector.core;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.junit.AfterClass;
@@ -52,6 +54,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.IQualificaUserSearchBuilder;
+import it.cnr.missioni.el.utility.QualificaFunction;
 import it.cnr.missioni.model.configuration.QualificaUser;
 import it.cnr.missioni.rest.api.response.qualificaUser.QualificaUserStore;
 
@@ -87,20 +90,20 @@ public class QualificaUserRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 
-//	@Test
-//	public void A_createTest() throws Exception {
-//		List<QualificaUser> lista = QualificaFunction.creaMassiveQualifica();
-//		lista.stream().forEach(p->{
-//			try {
-//				missioniCoreClientConnector.addQualificaUser(p);
-//			} catch (Exception e) {
-//			}
-//		});
-//		Thread.sleep(1000);
-//	}
+	@Test
+	public void A_createTest() throws Exception {
+		List<QualificaUser> lista = QualificaFunction.creaMassiveQualifica();
+		lista.stream().forEach(p->{
+			try {
+				missioniCoreClientConnector.addQualificaUser(p);
+			} catch (Exception e) {
+			}
+		});
+		Thread.sleep(1000);
+	}
 	
 	@Test
-	public void A_addQualificaUserTest() throws Exception {
+	public void B_addQualificaUserTest() throws Exception {
 		QualificaUser qualificaUser = new QualificaUser();
 		qualificaUser.setId("03");
 		qualificaUser.setValue("Tecnologo");
@@ -112,7 +115,7 @@ public class QualificaUserRestServiceTest {
 	}
 	
 	@Test
-	public void B_updateVeicolOCNRTest() throws Exception {
+	public void C_updateVeicolOCNRTest() throws Exception {
 		QualificaUser qualificaUser = new QualificaUser();
 		qualificaUser.setId("03");
 		qualificaUser.setValue("CTER");
@@ -124,7 +127,7 @@ public class QualificaUserRestServiceTest {
 	}
 	
 	@Test
-	public void C_deleteVeicoloCNRTest() throws Exception {
+	public void D_deleteVeicoloCNRTest() throws Exception {
 		missioniCoreClientConnector.deleteQualificaUser("03");
 		Thread.sleep(1000);
 		IQualificaUserSearchBuilder qualificaUserSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder.getQualificaUserSearchBuilder();
@@ -133,7 +136,7 @@ public class QualificaUserRestServiceTest {
 	}
 	
 	@Test
-	public void B_findQualificaByIDTest() throws Exception {
+	public void E_findQualificaByIDTest() throws Exception {
 		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
 				.getQualificaUserSearchBuilder().withId("01");
 		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaSearchBuilder);
@@ -142,7 +145,7 @@ public class QualificaUserRestServiceTest {
 	}
 	
 	@Test
-	public void B_findQualificaByID_2Test() throws Exception {
+	public void F_findQualificaByID_2Test() throws Exception {
 		IQualificaUserSearchBuilder qualificaSearchBuilder = IQualificaUserSearchBuilder.QualificaUserSearchBuilder
 				.getQualificaUserSearchBuilder().withId("05");
 		QualificaUserStore qualificaUserStore = missioniCoreClientConnector.getQualificaUserByQuery(qualificaSearchBuilder);

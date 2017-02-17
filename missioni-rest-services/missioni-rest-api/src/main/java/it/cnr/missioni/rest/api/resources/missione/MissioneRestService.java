@@ -31,6 +31,7 @@ public interface MissioneRestService {
 	 * @param multiMatch
 	 * @param fieldExist
 	 * @param fieldNotExist
+	 * @param rimborsoCompleted
 	 * @param from
 	 * @param size
 	 * @return
@@ -40,13 +41,13 @@ public interface MissioneRestService {
 	@Path(value = MissioneServiceRSPathConfig.GET_MISSIONE_BY_QUERY)
 	Response getMissioneByQuery(@QueryParam(value = "idMissione") String idMissione,
 			@QueryParam(value = "idUser") String idUser, @QueryParam(value = "stato") String stato,
-			@QueryParam(value = "numeroOrdineRimborso") Long numeroOrdineRimborso,
+			@QueryParam(value = "numeroOrdineRimborso") String numeroOrdineRimborso,
 			@QueryParam(value = "dataFromMissione") Long dataFromMissione,
 			@QueryParam(value = "dataToMissione") Long dataToMissione,
 			@QueryParam(value = "dataFromRimborso") Long dataFromRimborso,
 			@QueryParam(value = "dataToRimborso") Long dataToRimborso, @QueryParam(value = "oggetto") String oggetto,
 			@QueryParam(value = "multiMatch") String multiMatch, @QueryParam(value = "fieldExist") String fieldExist,
-			@QueryParam(value = "fieldNotExist") String fieldNotExist, @QueryParam(value = "from") int from,
+			@QueryParam(value = "fieldNotExist") String fieldNotExist,@QueryParam(value = "rimborsoCompleted") boolean rimborsoCompleted, @QueryParam(value = "from") int from,
 			@QueryParam(value = "size") int size) throws Exception;
 
 	/**

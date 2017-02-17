@@ -214,10 +214,10 @@ public final class DashboardMenu extends CustomComponent {
     @Subscribe
     public void updateNotificationsCount(final NotificationsCountUpdatedEvent event) {
         int unreadNotificationsCount = DashboardUI.getDataProvider().getUnreadNotificationsCount();
-        if(notificationsBadge != null){
+        //if(notificationsBadge != null){
         	notificationsBadge.setValue(String.valueOf(unreadNotificationsCount));
         	notificationsBadge.setVisible(unreadNotificationsCount > 0);
-        }
+        //}
     }
 
     // aggiorna il menù a seguito della registrazione completata da parte

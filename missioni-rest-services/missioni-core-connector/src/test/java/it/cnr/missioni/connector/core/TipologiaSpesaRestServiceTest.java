@@ -37,6 +37,7 @@ package it.cnr.missioni.connector.core;
 
 import it.cnr.missioni.connector.core.spring.connector.MissioniCoreClientConnector;
 import it.cnr.missioni.el.model.search.builder.ITipologiaSpesaSearchBuilder;
+import it.cnr.missioni.el.utility.TipologiaSpesaFunction;
 import it.cnr.missioni.model.configuration.TipologiaSpesa;
 import it.cnr.missioni.model.missione.TrattamentoMissioneEsteraEnum;
 import it.cnr.missioni.rest.api.response.tipologiaSpesa.TipologiaSpesaStore;
@@ -47,6 +48,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -82,20 +85,20 @@ public class TipologiaSpesaRestServiceTest {
 		System.clearProperty(CORE_CONNECTOR_KEY);
 	}
 	
-//	@Test
-//	public void A_createTest() throws Exception {
-//		List<TipologiaSpesa> lista = TipologiaSpesaFunction.creaMassiveTipologiaSpesa();
-//		lista.stream().forEach(m->{
-//			try {
-//				missioniCoreClientConnector.addTipologiaSpesa(m);
-//			} catch (Exception e) {
-//			}
-//		});
-//		Thread.sleep(1000);
-//	}
+	@Test
+	public void A_createTest() throws Exception {
+		List<TipologiaSpesa> lista = TipologiaSpesaFunction.creaMassiveTipologiaSpesa();
+		lista.stream().forEach(m->{
+			try {
+				missioniCoreClientConnector.addTipologiaSpesa(m);
+			} catch (Exception e) {
+			}
+		});
+		Thread.sleep(1000);
+	}
 
 	@Test
-	public void A_addTipologiaSpesaTest() throws Exception {
+	public void B_addTipologiaSpesaTest() throws Exception {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		tipologiaSpesa.setId("05");
 		tipologiaSpesa.setValue("VITTO");
@@ -107,7 +110,7 @@ public class TipologiaSpesaRestServiceTest {
 	}
 	
 	@Test
-	public void B_updateTipologiaSpesaTest() throws Exception {
+	public void C_updateTipologiaSpesaTest() throws Exception {
 		TipologiaSpesa tipologiaSpesa = new TipologiaSpesa();
 		tipologiaSpesa.setId("05");
 		tipologiaSpesa.setValue("PRANZO");
@@ -119,7 +122,7 @@ public class TipologiaSpesaRestServiceTest {
 	}
 	
 	@Test
-	public void C_deleteTipologiaSpesaTest() throws Exception {
+	public void D_deleteTipologiaSpesaTest() throws Exception {
 		missioniCoreClientConnector.deleteTipologiaSpesa("05");
 		Thread.sleep(1000);
 		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder();
@@ -128,14 +131,14 @@ public class TipologiaSpesaRestServiceTest {
 	}
 	
 	@Test
-	public void F_findTipologiaSpesaTipoTest() throws Exception {
+	public void E_findTipologiaSpesaTipoTest() throws Exception {
 		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withEstera(true);
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);
 	}
 	
 	@Test
-	public void G_findTipologiaSpesaTipoTest() throws Exception {
+	public void F_findTipologiaSpesaTipoTest() throws Exception {
 		ITipologiaSpesaSearchBuilder tipologiaSpesaSearchBuilder = ITipologiaSpesaSearchBuilder.TipologiaSpesaSearchBuilder.getTipologiaSpesaSearchBuilder().withItalia(true);
 		TipologiaSpesaStore tipologiaSpesaStore = missioniCoreClientConnector.getTipologiaSpesaByQuery(tipologiaSpesaSearchBuilder);
 		Assert.assertTrue("FIND  TIPOLOGIA SPESA TIPO", tipologiaSpesaStore.getTipologiaSpesa().size() == 2);

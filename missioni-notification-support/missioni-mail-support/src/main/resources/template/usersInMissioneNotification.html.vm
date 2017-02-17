@@ -1,0 +1,29 @@
+<html>
+<body>
+    <h3>CNR : Sistema Missioni</h3>
+    <div>
+        <p>Buongiorno,</p>
+         <p>in allegato e nella tabella sottostante gli utenti che risultano essere in missione nella 
+        giornata odierna.
+        </p>
+        
+        <table id="tableUsers" class="aui">
+        <thead>
+          <tr bgcolor="#C2C2CE">
+             <th id="shortUser">Cognome Nome</th>
+             <th id="localita">Localit&agrave;</th>
+          </tr>
+        </thead>
+        <tbody>
+        #foreach($obj in $objects)
+           <tr>
+           <td id="tdAlert" headers="shortUser">$obj.shortUser</td>
+           <td id="tdAlert" headers="localita">$obj.localita</td>
+           </tr>
+        #end
+        </tbody>
+        </table>
+        
+    </div>
+</body>
+</html>

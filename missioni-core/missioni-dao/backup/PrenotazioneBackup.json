@@ -1,0 +1,653 @@
+{
+  "list" : [ {
+    "id" : "b617c3c1-0e1d-11e6-9aa9-005056a63867",
+    "dataFrom" : 1464040800000,
+    "dataTo" : 1464213599999,
+    "idUser" : "b2e42c80-0e1c-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "ROMA",
+    "descrizione" : "GRIPPO Giuseppe",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "603eaf89-1039-11e6-9b59-005056a63867",
+    "dataFrom" : 1462140000000,
+    "dataTo" : 1462226399999,
+    "idUser" : "ecfeb0c7-0c75-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Gorgoglione",
+    "descrizione" : "perrone  angela",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "d6a9aaaf-16af-11e6-960b-005056a63867",
+    "dataFrom" : 1465184700000,
+    "dataTo" : 1465239659999,
+    "idUser" : "ee823e41-030d-11e6-afa2-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Salerno",
+    "descrizione" : "Telesca Lucia",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "1a31b23b-2809-11e6-8cb7-005056a63867",
+    "dataFrom" : 1464933600000,
+    "dataTo" : 1464966059999,
+    "idUser" : "176bc7cf-021f-11e6-afa2-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Castrovillari (CS)",
+    "descrizione" : "Lapenna Vincenzo ",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "1113443c-280d-11e6-8cb7-005056a63867",
+    "dataFrom" : 1465880400000,
+    "dataTo" : 1465921859999,
+    "idUser" : "0d5f9d6a-f117-11e5-9c1b-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Napoli",
+    "descrizione" : "Amato Lorenzo",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "1b26dba2-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1468274400000,
+    "dataTo" : 1468360799999,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Montalbano",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "7fa9c106-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1471906800000,
+    "dataTo" : 1471910400000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Irsina",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "289c91ea-27f1-11e6-8cb7-005056a63867",
+    "dataFrom" : 1465768800000,
+    "dataTo" : 1465855199999,
+    "idUser" : "2552e4d2-0bbe-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Castellaneta Marina (TA)",
+    "descrizione" : "Trippetta Serena",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "c26876db-15c7-11e6-9ee2-005056a63867",
+    "dataFrom" : 1462854600000,
+    "dataTo" : 1462863599999,
+    "idUser" : "f15522af-0dec-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Ferrandina",
+    "descrizione" : "Lettino Antonio",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "02c2f89a-111b-11e6-841a-005056a63867",
+    "dataFrom" : 1468389600000,
+    "dataTo" : 1468447199999,
+    "idUser" : "d3819e6e-0c46-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "marsico nuovo",
+    "descrizione" : "faruolo mariapia",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "47329495-0df3-11e6-9aa9-005056a63867",
+    "dataFrom" : 1462863600000,
+    "dataTo" : 1462899599999,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Muro Lucano",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "0e58844b-111b-11e6-841a-005056a63867",
+    "dataFrom" : 1468447200000,
+    "dataTo" : 1468533599999,
+    "idUser" : "d3819e6e-0c46-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "matera",
+    "descrizione" : "faruolo mariapia",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "5d539db6-271b-11e6-8cb7-005056a63867",
+    "dataFrom" : 1465423200000,
+    "dataTo" : 1465468200000,
+    "idUser" : "ecfeb0c7-0c75-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Avigliano",
+    "descrizione" : "Perrone  Angela",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "c14e3e2f-15d0-11e6-9ee2-005056a63867",
+    "dataFrom" : 1465250400000,
+    "dataTo" : 1465336799999,
+    "idUser" : "1bda026c-15cd-11e6-9ee2-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Viggiano",
+    "descrizione" : "Caggiano Rosa",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "50e389e5-12ad-11e6-b5d3-005056a63867",
+    "dataFrom" : 1465077600000,
+    "dataTo" : 1465423199999,
+    "idUser" : "b2e42c80-0e1c-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Roma",
+    "descrizione" : "GRIPPO Giuseppe",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "f65bb26e-2100-11e6-8cb7-005056a63867",
+    "dataFrom" : 1464645600000,
+    "dataTo" : 1464731999999,
+    "idUser" : "0d5f9d6a-f117-11e5-9c1b-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "catanzaro",
+    "descrizione" : "Amato Lorenzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "ab466a7f-2bc1-11e6-8cb7-005056a63867",
+    "dataFrom" : 1467091800000,
+    "dataTo" : 1467097200000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Pisticci",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "9e7e5cd7-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1472542200000,
+    "dataTo" : 1472544000000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Corleto P.",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "2ff520ce-2f03-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466114400000,
+    "dataTo" : 1466200799999,
+    "idUser" : "168cd41d-16ad-11e6-960b-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Castellaneta Marina (Taranto)",
+    "descrizione" : "Margiotta Salvatore",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "f6e50f2f-32cd-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466373600000,
+    "dataTo" : 1466459999999,
+    "idUser" : "e5a85be6-12c2-11e6-b5d3-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Viggiano",
+    "descrizione" : "Sabia Serena",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "9b15e8f2-32e6-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466064000000,
+    "dataTo" : 1466085659999,
+    "idUser" : "f043d128-0dd5-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Abriola",
+    "descrizione" : "Satriani Antonio",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "717ab102-23f3-11e6-8cb7-005056a63867",
+    "dataFrom" : 1464559200000,
+    "dataTo" : 1464645599999,
+    "idUser" : "4cc65ccd-0e11-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Bari",
+    "descrizione" : "Ragone Pietro Pasquale",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "cc72a16b-20b6-11e6-8cb7-005056a63867",
+    "dataFrom" : 1463988600000,
+    "dataTo" : 1463994059999,
+    "idUser" : "f3315f0a-20b4-11e6-8cb7-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Potenza",
+    "descrizione" : "Caivano Rocchino",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "70bf86e4-262e-11e6-8cb7-005056a63867",
+    "dataFrom" : 1464595200000,
+    "dataTo" : 1464616859999,
+    "idUser" : "f043d128-0dd5-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Pignola",
+    "descrizione" : "Satriani Antonio",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "44ce3103-0dee-11e6-9aa9-005056a63867",
+    "dataFrom" : 1463436000000,
+    "dataTo" : 1463522399999,
+    "idUser" : "f15522af-0dec-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Napoli",
+    "descrizione" : "Lettino Antonio",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "121d6119-0df6-11e6-9aa9-005056a63867",
+    "dataFrom" : 1462485600000,
+    "dataTo" : 1462571999999,
+    "idUser" : "f043d128-0dd5-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Caserta",
+    "descrizione" : "satriani antonio",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "362b8c62-0dee-11e6-9aa9-005056a63867",
+    "dataFrom" : 1462399200000,
+    "dataTo" : 1462485599999,
+    "idUser" : "f15522af-0dec-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Roma",
+    "descrizione" : "Lettino Antonio",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "2355438e-15d0-11e6-9ee2-005056a63867",
+    "dataFrom" : 1463954400000,
+    "dataTo" : 1464040799999,
+    "idUser" : "1bda026c-15cd-11e6-9ee2-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Viggiano",
+    "descrizione" : "Caggiano Rosa",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "4dc7331d-0de9-11e6-9aa9-005056a63867",
+    "dataFrom" : 1462744800000,
+    "dataTo" : 1462831199999,
+    "idUser" : "528f7b7c-0de7-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Pompei",
+    "descrizione" : "Rizzo Enzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "5fc9ec2e-2bc1-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466460000000,
+    "dataTo" : 1466546399999,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "maratea",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "003a2861-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1467684000000,
+    "dataTo" : 1467687600000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Melfi",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "b9b6ef70-32d7-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466460000000,
+    "dataTo" : 1466546399999,
+    "idUser" : "528f7b7c-0de7-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Foggia",
+    "descrizione" : "Rizzo Enzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "b4768629-3795-11e6-8cb7-005056a63867",
+    "dataFrom" : 1467669600000,
+    "dataTo" : 1467755999999,
+    "idUser" : "034f0e6f-0c48-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Val d'Agri",
+    "descrizione" : "Loperte Simona",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "e2bdd91b-379b-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466978400000,
+    "dataTo" : 1467064799999,
+    "idUser" : "0d5f9d6a-f117-11e5-9c1b-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "napoli",
+    "descrizione" : "Amato Lorenzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "b47d579c-37cf-11e6-8cb7-005056a63867",
+    "dataFrom" : 1467842400000,
+    "dataTo" : 1468101599999,
+    "idUser" : "c326f6f1-1069-11e6-9b59-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Napoli",
+    "descrizione" : "Pappalardo Gelsomina",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "b0c7e148-111a-11e6-841a-005056a63867",
+    "dataFrom" : 1468360800000,
+    "dataTo" : 1468447199999,
+    "idUser" : "2552e4d2-0bbe-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Marsico Nuovo (PZ)",
+    "descrizione" : "Trippetta Serena",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "f5c467db-0de5-11e6-9aa9-005056a6ssssdf",
+    "dataFrom" : 1462226400000,
+    "dataTo" : 1462399199999,
+    "idUser" : "145160aa-0e0d-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Napoli",
+    "descrizione" : "FABIO MADONNA",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "a9d659b7-0df3-11e6-9aa9-005056a63867",
+    "dataFrom" : 1464678000000,
+    "dataTo" : 1464714059999,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Montalbano J.",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "cdb6cd29-111a-11e6-841a-005056a63867",
+    "dataFrom" : 1468447200000,
+    "dataTo" : 1468533599999,
+    "idUser" : "2552e4d2-0bbe-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Matera",
+    "descrizione" : "Trippetta Serena",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "512fa340-18e6-11e6-8cb7-005056a63867",
+    "dataFrom" : 1463378400000,
+    "dataTo" : 1463414459999,
+    "idUser" : "f043d128-0dd5-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "abriola",
+    "descrizione" : "Satriani Antonio",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "238364cd-185c-11e6-8cb7-005056a63867",
+    "dataFrom" : 1463119200000,
+    "dataTo" : 1463140799999,
+    "idUser" : "0d5f9d6a-f117-11e5-9c1b-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Napoli",
+    "descrizione" : "Amato Lorenzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "6324b66e-0de9-11e6-9aa9-005056a63867",
+    "dataFrom" : 1462917600000,
+    "dataTo" : 1463090399999,
+    "idUser" : "528f7b7c-0de7-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Pompei",
+    "descrizione" : "Rizzo Enzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "97af244d-15cf-11e6-9ee2-005056a63867",
+    "dataFrom" : 1462861800000,
+    "dataTo" : 1462863600000,
+    "idUser" : "1bda026c-15cd-11e6-9ee2-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Viggiano",
+    "descrizione" : "Caggiano Rosa",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "7cacf9e7-271b-11e6-8cb7-005056a63867",
+    "dataFrom" : 1465509600000,
+    "dataTo" : 1465547400000,
+    "idUser" : "ecfeb0c7-0c75-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Avigliano",
+    "descrizione" : "Perrone  Angela",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "4daa1244-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1470090600000,
+    "dataTo" : 1470092400000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Muro Lucano",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "652126c5-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1470713400000,
+    "dataTo" : 1470715200000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Venosa",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "e3b72849-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1473762600000,
+    "dataTo" : 1473768000000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Lauria",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "0fea4ffb-2bc3-11e6-8cb7-005056a63867",
+    "dataFrom" : 1474968600000,
+    "dataTo" : 1474972200000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Rionero",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "69334b46-3176-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466028000000,
+    "dataTo" : 1466076600000,
+    "idUser" : "ecfeb0c7-0c75-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Avigliano ",
+    "descrizione" : "Perrone  Angela",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "4900e72e-32c9-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466546400000,
+    "dataTo" : 1466632799999,
+    "idUser" : "168cd41d-16ad-11e6-960b-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Bari",
+    "descrizione" : "Margiotta Salvatore",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "974e9e65-32ff-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466632800000,
+    "dataTo" : 1466719199999,
+    "idUser" : "9263453e-1056-11e6-9b59-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Cosenza",
+    "descrizione" : "Calamita Giuseppe",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "fdfc4128-15b5-11e6-9ee2-005056a63867",
+    "dataFrom" : 1463090400000,
+    "dataTo" : 1463176799999,
+    "idUser" : "f043d128-0dd5-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Abriola- Pantano di Pignola",
+    "descrizione" : "Satriani Antonio",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "5b443bfd-295b-11e6-8cb7-005056a63867",
+    "dataFrom" : 1465369200000,
+    "dataTo" : 1465394459999,
+    "idUser" : "f043d128-0dd5-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Pantano Pignola",
+    "descrizione" : "Satriani Antonio",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "f5c467db-0de5-11e6-9aa9-005056a63868",
+    "dataFrom" : 1462485600000,
+    "dataTo" : 1462571999999,
+    "idUser" : "ecfeb0c7-0c75-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Petacciato",
+    "descrizione" : "Angela Perrone",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "f5c467db-0de5-11e6-9aa9-005056a63869",
+    "dataFrom" : 1463608800000,
+    "dataTo" : 1463954399999,
+    "idUser" : "2552e4d2-0bbe-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Roma",
+    "descrizione" : "Serena Trippetta",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "b0120657-1d96-11e6-8cb7-005056a63867",
+    "dataFrom" : 1464040800000,
+    "dataTo" : 1464127199999,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Lauria",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "d09defa8-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1473147000000,
+    "dataTo" : 1473150600000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Avigliano",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "32d26da3-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1468899000000,
+    "dataTo" : 1468900800000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Valsinni",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "5bcab73d-20da-11e6-8cb7-005056a63867",
+    "dataFrom" : 1464244200000,
+    "dataTo" : 1464274800000,
+    "idUser" : "ecfeb0c7-0c75-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Stigliano",
+    "descrizione" : "Perrone  Angela",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "f9d4a03a-2bc2-11e6-8cb7-005056a63867",
+    "dataFrom" : 1474362000000,
+    "dataTo" : 1474365600000,
+    "idUser" : "4e4f5111-0ded-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Bella",
+    "descrizione" : "Lanorte Antonio ",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "5dc84f35-2670-11e6-8cb7-005056a63867",
+    "dataFrom" : 1465513200000,
+    "dataTo" : 1465515000000,
+    "idUser" : "0d5f9d6a-f117-11e5-9c1b-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Roma",
+    "descrizione" : "Amato Lorenzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "74fab904-314d-11e6-8cb7-005056a63867",
+    "dataFrom" : 1465855200000,
+    "dataTo" : 1466027999999,
+    "idUser" : "29fe2967-1376-11e6-9ee2-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Roma MIUR",
+    "descrizione" : "Gagliardi Simone",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "ebb9d281-32d7-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466978400000,
+    "dataTo" : 1467496799999,
+    "idUser" : "528f7b7c-0de7-11e6-9aa9-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Larderello",
+    "descrizione" : "Rizzo Enzo",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  }, {
+    "id" : "9de53dc8-3795-11e6-8cb7-005056a63867",
+    "dataFrom" : 1467237600000,
+    "dataTo" : 1467323999999,
+    "idUser" : "034f0e6f-0c48-11e6-9a70-005056a63867",
+    "idVeicoloCNR" : "eb4cfd0c-f268-11e5-9c1b-005056a63867",
+    "localita" : "Val d'Agri",
+    "descrizione" : "Loperte Simona",
+    "allDay" : true,
+    "descriptionVeicoloCNR" : "PUNTO BIANCA EG462GM"
+  }, {
+    "id" : "a4c4f7aa-3797-11e6-8cb7-005056a63867",
+    "dataFrom" : 1466578800000,
+    "dataTo" : 1466604059999,
+    "idUser" : "2aee6cf7-1116-11e6-841a-005056a63867",
+    "idVeicoloCNR" : "a551cbfb-f268-11e5-9c1b-005056a63867",
+    "localita" : "Melfi",
+    "descrizione" : "Cosmi Carmelina",
+    "allDay" : false,
+    "descriptionVeicoloCNR" : "PUNTO BLU ES578BM"
+  } ]
+}

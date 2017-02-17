@@ -36,7 +36,6 @@ public class UpdateUserAction implements IAction {
             DashboardEventBus.post(new DashboardEvent.ProfileUpdatedEvent());
             if (!value) {
                 DashboardEventBus.post(new DashboardEvent.MenuUpdateEvent());
-                Collection<DashboardNotification> notifications = DashboardUI.getDataProvider().getNotifications();
                 DashboardEventBus.post(new NotificationsCountUpdatedEvent());
             }
             Utility.getNotification(Utility.getMessage("success_message"), null,

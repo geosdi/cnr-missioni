@@ -172,9 +172,9 @@ public class MassimaleDAOTest {
         Assert.assertTrue("FIND MASSIMALE BY NOT ID", lista.isEmpty());
     }
 
-//	@Test
-//	public void tearDown() throws Exception {
-//		this.massimaleDocIndexCreator.deleteIndex();
-//	}
+	@Test
+	public void tearDown() throws Exception {
+		this.massimaleDocIndexCreator.deleteIndex();
+	}
 
 }
