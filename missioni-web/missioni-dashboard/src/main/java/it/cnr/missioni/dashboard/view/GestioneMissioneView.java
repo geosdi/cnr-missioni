@@ -215,6 +215,7 @@ public class GestioneMissioneView extends GestioneTemplateView<Missione> {
                 openWizardMissione();
             }
         });
+        buttonNew.setEnabled(Boolean.FALSE);
 
         buttonDettagli = buildButton("Dettagli", "Visualizza i dettagli della Missione", FontAwesome.EDIT);
         buttonDettagli.addClickListener(new Button.ClickListener() {

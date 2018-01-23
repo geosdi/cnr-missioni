@@ -81,10 +81,10 @@ public class MissioneDAO extends AbstractElasticSearchDAO<Missione> implements I
         }
         StatisticheMissioni statisticheMissioni = new StatisticheMissioni();
         Terms termsByComune = searchResponse.getAggregations().get("by_stato");
-        Collection<Terms.Bucket> bucketsByStato = termsByComune.getBuckets();
+        List bucketsByStato = termsByComune.getBuckets();
         bucketsByStato.forEach(bucketByStato -> {
-            statisticheMissioni.getMappaStatistiche().put(StatoEnum.getStatoEnum(bucketByStato.getKey().toString().toUpperCase()),
-                    bucketByStato.getDocCount());
+            statisticheMissioni.getMappaStatistiche().put(StatoEnum.getStatoEnum(((Terms.Bucket)bucketByStato).getKey().toString().toUpperCase()),
+                    ((Terms.Bucket)bucketByStato).getDocCount());
         });
         return statisticheMissioni;
     }

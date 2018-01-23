@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.search.sort.SortOrder;
 import org.geosdi.geoplatform.experimental.el.api.mapper.GPBaseMapper;
 import org.geosdi.geoplatform.experimental.el.dao.AbstractElasticSearchDAO;
@@ -47,7 +48,7 @@ public class UserDAO extends AbstractElasticSearchDAO<User> implements IUserDAO 
     public User findUserByUsername(String username) throws Exception{
         logger.debug("###############Try to find Users by Username: {}\n\n");
         List<User> users = super.find(new MultiFieldsSearch(new BooleanExactSearch(SearchConstants.USER_FIELD_USERNAME,
-                username, BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND))).getResults();
+                username, BooleanQueryType.MUST, Operator.AND))).getResults();
         return ((users != null) && (users.size() == 1)) ? users.get(0) : null;
     }
 

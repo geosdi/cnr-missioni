@@ -1,7 +1,7 @@
 package it.cnr.missioni.el.model.search.builder;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
+import org.elasticsearch.index.query.Operator;
 import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
 import org.geosdi.geoplatform.experimental.el.search.bool.BooleanFieldExistsSearch;
@@ -201,7 +201,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         public IMissioneSearchBuilder withIdUser(String idUser) {
             this.idUser = idUser;
             if (idUser != null && !idUser.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_ID_USER, idUser, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_ID_USER, idUser, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -212,7 +212,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         public IMissioneSearchBuilder withStato(String stato) {
             this.stato = stato;
             if (stato != null && !stato.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_STATO, stato, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_STATO, stato, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -223,7 +223,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         public IMissioneSearchBuilder withNumeroOrdineMissione(String numeroOrdineRimborso) {
             this.numeroOrdineRimborso = numeroOrdineRimborso;
             if (numeroOrdineRimborso != null && !numeroOrdineRimborso.equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE, numeroOrdineRimborso, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_NUMERO_ORDINE, numeroOrdineRimborso, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -247,7 +247,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         public IMissioneSearchBuilder withId(String id) {
             this.id = id;
             if (id != null && !id.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -311,7 +311,7 @@ public interface IMissioneSearchBuilder extends ISearchBuilder<IMissioneSearchBu
         public IMissioneSearchBuilder withRimborsoCompleted(boolean allCompleted) {
             this.rimborsoCompleted = allCompleted;
             if(allCompleted == true)
-            	listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_COMPLETED, allCompleted, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            	listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.MISSIONE_FIELD_RIMBORSO_COMPLETED, allCompleted, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 

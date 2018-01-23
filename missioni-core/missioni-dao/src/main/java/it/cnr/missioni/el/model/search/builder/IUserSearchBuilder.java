@@ -1,6 +1,7 @@
 package it.cnr.missioni.el.model.search.builder;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.Operator;
 import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
 import org.geosdi.geoplatform.experimental.el.search.bool.BooleanMultiMatchSearch;
@@ -231,7 +232,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
 
         private UserSearchBuilder() {
             this.fieldSort = SearchConstants.USER_FIELD_COGNOME;
-            listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_REGISTRAZIONE_COMPLETATA, true, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+            listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_REGISTRAZIONE_COMPLETATA, true, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
         }
 
         public static IUserSearchBuilder getUserSearchBuilder() {
@@ -245,7 +246,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withNome(String nome) {
             this.nome = nome;
             if (nome != null && !nome.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_NOME, nome.toLowerCase(), IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.OR));
+                listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_NOME, nome.toLowerCase(), IBooleanSearch.BooleanQueryType.MUST, Operator.OR));
             return self();
         }
 
@@ -265,7 +266,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withCognome(String cognome) {
             this.cognome = cognome;
             if (cognome != null && !cognome.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_COGNOME, cognome.toLowerCase(), IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_COGNOME, cognome.toLowerCase(), IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -276,7 +277,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withCodiceFiscale(String codiceFiscale) {
             this.codiceFiscale = codiceFiscale;
             if (codiceFiscale != null && !codiceFiscale.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_CODICE_FISCALE, codiceFiscale.toLowerCase(), IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_CODICE_FISCALE, codiceFiscale.toLowerCase(), IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -288,9 +289,9 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
             this.matricola = matricola;
             if (matricola != null && !matricola.trim().equals("")) {
                 if (searchType.equals("prefix") || searchType == null) {
-                    listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                    listAbstractBooleanSearch.add(new BooleanPrefixSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
                 } else {
-                    listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                    listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_MATRICOLA, matricola, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
                 }
             }
             return self();
@@ -303,7 +304,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withUsername(String username) {
             this.username = username;
             if (username != null && !username.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_USERNAME, username, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_USERNAME, username, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -314,7 +315,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withTarga(String targa) {
             this.targa = targa;
             if (targa != null && !targa.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_VEICOLO_TARGA, targa, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_VEICOLO_TARGA, targa, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -325,7 +326,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withCartaCircolazione(String cartaCircolazione) {
             this.cartaCircolazione = cartaCircolazione;
             if (cartaCircolazione != null && !cartaCircolazione.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_VEICOLO_CARTA_CIRCOLAZIONE, cartaCircolazione, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -336,7 +337,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withPolizzaAssicurativa(String polizzaAssicurativa) {
             this.polizzaAssicurativa = polizzaAssicurativa;
             if (polizzaAssicurativa != null && !polizzaAssicurativa.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_VEICOLO_POLIZZA_ASSICURATIVA, polizzaAssicurativa, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -347,7 +348,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withIban(String iban) {
             this.iban = iban;
             if (iban != null && !iban.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_IBAN, iban, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_IBAN, iban, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -358,7 +359,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withMail(String mail) {
             this.mail = mail;
             if (mail != null && !mail.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_MAIL, mail, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_MAIL, mail, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -369,7 +370,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withNotId(String notId) {
             this.setNotId(notId);
             if (notId != null && !notId.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_ID, notId, IBooleanSearch.BooleanQueryType.MUST_NOT, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_ID, notId, IBooleanSearch.BooleanQueryType.MUST_NOT, Operator.AND));
             return self();
         }
 
@@ -380,7 +381,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withId(String id) {
             this.id = id;
             if (id != null && !id.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -391,7 +392,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withNumeroPatente(String numeroPatente) {
             this.numeroPatente = numeroPatente;
             if (numeroPatente != null && !numeroPatente.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_NUMERO_PATENTE, numeroPatente, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_NUMERO_PATENTE, numeroPatente, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -402,7 +403,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withMultiMatch(String multiMatchValue) {
             this.multiMatchValue = multiMatchValue;
             if (multiMatchValue != null && !multiMatchValue.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanMultiMatchSearch(multiMatchValue, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.OR,fieldMultiMatch.split(",")));
+                listAbstractBooleanSearch.add(new BooleanMultiMatchSearch(multiMatchValue, IBooleanSearch.BooleanQueryType.MUST, Operator.OR,fieldMultiMatch.split(",")));
             return self();
         }
 
@@ -422,7 +423,7 @@ public interface IUserSearchBuilder extends ISearchBuilder<IUserSearchBuilder> {
         public IUserSearchBuilder withResponsabileGruppo(Boolean responsabileGruppo) {
             this.responsabileGruppo = responsabileGruppo;
             if (responsabileGruppo != null)
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_RESPONSABILIE_GRUPPO, responsabileGruppo, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.USER_FIELD_RESPONSABILIE_GRUPPO, responsabileGruppo, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 

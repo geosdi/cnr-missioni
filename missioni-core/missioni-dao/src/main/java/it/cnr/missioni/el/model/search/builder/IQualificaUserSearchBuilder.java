@@ -1,6 +1,7 @@
 package it.cnr.missioni.el.model.search.builder;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.Operator;
 import org.geosdi.geoplatform.experimental.el.dao.GPPageableElasticSearchDAO;
 import org.geosdi.geoplatform.experimental.el.search.bool.BooleanExactSearch;
 import org.geosdi.geoplatform.experimental.el.search.bool.IBooleanSearch;
@@ -43,7 +44,7 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
         public IQualificaUserSearchBuilder withValue(String value) {
             this.value = value;
             if (value != null && !value.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.QUALIFICA_USER_FIELD_VALUE, value, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.QUALIFICA_USER_FIELD_VALUE, value, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
             return self();
         }
 
@@ -54,7 +55,7 @@ public interface IQualificaUserSearchBuilder extends ISearchBuilder<IQualificaUs
         public IQualificaUserSearchBuilder withId(String id) {
             this.id = id;
             if (id != null && !id.trim().equals(""))
-                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, MatchQueryBuilder.Operator.AND));
+                listAbstractBooleanSearch.add(new BooleanExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id, IBooleanSearch.BooleanQueryType.MUST, Operator.AND));
 
 /*            booleanModelSearch.getListaSearch()
                     .add(new ExactSearch(SearchConstants.QUALIFICA_USER_FIELD_ID, id));*/
